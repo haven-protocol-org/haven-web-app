@@ -2,6 +2,7 @@
   "name": "haven_web_wallet",
   "version": "0.1.0",
   "private": true,
+  "proxy": "https://localhost:5000",
   "dependencies": {
     "axios": "^0.18.0",
     "chart.js": "^2.8.0",

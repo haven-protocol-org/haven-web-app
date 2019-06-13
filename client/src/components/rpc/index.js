@@ -18,7 +18,7 @@ class RPC extends React.Component {
         
         // NEAC - make a call to the RPC code
         return window
-            .fetch("https://nelliekins.zapto.org:5000/rpc", {
+            .fetch("/rpc", {
                 method: "POST",
                 mode: "cors",
                 cache: "no-cache",
