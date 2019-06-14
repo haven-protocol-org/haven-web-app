@@ -1,29 +1,22 @@
 // Library Imports
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { authUser, currentUser } from "../../../actions/index.js";
 import history from "../../../history.js";
 
 // Relative Imports
 import { Container, Haven, Logo, Brand, Button, Logout } from "./styles.js";
 import Icon from "../../../assets/haven.svg";
+import {IN_SESSION} from "../../../reducers/walletSession";
 
 class Navigation extends Component {
   handleLogout = () => {
-    const user = {
-      auth: false,
-      seedPhrase: "",
-      privateKey: "",
-      spendKey: "",
-      viewKey: ""
-    };
-    this.props.currentUser(user);
+
 
     history.push("/wallet/assets");
   };
 
   render() {
-    const { auth } = this.props.user;
+    const auth = this.props.session === IN_SESSION;
     return (
       <Container>
         <Brand to={auth === true ? "/wallet/assets" : "/"}>
@@ -41,10 +34,9 @@ class Navigation extends Component {
 }
 
 export const mapStateToProps = state => ({
-  user: state.user
+  session: state.walletSession.state
 });
 
 export default connect(
   mapStateToProps,
-  { authUser, currentUser }
 )(Navigation);

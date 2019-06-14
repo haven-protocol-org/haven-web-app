@@ -9,6 +9,7 @@ import history from "./history.js";
 import Navigation from "./components/_layout/navigation/index.js";
 import PrivateRoutes from "./routes/private/index.js";
 import PublicRoutes from "./routes/public/index.js";
+import {IN_SESSION} from "./reducers/walletSession";
 
 class App extends Component {
   state = {
@@ -16,14 +17,14 @@ class App extends Component {
   };
 
   render() {
-    const { auth } = this.props.user;
+    const auth  = this.props.session === IN_SESSION;
 
     return (
       <ThemeProvider theme={this.props.theme}>
         <Router history={history}>
           <Navigation />
           <PublicRoutes />
-          {!auth && history.push("/")}
+
           <PrivateRoutes />
         </Router>
       </ThemeProvider>
@@ -33,7 +34,7 @@ class App extends Component {
 
 export const mapStateToProps = state => ({
   theme: state.theme,
-  user: state.user
+  session: state.walletSession.state
 });
 
 export default connect(mapStateToProps)(App);

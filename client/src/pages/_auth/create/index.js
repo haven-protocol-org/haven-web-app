@@ -2,7 +2,6 @@
 
 import React, { Component } from "react";
 import history from "../../../history.js";
-import { authUser, currentUser } from "../../../actions";
 import { connect } from "react-redux";
 
 // Relative Imports
@@ -15,7 +14,7 @@ import { Container } from "./styles";
 const seed =
   "whip cactus theme clever relief category crucial decorate ghost veteran owner exile essay turkey spawn transfer potato island add forward script donor marriage choose";
 
-class Create extends Component {
+export default class Create extends Component {
   state = {
     auth: false,
     step: 1,
@@ -29,7 +28,6 @@ class Create extends Component {
     // Doing it here makes it seem faster to the user as it's preloaded
     this.setState({
       seed: seed,
-      auth: this.props.auth
     });
   }
 
@@ -42,15 +40,15 @@ class Create extends Component {
     if (step < 3) {
       this.setState({ step: step + 1 });
     }
-    // On step three, if seed is invalid display error messsage for 2s
+    // On step three, if seed_testnet.txt is invalid display error messsage for 2s
     else if (stepThree && !valid) {
-      this.setState({ error: "Sorry, that seed is incorrect" });
+      this.setState({ error: "Sorry, that seed_testnet.txt is incorrect" });
 
       setTimeout(() => {
         this.setState({ error: "" });
       }, 2000);
     }
-    // On step three, if seed is valid, set loading to true and push true to authUser reducer
+    // On step three, if seed_testnet.txt is valid, set loading to true and push true to authUser reducer
     else if (stepThree && valid) {
       // const auth = true;
 
@@ -69,8 +67,7 @@ class Create extends Component {
           viewKey:
             "dcbce83bf1ac67579757b080a9bc096e487e2a039086b1e2caeffca9ae1a3862"
         };
-        // this.props.authUser(auth);
-        this.props.currentUser(user);
+
         history.push("/wallet/assets");
       }, 2500);
     } else {
@@ -138,11 +135,4 @@ class Create extends Component {
   }
 }
 
-export const mapStateToProps = state => ({
-  auth: state.auth
-});
 
-export default connect(
-  mapStateToProps,
-  { authUser, currentUser }
-)(Create);
