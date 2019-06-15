@@ -25,6 +25,22 @@ export function getBalanceRPC(params, sessionID) {
 }
 
 
+export function queryViewKeyRPC(sessionID) {
+
+    return callRpc('query_key', {key_type: "view_key"}, sessionID);
+
+}
+
+export function queryMnemonicKeyRPC(sessionID) {
+
+    return callRpc('query_key', {key_type: "mnemonic"}, sessionID);
+}
+
+export function transferRPC(params, sessionID) {
+
+    return callRpc('transfer', params, sessionID);
+}
+
 function callRpc(method, params, sessionID = null) {
 
 

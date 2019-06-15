@@ -5,7 +5,9 @@ import {
 } from "../actions/types";
 
 
-const INITIAL_STATE = {balance:-1, unlockedBalance: -1, perSubaddress: [], isFetching: false};
+export const NO_BALANCE = -1;
+
+const INITIAL_STATE = {balance: NO_BALANCE, unlockedBalance: NO_BALANCE, perSubaddress: [], isFetching: false};
 
 export default function(state = INITIAL_STATE, action) {
     switch (action.type) {

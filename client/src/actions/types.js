@@ -26,3 +26,29 @@ export const GET_BALANCES_FAILED = "get_balances_failed";
 
 export const CREATE_WALLET = "create_wallet";
 export const CLOSE_WALLET = "close_wallet";
+
+
+
+/*
+ QUERY KEYS
+ */
+
+
+export const QUERY_PRIVATE_VIEW_KEY_FETCHING = 'query_private_view_key_fetching';
+export const QUERY_PRIVATE_VIEW_KEY_FAILED = 'query_private_view_key_failed';
+export const QUERY_PRIVATE_VIEW_KEY_SUCCEED = 'query_private_view_key_succeed';
+
+export const QUERY_MNEMONIC_FETCHING = 'query_mnemonic_fetching';
+export const QUERY_MNEMONIC_FAILED = 'query_mneomic_failed';
+export const QUERY_MNEMONIC_SUCCEED = 'query_mneomic_succeed';
+
+
+/*
+TRANSFER
+ */
+
+export const TRANSFER_FETCHING = 'transfer_fetching';
+export const TRANSFER_FAILED = 'transfer_failed';
+export const TRANSFER_SUCCEED = 'transfer_succeed';
+
+

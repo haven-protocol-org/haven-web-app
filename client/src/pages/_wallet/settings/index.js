@@ -2,6 +2,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { selectTheme } from "../../../actions";
+import { queryKeys } from "../../../actions";
 
 // Relative Imports
 import Page from "../../../components/_layout/page";
@@ -14,6 +15,7 @@ import Form from "../../../components/_inputs/form";
 import Theme from "../../../components/_inputs/theme";
 
 import { dark, light } from "../../../constants/themes.js";
+import {NO_KEY} from "../../../reducers/keys";
 
 const options = [
   { theme: "dark", value: "Dark Theme" },
@@ -32,6 +34,12 @@ class Settings extends Component {
     this.setState({
       value: this.props.theme.value
     });
+
+
+    if (this.props.privateViewKey.key === NO_KEY) {
+      this.props.queryKeys();
+    }
+
   }
 
   handleClick = ({ theme, value }) => {
@@ -58,8 +66,11 @@ class Settings extends Component {
 
   render() {
     const { status, value, type, reveal } = this.state;
-    const { seedPhrase, privateKey, spendKey, viewKey } = this.props.user;
+    const  privateKey = "private key";
+    const  spendKey = "spend key";
     return (
+
+
       <Page>
         <Menu />
         <Body>
@@ -81,7 +92,7 @@ class Settings extends Component {
               label="Seed Phrase"
               placeholder="Select Asset"
               width="true"
-              value={seedPhrase}
+              value={this.props.mnemonicKey.key}
               readOnly
               type={type}
               reveal={reveal}
@@ -110,7 +121,7 @@ class Settings extends Component {
               label="View Key"
               placeholder="Select Asset"
               width="true"
-              value={viewKey}
+              value={this.props.privateViewKey.key}
               readOnly
               reveal={reveal}
               type={type}
@@ -125,10 +136,11 @@ class Settings extends Component {
 
 export const mapStateToProps = state => ({
   theme: state.theme,
-  user: state.user
+  ...state.keys
+
 });
 
 export default connect(
   mapStateToProps,
-  { selectTheme }
+  { selectTheme, queryKeys }
 )(Settings);

@@ -5,6 +5,7 @@ import React, { Component } from "react";
 import { Container, Overview, Item, Value, Wrapper, Amount } from "./styles";
 import {connect} from "react-redux";
 import {getBalances} from "../../../actions";
+import {NO_BALANCE} from "../../../reducers/balance";
 
 
 class Menu extends Component {
@@ -12,8 +13,10 @@ class Menu extends Component {
 
   componentDidMount() {
 
-      this.props.getBalances();
+      if (this.props.balance === NO_BALANCE) {
 
+          this.props.getBalances();
+      }
   }
 
 
@@ -25,7 +28,7 @@ class Menu extends Component {
       <Container>
         <Overview>
           <Wrapper>
-            <Amount>{this.props.balance}</Amount>
+            <Amount>{this.props.balance === NO_BALANCE ? 0.00 : this.props.balance}</Amount>
             <Value>Total Balance (XHV)</Value>
           </Wrapper>
         </Overview>
