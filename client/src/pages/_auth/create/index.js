@@ -10,11 +10,13 @@ import Placeholder from "../../../components/_create/placeholder";
 import CreateSeed from "../../../components/_create/create_seed";
 import VerifySeed from "../../../components/_create/verify_seed";
 import { Container } from "./styles";
+import {createWallet, restoreWallet} from "../../../actions";
+import walletCreation from "../../../reducers/walletCreation";
 
 const seed =
   "whip cactus theme clever relief category crucial decorate ghost veteran owner exile essay turkey spawn transfer potato island add forward script donor marriage choose";
 
-export default class Create extends Component {
+class Create extends Component {
   state = {
     auth: false,
     step: 1,
@@ -24,11 +26,10 @@ export default class Create extends Component {
   };
 
   componentDidMount() {
-    // When component loads go fetch the Seed Phrase. Then setState with the response
-    // Doing it here makes it seem faster to the user as it's preloaded
-    this.setState({
-      seed: seed,
-    });
+
+    this.props.getSeed();
+
+
   }
 
   nextStep = () => {
@@ -42,7 +43,7 @@ export default class Create extends Component {
     }
     // On step three, if seed_testnet.txt is invalid display error messsage for 2s
     else if (stepThree && !valid) {
-      this.setState({ error: "Sorry, that seed_testnet.txt is incorrect" });
+      this.setState({ error: "Sorry, that seed is incorrect" });
 
       setTimeout(() => {
         this.setState({ error: "" });
@@ -56,7 +57,7 @@ export default class Create extends Component {
         loading: true
       });
       setTimeout(() => {
-        const user = {
+   /*     const user = {
           auth: true,
           seedPhrase:
             "5b9b3c29734c60540d551eab0e7daa9b24cdf4be845f6cb8b457fc047deffe6a",
@@ -66,7 +67,7 @@ export default class Create extends Component {
             "8ac0f2094ed292a5ca0bd65055475b182e33e09b4017d67b2a817f88a831b52e",
           viewKey:
             "dcbce83bf1ac67579757b080a9bc096e487e2a039086b1e2caeffca9ae1a3862"
-        };
+        };*/
 
         history.push("/wallet/assets");
       }, 2500);
@@ -96,7 +97,7 @@ export default class Create extends Component {
       case 1:
         return <Placeholder />;
       case 2:
-        return <CreateSeed value={seed} readOnly={true} />;
+        return <CreateSeed value={this.props.wallet.seed} readOnly={true} />;
       case 3:
         return (
           <VerifySeed
@@ -134,5 +135,15 @@ export default class Create extends Component {
     );
   }
 }
+
+export const mapStateToProps = state => ({
+    wallet: state.walletCreation
+});
+
+export default connect(
+    mapStateToProps,
+    { getSeed: createWallet }
+)(Create);
+
 
 

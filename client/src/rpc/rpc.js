@@ -10,6 +10,17 @@ const INIT_REQUEST = {
     redirect: "follow",
     referrer: "no-referrer",
 
+};
+
+
+let sessionID;
+
+
+
+function parseSessionID(result) {
+
+    sessionID = result.sessionid;
+    return result;
 }
 
 
@@ -17,31 +28,40 @@ const INIT_REQUEST = {
 export function restoreWalletRPC(params) {
 
     return callRpc('restore_deterministic_wallet', params)
+        .then(parseSessionID);
 }
 
 
-export function getBalanceRPC(params, sessionID) {
-    return callRpc('get_balance', params, sessionID)
+export function getBalanceRPC(params) {
+    return callRpc('get_balance', params)
 }
 
 
-export function queryViewKeyRPC(sessionID) {
+export function queryViewKeyRPC() {
 
-    return callRpc('query_key', {key_type: "view_key"}, sessionID);
+    return callRpc('query_key', {key_type: "view_key"});
 
 }
 
-export function queryMnemonicKeyRPC(sessionID) {
+export function queryMnemonicKeyRPC() {
 
-    return callRpc('query_key', {key_type: "mnemonic"}, sessionID);
+    return callRpc('query_key', {key_type: "mnemonic"});
 }
 
-export function transferRPC(params, sessionID) {
+export function transferRPC(params) {
 
-    return callRpc('transfer', params, sessionID);
+    return callRpc('transfer', params);
 }
 
-function callRpc(method, params, sessionID = null) {
+export function createWalletRPC() {
+
+    return callRpc('create_wallet')
+        .then(parseSessionID)
+
+
+}
+
+function callRpc(method, params) {
 
 
     const objRequest = {

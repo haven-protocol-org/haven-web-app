@@ -24,7 +24,10 @@ export const GET_BALANCES_FAILED = "get_balances_failed";
 
 
 
-export const CREATE_WALLET = "create_wallet";
+export const CREATE_WALLET_FETCHING = "create_wallet_fetching";
+export const CREATE_WALLET_SUCCEED = "create_wallet_succeed";
+export const CREATE_WALLET_FAILED = "create_wallet_failed";
+
 export const CLOSE_WALLET = "close_wallet";
 
 

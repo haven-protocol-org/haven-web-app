@@ -10,7 +10,7 @@ import { Container } from "./styles";
 import Auth from "../../../components/_auth/login";
 import Description from "../../../components/_inputs/description";
 import { Information } from "../../../constants/type.js";
-import {IN_SESSION} from "../../../reducers/walletSession";
+import {IN_SESSION} from "../../../reducers/appState";
 import { restoreWallet } from "../../../actions";
 
 
@@ -83,7 +83,7 @@ class Login extends Component {
 }
 
 export const mapStateToProps = state => ({
-  session: state.walletSession.state
+  session: state.appState.session
 });
 
 export default connect(

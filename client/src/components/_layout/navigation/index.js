@@ -6,7 +6,7 @@ import history from "../../../history.js";
 // Relative Imports
 import { Container, Haven, Logo, Brand, Button, Logout } from "./styles.js";
 import Icon from "../../../assets/haven.svg";
-import {IN_SESSION} from "../../../reducers/walletSession";
+import {IN_SESSION} from "../../../reducers/appState";
 
 class Navigation extends Component {
   handleLogout = () => {
@@ -34,7 +34,7 @@ class Navigation extends Component {
 }
 
 export const mapStateToProps = state => ({
-  session: state.walletSession.state
+  session: state.appState.session
 });
 
 export default connect(

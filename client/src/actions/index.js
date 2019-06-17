@@ -1,5 +1,7 @@
 import { THEME, AUTH, USER } from "./types.js";
 import {
+  CREATE_WALLET_FAILED,
+  CREATE_WALLET_FETCHING, CREATE_WALLET_SUCCEED,
   GET_BALANCES_FAILED,
   GET_BALANCES_FETCHING,
   GET_BALANCES_SUCCEED,
@@ -12,7 +14,14 @@ import {
 } from "./types";
 
 
-import {getBalanceRPC, queryMnemonicKeyRPC, queryViewKeyRPC, restoreWalletRPC, transferRPC} from "../rpc/rpc";
+import {
+  createWalletRPC,
+  getBalanceRPC,
+  queryMnemonicKeyRPC,
+  queryViewKeyRPC,
+  restoreWalletRPC,
+  transferRPC
+} from "../rpc/rpc";
 
 export const selectTheme = theme => ({
   type: THEME,
@@ -49,9 +58,8 @@ export const getBalances = () => {
     dispatch(getBalancesFetching());
 
     const account_index = 0;
-    const sessionID = getState().walletSession.id;
 
-    getBalanceRPC({account_index}, sessionID)
+    getBalanceRPC({account_index})
         .then(result => dispatch(getBalancesSucceed(result)))
         .catch(error => dispatch(getBalancesFailed(error)))
   }
@@ -68,13 +76,12 @@ export const queryKeys = () => {
 
       dispatch(queryPrivateKey());
       dispatch(queryMnemonic());
-      const sessionID = getState().walletSession.id;
 
-      queryMnemonicKeyRPC(sessionID)
+      queryMnemonicKeyRPC()
           .then(result => dispatch(queryMnemonicSucceed(result.key)))
           .catch(error => dispatch(queryMnemonicFailed(error)));
 
-    queryViewKeyRPC(sessionID)
+    queryViewKeyRPC()
           .then(result => dispatch(queryPrivateKeySucceed(result.key)))
           .catch(error => dispatch(queryPrivateKeyFailed(error)));
 
@@ -100,10 +107,9 @@ export const transfer = (address, amount) => {
   return (dispatch, getState) => {
 
     dispatch(transferFetch({address, amount}));
-    const sessionID = getState().walletSession.id;
     const params = {destinations: [{address, amount}], ring_size:12};
 
-    transferRPC(params, sessionID)
+    transferRPC(params)
         .then(result => dispatch(transferSucceed(result)))
         .catch(error => dispatch(transferFailed(error)));
   }
@@ -114,6 +120,28 @@ export const transfer = (address, amount) => {
 const transferFetch = (params) => ({type: TRANSFER_FETCHING, payload: {...params, isFetching: true}});
 const transferSucceed = (result) => ({type: TRANSFER_SUCCEED, payload: {...result, isFetching: false}});
 const transferFailed = (error) => ({type: TRANSFER_FAILED, payload: {...error, isFetching: false}});
+
+
+export const createWallet = (seed) => {
+
+    return (dispatch) => {
+
+      dispatch(createWalletFetch());
+
+      createWalletRPC()
+          .then(result => dispatch(createWalletSucceed(result)))
+          .catch(error => dispatch(createWalletFailed(error)))
+
+
+    }
+};
+
+
+const createWalletFetch = () => ({type: CREATE_WALLET_FETCHING});
+const createWalletSucceed = (result) => ({type: CREATE_WALLET_SUCCEED, payload: result});
+const createWalletFailed = (error) => ({type: CREATE_WALLET_FAILED, payload: error});
+
+
 
 
 
