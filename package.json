@@ -7,6 +7,7 @@
     "dev": "HTTPS=true DANGEROUSLY_DISABLE_HOST_CHECK=true concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
   },
   "dependencies": {
+    "@sentry/node": "^5.4.0",
     "body-parser": "^1.19.0",
     "concurrent-queue": "^7.0.2",
     "cors": "^2.8.5",
