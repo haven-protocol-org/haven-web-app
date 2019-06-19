@@ -1,0 +1,17 @@
+FROM node:latest
+
+#Setting working Directory
+WORKDIR /usr/src/app
+
+
+#Copying sources on working directory
+COPY . .
+
+#Expose Node port
+EXPOSE 3000
+
+#Build from source
+RUN npm install
+
+#Start npm
+CMD [ "npm", "start" ]

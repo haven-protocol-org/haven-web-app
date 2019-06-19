@@ -1,0 +1,25 @@
+version: "3.7"
+services:
+  wallet-back:
+    build:
+      context: ./
+      dockerfile: resources/Dockerfile-back
+    environment:
+      NETWORK: ${BACK_NETWORK}
+      PORT: ${BACK_PORT}
+      SENTRY_DSN: ${BACK_SENTRY_DSN}
+      WALLET_RPC_HOST: ${BACK_WALLET_RPC_HOST}
+      WALLET_RPC_PORT: ${BACK_WALLET_RPC_PORT}
+    ports:
+      - ${BACK_HOST_PORT}:${BACK_PORT}
+  wallet-front:
+    depends_on:
+      - wallet-back
+    build:
+      context: ./
+      dockerfile: resources/Dockerfile-front
+    environment:
+      REACT_APP_RPC_URL: ${BACK_RPC_URL}:${BACK_HOST_PORT}/rpc
+      REACT_APP_SENTRY_DSN: ${FRONT_SENTRY_DSN}
+    ports: 
+      - ${FRONT_HOST_PORT}:${FRONT_PORT}
