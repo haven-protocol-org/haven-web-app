@@ -23,12 +23,13 @@ class Menu extends Component {
 
   render() {
 
+      const viewBalance = this.props.balance === NO_BALANCE ? '...loading balance' : this.props.balance / Math.pow(10,12);
 
     return (
       <Container>
         <Overview>
           <Wrapper>
-            <Amount>{this.props.balance === NO_BALANCE ? 0.00 : this.props.balance}</Amount>
+            <Amount>{viewBalance}</Amount>
             <Value>Total Balance (XHV)</Value>
           </Wrapper>
         </Overview>

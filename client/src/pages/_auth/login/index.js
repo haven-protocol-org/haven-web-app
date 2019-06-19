@@ -66,7 +66,7 @@ class Login extends Component {
         >
           <Description
             label="Seed Phrase"
-            placeholder="Enter your 24 word seed phrase..."
+            placeholder="Enter your 25 word seed phrase..."
             name="seed_phrase"
             value={seed_phrase}
             error={error}

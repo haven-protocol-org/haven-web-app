@@ -100,15 +100,6 @@ class Settings extends Component {
               onClick={this.toggleVisibility}
             />
             <Toggle
-              label="Private Key"
-              placeholder="Enter amount"
-              width="true"
-              value={privateKey}
-              readOnly
-              reveal={reveal}
-              type={type}
-            />
-            <Toggle
               label="Spend Key"
               placeholder="Select Asset"
               width="true"
