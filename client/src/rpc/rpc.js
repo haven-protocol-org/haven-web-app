@@ -64,7 +64,7 @@ export function createWalletRPC() {
 function callRpc(method, params) {
 
 
-    const rpcUrl = process.env.REACT_APP_RPC_URL || "https://nelliekins.zapto.org:5000/rpc";
+    const rpcUrl = process.env.REACT_APP_RPC_URL;
     const objRequest = {
         id:0,
         jsonrpc:"2.0",
