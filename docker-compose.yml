@@ -1,25 +1,46 @@
 version: "3.7"
 services:
-  wallet-back:
+  back:
     build:
       context: ./
       dockerfile: resources/Dockerfile-back
     environment:
       NETWORK: ${BACK_NETWORK}
       PORT: ${BACK_PORT}
-      SENTRY_DSN: ${BACK_SENTRY_DSN}
-      WALLET_RPC_HOST: ${BACK_WALLET_RPC_HOST}
-      WALLET_RPC_PORT: ${BACK_WALLET_RPC_PORT}
+      BACK_SENTRY_DSN: ${BACK_SENTRY_DSN}
+      BACK_WALLET_RPC_HOST: ${BACK_WALLET_RPC_HOST}
+      BACK_WALLET_RPC_PORT: ${BACK_WALLET_RPC_PORT}
     ports:
       - ${BACK_HOST_PORT}:${BACK_PORT}
-  wallet-front:
     depends_on:
-      - wallet-back
+      - havend
+  front:
+    depends_on:
+      - back
     build:
       context: ./
       dockerfile: resources/Dockerfile-front
     environment:
       REACT_APP_RPC_URL: ${BACK_RPC_URL}:${BACK_HOST_PORT}/rpc
-      REACT_APP_SENTRY_DSN: ${FRONT_SENTRY_DSN}
+      REACT_APP_SENTRY_DSN: ${REACT_APP_SENTRY_DSN}
     ports: 
       - ${FRONT_HOST_PORT}:${FRONT_PORT}
+  havend:
+    build:
+      context: ./
+      dockerfile: resources/Dockerfile-havend
+    volumes:
+      - ${DAEMON_BC_PATH}:/root/.haven
+    command: havend --p2p-bind-ip=0.0.0.0 --testnet --p2p-bind-port=17749 --rpc-bind-ip=0.0.0.0 --rpc-bind-port=17750 --non-interactive --confirm-external-bind
+    environment:
+      NETWORK: ${BACK_NETWORK}
+      DAEMON_PATH: ${DAEMON_BC_PATH}
+  rpc:
+    build:
+      context: ./
+      dockerfile: resources/Dockerfile-havend
+    depends_on:
+      - havend
+    volumes:
+      - ${RPC_WALLET_DIR}:/wallet
+    command: haven-wallet-rpc --testnet --daemon-address havend:17750 --wallet-dir /wallet --rpc-bind-ip 0.0.0.0 --rpc-bind-port 12345 --confirm-external-bind --disable-rpc-login  --prompt-for-password --log-level 4

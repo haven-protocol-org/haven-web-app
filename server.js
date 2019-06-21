@@ -13,7 +13,7 @@ const rpc = new HavenRPCProvider();
 
 //Sentry
 const Sentry = require('@sentry/node');
-const sentryDsn = process.env.SENTRY_DSN;
+const sentryDsn = process.env.BACK_SENTRY_DSN;
 Sentry.init({ dsn: sentryDsn });
 
 // Create a new instance of express

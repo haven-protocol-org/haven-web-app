@@ -1,0 +1,12 @@
+FROM ubuntu:18.04
+
+
+RUN apt-get update \
+ && apt-get install wget unzip libunbound-dev libhidapi-libusb0 libzmq3-dev libboost-thread-dev libboost-serialization-dev libboost-dev libboost-regex-dev libboost-chrono-dev libboost-filesystem-dev libboost-program-options-dev -y
+
+WORKDIR /usr/local/bin
+
+RUN wget https://github.com/haven-protocol-org/haven/releases/download/v0.14.0-release/haven-ubuntu-v0.14.0-cli.zip \
+ && unzip haven-ubuntu-v0.14.0-cli.zip \
+ && rm haven-ubuntu-v0.14.0-cli.zip
+
