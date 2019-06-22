@@ -1,5 +1,6 @@
 import { THEME, AUTH, USER } from "./types.js";
 import {
+  CLOSE_WALLET,
   CREATE_WALLET_FAILED,
   CREATE_WALLET_FETCHING, CREATE_WALLET_SUCCEED,
   GET_BALANCES_FAILED,
@@ -140,6 +141,9 @@ export const createWallet = (seed) => {
 const createWalletFetch = () => ({type: CREATE_WALLET_FETCHING});
 const createWalletSucceed = (result) => ({type: CREATE_WALLET_SUCCEED, payload: result});
 const createWalletFailed = (error) => ({type: CREATE_WALLET_FAILED, payload: error});
+
+
+export const closeWallet = () => ({type: CLOSE_WALLET});
 
 
 
