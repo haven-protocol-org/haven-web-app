@@ -1,5 +1,8 @@
 // Library Imports
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { getBalances } from "../../../actions";
+import { NO_BALANCE } from "../../../reducers/balance";
 
 // Relative Imports
 import Page from "../../../components/_layout/page";
@@ -45,6 +48,10 @@ class Assets extends Component {
 
   render() {
     const { status } = this.state;
+    const viewBalance =
+      this.props.balance === NO_BALANCE
+        ? "loading..."
+        : this.props.balance / Math.pow(10, 12);
     return (
       <Page>
         <Menu />
@@ -53,7 +60,7 @@ class Assets extends Component {
             title="Assets"
             description="Overview of all available Haven Assets"
           />
-          <Overview amount="1,234.56" />
+          <Overview amount={viewBalance} />
           {this.renderTokens()}
         </Body>
         {status && <Status>Pending transaction</Status>}
@@ -62,4 +69,11 @@ class Assets extends Component {
   }
 }
 
-export default Assets;
+export const mapStateToProps = state => ({
+  ...state.balance
+});
+
+export default connect(
+  mapStateToProps,
+  { getBalances }
+)(Assets);

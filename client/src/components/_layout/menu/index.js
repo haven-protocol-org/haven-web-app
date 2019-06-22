@@ -3,27 +3,22 @@ import React, { Component } from "react";
 
 // Relative Imports
 import { Container, Overview, Item, Value, Wrapper, Amount } from "./styles";
-import {connect} from "react-redux";
-import {getBalances} from "../../../actions";
-import {NO_BALANCE} from "../../../reducers/balance";
-
+import { connect } from "react-redux";
+import { getBalances } from "../../../actions";
+import { NO_BALANCE } from "../../../reducers/balance";
 
 class Menu extends Component {
-
-
   componentDidMount() {
-
-      if (this.props.balance === NO_BALANCE) {
-
-          this.props.getBalances();
-      }
+    if (this.props.balance === NO_BALANCE) {
+      this.props.getBalances();
+    }
   }
 
-
-
   render() {
-
-      const viewBalance = this.props.balance === NO_BALANCE ? '...loading balance' : this.props.balance / Math.pow(10,12);
+    const viewBalance =
+      this.props.balance === NO_BALANCE
+        ? "loading..."
+        : this.props.balance / Math.pow(10, 12);
 
     return (
       <Container>
@@ -44,10 +39,10 @@ class Menu extends Component {
 }
 
 export const mapStateToProps = state => ({
-    ...state.balance
+  ...state.balance
 });
 
 export default connect(
-    mapStateToProps,
-    { getBalances }
+  mapStateToProps,
+  { getBalances }
 )(Menu);
