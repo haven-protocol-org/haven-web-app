@@ -1,5 +1,10 @@
 FROM ubuntu:18.04
 
+ARG NETWORK
+ARG DAEMON_P2P_PORT
+ARG DAEMON_RPC_PORT
+ARG DAEMON_HOST
+ARG BACK_WALLET_RPC_PORT
 
 RUN apt-get update \
  && apt-get install wget unzip libunbound-dev libhidapi-libusb0 libzmq3-dev libboost-thread-dev libboost-serialization-dev libboost-dev libboost-regex-dev libboost-chrono-dev libboost-filesystem-dev libboost-program-options-dev -y
@@ -10,3 +15,13 @@ RUN wget https://github.com/haven-protocol-org/haven/releases/download/v0.14.0-r
  && unzip haven-ubuntu-v0.14.0-cli.zip \
  && rm haven-ubuntu-v0.14.0-cli.zip
 
+RUN if [ "$NETWORK" = "mainnet" ]; then \
+    echo "havend --p2p-bind-ip=0.0.0.0 --p2p-bind-port=${DAEMON_P2P_PORT} --rpc-bind-ip=0.0.0.0 --rpc-bind-port=${DAEMON_RPC_PORT} --non-interactive --confirm-external-bind" > /bootstrap-daemon.sh; \
+    echo "haven-wallet-rpc --daemon-address ${DAEMON_HOST}:${DAEMON_RPC_PORT} --wallet-dir ${RPC_WALLET_DIR} --rpc-bind-ip 0.0.0.0 --rpc-bind-port ${BACK_WALLET_RPC_PORT} --confirm-external-bind --disable-rpc-login  --prompt-for-password" >  /bootstrap-wallet.sh; \
+  else \
+    echo "havend --p2p-bind-ip=0.0.0.0 --testnet --p2p-bind-port=${DAEMON_P2P_PORT} --rpc-bind-ip=0.0.0.0 --rpc-bind-port=${DAEMON_RPC_PORT} --non-interactive --confirm-external-bind" > /bootstrap-daemon.sh; \
+    echo "haven-wallet-rpc --testnet --daemon-address ${DAEMON_HOST}:${DAEMON_RPC_PORT} --wallet-dir /wallet --rpc-bind-ip 0.0.0.0 --rpc-bind-port ${BACK_WALLET_RPC_PORT} --confirm-external-bind --disable-rpc-login  --prompt-for-password --log-level 4" >  /bootstrap-wallet.sh; \
+  fi \
+  && chmod +x /bootstrap-daemon.sh \
+  && chmod +x /bootstrap-wallet.sh
+  

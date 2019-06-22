@@ -1,4 +1,5 @@
 'use strict'
+require('newrelic');
 
 var bodyParser = require('body-parser')
 var cors = require('cors')

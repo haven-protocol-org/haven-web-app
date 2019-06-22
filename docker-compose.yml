@@ -4,6 +4,8 @@ services:
     build:
       context: ./
       dockerfile: resources/Dockerfile-back
+      args:
+        BACK_NR_LICENCE: ${BACK_NR_LICENCE}
     environment:
       NETWORK: ${BACK_NETWORK}
       PORT: ${BACK_PORT}
@@ -13,7 +15,7 @@ services:
     ports:
       - ${BACK_HOST_PORT}:${BACK_PORT}
     depends_on:
-      - havend
+      - rpc
   front:
     depends_on:
       - back
@@ -26,21 +28,29 @@ services:
     ports: 
       - ${FRONT_HOST_PORT}:${FRONT_PORT}
   havend:
+    image: haven-web-wallet_havend
     build:
       context: ./
       dockerfile: resources/Dockerfile-havend
+      args:
+        NETWORK: ${BACK_NETWORK}
+        DAEMON_RPC_PORT: ${DAEMON_RPC_PORT}
+        DAEMON_P2P_PORT: ${DAEMON_P2P_PORT}
+        DAEMON_HOST: ${DAEMON_HOST}
+        RPC_WALLET_DIR: ${RPC_WALLET_DIR}
+        BACK_WALLET_RPC_PORT: ${BACK_WALLET_RPC_PORT}
     volumes:
       - ${DAEMON_BC_PATH}:/root/.haven
-    command: havend --p2p-bind-ip=0.0.0.0 --testnet --p2p-bind-port=17749 --rpc-bind-ip=0.0.0.0 --rpc-bind-port=17750 --non-interactive --confirm-external-bind
-    environment:
-      NETWORK: ${BACK_NETWORK}
-      DAEMON_PATH: ${DAEMON_BC_PATH}
+    command: ["bash", "/bootstrap-daemon.sh"]
+    
   rpc:
-    build:
-      context: ./
-      dockerfile: resources/Dockerfile-havend
+    image: haven-web-wallet_havend
     depends_on:
       - havend
     volumes:
       - ${RPC_WALLET_DIR}:/wallet
-    command: haven-wallet-rpc --testnet --daemon-address havend:17750 --wallet-dir /wallet --rpc-bind-ip 0.0.0.0 --rpc-bind-port 12345 --confirm-external-bind --disable-rpc-login  --prompt-for-password --log-level 4
+    environment:
+      NETWORK: ${BACK_NETWORK}
+    ports:
+      - ${BACK_WALLET_RPC_PORT}:${BACK_WALLET_RPC_PORT}
+    command: ["bash", "/bootstrap-wallet.sh"]

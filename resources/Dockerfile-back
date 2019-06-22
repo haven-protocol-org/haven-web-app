@@ -1,5 +1,7 @@
 FROM node:latest
 
+ARG BACK_NR_LICENCE
+
 #Update NPM
 RUN npm install -g npm@latest
 
@@ -20,6 +22,9 @@ RUN KEY_FILE=keys/server_key.pem \
 
 #Copying sources on working directory
 COPY . .
+
+#Activate NR Licence
+RUN sed -i -e "s/license key here/$BACK_NR_LICENCE/g" newrelic.js
 
 #Expose Node port
 EXPOSE 5000
