@@ -46,27 +46,6 @@ class Exchange extends Component {
     this.setState({
       [name]: value
     });
-
-    /*
-    const sendAmount =
-    const sendRate =
-    const recieveAmount =
-    const recieveRate =
-
-    if (sending) {
-    const exchangeAmount - sendAmount * recieveRate
-    this.setState({
-      sendAmount: sendAmount,
-      exchangeAmount: exchangeAmount
-    });
-  } else if (receiving)
-    const exchangeAmount = recieveAmount / sendRate
-    this.setState({
-      sendAmount: sendAmount,
-      exchangeAmount: exchangeAmount
-    });
-  };
-  */
   };
 
   setFromAsset = option => {
