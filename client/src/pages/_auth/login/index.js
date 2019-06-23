@@ -1,21 +1,15 @@
 // Library Imports
 import React, { Component } from "react";
-import history from "../../../history.js";
 import { connect } from "react-redux";
-import { Redirect } from 'react-router-dom';
-
+import { Redirect } from "react-router-dom";
 
 // Relative Imports
 import { Container } from "./styles";
 import Auth from "../../../components/_auth/login";
 import Description from "../../../components/_inputs/description";
 import { Information } from "../../../constants/type.js";
-import {IN_SESSION} from "../../../reducers/appState";
+import { IN_SESSION } from "../../../reducers/appState";
 import { restoreWallet } from "../../../actions";
-
-
-// const seed_testnet.txt =
-//   "whip cactus theme clever relief category crucial decorate ghost veteran owner exile essay turkey spawn transfer potato island add forward script donor marriage choose";
 
 class Login extends Component {
   state = {
@@ -41,11 +35,9 @@ class Login extends Component {
   };
 
   render() {
-
     if (this.props.session === IN_SESSION) {
-      return <Redirect to='/wallet/assets'/>
+      return <Redirect to="/wallet/assets" />;
     }
-
 
     const { seed_phrase, error, loading } = this.state;
 
@@ -70,7 +62,7 @@ class Login extends Component {
             name="seed_phrase"
             value={seed_phrase}
             error={error}
-            onChange={(event) => this.handleChange(event)}
+            onChange={event => this.handleChange(event)}
           />
           <Information>
             Before entering your Seed Phrase please ensure you're not on a
