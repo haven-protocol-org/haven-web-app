@@ -12,7 +12,7 @@ import Input from "../../../components/_inputs/input";
 import Form from "../../../components/_inputs/form";
 import Footer from "../../../components/_inputs/footer";
 import Dropdown from "../../../components/_inputs/dropdown";
-import Transaction from "../../../components/_transactions/summary";
+import Transaction from "../../../components/_transactions/exchange";
 
 import { Container } from "./styles";
 
