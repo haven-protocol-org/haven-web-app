@@ -12,6 +12,7 @@ import Input from "../../../components/_inputs/input";
 import Form from "../../../components/_inputs/form";
 import Dropdown from "../../../components/_inputs/dropdown";
 import Footer from "../../../components/_inputs/footer";
+import Transaction from "../../../components/_transactions/transfer";
 
 import { Container } from "./styles";
 import { connect } from "react-redux";
@@ -73,7 +74,10 @@ class Transfer extends Component {
       <Page>
         <Menu />
         <Body>
-          <Header title="Transfer" description="Lorem impsum" />
+          <Header
+            title="Transfer"
+            description="Send or receive assets to and from your Haven Vault"
+          />
           <Form>
             <Dropdown
               label="Send Asset"
@@ -102,6 +106,7 @@ class Transfer extends Component {
             />
           </Form>
           <Container>
+            <Transaction state={this.state} />
             <Footer
               onClick={this.handleSubmit}
               loading={loading}

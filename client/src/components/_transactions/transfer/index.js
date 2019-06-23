@@ -5,34 +5,29 @@ import React from "react";
 import { Container, Header, Row, Key, Value } from "./styles";
 
 const Transaction = ({ state }) => {
-  const {
-    from_asset,
-    from_price,
-    from_ticker,
-    to_price,
-    to_ticker,
-    to_asset
-  } = state;
+  const { send_asset, send_ticker, send_amount, recipient_address } = state;
 
   return (
     <Container>
       <Header>
-        <Value>Transfer Transaction Details</Value>
+        <Value>Transaction Details</Value>
         <Value />
       </Header>
       <Row>
-        <Key>
-          {from_ticker === "" ? "From Asset" : `${from_asset}: ${from_ticker}`}{" "}
-        </Key>
-        <Value>{from_price === "" ? "--" : `${"$"}${from_price}`}</Value>
+        <Key>Transfer Asset</Key>
+        <Value>{send_asset !== "Select Asset" ? `${send_ticker}` : ""}</Value>
       </Row>
       <Row>
-        <Key>{to_ticker === "" ? "To Asset" : `${to_asset}: ${to_ticker}`}</Key>
-        <Value>{to_price === "" ? "--" : `${"$"}${to_price}`} </Value>
+        <Key>{send_amount === "" ? "Transfer Amount" : "Send Amount"}</Key>
+        <Value>{send_amount}</Value>
+      </Row>
+      <Row>
+        <Key>Recipient Address</Key>
+        <Value>{recipient_address}</Value>
       </Row>
 
       <Row>
-        <Key>Exchange Fee</Key>
+        <Key>Transaction Fee</Key>
         <Value>0.0203 XHV</Value>
       </Row>
     </Container>
