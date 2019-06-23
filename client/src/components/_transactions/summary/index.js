@@ -2,9 +2,9 @@
 import React from "react";
 
 // Relative Imports
-import { Container, Row, Key, Value, Divider } from "./styles";
+import { Container, Header, Row, Key, Value } from "./styles";
 
-const Summary = ({ state }) => {
+const Transaction = ({ state }) => {
   const {
     from_asset,
     from_price,
@@ -16,11 +16,10 @@ const Summary = ({ state }) => {
 
   return (
     <Container>
-      <Row>
-        <Value>Exchange Rate</Value>
+      <Header>
+        <Value>Exchange Transaction Details</Value>
         <Value />
-      </Row>
-      <Divider />
+      </Header>
       <Row>
         <Key>
           {from_ticker === "" ? "From Asset" : `${from_asset}: ${from_ticker}`}{" "}
@@ -31,7 +30,7 @@ const Summary = ({ state }) => {
         <Key>{to_ticker === "" ? "To Asset" : `${to_asset}: ${to_ticker}`}</Key>
         <Value>{to_price === "" ? "--" : `${"$"}${to_price}`} </Value>
       </Row>
-      <Divider clear="clear" />
+
       <Row>
         <Key>Exchange Fee</Key>
         <Value>0.0203 XHV</Value>
@@ -40,4 +39,4 @@ const Summary = ({ state }) => {
   );
 };
 
-export default Summary;
+export default Transaction;

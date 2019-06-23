@@ -12,7 +12,7 @@ import Input from "../../../components/_inputs/input";
 import Form from "../../../components/_inputs/form";
 import Footer from "../../../components/_inputs/footer";
 import Dropdown from "../../../components/_inputs/dropdown";
-import Summary from "../../../components/summary";
+import Transaction from "../../../components/_transactions/summary";
 
 import { Container } from "./styles";
 
@@ -131,7 +131,7 @@ class Exchange extends Component {
             />
           </Form>
           <Container>
-            <Summary state={this.state} />
+            <Transaction state={this.state} />
             <Footer
               onClick={this.handleSubmit}
               label="Exchange"
