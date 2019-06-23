@@ -17,7 +17,7 @@ const Transaction = ({ state }) => {
   return (
     <Container>
       <Header>
-        <Value>Exchange Transaction Details</Value>
+        <Value>Transfer Transaction Details</Value>
         <Value />
       </Header>
       <Row>
