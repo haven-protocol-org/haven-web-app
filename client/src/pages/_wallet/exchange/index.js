@@ -92,7 +92,7 @@ class Exchange extends Component {
         <Body>
           <Header
             title="Exchange "
-            description="Swap your Haven tokens for stable assets"
+            description="Swap to and from various Haven Assets"
           />
           <Form onSubmit={this.handleSubmit}>
             <Dropdown
