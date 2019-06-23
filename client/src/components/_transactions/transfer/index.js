@@ -16,7 +16,9 @@ const Transaction = ({ state }) => {
       <Row>
         <Key>Transfer Asset</Key>
         <Value>
-          {send_amount > 0 ? `${send_amount} ${send_ticker}` : "--"}
+          {send_amount > 0 && send_ticker !== ""
+            ? `${send_amount} ${send_ticker}`
+            : "--"}
         </Value>
       </Row>
       <Row>
