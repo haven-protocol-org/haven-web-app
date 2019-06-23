@@ -14,8 +14,8 @@ import Dropdown from "../../../components/_inputs/dropdown";
 import Footer from "../../../components/_inputs/footer";
 
 import { Container } from "./styles";
-import {connect} from "react-redux";
-import {transfer} from "../../../actions";
+import { connect } from "react-redux";
+import { transfer } from "../../../actions";
 
 const options = [
   { asset: "Haven Token", ticker: "XHV" },
@@ -23,7 +23,7 @@ const options = [
   { asset: "Australian Dollar", ticker: "xAUD" }
 ];
 
-class Exchange extends Component {
+class Transfer extends Component {
   state = {
     status: false,
     send_asset: "Select Asset",
@@ -32,7 +32,6 @@ class Exchange extends Component {
     recipient_address: "",
     validated: true,
     time: 7
-
   };
 
   componentDidMount() {
@@ -57,12 +56,12 @@ class Exchange extends Component {
   };
 
   handleSubmit = () => {
-  /*  const { send_ticker } = this.state;
+    /*  const { send_ticker } = this.state;
     setTimeout(() => this.setState({ status: true, loading: true }), 500);
     setInterval(() => this.setState({ time: this.state.time - 1 }), 1000);
     setTimeout(() => history.push(`/wallet/assets/${send_ticker}`), 7000);*/
 
-      this.props.transfer(this.state.recipient_address, this.state.send_amount);
+    this.props.transfer(this.state.recipient_address, this.state.send_amount);
   };
 
   render() {
@@ -76,8 +75,6 @@ class Exchange extends Component {
     } = this.state;
 
     return (
-
-
       <Page>
         <Menu />
         <Body>
@@ -123,7 +120,10 @@ class Exchange extends Component {
             <span role="img" aria-label="Money">
               💸
             </span>
-            <span>{this.props.latestTransfer.error}{this.props.latestTransfer.info}</span>
+            <span>
+              {this.props.latestTransfer.error}
+              {this.props.latestTransfer.info}
+            </span>
             Congrats, your transfer was submitted. Redirecting you in{" "}
             {this.state.time}'s
           </Status>
@@ -134,10 +134,10 @@ class Exchange extends Component {
 }
 
 export const mapStateToProps = state => ({
-  latestTransfer: state.transfer,
+  latestTransfer: state.transfer
 });
 
 export default connect(
-    mapStateToProps,
-    { transfer }
-)(Exchange);
+  mapStateToProps,
+  { transfer }
+)(Transfer);
