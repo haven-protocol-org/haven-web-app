@@ -56,11 +56,6 @@ class Transfer extends Component {
   };
 
   handleSubmit = () => {
-    /*  const { send_ticker } = this.state;
-    setTimeout(() => this.setState({ status: true, loading: true }), 500);
-    setInterval(() => this.setState({ time: this.state.time - 1 }), 1000);
-    setTimeout(() => history.push(`/wallet/assets/${send_ticker}`), 7000);*/
-
     this.props.transfer(this.state.recipient_address, this.state.send_amount);
   };
 
