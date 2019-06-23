@@ -15,15 +15,15 @@ const Transaction = ({ state }) => {
       </Header>
       <Row>
         <Key>Transfer Asset</Key>
-        <Value>{send_asset !== "Select Asset" ? `${send_ticker}` : ""}</Value>
-      </Row>
-      <Row>
-        <Key>{send_amount === "" ? "Transfer Amount" : "Send Amount"}</Key>
-        <Value>{send_amount}</Value>
+        <Value>
+          {send_amount > 0 ? `${send_amount} ${send_ticker}` : "--"}
+        </Value>
       </Row>
       <Row>
         <Key>Recipient Address</Key>
-        <Value>{recipient_address}</Value>
+        <Value>
+          {recipient_address === "" ? "--" : `${recipient_address}`}
+        </Value>
       </Row>
 
       <Row>
