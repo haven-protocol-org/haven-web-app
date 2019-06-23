@@ -1,6 +1,8 @@
 // Library Imports
 import React, { Component } from "react";
 import history from "../../../history.js";
+import { connect } from "react-redux";
+import { transfer } from "../../../actions";
 
 // Relative Imports
 import Page from "../../../components/_layout/page";
@@ -15,8 +17,6 @@ import Footer from "../../../components/_inputs/footer";
 import Transaction from "../../../components/_transactions/transfer";
 
 import { Container } from "./styles";
-import { connect } from "react-redux";
-import { transfer } from "../../../actions";
 
 const options = [
   { asset: "Haven Token", ticker: "XHV" },
