@@ -5,11 +5,14 @@ import React from "react";
 import { Container, Header, Row, Key, Value } from "./styles";
 
 const Transaction = ({ state }) => {
+  console.log(state);
   const {
     from_asset,
     from_price,
     from_ticker,
+    from_amount,
     to_price,
+    to_amount,
     to_ticker,
     to_asset
   } = state;
@@ -17,18 +20,18 @@ const Transaction = ({ state }) => {
   return (
     <Container>
       <Header>
-        <Value>Exchange Transaction Details</Value>
+        <Value>Transaction Details</Value>
         <Value />
       </Header>
       <Row>
-        <Key>
-          {from_ticker === "" ? "From Asset" : `${from_asset}: ${from_ticker}`}{" "}
-        </Key>
-        <Value>{from_price === "" ? "--" : `${"$"}${from_price}`}</Value>
+        <Key>From Asset</Key>
+        <Value>
+          {from_amount > 0 ? `${from_amount}${" "}${from_ticker}` : ""}
+        </Value>
       </Row>
       <Row>
-        <Key>{to_ticker === "" ? "To Asset" : `${to_asset}: ${to_ticker}`}</Key>
-        <Value>{to_price === "" ? "--" : `${"$"}${to_price}`} </Value>
+        <Key>To Asset</Key>
+        <Value>{to_amount > 0 ? `${to_amount}${" "}${to_ticker}` : ""}</Value>
       </Row>
 
       <Row>
