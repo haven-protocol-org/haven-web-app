@@ -18,13 +18,13 @@ class App extends Component {
 
   render() {
     const auth = this.props.session === IN_SESSION;
-
+    // Need to add private route handling inbetween
+    // <Public /> and <Private />
     return (
       <ThemeProvider theme={this.props.theme}>
         <Router history={history}>
           <Navigation />
           <PublicRoutes />
-          // Need to add private route prevention here
           <PrivateRoutes />
         </Router>
       </ThemeProvider>
