@@ -5,7 +5,7 @@ import React from "react";
 import { Container, Header, Row, Key, Value } from "./styles";
 
 const Transaction = ({ state }) => {
-  const { send_asset, send_ticker, send_amount, recipient_address } = state;
+  const { send_ticker, send_amount, recipient_address } = state;
 
   return (
     <Container>
