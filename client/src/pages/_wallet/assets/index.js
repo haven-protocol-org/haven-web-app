@@ -37,7 +37,7 @@ class Assets extends Component {
     return token.map(data => {
       const { token, ticker, price, change } = data;
       return (
-        <Card
+        <Cell
           key={token}
           tokenName={token}
           ticker={ticker}
@@ -59,10 +59,23 @@ class Assets extends Component {
         <Menu />
         <Body>
           <Header
-            title="Assets"
+            title="Available Assets"
             description="Overview of all available Haven Assets"
           />
           <Overview amount={viewBalance} />
+          <Cell
+            fullWidth="fullWidth"
+            key={1}
+            tokenName={"Haven Protocol"}
+            ticker={"XHV"}
+            price={"$1.23"}
+            change={"10.29%"}
+          />
+
+          <Header
+            title="Coming Soon"
+            description="Overview of Haven Assets coming soon"
+          />
           {this.renderTokens()}
         </Body>
         {status && <Status>Pending transaction</Status>}

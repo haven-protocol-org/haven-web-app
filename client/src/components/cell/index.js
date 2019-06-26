@@ -2,10 +2,21 @@
 import React from "react";
 
 // Relative Imports
-import { Container } from "./styles";
+import { Container, Row, Title, Subtitle } from "./styles";
 
-const Cell = ({ token, ticker, price, change }) => {
-  return <Container>Container</Container>;
+const Cell = ({ tokenName, ticker, price, change, fullWidth }) => {
+  return (
+    <Container fullWidth={fullWidth} to={`/wallet/assets/${ticker}`}>
+      <Row>
+        <Title>{ticker}</Title>
+        <Title>{price}</Title>
+      </Row>
+      <Row>
+        <Subtitle>{tokenName}</Subtitle>
+        <Subtitle>{change}</Subtitle>
+      </Row>
+    </Container>
+  );
 };
 
 export default Cell;
