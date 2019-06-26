@@ -1,5 +1,7 @@
-import { THEME, AUTH, USER } from "./types.js";
 import {
+  THEME,
+  AUTH,
+  USER,
   CREATE_WALLET_FAILED,
   CREATE_WALLET_FETCHING,
   CREATE_WALLET_SUCCEED,
