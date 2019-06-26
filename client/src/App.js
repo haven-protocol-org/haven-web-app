@@ -24,6 +24,7 @@ class App extends Component {
         <Router history={history}>
           <Navigation />
           <PublicRoutes />
+          // Need to add private route prevention here
           <PrivateRoutes />
         </Router>
       </ThemeProvider>
