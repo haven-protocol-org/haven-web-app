@@ -42,6 +42,7 @@ export function createWalletRPC() {
 }
 
 function callRpc(method, params) {
+  const rpcUrl = process.env.REACT_APP_RPC_URL;
   const objRequest = {
     id: 0,
     jsonrpc: "2.0",
@@ -51,10 +52,7 @@ function callRpc(method, params) {
 
   if (sessionID) objRequest.sessionID = sessionID;
 
-  return fetch("https://nelliekins.zapto.org:5000/rpc", {
-    ...INIT_REQUEST,
-    body: JSON.stringify(objRequest)
-  })
+  return fetch(rpcUrl, { ...INIT_REQUEST, body: JSON.stringify(objRequest) })
     .then(response => response.json())
     .then(function(response) {
       console.log(response);

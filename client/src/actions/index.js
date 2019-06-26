@@ -156,3 +156,5 @@ const createWalletFailed = error => ({
   type: CREATE_WALLET_FAILED,
   payload: error
 });
+
+export const closeWallet = () => ({ type: CLOSE_WALLET });

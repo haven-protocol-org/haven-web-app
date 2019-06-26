@@ -8,8 +8,9 @@ import balance from "./balance.js";
 import keys from "./keys";
 import transfer from "./transfer";
 import walletCreation from "./walletCreation";
+import {CLOSE_WALLET} from "../actions/types";
 
-const rootReducer = combineReducers({
+const appReducer = combineReducers({
   theme,
   address,
   appState,
@@ -18,5 +19,18 @@ const rootReducer = combineReducers({
   transfer,
   walletCreation
 });
+
+
+const rootReducer = (state, action) => {
+
+  if (action.type === CLOSE_WALLET) {
+    state = undefined
+  }
+
+  return appReducer(state, action);
+
+};
+
+
 
 export default rootReducer;

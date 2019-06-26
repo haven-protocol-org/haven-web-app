@@ -1,4 +1,5 @@
 "use strict";
+require("newrelic");
 
 var bodyParser = require("body-parser");
 var cors = require("cors");
@@ -10,6 +11,11 @@ var HavenRPCProvider = require("./lib/haven-rpc-provider.js");
 
 // Create a new RPC provider
 const rpc = new HavenRPCProvider();
+
+//Sentry
+const Sentry = require("@sentry/node");
+const sentryDsn = process.env.BACK_SENTRY_DSN;
+Sentry.init({ dsn: sentryDsn });
 
 // Create a new instance of express
 const app = express();
