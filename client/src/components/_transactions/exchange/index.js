@@ -5,16 +5,7 @@ import React from "react";
 import { Container, Header, Row, Key, Value } from "./styles";
 
 const Transaction = ({ state }) => {
-  const {
-    from_asset,
-    from_price,
-    from_ticker,
-    from_amount,
-    to_price,
-    to_amount,
-    to_ticker,
-    to_asset
-  } = state;
+  const { from_ticker, from_amount, to_amount, to_ticker } = state;
 
   return (
     <Container>
