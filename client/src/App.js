@@ -9,7 +9,7 @@ import history from "./history.js";
 import Navigation from "./components/_layout/navigation/index.js";
 import PrivateRoutes from "./routes/private/index.js";
 import PublicRoutes from "./routes/public/index.js";
-import {IN_SESSION} from "./reducers/appState";
+import { IN_SESSION } from "./reducers/appState";
 
 class App extends Component {
   state = {
@@ -17,14 +17,13 @@ class App extends Component {
   };
 
   render() {
-    const auth  = this.props.session === IN_SESSION;
+    const auth = this.props.session === IN_SESSION;
 
     return (
       <ThemeProvider theme={this.props.theme}>
         <Router history={history}>
           <Navigation />
           <PublicRoutes />
-
           <PrivateRoutes />
         </Router>
       </ThemeProvider>
