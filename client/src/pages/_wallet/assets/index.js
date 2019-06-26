@@ -12,6 +12,8 @@ import Header from "../../../components/_layout/header";
 import Status from "../../../components/_layout/status/";
 import Card from "../../../components/card";
 import Overview from "../../../components/overview";
+import Cell from "../../../components/cell";
+
 import data from "../../../constants/data.js";
 
 class Assets extends Component {
