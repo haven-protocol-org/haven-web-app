@@ -1,5 +1,8 @@
 // Library Imports
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { getBalances } from "../../../actions";
+import { NO_BALANCE } from "../../../reducers/balance";
 
 // Relative Imports
 import Page from "../../../components/_layout/page";
@@ -7,8 +10,11 @@ import Body from "../../../components/_layout/body";
 import Menu from "../../../components/_layout/menu";
 import Header from "../../../components/_layout/header";
 import Status from "../../../components/_layout/status/";
-import Card from "../../../components/card";
 import Overview from "../../../components/overview";
+import Cell from "../../../components/cell";
+// import Card from "../../../components/card";
+// Card can be toggle on later once we have real data
+
 import data from "../../../constants/data.js";
 
 class Assets extends Component {
@@ -32,7 +38,7 @@ class Assets extends Component {
     return token.map(data => {
       const { token, ticker, price, change } = data;
       return (
-        <Card
+        <Cell
           key={token}
           tokenName={token}
           ticker={ticker}
@@ -45,15 +51,32 @@ class Assets extends Component {
 
   render() {
     const { status } = this.state;
+    const viewBalance =
+      this.props.balance === NO_BALANCE
+        ? "loading..."
+        : this.props.balance / Math.pow(10, 12);
     return (
       <Page>
         <Menu />
         <Body>
           <Header
-            title="Assets"
+            title="Available Assets"
             description="Overview of all available Haven Assets"
           />
-          <Overview amount="1,234.56" />
+          <Overview amount={viewBalance} />
+          <Cell
+            fullWidth="fullWidth"
+            key={1}
+            tokenName={"Haven Protocol"}
+            ticker={"XHV"}
+            price={"$1.23"}
+            change={"10.29%"}
+          />
+
+          <Header
+            title="Coming Soon"
+            description="Overview of Haven Assets coming soon"
+          />
           {this.renderTokens()}
         </Body>
         {status && <Status>Pending transaction</Status>}
@@ -62,4 +85,11 @@ class Assets extends Component {
   }
 }
 
-export default Assets;
+export const mapStateToProps = state => ({
+  ...state.balance
+});
+
+export default connect(
+  mapStateToProps,
+  { getBalances }
+)(Assets);

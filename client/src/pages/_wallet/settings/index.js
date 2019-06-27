@@ -15,7 +15,7 @@ import Form from "../../../components/_inputs/form";
 import Theme from "../../../components/_inputs/theme";
 
 import { dark, light } from "../../../constants/themes.js";
-import {NO_KEY} from "../../../reducers/keys";
+import { NO_KEY } from "../../../reducers/keys";
 
 const options = [
   { theme: "dark", value: "Dark Theme" },
@@ -35,11 +35,9 @@ class Settings extends Component {
       value: this.props.theme.value
     });
 
-
     if (this.props.privateViewKey.key === NO_KEY) {
       this.props.queryKeys();
     }
-
   }
 
   handleClick = ({ theme, value }) => {
@@ -66,15 +64,16 @@ class Settings extends Component {
 
   render() {
     const { status, value, type, reveal } = this.state;
-    const  privateKey = "private key";
-    const  spendKey = "spend key";
+    const privateKey = "private key";
+    const spendKey = "spend key";
     return (
-
-
       <Page>
         <Menu />
         <Body>
-          <Header title="Settings" description="Lorem impsum" />
+          <Header
+            title="Theme "
+            description="Choose between light and dark themes"
+          />
           <Form span="true">
             <Theme
               label="Select Theme"
@@ -86,7 +85,10 @@ class Settings extends Component {
             />
           </Form>
 
-          <Header title="Private Keys" description="Lorem impsum" />
+          <Header
+            title="Private Keys"
+            description="Manage your wallets private keys"
+          />
           <Form span="true">
             <Toggle
               label="Seed Phrase"
@@ -128,7 +130,6 @@ class Settings extends Component {
 const mapStateToProps = state => ({
   theme: state.theme,
   ...state.keys
-
 });
 
 export default connect(

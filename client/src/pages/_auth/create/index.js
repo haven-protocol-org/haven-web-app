@@ -10,11 +10,7 @@ import Placeholder from "../../../components/_create/placeholder";
 import CreateSeed from "../../../components/_create/create_seed";
 import VerifySeed from "../../../components/_create/verify_seed";
 import { Container } from "./styles";
-import {createWallet, restoreWallet} from "../../../actions";
-import walletCreation from "../../../reducers/walletCreation";
-
-const seed =
-  "whip cactus theme clever relief category crucial decorate ghost veteran owner exile essay turkey spawn transfer potato island add forward script donor marriage choose";
+import { createWallet } from "../../../actions";
 
 class Create extends Component {
   state = {
@@ -26,10 +22,7 @@ class Create extends Component {
   };
 
   componentDidMount() {
-
     this.props.getSeed();
-
-
   }
 
   nextStep = () => {
@@ -57,7 +50,7 @@ class Create extends Component {
         loading: true
       });
       setTimeout(() => {
-   /*     const user = {
+        /*     const user = {
           auth: true,
           seedPhrase:
             "5b9b3c29734c60540d551eab0e7daa9b24cdf4be845f6cb8b457fc047deffe6a",
@@ -91,7 +84,7 @@ class Create extends Component {
   };
 
   handleSwitch = () => {
-    const { step, seed, verify_seed, error, loading } = this.state;
+    const { step, verify_seed, error, loading } = this.state;
 
     switch (step) {
       case 1:
@@ -136,14 +129,11 @@ class Create extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-    wallet: state.walletCreation
+export const mapStateToProps = state => ({
+  wallet: state.walletCreation
 });
 
 export default connect(
-    mapStateToProps,
-    { getSeed: createWallet }
+  mapStateToProps,
+  { getSeed: createWallet }
 )(Create);
-
-
-

@@ -12,7 +12,7 @@ import Input from "../../../components/_inputs/input";
 import Form from "../../../components/_inputs/form";
 import Footer from "../../../components/_inputs/footer";
 import Dropdown from "../../../components/_inputs/dropdown";
-import Summary from "../../../components/summary";
+import Transaction from "../../../components/_transactions/exchange";
 
 import { Container } from "./styles";
 
@@ -46,27 +46,6 @@ class Exchange extends Component {
     this.setState({
       [name]: value
     });
-
-    /*
-    const sendAmount =
-    const sendRate =
-    const recieveAmount =
-    const recieveRate =
-
-    if (sending) {
-    const exchangeAmount - sendAmount * recieveRate
-    this.setState({
-      sendAmount: sendAmount,
-      exchangeAmount: exchangeAmount
-    });
-  } else if (receiving)
-    const exchangeAmount = recieveAmount / sendRate
-    this.setState({
-      sendAmount: sendAmount,
-      exchangeAmount: exchangeAmount
-    });
-  };
-  */
   };
 
   setFromAsset = option => {
@@ -113,7 +92,7 @@ class Exchange extends Component {
         <Body>
           <Header
             title="Exchange "
-            description="Swap your Haven tokens for stable assets"
+            description="Swap to and from various Haven Assets"
           />
           <Form onSubmit={this.handleSubmit}>
             <Dropdown
@@ -152,7 +131,7 @@ class Exchange extends Component {
             />
           </Form>
           <Container>
-            <Summary state={this.state} />
+            <Transaction state={this.state} />
             <Footer
               onClick={this.handleSubmit}
               label="Exchange"

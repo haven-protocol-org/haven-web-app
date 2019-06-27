@@ -4,6 +4,9 @@ import ReactDOM from "react-dom";
 import { GlobalStyle } from "./globalStyle.js";
 import * as serviceWorker from "./serviceWorker";
 
+//Sentry
+// import * as Sentry from "@sentry/browser";
+
 // Relative Imports
 import App from "./App.js";
 
@@ -13,15 +16,22 @@ import { createStore, applyMiddleware } from "redux";
 import reduxThunk from "redux-thunk";
 
 import reducers from "./reducers";
+
+//Sentry
+// const sentryDsn = process.env.REACT_APP_SENTRY_DSN;
+// Sentry.init({ dsn: sentryDsn });
+
 const logger = store => next => action => {
-    console.group(action.type)
-    console.info('dispatching', action)
-    let result = next(action)
-    console.log('next state', store.getState())
-    console.groupEnd()
-    return result
-}
-const createStoreWithMiddleware = applyMiddleware(reduxThunk, logger)(createStore);
+  console.group(action.type);
+  console.info("dispatching", action);
+  let result = next(action);
+  console.log("next state", store.getState());
+  console.groupEnd();
+  return result;
+};
+const createStoreWithMiddleware = applyMiddleware(reduxThunk, logger)(
+  createStore
+);
 const store = createStoreWithMiddleware(reducers);
 
 ReactDOM.render(
