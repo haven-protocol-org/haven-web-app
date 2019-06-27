@@ -125,7 +125,7 @@ class Settings extends Component {
   }
 }
 
-export const mapStateToProps = state => ({
+const mapStateToProps = state => ({
   theme: state.theme,
   ...state.keys
 

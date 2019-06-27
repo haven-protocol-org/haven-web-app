@@ -82,7 +82,7 @@ class Login extends Component {
   }
 }
 
-export const mapStateToProps = state => ({
+const mapStateToProps = state => ({
   session: state.appState.session
 });
 

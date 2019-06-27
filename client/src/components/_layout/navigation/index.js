@@ -14,7 +14,7 @@ class Navigation extends Component {
 
     this.props.logout();
     //TODO handle routing to private/public by checking session in root component
-    history.push("/");
+    //history.push("/");
   };
 
   render() {
@@ -35,7 +35,7 @@ class Navigation extends Component {
   }
 }
 
-export const mapStateToProps = state => ({
+const mapStateToProps = state => ({
   session: state.appState.session
 });
 

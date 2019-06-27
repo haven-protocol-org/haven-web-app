@@ -43,7 +43,7 @@ class Menu extends Component {
   }
 }
 
-export const mapStateToProps = state => ({
+const mapStateToProps = state => ({
     ...state.balance
 });
 

@@ -133,7 +133,7 @@ class Exchange extends Component {
   }
 }
 
-export const mapStateToProps = state => ({
+const mapStateToProps = state => ({
   latestTransfer: state.transfer,
 });
 

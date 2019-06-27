@@ -136,7 +136,7 @@ class Create extends Component {
   }
 }
 
-export const mapStateToProps = state => ({
+const mapStateToProps = state => ({
     wallet: state.walletCreation
 });
 
