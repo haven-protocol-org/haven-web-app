@@ -6,14 +6,16 @@ ARG DAEMON_RPC_PORT
 ARG DAEMON_HOST
 ARG BACK_WALLET_RPC_PORT
 
+ARG HAVEN_VERSION=0.14.1
+
 RUN apt-get update \
  && apt-get install wget unzip libunbound-dev libhidapi-libusb0 libzmq3-dev libboost-thread-dev libboost-serialization-dev libboost-dev libboost-regex-dev libboost-chrono-dev libboost-filesystem-dev libboost-program-options-dev -y
 
 WORKDIR /usr/local/bin
 
-RUN wget https://github.com/haven-protocol-org/haven/releases/download/v0.14.0-release/haven-ubuntu-v0.14.0-cli.zip \
- && unzip haven-ubuntu-v0.14.0-cli.zip \
- && rm haven-ubuntu-v0.14.0-cli.zip
+RUN wget https://github.com/haven-protocol-org/haven/releases/download/v0.14.1-release/haven-ubuntu-v$HAVEN_VERSION-cli.zip \
+ && unzip haven-ubuntu-v$HAVEN_VERSION-cli.zip \
+ && rm haven-ubuntu-v$HAVEN_VERSION-cli.zip
 
 RUN if [ "$NETWORK" = "mainnet" ]; then \
     echo "havend --p2p-bind-ip=0.0.0.0 --p2p-bind-port=${DAEMON_P2P_PORT} --rpc-bind-ip=0.0.0.0 --rpc-bind-port=${DAEMON_RPC_PORT} --non-interactive --confirm-external-bind" > /bootstrap-daemon.sh; \
