@@ -13,7 +13,7 @@ RUN apt-get update \
 
 WORKDIR /usr/local/bin
 
-RUN wget https://github.com/haven-protocol-org/haven/releases/download/v0.14.1-release/haven-ubuntu-v$HAVEN_VERSION-cli.zip \
+RUN wget https://github.com/haven-protocol-org/haven/releases/download/v$HAVEN_VERSION-release/haven-ubuntu-v$HAVEN_VERSION-cli.zip \ 
  && unzip haven-ubuntu-v$HAVEN_VERSION-cli.zip \
  && rm haven-ubuntu-v$HAVEN_VERSION-cli.zip
 
@@ -21,7 +21,7 @@ RUN if [ "$NETWORK" = "mainnet" ]; then \
     echo "havend --p2p-bind-ip=0.0.0.0 --p2p-bind-port=${DAEMON_P2P_PORT} --rpc-bind-ip=0.0.0.0 --rpc-bind-port=${DAEMON_RPC_PORT} --non-interactive --confirm-external-bind" > /bootstrap-daemon.sh; \
     echo "haven-wallet-rpc --daemon-address ${DAEMON_HOST}:${DAEMON_RPC_PORT} --wallet-dir ${RPC_WALLET_DIR} --rpc-bind-ip 0.0.0.0 --rpc-bind-port ${BACK_WALLET_RPC_PORT} --confirm-external-bind --disable-rpc-login  --prompt-for-password" >  /bootstrap-wallet.sh; \
   else \
-    echo "havend --p2p-bind-ip=0.0.0.0 --testnet --p2p-bind-port=${DAEMON_P2P_PORT} --rpc-bind-ip=0.0.0.0 --rpc-bind-port=${DAEMON_RPC_PORT} --non-interactive --confirm-external-bind" > /bootstrap-daemon.sh; \
+    echo "havend --add-exclusive-node seed01.testnet.havenprotocol.org:27749 --p2p-bind-ip=0.0.0.0 --testnet --p2p-bind-port=${DAEMON_P2P_PORT} --rpc-bind-ip=0.0.0.0 --rpc-bind-port=${DAEMON_RPC_PORT} --non-interactive --confirm-external-bind" > /bootstrap-daemon.sh; \
     echo "haven-wallet-rpc --testnet --daemon-address ${DAEMON_HOST}:${DAEMON_RPC_PORT} --wallet-dir /wallet --rpc-bind-ip 0.0.0.0 --rpc-bind-port ${BACK_WALLET_RPC_PORT} --confirm-external-bind --disable-rpc-login  --prompt-for-password --log-level 4" >  /bootstrap-wallet.sh; \
   fi \
   && chmod +x /bootstrap-daemon.sh \
