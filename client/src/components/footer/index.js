@@ -163,6 +163,18 @@ const Footer = () => {
         >
           Trade Ogre
         </External>
+        <External
+          rel="noopener"
+          href="https://tradeogre.com/exchange/BTC-XHV"
+          target="_blank"
+        >
+          Zelcore
+        </External>
+      </Section>
+      <Section>
+        <Title>About </Title>
+        <Internal to="/team">Team</Internal>
+        <Internal to="/blog">Blog</Internal>
       </Section>
     </Container>
   );
