@@ -4,7 +4,7 @@ import React, { Component } from "react";
 // Relative Imports
 import { Container, Microcopy, Heading, Page } from "./styles";
 
-import Content from "../../../components/_public/faq";
+import Content from "../../../components/_public/team";
 import Footer from "../../../components/footer";
 
 class Team extends Component {
