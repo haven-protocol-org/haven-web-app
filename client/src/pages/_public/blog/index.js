@@ -18,7 +18,7 @@ class Blog extends Component {
         <Container>
           <Microcopy>
             <Heading>Haven Protocol</Heading>
-            <Heading>Team</Heading>
+            <Heading>Blog</Heading>
           </Microcopy>
         </Container>
         <Content />

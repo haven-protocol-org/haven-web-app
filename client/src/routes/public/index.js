@@ -8,6 +8,8 @@ import Welcome from "../../pages/_public/welcome";
 import Faq from "../../pages/_public/faq";
 import Create from "../../pages/_auth/create";
 import Login from "../../pages/_auth/login";
+import Blog from "../../pages/_public/blog";
+import Team from "../../pages/_public/team";
 
 class PublicRoutes extends Component {
   render() {
@@ -15,6 +17,8 @@ class PublicRoutes extends Component {
       <div>
         <Route path="/" exact component={Welcome} />
         <Route path="/faq" exact component={Faq} />
+        <Route path="/blog" exact component={Blog} />
+        <Route path="/team" exact component={Team} />
         <Route path="/wallet/create" exact component={Create} />
         <Route path="/wallet/login" exact component={Login} />
       </div>
