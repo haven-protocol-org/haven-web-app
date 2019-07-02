@@ -165,7 +165,7 @@ const Footer = () => {
         </External>
         <External
           rel="noopener"
-          href="https://tradeogre.com/exchange/BTC-XHV"
+          href="https://zel.network/project/zelcore/"
           target="_blank"
         >
           Zelcore
@@ -175,6 +175,7 @@ const Footer = () => {
         <Title>About </Title>
         <Internal to="/team">Team</Internal>
         <Internal to="/blog">Blog</Internal>
+        <Internal to="/faq">F.A.Q</Internal>
       </Section>
     </Container>
   );
