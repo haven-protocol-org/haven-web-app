@@ -7,7 +7,7 @@ import { Container, Microcopy, Heading, Page } from "./styles";
 import Content from "../../../components/_public/faq";
 import Footer from "../../../components/footer";
 
-class About extends Component {
+class Team extends Component {
   componentDidMount() {
     window.scrollTo(0, 0);
   }
@@ -28,4 +28,4 @@ class About extends Component {
   }
 }
 
-export default About;
+export default Team;
