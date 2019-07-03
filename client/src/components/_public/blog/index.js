@@ -15,83 +15,34 @@ import {
 
 const Content = () => {
   return (
-    <>
-      <Wrapper>
-        <Heading>Core Team</Heading>
-        <Container>
-          <Cell>
-            <Avatar src="http://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif" />
-            <Title>Name</Title>
-            <Description>Position</Description>
-          </Cell>
-          <Cell>
-            <Avatar src="http://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif" />
-            <Title>Name</Title>
-            <Description>Position</Description>
-          </Cell>
-          <Cell>
-            <Avatar src="http://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif" />
-            <Title>Name</Title>
-            <Description>Position</Description>
-          </Cell>
-          <Cell>
-            <Avatar src="http://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif" />
-            <Title>Name</Title>
-            <Description>Position</Description>
-          </Cell>
-          <Cell>
-            <Avatar src="http://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif" />
-            <Title>Name</Title>
-            <Description>Position</Description>
-          </Cell>
-          <Cell>
-            <Avatar src="http://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif" />
-            <Title>Name</Title>
-            <Description>Position</Description>
-          </Cell>
-          <Cell>
-            <Avatar src="http://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif" />
-            <Title>Name</Title>
-            <Description>Position</Description>
-          </Cell>
-        </Container>
-      </Wrapper>
-      <Wrapper>
-        <Heading>Contributing Team</Heading>
-        <Container>
-          <Cell>
-            <Avatar src="http://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif" />
-            <Title>Name</Title>
-            <Description>Contributor Position</Description>
-          </Cell>
-          <Cell>
-            <Avatar src="http://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif" />
-            <Title>Name</Title>
-            <Description>Contributor Position</Description>
-          </Cell>
-          <Cell>
-            <Avatar src="http://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif" />
-            <Title>Name</Title>
-            <Description>Contributor Position</Description>
-          </Cell>
-          <Cell>
-            <Avatar src="http://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif" />
-            <Title>Name</Title>
-            <Description>Contributor Position</Description>
-          </Cell>
-          <Cell>
-            <Avatar src="http://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif" />
-            <Title>Name</Title>
-            <Description>Contributor Position</Description>
-          </Cell>
-          <Cell>
-            <Avatar src="http://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif" />
-            <Title>Name</Title>
-            <Description>Contributor Position</Description>
-          </Cell>
-        </Container>
-      </Wrapper>
-    </>
+    <Wrapper>
+      <Container>
+        <Cell>
+          <Title>Haven Added to ZelCore Ecosystem</Title>
+          <Description>
+            The Haven team is proud to announce we have been selected by Zel
+            Technologies to be added to the ZelCore ecosystem.
+          </Description>
+        </Cell>
+        <Cell>
+          <Title>Haven Protocol — April 2019 Update</Title>
+          <Description>
+            Since January, the Haven Protocol project has undergone many
+            organizational changes. We have grown considerably and are excited
+            to share our progress with the community.
+          </Description>
+        </Cell>
+        <Cell>
+          <Title>
+            Update from the Haven Protocol [XHV] Development team — Jan 2019
+          </Title>
+          <Description>
+            As many of you have noticed, the Haven Protocol team has expanded
+            over recent days.
+          </Description>
+        </Cell>
+      </Container>
+    </Wrapper>
   );
 };
 

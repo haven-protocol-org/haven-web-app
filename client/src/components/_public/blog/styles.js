@@ -7,30 +7,17 @@ export const Wrapper = styled.div`
   background: #36393f;
   display: flex;
   flex-direction: column;
-  padding-top: 40px;
-  padding-left: 40px;
-  padding-right: 40px;
+  padding: 40px;
 `;
 
 export const Container = styled.div`
   display: grid;
   height: auto;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr;
   grid-gap: 20px;
-  padding: 40px 20px;
   background: #36393f;
   justify-content: center;
   align-items: center;
-
-  ${media.laptop`
-    grid-template-columns: 1fr 1fr;
-    padding: 40px 20px;
-  `}
-
-  ${media.mobile`
-    grid-template-columns: 1fr;
-    padding: 40px 20px;
-  `}
 `;
 
 export const Heading = styled.div`
@@ -59,7 +46,7 @@ export const Cell = styled.div`
   height: auto;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: left;
   justify-content: center;
   padding: 20px;
   border-radius: 4px;
