@@ -37,6 +37,10 @@ export function transferRPC(params) {
   return callRpc("transfer", params);
 }
 
+export function getTransferRPC(params) {
+  return callRpc('get_transfers', params);
+}
+
 export function createWalletRPC() {
   return callRpc("create_wallet").then(parseSessionID);
 }

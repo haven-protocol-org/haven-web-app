@@ -7,8 +7,7 @@ export const USER = "user";
 /*
  RESTORE WALLET
  */
-export const RESTORE_WALLET_BY_SEED_FETCHING =
-  "restore_wallet_by_seed_fetching";
+export const RESTORE_WALLET_BY_SEED_FETCHING = "restore_wallet_by_seed_fetching";
 export const RESTORE_WALLET_BY_SEED_SUCCEED = "restore_wallet_by_seed_succeed";
 export const RESTORE_WALLET_BY_SEED_FAILED = "restore_wallet_by_seed_failed";
 
@@ -45,3 +44,8 @@ TRANSFER
 export const TRANSFER_FETCHING = "transfer_fetching";
 export const TRANSFER_FAILED = "transfer_failed";
 export const TRANSFER_SUCCEED = "transfer_succeed";
+
+
+export const GET_TRANSFERS_FETCHING = "get_transfers_fetching";
+export const GET_TRANSFERS_SUCCEED = "get_transfers_succeed";
+export const GET_TRANSFERS_FAILED = "get_transfers_failed";

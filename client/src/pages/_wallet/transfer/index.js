@@ -16,6 +16,7 @@ import Footer from "../../../components/_inputs/footer";
 import Transaction from "../../../components/_transactions/transfer";
 
 import { Container } from "./styles";
+import history from "../../../history";
 
 const options = [
   { asset: "Haven Token", ticker: "XHV" },
@@ -54,6 +55,13 @@ class Transfer extends Component {
       send_ticker: ticker
     });
   };
+
+
+ /* componentWillReceiveProps(nextProps) {
+    if (nextProps.transferList.length !== this.props.transferList.length) {
+      history.push('/wallet/assets/XHV');
+    }
+  }*/
 
   handleSubmit = () => {
     this.props.transfer(this.state.recipient_address, this.state.send_amount);
@@ -133,7 +141,8 @@ class Transfer extends Component {
 }
 
 export const mapStateToProps = state => ({
-  latestTransfer: state.transfer
+  latestTransfer: state.transfer,
+  transferList: state.transferList.list
 });
 
 export default connect(
