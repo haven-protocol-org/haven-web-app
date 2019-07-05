@@ -163,6 +163,19 @@ const Footer = () => {
         >
           Trade Ogre
         </External>
+        <External
+          rel="noopener"
+          href="https://zel.network/project/zelcore/"
+          target="_blank"
+        >
+          Zelcore
+        </External>
+      </Section>
+      <Section>
+        <Title>About </Title>
+        <Internal to="/team">Team</Internal>
+        <Internal to="/blog">Blog</Internal>
+        <Internal to="/faq">F.A.Q</Internal>
       </Section>
     </Container>
   );

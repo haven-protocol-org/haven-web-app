@@ -4,10 +4,10 @@ import React, { Component } from "react";
 // Relative Imports
 import { Container, Microcopy, Heading, Page } from "./styles";
 
-import Content from "../../../components/_public/faq";
+import Content from "../../../components/_public/team";
 import Footer from "../../../components/footer";
 
-class Faq extends Component {
+class Team extends Component {
   componentDidMount() {
     window.scrollTo(0, 0);
   }
@@ -17,7 +17,7 @@ class Faq extends Component {
       <Page>
         <Container>
           <Microcopy>
-            <Heading>Haven Protocol F.A.Q's</Heading>
+            <Heading>Haven Protocol Team</Heading>
           </Microcopy>
         </Container>
         <Content />
@@ -27,4 +27,4 @@ class Faq extends Component {
   }
 }
 
-export default Faq;
+export default Team;
