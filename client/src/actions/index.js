@@ -17,12 +17,12 @@ import {
   RESTORE_WALLET_BY_SEED_SUCCEED,
   TRANSFER_FAILED,
   TRANSFER_FETCHING,
-  TRANSFER_SUCCEED
+  TRANSFER_SUCCEED, GET_TRANSFERS_FETCHING
 } from "./types";
 
 import {
   createWalletRPC,
-  getBalanceRPC,
+  getBalanceRPC, getTransferRPC,
   queryMnemonicKeyRPC,
   queryViewKeyRPC,
   restoreWalletRPC,
@@ -121,10 +121,42 @@ export const transfer = (address, amount) => {
     const params = { destinations: [{ address, amount }], ring_size: 11 };
 
     transferRPC(params)
-      .then(result => dispatch(transferSucceed(result)))
+      .then(result => {
+        dispatch(transferSucceed(result));
+        dispatch(getTransfers());
+      })
       .catch(error => dispatch(transferFailed(error)));
   };
 };
+
+export const getTransfers = () => {
+
+  return (dispatch) => {
+
+    dispatch(getTransfersFetching());
+    const params = {'in': true, 'out': true, 'pending': true};
+    getTransferRPC(params)
+        .then(result => {
+
+        })
+  }
+
+};
+
+const getTransfersFetching = () => ({
+  type: GET_TRANSFERS_FETCHING,
+  payload: {isFetching:true}
+
+});
+
+const getTransfersSucceed = () => {
+
+};
+
+const getTransfersFailed = () => {
+
+};
+
 
 const transferFetch = params => ({
   type: TRANSFER_FETCHING,

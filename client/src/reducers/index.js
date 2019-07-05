@@ -7,6 +7,7 @@ import appState from "./appState.js";
 import balance from "./balance.js";
 import keys from "./keys";
 import transfer from "./transfer";
+import transferList from "./transferList";
 import walletCreation from "./walletCreation";
 import {CLOSE_WALLET} from "../actions/types";
 
@@ -17,6 +18,7 @@ const appReducer = combineReducers({
   balance,
   keys,
   transfer,
+  transferList,
   walletCreation
 });
 

@@ -44,3 +44,8 @@ TRANSFER
 export const TRANSFER_FETCHING = "transfer_fetching";
 export const TRANSFER_FAILED = "transfer_failed";
 export const TRANSFER_SUCCEED = "transfer_succeed";
+
+
+export const GET_TRANSFERS_FETCHING = "get_transfers_fetching";
+export const GET_TRANSFERS_SUCCEED = "get_transfers_succeed";
+export const GET_TRANSFERS_FAILED = "get_transfers_failed";
