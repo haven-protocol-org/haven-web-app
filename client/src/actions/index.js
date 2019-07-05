@@ -115,9 +115,10 @@ const queryPrivateKeyFailed = error => ({
 });
 
 export const transfer = (address, amount) => {
+  amount=amount * 1e12;
   return (dispatch, getState) => {
     dispatch(transferFetch({ address, amount }));
-    const params = { destinations: [{ address, amount }], ring_size: 12 };
+    const params = { destinations: [{ address, amount }], ring_size: 11 };
 
     transferRPC(params)
       .then(result => dispatch(transferSucceed(result)))
