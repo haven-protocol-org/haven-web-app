@@ -64,7 +64,7 @@ class Settings extends Component {
 
   render() {
     const { status, value, type, reveal } = this.state;
-    const privateKey = "private key";
+    // const privateKey = "private key";
     const spendKey = "spend key";
     return (
       <Page>

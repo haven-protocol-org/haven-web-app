@@ -1,17 +1,15 @@
 // Library Imports
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import history from "../../../history.js";
 
 // Relative Imports
 import { Container, Haven, Logo, Brand, Button, Logout } from "./styles.js";
 import Icon from "../../../assets/haven.svg";
-import {IN_SESSION} from "../../../reducers/appState";
-import {closeWallet} from "../../../actions";
+import { IN_SESSION } from "../../../reducers/appState";
+import { closeWallet } from "../../../actions";
 
 class Navigation extends Component {
   handleLogout = () => {
-
     this.props.logout();
     //TODO handle routing to private/public by checking session in root component
     //history.push("/");
@@ -40,5 +38,6 @@ const mapStateToProps = state => ({
 });
 
 export default connect(
-  mapStateToProps,{logout: closeWallet}
+  mapStateToProps,
+  { logout: closeWallet }
 )(Navigation);

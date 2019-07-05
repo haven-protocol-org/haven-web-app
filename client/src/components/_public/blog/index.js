@@ -7,8 +7,6 @@ import {
   Cell,
   Description,
   Title,
-  Avatar,
-  Section,
   Wrapper,
   Image,
   Route,
