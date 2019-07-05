@@ -75,13 +75,13 @@ export const Heading = styled.div`
   text-align: center;
 
   ${media.laptop`
-    font-size: 72px;
-    line-height: 82px;
+    font-size: 58px;
+    line-height: 78px;
   `};
 
   ${media.mobile`
-    font-size: 68px;
-    line-height: 78px;
+    font-size: 52px;
+    line-height: 56px;
   `};
 `;
 
