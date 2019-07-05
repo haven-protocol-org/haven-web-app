@@ -13,33 +13,32 @@ export const Wrapper = styled.div`
 export const Container = styled.div`
   display: grid;
   height: auto;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 20px;
   background: #36393f;
   justify-content: center;
   align-items: center;
-`;
-
-export const Heading = styled.div`
-  font-weight: 900;
-  font-family: "Playfair Display", serif;
-  font-size: 60px;
-  color: #fff;
-  letter-spacing: 0;
-  line-height: 90px;
-  margin-left: 20px;
-  margin-right: 20px;
-  text-align: center;
 
   ${media.laptop`
-    font-size: 72px;
-    line-height: 82px;
-  `};
+    grid-template-columns: 1fr 1fr ;
+  `}
+  ${media.tablet`
+    grid-template-columns: 1fr;
+  `}
+`;
 
-  ${media.mobile`
-    font-size: 68px;
-    line-height: 78px;
-  `};
+export const Route = styled.a`
+  font-size: 16px;
+  color: ${_.link};
+  height: auto;
+  text-decoration: none;
+  margin-top: 30px;
+  transition: 500ms;
+
+  &:hover {
+    color: ${_.link_hover};
+    transition: 500ms;
+  }
 `;
 
 export const Cell = styled.div`
@@ -52,14 +51,30 @@ export const Cell = styled.div`
   border-radius: 4px;
   background: ${_.background};
   border: 1px solid ${_.border};
+  transition: 500ms;
+
+  &:hover {
+    background: ${props => props.theme.body.foreground};
+    border: 1px solid ${props => props.theme.body.border};
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    transition: 500ms;
 `;
 
-export const Avatar = styled.img`
-  height: 80px;
-  width: 80px;
-  background: #36393f;
-  margin-bottom: 20px;
-  border-radius: 100%;
+export const Aspect = styled.div`
+  height: 0;
+  padding-top: 56.25%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+`;
+
+export const Image = styled.img`
+  width: 110%;
+  height: auto;
+  margin-top: -56.25%;
 `;
 
 export const Title = styled.div`
@@ -68,6 +83,8 @@ export const Title = styled.div`
   font-size: 18px;
   font-weight: bold;
   line-height: 26px;
+  margin-top: 20px;
+  margin-bottom: 10px;
 `;
 
 export const Description = styled.div`

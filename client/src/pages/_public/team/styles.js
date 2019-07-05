@@ -39,13 +39,17 @@ export const Heading = styled.div`
   letter-spacing: 0;
   line-height: 90px;
   margin-left: 8px;
+  max-width: 600px;
+  text-align: center;
 
   ${media.laptop`
+    width: 90%
     font-size: 72px;
     line-height: 82px;
   `};
 
   ${media.mobile`
+    width: 90%
     font-size: 68px;
     line-height: 78px;
   `};

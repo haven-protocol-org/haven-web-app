@@ -17,8 +17,7 @@ class Faq extends Component {
       <Page>
         <Container>
           <Microcopy>
-            <Heading>Haven Protocol</Heading>
-            <Heading>F.A.Q's</Heading>
+            <Heading>Haven Protocol F.A.Q's</Heading>
           </Microcopy>
         </Container>
         <Content />

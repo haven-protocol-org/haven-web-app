@@ -17,8 +17,7 @@ class Team extends Component {
       <Page>
         <Container>
           <Microcopy>
-            <Heading>Haven Protocol</Heading>
-            <Heading>Team</Heading>
+            <Heading>Haven Protocol Team</Heading>
           </Microcopy>
         </Container>
         <Content />

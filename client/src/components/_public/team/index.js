@@ -48,7 +48,7 @@ const Content = () => {
           <Cell>
             <Avatar src={pierre} />
             <Title>Pierre Lafitte</Title>
-            <Description>Head of Product</Description>
+            <Description>Lead Product Designer</Description>
           </Cell>
           <Cell>
             <Avatar src={neac} />

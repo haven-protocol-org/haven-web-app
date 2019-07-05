@@ -17,8 +17,7 @@ class Blog extends Component {
       <Page>
         <Container>
           <Microcopy>
-            <Heading>Haven Protocol</Heading>
-            <Heading>Blog</Heading>
+            <Heading>Haven Protocol Blog</Heading>
           </Microcopy>
         </Container>
         <Content />
