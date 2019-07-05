@@ -24,10 +24,13 @@ import news from "../../../assets/team/news.png";
 import ahawk from "../../../assets/team/ahawk.png";
 import mad from "../../../assets/team/mad.png";
 import rare from "../../../assets/team/rare.png";
-// import goshiz from "../../../assets/team/goshiz.png";
-// import marty from "../../../assets/team/marty.png";
-// import luge from "../../../assets/team/luge.png";
-// import nick from "../../../assets/team/nick.png";
+import goshiz from "../../../assets/team/goshiz.png";
+import marty from "../../../assets/team/marty.png";
+import serpent from "../../../assets/team/serpent.png";
+import rad from "../../../assets/team/rad.png";
+import jriggs from "../../../assets/team/jriggs.png";
+import luge from "../../../assets/team/luge.png";
+import nick from "../../../assets/team/nick.png";
 
 const Content = () => {
   return (
@@ -48,7 +51,7 @@ const Content = () => {
           <Cell>
             <Avatar src={pierre} />
             <Title>Pierre Lafitte</Title>
-            <Description>Lead Product Designer</Description>
+            <Description>Head of Product</Description>
           </Cell>
           <Cell>
             <Avatar src={neac} />
@@ -66,22 +69,22 @@ const Content = () => {
             <Description>Growth & Marketing</Description>
           </Cell>
           <Cell>
-            <Avatar src="http://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif" />
+            <Avatar src={marty} />
             <Title>Marty</Title>
             <Description>Core Developer</Description>
           </Cell>
           <Cell>
-            <Avatar src="http://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif" />
+            <Avatar src={goshiz} />
             <Title>Goshiz</Title>
             <Description>Core Developer</Description>
           </Cell>
           <Cell>
-            <Avatar src="http://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif" />
+            <Avatar src={serpent} />
             <Title>Serpentchain</Title>
             <Description>Core Developer</Description>
           </Cell>
           <Cell>
-            <Avatar src="http://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif" />
+            <Avatar src={rad} />
             <Title>Radvd</Title>
             <Description>Core Developer</Description>
           </Cell>
@@ -91,7 +94,7 @@ const Content = () => {
             <Description>Community Manager</Description>
           </Cell>
           <Cell>
-            <Avatar src="http://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif" />
+            <Avatar src={jriggs} />
             <Title>Jriggs</Title>
             <Description>Community Manager</Description>
           </Cell>
@@ -101,12 +104,12 @@ const Content = () => {
             <Description>Community Manager</Description>
           </Cell>
           <Cell>
-            <Avatar src="http://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif" />
+            <Avatar src={luge} />
             <Title>Luge</Title>
             <Description>Community Manager</Description>
           </Cell>
           <Cell>
-            <Avatar src="http://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif" />
+            <Avatar src={nick} />
             <Title>NickM4</Title>
             <Description>Community Manager</Description>
           </Cell>
