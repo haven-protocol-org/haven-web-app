@@ -18,7 +18,7 @@ import {
 import dweab from "../../../assets/team/dweab.png";
 import pierre from "../../../assets/team/pierre.png";
 import baki from "../../../assets/team/baki.png";
-// import neac from "../../../assets/team/neac.png";
+import neac from "../../../assets/team/neac.png";
 // Contributors
 import news from "../../../assets/team/news.png";
 import ahawk from "../../../assets/team/ahawk.png";
@@ -51,7 +51,7 @@ const Content = () => {
             <Description>Head of Product</Description>
           </Cell>
           <Cell>
-            <Avatar src="http://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif" />
+            <Avatar src={neac} />
             <Title>Neac</Title>
             <Description>Core Developer</Description>
           </Cell>
