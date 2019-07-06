@@ -14,9 +14,6 @@ export const Container = styled.div`
   bottom: 0;
   position: absolute;
 
-
-
-
   ${media.laptop`
     order: 2;
     margin-bottom: 60px;
