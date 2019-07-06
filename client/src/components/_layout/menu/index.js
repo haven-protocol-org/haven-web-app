@@ -28,9 +28,7 @@ class Menu extends Component {
             <Value>Total Balance (XHV)</Value>
           </Wrapper>
         </Overview>
-
         <Item to="/wallet/assets">Assets</Item>
-        <Item to="/wallet/exchange">Exchange</Item>
         <Item to="/wallet/transfer">Transfer</Item>
         <Item to="/wallet/settings">Settings</Item>
       </Container>

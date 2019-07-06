@@ -93,7 +93,7 @@ export const Item = styled(NavLink).attrs({
   }
 
   ${media.laptop`
-    width: 25%;
+    width: calc(100vw / 3);
     height: auto;
     font-size: 13px;
     padding: 20px 8px;
