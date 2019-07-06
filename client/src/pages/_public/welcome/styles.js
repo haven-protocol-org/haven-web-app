@@ -76,6 +76,12 @@ export const Page = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+
+  /* &::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+     display: none;
+  } */
 `;
 
 export const Container = styled.div`
