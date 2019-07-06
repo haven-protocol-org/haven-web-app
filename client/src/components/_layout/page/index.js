@@ -11,7 +11,7 @@ class Page extends Component {
       <>
         <Container>
           {this.props.children}
-          <Status>Pending transaction</Status> }
+          <Status>Pending transaction</Status>
         </Container>
       </>
     );

@@ -96,7 +96,6 @@ class Details extends Component {
             />
           </History>
         </Body>
-        // {status ? <Status>Pending transaction</Status> : null}
       </Page>
     );
   }

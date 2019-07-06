@@ -15,10 +15,7 @@ export const Container = styled.div`
   position: absolute;
 
 
-  ${media.tablet`
-    order: 2;
-    margin-bottom: 60px;
-  `}
+
 
   ${media.laptop`
     order: 2;
