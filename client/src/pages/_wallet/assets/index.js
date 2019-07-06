@@ -54,7 +54,7 @@ class Assets extends Component {
     const viewBalance =
       this.props.balance === NO_BALANCE
         ? "loading..."
-        : this.props.balance / Math.pow(10, 12);
+        : this.props.balance / Math.pow(10, 12).toFixed(4);
     return (
       <Page>
         <Menu />
