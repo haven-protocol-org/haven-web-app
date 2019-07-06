@@ -9,10 +9,11 @@ import Page from "../../../components/_layout/page";
 import Body from "../../../components/_layout/body";
 import Menu from "../../../components/_layout/menu";
 import Header from "../../../components/_layout/header";
-import Status from "../../../components/_layout/status/";
-import Toggle from "../../../components/_inputs/toggle";
+import Input from "../../../components/_inputs/input";
 import Form from "../../../components/_inputs/form";
 import Theme from "../../../components/_inputs/theme";
+import Footer from "../../../components/_inputs/footer";
+import { Container } from "./styles";
 
 import { dark, light } from "../../../constants/themes.js";
 import { NO_KEY } from "../../../reducers/keys";
@@ -26,7 +27,8 @@ class Settings extends Component {
   state = {
     status: false,
     value: "",
-    reveal: false
+    reveal: false,
+    validated: true
   };
 
   componentDidMount() {
@@ -63,7 +65,7 @@ class Settings extends Component {
   };
 
   render() {
-    const { status, value, type, reveal } = this.state;
+    const { value, reveal } = this.state;
     // const privateKey = "private key";
     const spendKey = "spend key";
     return (
@@ -90,36 +92,39 @@ class Settings extends Component {
             description="Manage your wallets private keys"
           />
           <Form span="true">
-            <Toggle
+            <Input
               label="Seed Phrase"
               placeholder="Select Asset"
               width="true"
               value={this.props.mnemonicKey.key}
               readOnly
-              type={type}
-              reveal={reveal}
-              attrs={reveal}
+              type={reveal ? "type" : "password"}
               onClick={this.toggleVisibility}
             />
-            <Toggle
+            <Input
               label="Spend Key"
               placeholder="Select Asset"
               width="true"
               value={spendKey}
               readOnly
-              reveal={reveal}
-              type={type}
+              type={reveal ? "type" : "password"}
             />
-            <Toggle
+            <Input
               label="View Key"
               placeholder="Select Asset"
               width="true"
               value={this.props.privateViewKey.key}
               readOnly
-              reveal={reveal}
-              type={type}
+              type={reveal ? "type" : "password"}
             />
           </Form>
+          <Container>
+            <Footer
+              onClick={this.toggleVisibility}
+              label={this.state.reveal ? "Hide Keys" : "Show Keys"}
+              validated={this.state.validated}
+            />
+          </Container>
         </Body>
       </Page>
     );

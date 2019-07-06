@@ -20,6 +20,7 @@ export const Button = styled.button`
   border-radius: 4px;
   text-decoration: none;
   transition: 500ms;
+  outline: none;
 
   &:disabled {
     color: rgba(255, 255, 255, 0.5);
