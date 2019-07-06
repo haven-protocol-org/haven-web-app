@@ -139,15 +139,6 @@ class Exchange extends Component {
             />
           </Container>
         </Body>
-        {status && (
-          <Status>
-            <span role="img" aria-label="Money">
-              💸
-            </span>
-            Congrats, your exchange was submitted. Redirecting you in{" "}
-            {this.state.time}'s
-          </Status>
-        )}
       </Page>
     );
   }

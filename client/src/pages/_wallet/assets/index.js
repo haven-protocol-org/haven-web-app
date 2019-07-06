@@ -79,7 +79,7 @@ class Assets extends Component {
           />
           {this.renderTokens()}
         </Body>
-        {status && <Status>Pending transaction</Status>}
+        // {status && <Status>Pending transaction</Status>}
       </Page>
     );
   }

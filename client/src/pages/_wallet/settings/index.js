@@ -121,7 +121,7 @@ class Settings extends Component {
             />
           </Form>
         </Body>
-        {status ? <Status>Pending transaction</Status> : null}
+        // {status ? <Status>Pending transaction</Status> : null}
       </Page>
     );
   }
