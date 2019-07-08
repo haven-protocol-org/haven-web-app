@@ -2,6 +2,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { transfer } from "../../../actions";
+import history from "../../../history.js";
 
 // Relative Imports
 import Page from "../../../components/_layout/page";
