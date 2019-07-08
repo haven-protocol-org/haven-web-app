@@ -12,6 +12,8 @@ import Statistic from "../../../components/statistic";
 import Chart from "../../../components/chart";
 
 import { History, Row } from "./styles";
+import {connect} from "react-redux";
+import {transfer} from "../../../actions";
 
 class Details extends Component {
   state = {
@@ -102,4 +104,12 @@ class Details extends Component {
   }
 }
 
-export default Details;
+export const mapStateToProps = state => ({
+  transferList: state.transferList
+});
+
+export default connect(
+    mapStateToProps,
+    { transfer }
+)(Details);
+
