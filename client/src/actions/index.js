@@ -17,7 +17,7 @@ import {
   RESTORE_WALLET_BY_SEED_SUCCEED,
   TRANSFER_FAILED,
   TRANSFER_FETCHING,
-  TRANSFER_SUCCEED, GET_TRANSFERS_FETCHING
+  TRANSFER_SUCCEED, GET_TRANSFERS_FETCHING, GET_TRANSFERS_SUCCEED, GET_TRANSFERS_FAILED
 } from "./types";
 
 import {
@@ -138,8 +138,8 @@ export const getTransfers = () => {
     const params = {'in': true, 'out': true, 'pending': true};
     getTransferRPC(params)
         .then(result => {
-
-        })
+          dispatch(getTransfersSucceed(result))})
+        .catch(error => dispatch(getTransfersFailed(error)));
   }
 
 };
@@ -147,16 +147,17 @@ export const getTransfers = () => {
 const getTransfersFetching = () => ({
   type: GET_TRANSFERS_FETCHING,
   payload: {isFetching:true}
-
 });
 
-const getTransfersSucceed = () => {
+const getTransfersSucceed = result => ({
+  type: GET_TRANSFERS_SUCCEED,
+  payload: result
+});
 
-};
-
-const getTransfersFailed = () => {
-
-};
+const getTransfersFailed = error => ({
+  type: GET_TRANSFERS_FAILED,
+  payload: error
+});
 
 
 const transferFetch = params => ({

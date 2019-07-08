@@ -13,8 +13,8 @@ import {
   Data
 } from "./styles";
 
-const Transaction = ({ status, alignment, date, hash, amount }) => {
-  const tx = "91f71216fff8c29076dc7ff9230387647a77403c2ae7fdfaf9cc8fd715e88f9b";
+const Transaction = ({ status, alignment, date, tx, amount }) => {
+
   const last = tx.substring(tx.length - 4);
   const first = tx.substring(0, 4);
   const truncated = first + "...." + last;
@@ -31,7 +31,7 @@ const Transaction = ({ status, alignment, date, hash, amount }) => {
       <Column>
         <Row>
           <Data>
-            <Value alignment="left">{123.32}</Value>
+            <Value alignment="left">{amount}</Value>
             <Label alignment="left">Amount</Label>
           </Data>
           <Data>
@@ -49,7 +49,7 @@ const Transaction = ({ status, alignment, date, hash, amount }) => {
             <Label alignment="left">Type</Label>
           </Data>
           <Data>
-            <Value alignment="center">May 1, 2019</Value>
+            <Value alignment="center">{date}</Value>
             <Label alignment="center">Date</Label>
           </Data>
           <Data>

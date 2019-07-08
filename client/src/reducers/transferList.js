@@ -8,7 +8,9 @@ import {
 
 
 const INITIAL_STATE = {
-    list: [],
+    in: [],
+    out:[],
+    pending:[],
     isFetching: false,
     error: {}
 };
@@ -19,7 +21,7 @@ export default function(state = INITIAL_STATE, action) {
         case GET_TRANSFERS_FETCHING:
             return {...state, isFetching: true};
         case GET_TRANSFERS_SUCCEED:
-            return {list: action.payload, isFetching:false, error:''};
+            return {...action.payload, isFetching:false, error:''};
         case GET_TRANSFERS_FAILED:
             return {...state, error:action.payload, isFetching:false};
         default:

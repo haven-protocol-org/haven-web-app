@@ -19,7 +19,6 @@ class Details extends Component {
     window.scrollTo(0, 0);
   }
 
-  renderTransactions = () => {};
 
   render() {
     const { id } = this.props.match.params;
@@ -60,36 +59,42 @@ class Details extends Component {
             description={`Review your ${id} transaction history`}
           />
           <History>
-            <Transaction
-              status="pending"
-              date="April 1, 2019"
-              hash=" 25a6….19b7"
-              amount="123"
+
+            {this.props.transferList.pending.map((transaction, index) => {
+
+            return  <Transaction
+                key={index}
+                status={transaction.type}
+                date={new Date(transaction.timestamp * 1000).getDate()}
+                tx={transaction.txid}
+                amount={amount}
             />
-            <Transaction
-              status="completed"
-              date="April 1, 2019"
-              hash=" 25a6….19b7"
-              amount="123"
-            />
-            <Transaction
-              status="completed"
-              date="April 1, 2019"
-              hash=" 25a6….19b7"
-              amount="123"
-            />
-            <Transaction
-              status="completed"
-              date="April 1, 2019"
-              hash=" 25a6….19b7"
-              amount="123"
-            />
-            <Transaction
-              status="completed"
-              date="April 1, 2019"
-              hash=" 25a6….19b7"
-              amount="123"
-            />
+
+          })}
+
+            {this.props.transferList.out.map((transaction, index) => {
+
+              return  <Transaction
+                  key={index}
+                  status={transaction.type}
+                  date={new Date(transaction.timestamp * 1000).getDate()}
+                  tx={transaction.txid}
+                  amount={amount}
+              />
+
+            })}
+
+            {this.props.transferList.in.map((transaction, index) => {
+
+              return  <Transaction
+                  key={index}
+                  status={transaction.type}
+                  date={new Date(transaction.timestamp * 1000).getDate()}
+                  tx={transaction.txid}
+                  amount={amount}
+              />
+
+            })}
           </History>
         </Body>
       </Page>

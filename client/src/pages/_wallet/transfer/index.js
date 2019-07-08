@@ -57,7 +57,7 @@ class Transfer extends Component {
   };
 
    componentWillReceiveProps(nextProps) {
-    if (nextProps.transferList.length !== this.props.transferList.length) {
+    if (nextProps.transferOuts !== this.props.transferOuts) {
       history.push('/wallet/assets/XHV');
     }
   }
@@ -141,7 +141,7 @@ class Transfer extends Component {
 
 export const mapStateToProps = state => ({
   latestTransfer: state.transfer,
-  transferList: state.transferList.list
+  transferOuts: state.transferList.out
 });
 
 export default connect(

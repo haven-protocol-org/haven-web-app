@@ -59,6 +59,10 @@ export const State = styled.div`
         return "palevioletred";
       case "completed":
         return "#34d8ac";
+        case "in":
+            return "blue";
+        case "out":
+            return "yellow";
       default:
     }
   }};
