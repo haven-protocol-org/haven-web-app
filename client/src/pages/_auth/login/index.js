@@ -46,7 +46,7 @@ class Login extends Component {
         <Auth
           title="Vault Login"
           description="To access your vault please enter your seed phrase"
-          link="/wallet/create"
+          link="/create"
           route="Create a Vault"
           label="Don’t have a Vault?"
           disable={this.state.loading}

@@ -24,7 +24,7 @@ class Navigation extends Component {
           <Haven>HAVEN</Haven>
         </Brand>
         {auth === false ? (
-          <Button to="/wallet/login">Login</Button>
+          <Button to="/login">Login</Button>
         ) : (
           <Logout onClick={this.handleLogout}>Logout</Logout>
         )}

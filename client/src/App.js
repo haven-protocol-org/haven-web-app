@@ -9,7 +9,8 @@ import history from "./history.js";
 import Navigation from "./components/_layout/navigation/index.js";
 import PrivateRoutes from "./routes/private/index.js";
 import PublicRoutes from "./routes/public/index.js";
-// import { IN_SESSION } from "./reducers/appState";
+import {Redirect, Route} from "react-router";
+import { IN_SESSION } from "./reducers/appState";
 
 class App extends Component {
   state = {
@@ -25,7 +26,7 @@ class App extends Component {
         <Router history={history}>
           <Navigation />
           <PublicRoutes />
-          <PrivateRoutes />
+          <Route path="/wallet" component={PrivateRoutes} />
         </Router>
       </ThemeProvider>
     );
@@ -34,7 +35,7 @@ class App extends Component {
 
 export const mapStateToProps = state => ({
   theme: state.theme,
-  session: state.appState.state
+  session: state.appState.session
 });
 
 export default connect(mapStateToProps)(App);

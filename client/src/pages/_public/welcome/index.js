@@ -72,7 +72,7 @@ class Welcome extends Component {
               <Heading>Private, Stable, Money</Heading>
             </HeadingWrapper>
             <Buttons>
-              <Link to="/wallet/create" label="Get Haven Vault" />
+              <Link to="/create" label="Get Haven Vault" />
               <Button onClick={this.handleClick} label="Learn More" />
             </Buttons>
           </Microcopy>

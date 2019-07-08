@@ -113,7 +113,7 @@ class Create extends Component {
         <Auth
           title="Create a Vault"
           description="To create a new vault please generate a new seed phrase."
-          link="/wallet/login"
+          link="/login"
           route="Sign In!"
           label="Have a Vault already?"
           submit="Generate"

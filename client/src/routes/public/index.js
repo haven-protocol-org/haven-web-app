@@ -19,8 +19,8 @@ class PublicRoutes extends Component {
         <Route path="/faq" exact component={Faq} />
         <Route path="/blog" exact component={Blog} />
         <Route path="/team" exact component={Team} />
-        <Route path="/wallet/create" exact component={Create} />
-        <Route path="/wallet/login" exact component={Login} />
+        <Route path="/create" exact component={Create} />
+        <Route path="/login" exact component={Login} />
       </div>
     );
   }

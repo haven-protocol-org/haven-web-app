@@ -130,7 +130,7 @@ const Footer = () => {
         >
           CLI Wallet
         </External>
-        <Internal to="/wallet/create">Web Wallet</Internal>
+        <Internal to="/create">Web Wallet</Internal>
       </Section>
 
       <Section>
