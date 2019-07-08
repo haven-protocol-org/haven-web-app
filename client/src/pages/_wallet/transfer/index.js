@@ -57,11 +57,11 @@ class Transfer extends Component {
   };
 
 
- /* componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps) {
     if (nextProps.transferList.length !== this.props.transferList.length) {
       history.push('/wallet/assets/XHV');
     }
-  }*/
+  }
 
   handleSubmit = () => {
     this.props.transfer(this.state.recipient_address, this.state.send_amount);
