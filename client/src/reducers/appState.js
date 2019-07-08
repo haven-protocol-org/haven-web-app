@@ -1,4 +1,5 @@
 import {
+  CLOSE_WALLET,
   RESTORE_WALLET_BY_SEED_FETCHING,
   RESTORE_WALLET_BY_SEED_SUCCEED
 } from "../actions/types";
@@ -15,6 +16,8 @@ export default function(state = INITIAL_STATE, action) {
       return { session: IN_SESSION };
     case RESTORE_WALLET_BY_SEED_FETCHING:
       return { session: REQUESTING_SESSION };
+    case CLOSE_WALLET:
+      return {session: NO_SESSION};
     default:
       return state;
   }

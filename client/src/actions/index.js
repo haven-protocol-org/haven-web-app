@@ -26,6 +26,7 @@ import {
   queryMnemonicKeyRPC,
   queryViewKeyRPC,
   restoreWalletRPC,
+  resetSessionId,
   transferRPC
 } from "../rpc/rpc";
 
@@ -191,4 +192,8 @@ const createWalletFailed = error => ({
   payload: error
 });
 
-export const closeWallet = () => ({ type: CLOSE_WALLET });
+export const closeWallet = () => {
+
+  resetSessionId();
+  return { type: CLOSE_WALLET }
+};

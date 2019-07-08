@@ -10,11 +10,15 @@ const INIT_REQUEST = {
   referrer: "no-referrer"
 };
 
-let sessionID;
+let sessionID = -1;
 
 function parseSessionID(result) {
   sessionID = result.sessionid;
   return result;
+}
+
+export function resetSessionId() {
+  sessionID = -1;
 }
 
 export function restoreWalletRPC(params) {
@@ -54,7 +58,7 @@ function callRpc(method, params) {
     params: params
   };
 
-  if (sessionID) objRequest.sessionID = sessionID;
+  if (sessionID !== -1) objRequest.sessionID = sessionID;
 
   return fetch(rpcUrl, { ...INIT_REQUEST, body: JSON.stringify(objRequest) })
     .then(response => response.json())
