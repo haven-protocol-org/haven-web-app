@@ -9,7 +9,6 @@ import {
   Description,
   Title,
   Avatar,
-  Section,
   Heading,
   Wrapper
 } from "./styles";
@@ -99,7 +98,7 @@ const Content = () => {
             <Description>Community Manager</Description>
           </Cell>
           <Cell>
-            <Avatar src={ahawk} />
+            <Avatar src={mad} />
             <Title>Madlentil</Title>
             <Description>Community Manager</Description>
           </Cell>

@@ -9,7 +9,6 @@ import Page from "../../../components/_layout/page";
 import Body from "../../../components/_layout/body";
 import Menu from "../../../components/_layout/menu";
 import Header from "../../../components/_layout/header";
-import Status from "../../../components/_layout/status/";
 import Overview from "../../../components/overview";
 import Cell from "../../../components/cell";
 // import Card from "../../../components/card";
@@ -50,11 +49,10 @@ class Assets extends Component {
   };
 
   render() {
-    const { status } = this.state;
     const viewBalance =
       this.props.balance === NO_BALANCE
         ? "loading..."
-        : this.props.balance / Math.pow(10, 12);
+        : this.props.balance / Math.pow(10, 12).toFixed(4);
     return (
       <Page>
         <Menu />
@@ -79,7 +77,6 @@ class Assets extends Component {
           />
           {this.renderTokens()}
         </Body>
-        {status && <Status>Pending transaction</Status>}
       </Page>
     );
   }

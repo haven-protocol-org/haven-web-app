@@ -14,12 +14,6 @@ export const Container = styled.div`
   bottom: 0;
   position: absolute;
 
-
-  ${media.tablet`
-    order: 2;
-    margin-bottom: 60px;
-  `}
-
   ${media.laptop`
     order: 2;
     margin-bottom: 60px;

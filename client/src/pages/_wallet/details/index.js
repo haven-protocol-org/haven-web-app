@@ -6,7 +6,6 @@ import Page from "../../../components/_layout/page";
 import Body from "../../../components/_layout/body";
 import Menu from "../../../components/_layout/menu";
 import Header from "../../../components/_layout/header";
-import Status from "../../../components/_layout/status/";
 import Transaction from "../../../components/transaction";
 import Statistic from "../../../components/statistic";
 import Chart from "../../../components/chart";
@@ -16,10 +15,6 @@ import {connect} from "react-redux";
 import {transfer} from "../../../actions";
 
 class Details extends Component {
-  state = {
-    status: false
-  };
-
   componentDidMount() {
     window.scrollTo(0, 0);
   }
@@ -31,7 +26,6 @@ class Details extends Component {
     const price = 1.23;
     const amount = 9867.54;
     const value = price * amount;
-    const { status } = this.state;
 
     return (
       <Page>
@@ -98,7 +92,6 @@ class Details extends Component {
             />
           </History>
         </Body>
-        {status ? <Status>Pending transaction</Status> : null}
       </Page>
     );
   }

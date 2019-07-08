@@ -15,6 +15,10 @@ export const Container = styled(Link)`
     grid-column: 1 / 3;
   `}
 
+  ${media.mobile`
+    grid-column: 1 / 3;
+  `}
+
   &:hover {
     cursor: pointer;
     background: ${props => props.theme.body.foreground};

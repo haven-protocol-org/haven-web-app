@@ -7,7 +7,6 @@ import Page from "../../../components/_layout/page";
 import Body from "../../../components/_layout/body";
 import Menu from "../../../components/_layout/menu";
 import Header from "../../../components/_layout/header";
-import Status from "../../../components/_layout/status/";
 import Input from "../../../components/_inputs/input";
 import Form from "../../../components/_inputs/form";
 import Footer from "../../../components/_inputs/footer";
@@ -23,7 +22,6 @@ const options = [
 
 class Exchange extends Component {
   state = {
-    status: false,
     from_asset: "Select Asset",
     from_amount: "",
     from_ticker: "",
@@ -77,7 +75,6 @@ class Exchange extends Component {
 
   render() {
     const {
-      status,
       from_asset,
       from_amount,
       from_ticker,
@@ -139,15 +136,6 @@ class Exchange extends Component {
             />
           </Container>
         </Body>
-        {status && (
-          <Status>
-            <span role="img" aria-label="Money">
-              💸
-            </span>
-            Congrats, your exchange was submitted. Redirecting you in{" "}
-            {this.state.time}'s
-          </Status>
-        )}
       </Page>
     );
   }
