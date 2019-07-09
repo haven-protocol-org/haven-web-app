@@ -9,7 +9,7 @@ export const Container = styled(Link)`
   border-radius: 4px;
   text-decoration: none;
   transition: 500ms;
-  grid-column: ${props => (props.fullWidth ? "1 / 3" : null)}
+  grid-column: ${props => (props.fullwidth ? "1 / 3" : null)}
 
   ${media.laptop`
     grid-column: 1 / 3;

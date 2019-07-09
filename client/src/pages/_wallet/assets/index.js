@@ -63,7 +63,7 @@ class Assets extends Component {
           />
           <Overview amount={viewBalance} />
           <Cell
-            fullWidth="fullWidth"
+            fullwidth="fullwidth"
             key={1}
             tokenName={"Haven Protocol"}
             ticker={"XHV"}

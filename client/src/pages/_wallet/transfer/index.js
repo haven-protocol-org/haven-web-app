@@ -15,6 +15,7 @@ import Form from "../../../components/_inputs/form";
 import Dropdown from "../../../components/_inputs/dropdown";
 import Footer from "../../../components/_inputs/footer";
 import Transaction from "../../../components/_transactions/transfer";
+import Tab from "../../../components/tab/index.js";
 
 import { Container } from "./styles";
 
@@ -32,7 +33,9 @@ class Transfer extends Component {
     send_ticker: "",
     recipient_address: "",
     validated: true,
-    time: 7
+    time: 7,
+    firstTabState: true,
+    secondTabState: false
   };
 
   componentDidMount() {
@@ -56,14 +59,28 @@ class Transfer extends Component {
     });
   };
 
-   componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps) {
     if (nextProps.transferOuts !== this.props.transferOuts) {
-      history.push('/wallet/assets/XHV');
+      history.push("/wallet/assets/XHV");
     }
   }
 
   handleSubmit = () => {
     this.props.transfer(this.state.recipient_address, this.state.send_amount);
+  };
+
+  toggleSend = () => {
+    this.setState({
+      firstTabState: true,
+      secondTabState: false
+    });
+  };
+
+  toggleReceive = () => {
+    this.setState({
+      firstTabState: false,
+      secondTabState: true
+    });
   };
 
   render() {
@@ -83,6 +100,14 @@ class Transfer extends Component {
           <Header
             title="Transfer"
             description="Send or receive assets to and from your Haven Vault"
+          />
+          <Tab
+            firstTabLabel="Send"
+            secondTabLabel="Receive"
+            firstTabState={this.state.firstTabState}
+            secondTabState={this.state.secondTabState}
+            toggleSend={this.toggleSend}
+            toggleReceive={this.toggleReceive}
           />
           <Form>
             <Dropdown

@@ -4,9 +4,9 @@ import React from "react";
 // Relative Imports
 import { Container, Row, Title, Subtitle } from "./styles";
 
-const Cell = ({ tokenName, ticker, price, change, fullWidth }) => {
+const Cell = ({ tokenName, ticker, price, change, fullwidth }) => {
   return (
-    <Container fullWidth={fullWidth} to={`/wallet/assets/${ticker}`}>
+    <Container fullwidth={fullwidth} to={`/wallet/assets/${ticker}`}>
       <Row>
         <Title>{ticker}</Title>
         <Title>{price}</Title>
