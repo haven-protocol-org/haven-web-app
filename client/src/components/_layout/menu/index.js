@@ -18,13 +18,17 @@ class Menu extends Component {
     const viewBalance =
       this.props.balance === NO_BALANCE
         ? "loading..."
-        : this.props.balance / Math.pow(10, 12).toFixed(4);
+        : this.props.balance / Math.pow(10, 12);
 
     return (
       <Container>
         <Overview>
           <Wrapper>
-            <Amount>{viewBalance}</Amount>
+            <Amount>
+              {viewBalance === "loading..."
+                ? viewBalance
+                : viewBalance.toFixed(4)}
+            </Amount>
             <Value>Total Balance (XHV)</Value>
           </Wrapper>
         </Overview>

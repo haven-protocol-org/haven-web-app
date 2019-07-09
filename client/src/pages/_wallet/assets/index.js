@@ -52,7 +52,7 @@ class Assets extends Component {
     const viewBalance =
       this.props.balance === NO_BALANCE
         ? "loading..."
-        : this.props.balance / Math.pow(10, 12).toFixed(4);
+        : this.props.balance / Math.pow(10, 12);
     return (
       <Page>
         <Menu />
@@ -61,7 +61,13 @@ class Assets extends Component {
             title="Available Assets"
             description="Overview of all available Haven Assets"
           />
-          <Overview amount={viewBalance} />
+          <Overview
+            amount={
+              viewBalance === "loading..."
+                ? viewBalance
+                : viewBalance.toFixed(4)
+            }
+          />
           <Cell
             fullwidth="fullwidth"
             key={1}
