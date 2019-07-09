@@ -49,10 +49,10 @@ class Dropdown extends React.Component {
 
   render() {
     const { displayMenu } = this.state;
-    const { label, error, placeholder, value, ticker } = this.props;
+    const { label, error, placeholder, value, ticker, width } = this.props;
 
     return (
-      <Container>
+      <Container width={width}>
         <Labels>
           <Label>{label}</Label>
           <Error>{error}</Error>
