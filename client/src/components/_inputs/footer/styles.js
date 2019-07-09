@@ -10,14 +10,17 @@ export const Container = styled.div`
 `;
 
 export const Button = styled.button`
-  background: #7289da;
+  background: ${props => props.theme.button.primary};
   border: none;
-  width: 120px;
+  width: auto;
+  min-width: 120px;
   height: 48px;
   color: white;
   font-size: 16px;
   text-align: center;
   border-radius: 4px;
+  padding-left: 16px;
+  padding-right: 16px;
   text-decoration: none;
   transition: 500ms;
   outline: none;

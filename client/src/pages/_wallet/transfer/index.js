@@ -164,7 +164,7 @@ class Transfer extends Component {
 
                 <Input
                   label="Address"
-                  placeholder="Enter recipient address"
+                  placeholder="Asset Wallet Address"
                   width="true"
                   name="recipient_address"
                   value={recipient_address}
@@ -175,7 +175,7 @@ class Transfer extends Component {
                 <Footer
                   onClick={this.handleSubmit}
                   loading={loading}
-                  label="Copy"
+                  label="Copy Address"
                   validated={this.state.validated}
                 />
               </Container>
