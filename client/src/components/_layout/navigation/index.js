@@ -7,6 +7,7 @@ import { Container, Haven, Logo, Brand, Button, Logout } from "./styles.js";
 import Icon from "../../../assets/haven.svg";
 import { IN_SESSION } from "../../../reducers/appState";
 import { closeWallet } from "../../../actions";
+import history from "../../../history.js";
 
 class Navigation extends Component {
   handleLogout = () => {
