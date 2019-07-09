@@ -2,7 +2,10 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   grid-column: 1 / 3;
-  height: auto;
+  max-height: 520px;
+  height: 480px;
+  overflow: hidden;
+  display: flex;
   width: 100%;
   border-radius: 4px;
   padding: 1px;

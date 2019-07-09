@@ -93,6 +93,7 @@ class Chart extends Component {
         <Line
           options={{
             responsive: true,
+            maintainAspectRatio: false,
             title: {
               display: false
             },
@@ -121,14 +122,6 @@ class Chart extends Component {
               titleFontFamily:
                 "Inter-SemiBold, 'Helvetica', 'Arial', sans-serif",
               bodyFontFamily: "Inter-SemiBold, 'Helvetica', 'Arial', sans-serif"
-              // callbacks: {
-              //   label: function(tooltipItems, data) {
-              //     return alert(data.datasets[0].data[tooltipItems.index]);
-              //
-              //     // return console.log(data.labels[tooltipItems.index]);
-              //     // return console.log(data.datasets[0].data[tooltipItems.index]);
-              //   }
-              // }
             }
           }}
           data={this.state.data}
