@@ -7,6 +7,10 @@ export const dark = {
     border: " #3A4048",
     active_menu: "#8ea1e1"
   },
+  button: {
+    primary: "#7289da",
+    primary_hover: "#677bc4"
+  },
   type: {
     primary: "#ffffff",
     secondary: "#8a8d90"
@@ -31,6 +35,10 @@ export const light = {
     foreground: "#F1F2F8",
     border: "#D9E2ED",
     active_menu: "#7289da"
+  },
+  button: {
+    primary: "#7289da",
+    primary_hover: "#677bc4"
   },
   type: {
     primary: "#384451",
