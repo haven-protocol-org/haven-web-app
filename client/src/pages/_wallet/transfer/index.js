@@ -109,42 +109,78 @@ class Transfer extends Component {
             toggleSend={this.toggleSend}
             toggleReceive={this.toggleReceive}
           />
-          <Form>
-            <Dropdown
-              label="Send Asset"
-              placeholder="Select Asset"
-              name="send_asset"
-              ticker={send_ticker}
-              value={send_asset}
-              options={options}
-              onClick={this.setSendAsset}
-            />
-            <Input
-              label="Amount"
-              placeholder="Enter amount"
-              type="number"
-              name="send_amount"
-              value={send_amount}
-              onChange={this.handleChange}
-            />
-            <Input
-              label="Recipient"
-              placeholder="Enter recipient address"
-              width="true"
-              name="recipient_address"
-              value={recipient_address}
-              onChange={this.handleChange}
-            />
-          </Form>
-          <Container>
-            <Transaction state={this.state} />
-            <Footer
-              onClick={this.handleSubmit}
-              loading={loading}
-              label="Transfer"
-              validated={this.state.validated}
-            />
-          </Container>
+          {this.state.firstTabState ? (
+            <>
+              <Form>
+                <Dropdown
+                  label="Send Asset"
+                  placeholder="Select Asset"
+                  name="send_asset"
+                  ticker={send_ticker}
+                  value={send_asset}
+                  options={options}
+                  onClick={this.setSendAsset}
+                />
+                <Input
+                  label="Amount"
+                  placeholder="Enter amount"
+                  type="number"
+                  name="send_amount"
+                  value={send_amount}
+                  onChange={this.handleChange}
+                />
+                <Input
+                  label="Recipient"
+                  placeholder="Enter recipient address"
+                  width="true"
+                  name="recipient_address"
+                  value={recipient_address}
+                  onChange={this.handleChange}
+                />
+              </Form>
+              <Container>
+                <Transaction state={this.state} />
+                <Footer
+                  onClick={this.handleSubmit}
+                  loading={loading}
+                  label="Transfer"
+                  validated={this.state.validated}
+                />
+              </Container>
+            </>
+          ) : (
+            <>
+              <Form>
+                <Dropdown
+                  label="Receiving Asset"
+                  placeholder="Select Asset"
+                  name="send_asset"
+                  width="true"
+                  ticker={send_ticker}
+                  value={send_asset}
+                  options={options}
+                  onClick={this.setSendAsset}
+                />
+
+                <Input
+                  label="Address"
+                  placeholder="Enter recipient address"
+                  width="true"
+                  name="recipient_address"
+                  value={recipient_address}
+                  onChange={this.handleChange}
+                />
+              </Form>
+              <Container>
+                <Footer
+                  onClick={this.handleSubmit}
+                  loading={loading}
+                  label="Copy"
+                  validated={this.state.validated}
+                />
+              </Container>
+            </>
+          )}
         </Body>
         {status && (
           <Status>
