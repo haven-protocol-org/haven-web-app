@@ -16,10 +16,14 @@ import { createStore, applyMiddleware } from "redux";
 import reduxThunk from "redux-thunk";
 
 import reducers from "./reducers";
+import {loadState} from "./localStorage";
+import {saveState} from "./localStorage";
 
 //Sentry
 // const sentryDsn = process.env.REACT_APP_SENTRY_DSN;
 // Sentry.init({ dsn: sentryDsn });
+
+const persistedState = loadState();
 
 const logger = store => next => action => {
   console.group(action.type);
@@ -29,10 +33,17 @@ const logger = store => next => action => {
   console.groupEnd();
   return result;
 };
+
+
 const createStoreWithMiddleware = applyMiddleware(reduxThunk, logger)(
   createStore
 );
-const store = createStoreWithMiddleware(reducers);
+const store = createStoreWithMiddleware(reducers, persistedState);
+
+store.subscribe(() => {
+    saveState(store.getState()
+    );
+});
 
 ReactDOM.render(
   <Provider store={store}>

@@ -13,11 +13,15 @@ const INIT_REQUEST = {
 let sessionID = -1;
 
 function parseSessionID(result) {
+
   sessionID = result.sessionid;
+  localStorage.setItem('sessionID', result.sessionid);
+
   return result;
 }
 
 export function resetSessionId() {
+  localStorage.clear();
   sessionID = -1;
 }
 
@@ -57,6 +61,10 @@ function callRpc(method, params) {
     method: method,
     params: params
   };
+
+  if (sessionID === -1) {
+    sessionID = localStorage.getItem('sessionID')? localStorage.getItem('sessionID') : -1;
+  }
 
   if (sessionID !== -1) objRequest.sessionID = sessionID;
 
