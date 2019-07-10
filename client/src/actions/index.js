@@ -17,7 +17,12 @@ import {
   RESTORE_WALLET_BY_SEED_SUCCEED,
   TRANSFER_FAILED,
   TRANSFER_FETCHING,
-  TRANSFER_SUCCEED, GET_TRANSFERS_FETCHING, GET_TRANSFERS_SUCCEED, GET_TRANSFERS_FAILED
+  TRANSFER_SUCCEED,
+  GET_TRANSFERS_FETCHING,
+  GET_TRANSFERS_SUCCEED,
+  GET_TRANSFERS_FAILED,
+  GET_PRICE_DATA_FAILED,
+  GET_PRICE_DATA_SUCCEED, GET_PRICE_DATA_FETCHING
 } from "./types";
 
 import {
@@ -198,3 +203,22 @@ export const closeWallet = () => {
   resetSessionId();
   return { type: CLOSE_WALLET }
 };
+
+
+export const getPriceData = () => {
+
+  return (dispatch) => {
+
+    dispatch(getPriceDataFetching());
+    fetch("https://api.coingecko.com/api/v3/coins/haven/market_chart?vs_currency=usd&days=14")
+        .then(response => response.json())
+        .then(jsonResult => dispatch(getPriceDataSucceed(jsonResult)))
+        .catch(error => dispatch(getPriceDataFailed(error)));
+  }
+
+
+};
+
+const getPriceDataFetching = () => ({type: GET_PRICE_DATA_FETCHING});
+const getPriceDataFailed = (error) => ({type: GET_TRANSFERS_FAILED, payload: error});
+const getPriceDataSucceed = priceData => ({type: GET_PRICE_DATA_SUCCEED, payload: priceData});

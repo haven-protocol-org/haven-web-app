@@ -12,19 +12,24 @@ import Chart from "../../../components/chart";
 
 import { History, Row } from "./styles";
 import {connect} from "react-redux";
-import {transfer} from "../../../actions";
+import {getPriceData} from "../../../actions";
 
 class Details extends Component {
   componentDidMount() {
     window.scrollTo(0, 0);
+
+    if (this.props.prices.length === 0)
+    {
+      this.props.getPriceData();
+    }
   }
 
 
   render() {
     const { id } = this.props.match.params;
-    const price = 1.23;
-    const amount = 9867.54;
-    const value = price * amount;
+    const price = 11111111;
+    const amount = 1111111;
+    const value = 1111111;
 
     return (
       <Page>
@@ -65,7 +70,7 @@ class Details extends Component {
             return  <Transaction
                 key={index}
                 status={transaction.type}
-                date={new Date(transaction.timestamp * 1000).getDate()}
+                date={new Date(transaction.timestamp * 1000).toLocaleDateString()}
                 tx={transaction.txid}
                 amount={amount}
             />
@@ -77,7 +82,7 @@ class Details extends Component {
               return  <Transaction
                   key={index}
                   status={transaction.type}
-                  date={new Date(transaction.timestamp * 1000).getDate()}
+                  date={new Date(transaction.timestamp * 1000).toLocaleDateString()}
                   tx={transaction.txid}
                   amount={amount}
               />
@@ -89,7 +94,7 @@ class Details extends Component {
               return  <Transaction
                   key={index}
                   status={transaction.type}
-                  date={new Date(transaction.timestamp * 1000).getDate()}
+                  date={new Date(transaction.timestamp * 1000).toLocaleDateString()}
                   tx={transaction.txid}
                   amount={amount}
               />
@@ -103,11 +108,12 @@ class Details extends Component {
 }
 
 export const mapStateToProps = state => ({
-  transferList: state.transferList
+  transferList: state.transferList,
+  prices:state.priceData.prices
 });
 
 export default connect(
     mapStateToProps,
-    { transfer }
+    { getPriceData }
 )(Details);
 

@@ -48,7 +48,7 @@ export const Wrapper = styled.ul`
   z-index: 1;
   background: ${props => props.theme.input.input_background};
   border: 1px solid ${props => props.theme.input.input_border};
-  overflow: scroll;
+  overflow: auto;
 `;
 
 export const Labels = styled.div`

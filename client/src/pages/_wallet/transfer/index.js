@@ -20,23 +20,29 @@ import Tab from "../../../components/tab/index.js";
 import { Container } from "./styles";
 
 const options = [
-  { asset: "Haven Token", ticker: "XHV" },
-  { asset: "United States Dollar", ticker: "xUSD" },
-  { asset: "Australian Dollar", ticker: "xAUD" }
+  { asset: "Haven Token", ticker: "XHV" }
 ];
 
 class Transfer extends Component {
+
+  constructor(props) {
+    super(props);
+    this.addressValue = React.createRef();
+
+  }
+
   state = {
     status: false,
-    send_asset: "Select Asset",
+    send_asset: "Haven Token",
     send_amount: "",
-    send_ticker: "",
+    send_ticker: "XHV",
     recipient_address: "",
     validated: true,
     time: 7,
     firstTabState: true,
     secondTabState: false
   };
+
 
   componentDidMount() {
     window.scrollTo(0, 0);
@@ -82,6 +88,13 @@ class Transfer extends Component {
       secondTabState: true
     });
   };
+
+  copyAddressToClipBoard = (e) => {
+
+    //this.addressValue.select();
+    //document.execCommand('copy');
+
+  } ;
 
   render() {
     const {
@@ -163,17 +176,18 @@ class Transfer extends Component {
                 />
 
                 <Input
-                  label="Address"
-                  placeholder="Asset Wallet Address"
-                  width="true"
+                    ref={(textarea) => this.addressValue = textarea}
+                    label="Your Main Address"
+                    placeholder="...load address"
+                    width="true"
                   name="recipient_address"
-                  value={recipient_address}
-                  onChange={this.handleChange}
+                  value={this.props.address}
+                  readOnly={true}
                 />
               </Form>
               <Container>
                 <Footer
-                  onClick={this.handleSubmit}
+                  onClick={this.copyAddressToClipBoard()}
                   loading={loading}
                   label="Copy Address"
                   validated={this.state.validated}
@@ -202,7 +216,8 @@ class Transfer extends Component {
 
 export const mapStateToProps = state => ({
   latestTransfer: state.transfer,
-  transferOuts: state.transferList.out
+  transferOuts: state.transferList.out,
+  address:state.address.main
 });
 
 export default connect(
