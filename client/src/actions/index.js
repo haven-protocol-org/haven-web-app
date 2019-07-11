@@ -220,5 +220,12 @@ export const getPriceData = () => {
 };
 
 const getPriceDataFetching = () => ({type: GET_PRICE_DATA_FETCHING});
-const getPriceDataFailed = (error) => ({type: GET_TRANSFERS_FAILED, payload: error});
-const getPriceDataSucceed = priceData => ({type: GET_PRICE_DATA_SUCCEED, payload: priceData});
+const getPriceDataFailed = (error) => ({type: GET_PRICE_DATA_FAILED, payload: error});
+const getPriceDataSucceed = (priceData) => {
+
+
+ const  lastPrice = priceData.prices[priceData.prices.length -1][1];
+ return {type: GET_PRICE_DATA_SUCCEED, payload: {prices:priceData.prices, lastPrice}}
+
+
+};

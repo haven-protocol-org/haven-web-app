@@ -6,16 +6,19 @@ import {
 import {convertTimestampToDateString} from "../utility";
 
 
+export const NO_PRICE = -1;
+
 const INITIAL_STATE = {
     prices:[],
     error:"",
-    isFetching:false
+    isFetching:false,
+    lastPrice: NO_PRICE
 };
 
-export function priceData (state = INITIAL_STATE, action) {
+export function priceHistory (state = INITIAL_STATE, action) {
     switch (action.type) {
         case GET_PRICE_DATA_SUCCEED:
-            return { prices: action.payload.prices, isFetching:false, error:""};
+            return { ...action.payload, isFetching:false, error:""};
         case GET_PRICE_DATA_FETCHING:
             return { ...state, isFetching: true };
         case GET_PRICE_DATA_FAILED:
@@ -26,10 +29,11 @@ export function priceData (state = INITIAL_STATE, action) {
 }
 
 export function getPriceDates(state) {
-    return state.priceData.prices.map( priceItem => convertTimestampToDateString(priceItem[0]) );
+    return state.priceHistory.prices.map( priceItem => convertTimestampToDateString(priceItem[0]) );
 }
 
 export function getPriceValues(state) {
-    return state.priceData.prices.map( priceItem => priceItem[1] );
+    return state.priceHistory.prices.map( priceItem => priceItem[1] );
 }
+
 

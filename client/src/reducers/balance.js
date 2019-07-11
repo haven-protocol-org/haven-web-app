@@ -13,7 +13,7 @@ const INITIAL_STATE = {
   isFetching: false
 };
 
-export default function(state = INITIAL_STATE, action) {
+export function balance (state = INITIAL_STATE, action) {
   switch (action.type) {
     case GET_BALANCES_SUCCEED:
       return {
@@ -29,4 +29,12 @@ export default function(state = INITIAL_STATE, action) {
     default:
       return state;
   }
+}
+
+export function getReadableBalance(state) {
+
+  if (state.balance.balance === NO_BALANCE)
+    return state.balance.balance;
+
+  return (state.balance.balance / Math.pow(10, 12)).toFixed(4);
 }

@@ -5,7 +5,7 @@ import React, { Component } from "react";
 import { Container, Overview, Item, Value, Wrapper, Amount } from "./styles";
 import { connect } from "react-redux";
 import { getBalances } from "../../../actions";
-import { NO_BALANCE } from "../../../reducers/balance";
+import {getReadableBalance, NO_BALANCE} from "../../../reducers/balance";
 
 class Menu extends Component {
   componentDidMount() {
@@ -18,7 +18,7 @@ class Menu extends Component {
     const viewBalance =
       this.props.balance === NO_BALANCE
         ? "loading..."
-        : this.props.balance / Math.pow(10, 12);
+        : this.props.balance;
 
     return (
       <Container>
@@ -27,7 +27,7 @@ class Menu extends Component {
             <Amount>
               {viewBalance === "loading..."
                 ? viewBalance
-                : viewBalance.toFixed(4)}
+                : viewBalance}
             </Amount>
             <Value>Total Balance (XHV)</Value>
           </Wrapper>
@@ -41,7 +41,7 @@ class Menu extends Component {
 }
 
 export const mapStateToProps = state => ({
-  ...state.balance
+  balance:getReadableBalance(state)
 });
 
 export default connect(

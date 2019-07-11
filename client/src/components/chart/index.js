@@ -27,7 +27,8 @@ class Chart extends Component {
             responsive: true,
             maintainAspectRatio: false,
             title: {
-              display: false
+              display: true,
+                text:'last 14 days'
             },
             legend: {
               display: false

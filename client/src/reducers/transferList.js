@@ -12,7 +12,8 @@ const INITIAL_STATE = {
     out:[],
     pending:[],
     isFetching: false,
-    error: {}
+    error: {},
+    isEmpty:true
 };
 
 export default function(state = INITIAL_STATE, action) {
@@ -21,7 +22,7 @@ export default function(state = INITIAL_STATE, action) {
         case GET_TRANSFERS_FETCHING:
             return {...state, isFetching: true};
         case GET_TRANSFERS_SUCCEED:
-            return {...action.payload, isFetching:false, error:''};
+            return {...action.payload, isFetching:false, error:'', isEmpty: false};
         case GET_TRANSFERS_FAILED:
             return {...state, error:action.payload, isFetching:false};
         default:

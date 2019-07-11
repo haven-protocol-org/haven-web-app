@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getBalances } from "../../../actions";
-import { NO_BALANCE } from "../../../reducers/balance";
+import {getReadableBalance, NO_BALANCE} from "../../../reducers/balance";
 
 // Relative Imports
 import Page from "../../../components/_layout/page";
@@ -52,7 +52,7 @@ class Assets extends Component {
     const viewBalance =
       this.props.balance === NO_BALANCE
         ? "loading..."
-        : this.props.balance / Math.pow(10, 12);
+        : this.props.balance;
     return (
       <Page>
         <Menu />
@@ -63,9 +63,7 @@ class Assets extends Component {
           />
           <Overview
             amount={
-              viewBalance === "loading..."
-                ? viewBalance
-                : viewBalance.toFixed(4)
+              viewBalance
             }
           />
           <Cell
@@ -89,7 +87,7 @@ class Assets extends Component {
 }
 
 export const mapStateToProps = state => ({
-  ...state.balance
+  balance:getReadableBalance(state)
 });
 
 export default connect(
