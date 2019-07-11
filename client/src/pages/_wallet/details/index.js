@@ -13,6 +13,8 @@ import Chart from "../../../components/chart";
 import { History, Row } from "./styles";
 import {connect} from "react-redux";
 import {getPriceData} from "../../../actions";
+import {getPriceValues} from "../../../reducers/pricedata";
+import {getPriceDates} from "../../../reducers/pricedata";
 
 class Details extends Component {
   componentDidMount() {
@@ -40,7 +42,10 @@ class Details extends Component {
             title={`${id} Overview`}
             description="Pricing history and asset values"
           />
-          <Chart />
+          <Chart
+          prices={this.props.prices}
+          labels={this.props.labels}
+          />
           <Row>
             <Statistic label="Amount" value={amount} />
             <Statistic
@@ -109,7 +114,8 @@ class Details extends Component {
 
 export const mapStateToProps = state => ({
   transferList: state.transferList,
-  prices:state.priceData.prices
+  labels:getPriceDates(state),
+    prices:getPriceValues(state)
 });
 
 export default connect(

@@ -34,6 +34,7 @@ import {
   resetSessionId,
   transferRPC
 } from "../rpc/rpc";
+import {lowerPricePoints} from "../utility";
 
 export const selectTheme = theme => ({
   type: THEME,
@@ -212,11 +213,10 @@ export const getPriceData = () => {
     dispatch(getPriceDataFetching());
     fetch("https://api.coingecko.com/api/v3/coins/haven/market_chart?vs_currency=usd&days=14")
         .then(response => response.json())
-        .then(jsonResult => dispatch(getPriceDataSucceed(jsonResult)))
+        .then(lowerPricePoints)
+        .then(priceData => dispatch(getPriceDataSucceed(priceData)))
         .catch(error => dispatch(getPriceDataFailed(error)));
   }
-
-
 };
 
 const getPriceDataFetching = () => ({type: GET_PRICE_DATA_FETCHING});

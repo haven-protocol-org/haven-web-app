@@ -8,7 +8,7 @@ import balance from "./balance.js";
 import keys from "./keys";
 import transfer from "./transfer";
 import transferList from "./transferList";
-import priceData from "./pricedata";
+import {priceData} from "./pricedata";
 import walletCreation from "./walletCreation";
 import {CLOSE_WALLET} from "../actions/types";
 
@@ -34,7 +34,5 @@ const rootReducer = (state, action) => {
   return appReducer(state, action);
 
 };
-
-
 
 export default rootReducer;
