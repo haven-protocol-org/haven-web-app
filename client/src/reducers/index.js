@@ -4,13 +4,13 @@ import { combineReducers } from "redux";
 import theme from "./currentTheme.js";
 import address from "./address.js";
 import appState from "./appState.js";
-import {balance} from "./balance.js";
+import { balance } from "./balance.js";
 import keys from "./keys";
 import transfer from "./transfer";
 import transferList from "./transferList";
-import {priceHistory} from "./priceHistory";
+import { priceHistory } from "./priceHistory";
 import walletCreation from "./walletCreation";
-import {CLOSE_WALLET} from "../actions/types";
+import { CLOSE_WALLET } from "../actions/types";
 
 const appReducer = combineReducers({
   theme,
@@ -24,15 +24,12 @@ const appReducer = combineReducers({
   priceHistory
 });
 
-
 const rootReducer = (state, action) => {
-
   if (action.type === CLOSE_WALLET) {
-    state = undefined
+    state = undefined;
   }
 
   return appReducer(state, action);
-
 };
 
 export default rootReducer;
