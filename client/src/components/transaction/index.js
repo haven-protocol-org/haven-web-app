@@ -14,7 +14,6 @@ import {
 } from "./styles";
 
 const Transaction = ({ status, alignment, date, tx, amount }) => {
-
   const last = tx.substring(tx.length - 4);
   const first = tx.substring(0, 4);
   const truncated = first + "...." + last;
@@ -25,7 +24,7 @@ const Transaction = ({ status, alignment, date, tx, amount }) => {
       target="_blank"
     >
       <State status={status}>
-        <Status>{status}</Status>
+        <Status>{status === "in" ? "Received" : "Sent"}</Status>
       </State>
 
       <Column>
