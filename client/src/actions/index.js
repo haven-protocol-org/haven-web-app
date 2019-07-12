@@ -22,19 +22,21 @@ import {
   GET_TRANSFERS_SUCCEED,
   GET_TRANSFERS_FAILED,
   GET_PRICE_DATA_FAILED,
-  GET_PRICE_DATA_SUCCEED, GET_PRICE_DATA_FETCHING
+  GET_PRICE_DATA_SUCCEED,
+  GET_PRICE_DATA_FETCHING
 } from "./types";
 
 import {
   createWalletRPC,
-  getBalanceRPC, getTransferRPC,
+  getBalanceRPC,
+  getTransferRPC,
   queryMnemonicKeyRPC,
   queryViewKeyRPC,
   restoreWalletRPC,
   resetSessionId,
   transferRPC
 } from "../rpc/rpc";
-import {lowerPricePoints} from "../utility";
+import { lowerPricePoints } from "../utility";
 
 export const selectTheme = theme => ({
   type: THEME,
@@ -122,7 +124,7 @@ const queryPrivateKeyFailed = error => ({
 });
 
 export const transfer = (address, amount) => {
-  amount=amount * 1e12;
+  amount = amount * 1e12;
   return (dispatch, getState) => {
     dispatch(transferFetch({ address, amount }));
     const params = { destinations: [{ address, amount }], ring_size: 11 };
@@ -137,22 +139,20 @@ export const transfer = (address, amount) => {
 };
 
 export const getTransfers = () => {
-
-  return (dispatch) => {
-
+  return dispatch => {
     dispatch(getTransfersFetching());
-    const params = {'in': true, 'out': true, 'pending': true};
+    const params = { in: true, out: true, pending: true };
     getTransferRPC(params)
-        .then(result => {
-          dispatch(getTransfersSucceed(result))})
-        .catch(error => dispatch(getTransfersFailed(error)));
-  }
-
+      .then(result => {
+        dispatch(getTransfersSucceed(result));
+      })
+      .catch(error => dispatch(getTransfersFailed(error)));
+  };
 };
 
 const getTransfersFetching = () => ({
   type: GET_TRANSFERS_FETCHING,
-  payload: {isFetching:true}
+  payload: { isFetching: true }
 });
 
 const getTransfersSucceed = result => ({
@@ -164,7 +164,6 @@ const getTransfersFailed = error => ({
   type: GET_TRANSFERS_FAILED,
   payload: error
 });
-
 
 const transferFetch = params => ({
   type: TRANSFER_FETCHING,
@@ -200,32 +199,32 @@ const createWalletFailed = error => ({
 });
 
 export const closeWallet = () => {
-
   resetSessionId();
-  return { type: CLOSE_WALLET }
+  return { type: CLOSE_WALLET };
 };
-
 
 export const getPriceData = () => {
-
-  return (dispatch) => {
-
+  return dispatch => {
     dispatch(getPriceDataFetching());
-    fetch("https://api.coingecko.com/api/v3/coins/haven/market_chart?vs_currency=usd&days=14")
-        .then(response => response.json())
-        .then(lowerPricePoints)
-        .then(priceData => dispatch(getPriceDataSucceed(priceData)))
-        .catch(error => dispatch(getPriceDataFailed(error)));
-  }
+    fetch(
+      "https://api.coingecko.com/api/v3/coins/haven/market_chart?vs_currency=usd&days=14"
+    )
+      .then(response => response.json())
+      .then(lowerPricePoints)
+      .then(priceData => dispatch(getPriceDataSucceed(priceData)))
+      .catch(error => dispatch(getPriceDataFailed(error)));
+  };
 };
 
-const getPriceDataFetching = () => ({type: GET_PRICE_DATA_FETCHING});
-const getPriceDataFailed = (error) => ({type: GET_PRICE_DATA_FAILED, payload: error});
-const getPriceDataSucceed = (priceData) => {
-
-
- const  lastPrice = priceData.prices[priceData.prices.length -1][1];
- return {type: GET_PRICE_DATA_SUCCEED, payload: {prices:priceData.prices, lastPrice}}
-
-
+const getPriceDataFetching = () => ({ type: GET_PRICE_DATA_FETCHING });
+const getPriceDataFailed = error => ({
+  type: GET_PRICE_DATA_FAILED,
+  payload: error
+});
+const getPriceDataSucceed = priceData => {
+  const lastPrice = priceData.prices[priceData.prices.length - 1][1];
+  return {
+    type: GET_PRICE_DATA_SUCCEED,
+    payload: { prices: priceData.prices, lastPrice }
+  };
 };
