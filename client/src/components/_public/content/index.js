@@ -80,9 +80,10 @@ const Content = ({ ref }) => {
             xUSD, to remain stable without the use of fiat backing
           </Description>
           <Description>
-            As a Monero fork, Haven is private by default and all balances and
-            transactions are anonymous. The price stability of Haven's assets
-            gives investors exposure to market volatility, when they choose it.
+            Being based on Monero, Haven is private by default and all balances
+            and transactions are anonymous. The price stability of Haven's
+            assets gives investors exposure to market volatility, when they
+            choose it.
           </Description>
           <LearnMore to="/faq">Read F.A.Q's</LearnMore>
         </Words>
