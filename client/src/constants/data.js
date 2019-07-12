@@ -55,13 +55,13 @@ module.exports = [
   },
   {
     token: "Euro",
-    ticker: "xEURO",
+    ticker: "xEUR",
     price: "$0.89",
     change: "- $0.28"
   },
   {
     token: "Pound Sterling",
-    ticker: "xGPD",
+    ticker: "xGBP",
     price: "$0.77",
     change: "+ $0.01"
   },
