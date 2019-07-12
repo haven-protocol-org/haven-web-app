@@ -9,7 +9,8 @@ const Overview = ({ amount }) => {
     <Container>
       <Wrapper>
         <Amount>{amount}</Amount>
-        <Value>Total Balance (USD)</Value>
+        <Value>XHV Balance</Value>
+        <Value>{amount} is locked</Value>
       </Wrapper>
     </Container>
   );
