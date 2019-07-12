@@ -2,7 +2,14 @@
 import React from "react";
 
 // Relative Imports
-import { Container, Title, Internal, External, Section } from "./styles";
+import {
+  Container,
+  Title,
+  Internal,
+  Disabled,
+  External,
+  Section
+} from "./styles";
 
 const Footer = () => {
   return (
@@ -176,6 +183,9 @@ const Footer = () => {
         <Internal to="/team">Team</Internal>
         <Internal to="/blog">Blog</Internal>
         <Internal to="/faq">F.A.Q</Internal>
+        <Disabled to="/">Media Kit</Disabled>
+        <Disabled to="/">Timeline</Disabled>
+        <Disabled to="/">Whitepaper</Disabled>
       </Section>
     </Container>
   );
