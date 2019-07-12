@@ -11,53 +11,42 @@ import Statistic from "../../../components/statistic";
 import Chart from "../../../components/chart";
 
 import { History, Row } from "./styles";
-import {connect} from "react-redux";
-import {getPriceData, getTransfers} from "../../../actions";
-import {getPriceValues, NO_PRICE} from "../../../reducers/priceHistory";
-import {getPriceDates} from "../../../reducers/priceHistory";
-import {getReadableBalance, NO_BALANCE} from "../../../reducers/balance";
+import { connect } from "react-redux";
+import { getPriceData, getTransfers } from "../../../actions";
+import { getPriceValues, NO_PRICE } from "../../../reducers/priceHistory";
+import { getPriceDates } from "../../../reducers/priceHistory";
+import { getReadableBalance, NO_BALANCE } from "../../../reducers/balance";
 
 class Details extends Component {
   componentDidMount() {
     window.scrollTo(0, 0);
 
-    if (this.props.prices.length === 0)
-    {
+    if (this.props.prices.length === 0) {
       this.props.getPriceData();
     }
 
-    if(this.props.transferList.isEmpty) {
+    if (this.props.transferList.isEmpty) {
       this.props.getTransfers();
     }
-
-
   }
 
-
-
-
   getBalancePriceStats() {
-
-    console.log('get balance stats');
+    console.log("get balance stats");
     let amount = this.props.balance === NO_BALANCE ? 1 : this.props.balance;
     let price = this.props.lastPrice === NO_PRICE ? 1 : this.props.lastPrice;
     let value = price * amount;
 
-
-    return {amount,price, value}
-
+    return { amount, price, value };
   }
-
 
   render() {
     const { id } = this.props.match.params;
 
-    const {amount, price, value} = this.getBalancePriceStats();
+    const { amount, price, value } = this.getBalancePriceStats();
 
-    const {pending, out} = this.props.transferList;
+    const { pending, out } = this.props.transferList;
     const incoming = this.props.transferList.in;
 
-    console.log(price);
     return (
       <Page>
         <Menu />
@@ -67,10 +56,7 @@ class Details extends Component {
             title={`${id} Overview`}
             description="Pricing history and asset values"
           />
-          <Chart
-          prices={this.props.prices}
-          labels={this.props.labels}
-          />
+          <Chart prices={this.props.prices} labels={this.props.labels} />
           <Row>
             <Statistic label="Amount" value={amount} />
             <Statistic
@@ -82,7 +68,7 @@ class Details extends Component {
             />
             <Statistic
               label="Value"
-              value={ value.toLocaleString("en-US", {
+              value={value.toLocaleString("en-US", {
                 style: "currency",
                 currency: "USD"
               })}
@@ -94,42 +80,53 @@ class Details extends Component {
             description={`Review your ${id} transaction history`}
           />
           <History>
+            {pending
+              ? pending.map((transaction, index) => {
+                  return (
+                    <Transaction
+                      key={index}
+                      status={transaction.type}
+                      date={new Date(
+                        transaction.timestamp * 1000
+                      ).toLocaleDateString()}
+                      tx={transaction.txid}
+                      amount={amount}
+                    />
+                  );
+                })
+              : null}
 
-            {pending ? pending.map((transaction, index) => {
+            {out
+              ? out.map((transaction, index) => {
+                  return (
+                    <Transaction
+                      key={index}
+                      status={transaction.type}
+                      date={new Date(
+                        transaction.timestamp * 1000
+                      ).toLocaleDateString()}
+                      tx={transaction.txid}
+                      amount={amount}
+                    />
+                  );
+                })
+              : null}
 
-            return  <Transaction
-                key={index}
-                status={transaction.type}
-                date={new Date(transaction.timestamp * 1000).toLocaleDateString()}
-                tx={transaction.txid}
-                amount={amount}
-            />
-
-          }):null}
-
-            {out ? out.map((transaction, index) => {
-
-              return  <Transaction
-                  key={index}
-                  status={transaction.type}
-                  date={new Date(transaction.timestamp * 1000).toLocaleDateString()}
-                  tx={transaction.txid}
-                  amount={amount}
-              />
-
-            }):null}
-
-            {incoming? incoming.map((transaction, index) => {
-
-              return  <Transaction
-                  key={index}
-                  status={transaction.type}
-                  date={new Date(transaction.timestamp * 1000).toLocaleDateString()}
-                  tx={transaction.txid}
-                  amount={amount}
-              />
-
-            }):null}
+            {incoming
+              ? incoming.map((transaction, index) => {
+                  return (
+                    <Transaction
+                      key={index}
+                      status={transaction.type}
+                      date={new Date(
+                        transaction.timestamp * 1000
+                      ).toLocaleDateString()}
+                      tx={transaction.txid}
+                      amount={amount}
+                    />
+                  );
+                })
+              : null}
           </History>
         </Body>
       </Page>
@@ -139,14 +136,13 @@ class Details extends Component {
 
 export const mapStateToProps = state => ({
   transferList: state.transferList,
-  labels:getPriceDates(state),
-    prices:getPriceValues(state),
-    lastPrice:state.priceHistory.lastPrice,
+  labels: getPriceDates(state),
+  prices: getPriceValues(state),
+  lastPrice: state.priceHistory.lastPrice,
   balance: getReadableBalance(state)
 });
 
 export default connect(
-    mapStateToProps,
-    { getPriceData, getTransfers }
+  mapStateToProps,
+  { getPriceData, getTransfers }
 )(Details);
-
