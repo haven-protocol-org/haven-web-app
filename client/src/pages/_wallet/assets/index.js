@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getBalances } from "../../../actions";
-import {getReadableBalance, NO_BALANCE} from "../../../reducers/balance";
+import { getReadableBalance, NO_BALANCE } from "../../../reducers/balance";
 
 // Relative Imports
 import Page from "../../../components/_layout/page";
@@ -19,7 +19,9 @@ import data from "../../../constants/data.js";
 class Assets extends Component {
   state = {
     status: false,
-    token: data
+    token: data,
+    lockedBalance: 4.124211,
+    lockedTime: 20
   };
 
   componentDidMount() {
@@ -50,9 +52,7 @@ class Assets extends Component {
 
   render() {
     const viewBalance =
-      this.props.balance === NO_BALANCE
-        ? "loading..."
-        : this.props.balance;
+      this.props.balance === NO_BALANCE ? "loading..." : this.props.balance;
     return (
       <Page>
         <Menu />
@@ -62,9 +62,9 @@ class Assets extends Component {
             description="Overview of all available Haven Assets"
           />
           <Overview
-            amount={
-              viewBalance
-            }
+            amount={viewBalance}
+            lockedTime={this.state.lockedTime}
+            lockedBalance={this.state.lockedBalance}
           />
           <Cell
             fullwidth="fullwidth"
@@ -87,7 +87,7 @@ class Assets extends Component {
 }
 
 export const mapStateToProps = state => ({
-  balance:getReadableBalance(state)
+  balance: getReadableBalance(state)
 });
 
 export default connect(

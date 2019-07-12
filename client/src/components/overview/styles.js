@@ -20,6 +20,20 @@ export const Container = styled.div`
   `}
 `;
 
+export const Pending = styled.div`
+  width: auto;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: ${props => props.theme.type.secondary};
+  font-family: Inter-Regular;
+  margin-top: 12px;
+  text-align: center;
+  line-height: 1.7em;
+`;
+
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;

@@ -17,7 +17,7 @@ import { getReadableBalance, NO_BALANCE } from "../../../reducers/balance";
 
 class Menu extends Component {
   state = {
-    lockedBalance: 0,
+    lockedBalance: 4.124211,
     lockedTime: 20
   };
 
