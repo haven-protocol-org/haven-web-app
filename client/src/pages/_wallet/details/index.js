@@ -90,7 +90,7 @@ class Details extends Component {
                         transaction.timestamp * 1000
                       ).toLocaleDateString()}
                       tx={transaction.txid}
-                      amount={amount}
+                      amount={transaction.amount}
                     />
                   );
                 })
@@ -106,7 +106,7 @@ class Details extends Component {
                         transaction.timestamp * 1000
                       ).toLocaleDateString()}
                       tx={transaction.txid}
-                      amount={amount}
+                      amount={transaction.amount}
                     />
                   );
                 })
@@ -122,7 +122,7 @@ class Details extends Component {
                         transaction.timestamp * 1000
                       ).toLocaleDateString()}
                       tx={transaction.txid}
-                      amount={amount}
+                      amount={transaction.amount}
                     />
                   );
                 })
