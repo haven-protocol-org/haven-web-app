@@ -183,8 +183,11 @@ export const createWallet = seed => {
     dispatch(createWalletFetch());
 
     createWalletRPC()
-      .then(result => dispatch(createWalletSucceed(result)))
-      .catch(error => dispatch(createWalletFailed(error)));
+        .then(result => dispatch(createWalletSucceed(result)))
+        .then(result => queryMnemonicKeyRPC())
+        .then(result => dispatch(queryMnemonicSucceed(result.key)))
+        .catch(error => dispatch(createWalletFailed(error)))
+
   };
 };
 

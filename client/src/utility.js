@@ -1,3 +1,4 @@
+import {NO_BALANCE} from "./reducers/balance";
 
 
 export const convertTimestampToDateString = (timestamp) => new Date(timestamp ).toISOString();
@@ -18,5 +19,20 @@ export const lowerPricePoints = (priceData) => {
     }
 
     return {prices:reducedPrices};
+
+};
+
+export const convertBalanceForReading = (balance) => {
+
+    if (balance === NO_BALANCE)
+        return balance;
+
+
+     const readableBalance =  (balance / Math.pow(10, 12)).toFixed(4);
+
+     if (readableBalance % 1 === 0)
+         return parseInt(readableBalance);
+     return readableBalance;
+
 
 };
