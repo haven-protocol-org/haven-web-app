@@ -56,13 +56,15 @@ export const State = styled.div`
   background: ${props => {
     switch (props.status) {
       case "pending":
-        return "palevioletred";
+        return "#F26522";
       case "completed":
         return "#34d8ac";
-        case "in":
-            return "blue";
-        case "out":
-            return "yellow";
+      case "error":
+        return "#F04747";
+      case "in":
+        return "#2fc29b";
+      case "out":
+        return "#2fc29b";
       default:
     }
   }};

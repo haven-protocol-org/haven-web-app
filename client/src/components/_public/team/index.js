@@ -40,22 +40,22 @@ const Content = () => {
           <Cell>
             <Avatar src={dweab} />
             <Title>Dweab</Title>
-            <Description>Project Leader</Description>
+            <Description>Project Lead</Description>
           </Cell>
           <Cell>
             <Avatar src={baki} />
             <Title>Nbourbaki</Title>
-            <Description>Core Developer</Description>
+            <Description>Oracle Lead</Description>
           </Cell>
           <Cell>
             <Avatar src={pierre} />
             <Title>Pierre Lafitte</Title>
-            <Description>Head of Product</Description>
+            <Description>Product Lead</Description>
           </Cell>
           <Cell>
             <Avatar src={neac} />
             <Title>Neac</Title>
-            <Description>Core Developer</Description>
+            <Description>Protocol Lead</Description>
           </Cell>
         </Core>
       </Wrapper>

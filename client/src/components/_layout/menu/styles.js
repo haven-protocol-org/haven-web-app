@@ -47,6 +47,20 @@ export const Value = styled.div`
   margin-top: 12px;
 `;
 
+export const Pending = styled.div`
+  width: auto;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: ${props => props.theme.type.secondary};
+  font-family: Inter-Regular;
+  margin-top: 12px;
+  text-align: center;
+  line-height: 1.7em;
+`;
+
 export const Amount = styled.div`
   font-size: 32px;
   font-family: Inter-Bold;
@@ -59,6 +73,7 @@ export const Overview = styled.div`
   height: 240px;
   width: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   border-bottom: 1px solid ${props => props.theme.body.border};

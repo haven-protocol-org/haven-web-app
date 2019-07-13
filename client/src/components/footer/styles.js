@@ -52,15 +52,33 @@ export const External = styled.a`
     transition: 750ms;
   }
 `;
+
 export const Internal = styled(Link)`
   font-family: Inter-Regular;
   font-size: 16px;
-  color: ${secondary}
+  color: ${secondary};
   letter-spacing: 0;
   text-align: center;
   line-height: 26px;
   text-decoration: none;
   transition: 750ms;
+
+  &:hover {
+    color: #ffffff;
+    transition: 750ms;
+  }
+`;
+
+export const Disabled = styled.div`
+  font-family: Inter-Regular;
+  font-size: 16px;
+  color: ${secondary};
+  letter-spacing: 0;
+  text-align: center;
+  line-height: 26px;
+  text-decoration: none;
+  transition: 750ms;
+  cursor: not-allowed;
 
   &:hover {
     color: #ffffff;

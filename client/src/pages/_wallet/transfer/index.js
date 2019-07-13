@@ -19,16 +19,12 @@ import Tab from "../../../components/tab/index.js";
 
 import { Container } from "./styles";
 
-const options = [
-  { asset: "Haven Token", ticker: "XHV" }
-];
+const options = [{ asset: "Haven Token", ticker: "XHV" }];
 
 class Transfer extends Component {
-
   constructor(props) {
     super(props);
     this.addressValue = React.createRef();
-
   }
 
   state = {
@@ -40,9 +36,9 @@ class Transfer extends Component {
     validated: true,
     time: 7,
     firstTabState: true,
-    secondTabState: false
+    secondTabState: false,
+    copyButtonState: "Copy Address"
   };
-
 
   componentDidMount() {
     window.scrollTo(0, 0);
@@ -89,12 +85,20 @@ class Transfer extends Component {
     });
   };
 
-  copyAddressToClipBoard = (e) => {
+  copyAddressToClipBoard = () => {
+    this.setState({
+      copyButtonState: "Address Copied"
+    });
+
+    setTimeout(() => {
+      this.setState({
+        copyButtonState: "Copy Address"
+      });
+    }, 1000);
 
     //this.addressValue.select();
     //document.execCommand('copy');
-
-  } ;
+  };
 
   render() {
     const {
@@ -176,10 +180,10 @@ class Transfer extends Component {
                 />
 
                 <Input
-                    ref={(textarea) => this.addressValue = textarea}
-                    label="Your Main Address"
-                    placeholder="...load address"
-                    width="true"
+                  ref={textarea => (this.addressValue = textarea)}
+                  label="Haven Token Address"
+                  placeholder="...load address"
+                  width="true"
                   name="recipient_address"
                   value={this.props.address}
                   readOnly={true}
@@ -187,9 +191,9 @@ class Transfer extends Component {
               </Form>
               <Container>
                 <Footer
-                  onClick={this.copyAddressToClipBoard()}
+                  onClick={this.copyAddressToClipBoard}
                   loading={loading}
-                  label="Copy Address"
+                  label={this.state.copyButtonState}
                   validated={this.state.validated}
                 />
               </Container>
@@ -217,7 +221,7 @@ class Transfer extends Component {
 export const mapStateToProps = state => ({
   latestTransfer: state.transfer,
   transferOuts: state.transferList.out,
-  address:state.address.main
+  address: state.address.main
 });
 
 export default connect(
