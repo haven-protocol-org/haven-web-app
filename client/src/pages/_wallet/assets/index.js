@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getBalances } from "../../../actions";
-import { getReadableBalance, NO_BALANCE } from "../../../reducers/balance";
+import { selectReadableBalance, NO_BALANCE } from "../../../reducers/balance";
 
 // Relative Imports
 import Page from "../../../components/_layout/page";
@@ -87,7 +87,7 @@ class Assets extends Component {
 }
 
 export const mapStateToProps = state => ({
-  balance: getReadableBalance(state)
+  balance: selectReadableBalance(state)
 });
 
 export default connect(

@@ -15,7 +15,8 @@ import { connect } from "react-redux";
 import { getPriceData, getTransfers } from "../../../actions";
 import { getPriceValues, NO_PRICE } from "../../../reducers/priceHistory";
 import { getPriceDates } from "../../../reducers/priceHistory";
-import { getReadableBalance, NO_BALANCE } from "../../../reducers/balance";
+import { selectReadableBalance, NO_BALANCE } from "../../../reducers/balance";
+import {convertBalanceForReading} from "../../../utility";
 
 class Details extends Component {
   componentDidMount() {
@@ -90,7 +91,7 @@ class Details extends Component {
                         transaction.timestamp * 1000
                       ).toLocaleDateString()}
                       tx={transaction.txid}
-                      amount={transaction.amount}
+                      amount={convertBalanceForReading(transaction.amount)}
                     />
                   );
                 })
@@ -106,7 +107,7 @@ class Details extends Component {
                         transaction.timestamp * 1000
                       ).toLocaleDateString()}
                       tx={transaction.txid}
-                      amount={transaction.amount}
+                      amount={convertBalanceForReading(transaction.amount)}
                     />
                   );
                 })
@@ -122,7 +123,7 @@ class Details extends Component {
                         transaction.timestamp * 1000
                       ).toLocaleDateString()}
                       tx={transaction.txid}
-                      amount={transaction.amount}
+                      amount={convertBalanceForReading(transaction.amount)}
                     />
                   );
                 })
@@ -139,7 +140,7 @@ export const mapStateToProps = state => ({
   labels: getPriceDates(state),
   prices: getPriceValues(state),
   lastPrice: state.priceHistory.lastPrice,
-  balance: getReadableBalance(state)
+  balance: selectReadableBalance(state)
 });
 
 export default connect(

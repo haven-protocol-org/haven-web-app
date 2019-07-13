@@ -13,7 +13,7 @@ import {
 } from "./styles";
 import { connect } from "react-redux";
 import { getBalances } from "../../../actions";
-import { getReadableBalance, NO_BALANCE } from "../../../reducers/balance";
+import { selectReadableBalance, NO_BALANCE } from "../../../reducers/balance";
 
 class Menu extends Component {
   state = {
@@ -59,7 +59,7 @@ class Menu extends Component {
 }
 
 export const mapStateToProps = state => ({
-  balance: getReadableBalance(state)
+  balance: selectReadableBalance(state)
 });
 
 export default connect(

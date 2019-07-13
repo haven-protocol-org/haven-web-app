@@ -3,6 +3,7 @@ import {
   GET_BALANCES_FETCHING,
   GET_BALANCES_SUCCEED
 } from "../actions/types";
+import {convertBalanceForReading} from "../utility";
 
 export const NO_BALANCE = -1;
 
@@ -31,10 +32,10 @@ export function balance (state = INITIAL_STATE, action) {
   }
 }
 
-export function getReadableBalance(state) {
+export function selectReadableBalance(state) {
 
   if (state.balance.balance === NO_BALANCE)
     return state.balance.balance;
 
-  return (state.balance.balance / Math.pow(10, 12)).toFixed(4);
+  return convertBalanceForReading(state.balance.balance);
 }
