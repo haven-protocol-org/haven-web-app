@@ -12,6 +12,7 @@
     "concurrent-queue": "^7.0.2",
     "cors": "^2.8.5",
     "express": "^4.16.4",
+    "lodash": "^4.17.14",
     "monerojs": "^0.1.8",
     "newrelic": "^5.10.0",
     "request": "^2.88.0",
