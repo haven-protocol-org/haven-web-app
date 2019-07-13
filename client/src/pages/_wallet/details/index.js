@@ -102,7 +102,7 @@ class Details extends Component {
                 status={transaction.type}
                 date={new Date(transaction.timestamp * 1000).toLocaleDateString()}
                 tx={transaction.txid}
-                amount={amount}
+                amount={transaction.amount}
             />
 
           }):null}
@@ -114,7 +114,7 @@ class Details extends Component {
                   status={transaction.type}
                   date={new Date(transaction.timestamp * 1000).toLocaleDateString()}
                   tx={transaction.txid}
-                  amount={amount}
+                  amount={transaction.amount}
               />
 
             }):null}
@@ -126,7 +126,7 @@ class Details extends Component {
                   status={transaction.type}
                   date={new Date(transaction.timestamp * 1000).toLocaleDateString()}
                   tx={transaction.txid}
-                  amount={amount}
+                  amount={transaction.amount}
               />
 
             }):null}
