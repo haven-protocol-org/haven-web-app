@@ -20,8 +20,8 @@ import {loadState} from "./localStorage";
 import {saveState} from "./localStorage";
 
 //Sentry
-// const sentryDsn = process.env.REACT_APP_SENTRY_DSN;
-// Sentry.init({ dsn: sentryDsn });
+const sentryDsn = process.env.REACT_APP_SENTRY_DSN;
+Sentry.init({ dsn: sentryDsn });
 
 const persistedState = loadState();
 
