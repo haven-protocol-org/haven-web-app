@@ -5,7 +5,7 @@ import { GlobalStyle } from "./globalStyle.js";
 import * as serviceWorker from "./serviceWorker";
 
 //Sentry
-// import * as Sentry from "@sentry/browser";
+import * as Sentry from "@sentry/browser";
 
 // Relative Imports
 import App from "./App.js";
@@ -20,8 +20,8 @@ import {loadState} from "./localStorage";
 import {saveState} from "./localStorage";
 
 //Sentry
-// const sentryDsn = process.env.REACT_APP_SENTRY_DSN;
-// Sentry.init({ dsn: sentryDsn });
+const sentryDsn = process.env.REACT_APP_SENTRY_DSN;
+Sentry.init({ dsn: sentryDsn });
 
 const persistedState = loadState();
 
