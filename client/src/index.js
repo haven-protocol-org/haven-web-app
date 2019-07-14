@@ -5,7 +5,7 @@ import { GlobalStyle } from "./globalStyle.js";
 import * as serviceWorker from "./serviceWorker";
 
 //Sentry
-// import * as Sentry from "@sentry/browser";
+import * as Sentry from "@sentry/browser";
 
 // Relative Imports
 import App from "./App.js";
