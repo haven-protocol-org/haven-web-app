@@ -10,15 +10,13 @@ import Placeholder from "../../../components/_create/placeholder";
 import CreateSeed from "../../../components/_create/create_seed";
 import VerifySeed from "../../../components/_create/verify_seed";
 import { Container } from "./styles";
-import { createWallet } from "../../../actions";
+import { createWallet, mnenomicVerificationSucceed, mneomicVerifcationFailed } from "../../../actions";
 
 class Create extends Component {
   state = {
-    auth: false,
     step: 1,
     error: "",
-    verify_seed: "",
-    seed: ""
+    verify_seed:""
   };
 
   componentDidMount() {
@@ -26,33 +24,38 @@ class Create extends Component {
   }
 
   nextStep = () => {
-    const { step, seed, verify_seed } = this.state;
-    const valid = seed === verify_seed;
+    const { step } = this.state;
     const stepThree = step === 3;
 
     // Until step three incremennt the steps
     if (step < 3) {
       this.setState({ step: step + 1 });
     }
-    // On step three, if seed_testnet.txt is invalid display error messsage for 2s
-    else if (stepThree && !valid) {
-      this.setState({ error: "Sorry, that seed is incorrect" });
+    // On step three, if seed is invalid display error messsage for 2s
+    else if (stepThree) {
 
-      setTimeout(() => {
-        this.setState({ error: "" });
-      }, 2000);
-    }
-    // On step three, if seed_testnet.txt is valid, set loading to true and push true to authUser reducer
-    else if (stepThree && valid) {
-      // const auth = true;
+      const validationSucceed = this.props.createdWallet.mnemonicKey === this.state.verify_seed;
 
-      this.setState({
-        loading: true
-      });
+      if (!validationSucceed)
+      {
+
+        this.setState({ error: "Sorry, that seed is incorrect" });
+
+        setTimeout(() => {
+          this.setState({ error: "" });
+        }, 2000);
+      }
+
+      // On step three, if seed is valid, set loading to true and push true to authUser reducer
+      if (validationSucceed) {
+
+        this.props.mnenomicVerificationSucceed();
         history.push("/wallet/assets");
-    } else {
-      return null;
+      } else {
+        return null;
+      }
     }
+
   };
 
   prevStep = () => {
@@ -76,7 +79,7 @@ class Create extends Component {
       case 1:
         return <Placeholder />;
       case 2:
-        return <CreateSeed value={this.props.wallet.seed} readOnly={true} />;
+        return <CreateSeed value={this.props.createdWallet.mnemonicKey} readOnly={true} />;
       case 3:
         return (
           <VerifySeed
@@ -116,10 +119,10 @@ class Create extends Component {
 }
 
 export const mapStateToProps = state => ({
-  wallet: state.walletCreation
+  createdWallet: state.walletCreation
 });
 
 export default connect(
   mapStateToProps,
-  { getSeed: createWallet }
+  { getSeed: createWallet, mnenomicVerificationSucceed, mneomicVerifcationFailed }
 )(Create);

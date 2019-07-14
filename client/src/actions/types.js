@@ -22,8 +22,7 @@ export const GET_BALANCES_FAILED = "get_balances_failed";
 export const CREATE_WALLET_FETCHING = "create_wallet_fetching";
 export const CREATE_WALLET_SUCCEED = "create_wallet_succeed";
 export const CREATE_WALLET_FAILED = "create_wallet_failed";
-
-export const VALIDATE_MNEMONIC = "validate_mnemonic";
+export const QUERY_MNEMONIC_FOR_WALLET_GENERATION_SUCCEED = "query_mnemonic_for_wallet_generation_succeed";
 export const VALIDATE_MNEMONIC_SUCCEED = "validate_mnemonic_succeed";
 export const VALIDATE_MNEMONIC_FAILED = "validate_mnemonic_failed";
 

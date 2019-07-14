@@ -23,7 +23,7 @@ import {
   GET_TRANSFERS_FAILED,
   GET_PRICE_DATA_FAILED,
   GET_PRICE_DATA_SUCCEED,
-  GET_PRICE_DATA_FETCHING
+  GET_PRICE_DATA_FETCHING, VALIDATE_MNEMONIC_SUCCEED, VALIDATE_MNEMONIC_FAILED, QUERY_MNEMONIC_FOR_WALLET_GENERATION_SUCCEED
 } from "./types";
 
 import {
@@ -45,6 +45,8 @@ export const selectTheme = theme => ({
 
 export const restoreWallet = seed => {
   return dispatch => {
+
+    dispatch(closeWallet());
     const language = "English";
     const seed_offset = "";
 
@@ -180,16 +182,26 @@ const transferFailed = error => ({
 
 export const createWallet = seed => {
   return dispatch => {
+
+    dispatch(closeWallet());
     dispatch(createWalletFetch());
 
-    createWalletRPC()
+      const language = "English";
+      const params = {language};
+
+    createWalletRPC(params)
         .then(result => dispatch(createWalletSucceed(result)))
         .then(result => queryMnemonicKeyRPC())
-        .then(result => dispatch(queryMnemonicSucceed(result.key)))
+        .then(result => dispatch(queryMnemonicForWalletGenerationSucceed(result.key)))
         .catch(error => dispatch(createWalletFailed(error)))
 
   };
 };
+
+const queryMnemonicForWalletGenerationSucceed = (key) => ({type: QUERY_MNEMONIC_FOR_WALLET_GENERATION_SUCCEED, payload:key});
+export const mnenomicVerificationSucceed = () =>  ({type: VALIDATE_MNEMONIC_SUCCEED});
+export const mneomicVerifcationFailed = () => ({type: VALIDATE_MNEMONIC_FAILED});
+
 
 const createWalletFetch = () => ({ type: CREATE_WALLET_FETCHING });
 const createWalletSucceed = result => ({
