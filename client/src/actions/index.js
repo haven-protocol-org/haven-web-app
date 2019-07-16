@@ -135,6 +135,7 @@ export const transfer = (address, amount) => {
       .then(result => {
         dispatch(transferSucceed(result));
         dispatch(getTransfers());
+        dispatch(getBalances());
       })
       .catch(error => dispatch(transferFailed(error)));
   };

@@ -96,8 +96,6 @@ class Transfer extends Component {
       });
     }, 1000);
 
-    //this.addressValue.select();
-    //document.execCommand('copy');
   };
 
   render() {

@@ -14,6 +14,7 @@ import {
 import { connect } from "react-redux";
 import { getBalances } from "../../../actions";
 import { selectReadableBalance, NO_BALANCE } from "../../../reducers/balance";
+import {convertBalanceForReading} from "../../../utility";
 
 class Menu extends Component {
   state = {
@@ -28,26 +29,27 @@ class Menu extends Component {
   }
 
   render() {
-    const { lockedBalance, lockedTime } = this.state;
-    const balance = lockedBalance.toFixed(4);
-    const viewBalance =
-      this.props.balance === NO_BALANCE ? "loading..." : this.props.balance;
+
+    const {balance, unlocked_balance, blocks_to_unlock} = this.props;
+
+   // if ()
+
+
 
     return (
       <Container>
         <Overview>
           <Wrapper>
             <Amount>
-              {viewBalance === "loading..." ? viewBalance : viewBalance}
-            </Amount>
+            {convertBalanceForReading(unlocked_balance)}
+          </Amount>
             <Value>XHV Balance</Value>
-            {balance > 0 ? (
-              <Pending>
-                You recently received {balance} XHV. <br />
-                In ~{lockedTime} mins it'll be unlocked and added to your
-                balance.
-              </Pending>
-            ) : null}
+            {balance !== unlocked_balance ?
+                <div>
+            <Amount>
+              {convertBalanceForReading(balance - unlocked_balance)}
+            </Amount>
+                  <Value>Locked XHV Balance</Value></div>:null}
           </Wrapper>
         </Overview>
         <Item to="/wallet/assets">Assets</Item>
@@ -59,7 +61,7 @@ class Menu extends Component {
 }
 
 export const mapStateToProps = state => ({
-  balance: selectReadableBalance(state)
+  ...state.balance
 });
 
 export default connect(

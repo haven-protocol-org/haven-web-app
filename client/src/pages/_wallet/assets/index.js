@@ -40,6 +40,7 @@ class Assets extends Component {
       const { token, ticker, price, change } = data;
       return (
         <Cell
+            fullwidth="fullwidth"
           key={token}
           tokenName={token}
           ticker={ticker}
@@ -51,8 +52,7 @@ class Assets extends Component {
   };
 
   render() {
-    const viewBalance =
-      this.props.balance === NO_BALANCE ? "loading..." : this.props.balance;
+
     return (
       <Page>
         <Menu />
@@ -62,9 +62,7 @@ class Assets extends Component {
             description="Overview of all available Haven Assets"
           />
           <Overview
-            amount={viewBalance}
-            lockedTime={this.state.lockedTime}
-            lockedBalance={this.state.lockedBalance}
+              {...this.props.balance}
           />
           <Cell
             fullwidth="fullwidth"
@@ -87,7 +85,7 @@ class Assets extends Component {
 }
 
 export const mapStateToProps = state => ({
-  balance: selectReadableBalance(state)
+  balance: state.balance
 });
 
 export default connect(
