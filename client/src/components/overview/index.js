@@ -6,7 +6,7 @@ import { Container, Amount, Value, Wrapper, Pending } from "./styles";
 import {NO_BALANCE} from "../../reducers/balance";
 import {convertBalanceForReading} from "../../utility";
 
-const Overview = ({ balance, unlocked_balancee }) => {
+const Overview = ({ balance, unlocked_balance }) => {
 
 
  // const balance = lockedBalance.toFixed(4);
@@ -18,7 +18,7 @@ const Overview = ({ balance, unlocked_balancee }) => {
       <Wrapper>
         <Amount>{convertBalanceForReading(balance)}</Amount>
         <Value>XHV Balance</Value>
-          <Amount>{convertBalanceForReading(unlocked_balancee)}</Amount>
+          <Amount>{convertBalanceForReading(unlocked_balance)}</Amount>
           <Value>Unlocked XHV Balance</Value>
         {balance > 0 ? (
           <Pending>

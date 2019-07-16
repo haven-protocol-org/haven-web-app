@@ -59,3 +59,8 @@ export const GET_TRANSFERS_FAILED = "get_transfers_failed";
 export const GET_PRICE_DATA_FETCHING = "get_price_data_fetching";
 export const GET_PRICE_DATA_SUCCEED = "get_price_data_succeed";
 export const GET_PRICE_DATA_FAILED = "get_price_data_failed";
+
+
+export const GET_BLOCK_HEIGHT_SUCEED = "get_block_height_succeed";
+export const GET_BLOCK_HEIGHT_FAILED = "get_block_height_failed";
+
