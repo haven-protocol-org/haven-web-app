@@ -4,10 +4,8 @@ import React, { Component } from "react";
 // Relative Imports
 import { Container } from "./styles";
 
-class LoadMore extends Component {
-  render() {
-    return <Container>LoadMore</Container>;
-  }
-}
+const LoadMore = ({ onClick, label }) => {
+  return <Container onClick={onClick}>{label}</Container>;
+};
 
 export default LoadMore;
