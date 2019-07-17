@@ -10,6 +10,9 @@ export const Container = styled(Link)`
   text-decoration: none;
   transition: 500ms;
   grid-column: ${props => (props.fullwidth ? "1 / 3" : null)}
+  display: flex;
+  justify-content: space-between;
+
 
   ${media.laptop`
     grid-column: 1 / 3;
@@ -28,10 +31,26 @@ export const Container = styled(Link)`
     transition: 500ms;
 `;
 
-export const Row = styled.div`
+export const Inner = styled.div`
+  height: auto;
+  width: 16px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  margin-left: 16px;
+`;
+
+export const Column = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const Icon = styled.img`
+  height: 16px;
+  width: 16px;
+`;
+
+export const Wrapper = styled.div`
+  display: flex;
 `;
 
 export const Title = styled.div`
