@@ -13,7 +13,7 @@ import {
   Data
 } from "./styles";
 
-const Transaction = ({ status, alignment, date, tx, amount }) => {
+const Transaction = ({ status, alignment, date, tx, amount, transaction }) => {
   const last = tx.substring(tx.length - 4);
   const first = tx.substring(0, 4);
   const truncated = first + "...." + last;
@@ -34,11 +34,11 @@ const Transaction = ({ status, alignment, date, tx, amount }) => {
             <Label alignment="left">Amount</Label>
           </Data>
           <Data>
-            <Value alignment="center">{843.21}</Value>
+            <Value alignment="center">MISSING VALUE</Value>
             <Label alignment="center">Price</Label>
           </Data>
           <Data>
-            <Value alignment="right">{123.32 * 843.21}</Value>
+            <Value alignment="right">MISSING VALUE</Value>
             <Label alignment="right">Value</Label>
           </Data>
         </Row>

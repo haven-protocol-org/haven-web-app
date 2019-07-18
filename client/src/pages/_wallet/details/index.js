@@ -9,6 +9,7 @@ import Header from "../../../components/_layout/header";
 import Transaction from "../../../components/transaction";
 import Statistic from "../../../components/statistic";
 import Chart from "../../../components/chart";
+import LoadMore from "../../../components/load-more";
 
 import { History, Row } from "./styles";
 import { connect } from "react-redux";
@@ -16,7 +17,7 @@ import { getPriceHistory, getTransfers } from "../../../actions";
 import { getPriceValues, NO_PRICE } from "../../../reducers/priceHistory";
 import { getPriceDates } from "../../../reducers/priceHistory";
 import { selectReadableBalance, NO_BALANCE } from "../../../reducers/balance";
-import {convertBalanceForReading} from "../../../utility";
+import { convertBalanceForReading } from "../../../utility";
 
 class Details extends Component {
   componentDidMount() {
@@ -30,6 +31,10 @@ class Details extends Component {
       this.props.getTransfers();
     }
   }
+
+  fetchData = () => {
+    alert("Load more data");
+  };
 
   getBalancePriceStats() {
     console.log("get balance stats");
@@ -92,6 +97,7 @@ class Details extends Component {
                       ).toLocaleDateString()}
                       tx={transaction.txid}
                       amount={convertBalanceForReading(transaction.amount)}
+                      transaction={transaction}
                     />
                   );
                 })
@@ -128,6 +134,7 @@ class Details extends Component {
                   );
                 })
               : null}
+            <LoadMore onClick={this.fetchData} label="Load More" />
           </History>
         </Body>
       </Page>

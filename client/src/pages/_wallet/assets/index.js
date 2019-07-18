@@ -40,7 +40,7 @@ class Assets extends Component {
       const { token, ticker, price, change } = data;
       return (
         <Cell
-            fullwidth="fullwidth"
+          fullwidth="fullwidth"
           key={token}
           tokenName={token}
           ticker={ticker}
@@ -52,7 +52,6 @@ class Assets extends Component {
   };
 
   render() {
-
     return (
       <Page>
         <Menu />
@@ -61,9 +60,7 @@ class Assets extends Component {
             title="Available Assets"
             description="Overview of all available Haven Assets"
           />
-          <Overview
-              {...this.props.balance}
-          />
+          <Overview {...this.props.balance} />
           <Cell
             fullwidth="fullwidth"
             key={1}

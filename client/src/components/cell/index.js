@@ -2,19 +2,34 @@
 import React from "react";
 
 // Relative Imports
-import { Container, Row, Title, Subtitle } from "./styles";
+import {
+  Container,
+  Column,
+  Title,
+  Subtitle,
+  Icon,
+  Inner,
+  Wrapper
+} from "./styles";
+import chevron from "../../assets/icons/chevron.svg";
 
 const Cell = ({ tokenName, ticker, price, change, fullwidth }) => {
   return (
     <Container fullwidth={fullwidth} to={`/wallet/assets/${ticker}`}>
-      <Row>
+      <Column>
         <Title>{ticker}</Title>
-        <Title>{price}</Title>
-      </Row>
-      <Row>
-        <Subtitle>{tokenName}</Subtitle>
-        <Subtitle>{change}</Subtitle>
-      </Row>
+        <Subtitle>{price}</Subtitle>
+      </Column>
+
+      <Wrapper>
+        <Column>
+          <Title>{tokenName}</Title>
+          <Subtitle>{change}</Subtitle>
+        </Column>
+        <Inner>
+          <Icon src={chevron} />
+        </Inner>
+      </Wrapper>
     </Container>
   );
 };
