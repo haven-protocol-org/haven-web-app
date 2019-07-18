@@ -20,7 +20,7 @@ const Transaction = ({ status, alignment, date, tx, amount, transaction }) => {
 
   return (
     <Container
-      href={`https://explorer.havenprotocol.org/tx/${tx}`}
+      href={`https://explorer-test.havenprotocol.org/tx/${tx}`}
       target="_blank"
     >
       <State status={status}>
