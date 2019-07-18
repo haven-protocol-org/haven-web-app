@@ -53,6 +53,10 @@ export function createWalletRPC(params) {
   return callRpc("create_wallet", params).then(parseSessionID);
 }
 
+export function getHeightRPC() {
+  return callRpc('get_height');
+}
+
 function callRpc(method, params) {
   const rpcUrl = process.env.REACT_APP_RPC_URL;
   const objRequest = {

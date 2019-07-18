@@ -1,7 +1,7 @@
 import {
-    GET_PRICE_DATA_FAILED,
-    GET_PRICE_DATA_FETCHING,
-    GET_PRICE_DATA_SUCCEED
+    GET_PRICE_HISTORY_FAILED,
+    GET_PRICE_HISTORY_FETCHING,
+    GET_PRICE_HISTORY_SUCCEED
 } from "../actions/types";
 import {convertTimestampToDateString} from "../utility";
 
@@ -17,11 +17,11 @@ const INITIAL_STATE = {
 
 export function priceHistory (state = INITIAL_STATE, action) {
     switch (action.type) {
-        case GET_PRICE_DATA_SUCCEED:
+        case GET_PRICE_HISTORY_SUCCEED:
             return { ...action.payload, isFetching:false, error:""};
-        case GET_PRICE_DATA_FETCHING:
+        case GET_PRICE_HISTORY_FETCHING:
             return { ...state, isFetching: true };
-        case GET_PRICE_DATA_FAILED:
+        case GET_PRICE_HISTORY_FAILED:
             return { ...state, error: action.payload, isFetching: false };
         default:
             return state;

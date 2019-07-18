@@ -70,7 +70,7 @@ class Assets extends Component {
             tokenName={"Haven Protocol"}
             ticker={"XHV"}
             price={"$1.23"}
-            change={"10.29%"}
+            change={"MISSING VALUE"}
           />
 
           <Header

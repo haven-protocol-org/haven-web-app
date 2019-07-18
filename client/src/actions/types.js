@@ -56,11 +56,15 @@ export const GET_TRANSFERS_FAILED = "get_transfers_failed";
 
 //PRICE DATA
 
-export const GET_PRICE_DATA_FETCHING = "get_price_data_fetching";
-export const GET_PRICE_DATA_SUCCEED = "get_price_data_succeed";
-export const GET_PRICE_DATA_FAILED = "get_price_data_failed";
+export const GET_PRICE_HISTORY_FETCHING = "get_price_data_fetching";
+export const GET_PRICE_HISTORY_SUCCEED = "get_price_data_succeed";
+export const GET_PRICE_HISTORY_FAILED = "get_price_data_failed";
 
 
 export const GET_BLOCK_HEIGHT_SUCEED = "get_block_height_succeed";
 export const GET_BLOCK_HEIGHT_FAILED = "get_block_height_failed";
+
+
+export const ADD_NOTIFICATION = "add_notifications";
+export const REMOVE_NOTIFICATION = "remove_notifications";
 

@@ -11,6 +11,7 @@ import PrivateRoutes from "./routes/private/index.js";
 import PublicRoutes from "./routes/public/index.js";
 import {Redirect, Route} from "react-router";
 import { IN_SESSION } from "./reducers/appState";
+import Status from "./components/_layout/status";
 
 class App extends Component {
   state = {
@@ -25,6 +26,7 @@ class App extends Component {
       <ThemeProvider theme={this.props.theme}>
         <Router history={history}>
           <Navigation />
+          <Status/>
           <PublicRoutes />
           <Route path="/wallet" component={PrivateRoutes} />
         </Router>

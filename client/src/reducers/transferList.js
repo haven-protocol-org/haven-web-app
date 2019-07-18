@@ -1,19 +1,18 @@
 import {
   GET_TRANSFERS_FAILED,
   GET_TRANSFERS_FETCHING,
-  GET_TRANSFERS_SUCCEED,
-  TRANSFER_FAILED,
-  TRANSFER_FETCHING,
-  TRANSFER_SUCCEED
+  GET_TRANSFERS_SUCCEED
 } from "../actions/types";
 
 const INITIAL_STATE = {
-  received: [],
-  sent: [],
+  out: [],
+  in: [],
   pending: [],
   isFetching: false,
   error: {},
-  isEmpty: true
+  isEmpty: true,
+  maxHeight:-1,
+  minHeight:-1
 };
 
 export default function(state = INITIAL_STATE, action) {

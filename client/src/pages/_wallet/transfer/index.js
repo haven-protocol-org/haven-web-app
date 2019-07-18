@@ -198,19 +198,6 @@ class Transfer extends Component {
             </>
           )}
         </Body>
-        {status && (
-          <Status>
-            <span role="img" aria-label="Money">
-              💸
-            </span>
-            <span>
-              {this.props.latestTransfer.error}
-              {this.props.latestTransfer.info}
-            </span>
-            Congrats, your transfer was submitted. Redirecting you in{" "}
-            {this.state.time}'s
-          </Status>
-        )}
       </Page>
     );
   }

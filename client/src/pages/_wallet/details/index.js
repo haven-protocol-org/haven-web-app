@@ -12,7 +12,7 @@ import Chart from "../../../components/chart";
 
 import { History, Row } from "./styles";
 import { connect } from "react-redux";
-import { getPriceData, getTransfers } from "../../../actions";
+import { getPriceHistory, getTransfers } from "../../../actions";
 import { getPriceValues, NO_PRICE } from "../../../reducers/priceHistory";
 import { getPriceDates } from "../../../reducers/priceHistory";
 import { selectReadableBalance, NO_BALANCE } from "../../../reducers/balance";
@@ -145,5 +145,5 @@ export const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getPriceData, getTransfers }
+  { getPriceData: getPriceHistory, getTransfers }
 )(Details);

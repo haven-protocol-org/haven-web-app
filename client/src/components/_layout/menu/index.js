@@ -15,6 +15,7 @@ import { connect } from "react-redux";
 import { getBalances } from "../../../actions";
 import { selectReadableBalance, NO_BALANCE } from "../../../reducers/balance";
 import {convertBalanceForReading} from "../../../utility";
+import {Spinner} from "../../spinner";
 
 class Menu extends Component {
   state = {
