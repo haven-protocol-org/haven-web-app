@@ -30,7 +30,9 @@ export const getTransfers = () => {
         dispatch(getTransfersFetching());
         const params = { in: true, out: true, pending: true };
         getTransferRPC(params)
+            .then(mergeAndSort)
             .then(result => {
+
                 dispatch(getTransfersSucceed(result));
             })
             .catch(error => dispatch(getTransfersFailed(error)));
@@ -64,3 +66,13 @@ const transferFailed = error => ({
     type: TRANSFER_FAILED,
     payload: { ...error, isFetching: false }
 });
+
+
+const mergeAndSort = (result) => {
+
+    const all = [...result.in, ...result.out,...result.pending? result.pending : []];
+    all.sort( (a,b) =>  b.timestamp - a.timestamp );
+    result.all = all;
+    return result;
+
+};

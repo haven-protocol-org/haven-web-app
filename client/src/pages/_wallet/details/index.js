@@ -50,8 +50,9 @@ class Details extends Component {
 
     const { amount, price, value } = this.getBalancePriceStats();
 
-    const { pending, out } = this.props.transferList;
+    const { pending, out, all } = this.props.transferList;
     const incoming = this.props.transferList.in;
+
 
     return (
       <Page>
@@ -86,8 +87,8 @@ class Details extends Component {
             description={`Review your ${id} transaction history`}
           />
           <History>
-            {pending
-              ? pending.map((transaction, index) => {
+            {all
+              ? all.map((transaction, index) => {
                   return (
                     <Transaction
                       key={index}
@@ -98,38 +99,6 @@ class Details extends Component {
                       tx={transaction.txid}
                       amount={convertBalanceForReading(transaction.amount)}
                       transaction={transaction}
-                    />
-                  );
-                })
-              : null}
-
-            {out
-              ? out.map((transaction, index) => {
-                  return (
-                    <Transaction
-                      key={index}
-                      status={transaction.type}
-                      date={new Date(
-                        transaction.timestamp * 1000
-                      ).toLocaleDateString()}
-                      tx={transaction.txid}
-                      amount={convertBalanceForReading(transaction.amount)}
-                    />
-                  );
-                })
-              : null}
-
-            {incoming
-              ? incoming.map((transaction, index) => {
-                  return (
-                    <Transaction
-                      key={index}
-                      status={transaction.type}
-                      date={new Date(
-                        transaction.timestamp * 1000
-                      ).toLocaleDateString()}
-                      tx={transaction.txid}
-                      amount={convertBalanceForReading(transaction.amount)}
                     />
                   );
                 })
