@@ -41,6 +41,10 @@ export function queryMnemonicKeyRPC() {
   return callRpc("query_key", { key_type: "mnemonic" });
 }
 
+export function querySpendKeyRPC() {
+  return callRpc("query_key", { key_type: "spend_key" });
+}
+
 export function transferRPC(params) {
   return callRpc("transfer", params);
 }

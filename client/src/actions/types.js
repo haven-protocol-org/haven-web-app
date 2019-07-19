@@ -41,6 +41,10 @@ export const QUERY_MNEMONIC_FETCHING = "query_mnemonic_fetching";
 export const QUERY_MNEMONIC_FAILED = "query_mneomic_failed";
 export const QUERY_MNEMONIC_SUCCEED = "query_mneomic_succeed";
 
+export const QUERY_SPEND_KEY_FETCHING = "query_spend_key_fetching";
+export const QUERY_SPEND_KEY_FAILED = "query_spend_key_failed";
+export const QUERY_SPEND_KEY_SUCCEED = "query_spend_key_succeed";
+
 /*
 TRANSFER
  */
