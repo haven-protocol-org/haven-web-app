@@ -89,6 +89,7 @@ export const Submit = styled.button`
   transition: 500ms;
   border: none;
   outline: none;
+  cursor: ${props => (props.disabled ? "not-allowed" : "pointer")}
 
   &:hover {
     cursor: pointer;
