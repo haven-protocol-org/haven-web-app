@@ -62,9 +62,9 @@ export const createWallet = seed => {
         const params = {language};
 
         createWalletRPC(params)
-            .then(result => dispatch(createWalletSucceed(result)))
             .then(result => queryMnemonicKeyRPC())
             .then(result => dispatch(queryMnemonicForWalletGenerationSucceed(result.key)))
+            .then(result => dispatch(createWalletSucceed(result)))
             .catch(error => dispatch(createWalletFailed(error)))
 
     };

@@ -42,7 +42,7 @@ class Menu extends Component {
         <Overview>
           <Wrapper>
             <Amount>
-            {convertBalanceForReading(unlocked_balance)}
+            {unlocked_balance === NO_BALANCE? '...loading' : convertBalanceForReading(unlocked_balance)}
           </Amount>
             <Value>XHV Balance</Value>
             {balance !== unlocked_balance ?

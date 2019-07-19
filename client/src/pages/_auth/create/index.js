@@ -107,10 +107,9 @@ class Create extends Component {
           label="Have a Vault already?"
           submit="Generate"
           step={step}
-          loading={loading}
+          loading={!this.props.createdWallet.isCreated}
           nextStep={this.nextStep}
-          prevStep={this.prevStep}
-        >
+          prevStep={this.prevStep}>
           <div>{this.handleSwitch()}</div>
         </Auth>
       </Container>
