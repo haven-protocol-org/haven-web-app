@@ -23,7 +23,12 @@ export const dark = {
     input_value: "#ffffff",
     input_select: "#ffffff",
     input_foreground: "#27292d",
-    input_error: "f04747"
+    input_error: "#f04747"
+  },
+  states: {
+    success: "#34d8ac",
+    error: "#F04747",
+    warning: "#FFC246"
   }
 };
 
@@ -52,6 +57,11 @@ export const light = {
     input_value: "#384451",
     input_select: "#5c5f63",
     input_foreground: "#d9dadf",
-    input_error: "f04747"
+    input_error: "#f04747"
+  },
+  states: {
+    success: "#34d8ac",
+    error: "#F04747",
+    warning: "#FFC246"
   }
 };

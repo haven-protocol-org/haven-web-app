@@ -19,7 +19,7 @@ import {
   Title,
   Description
 } from "./styles";
-import {Spinner} from "../../spinner";
+import { Spinner } from "../../spinner";
 
 const Create = ({
   title,
@@ -32,11 +32,13 @@ const Create = ({
   cancel,
   step,
   width,
+  disabled,
   nextStep,
   prevStep,
   children,
   loading
 }) => {
+  console.log("disabled", disabled);
   return (
     <Container>
       <Header>
@@ -57,17 +59,17 @@ const Create = ({
             <Back onClick={prevStep}>Back</Back>
           )}
           {!loading ? (
-              <div>
-            <Submit onClick={nextStep}>
-              {(step === 1 && "Next") ||
-                (step === 2 && "Verify") ||
-                (step === 3 && "Confirm")}
-            </Submit>
-              </div>
+            <div>
+              <Submit onClick={nextStep} disabled={disabled}>
+                {(step === 1 && "Next") ||
+                  (step === 2 && "Verify") ||
+                  (step === 3 && "Confirm")}
+              </Submit>
+            </div>
           ) : (
             <Submit disabled={true} onClick={nextStep}>
               {step === 3 && "Unlocking..."}
-              <Spinner color={'white'}></Spinner>
+              <Spinner color={"white"} />
             </Submit>
           )}
         </Buttons>

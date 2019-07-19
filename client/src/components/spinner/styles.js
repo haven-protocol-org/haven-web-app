@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {keyframes} from "styled-components";
+import { keyframes } from "styled-components";
 
 const rotate = keyframes`
   0% { -webkit-transform: rotate(0deg); }
@@ -13,7 +13,6 @@ const rotate = keyframes`
   100% { -webkit-transform: rotate(360deg); }
 `;
 
-
 const flip = keyframes`
   0% { -webkit-transform: scaleY(1); }
   10% { -webkit-transform: scaleY(-1); }
@@ -21,7 +20,6 @@ const flip = keyframes`
   60% { -webkit-transform: scaleY(1); }
   100% { -webkit-transform: scaleY(1); }
 `;
-
 
 const scale = keyframes`
   0% { -webkit-transform: scale(1); }
@@ -34,10 +32,8 @@ export const Rotate = styled.div`
   display: inline-block;
   animation: ${scale} 1s ease infinite;
   padding: 2rem 1rem;
-  font-size: .1rem;
+  font-size: 0.1rem;
 `;
-
-
 
 const rotate360 = keyframes`
   0% { -webkit-transform: rotate(0deg); }
@@ -55,8 +51,7 @@ export const RotateDiv = styled.div`
   border-bottom: 2px solid ${props => props.color};
   border-left: 2px solid transparent;
   background: transparent;
-  width: 24px;
-  height: 24px;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
 `;
-

@@ -14,8 +14,8 @@ import {
 } from "./styles";
 
 const Transaction = ({ status, alignment, date, tx, amount, transaction }) => {
-  const last = tx.substring(tx.length - 4);
   const first = tx.substring(0, 4);
+  const last = tx.substring(tx.length - 4);
   const truncated = first + "...." + last;
 
   return (

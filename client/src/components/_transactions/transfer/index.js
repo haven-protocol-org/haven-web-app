@@ -6,6 +6,9 @@ import { Container, Header, Row, Key, Value } from "./styles";
 
 const Transaction = ({ state }) => {
   const { send_ticker, send_amount, recipient_address } = state;
+  const first = recipient_address.substring(0, 4);
+  const last = recipient_address.substring(recipient_address.length - 4);
+  const truncated = first + "...." + last;
 
   return (
     <Container>
@@ -23,9 +26,7 @@ const Transaction = ({ state }) => {
       </Row>
       <Row>
         <Key>Recipient Address</Key>
-        <Value>
-          {recipient_address === "" ? "--" : `${recipient_address}`}
-        </Value>
+        <Value>{recipient_address === "" ? "--" : `${truncated}`}</Value>
       </Row>
 
       <Row>
