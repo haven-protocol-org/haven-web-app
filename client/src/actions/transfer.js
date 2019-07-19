@@ -8,6 +8,7 @@ import {
 } from "./types";
 
  import {getBalances} from "./";
+import {addNotificationByKey} from "./notification";
 
 export const transfer = (address, amount) => {
     amount = amount * 1e12;
@@ -18,6 +19,7 @@ export const transfer = (address, amount) => {
         transferRPC(params)
             .then(result => {
                 dispatch(transferSucceed(result));
+                dispatch(addNotificationByKey(TRANSFER_SUCCEED));
                 dispatch(getTransfers());
                 dispatch(getBalances());
             })

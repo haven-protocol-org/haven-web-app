@@ -2,12 +2,12 @@ import styled from "styled-components";
 import media from "../../../constants/media.js";
 
 export const Container = styled.div`
-  height: 30px;
+  height: 60px;
   width: 100vw;
   background: #34d8ac;
   color: white;
   display: flex;
-  font-size: 13px
+  font-size: 18px
   justify-content: center;
   align-items: center;
   z-index: 1000;

@@ -11,7 +11,7 @@ export default function(state = INITIAL_STATE, action) {
         case ADD_NOTIFICATION:
             return {notifications: [...state.notifications, action.payload]};
         case REMOVE_NOTIFICATION:
-            return {notifications: state.notifications.filter( not => not !== action.payload )};
+            return {notifications: state.notifications.filter( not => not.id !== action.payload )};
         default:
             return state;
     }
