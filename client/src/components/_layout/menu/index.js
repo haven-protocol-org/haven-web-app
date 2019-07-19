@@ -33,21 +33,17 @@ class Menu extends Component {
 
     const {balance, unlocked_balance, blocks_to_unlock} = this.props;
 
-   // if ()
-
-
-
     return (
       <Container>
         <Overview>
           <Wrapper>
             <Amount>
-            {unlocked_balance === NO_BALANCE? '...loading' : convertBalanceForReading(unlocked_balance)}
+            {unlocked_balance === NO_BALANCE? <Spinner/> : convertBalanceForReading(unlocked_balance)}
           </Amount>
             <Value>XHV Balance</Value>
             {balance !== unlocked_balance ?
                 <div>
-            <Amount>
+                    <Amount>
               {convertBalanceForReading(balance - unlocked_balance)}
             </Amount>
                   <Value>Locked XHV Balance</Value></div>:null}

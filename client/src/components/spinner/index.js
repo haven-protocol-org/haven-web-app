@@ -1,11 +1,12 @@
-import {Rotate} from "./styles";
+import {RotateDiv} from "./styles";
 import React from "react";
 import Icon from "../../assets/haven.svg";
 
 
-export const Spinner = ({width}) => {
+export const Spinner = ({color = 'grey', wh = 24}) => {
+
+
+
     return (
-        <Rotate>
-            <img width={'24px'} src={Icon}/>
-        </Rotate>
+        <RotateDiv color={color}></RotateDiv>
     )};

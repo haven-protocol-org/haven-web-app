@@ -8,7 +8,7 @@ import { Container } from "./styles";
 import Auth from "../../../components/_auth/login";
 import Description from "../../../components/_inputs/description";
 import { Information } from "../../../constants/type.js";
-import { IN_SESSION } from "../../../reducers/appState";
+import {IN_SESSION, REQUESTING_SESSION} from "../../../reducers/appState";
 import { restoreWallet } from "../../../actions";
 
 class Login extends Component {
@@ -49,9 +49,9 @@ class Login extends Component {
           link="/create"
           route="Create a Vault"
           label="Don’t have a Vault?"
-          disable={this.state.loading}
+          disable={this.props.session === REQUESTING_SESSION}
           onClick={() => this.handleLogin()}
-          loading={loading}
+          loading={this.props.session === REQUESTING_SESSION}
           information="Before entering your seed phrase please ensure you’re not on a public
         or unsecured wifi connection."
           submit="Submit"

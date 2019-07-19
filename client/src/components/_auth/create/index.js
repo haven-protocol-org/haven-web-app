@@ -19,6 +19,7 @@ import {
   Title,
   Description
 } from "./styles";
+import {Spinner} from "../../spinner";
 
 const Create = ({
   title,
@@ -56,14 +57,17 @@ const Create = ({
             <Back onClick={prevStep}>Back</Back>
           )}
           {!loading ? (
+              <div>
             <Submit onClick={nextStep}>
               {(step === 1 && "Next") ||
                 (step === 2 && "Verify") ||
                 (step === 3 && "Confirm")}
             </Submit>
+              </div>
           ) : (
             <Submit disabled={true} onClick={nextStep}>
               {step === 3 && "Unlocking..."}
+              <Spinner color={'white'}></Spinner>
             </Submit>
           )}
         </Buttons>

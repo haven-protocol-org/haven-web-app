@@ -36,3 +36,27 @@ export const Rotate = styled.div`
   padding: 2rem 1rem;
   font-size: .1rem;
 `;
+
+
+
+const rotate360 = keyframes`
+  0% { -webkit-transform: rotate(0deg); }
+  25% { -webkit-transform: rotate(90deg); }
+  50% { -webkit-transform: rotate(180deg); }
+  75% { -webkit-transform: rotate(270deg); }
+  100% { -webkit-transform: rotate(360deg); }
+`;
+
+export const RotateDiv = styled.div`
+  animation: ${rotate360} 1s linear infinite;
+  transform: translateZ(0);
+  border-top: 2px solid ${props => props.color};
+  border-right: 2px solid ${props => props.color};
+  border-bottom: 2px solid ${props => props.color};
+  border-left: 2px solid transparent;
+  background: transparent;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+`;
+
