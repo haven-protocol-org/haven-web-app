@@ -15,7 +15,7 @@ import {
   Route,
   Label
 } from "./styles";
-import {Spinner} from "../../spinner";
+import { Spinner } from "../../spinner";
 
 const Auth = ({
   title,
@@ -44,8 +44,13 @@ const Auth = ({
         <Buttons>
           <Cancel to="/">Cancel</Cancel>
           <Submit disabled={disable} onClick={onClick}>
-            {loading ? <div><Spinner color={'white'}/></div> : "Login"}
-
+            {loading ? (
+              <div>
+                <Spinner color={"white"} />
+              </div>
+            ) : (
+              "Login"
+            )}
           </Submit>
         </Buttons>
       </Main>
