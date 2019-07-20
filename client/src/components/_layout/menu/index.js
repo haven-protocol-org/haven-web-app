@@ -14,8 +14,8 @@ import {
 import { connect } from "react-redux";
 import { getBalances } from "../../../actions";
 import { selectReadableBalance, NO_BALANCE } from "../../../reducers/balance";
-import {convertBalanceForReading} from "../../../utility";
-import {Spinner} from "../../spinner";
+import { convertBalanceForReading } from "../../../utility";
+import { Spinner } from "../../spinner";
 
 class Menu extends Component {
   state = {
@@ -30,23 +30,30 @@ class Menu extends Component {
   }
 
   render() {
-
-    const {balance, unlocked_balance, blocks_to_unlock} = this.props;
+    const { balance, unlocked_balance, blocks_to_unlock } = this.props;
 
     return (
       <Container>
         <Overview>
           <Wrapper>
             <Amount>
-            {unlocked_balance === NO_BALANCE? <Spinner/> : convertBalanceForReading(unlocked_balance)}
-          </Amount>
-            <Value>XHV Balance</Value>
-            {balance !== unlocked_balance ?
-                <div>
-                    <Amount>
-              {convertBalanceForReading(balance - unlocked_balance)}
+              {unlocked_balance === NO_BALANCE ? (
+                <Spinner />
+              ) : (
+                convertBalanceForReading(balance - unlocked_balance)
+              )}
             </Amount>
-                  <Value>Locked XHV Balance</Value></div>:null}
+            <Value>XHV Balance</Value>
+            {balance !== unlocked_balance ? (
+              <div>
+                <Pending>
+                  You have {convertBalanceForReading(unlocked_balance)} XHV
+                  pending
+                  <br />
+                  Your balances will be updated shortly.
+                </Pending>
+              </div>
+            ) : null}
           </Wrapper>
         </Overview>
         <Item to="/wallet/assets">Assets</Item>

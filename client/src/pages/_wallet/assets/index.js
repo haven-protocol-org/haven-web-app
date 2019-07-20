@@ -11,6 +11,7 @@ import Menu from "../../../components/_layout/menu";
 import Header from "../../../components/_layout/header";
 import Overview from "../../../components/overview";
 import Cell from "../../../components/cell";
+import CellDisabled from "../../../components/cell_disabled";
 // import Card from "../../../components/card";
 // Card can be toggle on later once we have real data
 
@@ -39,7 +40,7 @@ class Assets extends Component {
     return token.map(data => {
       const { token, ticker, price, change } = data;
       return (
-        <Cell
+        <CellDisabled
           fullwidth="fullwidth"
           key={token}
           tokenName={token}
