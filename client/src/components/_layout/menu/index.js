@@ -40,14 +40,14 @@ class Menu extends Component {
               {unlocked_balance === NO_BALANCE ? (
                 <Spinner />
               ) : (
-                convertBalanceForReading(balance - unlocked_balance)
+                convertBalanceForReading(unlocked_balance)
               )}
             </Amount>
             <Value>XHV Balance</Value>
             {balance !== unlocked_balance ? (
               <div>
                 <Pending>
-                  You have {convertBalanceForReading(unlocked_balance)} XHV
+                  You have {convertBalanceForReading(balance - unlocked_balance)} XHV
                   pending
                   <br />
                   Your balances will be updated shortly.
