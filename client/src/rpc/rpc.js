@@ -58,7 +58,7 @@ export function createWalletRPC(params) {
 }
 
 export function getAddressRPC() {
-    return callRpc("get_address", {account_index:0}).then(parseSessionID);
+    return callRpc("get_address", {account_index:0});
 }
 
 export function getHeightRPC() {
