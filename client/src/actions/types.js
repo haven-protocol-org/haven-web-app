@@ -11,6 +11,13 @@ export const RESTORE_WALLET_BY_SEED_FETCHING = "restore_wallet_by_seed_fetching"
 export const RESTORE_WALLET_BY_SEED_SUCCEED = "restore_wallet_by_seed_succeed";
 export const RESTORE_WALLET_BY_SEED_FAILED = "restore_wallet_by_seed_failed";
 
+
+
+export const GET_ADDRESS_FETCHING = "get_address_fetching";
+export const GET_ADDRESS_SUCCEED = "get_address_succeed";
+export const GET_ADDRESS_FAILED = "get_address_failed";
+
+
 /*
 GET BALANCES
  */

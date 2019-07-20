@@ -1,7 +1,7 @@
 // Library Imports
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { transfer } from "../../../actions";
+import { transfer, getAddress } from "../../../actions";
 import history from "../../../history.js";
 
 // Relative Imports
@@ -42,6 +42,11 @@ class Transfer extends Component {
 
   componentDidMount() {
     window.scrollTo(0, 0);
+
+    if (this.props.address === '')
+    {
+        this.props.getAddress();
+    }
   }
 
   handleChange = event => {
@@ -211,5 +216,5 @@ export const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { transfer }
+  { transfer, getAddress }
 )(Transfer);

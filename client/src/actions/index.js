@@ -1,5 +1,5 @@
-import {getHeightRPC} from "../rpc/rpc";
-import {GET_BLOCK_HEIGHT_SUCEED} from "./types";
+import {getAddressRPC, getHeightRPC} from "../rpc/rpc";
+import {GET_ADDRESS_FAILED, GET_ADDRESS_FETCHING, GET_ADDRESS_SUCCEED, GET_BLOCK_HEIGHT_SUCEED} from "./types";
 
 export * from './prices';
 export * from './wallet';
@@ -10,7 +10,20 @@ export * from './theme';
 
 
 
+export const getAddress = () => {
 
+    return(dispatch) => {
+
+        dispatch(getAddressFetching());
+        getAddressRPC()
+            .then(result => dispatch(getAddressSucceed(result)))
+            .catch(error => dispatch(getAddressFailed(error)));
+    }
+};
+
+const getAddressFetching = () => ({type: GET_ADDRESS_FETCHING});
+const getAddressSucceed = (result) => ({type: GET_ADDRESS_SUCCEED, payload:result});
+const getAddressFailed = (error) => ({type: GET_ADDRESS_FAILED, payload: error});
 
 
 export const  getHeight = () => {
