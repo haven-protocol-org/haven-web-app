@@ -2,7 +2,7 @@ import {
   QUERY_MNEMONIC_FETCHING,
   QUERY_MNEMONIC_SUCCEED,
   QUERY_PRIVATE_VIEW_KEY_FETCHING,
-  QUERY_PRIVATE_VIEW_KEY_SUCCEED
+  QUERY_PRIVATE_VIEW_KEY_SUCCEED, QUERY_SPEND_KEY_SUCCEED
 } from "../actions/types";
 
 export const NO_KEY = -1;
@@ -35,7 +35,7 @@ export default function(state = INITIAL_STATE, action) {
         ...state,
         mnemonicKey: { key: action.payload, isFetching: false }
       };
-    case QUERY_MNEMONIC_SUCCEED:
+    case QUERY_SPEND_KEY_SUCCEED:
       return {
         ...state,
         spendKey: { key: action.payload, isFetching: false }

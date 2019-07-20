@@ -46,12 +46,13 @@ const queryPrivateKeyFailed = error => ({
 });
 
 const querySpendKeyFailed = result => ({
-    type: QUERY_SPEND_KEY_SUCCEED,
+    type: QUERY_SPEND_KEY_FAILED,
     payload: result
 });
 
 const querySpendKeySucceed = error => ({
-    type: QUERY_SPEND_KEY_FAILED,
+    type: QUERY_SPEND_KEY_SUCCEED,
+
     payload: error
 });
 
