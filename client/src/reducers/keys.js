@@ -9,7 +9,8 @@ export const NO_KEY = -1;
 
 const INITIAL_STATE = {
   privateViewKey: { key: NO_KEY, isFetching: false },
-  mnemonicKey: { key: NO_KEY, isFetching: false }
+  mnemonicKey: { key: NO_KEY, isFetching: false },
+  spendKey: {key: NO_KEY, isFetching: false}
 };
 
 export default function(state = INITIAL_STATE, action) {
@@ -33,6 +34,11 @@ export default function(state = INITIAL_STATE, action) {
       return {
         ...state,
         mnemonicKey: { key: action.payload, isFetching: false }
+      };
+    case QUERY_MNEMONIC_SUCCEED:
+      return {
+        ...state,
+        spendKey: { key: action.payload, isFetching: false }
       };
     default:
       return state;

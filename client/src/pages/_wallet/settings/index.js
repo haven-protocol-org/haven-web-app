@@ -105,7 +105,7 @@ class Settings extends Component {
               label="Spend Key"
               placeholder="Select Asset"
               width="true"
-              value={spendKey}
+              value={this.props.spendKey.key}
               readOnly
               type={reveal ? "type" : "password"}
             />
