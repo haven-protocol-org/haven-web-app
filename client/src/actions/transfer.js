@@ -8,7 +8,7 @@ import {
 } from "./types";
 
  import {getBalances} from "./";
-import {addNotificationByKey} from "./notification";
+import {addErrorNotification, addNotificationByKey} from "./notification";
 
 export const transfer = (address, amount) => {
     amount = amount * 1e12;
@@ -23,7 +23,7 @@ export const transfer = (address, amount) => {
                 dispatch(getTransfers());
                 dispatch(getBalances());
             })
-            .catch(error => dispatch(transferFailed(error)));
+            .catch(error => dispatch(manageTransferFailed(error)));
     };
 };
 
@@ -33,11 +33,10 @@ export const getTransfers = () => {
         const params = { in: true, out: true, pending: true };
         getTransferRPC(params)
             .then(mergeAndSort)
-            .then(result => {
-
-                dispatch(getTransfersSucceed(result));
-            })
-            .catch(error => dispatch(getTransfersFailed(error)));
+            .then(result => {dispatch(getTransfersSucceed(result))})
+            .catch(error => {
+                dispatch(getTransfersFailed(error))
+            });
     };
 };
 
@@ -64,10 +63,16 @@ const transferSucceed = result => ({
     type: TRANSFER_SUCCEED,
     payload: { ...result, isFetching: false }
 });
-const transferFailed = error => ({
-    type: TRANSFER_FAILED,
-    payload: { ...error, isFetching: false }
-});
+
+const manageTransferFailed = error => {
+    return dispatch => {
+        dispatch(transferFailed(error));
+        dispatch(addErrorNotification(error));
+    }
+};
+
+
+const transferFailed = error => ({type: TRANSFER_FAILED, payload: {...error, isFetching: false}});
 
 
 const mergeAndSort = (result) => {

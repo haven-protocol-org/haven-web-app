@@ -16,7 +16,6 @@ export * from './theme';
 export const  getHeight = () => {
 
   return(dispatch, state) => {
-
     getHeightRPC()
         .then(result => getHeightSucceed(result.height))
         .catch(error => getHeightFailed(error));

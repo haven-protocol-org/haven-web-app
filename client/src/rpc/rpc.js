@@ -79,8 +79,9 @@ function callRpc(method, params) {
   return fetch(rpcUrl, { ...INIT_REQUEST, body: JSON.stringify(objRequest) })
     .then(response => response.json())
     .then(function(response) {
-      console.log(response);
-      if (response.result.error) throw new Error(response.result.error);
+        const error = response.error || response.result.error;
+        if (error)
+          throw error;
       return response.result;
     });
 }

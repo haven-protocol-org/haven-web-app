@@ -1,8 +1,8 @@
 import {TRANSFER_SUCCEED} from "../actions/types";
 import {uuidv4} from "../utility";
 
-const SUCCESS = "success";
-const ERROR = "error";
+export const SUCCESS = "success";
+export const ERROR = "error";
 
 
 const statusMap = new Map();

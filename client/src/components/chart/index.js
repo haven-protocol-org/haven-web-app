@@ -28,7 +28,7 @@ class Chart extends Component {
             maintainAspectRatio: false,
             title: {
               display: true,
-                text:'last 14 days'
+                text:'XHV/USD last 14 days'
             },
             legend: {
               display: false

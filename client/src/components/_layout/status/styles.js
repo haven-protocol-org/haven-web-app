@@ -4,9 +4,7 @@ import media from "../../../constants/media.js";
 export const Container = styled.div`
   height: 60px;
   width: 100vw;
-/*
-  background: ${props => props.theme.status[props.notification.type]};
-*/
+  background: ${props => props.theme.states[props.type]};
   color: white;
   display: flex;
   font-size: 18px

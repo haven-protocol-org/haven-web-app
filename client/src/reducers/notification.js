@@ -1,6 +1,6 @@
 import {
     ADD_NOTIFICATION,
-    REMOVE_NOTIFICATION
+    REMOVE_NOTIFICATION, TRANSFER_FAILED
 } from "../actions/types";
 
 
@@ -19,11 +19,9 @@ export default function(state = INITIAL_STATE, action) {
 
 export const getNotification = (state) => {
 
-    if (state.notification.notifications.length > 0)
-    {
+    if (state.notification.notifications.length > 0) {
         return state.notification.notifications[0];
     }
-
     return undefined;
 
 };
