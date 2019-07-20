@@ -38,7 +38,6 @@ const Create = ({
   children,
   loading
 }) => {
-  console.log("disabled", disabled);
   return (
     <Container>
       <Header>
