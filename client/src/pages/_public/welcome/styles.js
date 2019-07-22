@@ -22,7 +22,7 @@ const ticker = keyframes`
 
 export const Scroller = styled.div`
   height: auto;
-  width: 100vw;
+  width: 98vw;
   display: flex;
   overflow-x: auto;
   margin-top: 150px;
@@ -86,7 +86,7 @@ export const Page = styled.div`
 
 export const Container = styled.div`
   min-height: 90vh;
-  width: 100vw;
+  //width: 100vw;
   display: flex;
   flex-direction: column;
   background: #2b2e34;
