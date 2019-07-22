@@ -47,7 +47,7 @@ store.subscribe(() => {
 
 ReactDOM.render(
   <Provider store={store}>
-    <GlobalStyle />x
+    <GlobalStyle />
     <App />
   </Provider>,
   document.querySelector("#root")
