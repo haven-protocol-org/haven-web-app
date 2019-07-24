@@ -4,7 +4,7 @@ import media from "../../../constants/media.js";
 export const Container = styled.div`
   background: ${props => props.theme.body.background};
   height: auto;
-  overflow: scroll;
+  overflow: auto;
   display: grid;
   grid-gap: 20px;
   margin-top: 60px;
