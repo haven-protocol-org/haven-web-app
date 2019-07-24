@@ -26,7 +26,7 @@ const getAddressSucceed = (result) => ({type: GET_ADDRESS_SUCCEED, payload:resul
 const getAddressFailed = (error) => ({type: GET_ADDRESS_FAILED, payload: error});
 
 
-export const  getHeight = () => {
+export const getHeight = () => {
 
   return(dispatch, state) => {
     getHeightRPC()
@@ -37,5 +37,8 @@ export const  getHeight = () => {
 
 const getHeightSucceed = (height) => ({type: GET_BLOCK_HEIGHT_SUCEED, payload:height});
 const getHeightFailed = (error) => ({type: GET_BLOCK_HEIGHT_SUCEED, payload: error});
+
+
+//export const
 
 

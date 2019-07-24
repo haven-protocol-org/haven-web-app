@@ -1,7 +1,7 @@
 import {NO_BALANCE} from "./reducers/balance";
 
 
-export const convertTimestampToDateString = (timestamp) => new Date(timestamp ).toISOString();
+export const convertTimestampToDateString = (timestamp) => new Date(timestamp ).toLocaleDateString();
 
 
 

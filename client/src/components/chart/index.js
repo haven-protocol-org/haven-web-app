@@ -34,10 +34,18 @@ class Chart extends Component {
               display: false
             },
             scales: {
-              yAxes: [{ display: true }],
+              yAxes: [{ display: true, ticks: {callback: (value, index, values) => '$' + value} }],
               xAxes: [{ display: false }]
             },
             tooltips: {
+                callbacks: {
+
+                    label: function (item,data) {
+
+                        return "$" + item.yLabel.toFixed(2);
+
+                    }
+                },
               yAlign: "bottom",
               xAlign: "center",
               xPadding: 20,
