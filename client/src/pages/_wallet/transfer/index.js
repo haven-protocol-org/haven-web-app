@@ -91,6 +91,10 @@ class Transfer extends Component {
   };
 
   copyAddressToClipBoard = () => {
+
+   this.addressValue.select();
+    document.execCommand("copy");
+    document.getSelection().empty();
     this.setState({
       copyButtonState: "Address Copied"
     });

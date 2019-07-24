@@ -5,7 +5,7 @@ import React from "react";
 import { Container, Field, Labels } from "./styles";
 import { Label, Error } from "../../../constants/type.js";
 
-const Input = ({
+const Input = React.forwardRef (({
   type,
   placeholder,
   label,
@@ -15,7 +15,7 @@ const Input = ({
   value,
   width,
   readOnly
-}) => {
+}, ref) => {
   return (
     <Container width={width}>
       <Labels>
@@ -23,6 +23,7 @@ const Input = ({
         <Error>{error}</Error>
       </Labels>
       <Field
+          ref={ref}
         type={type}
         value={value}
         name={name}
@@ -32,6 +33,6 @@ const Input = ({
       />
     </Container>
   );
-};
+});
 
 export default Input;
