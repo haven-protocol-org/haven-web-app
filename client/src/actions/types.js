@@ -72,6 +72,7 @@ export const GET_PRICE_HISTORY_SUCCEED = "get_price_data_succeed";
 export const GET_PRICE_HISTORY_FAILED = "get_price_data_failed";
 
 
+export const GET_BLOCK_HEIGHT_FETCHING = "get_block_height_fetching";
 export const GET_BLOCK_HEIGHT_SUCEED = "get_block_height_succeed";
 export const GET_BLOCK_HEIGHT_FAILED = "get_block_height_failed";
 

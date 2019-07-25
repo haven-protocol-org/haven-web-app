@@ -11,9 +11,35 @@ import Transfer from "../../pages/_wallet/transfer";
 import Settings from "../../pages/_wallet/settings";
 import {connect} from "react-redux";
 import {IN_SESSION} from "../../reducers/appState";
+import {refresh} from "../../actions";
 
+
+/**
+ *root component for private wallet
+ * by updating blockheight in given interval
+ * it is responsible for updating blockheight related data ( balances, transfers )
+ * which is done in the action getHeight which might not be the best place -> c'est la vie
+ */
 class PrivateRoutes extends Component {
-  render() {
+
+     constructor(props) {
+         super(props);
+     }
+
+
+    componentDidMount() {
+
+         this.timer = setInterval(this.props.refresh, 10000);
+
+    }
+
+    componentWillUnmount() {
+
+        clearInterval(this.timer);
+    }
+
+
+    render() {
 
       const {match} = this.props;
 
@@ -41,4 +67,4 @@ export const mapStateToProps = state => ({
 });
 
 export default connect(
-    mapStateToProps,{})(PrivateRoutes);
+    mapStateToProps,{refresh})(PrivateRoutes);

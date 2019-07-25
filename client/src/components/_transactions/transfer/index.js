@@ -31,7 +31,7 @@ const Transaction = ({ state }) => {
 
       <Row>
         <Key>Transaction Fee</Key>
-        <Value>0.0203 XHV</Value>
+        <Value>MISSING VALUE</Value>
       </Row>
     </Container>
   );

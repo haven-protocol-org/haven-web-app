@@ -25,7 +25,6 @@ app.use(cors());
 // Tell express to use the body-parser middleware and to not parse extended bodies
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
 // Route that receives a POST request to /incoming
 app.post("/rpc", function(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");

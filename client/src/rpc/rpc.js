@@ -65,6 +65,10 @@ export function getHeightRPC() {
   return callRpc('get_height');
 }
 
+export function refreshRPC(start_height = 0) {
+  return callRpc('refresh' ,{start_height});
+}
+
 function callRpc(method, params) {
   const rpcUrl = process.env.REACT_APP_RPC_URL;
   const objRequest = {
