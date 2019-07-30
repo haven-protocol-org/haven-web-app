@@ -18,7 +18,8 @@ class Timline extends Component {
         <Container>
           <Microcopy>
             <Heading>
-              Haven <br />
+              Haven Protocol
+              <br />
               Timeline
             </Heading>
           </Microcopy>
