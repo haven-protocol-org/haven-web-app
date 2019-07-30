@@ -28,11 +28,6 @@ const Transaction = ({ state }) => {
         <Key>Recipient Address</Key>
         <Value>{recipient_address === "" ? "--" : `${truncated}`}</Value>
       </Row>
-
-      <Row>
-        <Key>Transaction Fee</Key>
-        <Value>MISSING VALUE</Value>
-      </Row>
     </Container>
   );
 };
