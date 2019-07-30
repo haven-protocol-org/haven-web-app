@@ -19,7 +19,7 @@ import {
 } from "./styles";
 
 import Footer from "../../../components/footer";
-import Content from "../../../components/_public/content";
+import Content from "../../../components/_public/welcome";
 import Link from "../../../components/_buttons/link";
 import Button from "../../../components/_buttons/button";
 
