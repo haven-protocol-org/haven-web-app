@@ -41,28 +41,6 @@ class Welcome extends Component {
     });
   };
 
-  renderTokens = () => {
-    const { oracle } = this.state;
-
-    return oracle.map(info => {
-      const { token, ticker, data } = info;
-      return (
-        <Cards key={token}>
-          <Header>
-            <Section>
-              <Title left>{ticker}</Title>
-              <Title>{data[0]}</Title>
-            </Section>
-            <Section>
-              <Subtitle>{token}</Subtitle>
-              <Subtitle>0.00%</Subtitle>
-            </Section>
-          </Header>
-        </Cards>
-      );
-    });
-  };
-
   render() {
     return (
       <Page>
@@ -76,9 +54,6 @@ class Welcome extends Component {
               <Button onClick={this.handleClick} label="Learn More" />
             </Buttons>
           </Microcopy>
-          <Scroller>
-            <Wrapper>{this.renderTokens()}</Wrapper>
-          </Scroller>
         </Container>
         <Content />
         <Footer />
