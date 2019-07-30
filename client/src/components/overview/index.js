@@ -5,20 +5,29 @@ import React from "react";
 import { Container, Amount, Value, Wrapper, Pending } from "./styles";
 import { NO_BALANCE } from "../../reducers/balance";
 import { convertBalanceForReading } from "../../utility";
+import { Spinner } from "../spinner/index.js";
 
-const Overview = ({ balance, unlocked_balance }) => {
+const Overview = ({ balance, unlocked_balance, blocks_to_unlock }) => {
   return (
     <Container>
       <Wrapper>
-        <Amount>{convertBalanceForReading(balance)}</Amount>
+        <Amount>
+          {unlocked_balance === NO_BALANCE ? (
+            <Spinner />
+          ) : (
+            convertBalanceForReading(unlocked_balance)
+          )}
+        </Amount>
         <Value>XHV Balance</Value>
-        <Amount>{convertBalanceForReading(unlocked_balance)}</Amount>
-        <Value>Unlocked XHV Balance</Value>
-        {balance > 0 ? (
-          <Pending>
-            You recently received XHV. <br />
-            In it'll be unlocked and added to your balance.
-          </Pending>
+        {balance !== unlocked_balance ? (
+          <div>
+            <Pending>
+              You have {convertBalanceForReading(balance - unlocked_balance)}{" "}
+              XHV pending
+              <br />
+              Your balances will be updated shortly.
+            </Pending>
+          </div>
         ) : null}
       </Wrapper>
     </Container>

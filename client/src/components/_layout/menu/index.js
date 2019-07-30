@@ -47,7 +47,8 @@ class Menu extends Component {
             {balance !== unlocked_balance ? (
               <div>
                 <Pending>
-                  You have {convertBalanceForReading(balance - unlocked_balance)} XHV
+                  You have{" "}
+                  {convertBalanceForReading(balance - unlocked_balance)} XHV
                   pending
                   <br />
                   Your balances will be updated shortly.
