@@ -30,7 +30,7 @@ const Content = () => {
             <Label>Complete</Label>
           </Complete>
           <Data>
-            <Title complete>Relase Haven Vault</Title>
+            <Title complete>Release Haven Vault</Title>
             <Description>
               At vero eos et accusamus et iusto odio dignissimos ducimus qui
               blanditiis praesentium voluptatum deleniti atque corrupti quos
