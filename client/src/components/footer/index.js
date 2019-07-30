@@ -185,7 +185,6 @@ const Footer = () => {
         <Internal to="/faq">F.A.Q</Internal>
         <Internal to="/timeline">Timeline</Internal>
         <Disabled to="/">Media Kit</Disabled>
-        <Disabled to="/">Whitepaper</Disabled>
       </Section>
     </Container>
   );
