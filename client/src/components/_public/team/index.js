@@ -53,16 +53,16 @@ const Content = () => {
             <Title>Neac</Title>
             <Description>Protocol Lead</Description>
           </Cell>
+          <Cell>
+            <Avatar src={news} />
+            <Title>Newscutter</Title>
+            <Description>Marketing Lead</Description>
+          </Cell>
         </Core>
       </Wrapper>
       <Wrapper>
         <Heading>Contributing Team</Heading>
         <Contributors>
-          <Cell>
-            <Avatar src={news} />
-            <Title>Newscutter</Title>
-            <Description>Growth & Marketing</Description>
-          </Cell>
           <Cell>
             <Avatar src={baki} />
             <Title>Nbourbaki</Title>
@@ -108,11 +108,7 @@ const Content = () => {
             <Title>Luge</Title>
             <Description>Community Manager</Description>
           </Cell>
-          <Cell>
-            <Avatar src={nick} />
-            <Title>NickM4</Title>
-            <Description>Community Manager</Description>
-          </Cell>
+
           <Cell>
             <Avatar src={rare} />
             <Title>Rarecommons</Title>
