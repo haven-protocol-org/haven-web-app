@@ -183,8 +183,8 @@ const Footer = () => {
         <Internal to="/team">Team</Internal>
         <Internal to="/blog">Blog</Internal>
         <Internal to="/faq">F.A.Q</Internal>
+        <Internal to="/timeline">Timeline</Internal>
         <Disabled to="/">Media Kit</Disabled>
-        <Disabled to="/">Timeline</Disabled>
         <Disabled to="/">Whitepaper</Disabled>
       </Section>
     </Container>
