@@ -65,7 +65,7 @@ class Assets extends Component {
           <Cell
             fullwidth="fullwidth"
             key={1}
-            tokenName={"Haven Protocol"}
+            tokenName={"Haven"}
             ticker={"XHV"}
             price={"$1.23"}
             change={"MISSING VALUE"}
