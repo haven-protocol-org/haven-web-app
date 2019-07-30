@@ -13,11 +13,7 @@ class Page extends Component {
   };
 
   render() {
-    return (
-        <Container>
-          {this.props.children}
-        </Container>
-    );
+    return <Container>{this.props.children}</Container>;
   }
 }
 
