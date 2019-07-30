@@ -19,7 +19,7 @@ import Tab from "../../../components/tab/index.js";
 
 import { Container } from "./styles";
 
-const options = [{ asset: "Haven Token", ticker: "XHV" }];
+const options = [{ asset: "Haven", ticker: "XHV" }];
 
 class Transfer extends Component {
   constructor(props) {
@@ -29,7 +29,7 @@ class Transfer extends Component {
 
   state = {
     status: false,
-    send_asset: "Haven Token",
+    send_asset: "Haven",
     send_amount: "",
     send_ticker: "XHV",
     recipient_address: "",
@@ -43,9 +43,8 @@ class Transfer extends Component {
   componentDidMount() {
     window.scrollTo(0, 0);
 
-    if (this.props.address === '')
-    {
-        this.props.getAddress();
+    if (this.props.address === "") {
+      this.props.getAddress();
     }
   }
 
@@ -91,8 +90,7 @@ class Transfer extends Component {
   };
 
   copyAddressToClipBoard = () => {
-
-   this.addressValue.select();
+    this.addressValue.select();
     document.execCommand("copy");
     document.getSelection().empty();
     this.setState({
@@ -104,7 +102,6 @@ class Transfer extends Component {
         copyButtonState: "Copy Address"
       });
     }, 1000);
-
   };
 
   render() {
@@ -188,7 +185,7 @@ class Transfer extends Component {
 
                 <Input
                   ref={textarea => (this.addressValue = textarea)}
-                  label="Haven Token Address"
+                  label="Haven Address"
                   placeholder="...load address"
                   width="true"
                   name="recipient_address"
