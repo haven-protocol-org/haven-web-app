@@ -42,11 +42,7 @@ const Content = () => {
             <Title>Dweab</Title>
             <Description>Project Lead</Description>
           </Cell>
-          <Cell>
-            <Avatar src={baki} />
-            <Title>Nbourbaki</Title>
-            <Description>Oracle Lead</Description>
-          </Cell>
+
           <Cell>
             <Avatar src={pierre} />
             <Title>Pierre Lafitte</Title>
@@ -66,6 +62,11 @@ const Content = () => {
             <Avatar src={news} />
             <Title>Newscutter</Title>
             <Description>Growth & Marketing</Description>
+          </Cell>
+          <Cell>
+            <Avatar src={baki} />
+            <Title>Nbourbaki</Title>
+            <Description>Oracle Lead</Description>
           </Cell>
           <Cell>
             <Avatar src={marty} />

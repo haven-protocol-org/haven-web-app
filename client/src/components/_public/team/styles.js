@@ -25,7 +25,7 @@ export const Wrapper = styled.div`
 export const Core = styled.div`
   display: grid;
   height: auto;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 20px;
   padding: 40px 20px;
   background: #36393f;
