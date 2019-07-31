@@ -15,8 +15,7 @@ import {
   Line,
   Circle,
   Icon,
-  Progress,
-  Soon
+  Progress
 } from "./styles";
 import tick from "../../../assets/icons/tick.svg";
 
