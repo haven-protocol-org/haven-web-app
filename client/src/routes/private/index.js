@@ -1,6 +1,6 @@
 // Library Imports
 import React, { Component } from "react";
-import {Redirect, Route} from "react-router-dom";
+import { Redirect, Route } from "react-router-dom";
 
 // Relative Imports
 
@@ -9,10 +9,9 @@ import Details from "../../pages/_wallet/details";
 import Exchange from "../../pages/_wallet/exchange";
 import Transfer from "../../pages/_wallet/transfer";
 import Settings from "../../pages/_wallet/settings";
-import {connect} from "react-redux";
-import {IN_SESSION} from "../../reducers/appState";
-import {refresh} from "../../actions";
-
+import { connect } from "react-redux";
+import { IN_SESSION } from "../../reducers/appState";
+import { refresh } from "../../actions";
 
 /**
  *root component for private wallet
@@ -21,36 +20,23 @@ import {refresh} from "../../actions";
  * which is done in the action getHeight which might not be the best place -> c'est la vie
  */
 class PrivateRoutes extends Component {
+  componentDidMount() {
+    this.timer = setInterval(this.props.refresh, 30000);
+  }
 
-     constructor(props) {
-         super(props);
-     }
+  componentWillUnmount() {
+    clearInterval(this.timer);
+  }
 
+  render() {
+    const { match } = this.props;
 
-    componentDidMount() {
-
-         this.timer = setInterval(this.props.refresh, 30000);
-
+    if (this.props.sessionState !== IN_SESSION) {
+      return <Redirect to="/" />;
     }
-
-    componentWillUnmount() {
-
-        clearInterval(this.timer);
-    }
-
-
-    render() {
-
-      const {match} = this.props;
-
-      if (this.props.sessionState !== IN_SESSION)
-      {
-         return (<Redirect to="/"/>)
-      }
-
 
     return (
-        <div>
+      <div>
         <Route path={`${match.url}/assets`} exact component={Assets} />
         <Route path={`${match.url}/assets/:id`} exact component={Details} />
         <Route path={`${match.url}/exchange`} exact component={Exchange} />
@@ -61,10 +47,11 @@ class PrivateRoutes extends Component {
   }
 }
 
-
 export const mapStateToProps = state => ({
-    sessionState: state.appState.session
+  sessionState: state.appState.session
 });
 
 export default connect(
-    mapStateToProps,{refresh})(PrivateRoutes);
+  mapStateToProps,
+  { refresh }
+)(PrivateRoutes);

@@ -66,8 +66,6 @@ class Settings extends Component {
 
   render() {
     const { value, reveal } = this.state;
-    // const privateKey = "private key";
-    const spendKey = "spend key";
     return (
       <Page>
         <Menu />

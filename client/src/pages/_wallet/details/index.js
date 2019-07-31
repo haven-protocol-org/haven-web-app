@@ -45,9 +45,7 @@ class Details extends Component {
   render() {
     const { id } = this.props.match.params;
     const { amount, price, value } = this.getBalancePriceStats();
-    const { pending, out, all, isFetching } = this.props.transferList;
-    const block = all[5];
-    const incoming = this.props.transferList.in;
+    const { all, isFetching } = this.props.transferList;
 
     const centerSpinner = {
       display: "flex",

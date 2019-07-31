@@ -2,7 +2,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getBalances } from "../../../actions";
-import { selectReadableBalance, NO_BALANCE } from "../../../reducers/balance";
 
 // Relative Imports
 import Page from "../../../components/_layout/page";
@@ -12,8 +11,6 @@ import Header from "../../../components/_layout/header";
 import Overview from "../../../components/overview";
 import Cell from "../../../components/cell";
 import CellDisabled from "../../../components/cell_disabled";
-// import Card from "../../../components/card";
-// Card can be toggle on later once we have real data
 
 import data from "../../../constants/data.js";
 

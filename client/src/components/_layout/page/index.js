@@ -5,7 +5,6 @@ import { transfer } from "../../../actions";
 
 // Relative Imports
 import { Container } from "./styles";
-import Status from "../status/index.js";
 
 class Page extends Component {
   state = {

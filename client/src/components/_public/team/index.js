@@ -29,7 +29,6 @@ import serpent from "../../../assets/team/serpent.png";
 import rad from "../../../assets/team/rad.png";
 import jriggs from "../../../assets/team/jriggs.png";
 import luge from "../../../assets/team/luge.png";
-import nick from "../../../assets/team/nick.png";
 
 const Content = () => {
   return (

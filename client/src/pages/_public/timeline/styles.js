@@ -1,7 +1,5 @@
 import styled from "styled-components";
 import media from "../../../constants/media.js";
-import { link, link_hover } from "../../../constants/colors.js";
-
 import img from "../../../assets/binary.svg";
 
 export const Page = styled.div`

@@ -1,26 +1,6 @@
 import styled from "styled-components";
 import { keyframes } from "styled-components";
 
-const rotate = keyframes`
-  0% { -webkit-transform: rotate(0deg); }
-  10% { -webkit-transform: rotate(90deg); }
-  25% { -webkit-transform: rotate(90deg); }
-  35% { -webkit-transform: rotate(180deg); }
-  50% { -webkit-transform: rotate(180deg); }
-  60% { -webkit-transform: rotate(270deg); }
-  75% { -webkit-transform: rotate(270deg); }
-  85% { -webkit-transform: rotate(360deg); }
-  100% { -webkit-transform: rotate(360deg); }
-`;
-
-const flip = keyframes`
-  0% { -webkit-transform: scaleY(1); }
-  10% { -webkit-transform: scaleY(-1); }
-  50% { -webkit-transform: scaleY(-1); }
-  60% { -webkit-transform: scaleY(1); }
-  100% { -webkit-transform: scaleY(1); }
-`;
-
 const scale = keyframes`
   0% { -webkit-transform: scale(1); }
   50% { -webkit-transform: scale(.7); }
@@ -51,7 +31,7 @@ export const RotateDiv = styled.span`
   border-bottom: 2px solid ${props => props.color};
   border-left: 2px solid transparent;
   background: transparent;
-  display:inline-block;
+  display: inline-block;
   width: 16px;
   height: 16px;
   border-radius: 50%;

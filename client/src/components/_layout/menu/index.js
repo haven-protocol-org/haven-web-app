@@ -13,7 +13,7 @@ import {
 } from "./styles";
 import { connect } from "react-redux";
 import { getBalances } from "../../../actions";
-import { selectReadableBalance, NO_BALANCE } from "../../../reducers/balance";
+import { NO_BALANCE } from "../../../reducers/balance";
 import { convertBalanceForReading } from "../../../utility";
 import { Spinner } from "../../spinner";
 
@@ -30,7 +30,7 @@ class Menu extends Component {
   }
 
   render() {
-    const { balance, unlocked_balance, blocks_to_unlock } = this.props;
+    const { balance, unlocked_balance } = this.props;
 
     return (
       <Container>
