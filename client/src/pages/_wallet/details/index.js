@@ -18,7 +18,7 @@ import { getPriceValues, NO_PRICE } from "../../../reducers/priceHistory";
 import { getPriceDates } from "../../../reducers/priceHistory";
 import { selectReadableBalance, NO_BALANCE } from "../../../reducers/balance";
 import { convertBalanceForReading } from "../../../utility";
-import {Spinner} from "../../../components/spinner";
+import { Spinner } from "../../../components/spinner";
 
 class Details extends Component {
   componentDidMount() {
@@ -48,17 +48,16 @@ class Details extends Component {
 
   render() {
     const { id } = this.props.match.params;
-
     const { amount, price, value } = this.getBalancePriceStats();
-
     const { pending, out, all, isFetching } = this.props.transferList;
+    const block = all[5];
     const incoming = this.props.transferList.in;
 
     const centerSpinner = {
-      display:'flex',
-      justifyContent:'center',
-      gridColumn:'1 /3',
-      width:'100%',
+      display: "flex",
+      justifyContent: "center",
+      gridColumn: "1 /3",
+      width: "100%"
     };
 
     return (
@@ -93,27 +92,37 @@ class Details extends Component {
             title="History"
             description={`Review your ${id} transaction history`}
           />
-          {isFetching? <div style={centerSpinner}><span style={{paddingRight:'15px', color:'grey'}}>..loading transfers</span><Spinner/></div> :
-              <History>
-                {all
-                    ? all.map((transaction, index) => {
-                      return (
-                          <Transaction
-                              key={index}
-                              status={transaction.type}
-                              date={new Date(
-                                  transaction.timestamp * 1000
-                              ).toLocaleDateString()}
-                              tx={transaction.txid}
-                              amount={convertBalanceForReading(transaction.amount)}
-                              transaction={transaction}
-                          />
-                      );
-                    })
-                    : null}
-               {/* <LoadMore onClick={this.fetchData} label="Load More" />*/}
-              </History>}
-
+          {isFetching ? (
+            <div style={centerSpinner}>
+              <span style={{ paddingRight: "15px", color: "grey" }}>
+                ..loading transfers
+              </span>
+              <Spinner />
+            </div>
+          ) : (
+            <History>
+              {all
+                ? all.map((transaction, index) => {
+                    return (
+                      <Transaction
+                        key={index}
+                        status={transaction.type}
+                        price={price}
+                        block={transaction.height}
+                        fee={convertBalanceForReading(transaction.fee)}
+                        date={new Date(
+                          transaction.timestamp * 1000
+                        ).toLocaleDateString()}
+                        tx={transaction.txid}
+                        amount={convertBalanceForReading(transaction.amount)}
+                        transaction={transaction}
+                      />
+                    );
+                  })
+                : null}
+              {/* <LoadMore onClick={this.fetchData} label="Load More" />*/}
+            </History>
+          )}
         </Body>
       </Page>
     );
