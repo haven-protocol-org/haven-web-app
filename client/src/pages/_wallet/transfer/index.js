@@ -9,7 +9,6 @@ import Page from "../../../components/_layout/page";
 import Body from "../../../components/_layout/body";
 import Menu from "../../../components/_layout/menu";
 import Header from "../../../components/_layout/header";
-import Status from "../../../components/_layout/status/";
 import Input from "../../../components/_inputs/input";
 import Form from "../../../components/_inputs/form";
 import Dropdown from "../../../components/_inputs/dropdown";
@@ -29,7 +28,6 @@ class Transfer extends Component {
   }
 
   state = {
-    status: false,
     send_asset: "Haven",
     send_amount: "",
     send_ticker: "XHV",
@@ -67,7 +65,8 @@ class Transfer extends Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.numTransferOuts >= this.props.numTransferOuts) {
+    if (nextProps.numTransferOuts > this.props.numTransferOuts) {
+
       history.push("/wallet/assets/XHV");
     }
   }
@@ -107,12 +106,10 @@ class Transfer extends Component {
 
   render() {
     const {
-      status,
       send_asset,
       send_amount,
       send_ticker,
       recipient_address,
-      loading
     } = this.state;
 
     return (
@@ -164,7 +161,7 @@ class Transfer extends Component {
                 <Transaction state={this.state} />
                 <Footer
                   onClick={this.handleSubmit}
-                  loading={loading}
+                  loading={this.props.latestTransfer.isFetching}
                   label="Transfer"
                   validated={this.state.validated}
                 />
@@ -197,7 +194,6 @@ class Transfer extends Component {
               <Container>
                 <Footer
                   onClick={this.copyAddressToClipBoard}
-                  loading={loading}
                   label={this.state.copyButtonState}
                   validated={this.state.validated}
                 />
