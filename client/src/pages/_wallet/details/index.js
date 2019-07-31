@@ -33,9 +33,7 @@ class Details extends Component {
     }
   }
 
-  fetchData = () => {
-    alert("Load more data");
-  };
+  fetchData = () => {};
 
   getBalancePriceStats() {
     console.log("get balance stats");
