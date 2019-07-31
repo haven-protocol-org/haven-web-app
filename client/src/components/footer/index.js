@@ -154,7 +154,7 @@ const Footer = () => {
           href="https://www.tokok.com/market?symbol=XHV_BTC"
           target="_blank"
         >
-          TokTok
+          Tokok
         </External>
         <External
           rel="noopener"
