@@ -29,7 +29,7 @@ class PrivateRoutes extends Component {
 
     componentDidMount() {
 
-         this.timer = setInterval(this.props.refresh, 10000);
+         this.timer = setInterval(this.props.refresh, 30000);
 
     }
 

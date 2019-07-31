@@ -18,6 +18,7 @@ import Transaction from "../../../components/_transactions/transfer";
 import Tab from "../../../components/tab/index.js";
 
 import { Container } from "./styles";
+import {selectNumOfTransferOuts} from "../../../reducers/transferList";
 
 const options = [{ asset: "Haven", ticker: "XHV" }];
 
@@ -66,7 +67,7 @@ class Transfer extends Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.transferOuts !== this.props.transferOuts) {
+    if (nextProps.numTransferOuts >= this.props.numTransferOuts) {
       history.push("/wallet/assets/XHV");
     }
   }
@@ -211,7 +212,7 @@ class Transfer extends Component {
 
 export const mapStateToProps = state => ({
   latestTransfer: state.transfer,
-  transferOuts: state.transferList.out,
+  numTransferOuts: selectNumOfTransferOuts(state),
   address: state.address.main
 });
 

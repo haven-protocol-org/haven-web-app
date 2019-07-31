@@ -7,7 +7,7 @@ import appState from "./appState.js";
 import { balance } from "./balance.js";
 import keys from "./keys";
 import transfer from "./transfer";
-import transferList from "./transferList";
+import { transferList } from "./transferList";
 import { priceHistory } from "./priceHistory";
 import notification from "./notification";
 import walletCreation from "./walletCreation";

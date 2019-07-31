@@ -12,6 +12,8 @@ const INIT_REQUEST = {
 
 let sessionID = -1;
 
+let processingCalls = 0;
+
 function parseSessionID(result) {
 
   sessionID = result.sessionid;
@@ -70,6 +72,29 @@ export function refreshRPC(start_height = 0) {
 }
 
 function callRpc(method, params) {
+
+  console.log(processingCalls);
+  if(processingCalls++ > 0)
+  {
+    console.log('with delay');
+    return delay(200)
+        .then(() =>
+        {
+          return executeCallRPC(method, params)
+        });
+  }
+  else
+  {
+    console.log('without delay');
+    return executeCallRPC(method, params);
+  }
+
+}
+
+
+function executeCallRPC(method, params) {
+
+
   const rpcUrl = process.env.REACT_APP_RPC_URL;
   const objRequest = {
     id: 0,
@@ -85,11 +110,17 @@ function callRpc(method, params) {
   if (sessionID !== -1) objRequest.sessionID = sessionID;
 
   return fetch(rpcUrl, { ...INIT_REQUEST, body: JSON.stringify(objRequest) })
-    .then(response => response.json())
-    .then(function(response) {
+      .then(response => response.json())
+      .then(function(response) {
+
+        processingCalls--;
         const error = response.error || response.result.error;
         if (error)
           throw error;
-      return response.result;
-    });
+        return response.result;
+      });
+
 }
+
+const delay = t => new Promise(resolve => setTimeout(resolve, t));
+

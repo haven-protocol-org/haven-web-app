@@ -15,7 +15,7 @@ const INITIAL_STATE = {
   minHeight:-1
 };
 
-export default function(state = INITIAL_STATE, action) {
+export function transferList(state = INITIAL_STATE, action) {
   switch (action.type) {
     case GET_TRANSFERS_FETCHING:
       return { ...state, isFetching: true };
@@ -32,3 +32,10 @@ export default function(state = INITIAL_STATE, action) {
       return state;
   }
 }
+
+
+export function selectNumOfTransferOuts(state) {
+
+  return state.transferList.out.length;
+
+};
