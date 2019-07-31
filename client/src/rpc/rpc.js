@@ -77,10 +77,10 @@ function callRpc(method, params) {
   if(processingCalls++ > 0)
   {
     console.log('with delay');
-    return delay(200)
+    return delay(processingCalls * 200)
         .then(() =>
         {
-          return executeCallRPC(method, params)
+          return executeCallRPC(method, params);
         });
   }
   else
