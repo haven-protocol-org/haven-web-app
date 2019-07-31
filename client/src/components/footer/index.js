@@ -2,14 +2,7 @@
 import React from "react";
 
 // Relative Imports
-import {
-  Container,
-  Title,
-  Internal,
-  Disabled,
-  External,
-  Section
-} from "./styles";
+import { Container, Title, Internal, External, Section } from "./styles";
 
 const Footer = () => {
   return (
