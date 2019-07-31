@@ -9,7 +9,6 @@ import Header from "../../../components/_layout/header";
 import Transaction from "../../../components/transaction";
 import Statistic from "../../../components/statistic";
 import Chart from "../../../components/chart";
-import LoadMore from "../../../components/load-more";
 
 import { History, Row } from "./styles";
 import { connect } from "react-redux";
@@ -36,7 +35,6 @@ class Details extends Component {
   fetchData = () => {};
 
   getBalancePriceStats() {
-    console.log("get balance stats");
     let amount = this.props.balance === NO_BALANCE ? 1 : this.props.balance;
     let price = this.props.lastPrice === NO_PRICE ? 1 : this.props.lastPrice;
     let value = price * amount;
@@ -118,7 +116,6 @@ class Details extends Component {
                     );
                   })
                 : null}
-              {/* <LoadMore onClick={this.fetchData} label="Load More" />*/}
             </History>
           )}
         </Body>
