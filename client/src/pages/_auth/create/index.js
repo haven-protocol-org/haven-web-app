@@ -100,7 +100,7 @@ class Create extends Component {
   };
 
   render() {
-    const { step, loading, verify_seed } = this.state;
+    const { step, verify_seed } = this.state;
     const disabled = step === 3 && verify_seed === "" ? true : false;
     return (
       <Container>

@@ -39,7 +39,7 @@ class Login extends Component {
       return <Redirect to="/wallet/assets" />;
     }
 
-    const { seed_phrase, error, loading } = this.state;
+    const { seed_phrase, error } = this.state;
 
     return (
       <Container>
