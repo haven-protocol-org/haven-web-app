@@ -7,6 +7,7 @@ import {
 const INITIAL_STATE = {
   out: [],
   in: [],
+  all: [],
   pending: [],
   isFetching: false,
   error: {},
