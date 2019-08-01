@@ -62,9 +62,11 @@ export const State = styled.div`
       case "error":
         return "#F04747";
       case "in":
-        return "#2fc29b";
+        return "#34D8AC";
       case "out":
-        return "#2fc29b";
+        return "#6A7FC8";
+      case "block":
+        return "#FFC246";
       default:
     }
   }};
@@ -88,6 +90,7 @@ export const Value = styled.div`
   letter-spacing: 0;
   line-height: 24px;
   text-align: ${props => props.alignment};
+  text-transform: capitalize;
 `;
 
 export const Label = styled.div`

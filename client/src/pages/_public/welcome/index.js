@@ -8,13 +8,6 @@ import {
   Buttons,
   Heading,
   Page,
-  Title,
-  Scroller,
-  Cards,
-  Wrapper,
-  Subtitle,
-  Section,
-  Header,
   HeadingWrapper
 } from "./styles";
 

@@ -1,5 +1,4 @@
 // Library Imports
-
 import React, { Component } from "react";
 import history from "../../../history.js";
 import { connect } from "react-redux";
@@ -101,7 +100,7 @@ class Create extends Component {
   };
 
   render() {
-    const { step, loading, verify_seed } = this.state;
+    const { step, verify_seed } = this.state;
     const disabled = step === 3 && verify_seed === "" ? true : false;
     return (
       <Container>

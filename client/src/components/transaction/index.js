@@ -13,10 +13,33 @@ import {
   Data
 } from "./styles";
 
-const Transaction = ({ status, alignment, date, tx, amount, transaction }) => {
+const Transaction = ({
+  status,
+  alignment,
+  date,
+  tx,
+  amount,
+  fee,
+  block,
+  transaction,
+  price
+}) => {
   const first = tx.substring(0, 4);
   const last = tx.substring(tx.length - 4);
   const truncated = first + "...." + last;
+  const value = price * amount;
+
+  function transactionType(status) {
+    if (status === "in") {
+      return "Received";
+    } else if (status === "out") {
+      return "Sent";
+    } else if (status === "block") {
+      return "Mined";
+    } else {
+      return null;
+    }
+  }
 
   return (
     <Container
@@ -24,7 +47,7 @@ const Transaction = ({ status, alignment, date, tx, amount, transaction }) => {
       target="_blank"
     >
       <State status={status}>
-        <Status>{status === "in" ? "Received" : "Sent"}</Status>
+        <Status>{transactionType(status)}</Status>
       </State>
 
       <Column>
@@ -34,18 +57,18 @@ const Transaction = ({ status, alignment, date, tx, amount, transaction }) => {
             <Label alignment="left">Amount</Label>
           </Data>
           <Data>
-            <Value alignment="center">MISSING VALUE</Value>
-            <Label alignment="center">Price</Label>
+            <Value alignment="center">${fee}</Value>
+            <Label alignment="center">Fee</Label>
           </Data>
           <Data>
-            <Value alignment="right">MISSING VALUE</Value>
-            <Label alignment="right">Value</Label>
+            <Value alignment="right">${value.toFixed(2)}</Value>
+            <Label alignment="right">Current Value</Label>
           </Data>
         </Row>
         <Row margin>
           <Data>
-            <Value alignment="left">Transfer</Value>
-            <Label alignment="left">Type</Label>
+            <Value alignment="left">{block}</Value>
+            <Label alignment="left">Block</Label>
           </Data>
           <Data>
             <Value alignment="center">{date}</Value>

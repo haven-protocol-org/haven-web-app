@@ -2,14 +2,7 @@
 import React from "react";
 
 // Relative Imports
-import {
-  Container,
-  Title,
-  Internal,
-  Disabled,
-  External,
-  Section
-} from "./styles";
+import { Container, Title, Internal, External, Section } from "./styles";
 
 const Footer = () => {
   return (
@@ -154,7 +147,7 @@ const Footer = () => {
           href="https://www.tokok.com/market?symbol=XHV_BTC"
           target="_blank"
         >
-          TokTok
+          Tokok
         </External>
         <External
           rel="noopener"
@@ -184,7 +177,13 @@ const Footer = () => {
         <Internal to="/blog">Blog</Internal>
         <Internal to="/faq">F.A.Q</Internal>
         <Internal to="/timeline">Timeline</Internal>
-        <Disabled to="/">Media Kit</Disabled>
+        <External
+          rel="noopener"
+          href="https://github.com/haven-protocol-org/brand-assets"
+          target="_blank"
+        >
+          Media Kit
+        </External>
       </Section>
     </Container>
   );
