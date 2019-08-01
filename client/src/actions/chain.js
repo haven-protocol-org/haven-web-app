@@ -1,4 +1,4 @@
-import {GET_BLOCK_HEIGHT_FETCHING, GET_BLOCK_HEIGHT_SUCEED} from "./types";
+import {GET_BLOCK_HEIGHT_FAILED, GET_BLOCK_HEIGHT_FETCHING, GET_BLOCK_HEIGHT_SUCEED} from "./types";
 import {getHeightRPC, refreshRPC} from "../rpc/rpc";
 import {getBalances} from "./balance";
 import {getTransfers} from "./transferHistory";
@@ -55,4 +55,4 @@ export const getHeight = () => {
 
 
 const getHeightSucceed = (height) => ({type: GET_BLOCK_HEIGHT_SUCEED, payload:height});
-const getHeightFailed = (error) => ({type: GET_BLOCK_HEIGHT_SUCEED, payload: error});
+const getHeightFailed = (error) => ({type: GET_BLOCK_HEIGHT_FAILED, payload: error});
