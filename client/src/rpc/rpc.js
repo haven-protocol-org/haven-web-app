@@ -73,54 +73,30 @@ export function refreshRPC(start_height = 0) {
 
 function callRpc(method, params) {
 
-  console.log(processingCalls);
-  if(processingCalls++ > 0)
-  {
-    console.log('with delay');
-    return delay(processingCalls * 200)
-        .then(() =>
-        {
-          return executeCallRPC(method, params);
+    const rpcUrl = process.env.REACT_APP_RPC_URL;
+    const objRequest = {
+        id: 0,
+        jsonrpc: "2.0",
+        method: method,
+        params: params
+    };
+
+    if (sessionID === -1) {
+        sessionID = localStorage.getItem('sessionID')? localStorage.getItem('sessionID') : -1;
+    }
+
+    if (sessionID !== -1) objRequest.sessionID = sessionID;
+
+    return fetch(rpcUrl, { ...INIT_REQUEST, body: JSON.stringify(objRequest) })
+        .then(response => response.json())
+        .then(function(response) {
+
+            processingCalls--;
+            const error = response.error || response.result.error;
+            if (error)
+                throw error;
+            return response.result;
         });
-  }
-  else
-  {
-    console.log('without delay');
-    return executeCallRPC(method, params);
-  }
-
 }
 
-
-function executeCallRPC(method, params) {
-
-
-  const rpcUrl = process.env.REACT_APP_RPC_URL;
-  const objRequest = {
-    id: 0,
-    jsonrpc: "2.0",
-    method: method,
-    params: params
-  };
-
-  if (sessionID === -1) {
-    sessionID = localStorage.getItem('sessionID')? localStorage.getItem('sessionID') : -1;
-  }
-
-  if (sessionID !== -1) objRequest.sessionID = sessionID;
-
-  return fetch(rpcUrl, { ...INIT_REQUEST, body: JSON.stringify(objRequest) })
-      .then(response => response.json())
-      .then(function(response) {
-
-        processingCalls--;
-        const error = response.error || response.result.error;
-        if (error)
-          throw error;
-        return response.result;
-      });
-
-}
-
-const delay = t => new Promise(resolve => setTimeout(resolve, t));
 
