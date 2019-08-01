@@ -6,7 +6,7 @@ const PENDING_TX_BLOCK_THRESHOLD = 20;
 /**
  * just refresh tx from interest - latest pending tx
  */
-export const updatePendingTransfers = () => {
+export const updateLatestTransfers = () => {
 
 
 };
@@ -24,8 +24,6 @@ export const getTransfers = () => {
             });
     };
 };
-
-
 
 
 const getTransfersFetching = () => ({

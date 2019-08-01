@@ -11,7 +11,7 @@ const INITIAL_STATE = {
   amount: "",
   fee: "",
   txHash: "",
-  isFetching: "",
+  isFetching: false,
   info: "",
   error: ""
 };
