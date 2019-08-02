@@ -21,7 +21,7 @@ export function transferList(state = INITIAL_STATE, action) {
     case GET_TRANSFERS_FETCHING:
       return { ...state, isFetching: true };
     case GET_TRANSFERS_SUCCEED:
-      return {
+      return { ...state,
         ...action.payload,
         isFetching: false,
         error: "",
