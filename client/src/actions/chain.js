@@ -2,8 +2,8 @@ import {GET_BLOCK_HEIGHT_FAILED, GET_BLOCK_HEIGHT_FETCHING, GET_BLOCK_HEIGHT_SUC
 import {getHeightRPC, refreshRPC} from "../rpc/rpc";
 import {getBalances} from "./balance";
 import {getTransfers} from "./transferHistory";
-import {addNotificationByMessage} from "./notification";
-import {SUCCESS} from "../constants/notificationMessages";
+import {addNotificationByKey, addNotificationByMessage} from "./notification";
+import {INCOMING_TRANSFER_MESSAGE, SUCCESS} from "../constants/notificationList";
 
 
 
@@ -24,7 +24,7 @@ export const refresh = () => {
                 }
 
                 if (received_money) {
-                    addNotificationByMessage(SUCCESS, 'Congrats,  there is a some underway to you');
+                    addNotificationByKey(INCOMING_TRANSFER_MESSAGE);
                 }
             });
 
