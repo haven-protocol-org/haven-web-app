@@ -8,19 +8,26 @@ export const ERROR = "error";
 
 export const INCOMING_TRANSFER_MESSAGE = "incoming_transfer_message";
 
-export const list =  [
+export const notificationList =  [
 
     {
         "key": TRANSFER_SUCCEED,
         "code": 0,
-        "msg": "your transfer was submitted",
+        "message": "your transfer was submitted",
         "type": SUCCESS
     },
     {
         "key": INCOMING_TRANSFER_MESSAGE,
         "code": 0,
-        "msg": "a transfer to you is underway",
+        "message": "a transfer to you is underway",
         "type": SUCCESS
+    },
+
+    {
+        "key": "",
+        "code": -1,
+        "message": "wrong",
+        "type": ERROR
     }
 
 

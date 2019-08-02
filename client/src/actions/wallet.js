@@ -41,7 +41,6 @@ export const restoreWallet = seed => {
             .then(result => dispatch(restoreWalletSucceed(result)))
             .catch(error => {
                 dispatch(restoreWalletFailed(error));
-                dispatch(addErrorNotification(error));
             });
     };
 };
@@ -73,7 +72,6 @@ export const createWallet = seed => {
             .then(result => dispatch(createWalletSucceed(result)))
             .catch(error => {
                 dispatch(createWalletFailed(error));
-                dispatch(addErrorNotification(error));
             })
 
     };

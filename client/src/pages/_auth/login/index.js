@@ -8,15 +8,12 @@ import { Container } from "./styles";
 import Auth from "../../../components/_auth/login";
 import Description from "../../../components/_inputs/description";
 import { Information } from "../../../constants/type.js";
-import { IN_SESSION, REQUESTING_SESSION } from "../../../reducers/appState";
+import {IN_SESSION, REQUESTING_SESSION, selectErrorMessage} from "../../../reducers/appState";
 import { restoreWallet } from "../../../actions";
 
 class Login extends Component {
   state = {
-    auth: "",
-    loading: false,
     seed_phrase: "",
-    error: ""
   };
 
   handleChange = event => {
@@ -65,7 +62,7 @@ class Login extends Component {
             placeholder="Enter your 25 word seed phrase..."
             name="seed_phrase"
             value={seed_phrase}
-            error={error}
+            error={this.props.errorMessage}
             onChange={event => this.handleChange(event)}
           />
           <Information>
@@ -79,7 +76,8 @@ class Login extends Component {
 }
 
 const mapStateToProps = state => ({
-  session: state.appState.session
+  session: state.appState.session,
+  errorMessage:selectErrorMessage(state)
 });
 
 export default connect(

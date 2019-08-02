@@ -23,7 +23,7 @@ class Status extends Component {
     if (!this.props.notification) return null;
     return (
       <Container type={this.props.notification.type}>
-        {this.props.notification.msg}
+        {this.props.notification.message}
       </Container>
     );
   }

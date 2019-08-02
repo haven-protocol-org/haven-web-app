@@ -1,4 +1,5 @@
 import { NO_BALANCE } from "./reducers/balance";
+import { notificationList} from "./constants/notificationList";
 
 export const convertTimestampToDateString = timestamp =>
   new Date(timestamp).toLocaleDateString();
@@ -33,4 +34,11 @@ export const uuidv4 = () => {
       (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
     ).toString(16)
   );
+};
+
+export const getMessageOfError = (error) => {
+
+  const errorNotification = notificationList.find( notification => notification.code === error.code );
+  return errorNotification? errorNotification.message : error.message;
+
 };
