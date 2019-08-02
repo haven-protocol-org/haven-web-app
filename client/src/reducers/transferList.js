@@ -35,8 +35,8 @@ export function transferList(state = INITIAL_STATE, action) {
 }
 
 
-export function selectNumOfTransferOuts(state) {
+export function selectNumOfTransferPending(state) {
 
-  return state.transferList.out.length;
+  return state.transferList.pending.length;
 
 };

@@ -17,7 +17,7 @@ import Transaction from "../../../components/_transactions/transfer";
 import Tab from "../../../components/tab/index.js";
 
 import { Container } from "./styles";
-import {selectNumOfTransferOuts} from "../../../reducers/transferList";
+import {selectNumOfTransferPending} from "../../../reducers/transferList";
 
 const options = [{ asset: "Haven", ticker: "XHV" }];
 
@@ -65,7 +65,7 @@ class Transfer extends Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.numTransferOuts > this.props.numTransferOuts) {
+    if (nextProps.numTransferPending > this.props.numTransferPending) {
 
       history.push("/wallet/assets/XHV");
     }
@@ -208,7 +208,7 @@ class Transfer extends Component {
 
 export const mapStateToProps = state => ({
   latestTransfer: state.transfer,
-  numTransferOuts: selectNumOfTransferOuts(state),
+  numTransferPending: selectNumOfTransferPending(state),
   address: state.address.main
 });
 
