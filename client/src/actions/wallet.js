@@ -6,7 +6,6 @@ import {
     RESTORE_WALLET_BY_SEED_FETCHING, RESTORE_WALLET_BY_SEED_SUCCEED, VALIDATE_MNEMONIC_FAILED, VALIDATE_MNEMONIC_SUCCEED
 } from "./types";
 import {createWalletRPC, queryMnemonicKeyRPC, resetSessionId, restoreWalletRPC} from "../rpc/rpc";
-import {addErrorNotification} from "./notification";
 
 
 const createWalletFetch = () => ({ type: CREATE_WALLET_FETCHING });

@@ -28,8 +28,19 @@ export const removeNotification = (id) => {
 
 
 export const addErrorNotification = (error) => {
-    const statusObj = {id:uuidv4(), type:ERROR, message: error.message};
-    return {type:ADD_NOTIFICATION, payload:statusObj};
+
+    const errorNotification = notificationList.find( notification => notification.code === error.code );
+
+    if (errorNotification)
+        return {type:ADD_NOTIFICATION, payload: {...errorNotification, id:uuidv4()}};
+    return buildNotification(error.message, ERROR);
+};
+
+
+const buildNotification = (message, type) => {
+
+    return {type:ADD_NOTIFICATION, payload :{type, message, id:uuidv4()}};
+
 };
 
 

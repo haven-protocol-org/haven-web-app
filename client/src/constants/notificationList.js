@@ -28,6 +28,12 @@ export const notificationList =  [
         "code": -1,
         "message": "wrong",
         "type": ERROR
+    },
+    {
+        "key": "",
+        "code": -2,
+        "message": "you are doing it wrong",
+        "type": ERROR
     }
 
 

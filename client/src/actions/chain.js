@@ -2,8 +2,8 @@ import {GET_BLOCK_HEIGHT_FAILED, GET_BLOCK_HEIGHT_FETCHING, GET_BLOCK_HEIGHT_SUC
 import {getHeightRPC, refreshRPC} from "../rpc/rpc";
 import {getBalances} from "./balance";
 import {getTransfers} from "./transferHistory";
-import {addNotificationByKey, addNotificationByMessage} from "./notification";
-import {INCOMING_TRANSFER_MESSAGE, SUCCESS} from "../constants/notificationList";
+import {addNotificationByKey} from "./notification";
+import {INCOMING_TRANSFER_MESSAGE} from "../constants/notificationList";
 
 
 
