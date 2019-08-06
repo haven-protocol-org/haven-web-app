@@ -13,14 +13,7 @@ import { Route } from "react-router";
 import Status from "./components/_layout/status";
 
 class App extends Component {
-  state = {
-    theme: {}
-  };
-
   render() {
-    // const auth = this.props.session === IN_SESSION;
-    // Need to add private route handling inbetween
-    // <Public /> and <Private />
     return (
       <ThemeProvider theme={this.props.theme}>
         <Router history={history}>
