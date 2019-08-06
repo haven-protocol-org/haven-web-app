@@ -10,7 +10,7 @@ import Transaction from "../../../components/transaction";
 import Statistic from "../../../components/statistic";
 import Chart from "../../../components/chart";
 
-import { History, Row } from "./styles";
+import { History, Row, Message, EmptyState } from "./styles";
 import { connect } from "react-redux";
 import { getPriceHistory, getTransfers } from "../../../actions";
 import { getPriceValues, NO_PRICE } from "../../../reducers/priceHistory";
@@ -87,12 +87,10 @@ class Details extends Component {
             description={`Review your ${id} transaction history`}
           />
           {isFetching ? (
-            <div style={centerSpinner}>
-              <span style={{ paddingRight: "15px", color: "grey" }}>
-                Loading transaction history...
-              </span>
+            <EmptyState>
               <Spinner />
-            </div>
+              <Message>Loading transaction history...</Message>
+            </EmptyState>
           ) : (
             <History>
               {all
