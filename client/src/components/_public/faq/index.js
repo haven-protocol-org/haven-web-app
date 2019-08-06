@@ -13,9 +13,7 @@ const Content = ({ ref }) => {
           <Description>
             Haven has a maximum supply of 18,400,000 coins with a target block
             time of 120 seconds. Each block reward is 19.256 XHV and the tail
-            coin-emission rate is the same as Monero. Once Offshore is
-            implemented, the circulating supply will be unknown due to users
-            minting and burning XHV coins.
+            coin-emission rate is the same as Monero.
           </Description>
         </Cell>
         <Cell>
