@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import media from "../../../constants/media.js";
 
 export const Error = styled.div`
   font-family: Inter-Regular;
@@ -13,11 +14,12 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding-bottom: 12px;
+  grid-column: ${props => (props.width ? "1 / 3" : null)};
 `;
 
 export const Field = styled.textarea.attrs({
   type: "password",
-  rows: 4
+  rows: "4"
 })`
   display: flex;
   align-items: flex-start;

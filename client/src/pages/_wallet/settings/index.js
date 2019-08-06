@@ -10,6 +10,7 @@ import Body from "../../../components/_layout/body";
 import Menu from "../../../components/_layout/menu";
 import Header from "../../../components/_layout/header";
 import Input from "../../../components/_inputs/input";
+import Description from "../../../components/_inputs/description";
 import Form from "../../../components/_inputs/form";
 import Theme from "../../../components/_inputs/theme";
 import Footer from "../../../components/_inputs/footer";
@@ -66,6 +67,7 @@ class Settings extends Component {
 
   render() {
     const { value, reveal } = this.state;
+
     return (
       <Page>
         <Menu />
@@ -90,28 +92,48 @@ class Settings extends Component {
             description="Manage your wallets private keys"
           />
           <Form span="true">
+            {reveal ? (
+              <Description
+                label="Seed Phrase"
+                width="true"
+                value={this.props.mnemonicKey.key}
+                readOnly
+                type={"password"}
+              />
+            ) : (
+              <Input
+                label="Seed Phrase"
+                width="true"
+                value={this.props.mnemonicKey.key}
+                readOnly
+                type={"password"}
+              />
+            )}
             <Input
-              label="Seed Phrase"
-              placeholder="Select Asset"
+              label="Public View Key"
               width="true"
-              value={this.props.mnemonicKey.key}
+              value={"MISSING VALUE"}
               readOnly
               type={reveal ? "type" : "password"}
-              onClick={this.toggleVisibility}
             />
             <Input
-              label="Spend Key"
-              placeholder="Select Asset"
+              label="Private View Key"
+              width="true"
+              value={this.props.privateViewKey.key}
+              readOnly
+              type={reveal ? "type" : "password"}
+            />
+            <Input
+              label="Private Spend Key"
               width="true"
               value={this.props.spendKey.key}
               readOnly
               type={reveal ? "type" : "password"}
             />
             <Input
-              label="View Key"
-              placeholder="Select Asset"
+              label="Public Spend Key"
               width="true"
-              value={this.props.privateViewKey.key}
+              value={"MISSING VALUE"}
               readOnly
               type={reveal ? "type" : "password"}
             />
