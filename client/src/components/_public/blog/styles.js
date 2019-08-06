@@ -46,6 +46,7 @@ export const Cell = styled.div`
   display: flex;
   flex-direction: column;
   align-items: left;
+  flex: 1;
   justify-content: center;
   padding: 20px;
   border-radius: 4px;

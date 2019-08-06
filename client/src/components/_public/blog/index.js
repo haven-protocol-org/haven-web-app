@@ -63,7 +63,7 @@ const Content = () => {
           <Title>Update - Jan 2019</Title>
           <Description>
             As many of you have noticed, the Haven Protocol team has expanded
-            over recent days...
+            over...
           </Description>
           <Route
             rel="noopener"
