@@ -8,12 +8,16 @@ import { Container } from "./styles";
 import Auth from "../../../components/_auth/login";
 import Description from "../../../components/_inputs/description";
 import { Information } from "../../../constants/type.js";
-import {IN_SESSION, REQUESTING_SESSION, selectErrorMessage} from "../../../reducers/appState";
+import {
+  IN_SESSION,
+  REQUESTING_SESSION,
+  selectErrorMessage
+} from "../../../reducers/appState";
 import { restoreWallet } from "../../../actions";
 
 class Login extends Component {
   state = {
-    seed_phrase: "",
+    seed_phrase: ""
   };
 
   handleChange = event => {
@@ -58,8 +62,8 @@ class Login extends Component {
           submit="Submit"
         >
           <Description
-            label="Seed Phrase"
-            placeholder="Enter your 25 word seed phrase..."
+            label="Seed Phrase or Private Key"
+            placeholder="Enter your 25 word seed phrase or Private Key..."
             name="seed_phrase"
             value={seed_phrase}
             error={this.props.errorMessage}
@@ -77,7 +81,7 @@ class Login extends Component {
 
 const mapStateToProps = state => ({
   session: state.appState.session,
-  errorMessage:selectErrorMessage(state)
+  errorMessage: selectErrorMessage(state)
 });
 
 export default connect(
