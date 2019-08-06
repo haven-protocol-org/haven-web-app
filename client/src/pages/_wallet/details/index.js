@@ -89,7 +89,7 @@ class Details extends Component {
           {isFetching ? (
             <div style={centerSpinner}>
               <span style={{ paddingRight: "15px", color: "grey" }}>
-                ..loading transfers
+                Loading transaction history...
               </span>
               <Spinner />
             </div>

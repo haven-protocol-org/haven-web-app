@@ -1,26 +1,23 @@
 // Library Imports
 import React, { Component } from "react";
 import { Line } from "react-chartjs-2";
+import { Spinner } from "../spinner/index.js";
 
 // Relative Imports
-import { Container } from "./styles";
+import { Container, Placeholder, Message } from "./styles";
 
 class Chart extends Component {
-
-
-
-
-
   render() {
-
-    if (this.props.prices.length === 0)
-    {
-      return <p>...we are fetching prices, hold on...</p>;
+    if (this.props.prices.length === 0) {
+      return (
+        <Placeholder>
+          <Spinner />
+          <Message>Fetching prices, hold on a sec...</Message>
+        </Placeholder>
+      );
     }
 
-
     return (
-
       <Container>
         <Line
           options={{
@@ -28,24 +25,26 @@ class Chart extends Component {
             maintainAspectRatio: false,
             title: {
               display: true,
-                text:'XHV/USD last 14 days'
+              text: "XHV/USD last 14 days"
             },
             legend: {
               display: false
             },
             scales: {
-              yAxes: [{ display: true, ticks: {callback: (value, index, values) => '$' + value} }],
+              yAxes: [
+                {
+                  display: true,
+                  ticks: { callback: (value, index, values) => "$" + value }
+                }
+              ],
               xAxes: [{ display: false }]
             },
             tooltips: {
-                callbacks: {
-
-                    label: function (item,data) {
-
-                        return "$" + item.yLabel.toFixed(2);
-
-                    }
-                },
+              callbacks: {
+                label: function(item, data) {
+                  return "$" + item.yLabel.toFixed(2);
+                }
+              },
               yAlign: "bottom",
               xAlign: "center",
               xPadding: 20,
@@ -68,12 +67,12 @@ class Chart extends Component {
           data={{
             labels: this.props.labels,
             datasets: [
-          {
-            backgroundColor: "rgba(114, 137, 218, 0.20)",
-            borderColor: "rgba(114, 137, 218, 1)",
-            pointBackgroundColor: "rgba(114, 137, 218, 1)",
-            data:this.props.prices
-          }
+              {
+                backgroundColor: "rgba(114, 137, 218, 0.20)",
+                borderColor: "rgba(114, 137, 218, 1)",
+                pointBackgroundColor: "rgba(114, 137, 218, 1)",
+                data: this.props.prices
+              }
             ]
           }}
         />
