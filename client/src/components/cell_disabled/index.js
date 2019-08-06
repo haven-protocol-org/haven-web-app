@@ -18,7 +18,7 @@ const CellDisabled = ({ tokenName, ticker, price, change, fullwidth }) => {
     <Container fullwidth={fullwidth}>
       <Column>
         <Title>{ticker}</Title>
-        <Subtitle>{price}</Subtitle>
+        <Subtitle left>{price}</Subtitle>
       </Column>
       <Wrapper>
         <Column>
