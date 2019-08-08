@@ -10,14 +10,16 @@ import Body from "../../../components/_layout/body";
 import Menu from "../../../components/_layout/menu";
 import Header from "../../../components/_layout/header";
 import Input from "../../../components/_inputs/input";
+import Description from "../../../components/_inputs/description";
 import Form from "../../../components/_inputs/form";
 import Dropdown from "../../../components/_inputs/dropdown";
 import Footer from "../../../components/_inputs/footer";
 import Transaction from "../../../components/_transactions/transfer";
-import Tab from "../../../components/tab/index.js";
+import Tab from "../../../components/tab";
+import Confirm from "../../../components/confirm";
 
 import { Container } from "./styles";
-import {selectNumOfTransferPending} from "../../../reducers/transferList";
+import { selectNumOfTransferPending } from "../../../reducers/transferList";
 
 const options = [{ asset: "Haven", ticker: "XHV" }];
 
@@ -32,10 +34,11 @@ class Transfer extends Component {
     send_amount: "",
     send_ticker: "XHV",
     recipient_address: "",
-    validated: true,
+    validated: false,
     time: 7,
     firstTabState: true,
     secondTabState: false,
+    checked: false,
     copyButtonState: "Copy Address"
   };
 
@@ -66,13 +69,17 @@ class Transfer extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.numTransferPending > this.props.numTransferPending) {
-
       history.push("/wallet/assets/XHV");
     }
   }
 
   handleSubmit = () => {
-    this.props.transfer(this.state.recipient_address, this.state.send_amount);
+    const { send_amount, recipient_address } = this.state;
+    if (send_amount.length === 0 && recipient_address.length === 0) {
+      this.setState({ validated: false });
+    } else if (send_amount.length > 0 && recipient_address.length > 0) {
+      this.props.transfer(this.state.recipient_address, this.state.send_amount);
+    }
   };
 
   toggleSend = () => {
@@ -104,13 +111,23 @@ class Transfer extends Component {
     }, 1000);
   };
 
+  handleCheckboxChange = event => {
+    const { checked } = event.target;
+    this.setState({ checked: checked, validated: true });
+  };
+
   render() {
     const {
       send_asset,
       send_amount,
       send_ticker,
       recipient_address,
+      checked,
+      validated
     } = this.state;
+
+    const checkValidation =
+      send_amount.length > 0 && recipient_address.length > 0;
 
     return (
       <Page>
@@ -158,12 +175,17 @@ class Transfer extends Component {
                 />
               </Form>
               <Container>
-                <Transaction state={this.state} />
+                <Transaction
+                  state={this.state}
+                  checked={this.state.checked}
+                  onChange={this.handleCheckboxChange}
+                />
+
                 <Footer
                   onClick={this.handleSubmit}
                   loading={this.props.latestTransfer.isFetching}
                   label="Transfer"
-                  validated={this.state.validated}
+                  validated={checked && checkValidation ? true : false}
                 />
               </Container>
             </>

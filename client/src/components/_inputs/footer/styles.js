@@ -13,7 +13,7 @@ export const Button = styled.button`
   background: ${props => props.theme.button.primary};
   border: none;
   width: auto;
-  min-width: 120px;
+  min-width: 128px;
   height: 48px;
   color: white;
   font-size: 16px;
@@ -24,6 +24,7 @@ export const Button = styled.button`
   text-decoration: none;
   transition: 500ms;
   outline: none;
+  font-size: 15px;
 
   &:disabled {
     color: rgba(255, 255, 255, 0.5);
