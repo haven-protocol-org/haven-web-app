@@ -23,14 +23,14 @@ export const notificationList = [
     key: "",
     code: -1,
     message: "Oops, that seed was incorrect",
-    type: ERROR
-    // Is this the vault login error?
+    type: ERROR,
+    description:'electrum style list failed --> comes with wrong seed'
   },
   {
     key: "",
     code: -2,
     message: "you are doing it wrong",
-    type: ERROR
-    // What is this error for?
+    type: ERROR,
+    description: "address for tx was not valid"
   }
 ];
