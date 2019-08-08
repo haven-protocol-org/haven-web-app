@@ -6,6 +6,7 @@ import {
     GET_ADDRESS_SUCCEED,
 
 } from "./types";
+import {createPubKeys} from "./key";
 
 export * from './prices';
 export * from './wallet';
@@ -20,11 +21,15 @@ export * from './chain';
 
 export const getAddress = () => {
 
+
     return(dispatch) => {
 
         dispatch(getAddressFetching());
         getAddressRPC()
-            .then(result => dispatch(getAddressSucceed(result)))
+            .then(result => {
+                dispatch(createPubKeys(result.address));
+                dispatch(getAddressSucceed(result));
+            })
             .catch(error => dispatch(getAddressFailed(error)));
     }
 };
