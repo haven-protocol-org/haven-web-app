@@ -112,7 +112,7 @@ class Settings extends Component {
             <Input
               label="Public View Key"
               width="true"
-              value={"MISSING VALUE"}
+              value={this.props.pubViewKey.key}
               readOnly
               type={reveal ? "type" : "password"}
             />
@@ -133,7 +133,7 @@ class Settings extends Component {
             <Input
               label="Public Spend Key"
               width="true"
-              value={"MISSING VALUE"}
+              value={this.props.pubSpendKey.key}
               readOnly
               type={reveal ? "type" : "password"}
             />

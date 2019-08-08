@@ -8,6 +8,8 @@ import {
     QUERY_PRIVATE_VIEW_KEY_SUCCEED, QUERY_SPEND_KEY_FAILED, QUERY_SPEND_KEY_SUCCEED
 } from "./types";
 
+import {getAddress} from "./index";
+
 import {cnUtil} from "../declarations/open_monero.service";
 
 
@@ -15,6 +17,11 @@ export const queryKeys = () => {
     return (dispatch, getState) => {
         dispatch(queryPrivateKey());
         dispatch(queryMnemonic());
+
+
+        if (getState().address.main === "") {
+            dispatch(getAddress());
+        }
 
         queryMnemonicKeyRPC()
             .then(result => dispatch(queryMnemonicSucceed(result.key)))
