@@ -60,9 +60,18 @@ class Settings extends Component {
   };
 
   toggleVisibility = () => {
-    this.setState({
-      reveal: !this.state.reveal
-    });
+    const { mnemonicKey, privateViewKey, spendKey } = this.props;
+    if (
+      mnemonicKey.isFetching === false &&
+      privateViewKey.isFetching === false &&
+      spendKey.isFetching === false
+    ) {
+      return this.setState({
+        reveal: !this.state.reveal
+      });
+    } else {
+      return null;
+    }
   };
 
   render() {
