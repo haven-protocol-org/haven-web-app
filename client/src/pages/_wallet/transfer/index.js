@@ -127,7 +127,7 @@ class Transfer extends Component {
     } = this.state;
 
     const checkValidation =
-      send_amount.length > 0 && recipient_address.length > 0;
+      send_amount.length > 0 && recipient_address.length > 97;
 
     return (
       <Page>
