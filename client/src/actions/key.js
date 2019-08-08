@@ -1,10 +1,14 @@
 import {queryMnemonicKeyRPC, queryViewKeyRPC, querySpendKeyRPC} from "../rpc/rpc";
 import {
+    CREATE_PUB_KEYS_FAILED,
+    CREATE_PUB_KEYS_SUCCEED,
     QUERY_MNEMONIC_FETCHING,
     QUERY_MNEMONIC_SUCCEED, QUERY_PRIVATE_VIEW_KEY_FAILED,
     QUERY_PRIVATE_VIEW_KEY_FETCHING,
     QUERY_PRIVATE_VIEW_KEY_SUCCEED, QUERY_SPEND_KEY_FAILED, QUERY_SPEND_KEY_SUCCEED
 } from "./types";
+
+import {cnUtil} from "../declarations/open_monero.service";
 
 
 export const queryKeys = () => {
@@ -25,6 +29,22 @@ export const queryKeys = () => {
             .catch(error => dispatch(querySpendKeyFailed(error)));
     };
 };
+
+export const createPubKeys = (address) => {
+
+    return (dispatch) => {
+        try {
+            const keys = cnUtil.decode_address(address);
+            dispatch(createPubKeysSucceed(keys));
+        }
+        catch(e){
+            dispatch(createPubKeysFailed(e));
+        }
+    }
+};
+
+const createPubKeysSucceed = (keys) => ({type:CREATE_PUB_KEYS_SUCCEED, payload: keys})
+const createPubKeysFailed = (error) => ({type:CREATE_PUB_KEYS_FAILED, payload: error})
 
 const queryPrivateKey = () => ({ type: QUERY_PRIVATE_VIEW_KEY_FETCHING });
 const queryMnemonic = () => ({ type: QUERY_MNEMONIC_FETCHING });

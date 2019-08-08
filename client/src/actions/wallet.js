@@ -6,6 +6,7 @@ import {
     RESTORE_WALLET_BY_SEED_FETCHING, RESTORE_WALLET_BY_SEED_SUCCEED, VALIDATE_MNEMONIC_FAILED, VALIDATE_MNEMONIC_SUCCEED
 } from "./types";
 import {createWalletRPC, queryMnemonicKeyRPC, resetSessionId, restoreWalletRPC} from "../rpc/rpc";
+import {createPubKeys} from "./key";
 
 
 const createWalletFetch = () => ({ type: CREATE_WALLET_FETCHING });
@@ -27,6 +28,8 @@ const queryMnemonicForWalletGenerationSucceed = (key) => ({type: QUERY_MNEMONIC_
 
 
 export const restoreWallet = seed => {
+
+
     return dispatch => {
 
         dispatch(closeWallet());
@@ -37,7 +40,10 @@ export const restoreWallet = seed => {
 
         dispatch(restoreWalletFetching());
         restoreWalletRPC(params)
-            .then(result => dispatch(restoreWalletSucceed(result)))
+            .then(result => {
+                dispatch(createPubKeys(result.address));
+                dispatch(restoreWalletSucceed(result));
+            })
             .catch(error => {
                 dispatch(restoreWalletFailed(error));
             });

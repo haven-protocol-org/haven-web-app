@@ -52,6 +52,9 @@ export const QUERY_SPEND_KEY_FETCHING = "query_spend_key_fetching";
 export const QUERY_SPEND_KEY_FAILED = "query_spend_key_failed";
 export const QUERY_SPEND_KEY_SUCCEED = "query_spend_key_succeed";
 
+export const CREATE_PUB_KEYS_SUCCEED = "create_pub_keys_succeed";
+export const CREATE_PUB_KEYS_FAILED = "create_pub_keys_failed";
+
 /*
 TRANSFER
  */
