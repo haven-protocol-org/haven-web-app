@@ -44,13 +44,7 @@ const Auth = ({
         <Buttons>
           <Cancel to="/">Cancel</Cancel>
           <Submit disabled={disable} onClick={onClick}>
-            {loading ? (
-              <div>
-                <Spinner color={"white"} />
-              </div>
-            ) : (
-              "Login"
-            )}
+            {loading ? <Spinner color={"white"} /> : "Login"}
           </Submit>
         </Buttons>
       </Main>

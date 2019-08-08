@@ -9,8 +9,9 @@ import Header from "../../../components/_layout/header";
 import Transaction from "../../../components/transaction";
 import Statistic from "../../../components/statistic";
 import Chart from "../../../components/chart";
+import empty from "../../../assets/illustration/no_transactions.svg";
 
-import { History, Row } from "./styles";
+import { History, Row, Message, EmptyState, NoTransactions } from "./styles";
 import { connect } from "react-redux";
 import { getPriceHistory, getTransfers } from "../../../actions";
 import { getPriceValues, NO_PRICE } from "../../../reducers/priceHistory";
@@ -87,33 +88,39 @@ class Details extends Component {
             description={`Review your ${id} transaction history`}
           />
           {isFetching ? (
-            <div style={centerSpinner}>
-              <span style={{ paddingRight: "15px", color: "grey" }}>
-                ..loading transfers
-              </span>
+            <EmptyState>
               <Spinner />
-            </div>
+              <Message>Loading transaction history...</Message>
+            </EmptyState>
           ) : (
             <History>
-              {all
-                ? all.map((transaction, index) => {
-                    return (
-                      <Transaction
-                        key={index}
-                        status={transaction.type}
-                        price={price}
-                        block={transaction.height}
-                        fee={convertBalanceForReading(transaction.fee)}
-                        date={new Date(
-                          transaction.timestamp * 1000
-                        ).toLocaleDateString()}
-                        tx={transaction.txid}
-                        amount={convertBalanceForReading(transaction.amount)}
-                        transaction={transaction}
-                      />
-                    );
-                  })
-                : null}
+              {all.length > 0 ? (
+                all.map((transaction, index) => {
+                  return (
+                    <Transaction
+                      key={index}
+                      status={transaction.type}
+                      price={price}
+                      block={transaction.height}
+                      fee={convertBalanceForReading(transaction.fee)}
+                      date={new Date(
+                        transaction.timestamp * 1000
+                      ).toLocaleDateString()}
+                      tx={transaction.txid}
+                      amount={convertBalanceForReading(transaction.amount)}
+                      transaction={transaction}
+                    />
+                  );
+                })
+              ) : (
+                <EmptyState>
+                  <NoTransactions src={empty} />
+                  <Message>
+                    No transactions found. Once you send, receive or exchange
+                    tokens your transactions will appear here.
+                  </Message>
+                </EmptyState>
+              )}
             </History>
           )}
         </Body>

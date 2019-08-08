@@ -47,7 +47,7 @@ export const light = {
   },
   type: {
     primary: "#384451",
-    secondary: "#B5BFCA"
+    secondary: "#9a9a9a"
   },
   input: {
     input_border: "#E4EBF2",
