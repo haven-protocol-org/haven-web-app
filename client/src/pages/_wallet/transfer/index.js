@@ -217,7 +217,6 @@ class Transfer extends Component {
                 <Footer
                   onClick={this.copyAddressToClipBoard}
                   label={this.state.copyButtonState}
-                  validated={this.state.validated}
                 />
               </Container>
             </>
