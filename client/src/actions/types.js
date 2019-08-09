@@ -33,8 +33,8 @@ export const CLOSE_WALLET = "close_wallet";
 
 
 // GENERATE KEYS
-export const KEYS_GENERATED_SUCCEED = "KEYS_GENERATED_SUCCEED";
-export const KEYS_GENERATED_FAILED = "KEYS_GENERATED_FAILED";
+export const KEYS_GENERATED_SUCCEED = "keys_generated_succeed";
+export const KEYS_GENERATED_FAILED = "keys_generated_failed";
 
 /*
 TRANSFER
@@ -54,6 +54,11 @@ export const GET_TRANSFERS_FAILED = "get_transfers_failed";
 export const GET_PRICE_HISTORY_FETCHING = "get_price_data_fetching";
 export const GET_PRICE_HISTORY_SUCCEED = "get_price_data_succeed";
 export const GET_PRICE_HISTORY_FAILED = "get_price_data_failed";
+
+//SIMPLE PRICE
+export const GET_SIMPLE_PRICE_FETCHING = "get_simple_price_fetching";
+export const GET_SIMPLE_PRICE_SUCCEED = "get_simple_price_succeed";
+export const GET_SIMPLE_PRICE_FAILED = "get_simple_price_failed";
 
 
 export const GET_BLOCK_HEIGHT_FETCHING = "get_block_height_fetching";

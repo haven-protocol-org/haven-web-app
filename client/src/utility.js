@@ -1,5 +1,6 @@
 import { NO_BALANCE } from "./reducers/balance";
 import { notificationList} from "./constants/notificationList";
+import {NO_PRICE} from "./reducers/priceHistory";
 
 export const convertTimestampToDateString = timestamp =>
   new Date(timestamp).toLocaleDateString();
@@ -40,5 +41,21 @@ export const getMessageOfError = (error) => {
 
   const errorNotification = notificationList.find( notification => notification.code === error.code );
   return errorNotification? errorNotification.message : error.message;
+
+};
+
+
+export const calcValue = (amount, price) => {
+
+  if (amount === NO_BALANCE || price === NO_PRICE ) {
+    return '--';
+  }
+  else {
+    return (amount * price).toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD"
+    });
+  }
+
 
 };

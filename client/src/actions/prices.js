@@ -2,7 +2,12 @@
 
 
 import {lowerPricePoints} from "../utility";
-import {GET_PRICE_HISTORY_FAILED, GET_PRICE_HISTORY_FETCHING, GET_PRICE_HISTORY_SUCCEED} from "./types";
+import {
+    GET_PRICE_HISTORY_FAILED,
+    GET_PRICE_HISTORY_FETCHING,
+    GET_PRICE_HISTORY_SUCCEED,
+    GET_SIMPLE_PRICE_SUCCEED
+} from "./types";
 
 export const getPriceHistory = () => {
     return dispatch => {
@@ -34,7 +39,18 @@ const getPriceDataSucceed = priceData => {
 export const getSimplePrice = () => {
 
 
-    fetch(
-    "https://api.coingecko.com/api/v3/simple/price?ids=haven&vs_currencies=usd")
+    return dispatch => {
+
+        fetch(
+            "https://api.coingecko.com/api/v3/simple/price?ids=haven&vs_currencies=usd")
+            .then(response => response.json())
+            .then(priceData => dispatch(getSimplePriceSucceed(priceData.haven.usd)))
+            .catch(error => dispatch(getSimplePriceFailed(error)));
+    };
+
 
 };
+
+
+const getSimplePriceSucceed = (result) => ({type: GET_SIMPLE_PRICE_SUCCEED, payload: result});
+const getSimplePriceFailed = (error) => ({type: GET_SIMPLE_PRICE_SUCCEED, payload: error});

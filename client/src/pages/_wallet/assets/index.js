@@ -1,7 +1,7 @@
 // Library Imports
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getBalances } from "../../../actions";
+import { getBalances, getSimplePrice } from "../../../actions";
 
 // Relative Imports
 import Page from "../../../components/_layout/page";
@@ -13,17 +13,21 @@ import Cell from "../../../components/cell";
 import CellDisabled from "../../../components/cell_disabled";
 
 import data from "../../../constants/data.js";
+import {NO_PRICE} from "../../../reducers/priceHistory";
+import {calcValue} from "../../../utility";
+import {selectReadableBalance} from "../../../reducers/balance";
 
 class Assets extends Component {
   state = {
-    status: false,
     token: data,
-    lockedBalance: 4.124211,
-    lockedTime: 20
   };
 
   componentDidMount() {
     window.scrollTo(0, 0);
+
+    if (this.props.price === NO_PRICE) {
+      this.props.getSimplePrice();
+    }
   }
 
   handleState = () => {
@@ -50,6 +54,15 @@ class Assets extends Component {
   };
 
   render() {
+
+
+    const price = this.props.price === NO_PRICE? '--' : this.props.price.toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD"
+    });
+
+    const value = calcValue(this.props.balance, this.props.price);
+
     return (
       <Page>
         <Menu />
@@ -64,8 +77,8 @@ class Assets extends Component {
             key={1}
             tokenName={"Haven"}
             ticker={"XHV"}
-            price={"$1.23"}
-            change={"MISSING VALUE"}
+            price={price}
+            change={value}
           />
 
           <Header
@@ -80,10 +93,11 @@ class Assets extends Component {
 }
 
 export const mapStateToProps = state => ({
-  balance: state.balance
+  balance: selectReadableBalance(state),
+  ... state.simplePrice
 });
 
 export default connect(
   mapStateToProps,
-  { getBalances }
+  { getBalances, getSimplePrice }
 )(Assets);
