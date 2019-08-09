@@ -35,18 +35,6 @@ export function getBalanceRPC(params) {
   return callRpc("get_balance", params);
 }
 
-export function queryViewKeyRPC() {
-  return callRpc("query_key", { key_type: "view_key" });
-}
-
-export function queryMnemonicKeyRPC() {
-  return callRpc("query_key", { key_type: "mnemonic" });
-}
-
-export function querySpendKeyRPC() {
-  return callRpc("query_key", { key_type: "spend_key" });
-}
-
 export function transferRPC(params) {
   return callRpc("transfer", params);
 }
@@ -57,10 +45,6 @@ export function getTransferRPC(params) {
 
 export function createWalletRPC(params) {
   return callRpc("create_wallet", params).then(parseSessionID);
-}
-
-export function getAddressRPC() {
-    return callRpc("get_address", {account_index:0});
 }
 
 export function getHeightRPC() {

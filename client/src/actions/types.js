@@ -11,11 +11,7 @@ export const RESTORE_WALLET_BY_SEED_FETCHING = "restore_wallet_by_seed_fetching"
 export const RESTORE_WALLET_BY_SEED_SUCCEED = "restore_wallet_by_seed_succeed";
 export const RESTORE_WALLET_BY_SEED_FAILED = "restore_wallet_by_seed_failed";
 
-
-
-export const GET_ADDRESS_FETCHING = "get_address_fetching";
-export const GET_ADDRESS_SUCCEED = "get_address_succeed";
-export const GET_ADDRESS_FAILED = "get_address_failed";
+export const ADD_PUB_ADDRESS = "get_address_failed";
 
 
 /*
@@ -35,25 +31,10 @@ export const VALIDATE_MNEMONIC_FAILED = "validate_mnemonic_failed";
 
 export const CLOSE_WALLET = "close_wallet";
 
-/*
- QUERY KEYS
- */
 
-export const QUERY_PRIVATE_VIEW_KEY_FETCHING =
-  "query_private_view_key_fetching";
-export const QUERY_PRIVATE_VIEW_KEY_FAILED = "query_private_view_key_failed";
-export const QUERY_PRIVATE_VIEW_KEY_SUCCEED = "query_private_view_key_succeed";
-
-export const QUERY_MNEMONIC_FETCHING = "query_mnemonic_fetching";
-export const QUERY_MNEMONIC_FAILED = "query_mneomic_failed";
-export const QUERY_MNEMONIC_SUCCEED = "query_mneomic_succeed";
-
-export const QUERY_SPEND_KEY_FETCHING = "query_spend_key_fetching";
-export const QUERY_SPEND_KEY_FAILED = "query_spend_key_failed";
-export const QUERY_SPEND_KEY_SUCCEED = "query_spend_key_succeed";
-
-export const CREATE_PUB_KEYS_SUCCEED = "create_pub_keys_succeed";
-export const CREATE_PUB_KEYS_FAILED = "create_pub_keys_failed";
+// GENERATE KEYS
+export const KEYS_GENERATED_SUCCEED = "KEYS_GENERATED_SUCCEED";
+export const KEYS_GENERATED_FAILED = "KEYS_GENERATED_FAILED";
 
 /*
 TRANSFER

@@ -289,25 +289,7 @@ var cnUtil = (function(initConfig) {
         return keccak_256(hextobin(input));
     };
 
-    //many functions below are commented out now, and duplicated with the faster nacl impl --luigi1111
-    // to be removed completely later
-    /*cn_util.sec_key_to_pub = function(sec) {
-        var input = hextobin(sec);
-        if (input.length !== 32) {
-            throw "Invalid input length";
-        }
-        var input_mem = Module._malloc(KEY_SIZE);
-        Module.HEAPU8.set(input, input_mem);
-        var ge_p3 = Module._malloc(STRUCT_SIZES.GE_P3);
-        var out_mem = Module._malloc(KEY_SIZE);
-        Module.ccall('ge_scalarmult_base', 'void', ['number', 'number'], [ge_p3, input_mem]);
-        Module.ccall('ge_p3_tobytes', 'void', ['number', 'number'], [out_mem, ge_p3]);
-        var output = Module.HEAPU8.subarray(out_mem, out_mem + KEY_SIZE);
-        Module._free(ge_p3);
-        Module._free(input_mem);
-        Module._free(out_mem);
-        return bintohex(output);
-    };*/
+
 
     cn_util.sec_key_to_pub = function(sec) {
         if (sec.length !== 64) {
@@ -432,7 +414,7 @@ var cnUtil = (function(initConfig) {
         var expectedPrefixSub = cn_util.encode_varint(CRYPTONOTE_PUBLIC_SUBADDRESS_BASE58_PREFIX);
         var prefix = dec.slice(0, expectedPrefixSub.length);
         return (prefix === expectedPrefixSub);
-    }
+    };
 
     cn_util.create_address = function(seed) {
         var keys = {};

@@ -2,7 +2,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { selectTheme } from "../../../actions";
-import { queryKeys } from "../../../actions";
 
 // Relative Imports
 import Page from "../../../components/_layout/page";
@@ -39,9 +38,6 @@ class Settings extends Component {
       value: this.props.theme.value
     });
 
-    if (this.props.privateViewKey.key === NO_KEY) {
-      this.props.queryKeys();
-    }
   }
 
   handleClick = ({ theme, value }) => {
@@ -61,18 +57,9 @@ class Settings extends Component {
   };
 
   toggleVisibility = () => {
-    const { mnemonicKey, privateViewKey, spendKey } = this.props;
-    if (
-      mnemonicKey.isFetching === false &&
-      privateViewKey.isFetching === false &&
-      spendKey.isFetching === false
-    ) {
-      return this.setState({
+   this.setState({
         reveal: !this.state.reveal
       });
-    } else {
-      return null;
-    }
   };
 
   render() {
@@ -106,7 +93,7 @@ class Settings extends Component {
               <Description
                 label="Seed Phrase"
                 width="true"
-                value={this.props.mnemonicKey.key}
+                value={this.props.mnemonic}
                 readOnly
                 type={"password"}
               />
@@ -114,7 +101,7 @@ class Settings extends Component {
               <Input
                 label="Seed Phrase"
                 width="true"
-                value={this.props.mnemonicKey.key}
+                value={this.props.mnemonic}
                 readOnly
                 type={"password"}
               />
@@ -122,28 +109,28 @@ class Settings extends Component {
             <Input
               label="Public View Key"
               width="true"
-              value={this.props.pubViewKey.key}
+              value={this.props.view.pub}
               readOnly
               type={reveal ? "type" : "password"}
             />
             <Input
               label="Private View Key"
               width="true"
-              value={this.props.privateViewKey.key}
+              value={this.props.view.sec}
               readOnly
               type={reveal ? "type" : "password"}
             />
             <Input
               label="Private Spend Key"
               width="true"
-              value={this.props.spendKey.key}
+              value={this.props.spend.sec}
               readOnly
               type={reveal ? "type" : "password"}
             />
             <Input
               label="Public Spend Key"
               width="true"
-              value={this.props.pubSpendKey.key}
+              value={this.props.spend.pub}
               readOnly
               type={reveal ? "type" : "password"}
             />
@@ -168,5 +155,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { selectTheme, queryKeys }
+  { selectTheme }
 )(Settings);

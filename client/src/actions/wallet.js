@@ -2,11 +2,11 @@ import {
     CLOSE_WALLET,
     CREATE_WALLET_FAILED,
     CREATE_WALLET_FETCHING,
-    CREATE_WALLET_SUCCEED, QUERY_MNEMONIC_FOR_WALLET_GENERATION_SUCCEED, RESTORE_WALLET_BY_SEED_FAILED,
+    CREATE_WALLET_SUCCEED, RESTORE_WALLET_BY_SEED_FAILED,
     RESTORE_WALLET_BY_SEED_FETCHING, RESTORE_WALLET_BY_SEED_SUCCEED, VALIDATE_MNEMONIC_FAILED, VALIDATE_MNEMONIC_SUCCEED
 } from "./types";
-import {createWalletRPC, queryMnemonicKeyRPC, resetSessionId, restoreWalletRPC} from "../rpc/rpc";
-import {createPubKeys} from "./key";
+import {createWalletRPC, resetSessionId, restoreWalletRPC} from "../rpc/rpc";
+import {derivatePrivKeysBySeed} from "./key";
 
 
 const createWalletFetch = () => ({ type: CREATE_WALLET_FETCHING });
@@ -24,11 +24,9 @@ export const closeWallet = () => {
     return { type: CLOSE_WALLET };
 };
 
-const queryMnemonicForWalletGenerationSucceed = (key) => ({type: QUERY_MNEMONIC_FOR_WALLET_GENERATION_SUCCEED, payload:key});
 
 
 export const restoreWallet = seed => {
-
 
     return dispatch => {
 
@@ -41,7 +39,7 @@ export const restoreWallet = seed => {
         dispatch(restoreWalletFetching());
         restoreWalletRPC(params)
             .then(result => {
-                dispatch(createPubKeys(result.address));
+                dispatch(derivatePrivKeysBySeed(seed));
                 dispatch(restoreWalletSucceed(result));
             })
             .catch(error => {
@@ -72,8 +70,6 @@ export const createWallet = seed => {
         const params = {language};
 
         createWalletRPC(params)
-            .then(result => queryMnemonicKeyRPC())
-            .then(result => dispatch(queryMnemonicForWalletGenerationSucceed(result.key)))
             .then(result => dispatch(createWalletSucceed(result)))
             .catch(error => {
                 dispatch(createWalletFailed(error));

@@ -5,6 +5,12 @@
  Originally written in python special for Electrum (lightweight Bitcoin client).
  This version has been reimplemented in javascript and placed in public domain.
  */
+
+var mnemonic = (function () {
+
+
+var mnemonic = {};
+
 var mn_default_wordset = 'english';
 
 function mn_get_checksum_index(words, prefix_len) {
@@ -17,10 +23,10 @@ function mn_get_checksum_index(words, prefix_len) {
     return index;
 }
 
-function mn_encode(str, wordset_name) {
+    mnemonic.mn_encode= function(str, wordset_name) {
     'use strict';
     wordset_name = wordset_name || mn_default_wordset;
-    var wordset = mn_words[wordset_name];
+    var wordset = mnemonic.mn_words[wordset_name];
     var out = [];
     var n = wordset.words.length;
     for (var j = 0; j < str.length; j += 8) {
@@ -37,7 +43,7 @@ function mn_encode(str, wordset_name) {
         out.push(out[mn_get_checksum_index(out, wordset.prefix_len)]);
     }
     return out.join(' ');
-}
+};
 
 function mn_swap_endian_4byte(str) {
     'use strict';
@@ -45,10 +51,10 @@ function mn_swap_endian_4byte(str) {
     return str.slice(6, 8) + str.slice(4, 6) + str.slice(2, 4) + str.slice(0, 2);
 }
 
-function mn_decode(str, wordset_name) {
+    mnemonic.mn_decode =  function (str, wordset_name) {
     'use strict';
     wordset_name = wordset_name || mn_default_wordset;
-    var wordset = mn_words[wordset_name];
+    var wordset = mnemonic.mn_words[wordset_name];
     var out = '';
     var n = wordset.words.length;
     var wlist = str.toLowerCase().split(' ');
@@ -89,7 +95,7 @@ function mn_decode(str, wordset_name) {
         }
     }
     return out;
-}
+};
 
 function mn_random(bits) {
     'use strict';
@@ -128,7 +134,7 @@ function mn_random(bits) {
     return out;
 }
 
-var mn_words = {
+    mnemonic.mn_words = {
     'electrum': {
         prefix_len: 0,
         words: [
@@ -1185,17 +1191,19 @@ var mn_words = {
         ]
     }
 };
+return mnemonic;
+})();
 
 (function() {
     'use strict';
-    for (var i in mn_words) {
-        if (mn_words.hasOwnProperty(i)) {
-            if (mn_words[i].prefix_len === 0) {
+    for (var i in mnemonic.mn_words) {
+        if (mnemonic.mn_words.hasOwnProperty(i)) {
+            if (mnemonic.mn_words[i].prefix_len === 0) {
                 continue;
             }
-            mn_words[i].trunc_words = [];
-            for (var j = 0; j < mn_words[i].words.length; ++j) {
-                mn_words[i].trunc_words.push(mn_words[i].words[j].slice(0, mn_words[i].prefix_len));
+            mnemonic.mn_words[i].trunc_words = [];
+            for (var j = 0; j < mnemonic.mn_words[i].words.length; ++j) {
+                mnemonic.mn_words[i].trunc_words.push(mnemonic.mn_words[i].words[j].slice(0, mnemonic.mn_words[i].prefix_len));
             }
         }
     }

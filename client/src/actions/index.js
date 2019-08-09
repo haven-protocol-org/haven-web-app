@@ -1,11 +1,4 @@
-import { getAddressRPC } from "../rpc/rpc";
-
-import {
-  GET_ADDRESS_FAILED,
-  GET_ADDRESS_FETCHING,
-  GET_ADDRESS_SUCCEED
-} from "./types";
-import {createPubKeys} from "./key";
+import {ADD_PUB_ADDRESS} from "./types";
 
 export * from "./prices";
 export * from "./wallet";
@@ -16,36 +9,12 @@ export * from "./theme";
 export * from "./transferHistory";
 export * from "./chain";
 
-export const getAddress = () => {
 
 
-    return(dispatch) => {
+export const addPubAddress = (address) => ({type: ADD_PUB_ADDRESS, payload:address});
 
-        dispatch(getAddressFetching());
-        getAddressRPC()
-            .then(result => {
-                dispatch(createPubKeys(result.address));
-                dispatch(getAddressSucceed(result));
-            })
-            .catch(error => dispatch(getAddressFailed(error)));
-    }
-};
-
-const getAddressFetching = () => ({ type: GET_ADDRESS_FETCHING });
-const getAddressSucceed = result => ({
-  type: GET_ADDRESS_SUCCEED,
-  payload: result
-});
-const getAddressFailed = error => ({
-  type: GET_ADDRESS_FAILED,
-  payload: error
-});
 
 export const getForex = () => {
-  // https://api.exchangeratesapi.io/latest?base=USD
-  // GET https://api.exchangeratesapi.io/history?start_at=2018-01-01&end_at=2018-09-01 HTTP/1.1
-
-  //   https://api.exchangeratesapi.io/history?start_at=2019-07-23&end_at=2019-07-30&base=USD
 
   const endDate = new Date();
   const startDate = endDate - 14 * 3600 * 24;

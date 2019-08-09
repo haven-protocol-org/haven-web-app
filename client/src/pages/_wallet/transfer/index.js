@@ -1,7 +1,7 @@
 // Library Imports
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { transfer, getAddress } from "../../../actions";
+import { transfer } from "../../../actions";
 import history from "../../../history.js";
 
 // Relative Imports
@@ -236,5 +236,5 @@ export const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { transfer, getAddress }
+  { transfer }
 )(Transfer);
