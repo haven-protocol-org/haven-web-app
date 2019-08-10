@@ -21,11 +21,11 @@ import { refresh } from "../../actions";
  */
 class PrivateRoutes extends Component {
   componentDidMount() {
-   // this.timer = setInterval(this.props.refresh, 30000);
+    this.timer = setInterval(this.props.refresh, 30000);
   }
 
   componentWillUnmount() {
-    //clearInterval(this.timer);
+    clearInterval(this.timer);
   }
 
   render() {
