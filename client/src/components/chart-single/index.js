@@ -26,7 +26,6 @@ class ChartSingle extends Component {
   }
 
   render() {
-    console.log("DATA", this.state);
     return (
       <Container>
         <Line
