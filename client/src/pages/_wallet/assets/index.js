@@ -61,7 +61,7 @@ class Assets extends Component {
       currency: "USD"
     });
 
-    const value = calcValue(this.props.balance, this.props.price);
+    const value = calcValue(this.props.readableBalance, this.props.price);
 
     return (
       <Page>
@@ -93,7 +93,8 @@ class Assets extends Component {
 }
 
 export const mapStateToProps = state => ({
-  balance: selectReadableBalance(state),
+  balance: state.balance,
+  readableBalance: selectReadableBalance(state),
   ... state.simplePrice
 });
 

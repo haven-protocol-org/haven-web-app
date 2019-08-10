@@ -17,8 +17,20 @@ import { restoreWallet } from "../../../actions";
 
 class Login extends Component {
   state = {
-    seed_phrase: ""
+    seed_phrase: "",
+    error:''
   };
+
+
+  componentWillReceiveProps(nextProps, nextContext) {
+
+    if (nextProps.errorMessage) {
+
+      this.setState({error: nextProps.errorMessage});
+       setTimeout( () =>  this.setState({error: ''}), 2000)
+    }
+
+  }
 
   handleChange = event => {
     const name = event.target.name;
@@ -41,6 +53,8 @@ class Login extends Component {
     }
 
     const { seed_phrase, error } = this.state;
+
+
 
     return (
       <Container>
@@ -66,7 +80,7 @@ class Login extends Component {
             placeholder="Enter your 25 word seed phrase or Private Key..."
             name="seed_phrase"
             value={seed_phrase}
-            error={this.props.errorMessage}
+            error={error}
             onChange={event => this.handleChange(event)}
           />
           <Information>
@@ -80,7 +94,7 @@ class Login extends Component {
 }
 
 const mapStateToProps = state => ({
-  session: state.appState.session,
+  ...state.appState,
   errorMessage: selectErrorMessage(state)
 });
 

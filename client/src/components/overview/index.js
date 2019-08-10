@@ -8,6 +8,7 @@ import { convertBalanceForReading } from "../../utility";
 import { Spinner } from "../spinner/index.js";
 
 const Overview = ({ balance, unlocked_balance, blocks_to_unlock }) => {
+
   return (
     <Container>
       <Wrapper>

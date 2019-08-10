@@ -9,7 +9,7 @@ import {
 } from "../actions/types";
 
 
-const INITIAL_STATE = { isCreated:false, mnemonicKey:'', isVerified:false, error: null, isFetching:false };
+const INITIAL_STATE = { isCreated:false, mnemonicKey:'', isVerified:false, error: null, isFetching:false};
 
 export default function(state = INITIAL_STATE, action) {
   switch (action.type) {

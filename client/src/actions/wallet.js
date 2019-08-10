@@ -7,6 +7,7 @@ import {
 } from "./types";
 import {createWalletRPC, resetSessionId, restoreWalletRPC} from "../rpc/rpc";
 import {derivatePrivKeysBySeed} from "./key";
+import {mnemonic} from "../declarations/open_monero.service";
 
 
 const createWalletFetch = () => ({ type: CREATE_WALLET_FETCHING });
@@ -29,6 +30,13 @@ export const closeWallet = () => {
 export const restoreWallet = seed => {
 
     return dispatch => {
+
+
+        // check if user submitted privKey
+        if (seed.length === 64) {
+
+            seed = mnemonic.mn_encode(seed);
+        }
 
         dispatch(closeWallet());
         const language = "English";
