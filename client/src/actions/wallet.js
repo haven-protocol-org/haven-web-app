@@ -13,9 +13,9 @@ import {mnemonic} from "../declarations/open_monero.service";
 
 
 const createWalletFetch = () => ({ type: CREATE_WALLET_FETCHING });
-const createWalletSucceed = result => ({
+const createWalletSucceed = () => ({
     type: CREATE_WALLET_SUCCEED,
-    payload: result
+    payload: null
 });
 const createWalletFailed = error => ({
     type: CREATE_WALLET_FAILED,
@@ -81,8 +81,12 @@ export const createWallet = seed => {
 
         createWalletRPC(params)
             .then(result => queryMnemonicKeyRPC())
-            .then(result => dispatch(queryMnemonicForWalletGenerationSucceed(result.key)))
-            .then(result => dispatch(createWalletSucceed(result)))
+
+            .then(result => {
+                dispatch(derivatePrivKeysBySeed(result.key));
+                dispatch(queryMnemonicForWalletGenerationSucceed(result.key));
+            })
+            .then(() => dispatch(createWalletSucceed()))
             .catch(error => {
                 dispatch(createWalletFailed(error));
             })
