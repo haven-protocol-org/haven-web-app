@@ -35,6 +35,10 @@ export function getBalanceRPC(params) {
   return callRpc("get_balance", params);
 }
 
+export function queryMnemonicKeyRPC() {
+    return callRpc("query_key", { key_type: "mnemonic" });
+}
+
 export function transferRPC(params) {
   return callRpc("transfer", params);
 }

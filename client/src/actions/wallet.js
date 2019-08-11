@@ -3,9 +3,11 @@ import {
     CREATE_WALLET_FAILED,
     CREATE_WALLET_FETCHING,
     CREATE_WALLET_SUCCEED, RESTORE_WALLET_BY_SEED_FAILED,
-    RESTORE_WALLET_BY_SEED_FETCHING, RESTORE_WALLET_BY_SEED_SUCCEED, VALIDATE_MNEMONIC_FAILED, VALIDATE_MNEMONIC_SUCCEED
+    RESTORE_WALLET_BY_SEED_FETCHING, RESTORE_WALLET_BY_SEED_SUCCEED, VALIDATE_MNEMONIC_FAILED, VALIDATE_MNEMONIC_SUCCEED,
+    QUERY_MNEMONIC_FETCHING,
+    QUERY_MNEMONIC_SUCCEED, QUERY_MNEMONIC_FOR_WALLET_GENERATION_SUCCEED
 } from "./types";
-import {createWalletRPC, resetSessionId, restoreWalletRPC} from "../rpc/rpc";
+import {createWalletRPC, resetSessionId, restoreWalletRPC, queryMnemonicKeyRPC} from "../rpc/rpc";
 import {derivatePrivKeysBySeed} from "./key";
 import {mnemonic} from "../declarations/open_monero.service";
 
@@ -78,6 +80,8 @@ export const createWallet = seed => {
         const params = {language};
 
         createWalletRPC(params)
+            .then(result => queryMnemonicKeyRPC())
+            .then(result => dispatch(queryMnemonicForWalletGenerationSucceed(result.key)))
             .then(result => dispatch(createWalletSucceed(result)))
             .catch(error => {
                 dispatch(createWalletFailed(error));
@@ -85,6 +89,8 @@ export const createWallet = seed => {
 
     };
 };
+
+const queryMnemonicForWalletGenerationSucceed = (key) => ({type: QUERY_MNEMONIC_FOR_WALLET_GENERATION_SUCCEED, payload:key});
 
 export const mnenomicVerificationSucceed = () =>  ({type: VALIDATE_MNEMONIC_SUCCEED});
 export const mneomicVerifcationFailed = () => ({type: VALIDATE_MNEMONIC_FAILED});
