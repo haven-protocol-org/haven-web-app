@@ -46,9 +46,9 @@ const getTransfersFailed = error => ({
 
 const mergeAndSort = result => {
   const all = [
-    ...result.in,
-    ...result.out,
-    ...(result.pending ? result.pending : [])
+    ...result.in||[],
+    ...result.out||[],
+    ...result.pending||[]
   ];
   all.sort((a, b) => b.timestamp - a.timestamp);
   result.all = all;
