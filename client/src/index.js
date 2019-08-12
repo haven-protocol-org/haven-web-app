@@ -35,7 +35,7 @@ const logger = store => next => action => {
 };
 
 
-const createStoreWithMiddleware = applyMiddleware(reduxThunk)(
+const createStoreWithMiddleware = applyMiddleware(reduxThunk, logger)(
   createStore
 );
 const store = createStoreWithMiddleware(reducers, persistedState);
