@@ -177,6 +177,14 @@ const Footer = () => {
         <Internal to="/blog">Blog</Internal>
         <Internal to="/faq">F.A.Q</Internal>
         <Internal to="/timeline">Timeline</Internal>
+
+        <External
+          rel="noopener"
+          href="https://docs.wixstatic.com/ugd/4f3cdc_644cc2f46c234199836070f4cf976990.pdf?index=true"
+          target="_blank"
+        >
+          Whitepaper
+        </External>
         <External
           rel="noopener"
           href="https://github.com/haven-protocol-org/brand-assets"
