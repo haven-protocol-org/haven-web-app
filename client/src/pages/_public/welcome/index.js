@@ -40,7 +40,9 @@ class Welcome extends Component {
         <Container>
           <Microcopy>
             <HeadingWrapper>
-              <Heading>Private, Stable, Money</Heading>
+              <Heading>
+                Private <br /> Decentralized Finance
+              </Heading>
             </HeadingWrapper>
             <Buttons>
               <Link to="/create" label="Get Haven Vault" />
