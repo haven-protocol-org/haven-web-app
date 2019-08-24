@@ -40,7 +40,7 @@ const Content = ({ ref }) => {
             secure storage method or trade XHV/xUSD pairs. There will be further
             fiat currencies as well as xBTC and high profile commodities added
             to the platform over time allowing trading across a full range of up
-            to 66 trading pairs all available for trading without any of the
+            to 90+ trading pairs all available for trading without any of the
             currencies leaving their vault.
           </Description>
           <Title>Payments</Title>
