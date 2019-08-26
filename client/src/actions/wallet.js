@@ -9,7 +9,7 @@ import {
 } from "./types";
 import {createWalletRPC, resetSessionId, restoreWalletRPC, queryMnemonicKeyRPC} from "../rpc/rpc";
 import {derivatePrivKeysBySeed} from "./key";
-import {mnemonic} from "../declarations/open_monero.service";
+import {core} from "../declarations/open_monero.service";
 
 
 const createWalletFetch = () => ({ type: CREATE_WALLET_FETCHING });
@@ -34,7 +34,15 @@ export const restoreWallet = seed => {
     return dispatch => {
 
 
-        // check if user submitted privKey
+        core.monero_utils_promise.then(bridge => {
+
+            // 9vxH6ZyyPStir5B9x7rzkoZYKvckQ2J6PQgCfyeVcEYGjGvXy1sSNS7PrzdKe8wVdaSJL8jjb3mGjL9EMVbzWkVWU1n2TRS
+            console.log(bridge.decode_address('hvtaFf4rQ9ZQmqsVCG6VMhb2pkX8QpzB6RbK8VaW1uVjhsouUj5oZn4USH141gftUgCh1hHfPjtMtdhuMSm7mVb98rmdgiz9ZH', 1));
+            // console.log(bridge.seed_and_keys_from_mnemonic(seed, 1));
+        });
+
+
+/*        // check if user submitted privKey
         if (seed.length === 64) {
 
             seed = mnemonic.mn_encode(seed);
@@ -54,7 +62,7 @@ export const restoreWallet = seed => {
             })
             .catch(error => {
                 dispatch(restoreWalletFailed(error));
-            });
+           });*/
     };
 };
 
