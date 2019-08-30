@@ -29,7 +29,6 @@ class App extends Component {
 
 export const mapStateToProps = state => ({
   theme: state.theme,
-  session: state.appState.session
 });
 
 export default connect(mapStateToProps)(App);

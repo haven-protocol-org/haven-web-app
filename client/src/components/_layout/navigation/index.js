@@ -5,8 +5,8 @@ import { connect } from "react-redux";
 // Relative Imports
 import { Container, Haven, Logo, Brand, Button, Logout } from "./styles.js";
 import Icon from "../../../assets/haven.svg";
-import { IN_SESSION } from "../../../reducers/appState";
 import { closeWallet } from "../../../actions";
+import {selectIsLoggedIn} from "../../../reducers/account";
 
 class Navigation extends Component {
   handleLogout = () => {
@@ -16,7 +16,7 @@ class Navigation extends Component {
   };
 
   render() {
-    const auth = this.props.session === IN_SESSION;
+    const auth = this.props.isLoggedIn;
     return (
       <Container>
         <Brand to={auth === true ? "/wallet/assets" : "/"}>
@@ -34,7 +34,7 @@ class Navigation extends Component {
 }
 
 const mapStateToProps = state => ({
-  session: state.appState.session
+  isLoggedIn:selectIsLoggedIn(state)
 });
 
 export default connect(

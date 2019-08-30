@@ -56,6 +56,50 @@ export const calcValue = (amount, price) => {
       currency: "USD"
     });
   }
+};
 
 
+
+
+
+const toCamel = (s) => {
+  return s.replace(/([-_][a-z])/ig, ($1) => {
+    return $1.toUpperCase()
+        .replace('-', '')
+        .replace('_', '');
+  });
+};
+
+const isArray = (a) => {
+  return Array.isArray(a);
+};
+
+const isObject = (o) => {
+  return o === Object(o) && !isArray(o) && typeof o !== 'function';
+};
+
+
+// convert backend responses to camelCase
+export const keysToCamel = (o) => {
+  if (isObject(o)) {
+    const n = {};
+
+    Object.keys(o)
+        .forEach((k) => {
+          n[toCamel(k)] = keysToCamel(o[k]);
+        });
+
+    return n;
+  } else if (isArray(o)) {
+    return o.map((i) => {
+      return keysToCamel(i);
+    });
+  }
+
+  return o;
+};
+
+
+export const logM =  (message) => {
+  console.log(message);
 };

@@ -11,7 +11,7 @@ export const RESTORE_WALLET_BY_SEED_FETCHING = "restore_wallet_by_seed_fetching"
 export const RESTORE_WALLET_BY_SEED_SUCCEED = "restore_wallet_by_seed_succeed";
 export const RESTORE_WALLET_BY_SEED_FAILED = "restore_wallet_by_seed_failed";
 
-export const ADD_PUB_ADDRESS = "get_address_failed";
+export const ADD_PUB_ADDRESS = "add_pub_address";
 
 
 /*
@@ -80,3 +80,9 @@ export const GET_FOREX_FETCHING = "get_forex_fetching";
 export const GET_FOREX_SUCCEED = "get_forex_succeed";
 export const GET_FOREX_FAILED = "get_forex_failed";
 
+
+// ACCOUNT
+
+export const ACCOUNT_CREATION_REQUESTED = "account_creation_requested";
+export const ACCOUNT_CREATED = "account_created";
+export const ACCOUNT_CREATION_FAILED = "account_creation_failed";
