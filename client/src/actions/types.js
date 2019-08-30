@@ -21,11 +21,7 @@ export const GET_BALANCES_FETCHING = "get_balances_fetching";
 export const GET_BALANCES_SUCCEED = "get_balances_succeed";
 export const GET_BALANCES_FAILED = "get_balances_failed";
 
-//
-export const CREATE_WALLET_FETCHING = "create_wallet_fetching";
-export const CREATE_WALLET_SUCCEED = "create_wallet_succeed";
-export const CREATE_WALLET_FAILED = "create_wallet_failed";
-export const QUERY_MNEMONIC_FOR_WALLET_GENERATION_SUCCEED = "query_mnemonic_for_wallet_generation_succeed";
+
 export const VALIDATE_MNEMONIC_SUCCEED = "validate_mnemonic_succeed";
 export const VALIDATE_MNEMONIC_FAILED = "validate_mnemonic_failed";
 
@@ -36,9 +32,6 @@ export const CLOSE_WALLET = "close_wallet";
 export const KEYS_GENERATED_SUCCEED = "keys_generated_succeed";
 export const KEYS_GENERATED_FAILED = "keys_generated_failed";
 
-export const QUERY_MNEMONIC_FETCHING = "query_mnemonic_fetching";
-export const QUERY_MNEMONIC_FAILED = "query_mneomic_failed";
-export const QUERY_MNEMONIC_SUCCEED = "query_mneomic_succeed";
 
 /*
 TRANSFER

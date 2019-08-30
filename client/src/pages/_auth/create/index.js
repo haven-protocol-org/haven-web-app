@@ -14,6 +14,8 @@ import {
   mnenomicVerificationSucceed,
   mneomicVerifcationFailed
 } from "../../../actions";
+import {Redirect} from "react-router";
+import {selectIsLoggedIn} from "../../../reducers/account";
 
 class Create extends Component {
   state = {
@@ -27,6 +29,10 @@ class Create extends Component {
   }
 
   nextStep = () => {
+
+
+
+
     const { step } = this.state;
     const stepThree = step === 3;
 
@@ -37,7 +43,7 @@ class Create extends Component {
     // On step three, if seed is invalid display error messsage for 2s
     else if (stepThree) {
       const validationSucceed =
-        this.props.createdWallet.mnemonicKey === this.state.verify_seed;
+        this.props.mnemonicString === this.state.verify_seed;
 
       if (!validationSucceed) {
         this.setState({ error: "Sorry, that seed is incorrect" });
@@ -50,7 +56,7 @@ class Create extends Component {
       // On step three, if seed is valid, set loading to true and push true to authUser reducer
       if (validationSucceed) {
         this.props.mnenomicVerificationSucceed();
-        history.push("/wallet/assets");
+
       } else {
         return null;
       }
@@ -80,7 +86,7 @@ class Create extends Component {
       case 2:
         return (
           <CreateSeed
-            value={this.props.createdWallet.mnemonicKey}
+            value={this.props.mnemonicString}
             readOnly={true}
           />
         );
@@ -100,8 +106,14 @@ class Create extends Component {
   };
 
   render() {
+
+    if (this.props.isLoggedIn) {
+      return <Redirect to="/wallet/assets" />;
+    }
+
+
     const { step, verify_seed } = this.state;
-    const disabled = step === 3 && verify_seed === "" ? true : false;
+    const disabled = (step === 3 && verify_seed === "");
     return (
       <Container>
         <Auth
@@ -112,7 +124,6 @@ class Create extends Component {
           label="Have a Vault already?"
           submit="Generate"
           step={step}
-          loading={!this.props.createdWallet.isCreated}
           nextStep={this.nextStep}
           prevStep={this.prevStep}
           disabled={disabled}
@@ -125,7 +136,8 @@ class Create extends Component {
 }
 
 export const mapStateToProps = state => ({
-  createdWallet: state.walletCreation
+  mnemonicString: state.keys.mnemonicString,
+  isLoggedIn:selectIsLoggedIn(state)
 });
 
 export default connect(

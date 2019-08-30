@@ -9,7 +9,6 @@ import transfer from "./transfer";
 import { transferList } from "./transferList";
 import { priceHistory } from "./priceHistory";
 import notification from "./notification";
-import walletCreation from "./walletCreation";
 import { CLOSE_WALLET } from "../actions/types";
 import {account} from "./account";
 import {simplePrice} from "./simplePrice";
@@ -21,7 +20,6 @@ const appReducer = combineReducers({
   keys,
   transfer,
   transferList,
-  walletCreation,
   priceHistory,
   notification,
   account,

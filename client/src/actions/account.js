@@ -1,31 +1,19 @@
 import {
     CLOSE_WALLET,
-    CREATE_WALLET_FAILED,
-    CREATE_WALLET_FETCHING,
-    CREATE_WALLET_SUCCEED,
     VALIDATE_MNEMONIC_FAILED,
     VALIDATE_MNEMONIC_SUCCEED,
     ACCOUNT_CREATED,
     ACCOUNT_CREATION_FAILED,
     ACCOUNT_CREATION_REQUESTED
 } from "./types";
-import {createWalletRPC, resetSessionId, restoreWalletRPC, queryMnemonicKeyRPC} from "../rpc/rpc";
+
+import {resetSessionId} from "../rpc/rpc";
 import {keysGeneratedFailed, keysGeneratedSucceed} from "./key";
 import {core, lWallet} from "../declarations/open_monero.service";
 import {addPubAddress} from "./index";
 import {login} from "../api/api";
-import {logM} from "../utility";
+import {keysToCamel, logM} from "../utility";
 
-
-const createWalletFetch = () => ({ type: CREATE_WALLET_FETCHING });
-const createWalletSucceed = () => ({
-    type: CREATE_WALLET_SUCCEED,
-    payload: null
-});
-const createWalletFailed = error => ({
-    type: CREATE_WALLET_FAILED,
-    payload: error
-});
 
 export const closeWallet = () => {
     resetSessionId();
@@ -77,18 +65,30 @@ const accountCreationFailed = (error) => ({type: ACCOUNT_CREATION_FAILED, payloa
 
 
 
-export const createWallet = seed => {
+export const createWallet = () => {
     return dispatch => {
 
-        dispatch(closeWallet());
-        dispatch(createWalletFetch());
-
-        const language = "English";
-
+       core.monero_utils_promise
+           .then( bridge => {
+           const newWallet = keysToCamel(bridge.newly_created_wallet("english", 1));
+           dispatch(addPubAddress(newWallet.addressString));
+           delete newWallet.adressString;
+           dispatch(keysGeneratedSucceed(newWallet));
+       })
 
     };
 };
 
 
-export const mnenomicVerificationSucceed = () =>  ({type: VALIDATE_MNEMONIC_SUCCEED});
+export const mnenomicVerificationSucceed = () =>  {
+
+    return (dispatch, getState) => {
+
+        const pubViewKeyString = getState().keys.pubViewKeyString;
+        const address = getState().address.main;
+
+        dispatch(loginBE(address, pubViewKeyString, true));
+
+    };
+};
 export const mneomicVerifcationFailed = () => ({type: VALIDATE_MNEMONIC_FAILED});

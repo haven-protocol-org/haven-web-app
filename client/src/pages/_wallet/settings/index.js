@@ -17,7 +17,6 @@ import Footer from "../../../components/_inputs/footer";
 import { Container } from "./styles";
 
 import { dark, light } from "../../../constants/themes.js";
-import { NO_KEY } from "../../../reducers/keys";
 
 const options = [
   { theme: "dark", value: "Dark Theme" },
@@ -93,7 +92,7 @@ class Settings extends Component {
               <Description
                 label="Seed Phrase"
                 width="true"
-                value={this.props.mnemonic}
+                value={this.props.mnemonicString}
                 readOnly
                 type={"password"}
               />
@@ -101,7 +100,7 @@ class Settings extends Component {
               <Input
                 label="Seed Phrase"
                 width="true"
-                value={this.props.mnemonic}
+                value={this.props.mnemonicString}
                 readOnly
                 type={"password"}
               />
@@ -109,28 +108,28 @@ class Settings extends Component {
             <Input
               label="Public View Key"
               width="true"
-              value={this.props.view.pub}
+              value={this.props.pubViewKeyString}
               readOnly
               type={reveal ? "type" : "password"}
             />
             <Input
               label="Private View Key"
               width="true"
-              value={this.props.view.sec}
+              value={this.props.secViewKeyString}
               readOnly
               type={reveal ? "type" : "password"}
             />
             <Input
               label="Private Spend Key"
               width="true"
-              value={this.props.spend.sec}
+              value={this.props.secSpendKeyString}
               readOnly
               type={reveal ? "type" : "password"}
             />
             <Input
               label="Public Spend Key"
               width="true"
-              value={this.props.spend.pub}
+              value={this.props.pubSpendKeyString}
               readOnly
               type={reveal ? "type" : "password"}
             />
