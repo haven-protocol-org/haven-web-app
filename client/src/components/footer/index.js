@@ -180,7 +180,7 @@ const Footer = () => {
 
         <External
           rel="noopener"
-          href="https://docs.wixstatic.com/ugd/4f3cdc_644cc2f46c234199836070f4cf976990.pdf?index=true"
+          href="http://docs.havenprotocol.org/haven-protocol-wp-2_0.pdf"
           target="_blank"
         >
           Whitepaper
