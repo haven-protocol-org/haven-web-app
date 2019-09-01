@@ -101,7 +101,7 @@ const Content = ({ ref }) => {
           <Description>
             Haven (XHV) is based on Monero, a privacy-oriented crypto-currency.
             It is a Proof of Work (PoW) crypto currency based on the Cryptonote
-            proto
+            protocol.
           </Description>
           <Title>How many XHV coins are there?</Title>
           <Description>
