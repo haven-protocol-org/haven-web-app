@@ -7,7 +7,6 @@ import {
     ACCOUNT_CREATION_REQUESTED
 } from "./types";
 
-import {resetSessionId} from "../rpc/rpc";
 import {keysGeneratedFailed, keysGeneratedSucceed} from "./key";
 import {core, lWallet} from "../declarations/open_monero.service";
 import {addPubAddress} from "./index";
@@ -16,7 +15,6 @@ import {keysToCamel, logM} from "../utility";
 
 
 export const closeWallet = () => {
-    resetSessionId();
     return { type: CLOSE_WALLET };
 };
 
@@ -84,7 +82,7 @@ export const mnenomicVerificationSucceed = () =>  {
 
     return (dispatch, getState) => {
 
-        const pubViewKeyString = getState().keys.pubViewKeyString;
+        const pubViewKeyString = getState().keys.secViewKeyString;
         const address = getState().address.main;
 
         dispatch(loginBE(address, pubViewKeyString, true));

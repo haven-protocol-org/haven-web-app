@@ -10,7 +10,6 @@ import Exchange from "../../pages/_wallet/exchange";
 import Transfer from "../../pages/_wallet/transfer";
 import Settings from "../../pages/_wallet/settings";
 import { connect } from "react-redux";
-import { refresh } from "../../actions";
 import {selectIsLoggedIn} from "../../reducers/account";
 
 /**
@@ -53,5 +52,5 @@ export const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { refresh }
+  {  }
 )(PrivateRoutes);

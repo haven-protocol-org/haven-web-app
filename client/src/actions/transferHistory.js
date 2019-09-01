@@ -1,9 +1,9 @@
-import { getTransferRPC } from "../rpc/rpc";
 import {
   GET_TRANSFERS_FAILED,
   GET_TRANSFERS_FETCHING,
   GET_TRANSFERS_SUCCEED
 } from "./types";
+import {getAddressTxs} from "../api/api";
 
 /**
  * just refresh tx from interest - latest pending tx
@@ -18,7 +18,7 @@ export const getTransfers = () => {
   return dispatch => {
     dispatch(getTransfersFetching());
     const params = { in: true, out: true, pending: true };
-    getTransferRPC(params)
+    getAddressTxs(params)
       .then(mergeAndSort)
       .then(result => {
         dispatch(getTransfersSucceed(result));

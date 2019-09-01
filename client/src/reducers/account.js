@@ -16,7 +16,7 @@ export const account = (state = INITIAL_STATE, action) => {
         default:
             return state;
     }
-}
+};
 
 export const selectIsLoggedIn = (state) => {
   return state.account.status === "success";
@@ -33,4 +33,12 @@ export const selectErrorMessageForLogin = (state) => {
         return getMessageOfError(state.account.error);
     }
     return "";
+};
+
+export const selectCredentials = (state) => {
+
+    const view_key = state.keys.secViewKeyString;
+    const address = state.address.main;
+
+    return {view_key, address};
 };
