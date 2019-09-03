@@ -6,7 +6,7 @@ import {
 import {getAddressTxs} from "../api/api";
 import {selectCredentials} from "../reducers/account";
 import {core, lWallet} from "../declarations/open_monero.service";
-import {logM} from "../utility";
+import {keysToCamel, logM} from "../utility";
 
 /**
  * just refresh tx from interest - latest pending tx
@@ -22,6 +22,7 @@ export const getTransfers = () => {
     dispatch(getTransfersFetching());
     getAddressTxs(selectCredentials(getState()))
       .then(result => parseTx(result, getState()))
+        .then(txs => dispatch(getTransfersSucceed(txs)))
       .catch(error => {
         dispatch(getTransfersFailed(error));
       });
@@ -33,12 +34,10 @@ const parseTx = (rawTXs, state) => {
   const address = state.address.main;
   const {secViewKeyString, pubSpendKeyString, secSpendKeyString } = state.keys;
 
-  logM(rawTXs);
-  const parsedData = core.api_response_parser_utils.Parsed_AddressTransactions__sync__keyImageManaged(rawTXs,
+  let parsedData = core.api_response_parser_utils.Parsed_AddressTransactions__sync__keyImageManaged(rawTXs,
       address, secViewKeyString, pubSpendKeyString, secSpendKeyString, lWallet);
-  logM(parsedData);
-  logM(rawTXs);
 
+  return parsedData.serialized_transactions;
 };
 
 const getTransfersFetching = () => ({
@@ -55,6 +54,7 @@ const getTransfersFailed = error => ({
   type: GET_TRANSFERS_FAILED,
   payload: error
 });
+
 
 const mergeAndSort = result => {
   const all = [

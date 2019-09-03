@@ -23,7 +23,6 @@ export const getBalances = () => {
 
 const setBalance = (addressInfo) => {
 
-    logM(addressInfo);
     const balance = core.JSBigInt (addressInfo.totalReceivedString).subtract(core.JSBigInt (addressInfo.totalSentString));
 
     const lockedBalance = core.JSBigInt(addressInfo.lockedBalanceString);
@@ -40,7 +39,6 @@ const parseAddressInfo = (rawAddressInfo, state) => {
     const {secViewKeyString, pubSpendKeyString, secSpendKeyString } = state.keys;
     const parsedData = core.api_response_parser_utils.Parsed_AddressInfo__sync__keyImageManaged(rawAddressInfo, address , secViewKeyString, pubSpendKeyString, secSpendKeyString, lWallet);
 
-    console.log(parsedData);
     return parsedData;
 
 };
