@@ -10,11 +10,11 @@ export const getBalances = () => {
 
         const credentials = selectCredentials(getState());
 
-        console.log(core.api_response_parser_utils.Parsed_AddressInfo__keyImageManaged );
         getAddressInfo(credentials)
             .then(res => parseAddressInfo(res, getState()))
             .then(res => keysToCamel(res))
-            .then(res => setBalance(res));
+            .then(res => setBalance(res))
+            .then(res => dispatch(getBalancesSucceed(res)));
 
 
     };
@@ -26,7 +26,9 @@ const setBalance = (addressInfo) => {
     logM(addressInfo);
     const balance = core.JSBigInt (addressInfo.totalReceivedString).subtract(core.JSBigInt (addressInfo.totalSentString));
 
-    console.log(balance.toString());
+    const lockedBalance = core.JSBigInt(addressInfo.lockedBalanceString);
+    const unlockedBalance = balance.subtract(lockedBalance);
+    return {balance, lockedBalance, unlockedBalance};
 
 };
 

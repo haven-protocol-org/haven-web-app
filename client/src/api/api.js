@@ -39,7 +39,7 @@ export const keepAlive = (address, view_key) => {
  */
 export const getAddressInfo = (params) => {
     return fetch( `${API_URL}/get_address_info`, { ...INIT_REQUEST, body: JSON.stringify(params) } )
-        .then(result => keysToCamel(result.json()));
+        .then(result => result.json());
 };
 
 
@@ -48,10 +48,9 @@ export const getAddressInfo = (params) => {
  * @param address
  * @param view_key
  */
-export const getAddressTxs = (address, view_key) => {
-    const params = {address, view_key};
+export const getAddressTxs = (params) => {
     return fetch( `${API_URL}/get_address_txs`, { ...INIT_REQUEST, body: JSON.stringify(params) } )
-        .then(result => keysToCamel(result.json()));
+        .then(result => result.json());
 };
 
 

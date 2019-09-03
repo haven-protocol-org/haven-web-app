@@ -32,8 +32,9 @@ export const restoreWallet = seed => {
 
             //TODO net type must be env
             keys = lWallet.seed_and_keys_from_mnemonic(seed, core.nettype_utils.network_type.TESTNET);
+            keys = keysToCamel(keys);
             dispatch(keysGeneratedSucceed(keys));
-            dispatch(addPubAddress(keys.address_string));
+            dispatch(addPubAddress(keys.addressString));
 
         }
         catch(e) {
@@ -42,7 +43,7 @@ export const restoreWallet = seed => {
             return;
         }
 
-        dispatch(loginBE(keys.address_string, keys.sec_viewKey_string, false));
+        dispatch(loginBE(keys.addressString, keys.secViewKeyString, false));
     };
 };
 
