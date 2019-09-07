@@ -7,6 +7,7 @@ export * from "./transfer";
 export * from "./key";
 export * from "./theme";
 export * from "./transferHistory";
+export * from "./sendFunds";
 
 
 

@@ -59,26 +59,30 @@ export const getAddressTxs = (params) => {
 // API endpoints for sending funds
 //
 
-export const getUnspentOuts = (address, view_key ) => {
+export const getUnspentOuts = (params ) => {
 
-    const amount = 0;
-    const mixin = 0;
-    const use_dust = false;
-    const dust_threshold = "1000000000";
+//    const amount = 0;
+//    const mixin = 0;
+//    const use_dust = false;
+//    const dust_threshold = "1000000000";
 
 
-    const params = {address, view_key, amount, mixin, use_dust, dust_threshold};
+    //const params = {address, view_key, amount, mixin, use_dust, dust_threshold};
     return fetch( `${API_URL}/get_unspent_outs`, { ...INIT_REQUEST, body: JSON.stringify(params) } )
-        .then(result => keysToCamel(result.json()));
+        .then(result => result.json());
 
 };
 
 
-export const get_random_outs = () => {
+export const getRandomOuts = (params) => {
 
+    return fetch( `${API_URL}/get_random_outs`, { ...INIT_REQUEST, body: JSON.stringify(params) } )
+        .then(result => result.json());
 };
 
 
-export const submit_raw_tx = (tx) => {
+export const submitRawTx = (signedTx) => {
 
+    return fetch( `${API_URL}/submit_raw_tx`, { ...INIT_REQUEST, body: JSON.stringify(signedTx) } )
+        .then(result => result.json());
 };
