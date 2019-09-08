@@ -23,6 +23,15 @@ export const Cell = styled.div`
   height: auto;
 `;
 
+export const Important = styled.div`
+  width: auto;
+  height: auto;
+  background: #2b2e32;
+  padding: 10px 20px;
+  border-radius: 4px;
+  border-left: 6px solid #34d8ac;
+`;
+
 export const Title = styled.h3`
   color: #fff;
   letter-spacing: 0;
@@ -38,4 +47,27 @@ export const Description = styled.p`
   line-height: 26px;
   text-align: left;
   width: 100%;
+`;
+
+export const Heading = styled.div`
+  font-weight: 900;
+  font-family: "Playfair Display", serif;
+  font-size: 60px;
+  color: #fff;
+  letter-spacing: 0;
+  line-height: 90px;
+  margin-left: 20px;
+  margin-right: 20px;
+  text-align: center;
+  margin-bottom: 40px;
+  margin-top: 40px;
+  ${media.laptop`
+    font-size: 58px;
+    line-height: 78px;
+  `};
+
+  ${media.mobile`
+    font-size: 52px;
+    line-height: 56px;
+  `};
 `;

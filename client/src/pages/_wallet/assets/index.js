@@ -13,13 +13,13 @@ import Cell from "../../../components/cell";
 import CellDisabled from "../../../components/cell_disabled";
 
 import data from "../../../constants/data.js";
-import {NO_PRICE} from "../../../reducers/priceHistory";
-import {calcValue} from "../../../utility";
-import {selectReadableBalance} from "../../../reducers/balance";
+import { NO_PRICE } from "../../../reducers/priceHistory";
+import { calcValue } from "../../../utility";
+import { selectReadableBalance } from "../../../reducers/balance";
 
 class Assets extends Component {
   state = {
-    token: data,
+    token: data
   };
 
   componentDidMount() {
@@ -54,12 +54,13 @@ class Assets extends Component {
   };
 
   render() {
-
-
-    const price = this.props.price === NO_PRICE? '--' : this.props.price.toLocaleString("en-US", {
-      style: "currency",
-      currency: "USD"
-    });
+    const price =
+      this.props.price === NO_PRICE
+        ? "--"
+        : this.props.price.toLocaleString("en-US", {
+            style: "currency",
+            currency: "USD"
+          });
 
     const value = calcValue(this.props.readableBalance, this.props.price);
 
@@ -95,7 +96,7 @@ class Assets extends Component {
 export const mapStateToProps = state => ({
   balance: state.balance,
   readableBalance: selectReadableBalance(state),
-  ... state.simplePrice
+  ...state.simplePrice
 });
 
 export default connect(
