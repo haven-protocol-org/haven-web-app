@@ -7,23 +7,23 @@ import { NO_BALANCE } from "../../reducers/balance";
 import { convertBalanceForReading } from "../../utility";
 import { Spinner } from "../spinner/index.js";
 
-const Overview = ({ balance, unlocked_balance, blocks_to_unlock }) => {
+const Overview = ({ balance, unlockedBalance, lockedBalance }) => {
 
   return (
     <Container>
       <Wrapper>
         <Amount>
-          {unlocked_balance === NO_BALANCE ? (
+          {unlockedBalance === NO_BALANCE ? (
             <Spinner />
           ) : (
-            convertBalanceForReading(unlocked_balance)
+            convertBalanceForReading(unlockedBalance)
           )}
         </Amount>
         <Value>XHV Balance</Value>
-        {balance !== unlocked_balance ? (
+        {lockedBalance > 0 ? (
           <div>
             <Pending>
-              You have {convertBalanceForReading(balance - unlocked_balance)}{" "}
+              You have {convertBalanceForReading(lockedBalance)}{" "}
               XHV pending
               <br />
               Your balances will be updated shortly.

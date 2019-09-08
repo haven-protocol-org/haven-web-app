@@ -1,7 +1,7 @@
 // Library Imports
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { transfer } from "../../../actions";
+import { sendFunds } from "../../../actions";
 import history from "../../../history.js";
 
 // Relative Imports
@@ -10,16 +10,13 @@ import Body from "../../../components/_layout/body";
 import Menu from "../../../components/_layout/menu";
 import Header from "../../../components/_layout/header";
 import Input from "../../../components/_inputs/input";
-import Description from "../../../components/_inputs/description";
 import Form from "../../../components/_inputs/form";
 import Dropdown from "../../../components/_inputs/dropdown";
 import Footer from "../../../components/_inputs/footer";
 import Transaction from "../../../components/_transactions/transfer";
 import Tab from "../../../components/tab";
-import Confirm from "../../../components/confirm";
 
 import { Container } from "./styles";
-import { selectNumOfTransferPending } from "../../../reducers/transferList";
 
 const options = [{ asset: "Haven", ticker: "XHV" }];
 
@@ -65,7 +62,7 @@ class Transfer extends Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.numTransferPending > this.props.numTransferPending) {
+    if (false) {
       history.push("/wallet/assets/XHV");
     }
   }
@@ -75,7 +72,7 @@ class Transfer extends Component {
     if (send_amount.length === 0 && recipient_address.length === 0) {
       this.setState({ validated: false });
     } else if (send_amount.length > 0 && recipient_address.length > 0) {
-      this.props.transfer(this.state.recipient_address, this.state.send_amount);
+      this.props.sendFunds(this.state.recipient_address, this.state.send_amount);
     }
   };
 
@@ -226,11 +223,10 @@ class Transfer extends Component {
 
 export const mapStateToProps = state => ({
   latestTransfer: state.transfer,
-  numTransferPending: selectNumOfTransferPending(state),
   address: state.address.main
 });
 
 export default connect(
   mapStateToProps,
-  { transfer }
+  { sendFunds }
 )(Transfer);

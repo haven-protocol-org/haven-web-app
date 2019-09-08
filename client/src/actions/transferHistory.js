@@ -1,9 +1,12 @@
-import { getTransferRPC } from "../rpc/rpc";
 import {
   GET_TRANSFERS_FAILED,
   GET_TRANSFERS_FETCHING,
   GET_TRANSFERS_SUCCEED
 } from "./types";
+import {getAddressTxs} from "../api/api";
+import {selectCredentials} from "../reducers/account";
+import {core, lWallet} from "../declarations/open_monero.service";
+import {keysToCamel, logM} from "../utility";
 
 /**
  * just refresh tx from interest - latest pending tx
@@ -15,18 +18,26 @@ export const updateLatestTransfers = () => {
 
 
 export const getTransfers = () => {
-  return dispatch => {
+  return (dispatch, getState) => {
     dispatch(getTransfersFetching());
-    const params = { in: true, out: true, pending: true };
-    getTransferRPC(params)
-      .then(mergeAndSort)
-      .then(result => {
-        dispatch(getTransfersSucceed(result));
-      })
+    getAddressTxs(selectCredentials(getState()))
+      .then(result => parseTx(result, getState()))
+        .then(txs => dispatch(getTransfersSucceed(txs)))
       .catch(error => {
         dispatch(getTransfersFailed(error));
       });
   };
+};
+
+const parseTx = (rawTXs, state) => {
+
+  const address = state.address.main;
+  const {secViewKeyString, pubSpendKeyString, secSpendKeyString } = state.keys;
+
+  let parsedData = core.api_response_parser_utils.Parsed_AddressTransactions__sync__keyImageManaged(rawTXs,
+      address, secViewKeyString, pubSpendKeyString, secSpendKeyString, lWallet);
+
+  return parsedData.serialized_transactions;
 };
 
 const getTransfersFetching = () => ({
@@ -43,6 +54,7 @@ const getTransfersFailed = error => ({
   type: GET_TRANSFERS_FAILED,
   payload: error
 });
+
 
 const mergeAndSort = result => {
   const all = [

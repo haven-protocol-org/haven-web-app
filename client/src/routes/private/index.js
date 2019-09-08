@@ -10,8 +10,7 @@ import Exchange from "../../pages/_wallet/exchange";
 import Transfer from "../../pages/_wallet/transfer";
 import Settings from "../../pages/_wallet/settings";
 import { connect } from "react-redux";
-import { IN_SESSION } from "../../reducers/appState";
-import { refresh } from "../../actions";
+import {selectIsLoggedIn} from "../../reducers/account";
 
 /**
  *root component for private wallet
@@ -31,7 +30,7 @@ class PrivateRoutes extends Component {
   render() {
     const { match } = this.props;
 
-    if (this.props.sessionState !== IN_SESSION) {
+    if (!this.props.isLoggedIn) {
       return <Redirect to="/" />;
     }
 
@@ -48,10 +47,10 @@ class PrivateRoutes extends Component {
 }
 
 export const mapStateToProps = state => ({
-  sessionState: state.appState.session
+  isLoggedIn: selectIsLoggedIn(state)
 });
 
 export default connect(
   mapStateToProps,
-  { refresh }
+  {  }
 )(PrivateRoutes);

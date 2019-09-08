@@ -1,16 +1,46 @@
-import {getBalanceRPC} from "../rpc/rpc";
 import {GET_BALANCES_FAILED, GET_BALANCES_FETCHING, GET_BALANCES_SUCCEED} from "./types";
+import {getAddressInfo} from "../api/api";
+import {selectCredentials} from "../reducers/account";
+import {core, lWallet} from "../declarations/open_monero.service";
+import {keysToCamel, logM} from "../utility";
 
 export const getBalances = () => {
     return (dispatch, getState) => {
         dispatch(getBalancesFetching());
 
-        const account_index = 0;
+        const credentials = selectCredentials(getState());
 
-        getBalanceRPC({ account_index })
-            .then(result => dispatch(getBalancesSucceed(result)))
-            .catch(error => dispatch(getBalancesFailed(error)));
+        getAddressInfo(credentials)
+            .then(res => parseAddressInfo(res, getState()))
+            .then(res => keysToCamel(res))
+            .then(res => setBalance(res))
+            .then(res => dispatch(getBalancesSucceed(res)));
+
+
     };
+};
+
+
+const setBalance = (addressInfo) => {
+
+    const balance = core.JSBigInt (addressInfo.totalReceivedString).subtract(core.JSBigInt (addressInfo.totalSentString));
+
+    const lockedBalance = core.JSBigInt(addressInfo.lockedBalanceString);
+    const unlockedBalance = balance.subtract(lockedBalance);
+    return {balance, lockedBalance, unlockedBalance};
+
+};
+
+
+const parseAddressInfo = (rawAddressInfo, state) => {
+
+
+    const address = state.address.main;
+    const {secViewKeyString, pubSpendKeyString, secSpendKeyString } = state.keys;
+    const parsedData = core.api_response_parser_utils.Parsed_AddressInfo__sync__keyImageManaged(rawAddressInfo, address , secViewKeyString, pubSpendKeyString, secSpendKeyString, lWallet);
+
+    return parsedData;
+
 };
 
 const getBalancesFetching = () => ({ type: GET_BALANCES_FETCHING });

@@ -8,12 +8,9 @@ import { Container } from "./styles";
 import Auth from "../../../components/_auth/login";
 import Description from "../../../components/_inputs/description";
 import { Information } from "../../../constants/type.js";
-import {
-  IN_SESSION,
-  REQUESTING_SESSION,
-  selectErrorMessage
-} from "../../../reducers/appState";
+
 import { restoreWallet } from "../../../actions";
+import {selectErrorMessageForLogin, selectIsLoggedIn, selectIsRequestingLogin} from "../../../reducers/account";
 
 class Login extends Component {
   state = {
@@ -48,7 +45,7 @@ class Login extends Component {
   };
 
   render() {
-    if (this.props.session === IN_SESSION) {
+    if (this.props.isLoggedIn) {
       return <Redirect to="/wallet/assets" />;
     }
 
@@ -67,10 +64,10 @@ class Login extends Component {
           disable={
             seed_phrase === ""
               ? true
-              : this.props.session === REQUESTING_SESSION
+              : this.props.isRequestingLogin
           }
           onClick={() => this.handleLogin()}
-          loading={this.props.session === REQUESTING_SESSION}
+          loading={this.props.isRequestingLogin}
           information="Before entering your seed phrase please ensure you’re not on a public
         or unsecured wifi connection."
           submit="Submit"
@@ -94,8 +91,10 @@ class Login extends Component {
 }
 
 const mapStateToProps = state => ({
-  ...state.appState,
-  errorMessage: selectErrorMessage(state)
+
+  isRequestingLogin: selectIsRequestingLogin(state),
+  isLoggedIn:selectIsLoggedIn(state),
+  errorMessage: selectErrorMessageForLogin(state)
 });
 
 export default connect(

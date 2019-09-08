@@ -11,7 +11,7 @@ export const RESTORE_WALLET_BY_SEED_FETCHING = "restore_wallet_by_seed_fetching"
 export const RESTORE_WALLET_BY_SEED_SUCCEED = "restore_wallet_by_seed_succeed";
 export const RESTORE_WALLET_BY_SEED_FAILED = "restore_wallet_by_seed_failed";
 
-export const ADD_PUB_ADDRESS = "get_address_failed";
+export const ADD_PUB_ADDRESS = "add_pub_address";
 
 
 /*
@@ -21,11 +21,7 @@ export const GET_BALANCES_FETCHING = "get_balances_fetching";
 export const GET_BALANCES_SUCCEED = "get_balances_succeed";
 export const GET_BALANCES_FAILED = "get_balances_failed";
 
-//
-export const CREATE_WALLET_FETCHING = "create_wallet_fetching";
-export const CREATE_WALLET_SUCCEED = "create_wallet_succeed";
-export const CREATE_WALLET_FAILED = "create_wallet_failed";
-export const QUERY_MNEMONIC_FOR_WALLET_GENERATION_SUCCEED = "query_mnemonic_for_wallet_generation_succeed";
+
 export const VALIDATE_MNEMONIC_SUCCEED = "validate_mnemonic_succeed";
 export const VALIDATE_MNEMONIC_FAILED = "validate_mnemonic_failed";
 
@@ -36,9 +32,6 @@ export const CLOSE_WALLET = "close_wallet";
 export const KEYS_GENERATED_SUCCEED = "keys_generated_succeed";
 export const KEYS_GENERATED_FAILED = "keys_generated_failed";
 
-export const QUERY_MNEMONIC_FETCHING = "query_mnemonic_fetching";
-export const QUERY_MNEMONIC_FAILED = "query_mneomic_failed";
-export const QUERY_MNEMONIC_SUCCEED = "query_mneomic_succeed";
 
 /*
 TRANSFER
@@ -80,3 +73,16 @@ export const GET_FOREX_FETCHING = "get_forex_fetching";
 export const GET_FOREX_SUCCEED = "get_forex_succeed";
 export const GET_FOREX_FAILED = "get_forex_failed";
 
+
+// ACCOUNT
+
+export const ACCOUNT_CREATION_REQUESTED = "account_creation_requested";
+export const ACCOUNT_CREATED = "account_created";
+export const ACCOUNT_CREATION_FAILED = "account_creation_failed";
+
+// SEND FUNDS
+
+export const SEND_FUNDS_STARTED = "send_funds_started";
+export const SEND_FUNDS_SUCCEED = "send_funds_succeed";
+export const SEND_FUNDS_FAILED = "send_funds_failed";
+export const SEND_FUNDS_STATUS_UPDATE = "send_funds_status_update";

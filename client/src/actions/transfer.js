@@ -1,9 +1,9 @@
-import { transferRPC } from "../rpc/rpc";
 import { getTransfers } from "./";
 import { TRANSFER_FAILED, TRANSFER_FETCHING, TRANSFER_SUCCEED } from "./types";
 
 import { getBalances } from "./";
 import { addErrorNotification, addNotificationByKey } from "./notification";
+import {getAddressTxs} from "../api/api";
 
 export const transfer = (address, amount) => {
   amount = amount * 1e12;
@@ -11,7 +11,7 @@ export const transfer = (address, amount) => {
     dispatch(transferFetch({ address, amount }));
     const params = { destinations: [{ address, amount }], ring_size: 11 };
 
-    transferRPC(params)
+    getAddressTxs(params)
       .then(result => {
         dispatch(transferSucceed(result));
         dispatch(addNotificationByKey(TRANSFER_SUCCEED));

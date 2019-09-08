@@ -1,13 +1,13 @@
 import {ADD_PUB_ADDRESS} from "./types";
 
 export * from "./prices";
-export * from "./wallet";
+export * from "./account";
 export * from "./balance";
 export * from "./transfer";
 export * from "./key";
 export * from "./theme";
 export * from "./transferHistory";
-export * from "./chain";
+export * from "./sendFunds";
 
 
 

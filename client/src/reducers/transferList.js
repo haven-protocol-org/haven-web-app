@@ -5,15 +5,11 @@ import {
 } from "../actions/types";
 
 const INITIAL_STATE = {
-  out: [],
-  in: [],
-  all: [],
-  pending: [],
+  txs: [],
   isFetching: false,
   error: {},
   isEmpty: true,
-  maxHeight:-1,
-  minHeight:-1
+
 };
 
 export function transferList(state = INITIAL_STATE, action) {
@@ -22,7 +18,7 @@ export function transferList(state = INITIAL_STATE, action) {
       return { ...state, isFetching: true };
     case GET_TRANSFERS_SUCCEED:
       return { ...state,
-        ...action.payload,
+        txs:action.payload,
         isFetching: false,
         error: "",
         isEmpty: false
@@ -33,10 +29,3 @@ export function transferList(state = INITIAL_STATE, action) {
       return state;
   }
 }
-
-
-export function selectNumOfTransferPending(state) {
-
-  return state.transferList.pending.length;
-
-};
