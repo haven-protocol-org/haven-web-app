@@ -48,7 +48,6 @@ export const Heading = styled.div`
 
   ${media.mobile`
     width: 90%
-    font-size: 68px;
-    line-height: 78px;
+    font-size: 60px;
   `};
 `;

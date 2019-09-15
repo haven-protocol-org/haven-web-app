@@ -17,11 +17,7 @@ class Timline extends Component {
       <Page>
         <Container>
           <Microcopy>
-            <Heading>
-              Haven Development
-              <br />
-              Timeline
-            </Heading>
+            <Heading>Haven Timeline</Heading>
           </Microcopy>
         </Container>
         <Content />
