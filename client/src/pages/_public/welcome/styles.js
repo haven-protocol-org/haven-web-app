@@ -119,8 +119,7 @@ export const Heading = styled.h1`
   letter-spacing: 0;
 
   ${media.mobile`
-    font-size: 60px;
-
+    font-size: 50px;
   `};
 `;
 
