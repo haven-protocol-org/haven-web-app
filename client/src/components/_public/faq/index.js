@@ -15,15 +15,16 @@ const Content = ({ ref }) => {
   return (
     <>
       <Container>
-        <Heading>What is Haven? </Heading>
+        <Heading>What is Haven?</Heading>
         <Cell>
+          <Title>BUY. SWAP. STORE.</Title>
           <Description>
-            Haven is building a private decentralized finance network that gives
-            users the ability to privately store and transact their wealth
-            without having to use the traditional banking system. It allows
-            anyone with a computer or mobile device and an internet connection
-            to participate in storing and using a range of digital fiat
-            currencies as well as xBTC and other high profile commodities.
+            Be your own bank with Haven. Simply buy Haven [XHV] from any
+            exchange it’s listed on, send it to your own private digital vault
+            where you can swap between all supported Haven currencies and
+            securely store them without giving up control to anyone else.
+            <br /> <br />
+            Complete privacy so that YOUR money is 100% yours. No bank needed.
           </Description>
         </Cell>
         <Heading>What can Haven be used for? </Heading>
@@ -146,7 +147,7 @@ const Content = ({ ref }) => {
             user would not want to be available publicly. This is especially
             true for personal financial data that, if stolen, can be used by
             unscrupulous parties to potentially steal those funds. The privacy
-            features of Haven makes this much less likely to ha
+            features of Haven makes this much less likely to happen.
           </Description>
           <Important>
             <Title>Important!</Title>
