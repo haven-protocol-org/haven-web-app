@@ -56,18 +56,6 @@ const Content = ({ ref }) => {
         </Cell>
         <Heading>How does Haven work?</Heading>
         <Cell>
-          <Description>
-            Haven has a unique approach to allowing users to securely store
-            their wealth and have peace of mind that the value will remain
-            stable in relation to a fiat currency of the users choice (eg.
-            USD/EURO etc). As the network grows it is planned to further include
-            an xAsset pegged to BTC as well as other commodities. The details of
-            the mint and burn process that allows this to happen can be found in
-            our whitepaper. For most crypto users the issue of volatility is
-            overcome by sending your coins to an exchange and selling them for a
-            stablecoin. This method of storage has several potential issues
-            including:
-          </Description>
           <Title>Lack of liquidity on an exchange</Title>
           <Description>
             Using the mint/burn process Haven users can lock-in the fiat value
