@@ -11,6 +11,7 @@ import Transfer from "../../pages/_wallet/transfer";
 import Settings from "../../pages/_wallet/settings";
 import { connect } from "react-redux";
 import {selectIsLoggedIn} from "../../reducers/account";
+import {refresh} from "../../actions";
 
 /**
  *root component for private wallet
@@ -20,7 +21,7 @@ import {selectIsLoggedIn} from "../../reducers/account";
  */
 class PrivateRoutes extends Component {
   componentDidMount() {
-    this.timer = setInterval(this.props.refresh, 60000);
+    this.timer = setInterval(this.props.refresh, 15000);
   }
 
   componentWillUnmount() {
@@ -52,5 +53,5 @@ export const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  {  }
+  { refresh }
 )(PrivateRoutes);

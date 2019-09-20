@@ -9,13 +9,21 @@ import {
 
 import {keysGeneratedFailed, keysGeneratedSucceed} from "./key";
 import {core, lWallet} from "../declarations/open_monero.service";
-import {addPubAddress} from "./index";
+import {addPubAddress, getBalances, getTransfers} from "./index";
 import {login} from "../api/api";
 import {keysToCamel, logM} from "../utility";
 
 
 export const closeWallet = () => {
     return { type: CLOSE_WALLET };
+};
+
+export const refresh = () => {
+
+    return dispatch => {
+        dispatch(getBalances());
+        dispatch(getTransfers());
+    }
 };
 
 
