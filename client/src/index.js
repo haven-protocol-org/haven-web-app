@@ -41,6 +41,12 @@ const createStoreWithMiddleware = applyMiddleware(reduxThunk, logger)(
 const store = createStoreWithMiddleware(reducers, persistedState);
 
 
+store.subscribe(() => {
+    saveState(store.getState()
+    );
+});
+
+
 
 ReactDOM.render(
   <Provider store={store}>
