@@ -3,7 +3,7 @@
 
 import {keysToCamel} from "../utility";
 
-const API_URL = "http://127.0.0.1:1984/";
+const API_URL = "http://213.136.85.14:1984";
 
 const INIT_REQUEST = {
     method: "POST",
