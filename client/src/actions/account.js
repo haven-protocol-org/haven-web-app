@@ -12,6 +12,7 @@ import {core, lWallet} from "../declarations/open_monero.service";
 import {addPubAddress, getBalances, getTransfers} from "./index";
 import {login} from "../api/api";
 import {keysToCamel, logM} from "../utility";
+import {NET_TYPE_ID} from "../constants/env";
 
 
 export const closeWallet = () => {
@@ -39,7 +40,7 @@ export const restoreWallet = seed => {
         try {
 
             //TODO net type must be env
-            keys = lWallet.seed_and_keys_from_mnemonic(seed, core.nettype_utils.network_type.TESTNET);
+            keys = lWallet.seed_and_keys_from_mnemonic(seed, NET_TYPE_ID);
             keys = keysToCamel(keys);
             dispatch(keysGeneratedSucceed(keys));
             dispatch(addPubAddress(keys.addressString));
@@ -77,7 +78,7 @@ export const createWallet = () => {
 
        core.monero_utils_promise
            .then( bridge => {
-           const newWallet = keysToCamel(bridge.newly_created_wallet("english", 1));
+           const newWallet = keysToCamel(bridge.newly_created_wallet("english", NET_TYPE_ID));
            dispatch(addPubAddress(newWallet.addressString));
            delete newWallet.adressString;
            dispatch(keysGeneratedSucceed(newWallet));

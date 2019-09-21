@@ -1,7 +1,6 @@
 // Library Imports
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { transfer } from "../../../actions";
 
 // Relative Imports
 import { Container } from "./styles";
@@ -23,5 +22,5 @@ export const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { transfer }
+  null
 )(Page);

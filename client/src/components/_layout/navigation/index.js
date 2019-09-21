@@ -8,6 +8,7 @@ import Icon from "../../../assets/haven.svg";
 import { closeWallet } from "../../../actions";
 import {selectIsLoggedIn} from "../../../reducers/account";
 import {HeadingWrapper} from "../../../pages/_public/welcome/styles";
+import {APP_VERSION, NET_TYPE_NAME} from "../../../constants/env";
 
 class Navigation extends Component {
   handleLogout = () => {
@@ -24,8 +25,7 @@ class Navigation extends Component {
           <Logo src={Icon} />
           <Haven>HAVEN</Haven>
         </Brand>
-        <span style={{color: 'white'}}>V {process.env.REACT_APP_VERSION}</span>
-
+        <span style={{color: 'white'}}>V {APP_VERSION} {NET_TYPE_NAME}</span>
         {auth === false ? (
           <Button to="/login">Login</Button>
         ) : (

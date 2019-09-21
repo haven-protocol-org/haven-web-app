@@ -19,7 +19,9 @@ const Transaction = ({
   tx,
   amount,
   block,
-  price
+  price,
+    unlocked,
+    unconfirmed
 }) => {
   const first = tx.substring(0, 4);
   const last = tx.substring(tx.length - 4);

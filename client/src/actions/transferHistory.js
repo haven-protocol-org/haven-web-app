@@ -6,15 +6,6 @@ import {
 import {getAddressTxs} from "../api/api";
 import {selectCredentials} from "../reducers/account";
 import {core, lWallet} from "../declarations/open_monero.service";
-import {keysToCamel, logM} from "../utility";
-
-/**
- * just refresh tx from interest - latest pending tx
- */
-export const updateLatestTransfers = () => {
-
-
-};
 
 
 export const getTransfers = () => {
@@ -54,15 +45,3 @@ const getTransfersFailed = error => ({
   type: GET_TRANSFERS_FAILED,
   payload: error
 });
-
-
-const mergeAndSort = result => {
-  const all = [
-    ...result.in||[],
-    ...result.out||[],
-    ...result.pending||[]
-  ];
-  all.sort((a, b) => b.timestamp - a.timestamp);
-  result.all = all;
-  return result;
-};
