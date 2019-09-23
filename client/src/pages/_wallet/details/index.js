@@ -17,8 +17,10 @@ import { getPriceHistory, getTransfers } from "../../../actions";
 import { getPriceValues, NO_PRICE } from "../../../reducers/priceHistory";
 import { getPriceDates } from "../../../reducers/priceHistory";
 import { selectReadableBalance, NO_BALANCE } from "../../../reducers/balance";
-import { convertBalanceForReading } from "../../../utility";
+import {convertBalanceForReading, logM} from "../../../utility";
 import { Spinner } from "../../../components/spinner";
+import {selectBlockchainHeight} from "../../../reducers/chain";
+import {core} from "../../../declarations/open_monero.service";
 
 class Details extends Component {
   componentDidMount() {
@@ -54,6 +56,19 @@ class Details extends Component {
    else {
       return null;
     }
+  }
+
+  getTransactionStatus(tx) {
+
+      if (core.monero_txParsing_utils.IsTransactionUnlocked(tx, this.props.height) || core.monero_txParsing_utils.IsTransactionConfirmed(tx, this.props.height))
+      {
+          return 'completed'
+      }
+      else
+      {
+          return 'pending'
+      }
+
   }
 
   render() {
@@ -100,7 +115,7 @@ class Details extends Component {
             title="History"
             description={`Review your ${id} transaction history`}
           />
-          {isFetching ? (
+          {isFetching && txs == null ? (
             <EmptyState>
               <Spinner />
               <Message>Loading transaction history...</Message>
@@ -113,10 +128,11 @@ class Details extends Component {
                     <Transaction
                       key={index}
                       type={this.getTransactionType(transaction)}
+                      status={this.getTransactionStatus(transaction)}
                       price={price}
                       block={transaction.height}
                       date={new Date(
-                        transaction.timestamp * 1000
+                        transaction.timestamp
                       ).toLocaleDateString()}
                       tx={transaction.hash}
                       amount={convertBalanceForReading(Math.abs(transaction.amount))}
@@ -141,32 +157,16 @@ class Details extends Component {
 }
 
 export const mapStateToProps = state => ({
+
   transferList: state.transferList,
   labels: getPriceDates(state),
   prices: getPriceValues(state),
   lastPrice: state.priceHistory.lastPrice,
-  balance: selectReadableBalance(state)
+  balance: selectReadableBalance(state),
+    height:selectBlockchainHeight(state)
 });
 
 export default connect(
   mapStateToProps,
   { getPriceData: getPriceHistory, getTransfers }
 )(Details);
-//amount: "-500000778800000"
-// approx_float_amount: -500.0007788
-// coinbase: false
-// hash: "d6b16e33f4b2bf8d1714aa58098c18520ce7ed4a270ba6ffd2189eb29b35832e"
-// height: 46658
-// id: 47063
-// mempool: false
-// mixin: 11
-// spent_outputs: Array(2)
-// 0: {amount: "1000000000000000", key_image: "c68fa7434e3573748dc42ad2fa30b13551f7e04d6c9b65c84161cc0e56d4b37c", mixin: 11, out_index: 1, tx_pub_key: "83bf579af1b840652cbd5f5c019a452b550ba2539eb1e9215e736c920a151c02"}
-// 1: {amount: "28160864833614", key_image: "a5759fc2f064a4c08a8d8cf3df76e23210c5f5a1cb491232cd4228332c2f7c7f", mixin: 11, out_index: 0, tx_pub_key: "b40f81b6643f146acc0c88c3fca521ca5988042c42ced1c8e12068947027a875"}
-// length: 2
-// __proto__: Array(0)
-// timestamp: 1565599217000
-// total_received: "528160086033614"
-// total_sent: "1028160864833614"
-// tx_pub_key: "317f902ecb4c429f50aca688fa085e0b59ff67f15590d92000c7cda4634a3cc0"
-// unlock_time: 46668

@@ -2,7 +2,7 @@ import {GET_BALANCES_FAILED, GET_BALANCES_FETCHING, GET_BALANCES_SUCCEED} from "
 import {getAddressInfo} from "../api/api";
 import {selectCredentials} from "../reducers/account";
 import {core, lWallet} from "../declarations/open_monero.service";
-import {keysToCamel, logM} from "../utility";
+import {updateChainData} from "./index";
 
 export const getBalances = () => {
     return (dispatch, getState) => {
@@ -11,10 +11,14 @@ export const getBalances = () => {
         const credentials = selectCredentials(getState());
 
         getAddressInfo(credentials)
-            .then(res => parseAddressInfo(res, getState()))
-            .then(res => keysToCamel(res))
+            .then(res => {
+                dispatch(updateChainData(res));
+                return parseAddressInfo(res, getState());
+            })
             .then(res => setBalance(res))
-            .then(res => dispatch(getBalancesSucceed(res)));
+            .then(res => {
+                dispatch(getBalancesSucceed(res))
+            });
 
 
     };
@@ -23,9 +27,9 @@ export const getBalances = () => {
 
 const setBalance = (addressInfo) => {
 
-    const balance = core.JSBigInt (addressInfo.totalReceivedString).subtract(core.JSBigInt (addressInfo.totalSentString));
+    const balance = core.JSBigInt (addressInfo.total_received_String).subtract(core.JSBigInt (addressInfo.total_sent_String));
 
-    const lockedBalance = core.JSBigInt(addressInfo.lockedBalanceString);
+    const lockedBalance = core.JSBigInt(addressInfo.locked_balance_String);
     const unlockedBalance = balance.subtract(lockedBalance);
     return {balance, lockedBalance, unlockedBalance};
 
@@ -36,11 +40,9 @@ const parseAddressInfo = (rawAddressInfo, state) => {
 
 
     const address = state.address.main;
-    const {secViewKeyString, pubSpendKeyString, secSpendKeyString } = state.keys;
-    const parsedData = core.api_response_parser_utils.Parsed_AddressInfo__sync__keyImageManaged(rawAddressInfo, address , secViewKeyString, pubSpendKeyString, secSpendKeyString, lWallet);
-
+    const {sec_viewKey_string, pub_spendKey_string, sec_spendKey_string } = state.keys;
+    const parsedData = core.api_response_parser_utils.Parsed_AddressInfo__sync__keyImageManaged(rawAddressInfo, address , sec_viewKey_string, pub_spendKey_string, sec_spendKey_string, lWallet);
     return parsedData;
-
 };
 
 const getBalancesFetching = () => ({ type: GET_BALANCES_FETCHING });

@@ -5,7 +5,7 @@ import {
 } from "../actions/types";
 
 const INITIAL_STATE = {
-  txs: [],
+  txs: null,
   isFetching: false,
   error: {},
   isEmpty: true,

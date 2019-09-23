@@ -3,12 +3,20 @@ import {
 } from "../actions/types";
 import {getMessageOfError} from "../utility";
 
-const INITIAL_STATE = { accountCreated: false, status:"", startHeight:-1, newAddress:false, isFetching: false, error:null};
+const INITIAL_STATE = {
+    status:"",
+    start_height:-1,
+    scanned_block_Height:-1,
+    blockchain_height:-1,
+    new_address:false,
+    generated_locally: false,
+    isFetching: false,
+    error:null};
 
 export const account = (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case ACCOUNT_CREATED:
-            return { ...action.payload, isFetching:false, error:null };
+            return { ...state, ...action.payload, isFetching:false, error:null };
         case ACCOUNT_CREATION_REQUESTED:
             return {...state, isFetching:true, error:null};
         case ACCOUNT_CREATION_FAILED:
@@ -27,6 +35,8 @@ export const selectIsRequestingLogin = (state) => {
     return state.account.isFetching;
 };
 
+
+
 export const selectErrorMessageForLogin = (state) => {
     if (state.account.error !== null)
     {
@@ -37,7 +47,7 @@ export const selectErrorMessageForLogin = (state) => {
 
 export const selectCredentials = (state) => {
 
-    const view_key = state.keys.secViewKeyString;
+    const view_key = state.keys.sec_viewKey_string;
     const address = state.address.main;
 
     return {view_key, address};

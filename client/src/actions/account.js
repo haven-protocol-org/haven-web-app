@@ -1,7 +1,6 @@
 import {
     CLOSE_WALLET,
     VALIDATE_MNEMONIC_FAILED,
-    VALIDATE_MNEMONIC_SUCCEED,
     ACCOUNT_CREATED,
     ACCOUNT_CREATION_FAILED,
     ACCOUNT_CREATION_REQUESTED
@@ -11,7 +10,6 @@ import {keysGeneratedFailed, keysGeneratedSucceed} from "./key";
 import {core, lWallet} from "../declarations/open_monero.service";
 import {addPubAddress, getBalances, getTransfers} from "./index";
 import {login} from "../api/api";
-import {keysToCamel, logM} from "../utility";
 import {NET_TYPE_ID} from "../constants/env";
 
 
@@ -39,11 +37,9 @@ export const restoreWallet = seed => {
 
         try {
 
-            //TODO net type must be env
             keys = lWallet.seed_and_keys_from_mnemonic(seed, NET_TYPE_ID);
-            keys = keysToCamel(keys);
             dispatch(keysGeneratedSucceed(keys));
-            dispatch(addPubAddress(keys.addressString));
+            dispatch(addPubAddress(keys.address_string));
 
         }
         catch(e) {
@@ -52,7 +48,7 @@ export const restoreWallet = seed => {
             return;
         }
 
-        dispatch(loginBE(keys.addressString, keys.secViewKeyString, false));
+        dispatch(loginBE(keys.address_string, keys.sec_viewKey_string, false));
     };
 };
 
@@ -78,9 +74,9 @@ export const createWallet = () => {
 
        core.monero_utils_promise
            .then( bridge => {
-           const newWallet = keysToCamel(bridge.newly_created_wallet("english", NET_TYPE_ID));
-           dispatch(addPubAddress(newWallet.addressString));
-           delete newWallet.adressString;
+           const newWallet = bridge.newly_created_wallet("english", NET_TYPE_ID);
+           dispatch(addPubAddress(newWallet.address_string));
+           delete newWallet.adress_string;
            dispatch(keysGeneratedSucceed(newWallet));
        })
 
@@ -92,10 +88,10 @@ export const mnenomicVerificationSucceed = () =>  {
 
     return (dispatch, getState) => {
 
-        const pubViewKeyString = getState().keys.secViewKeyString;
+        const viewKey = getState().keys.sec_viewKey_string;
         const address = getState().address.main;
 
-        dispatch(loginBE(address, pubViewKeyString, true));
+        dispatch(loginBE(address, viewKey, true));
 
     };
 };

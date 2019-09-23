@@ -1,8 +1,6 @@
 // API layer for communication with an adjusted MyMonero-API-compatible server
 
 
-import {keysToCamel} from "../utility";
-
 const API_URL = "http://213.136.85.14:1984";
 
 const INIT_REQUEST = {
@@ -27,7 +25,7 @@ export const keepAlive = (address, view_key) => {
 
     const params = {address, view_key};
    return fetch( `${API_URL}/ping`, { ...INIT_REQUEST, body: JSON.stringify(params) } )
-       .then(result => keysToCamel(result.json()));
+       .then(result => result.json());
 
 };
 
@@ -60,11 +58,6 @@ export const getAddressTxs = (params) => {
 //
 
 export const getUnspentOuts = (params ) => {
-
-//    const amount = 0;
-//    const mixin = 0;
-//    const use_dust = false;
-//    const dust_threshold = "1000000000";
 
 
     //const params = {address, view_key, amount, mixin, use_dust, dust_threshold};

@@ -4,13 +4,6 @@ export const USER = "user";
 
 // WALLET RELATED
 
-/*
- RESTORE WALLET
- */
-export const RESTORE_WALLET_BY_SEED_FETCHING = "restore_wallet_by_seed_fetching";
-export const RESTORE_WALLET_BY_SEED_SUCCEED = "restore_wallet_by_seed_succeed";
-export const RESTORE_WALLET_BY_SEED_FAILED = "restore_wallet_by_seed_failed";
-
 export const ADD_PUB_ADDRESS = "add_pub_address";
 
 
@@ -58,11 +51,6 @@ export const GET_SIMPLE_PRICE_SUCCEED = "get_simple_price_succeed";
 export const GET_SIMPLE_PRICE_FAILED = "get_simple_price_failed";
 
 
-export const GET_BLOCK_HEIGHT_FETCHING = "get_block_height_fetching";
-export const GET_BLOCK_HEIGHT_SUCEED = "get_block_height_succeed";
-export const GET_BLOCK_HEIGHT_FAILED = "get_block_height_failed";
-
-
 export const ADD_NOTIFICATION = "add_notifications";
 export const REMOVE_NOTIFICATION = "remove_notifications";
 
@@ -86,3 +74,8 @@ export const SEND_FUNDS_STARTED = "send_funds_started";
 export const SEND_FUNDS_SUCCEED = "send_funds_succeed";
 export const SEND_FUNDS_FAILED = "send_funds_failed";
 export const SEND_FUNDS_STATUS_UPDATE = "send_funds_status_update";
+
+// Chain Data
+
+
+export const UPDATE_CHAIN_DATA = "update_chain_data";

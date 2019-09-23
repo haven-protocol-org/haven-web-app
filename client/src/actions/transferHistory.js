@@ -6,27 +6,30 @@ import {
 import {getAddressTxs} from "../api/api";
 import {selectCredentials} from "../reducers/account";
 import {core, lWallet} from "../declarations/open_monero.service";
+import {updateChainData} from "./index";
 
 
 export const getTransfers = () => {
   return (dispatch, getState) => {
     dispatch(getTransfersFetching());
     getAddressTxs(selectCredentials(getState()))
-      .then(result => parseTx(result, getState()))
+
+        .then(result => {
+          dispatch(updateChainData(result));
+          return parseTx(result, getState());
+        })
         .then(txs => dispatch(getTransfersSucceed(txs)))
-      .catch(error => {
-        dispatch(getTransfersFailed(error));
-      });
+        .catch(error => dispatch(getTransfersFailed(error)));
   };
 };
 
 const parseTx = (rawTXs, state) => {
 
   const address = state.address.main;
-  const {secViewKeyString, pubSpendKeyString, secSpendKeyString } = state.keys;
+  const {sec_viewKey_string, pub_spendKey_string, sec_spendKey_string } = state.keys;
 
   let parsedData = core.api_response_parser_utils.Parsed_AddressTransactions__sync__keyImageManaged(rawTXs,
-      address, secViewKeyString, pubSpendKeyString, secSpendKeyString, lWallet);
+      address, sec_viewKey_string, pub_spendKey_string, sec_spendKey_string, lWallet);
 
   return parsedData.serialized_transactions;
 };

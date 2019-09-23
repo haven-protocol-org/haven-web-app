@@ -6,12 +6,12 @@ import {
 export const NO_KEY = -1;
 
 const INITIAL_STATE = {
-  mnemonicString: '',
-  mnemonicLanguage:'',
-  pubSpendKeyString:'',
-  pubViewKeyString: '',
-  secSpendKeyString:'',
-  secViewKeyString:''
+  mnemonic_string: '',
+  mnemonic_language:'',
+  pub_spendKey_string:'',
+  pub_viewKey_string: '',
+  sec_spendKey_string:'',
+  sec_viewKey_string:''
 };
 
 export default function(state = INITIAL_STATE, action) {

@@ -7,6 +7,7 @@ import {
 import {getRandomOuts, getUnspentOuts, submitRawTx} from "../api/api";
 import {logM} from "../utility";
 import {core, lWallet} from "../declarations/open_monero.service";
+import {NET_TYPE_ID} from "../constants/env";
 
 
 export const sendFunds = (toAddress, amount) => {
@@ -34,7 +35,7 @@ export const sendFunds = (toAddress, amount) => {
         sendFundsArgs.unlock_time = 0;
         sendFundsArgs.priority = 1;
         sendFundsArgs.is_sweeping = false;
-        sendFundsArgs.nettype = 1;
+        sendFundsArgs.nettype = NET_TYPE_ID;
         sendFundsArgs.payment_id_string = "";
 
         sendFundsArgs.sending_amount = parsedAmount.toString();

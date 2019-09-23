@@ -92,7 +92,7 @@ class Settings extends Component {
               <Description
                 label="Seed Phrase"
                 width="true"
-                value={this.props.mnemonicString}
+                value={this.props.mnemonic_string}
                 readOnly
                 type={"password"}
               />
@@ -100,7 +100,7 @@ class Settings extends Component {
               <Input
                 label="Seed Phrase"
                 width="true"
-                value={this.props.mnemonicString}
+                value={this.props.mnemonic_string}
                 readOnly
                 type={"password"}
               />
@@ -108,28 +108,28 @@ class Settings extends Component {
             <Input
               label="Public View Key"
               width="true"
-              value={this.props.pubViewKeyString}
+              value={this.props.pub_viewKey_string}
               readOnly
               type={reveal ? "type" : "password"}
             />
             <Input
               label="Private View Key"
               width="true"
-              value={this.props.secViewKeyString}
+              value={this.props.sec_viewKey_string}
               readOnly
               type={reveal ? "type" : "password"}
             />
             <Input
               label="Private Spend Key"
               width="true"
-              value={this.props.secSpendKeyString}
+              value={this.props.sec_spendKey_string}
               readOnly
               type={reveal ? "type" : "password"}
             />
             <Input
               label="Public Spend Key"
               width="true"
-              value={this.props.pubSpendKeyString}
+              value={this.props.pub_spendKey_string}
               readOnly
               type={reveal ? "type" : "password"}
             />
