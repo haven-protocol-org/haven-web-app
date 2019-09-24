@@ -17,6 +17,15 @@ export const Logo = styled.img`
   width: auto;
 `;
 
+export const Tag = styled.div`
+  padding: 4px 8px;
+  background: #34d8ac;
+  font-size: 10px;
+  border-radius: 3px;
+  margin-left: 12px;
+  color: #26282c;
+`;
+
 export const Haven = styled.div`
   color: white;
   font-size: 20px;

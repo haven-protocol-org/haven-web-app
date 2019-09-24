@@ -3,12 +3,20 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 // Relative Imports
-import { Container, Haven, Logo, Brand, Button, Logout } from "./styles.js";
+import {
+  Container,
+  Haven,
+  Logo,
+  Brand,
+  Button,
+  Logout,
+  Tag
+} from "./styles.js";
 import Icon from "../../../assets/haven.svg";
 import { closeWallet } from "../../../actions";
-import {selectIsLoggedIn} from "../../../reducers/account";
-import {HeadingWrapper} from "../../../pages/_public/welcome/styles";
-import {APP_VERSION, NET_TYPE_NAME} from "../../../constants/env";
+import { selectIsLoggedIn } from "../../../reducers/account";
+import { HeadingWrapper } from "../../../pages/_public/welcome/styles";
+import { APP_VERSION, NET_TYPE_NAME } from "../../../constants/env";
 
 class Navigation extends Component {
   handleLogout = () => {
@@ -24,8 +32,10 @@ class Navigation extends Component {
         <Brand to={auth === true ? "/wallet/assets" : "/"}>
           <Logo src={Icon} />
           <Haven>HAVEN</Haven>
+          <Tag>
+            v{APP_VERSION} {NET_TYPE_NAME}
+          </Tag>
         </Brand>
-        <span style={{color: 'white'}}>V {APP_VERSION} {NET_TYPE_NAME}</span>
         {auth === false ? (
           <Button to="/login">Login</Button>
         ) : (
@@ -37,7 +47,7 @@ class Navigation extends Component {
 }
 
 const mapStateToProps = state => ({
-  isLoggedIn:selectIsLoggedIn(state)
+  isLoggedIn: selectIsLoggedIn(state)
 });
 
 export default connect(
