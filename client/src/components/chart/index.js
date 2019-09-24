@@ -52,7 +52,7 @@ class Chart extends Component {
               scales: {
                 yAxes: [
                   {
-                    display: true,
+                    display: false,
                     gridLines: {
                       display: false
                     },
