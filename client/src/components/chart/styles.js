@@ -7,11 +7,12 @@ export const Container = styled.div`
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  width: 100%;
-  border-radius: 4px;
-  padding: 1px;
+  border-radius: 0px 0px 4px 4px;
+  padding-top: 4px;
+  padding-bottom: -4px;
   background: ${props => props.theme.body.foreground};
   border: 1px solid ${props => props.theme.body.border};
+  border-top: none;
 `;
 
 export const Placeholder = styled.div`
@@ -45,10 +46,12 @@ export const Spacer = styled.div`
   width: 100%;
   font-family: Inter-SemiBold;
 `;
+
 export const Header = styled.div`
   height: auto;
-  grid-column: 1 / 3;
-  width: 100%;
+  grid-column: 1/ 3;
+  border-radius: 4px 4px 0px 0px;
+  margin-bottom: -20px;
   background: ${props => props.theme.body.foreground};
   border-bottom: 1px solid ${props => props.theme.body.border};
   padding: 16px;
@@ -58,6 +61,7 @@ export const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border: 1px solid ${props => props.theme.body.border};
 `;
 
 export const Button = styled.div`
@@ -89,7 +93,7 @@ export const Buttons = styled.div`
   height: auto;
   display: flex;
   width: auto;
-  margin-right: 32px;
+
   border-radius: 4px;
   overflow: hidden;
   border: 1px solid ${props => props.theme.body.border};

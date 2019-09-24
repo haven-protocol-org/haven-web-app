@@ -17,10 +17,10 @@ import { getPriceHistory, getTransfers } from "../../../actions";
 import { getPriceValues, NO_PRICE } from "../../../reducers/priceHistory";
 import { getPriceDates } from "../../../reducers/priceHistory";
 import { selectReadableBalance, NO_BALANCE } from "../../../reducers/balance";
-import {convertBalanceForReading, logM} from "../../../utility";
+import { convertBalanceForReading, logM } from "../../../utility";
 import { Spinner } from "../../../components/spinner";
-import {selectBlockchainHeight} from "../../../reducers/chain";
-import {core} from "../../../declarations/open_monero.service";
+import { selectBlockchainHeight } from "../../../reducers/chain";
+import { core } from "../../../declarations/open_monero.service";
 
 class Details extends Component {
   componentDidMount() {
@@ -35,7 +35,6 @@ class Details extends Component {
     }
   }
 
-
   getBalancePriceStats() {
     let amount = this.props.balance === NO_BALANCE ? 1 : this.props.balance;
     let price = this.props.lastPrice === NO_PRICE ? 1 : this.props.lastPrice;
@@ -44,30 +43,30 @@ class Details extends Component {
     return { amount, price, value };
   }
 
-   getTransactionType(tx) {
+  getTransactionType(tx) {
     if (tx.coinbase) {
       return "Mined";
-    }
-    else if (tx.approx_float_amount > 0 ) {
+    } else if (tx.approx_float_amount > 0) {
       return "Received";
     } else if (tx.approx_float_amount < 0) {
-      return "Sent"; }
-   else {
+      return "Sent";
+    } else {
       return null;
     }
   }
 
   getTransactionStatus(tx) {
-
-      if (core.monero_txParsing_utils.IsTransactionUnlocked(tx, this.props.height) || core.monero_txParsing_utils.IsTransactionConfirmed(tx, this.props.height))
-      {
-          return 'completed'
-      }
-      else
-      {
-          return 'pending'
-      }
-
+    if (
+      core.monero_txParsing_utils.IsTransactionUnlocked(
+        tx,
+        this.props.height
+      ) ||
+      core.monero_txParsing_utils.IsTransactionConfirmed(tx, this.props.height)
+    ) {
+      return "completed";
+    } else {
+      return "pending";
+    }
   }
 
   render() {
@@ -134,7 +133,9 @@ class Details extends Component {
                         transaction.timestamp
                       ).toLocaleDateString()}
                       tx={transaction.hash}
-                      amount={convertBalanceForReading(Math.abs(transaction.amount))}
+                      amount={convertBalanceForReading(
+                        Math.abs(transaction.amount)
+                      )}
                     />
                   );
                 })
@@ -156,13 +157,12 @@ class Details extends Component {
 }
 
 export const mapStateToProps = state => ({
-
   transferList: state.transferList,
   labels: getPriceDates(state),
   prices: getPriceValues(state),
   lastPrice: state.priceHistory.lastPrice,
   balance: selectReadableBalance(state),
-    height:selectBlockchainHeight(state)
+  height: selectBlockchainHeight(state)
 });
 
 export default connect(

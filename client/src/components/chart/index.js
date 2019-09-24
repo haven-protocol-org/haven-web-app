@@ -31,17 +31,16 @@ class Chart extends Component {
 
     return (
       <>
+        <Header>
+          <div>Price History</div>
+          <Buttons>
+            <Button>1D</Button>
+            <Button active>1M</Button>
+            <Button>1Y</Button>
+            <Button>ALL</Button>
+          </Buttons>
+        </Header>
         <Container>
-          <Header>
-            <div>Price History</div>
-            <Buttons>
-              <Button>1D</Button>
-              <Button active>1M</Button>
-              <Button>1Y</Button>
-              <Button>ALL</Button>
-            </Buttons>
-          </Header>
-          <Spacer />
           <Line
             options={{
               responsive: true,
