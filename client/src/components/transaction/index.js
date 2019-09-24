@@ -13,21 +13,13 @@ import {
   Data
 } from "./styles";
 
-const Transaction = ({
-  type,
-  date,
-  tx,
-  amount,
-  block,
-  price,
-   status
-}) => {
+const Transaction = ({ type, date, tx, amount, block, price, status }) => {
   const first = tx.substring(0, 4);
   const last = tx.substring(tx.length - 4);
   const truncated = first + "...." + last;
   const value = price * amount;
 
-
+  console.log("PROPS", type);
 
   return (
     <Container

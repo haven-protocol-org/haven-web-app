@@ -55,18 +55,12 @@ export const State = styled.div`
   border-right: none;
   background: ${props => {
     switch (props.status) {
-      case "pending":
+      case "Mined":
         return "#F26522";
-      case "completed":
+      case "Received":
         return "#34d8ac";
-      case "error":
-        return "#F04747";
-      case "in":
-        return "#34D8AC";
-      case "out":
+      case "Sent":
         return "#6A7FC8";
-      case "block":
-        return "#FFC246";
       default:
     }
   }};
@@ -76,7 +70,7 @@ export const Status = styled.div`
   transform: rotate(-90deg);
   font-family: Inter-SemiBold;
   font-size: 10px;
-  /* color: #2b2e32; */
+
   letter-spacing: 0;
   text-align: center;
   line-height: 16px;
