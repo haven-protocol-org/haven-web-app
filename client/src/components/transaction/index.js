@@ -38,7 +38,7 @@ const Transaction = ({ type, date, tx, amount, block, price, status }) => {
           </Data>
           <Data>
             <Value alignment="center">{status}</Value>
-            <Label alignment="center">Fee</Label>
+            <Label alignment="center">Status</Label>
           </Data>
           <Data>
             <Value alignment="right">${value.toFixed(2)}</Value>
