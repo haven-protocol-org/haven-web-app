@@ -10,23 +10,23 @@ import Description from "../../../components/_inputs/description";
 import { Information } from "../../../constants/type.js";
 
 import { restoreWallet } from "../../../actions";
-import {selectErrorMessageForLogin, selectIsLoggedIn, selectIsRequestingLogin} from "../../../reducers/account";
+import {
+  selectErrorMessageForLogin,
+  selectIsLoggedIn,
+  selectIsRequestingLogin
+} from "../../../reducers/account";
 
 class Login extends Component {
   state = {
     seed_phrase: "",
-    error:''
+    error: ""
   };
 
-
   componentWillReceiveProps(nextProps, nextContext) {
-
     if (nextProps.errorMessage) {
-
-      this.setState({error: nextProps.errorMessage});
-       setTimeout( () =>  this.setState({error: ''}), 2000)
+      this.setState({ error: nextProps.errorMessage });
+      setTimeout(() => this.setState({ error: "" }), 2000);
     }
-
   }
 
   handleChange = event => {
@@ -51,8 +51,6 @@ class Login extends Component {
 
     const { seed_phrase, error } = this.state;
 
-
-
     return (
       <Container>
         <Auth
@@ -61,11 +59,7 @@ class Login extends Component {
           link="/create"
           route="Create a Vault"
           label="Don’t have a Vault?"
-          disable={
-            seed_phrase === ""
-              ? true
-              : this.props.isRequestingLogin
-          }
+          disable={seed_phrase === "" ? true : this.props.isRequestingLogin}
           onClick={() => this.handleLogin()}
           loading={this.props.isRequestingLogin}
           information="Before entering your seed phrase please ensure you’re not on a public
@@ -91,9 +85,8 @@ class Login extends Component {
 }
 
 const mapStateToProps = state => ({
-
   isRequestingLogin: selectIsRequestingLogin(state),
-  isLoggedIn:selectIsLoggedIn(state),
+  isLoggedIn: selectIsLoggedIn(state),
   errorMessage: selectErrorMessageForLogin(state)
 });
 

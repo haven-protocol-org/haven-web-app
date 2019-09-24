@@ -15,6 +15,7 @@ import Dropdown from "../../../components/_inputs/dropdown";
 import Footer from "../../../components/_inputs/footer";
 import Transaction from "../../../components/_transactions/transfer";
 import Tab from "../../../components/tab";
+import Spinner from "../../../components/spinner/index.js";
 
 import { Container } from "./styles";
 
@@ -36,12 +37,12 @@ class Transfer extends Component {
     firstTabState: true,
     secondTabState: false,
     checked: false,
-    copyButtonState: "Copy Address"
+    copyButtonState: "Copy Address",
+    loading: false
   };
 
   componentDidMount() {
     window.scrollTo(0, 0);
-
   }
 
   handleChange = event => {
@@ -72,7 +73,10 @@ class Transfer extends Component {
     if (send_amount.length === 0 && recipient_address.length === 0) {
       this.setState({ validated: false });
     } else if (send_amount.length > 0 && recipient_address.length > 0) {
-      this.props.sendFunds(this.state.recipient_address, this.state.send_amount);
+      this.props.sendFunds(
+        this.state.recipient_address,
+        this.state.send_amount
+      );
     }
   };
 
@@ -177,7 +181,7 @@ class Transfer extends Component {
 
                 <Footer
                   onClick={this.handleSubmit}
-                  loading={false}
+                  loading={this.state.loading}
                   label="Transfer"
                   validated={checked && checkValidation ? true : false}
                 />

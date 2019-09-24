@@ -36,7 +36,6 @@ class Settings extends Component {
     this.setState({
       value: this.props.theme.value
     });
-
   }
 
   handleClick = ({ theme, value }) => {
@@ -56,9 +55,9 @@ class Settings extends Component {
   };
 
   toggleVisibility = () => {
-   this.setState({
-        reveal: !this.state.reveal
-      });
+    this.setState({
+      reveal: !this.state.reveal
+    });
   };
 
   render() {
