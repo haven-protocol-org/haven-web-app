@@ -136,7 +136,7 @@ class Create extends Component {
 }
 
 export const mapStateToProps = state => ({
-  mnemonicString: state.keys.mnemonicString,
+  mnemonicString: state.keys.mnemonic_string,
   isLoggedIn:selectIsLoggedIn(state)
 });
 

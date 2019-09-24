@@ -121,7 +121,7 @@ class Details extends Component {
             </EmptyState>
           ) : (
             <History>
-              {txs.length > 0 ? (
+              {txs && txs.length > 0 ? (
                 txs.map((transaction, index) => {
                   return (
                     <Transaction
