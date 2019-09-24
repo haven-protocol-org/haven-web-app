@@ -177,7 +177,7 @@ class Transfer extends Component {
 
                 <Footer
                   onClick={this.handleSubmit}
-                  loading={this.props.latestTransfer.isFetching}
+                  loading={false}
                   label="Transfer"
                   validated={checked && checkValidation ? true : false}
                 />
@@ -222,7 +222,6 @@ class Transfer extends Component {
 }
 
 export const mapStateToProps = state => ({
-  latestTransfer: state.transfer,
   address: state.address.main
 });
 

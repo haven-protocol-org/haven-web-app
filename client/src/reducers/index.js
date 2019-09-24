@@ -5,7 +5,6 @@ import theme from "./currentTheme.js";
 import address from "./address.js";
 import { balance } from "./balance.js";
 import keys from "./keys";
-import transfer from "./transfer";
 import { transferList } from "./transferList";
 import { priceHistory } from "./priceHistory";
 import notification from "./notification";
@@ -20,7 +19,6 @@ const appReducer = combineReducers({
   balance,
   chain,
   keys,
-  transfer,
   transferList,
   priceHistory,
   notification,

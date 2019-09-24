@@ -2,19 +2,19 @@ import {
     SEND_FUNDS_FAILED,
     SEND_FUNDS_STARTED,
     SEND_FUNDS_STATUS_UPDATE,
-    SEND_FUNDS_SUCCEED
+    SEND_FUNDS_SUCCEED, TRANSFER_SUCCEED
 } from "./types";
 import {getRandomOuts, getUnspentOuts, submitRawTx} from "../api/api";
 import {logM} from "../utility";
 import {core, lWallet} from "../declarations/open_monero.service";
 import {NET_TYPE_ID} from "../constants/env";
+import {addNotificationByKey} from "./notification";
 
 
 export const sendFunds = (toAddress, amount) => {
 
 
     const parsedAmount = core.monero_amount_format_utils.parseMoney(amount);
-    logM(parsedAmount);
 
     return (dispatch, getState) => {
 
@@ -27,9 +27,9 @@ export const sendFunds = (toAddress, amount) => {
         sendFundsArgs.from_address_string = ownAddress;
 
         const keys = getState().keys;
-        sendFundsArgs.sec_viewKey_string = keys.secViewKeyString;
-        sendFundsArgs.sec_spendKey_string = keys.secSpendKeyString;
-        sendFundsArgs.pub_spendKey_string = keys.pubSpendKeyString;
+        sendFundsArgs.sec_viewKey_string = keys.sec_viewKey_string;
+        sendFundsArgs.sec_spendKey_string = keys.sec_spendKey_string;
+        sendFundsArgs.pub_spendKey_string = keys.pub_spendKey_string;
 
         // default values
         sendFundsArgs.unlock_time = 0;
@@ -45,6 +45,7 @@ export const sendFunds = (toAddress, amount) => {
             dispatch(updateStatus(params))
         };
         sendFundsArgs.success_fn =  (params) => {
+            dispatch(addNotificationByKey(TRANSFER_SUCCEED))
             dispatch(sendFundsSucceed(params))
         };
         sendFundsArgs.error_fn =  (err) => {

@@ -35,7 +35,6 @@ class Details extends Component {
     }
   }
 
-  fetchData = () => {};
 
   getBalancePriceStats() {
     let amount = this.props.balance === NO_BALANCE ? 1 : this.props.balance;
