@@ -1,9 +1,6 @@
-import {
-  ADD_PUB_ADDRESS
+import { ADD_PUB_ADDRESS } from "../actions/types";
 
-} from "../actions/types";
-
-const INITIAL_STATE = { main: "", subs: []};
+const INITIAL_STATE = { main: "", subs: [] };
 
 export default function(state = INITIAL_STATE, action) {
   switch (action.type) {

@@ -8,8 +8,7 @@ const INITIAL_STATE = {
   txs: null,
   isFetching: false,
   error: {},
-  isEmpty: true,
-
+  isEmpty: true
 };
 
 export function transferList(state = INITIAL_STATE, action) {
@@ -17,8 +16,9 @@ export function transferList(state = INITIAL_STATE, action) {
     case GET_TRANSFERS_FETCHING:
       return { ...state, isFetching: true };
     case GET_TRANSFERS_SUCCEED:
-      return { ...state,
-        txs:action.payload,
+      return {
+        ...state,
+        txs: action.payload,
         isFetching: false,
         error: "",
         isEmpty: false

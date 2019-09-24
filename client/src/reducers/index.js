@@ -9,9 +9,9 @@ import { transferList } from "./transferList";
 import { priceHistory } from "./priceHistory";
 import notification from "./notification";
 import { CLOSE_WALLET } from "../actions/types";
-import {account} from "./account";
-import {simplePrice} from "./simplePrice";
-import {chain} from "./chain";
+import { account } from "./account";
+import { simplePrice } from "./simplePrice";
+import { chain } from "./chain";
 
 const appReducer = combineReducers({
   theme,
