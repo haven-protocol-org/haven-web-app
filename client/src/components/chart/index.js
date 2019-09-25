@@ -23,21 +23,63 @@ import {
 
 class Chart extends Component {
   state = {
-    time: ""
+    activeDay: "1M"
+  };
+
+  toggleDay = time => {
+    this.setState({
+      activeDay: time
+    });
   };
 
   render() {
+    const { activeDay } = this.state;
+    const dateRangeButtons = (
+      <Buttons>
+        <Button
+          onClick={() => {
+            this.props.onChangePriceRange(PRICE_RANGE_DAY);
+            this.toggleDay("1D");
+          }}
+          active={activeDay == "1D" && true}
+        >
+          1D
+        </Button>
+        <Button
+          onClick={() => {
+            this.props.onChangePriceRange(PRICE_RANGE_MONTH);
+            this.toggleDay("1M");
+          }}
+          active={activeDay == "1M" && true}
+        >
+          1M
+        </Button>
+        <Button
+          onClick={() => {
+            this.props.onChangePriceRange(PRICE_RANGE_YEAR);
+            this.toggleDay("1Y");
+          }}
+          active={activeDay == "1Y" && true}
+        >
+          1Y
+        </Button>
+        <Button
+          onClick={() => {
+            this.props.onChangePriceRange(PRICE_RANGE_MAX);
+            this.toggleDay("ALL");
+          }}
+          active={activeDay == "ALL" && true}
+        >
+          ALL
+        </Button>
+      </Buttons>
+    );
     if (this.props.prices.length === 0) {
       return (
         <>
           <Header>
             <Title>Price History</Title>
-            <Buttons>
-              <Button>1D</Button>
-              <Button>1M</Button>
-              <Button>1Y</Button>
-              <Button>ALL</Button>
-            </Buttons>
+            {dateRangeButtons}
           </Header>
           <Placeholder>
             <Spinner />
@@ -51,29 +93,7 @@ class Chart extends Component {
       <>
         <Header>
           <Title>Price History</Title>
-          <Buttons>
-            <Button
-              onClick={() => this.props.onChangePriceRange(PRICE_RANGE_DAY)}
-            >
-              1D
-            </Button>
-            <Button
-              onClick={() => this.props.onChangePriceRange(PRICE_RANGE_MONTH)}
-              active
-            >
-              1M
-            </Button>
-            <Button
-              onClick={() => this.props.onChangePriceRange(PRICE_RANGE_YEAR)}
-            >
-              1Y
-            </Button>
-            <Button
-              onClick={() => this.props.onChangePriceRange(PRICE_RANGE_MAX)}
-            >
-              ALL
-            </Button>
-          </Buttons>
+          {dateRangeButtons}
         </Header>
         <Container>
           <Line

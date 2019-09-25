@@ -34,6 +34,8 @@ export const Placeholder = styled.div`
   background: ${props => props.theme.body.foreground};
   border: 1px solid ${props => props.theme.body.border};
   border-top: none;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const Message = styled.div`
@@ -78,13 +80,13 @@ export const Button = styled.div`
   justify-content: center;
   font-size: 12px;
   border-left: 1px solid ${props => props.theme.body.border};
-
   font-family: ${props => (props.active ? "Inter-SemiBold" : "Inter-Regular")}
   color: ${props =>
     props.active ? props.theme.type.primary : props.theme.type.secondary};
   background: ${props =>
     props.active ? props.theme.body.background : props.theme.body.foreground};
  transition: 500ms;
+
  &:hover {
    cursor: pointer;
    background: ${props => props.theme.body.background};
@@ -97,7 +99,6 @@ export const Buttons = styled.div`
   height: auto;
   display: flex;
   width: auto;
-
   border-radius: 4px;
   overflow: hidden;
   border: 1px solid ${props => props.theme.body.border};
