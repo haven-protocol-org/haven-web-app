@@ -13,6 +13,7 @@ import {
   Button,
   Buttons
 } from "./styles";
+import {PRICE_RANGE_DAY, PRICE_RANGE_MAX, PRICE_RANGE_MONTH, PRICE_RANGE_YEAR} from "../../reducers/priceHistory";
 
 class Chart extends Component {
   state = {
@@ -34,10 +35,10 @@ class Chart extends Component {
         <Header>
           <div>Price History</div>
           <Buttons>
-            <Button>1D</Button>
-            <Button active>1M</Button>
-            <Button>1Y</Button>
-            <Button>ALL</Button>
+            <Button onClick={()=>this.props.onChangePriceRange(PRICE_RANGE_DAY)}>1D</Button>
+            <Button onClick={()=>this.props.onChangePriceRange(PRICE_RANGE_MONTH)}  active>1M</Button>
+            <Button onClick={()=>this.props.onChangePriceRange(PRICE_RANGE_YEAR)} >1Y</Button>
+            <Button onClick={()=>this.props.onChangePriceRange(PRICE_RANGE_MAX)} >ALL</Button>
           </Buttons>
         </Header>
         <Container>

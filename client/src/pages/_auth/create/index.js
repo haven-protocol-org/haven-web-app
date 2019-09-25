@@ -30,9 +30,6 @@ class Create extends Component {
 
   nextStep = () => {
 
-
-
-
     const { step } = this.state;
     const stepThree = step === 3;
 

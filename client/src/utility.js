@@ -5,18 +5,18 @@ import {NO_PRICE} from "./reducers/priceHistory";
 export const convertTimestampToDateString = timestamp =>
   new Date(timestamp).toLocaleDateString();
 
-//coingeckeo delivers to much prices, so we reduce it
-export const lowerPricePoints = priceData => {
+//coingeckeo delivers to many prices, so we decrease them
+export const decreasePricePoints = priceData => {
   const prices = priceData.prices;
-  const reducedPrices = [];
+  const decreasedPrices = [];
   const maxVal = 30;
   const delta = Math.round(prices.length / maxVal);
   let i;
   for (i = 0; i < prices.length; i += delta) {
-    reducedPrices.push(prices[i]);
+    decreasedPrices.push(prices[i]);
   }
 
-  return { prices: reducedPrices };
+  return { prices: decreasedPrices };
 };
 
 export const convertBalanceForReading = balance => {
@@ -57,6 +57,17 @@ export const calcValue = (amount, price) => {
     });
   }
 };
+
+export const getPriceDates = (prices) =>  {
+  return prices.map(priceItem =>
+      convertTimestampToDateString(priceItem[0])
+  );
+};
+
+export const getPriceValues = (prices) => {
+  return prices.map(priceItem => priceItem[1]);
+};
+
 
 
 export const logM =  (message) => {

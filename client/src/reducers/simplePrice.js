@@ -23,3 +23,9 @@ export function simplePrice(state = INITIAL_STATE, action) {
       return state;
   }
 }
+
+export const selectSimplePrice = (state) => {
+
+  return state.simplePrice.price;
+
+};

@@ -73,3 +73,6 @@ class ChartSingle extends Component {
 }
 
 export default ChartSingle;
+
+
+

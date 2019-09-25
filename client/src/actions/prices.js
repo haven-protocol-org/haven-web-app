@@ -1,7 +1,7 @@
 
 
 
-import {lowerPricePoints} from "../utility";
+import {decreasePricePoints} from "../utility";
 import {
     GET_PRICE_HISTORY_FAILED,
     GET_PRICE_HISTORY_FETCHING,
@@ -9,38 +9,51 @@ import {
     GET_SIMPLE_PRICE_SUCCEED
 } from "./types";
 
-export const getPriceHistory = () => {
-    return dispatch => {
+
+
+
+export const getPriceHistory = (rangeInDays) => {
+    return (dispatch, getState) => {
+
+
+        const hasPricesForRange = getState().priceHistory.prices.some( priceRangeEntry =>
+            priceRangeEntry.rangeInDays === rangeInDays &&
+            priceRangeEntry.prices.length > 0 );
+
+        // if we have these prices, we are done
+        if (hasPricesForRange) {
+            return;
+        }
+
+
         dispatch(getPriceDataFetching());
         fetch(
-            "https://api.coingecko.com/api/v3/coins/haven/market_chart?vs_currency=usd&days=14"
+           `https://api.coingecko.com/api/v3/coins/haven/market_chart?vs_currency=usd&days=${rangeInDays}`
         )
             .then(response => response.json())
-            .then(lowerPricePoints)
-            .then(priceData => dispatch(getPriceDataSucceed(priceData)))
+            .then(decreasePricePoints)
+            .then(priceData => dispatch(getPriceDataSucceed(priceData.prices, rangeInDays)))
             .catch(error => dispatch(getPriceDataFailed(error)));
     };
 };
+
+
 
 const getPriceDataFetching = () => ({ type: GET_PRICE_HISTORY_FETCHING });
 const getPriceDataFailed = error => ({
     type: GET_PRICE_HISTORY_FAILED,
     payload: error
 });
-const getPriceDataSucceed = priceData => {
-    const lastPrice = priceData.prices[priceData.prices.length - 1][1];
+const getPriceDataSucceed = ( prices, rangeInDays) => {
     return {
         type: GET_PRICE_HISTORY_SUCCEED,
-        payload: { prices: priceData.prices, lastPrice }
+        payload: { prices, rangeInDays }
     };
 };
 
 
 export const getSimplePrice = () => {
-
-
     return dispatch => {
-
         fetch(
             "https://api.coingecko.com/api/v3/simple/price?ids=haven&vs_currencies=usd")
             .then(response => response.json())
