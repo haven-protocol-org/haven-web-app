@@ -11,9 +11,15 @@ import {
   Header,
   Spacer,
   Button,
-  Buttons
+  Buttons,
+  Title
 } from "./styles";
-import {PRICE_RANGE_DAY, PRICE_RANGE_MAX, PRICE_RANGE_MONTH, PRICE_RANGE_YEAR} from "../../reducers/priceHistory";
+import {
+  PRICE_RANGE_DAY,
+  PRICE_RANGE_MAX,
+  PRICE_RANGE_MONTH,
+  PRICE_RANGE_YEAR
+} from "../../reducers/priceHistory";
 
 class Chart extends Component {
   state = {
@@ -23,22 +29,50 @@ class Chart extends Component {
   render() {
     if (this.props.prices.length === 0) {
       return (
-        <Placeholder>
-          <Spinner />
-          <Message>Fetching prices, hold on a sec...</Message>
-        </Placeholder>
+        <>
+          <Header>
+            <Title>Price History</Title>
+            <Buttons>
+              <Button>1D</Button>
+              <Button>1M</Button>
+              <Button>1Y</Button>
+              <Button>ALL</Button>
+            </Buttons>
+          </Header>
+          <Placeholder>
+            <Spinner />
+            <Message>Fetching prices, hold on a sec...</Message>
+          </Placeholder>
+        </>
       );
     }
 
     return (
       <>
         <Header>
-          <div>Price History</div>
+          <Title>Price History</Title>
           <Buttons>
-            <Button onClick={()=>this.props.onChangePriceRange(PRICE_RANGE_DAY)}>1D</Button>
-            <Button onClick={()=>this.props.onChangePriceRange(PRICE_RANGE_MONTH)}  active>1M</Button>
-            <Button onClick={()=>this.props.onChangePriceRange(PRICE_RANGE_YEAR)} >1Y</Button>
-            <Button onClick={()=>this.props.onChangePriceRange(PRICE_RANGE_MAX)} >ALL</Button>
+            <Button
+              onClick={() => this.props.onChangePriceRange(PRICE_RANGE_DAY)}
+            >
+              1D
+            </Button>
+            <Button
+              onClick={() => this.props.onChangePriceRange(PRICE_RANGE_MONTH)}
+              active
+            >
+              1M
+            </Button>
+            <Button
+              onClick={() => this.props.onChangePriceRange(PRICE_RANGE_YEAR)}
+            >
+              1Y
+            </Button>
+            <Button
+              onClick={() => this.props.onChangePriceRange(PRICE_RANGE_MAX)}
+            >
+              ALL
+            </Button>
           </Buttons>
         </Header>
         <Container>

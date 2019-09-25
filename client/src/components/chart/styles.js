@@ -15,6 +15,12 @@ export const Container = styled.div`
   border-top: none;
 `;
 
+export const Title = styled.div`
+  font-size: 16px;
+  font-family: "Inter-SemiBold";
+  color: white;
+`;
+
 export const Placeholder = styled.div`
   grid-column: 1 / 3;
   max-height: 584px;
@@ -22,14 +28,12 @@ export const Placeholder = styled.div`
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  border-radius: 4px;
-  padding: 1px;
+  border-radius: 0px 0px 4px 4px;
+  padding-top: 4px;
+  padding-bottom: -4px;
   background: ${props => props.theme.body.foreground};
   border: 1px solid ${props => props.theme.body.border};
-  color: ${props => props.theme.type.secondary};
+  border-top: none;
 `;
 
 export const Message = styled.div`
