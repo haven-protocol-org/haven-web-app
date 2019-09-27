@@ -12,6 +12,7 @@ import { CLOSE_WALLET } from "../actions/types";
 import { account } from "./account";
 import { simplePrice } from "./simplePrice";
 import { chain } from "./chain";
+import txProcess from "./txProcess";
 
 const appReducer = combineReducers({
   theme,
@@ -23,7 +24,8 @@ const appReducer = combineReducers({
   priceHistory,
   notification,
   account,
-  simplePrice
+  simplePrice,
+    txProcess
 });
 
 const rootReducer = (state, action) => {

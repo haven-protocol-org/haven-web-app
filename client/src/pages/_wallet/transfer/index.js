@@ -18,6 +18,7 @@ import Tab from "../../../components/tab";
 import Spinner from "../../../components/spinner/index.js";
 
 import { Container } from "./styles";
+import {isDevMode} from "../../../constants/env";
 
 const options = [{ asset: "Haven", ticker: "XHV" }];
 
@@ -143,10 +144,9 @@ class Transfer extends Component {
             toggleSend={this.toggleSend}
             toggleReceive={this.toggleReceive}
           />
-          {this.state.firstTabState ? (
-            <>
-              <Form>
-                <Dropdown
+          {this.state.firstTabState ? <>
+            <Form>
+              <Dropdown
                   label="Send Asset"
                   placeholder="Select Asset"
                   name="send_asset"
@@ -154,43 +154,49 @@ class Transfer extends Component {
                   value={send_asset}
                   options={options}
                   onClick={this.setSendAsset}
-                />
-                <Input
+              />
+              <Input
                   label="Amount"
                   placeholder="Enter amount"
                   type="number"
                   name="send_amount"
                   value={send_amount}
                   onChange={this.handleChange}
-                />
-                <Input
+              />
+              <Input
                   label="Recipient"
                   placeholder="Enter recipient address"
                   width="true"
                   name="recipient_address"
                   value={recipient_address}
                   onChange={this.handleChange}
-                />
-              </Form>
-              <Container>
-                <Transaction
+              />
+            </Form>
+            <Container>
+              <Transaction
                   state={this.state}
                   checked={this.state.checked}
                   onChange={this.handleCheckboxChange}
-                />
+              />
 
-                <Footer
+              <Footer
                   onClick={this.handleSubmit}
-                  loading={this.state.loading}
+                  loading={this.props.tx.isProcessing}
                   label="Transfer"
                   validated={checked && checkValidation ? true : false}
-                />
-              </Container>
-            </>
-          ) : (
-            <>
-              <Form>
-                <Dropdown
+              />
+
+              {isDevMode() ? (<div>Tx Status Update <br/> {Object.entries(this.props.tx.update).map(([key, value]) => {
+                return (<div>{key} : {value}</div>)
+              })} <br/> </div> ): ''}
+
+              {isDevMode() ?  ( <div> <div>Transfer Stats after submission : </div> {Object.entries(this.props.tx.stats).map(([key, value]) => {
+                return (<div>{key} : {value}</div>)
+              })}</div>) : ''}
+            </Container>
+          </> : <>
+            <Form>
+              <Dropdown
                   label="Receiving Asset"
                   placeholder="Select Asset"
                   name="send_asset"
@@ -199,9 +205,9 @@ class Transfer extends Component {
                   value={send_asset}
                   options={options}
                   onClick={this.setSendAsset}
-                />
+              />
 
-                <Input
+              <Input
                   ref={textarea => (this.addressValue = textarea)}
                   label="Haven Address"
                   placeholder="...load address"
@@ -209,16 +215,15 @@ class Transfer extends Component {
                   name="recipient_address"
                   value={this.props.address}
                   readOnly={true}
-                />
-              </Form>
-              <Container>
-                <Footer
+              />
+            </Form>
+            <Container>
+              <Footer
                   onClick={this.copyAddressToClipBoard}
                   label={this.state.copyButtonState}
-                />
-              </Container>
-            </>
-          )}
+              />
+            </Container>
+          </>}
         </Body>
       </Page>
     );
@@ -226,7 +231,8 @@ class Transfer extends Component {
 }
 
 export const mapStateToProps = state => ({
-  address: state.address.main
+  address: state.address.main,
+  tx:state.txProcess
 });
 
 export default connect(

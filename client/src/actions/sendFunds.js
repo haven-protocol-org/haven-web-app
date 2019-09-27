@@ -16,7 +16,10 @@ export const sendFunds = (toAddress, amount) => {
 
     const parsedAmount = core.monero_amount_format_utils.parseMoney(amount);
 
+
     return (dispatch, getState) => {
+
+        dispatch({type: SEND_FUNDS_STARTED})
 
 
         // arguments for the send funds routine, including functions for backend requests
