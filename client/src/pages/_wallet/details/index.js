@@ -85,6 +85,12 @@ class Details extends Component {
     }
   }
 
+
+  getLockedReason(tx) {
+
+    return core.monero_txParsing_utils.TransactionLockedReason(tx, this.props.height);
+  }
+
   render() {
     const { id } = this.props.match.params;
     const { amount, price, value } = this.getBalancePriceStats();
@@ -142,6 +148,7 @@ class Details extends Component {
                       key={index}
                       type={this.getTransactionType(transaction)}
                       status={this.getTransactionStatus(transaction)}
+                      lockedReason={this.getLockedReason(transaction)}
                       price={price}
                       block={transaction.height}
                       date={new Date(

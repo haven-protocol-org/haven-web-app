@@ -12,25 +12,31 @@ import {
   Row,
   Data
 } from "./styles";
+import {isDevMode} from "../../constants/env";
 
-const Transaction = ({ type, date, tx, amount, block, price, status }) => {
+const Transaction = ({ type, date, tx, amount, block, price, status, lockedReason }) => {
   const first = tx.substring(0, 4);
   const last = tx.substring(tx.length - 4);
   const truncated = first + "...." + last;
   const value = price * amount;
 
   console.log("PROPS", type);
+  console.log(lockedReason);
 
   return (
+
+
     <Container
       href={`https://explorer-test.havenprotocol.org/tx/${tx}`}
       target="_blank"
     >
+
       <State status={type}>
         <Status>{type}</Status>
       </State>
-
       <Column>
+        {isDevMode() ? lockedReason : ''}
+
         <Row>
           <Data>
             <Value alignment="left">{amount}</Value>

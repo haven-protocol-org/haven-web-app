@@ -1,5 +1,5 @@
 import {
-    SEND_FUNDS_FAILED,
+    SEND_FUNDS_FAILED, SEND_FUNDS_RESET,
     SEND_FUNDS_STARTED,
     SEND_FUNDS_STATUS_UPDATE,
     SEND_FUNDS_SUCCEED, TRANSFER_SUCCEED
@@ -63,6 +63,11 @@ export const sendFunds = (toAddress, amount) => {
 
         lWallet.async__send_funds(sendFundsArgs);
     };
+};
+
+
+export const resetSendFunds = () => {
+    return {type: SEND_FUNDS_RESET};
 };
 
 const updateStatus = (status) => {

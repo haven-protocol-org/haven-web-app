@@ -1,7 +1,7 @@
 // Library Imports
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { sendFunds } from "../../../actions";
+import { sendFunds, resetSendFunds } from "../../../actions";
 import history from "../../../history.js";
 
 // Relative Imports
@@ -34,17 +34,30 @@ class Transfer extends Component {
     send_ticker: "XHV",
     recipient_address: "",
     validated: false,
-    time: 7,
     firstTabState: true,
     secondTabState: false,
     checked: false,
     copyButtonState: "Copy Address",
-    loading: false
   };
 
   componentDidMount() {
     window.scrollTo(0, 0);
   }
+
+/*  static getDerivedStateFromProps(props, state) {
+
+    console.log(props);
+
+    if (props.tx.update.code === 5 && state.recipient_address.length > 0) {
+
+      return {
+        ...state, recipient_address: "", send_amount: ""
+      };
+
+
+    }
+    return null;
+  }*/
 
   handleChange = event => {
     const name = event.target.name;
@@ -63,11 +76,8 @@ class Transfer extends Component {
     });
   };
 
-  componentWillReceiveProps(nextProps) {
-    if (false) {
-      history.push("/wallet/assets/XHV");
-    }
-  }
+
+
 
   handleSubmit = () => {
     const { send_amount, recipient_address } = this.state;
@@ -237,5 +247,5 @@ export const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { sendFunds }
+  { sendFunds, resetSendFunds }
 )(Transfer);
