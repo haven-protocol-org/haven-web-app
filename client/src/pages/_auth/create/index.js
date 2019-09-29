@@ -15,7 +15,7 @@ import {
   mneomicVerifcationFailed
 } from "../../../actions";
 import {Redirect} from "react-router";
-import {selectIsLoggedIn} from "../../../reducers/account";
+import {selectIsLoggedIn, selectIsRequestingLogin} from "../../../reducers/account";
 
 class Create extends Component {
   state = {
@@ -95,7 +95,7 @@ class Create extends Component {
             value={verify_seed}
             error={error}
             onChange={this.handleChange}
-            loading={loading}
+            loading={this.props.isRequestingLogin}
           />
         );
       default:
@@ -134,7 +134,8 @@ class Create extends Component {
 
 export const mapStateToProps = state => ({
   mnemonicString: state.keys.mnemonic_string,
-  isLoggedIn:selectIsLoggedIn(state)
+  isLoggedIn:selectIsLoggedIn(state),
+  isRequestingLogin: selectIsRequestingLogin(state),
 });
 
 export default connect(

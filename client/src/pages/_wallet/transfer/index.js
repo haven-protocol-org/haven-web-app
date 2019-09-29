@@ -2,7 +2,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { sendFunds, resetSendFunds } from "../../../actions";
-import history from "../../../history.js";
 
 // Relative Imports
 import Page from "../../../components/_layout/page";
@@ -15,7 +14,6 @@ import Dropdown from "../../../components/_inputs/dropdown";
 import Footer from "../../../components/_inputs/footer";
 import Transaction from "../../../components/_transactions/transfer";
 import Tab from "../../../components/tab";
-import Spinner from "../../../components/spinner/index.js";
 
 import { Container } from "./styles";
 import {isDevMode} from "../../../constants/env";

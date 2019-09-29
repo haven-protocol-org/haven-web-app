@@ -73,6 +73,8 @@ const accountCreationFailed = (error) => ({type: ACCOUNT_CREATION_FAILED, payloa
 export const createWallet = () => {
     return dispatch => {
 
+
+
        core.monero_utils_promise
            .then( bridge => {
            const newWallet = bridge.newly_created_wallet("english", NET_TYPE_ID);
@@ -92,6 +94,7 @@ export const mnenomicVerificationSucceed = () =>  {
         const viewKey = getState().keys.sec_viewKey_string;
         const address = getState().address.main;
 
+        dispatch(accountCreationRequested());
         dispatch(loginBE(address, viewKey, true));
 
     };
