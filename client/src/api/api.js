@@ -13,7 +13,7 @@ const INIT_REQUEST = {
 export const login = (address, view_key, generated_locally, create_account = true) => {
     const params = {address, view_key, generated_locally, create_account};
     return fetch( `${API_URL}/login`, { ...INIT_REQUEST, body: JSON.stringify(params) } )
-        .then(result => result.json());
+        .then(handleError)
 };
 
 /**
@@ -25,7 +25,7 @@ export const keepAlive = (address, view_key) => {
 
     const params = {address, view_key};
    return fetch( `${API_URL}/ping`, { ...INIT_REQUEST, body: JSON.stringify(params) } )
-       .then(result => result.json());
+       .then(handleError)
 
 };
 
@@ -37,7 +37,7 @@ export const keepAlive = (address, view_key) => {
  */
 export const getAddressInfo = (params) => {
     return fetch( `${API_URL}/get_address_info`, { ...INIT_REQUEST, body: JSON.stringify(params) } )
-        .then(result => result.json());
+        .then(handleError)
 };
 
 
@@ -48,7 +48,7 @@ export const getAddressInfo = (params) => {
  */
 export const getAddressTxs = (params) => {
     return fetch( `${API_URL}/get_address_txs`, { ...INIT_REQUEST, body: JSON.stringify(params) } )
-        .then(result => result.json());
+        .then(handleError)
 };
 
 
@@ -62,7 +62,7 @@ export const getUnspentOuts = (params ) => {
 
     //const params = {address, view_key, amount, mixin, use_dust, dust_threshold};
     return fetch( `${API_URL}/get_unspent_outs`, { ...INIT_REQUEST, body: JSON.stringify(params) } )
-        .then(result => result.json());
+        .then(handleError)
 
 };
 
@@ -70,12 +70,27 @@ export const getUnspentOuts = (params ) => {
 export const getRandomOuts = (params) => {
 
     return fetch( `${API_URL}/get_random_outs`, { ...INIT_REQUEST, body: JSON.stringify(params) } )
-        .then(result => result.json());
+        .then(handleError)
 };
 
 
 export const submitRawTx = (signedTx) => {
 
     return fetch( `${API_URL}/submit_raw_tx`, { ...INIT_REQUEST, body: JSON.stringify(signedTx) } )
-        .then(result => result.json());
+        .then(handleError)
+};
+
+const handleError = (response) => {
+
+    // intercept error on protocol level
+    if (!response.ok)
+        throw new Error (response.statusText);
+
+    const responseBody = response.json();
+
+    //intercept error on application level
+    if (responseBody.status && responseBody.status !== 'success')
+        throw new Error (responseBody.reason);
+    return responseBody;
+
 };

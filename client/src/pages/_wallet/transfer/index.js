@@ -29,6 +29,7 @@ class Transfer extends Component {
   }
 
   state = {
+    tx_submitted: true,
     send_asset: "Haven",
     send_amount: "",
     send_ticker: "XHV",
@@ -44,20 +45,13 @@ class Transfer extends Component {
     window.scrollTo(0, 0);
   }
 
-/*  static getDerivedStateFromProps(props, state) {
+  componentDidUpdate(prevProps, prevState, snapshot) {
 
-    console.log(props);
-
-    if (props.tx.update.code === 5 && state.recipient_address.length > 0) {
-
-      return {
-        ...state, recipient_address: "", send_amount: ""
-      };
-
-
+    if (this.state.tx_submitted  && ( this.props.tx.update.code === 5 && prevProps.tx.update !== 5) ) {
+      console.log('new tx');
+      this.setState((prevState) => ({...prevState, recipient_address: '', send_amount: '', tx_submitted: false}));
     }
-    return null;
-  }*/
+  }
 
   handleChange = event => {
     const name = event.target.name;
@@ -89,6 +83,8 @@ class Transfer extends Component {
         this.state.send_amount
       );
     }
+
+    this.setState((prevState) => ({...prevState, tx_submitted: true}));
   };
 
   toggleSend = () => {

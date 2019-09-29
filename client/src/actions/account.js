@@ -38,6 +38,7 @@ export const restoreWallet = seed => {
         try {
 
             keys = lWallet.seed_and_keys_from_mnemonic(seed, NET_TYPE_ID);
+            keys.mnemonic_string = seed;
             dispatch(keysGeneratedSucceed(keys));
             dispatch(addPubAddress(keys.address_string));
 
