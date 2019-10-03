@@ -13,13 +13,15 @@ export const getTransfers = () => {
   return (dispatch, getState) => {
     dispatch(getTransfersFetching());
     getAddressTxs(selectCredentials(getState()))
-
         .then(result => {
           dispatch(updateChainData(result));
           return parseTx(result, getState());
         })
         .then(txs => dispatch(getTransfersSucceed(txs)))
-        .catch(error => dispatch(getTransfersFailed(error)));
+        .catch(error => dispatch(getTransfersFailed(error)))
+
+
+
   };
 };
 

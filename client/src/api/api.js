@@ -80,17 +80,24 @@ export const submitRawTx = (signedTx) => {
         .then(handleError)
 };
 
-const handleError = (response) => {
+const handleError = async (response) => {
+
 
     // intercept error on protocol level
     if (!response.ok)
-        throw new Error (response.statusText);
+        return Promise.reject (response.statusText);
 
-    const responseBody = response.json();
+    const responseBody = await response.json();
 
     //intercept error on application level
     if (responseBody.status && responseBody.status !== 'success')
-        throw new Error (responseBody.reason);
-    return responseBody;
+    {
+        return Promise.reject(responseBody.reason);
+    }
+    else
+    {
+        return responseBody;
+
+    }
 
 };

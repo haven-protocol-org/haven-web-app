@@ -20,13 +20,21 @@ import {loadState} from "./localStorage";
 import {saveState} from "./localStorage";
 import {isDevMode} from "./constants/env";
 
+const logger = store => next => action => {
+    console.group(action.type);
+    console.info("dispatching", action);
+    let result = next(action);
+    console.log("next state", store.getState());
+    console.groupEnd();
+    return result;
+};
+
 if (isDevMode()) {
 
-    import("./dev")
-        .then( dev => {
+
 
             const persistedState = loadState();
-            const createStoreWithMiddleware = applyMiddleware(reduxThunk, dev.logger)(
+            const createStoreWithMiddleware = applyMiddleware(reduxThunk, logger)(
                 createStore
             );
             const store = createStoreWithMiddleware(reducers, persistedState);
@@ -43,7 +51,7 @@ if (isDevMode()) {
                 document.querySelector("#root")
             );
 
-        });
+
 }
 else
 {
