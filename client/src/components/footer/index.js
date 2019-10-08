@@ -77,7 +77,7 @@ const Footer = () => {
         </External>
         <External
           rel="noopener"
-          href="https://twitter.com/HavenProtocol_"
+          href="https://twitter.com/HavenXHV"
           target="_blank"
         >
           Twitter
