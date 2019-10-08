@@ -130,6 +130,13 @@ const Footer = () => {
         >
           CLI Wallet
         </External>
+        <External
+          rel="noopener"
+          href="https://explorer-test.havenprotocol.org/"
+          target="_blank"
+        >
+          Block Explorer
+        </External>
         <Internal to="/create">Web Wallet</Internal>
       </Section>
 
