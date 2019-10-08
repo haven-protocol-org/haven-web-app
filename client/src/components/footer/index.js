@@ -18,20 +18,6 @@ const Footer = () => {
         </External>
         <External
           rel="noopener"
-          href="https://xhv.luckypool.io/"
-          target="_blank"
-        >
-          Lucky Pool
-        </External>
-        <External
-          rel="noopener"
-          href="https://xhv.solopool.org/"
-          target="_blank"
-        >
-          Solo Pool
-        </External>
-        <External
-          rel="noopener"
           href="https://xhv.dark-mine.su/"
           target="_blank"
         >
@@ -51,19 +37,12 @@ const Footer = () => {
         >
           Fracking Miner
         </External>
-        <External
-          rel="noopener"
-          href="http://pool.mineallcrypto.com/pool/?symbol=XHV"
-          target="_blank"
-        >
-          Mine All Crypto
-        </External>
       </Section>
       <Section>
         <Title>Social</Title>
         <External
           rel="noopener"
-          href="https://discordapp.com/invite/vWQ2GZX"
+          href="https://discordapp.com/invite/CCtNxfG"
           target="_blank"
         >
           Discord
