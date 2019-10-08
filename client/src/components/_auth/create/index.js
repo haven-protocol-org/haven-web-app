@@ -67,7 +67,6 @@ const Create = ({
             </div>
           ) : (
             <Submit disabled={true} onClick={nextStep}>
-              {step === 3 && "Unlocking..."}
               <Spinner color={"white"} />
             </Submit>
           )}
