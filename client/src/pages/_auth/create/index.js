@@ -14,8 +14,11 @@ import {
   mnenomicVerificationSucceed,
   mneomicVerifcationFailed
 } from "../../../actions";
-import {Redirect} from "react-router";
-import {selectIsLoggedIn, selectIsRequestingLogin} from "../../../reducers/account";
+import { Redirect } from "react-router";
+import {
+  selectIsLoggedIn,
+  selectIsRequestingLogin
+} from "../../../reducers/account";
 
 class Create extends Component {
   state = {
@@ -29,7 +32,6 @@ class Create extends Component {
   }
 
   nextStep = () => {
-
     const { step } = this.state;
     const stepThree = step === 3;
 
@@ -53,7 +55,6 @@ class Create extends Component {
       // On step three, if seed is valid, set loading to true and push true to authUser reducer
       if (validationSucceed) {
         this.props.mnenomicVerificationSucceed();
-
       } else {
         return null;
       }
@@ -81,12 +82,7 @@ class Create extends Component {
       case 1:
         return <Placeholder />;
       case 2:
-        return (
-          <CreateSeed
-            value={this.props.mnemonicString}
-            readOnly={true}
-          />
-        );
+        return <CreateSeed value={this.props.mnemonicString} readOnly={true} />;
       case 3:
         return (
           <VerifySeed
@@ -95,7 +91,6 @@ class Create extends Component {
             value={verify_seed}
             error={error}
             onChange={this.handleChange}
-            loading={this.props.isRequestingLogin}
           />
         );
       default:
@@ -103,14 +98,12 @@ class Create extends Component {
   };
 
   render() {
-
     if (this.props.isLoggedIn) {
       return <Redirect to="/wallet/assets" />;
     }
 
-
     const { step, verify_seed } = this.state;
-    const disabled = (step === 3 && verify_seed === "");
+    const disabled = step === 3 && verify_seed === "";
     return (
       <Container>
         <Auth
@@ -124,8 +117,9 @@ class Create extends Component {
           nextStep={this.nextStep}
           prevStep={this.prevStep}
           disabled={disabled}
+          loading={this.props.isRequestingLogin}
         >
-          <div>{this.handleSwitch()}</div>
+          <>{this.handleSwitch()}</>
         </Auth>
       </Container>
     );
@@ -134,8 +128,8 @@ class Create extends Component {
 
 export const mapStateToProps = state => ({
   mnemonicString: state.keys.mnemonic_string,
-  isLoggedIn:selectIsLoggedIn(state),
-  isRequestingLogin: selectIsRequestingLogin(state),
+  isLoggedIn: selectIsLoggedIn(state),
+  isRequestingLogin: selectIsRequestingLogin(state)
 });
 
 export default connect(
