@@ -24,12 +24,12 @@ export const notificationList = [
     code: -1,
     message: "Oops, that seed was incorrect",
     type: ERROR,
-    description:'electrum style list failed --> comes with wrong seed'
+    description: "electrum style list failed --> comes with wrong seed"
   },
   {
     key: "",
     code: -2,
-    message: "you are doing it wrong",
+    message: "This is an invalid  address",
     type: ERROR,
     description: "address for tx was not valid"
   }
