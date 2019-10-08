@@ -9,7 +9,6 @@ import {
   Placeholder,
   Message,
   Header,
-  Spacer,
   Button,
   Buttons,
   Title
@@ -20,20 +19,17 @@ import {
   PRICE_RANGE_MONTH,
   PRICE_RANGE_YEAR
 } from "../../reducers/priceHistory";
-import {isDevMode} from "../../constants/env";
+import { isDevMode } from "../../constants/env";
 
 class Chart extends Component {
-
-    constructor(props) {
-
-        super(props);
-        this.chartJs = React.createRef();
-
-    }
+  constructor(props) {
+    super(props);
+    this.chartJs = React.createRef();
+  }
   state = {
     activeDay: "1M",
-      hoveredValue:'',
-      hoveredLabel:''
+    hoveredValue: "",
+    hoveredLabel: ""
   };
 
   toggleDay = time => {
@@ -42,30 +38,28 @@ class Chart extends Component {
     });
   };
 
+  onHoverChart(event) {
+    const hoveredElementArr = this.chartJs.chartInstance.getElementAtEvent(
+      event
+    );
 
-    onHoverChart(event) {
+    if (hoveredElementArr.length === 0) return;
 
+    const hoveredElement = hoveredElementArr[0];
 
-     const hoveredElementArr = this.chartJs.chartInstance.getElementAtEvent(event);
+    const label = this.chartJs.chartInstance.data.labels[hoveredElement._index];
+    const value = this.chartJs.chartInstance.data.datasets[
+      hoveredElement._datasetIndex
+    ].data[hoveredElement._index];
 
-     if (hoveredElementArr.length === 0)
-         return;
-
-     const hoveredElement = hoveredElementArr[0];
-
-     const label = this.chartJs.chartInstance.data.labels[hoveredElement._index];
-     const value = this.chartJs.chartInstance.data.datasets[hoveredElement._datasetIndex].data[hoveredElement._index];
-
-
-     this.setState((prev => ({...prev, hoveredLabel:label, hoveredValue: '$' + value.toFixed(2)})));
-
-
-
+    this.setState(prev => ({
+      ...prev,
+      hoveredLabel: label,
+      hoveredValue: "$" + value.toFixed(2)
+    }));
   }
 
   render() {
-
-
     const { activeDay } = this.state;
     const dateRangeButtons = (
       <Buttons>
@@ -74,7 +68,7 @@ class Chart extends Component {
             this.props.onChangePriceRange(PRICE_RANGE_DAY);
             this.toggleDay("1D");
           }}
-          active={activeDay == "1D" && true}
+          active={activeDay === "1D" && true}
         >
           1D
         </Button>
@@ -83,7 +77,7 @@ class Chart extends Component {
             this.props.onChangePriceRange(PRICE_RANGE_MONTH);
             this.toggleDay("1M");
           }}
-          active={activeDay == "1M" && true}
+          active={activeDay === "1M" && true}
         >
           1M
         </Button>
@@ -92,7 +86,7 @@ class Chart extends Component {
             this.props.onChangePriceRange(PRICE_RANGE_YEAR);
             this.toggleDay("1Y");
           }}
-          active={activeDay == "1Y" && true}
+          active={activeDay === "1Y" && true}
         >
           1Y
         </Button>
@@ -101,7 +95,7 @@ class Chart extends Component {
             this.props.onChangePriceRange(PRICE_RANGE_MAX);
             this.toggleDay("ALL");
           }}
-          active={activeDay == "ALL" && true}
+          active={activeDay === "ALL" && true}
         >
           ALL
         </Button>
@@ -128,14 +122,17 @@ class Chart extends Component {
           <Title>Price History</Title>
           {dateRangeButtons}
 
-            {isDevMode() ? this.state.hoveredLabel + ' ' + this.state.hoveredValue:''}
+          {isDevMode()
+            ? this.state.hoveredLabel + " " + this.state.hoveredValue
+            : ""}
         </Header>
         <Container>
-          <Line ref={(ref) => this.chartJs = ref}
+          <Line
+            ref={ref => (this.chartJs = ref)}
             options={{
               responsive: true,
               maintainAspectRatio: false,
-                onHover: (event) => this.onHoverChart(event),
+              onHover: event => this.onHoverChart(event),
 
               legend: {
                 display: false

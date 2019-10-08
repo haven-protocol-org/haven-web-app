@@ -15,7 +15,6 @@ import {
 import Icon from "../../../assets/haven.svg";
 import { closeWallet } from "../../../actions";
 import { selectIsLoggedIn } from "../../../reducers/account";
-import { HeadingWrapper } from "../../../pages/_public/welcome/styles";
 import { APP_VERSION, NET_TYPE_NAME } from "../../../constants/env";
 
 class Navigation extends Component {

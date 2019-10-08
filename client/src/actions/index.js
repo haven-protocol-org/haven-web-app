@@ -1,4 +1,4 @@
-import {ADD_PUB_ADDRESS, UPDATE_CHAIN_DATA} from "./types";
+import { ADD_PUB_ADDRESS, UPDATE_CHAIN_DATA } from "./types";
 
 export * from "./prices";
 export * from "./account";
@@ -8,19 +8,24 @@ export * from "./theme";
 export * from "./transferHistory";
 export * from "./sendFunds";
 
-
-
-export const addPubAddress = (address) => ({type: ADD_PUB_ADDRESS, payload:address});
-export const updateChainData = ({start_height, scanned_block_height, blockchain_height}) => {
-
-  return {type: UPDATE_CHAIN_DATA, payload: {start_height, scanned_block_height, blockchain_height}}
+export const addPubAddress = address => ({
+  type: ADD_PUB_ADDRESS,
+  payload: address
+});
+export const updateChainData = ({
+  start_height,
+  scanned_block_height,
+  blockchain_height
+}) => {
+  return {
+    type: UPDATE_CHAIN_DATA,
+    payload: { start_height, scanned_block_height, blockchain_height }
+  };
 };
 
-
 export const getForex = () => {
-
   const endDate = new Date();
-  const startDate = endDate - 14 * 3600 * 24;
+  // const startDate = endDate - 14 * 3600 * 24;
   const isoEndDate = endDate.toISOString().split("T")[0];
   const isoStartDate = endDate.toISOString().split("T")[0];
 

@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import media from "../../../constants/media.js";
 
 export const Error = styled.div`
   font-family: Inter-Regular;

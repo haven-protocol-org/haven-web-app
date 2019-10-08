@@ -1,6 +1,5 @@
 // Library Imports
 import React, { Component } from "react";
-import { connect } from "react-redux";
 
 // Relative Imports
 import { Container } from "./styles";

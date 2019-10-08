@@ -1,6 +1,5 @@
 // Library Imports
 import React, { Component } from "react";
-import history from "../../../history.js";
 import { connect } from "react-redux";
 
 // Relative Imports
@@ -76,7 +75,7 @@ class Create extends Component {
   };
 
   handleSwitch = () => {
-    const { step, verify_seed, error, loading } = this.state;
+    const { step, verify_seed, error } = this.state;
 
     switch (step) {
       case 1:

@@ -16,7 +16,7 @@ import Transaction from "../../../components/_transactions/transfer";
 import Tab from "../../../components/tab";
 
 import { Container } from "./styles";
-import {isDevMode} from "../../../constants/env";
+import { isDevMode } from "../../../constants/env";
 
 const options = [{ asset: "Haven", ticker: "XHV" }];
 
@@ -36,7 +36,7 @@ class Transfer extends Component {
     firstTabState: true,
     secondTabState: false,
     checked: false,
-    copyButtonState: "Copy Address",
+    copyButtonState: "Copy Address"
   };
 
   componentDidMount() {
@@ -44,10 +44,17 @@ class Transfer extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-
-    if (this.state.tx_submitted  && ( this.props.tx.update.code === 5 && prevProps.tx.update !== 5) ) {
-      console.log('new tx');
-      this.setState((prevState) => ({...prevState, recipient_address: '', send_amount: '', tx_submitted: false}));
+    if (
+      this.state.tx_submitted &&
+      (this.props.tx.update.code === 5 && prevProps.tx.update !== 5)
+    ) {
+      console.log("new tx");
+      this.setState(prevState => ({
+        ...prevState,
+        recipient_address: "",
+        send_amount: "",
+        tx_submitted: false
+      }));
     }
   }
 
@@ -68,9 +75,6 @@ class Transfer extends Component {
     });
   };
 
-
-
-
   handleSubmit = () => {
     const { send_amount, recipient_address } = this.state;
     if (send_amount.length === 0 && recipient_address.length === 0) {
@@ -82,7 +86,7 @@ class Transfer extends Component {
       );
     }
 
-    this.setState((prevState) => ({...prevState, tx_submitted: true}));
+    this.setState(prevState => ({ ...prevState, tx_submitted: true }));
   };
 
   toggleSend = () => {
@@ -125,8 +129,7 @@ class Transfer extends Component {
       send_amount,
       send_ticker,
       recipient_address,
-      checked,
-      validated
+      checked
     } = this.state;
 
     const checkValidation =
@@ -148,9 +151,10 @@ class Transfer extends Component {
             toggleSend={this.toggleSend}
             toggleReceive={this.toggleReceive}
           />
-          {this.state.firstTabState ? <>
-            <Form>
-              <Dropdown
+          {this.state.firstTabState ? (
+            <>
+              <Form>
+                <Dropdown
                   label="Send Asset"
                   placeholder="Select Asset"
                   name="send_asset"
@@ -158,49 +162,77 @@ class Transfer extends Component {
                   value={send_asset}
                   options={options}
                   onClick={this.setSendAsset}
-              />
-              <Input
+                />
+                <Input
                   label="Amount"
                   placeholder="Enter amount"
                   type="number"
                   name="send_amount"
                   value={send_amount}
                   onChange={this.handleChange}
-              />
-              <Input
+                />
+                <Input
                   label="Recipient"
                   placeholder="Enter recipient address"
                   width="true"
                   name="recipient_address"
                   value={recipient_address}
                   onChange={this.handleChange}
-              />
-            </Form>
-            <Container>
-              <Transaction
+                />
+              </Form>
+              <Container>
+                <Transaction
                   state={this.state}
                   checked={this.state.checked}
                   onChange={this.handleCheckboxChange}
-              />
+                />
 
-              <Footer
+                <Footer
                   onClick={this.handleSubmit}
                   loading={this.props.tx.isProcessing}
                   label="Transfer"
                   validated={checked && checkValidation ? true : false}
-              />
+                />
 
-              {isDevMode() ? (<div>Tx Status Update <br/> {Object.entries(this.props.tx.update).map(([key, value]) => {
-                return (<div>{key} : {value}</div>)
-              })} <br/> </div> ): ''}
+                {isDevMode() ? (
+                  <div>
+                    Tx Status Update <br />{" "}
+                    {Object.entries(this.props.tx.update).map(
+                      ([key, value]) => {
+                        return (
+                          <div>
+                            {key} : {value}
+                          </div>
+                        );
+                      }
+                    )}{" "}
+                    <br />{" "}
+                  </div>
+                ) : (
+                  ""
+                )}
 
-              {isDevMode() ?  ( <div> <div>Transfer Stats after submission : </div> {Object.entries(this.props.tx.stats).map(([key, value]) => {
-                return (<div>{key} : {value}</div>)
-              })}</div>) : ''}
-            </Container>
-          </> : <>
-            <Form>
-              <Dropdown
+                {isDevMode() ? (
+                  <div>
+                    {" "}
+                    <div>Transfer Stats after submission : </div>{" "}
+                    {Object.entries(this.props.tx.stats).map(([key, value]) => {
+                      return (
+                        <div>
+                          {key} : {value}
+                        </div>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  ""
+                )}
+              </Container>
+            </>
+          ) : (
+            <>
+              <Form>
+                <Dropdown
                   label="Receiving Asset"
                   placeholder="Select Asset"
                   name="send_asset"
@@ -209,9 +241,9 @@ class Transfer extends Component {
                   value={send_asset}
                   options={options}
                   onClick={this.setSendAsset}
-              />
+                />
 
-              <Input
+                <Input
                   ref={textarea => (this.addressValue = textarea)}
                   label="Haven Address"
                   placeholder="...load address"
@@ -219,15 +251,16 @@ class Transfer extends Component {
                   name="recipient_address"
                   value={this.props.address}
                   readOnly={true}
-              />
-            </Form>
-            <Container>
-              <Footer
+                />
+              </Form>
+              <Container>
+                <Footer
                   onClick={this.copyAddressToClipBoard}
                   label={this.state.copyButtonState}
-              />
-            </Container>
-          </>}
+                />
+              </Container>
+            </>
+          )}
         </Body>
       </Page>
     );
@@ -236,7 +269,7 @@ class Transfer extends Component {
 
 export const mapStateToProps = state => ({
   address: state.address.main,
-  tx:state.txProcess
+  tx: state.txProcess
 });
 
 export default connect(

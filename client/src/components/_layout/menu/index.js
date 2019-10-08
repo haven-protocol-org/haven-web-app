@@ -18,8 +18,6 @@ import { convertBalanceForReading } from "../../../utility";
 import { Spinner } from "../../spinner";
 
 class Menu extends Component {
-
-
   componentDidMount() {
     if (this.props.balance === NO_BALANCE) {
       this.props.getBalances();
@@ -27,7 +25,7 @@ class Menu extends Component {
   }
 
   render() {
-    const { balance, unlockedBalance, lockedBalance } = this.props;
+    const { unlockedBalance, lockedBalance } = this.props;
 
     return (
       <Container>
@@ -44,9 +42,7 @@ class Menu extends Component {
             {lockedBalance > 0 ? (
               <div>
                 <Pending>
-                  You have{" "}
-                  {convertBalanceForReading(lockedBalance)} XHV
-                  pending
+                  You have {convertBalanceForReading(lockedBalance)} XHV pending
                   <br />
                   Your balances will be updated shortly.
                 </Pending>

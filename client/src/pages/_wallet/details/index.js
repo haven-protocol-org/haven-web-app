@@ -14,29 +14,23 @@ import empty from "../../../assets/illustration/no_transactions.svg";
 import { History, Row, Message, EmptyState, NoTransactions } from "./styles";
 import { connect } from "react-redux";
 import { getPriceHistory, getTransfers } from "../../../actions";
-import { NO_PRICE, PRICE_RANGE_MONTH} from "../../../reducers/priceHistory";
+import { NO_PRICE, PRICE_RANGE_MONTH } from "../../../reducers/priceHistory";
 import { selectReadableBalance, NO_BALANCE } from "../../../reducers/balance";
 import {
   convertBalanceForReading,
-  convertTimestampToDateString,
   getPriceDates,
-  getPriceValues,
-  logM
+  getPriceValues
 } from "../../../utility";
 import { Spinner } from "../../../components/spinner";
 import { selectBlockchainHeight } from "../../../reducers/chain";
 import { core } from "../../../declarations/open_monero.service";
-import {selectSimplePrice} from "../../../reducers/simplePrice";
+import { selectSimplePrice } from "../../../reducers/simplePrice";
 
 class Details extends Component {
-
-  state = {selectedRangeInDays: PRICE_RANGE_MONTH};
-
+  state = { selectedRangeInDays: PRICE_RANGE_MONTH };
 
   componentDidMount() {
     window.scrollTo(0, 0);
-
-
 
     this.selectPriceHistory(PRICE_RANGE_MONTH);
     if (this.props.transferList.isEmpty) {
@@ -45,10 +39,8 @@ class Details extends Component {
   }
 
   selectPriceHistory(rangeInDays) {
-
     this.props.getPriceHistory(rangeInDays);
-    this.setState({selectedRangeInDays: rangeInDays});
-
+    this.setState({ selectedRangeInDays: rangeInDays });
   }
 
   getBalancePriceStats() {
@@ -85,10 +77,11 @@ class Details extends Component {
     }
   }
 
-
   getLockedReason(tx) {
-
-    return core.monero_txParsing_utils.TransactionLockedReason(tx, this.props.height);
+    return core.monero_txParsing_utils.TransactionLockedReason(
+      tx,
+      this.props.height
+    );
   }
 
   render() {
@@ -96,11 +89,13 @@ class Details extends Component {
     const { amount, price, value } = this.getBalancePriceStats();
     const { txs, isFetching } = this.props.transferList;
 
-    const priceRangeEntry = this.props.priceHistory.prices.find( priceRangeEntry =>  priceRangeEntry.rangeInDays === this.state.selectedRangeInDays);
+    const priceRangeEntry = this.props.priceHistory.prices.find(
+      priceRangeEntry =>
+        priceRangeEntry.rangeInDays === this.state.selectedRangeInDays
+    );
 
     const prices = getPriceValues(priceRangeEntry.prices);
     const labels = getPriceDates(priceRangeEntry.prices);
-
 
     return (
       <Page>
@@ -111,7 +106,11 @@ class Details extends Component {
             title={`${id} Overview`}
             description="Pricing history and asset values"
           />
-          <Chart prices={prices} labels={labels} onChangePriceRange={(args) => this.selectPriceHistory(args)} />
+          <Chart
+            prices={prices}
+            labels={labels}
+            onChangePriceRange={args => this.selectPriceHistory(args)}
+          />
           <Row>
             <Statistic label="Amount" value={amount} />
             <Statistic
@@ -190,4 +189,3 @@ export default connect(
   mapStateToProps,
   { getPriceHistory: getPriceHistory, getTransfers }
 )(Details);
-
