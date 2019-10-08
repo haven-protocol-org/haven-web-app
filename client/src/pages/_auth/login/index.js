@@ -67,8 +67,8 @@ class Login extends Component {
           submit="Submit"
         >
           <Description
-            label="Seed Phrase or Private Key"
-            placeholder="Enter your 25 word seed phrase or Private Key..."
+            label="Seed Phrase or Private Spend Key"
+            placeholder="Enter your 25 word seed phrase or Private Spend Key..."
             name="seed_phrase"
             value={seed_phrase}
             error={error}
