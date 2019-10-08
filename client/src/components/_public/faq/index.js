@@ -23,8 +23,43 @@ const Content = ({ ref }) => {
             exchange it’s listed on, send it to your own private digital vault
             where you can swap between all supported Haven currencies and
             securely store them without giving up control to anyone else.
-            <br /> <br />
+            <br />
+            <br />
             Complete privacy so that YOUR money is 100% yours. No bank needed.
+          </Description>
+        </Cell>
+        <Heading>Why use Haven?</Heading>
+        <Cell>
+          <Title>ANYONE. ANYWHERE. ANYTIME.</Title>
+          <Description>
+            Use Haven to store or send your money anywhere in the world at any
+            time with little cost and complete privacy.
+            <br />
+            <br />
+            Haven is based on Monero, a well regarded cryptocurrency, and as
+            such inherits all of its privacy features giving you complete
+            financial control.no permission needed to store or transfer your
+            wealth.
+          </Description>
+        </Cell>
+        <Heading>How does Haven work?</Heading>
+        <Cell>
+          <Title>PRIVATE. SECURE. FLEXIBLE.</Title>
+          <Description>
+            Haven uses an innovative mechanism to swap between all supported
+            currencies.
+            <br />
+            <br />
+            For example, when you swap from Haven [XHV] to xUSD the system
+            destroys the XHV and creates xUSD equivalent to the USD value. If
+            you want to go back to XHV you will always receive the same USD
+            worth of XHV.
+            <br />
+            <br />
+            There are many different stablecoin projects but very few that can
+            offer the privacy, security and the flexibility of Haven with all
+            currency swaps completed in your own Haven vault. No 3rd party
+            needed.
           </Description>
         </Cell>
         <Heading>What can Haven be used for? </Heading>
@@ -54,37 +89,7 @@ const Content = ({ ref }) => {
             could be built on top of the Haven network.
           </Description>
         </Cell>
-        <Heading>How does Haven work?</Heading>
-        <Cell>
-          <Title>Lack of liquidity on an exchange</Title>
-          <Description>
-            Using the mint/burn process Haven users can lock-in the fiat value
-            of their funds within their own wallet negating the need for
-            exchange liquidity. There is no limit to the amount that can be
-            exchanged within the wallet due to infinite liquidity.
-          </Description>
-          <Title>Lack of trust for collateral backed stablecoins</Title>
-          <Description>
-            The majority of stable-coins used by exchanges are collateral
-            backed. Not all of them have been audited to verify the funds being
-            held are actually backed up in the case of loss.
-          </Description>
-          <Title>You have to trust a 3rd party exchange</Title>
-          <Description>
-            Centralized exchanges have, and continue to be, hacked and customers
-            funds stolen. Haven solves this problem as your money never needs to
-            leave your wallet in order to lock-in the fiat value. If it is added
-            then a user can also exchange to xBTC in order to benefit from any
-            price increase of BTC.
-          </Description>
-          <Title>Your account can be frozen by a 3rd party</Title>
-          <Description>
-            Most exchanges require KYC and some also have the ability to freeze
-            your account and seize your assets held there. With Haven this is
-            not necessary as your money can be securely stored within your own
-            private wallet away from prying eyes.
-          </Description>
-        </Cell>
+
         <Heading>The Haven Currency</Heading>
         <Cell>
           <Description>
