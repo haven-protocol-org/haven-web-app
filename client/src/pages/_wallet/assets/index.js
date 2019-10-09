@@ -55,12 +55,7 @@ class Assets extends Component {
 
   render() {
     const price =
-      this.props.price === NO_PRICE
-        ? "--"
-        : this.props.price.toLocaleString("en-US", {
-            style: "currency",
-            currency: "USD"
-          });
+      this.props.price === NO_PRICE ? "--" : this.props.price.toFixed(4);
 
     const value = calcValue(this.props.readableBalance, this.props.price);
 
