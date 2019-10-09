@@ -11,7 +11,10 @@ import {
   Header,
   Button,
   Buttons,
-  Title
+  Title,
+  PriceHistory,
+  Value,
+  Label
 } from "./styles";
 import {
   PRICE_RANGE_DAY,
@@ -31,6 +34,13 @@ class Chart extends Component {
     hoveredValue: "",
     hoveredLabel: ""
   };
+
+  componentDidMount() {
+    this.setState({
+      hoveredValue: this.props.price,
+      hoveredLabel: "Last Price"
+    });
+  }
 
   toggleDay = time => {
     this.setState({
@@ -55,7 +65,7 @@ class Chart extends Component {
     this.setState(prev => ({
       ...prev,
       hoveredLabel: label,
-      hoveredValue: "$" + value.toFixed(2)
+      hoveredValue: "$" + value.toFixed(4)
     }));
   }
 
@@ -121,12 +131,19 @@ class Chart extends Component {
         <Header>
           <Title>Price History</Title>
           {dateRangeButtons}
-
-          {isDevMode()
-            ? this.state.hoveredLabel + " " + this.state.hoveredValue
-            : ""}
         </Header>
+
         <Container>
+          <PriceHistory>
+            {isDevMode() ? (
+              <PriceHistory>
+                <Value>{this.state.hoveredValue}</Value>
+                <Label>{this.state.hoveredLabel}</Label>
+              </PriceHistory>
+            ) : (
+              <PriceHistory />
+            )}
+          </PriceHistory>
           <Line
             ref={ref => (this.chartJs = ref)}
             options={{
@@ -149,31 +166,7 @@ class Chart extends Component {
                 ],
                 xAxes: [{ display: false }]
               },
-              tooltips: {
-                callbacks: {
-                  label: function(item, data) {
-                    return "$" + item.yLabel.toFixed(2);
-                  }
-                },
-                yAlign: "bottom",
-                xAlign: "center",
-                xPadding: 20,
-                yPadding: 15,
-                bodyAlign: "center",
-                footerAlign: "center",
-                displayColors: false,
-                titleFontSize: 18,
-                bodyFontSize: 14,
-                titleMarginBottom: 8,
-                titleFontColor: "#fff",
-                background: "rgba(21, 35, 44, 08)",
-                bodyFontColor: "#999",
-                bodySpacing: 10,
-                titleFontFamily:
-                  "Inter-SemiBold, 'Helvetica', 'Arial', sans-serif",
-                bodyFontFamily:
-                  "Inter-SemiBold, 'Helvetica', 'Arial', sans-serif"
-              }
+              tooltips: { enabled: false }
             }}
             data={{
               labels: this.props.labels,

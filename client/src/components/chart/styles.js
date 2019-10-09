@@ -2,8 +2,7 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   grid-column: 1 / 3;
-  max-height: 584px;
-  height: 480px;
+  min-height: 480px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -13,6 +12,30 @@ export const Container = styled.div`
   background: ${props => props.theme.body.foreground};
   border: 1px solid ${props => props.theme.body.border};
   border-top: none;
+`;
+
+export const PriceHistory = styled.div`
+  background: ${props => props.theme.body.foreground};
+  height: 80px;
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  grid-column: 1 / 3;
+  margin-bottom: -20px;
+`;
+
+export const Value = styled.div`
+  font-size: 36px;
+  color: white;
+  font-family: "Inter-Bold";
+  text-align: center;
+  margin-top: 12px;
+`;
+
+export const Label = styled.div`
+  font-size: 16px;
+  color: #999;
+  text-align: center;
 `;
 
 export const Title = styled.div`

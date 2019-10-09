@@ -109,17 +109,12 @@ class Details extends Component {
           <Chart
             prices={prices}
             labels={labels}
+            price={price.toFixed(4)}
             onChangePriceRange={args => this.selectPriceHistory(args)}
           />
           <Row>
             <Statistic label="Amount" value={amount} />
-            <Statistic
-              label="Price"
-              value={price.toLocaleString("en-US", {
-                style: "currency",
-                currency: "USD"
-              })}
-            />
+            <Statistic label="Price" value={price.toFixed(4)} />
             <Statistic
               label="Value"
               value={value.toLocaleString("en-US", {
