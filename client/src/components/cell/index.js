@@ -17,7 +17,7 @@ const Cell = ({ tokenName, ticker, price, change, fullwidth }) => {
   return (
     <Container fullwidth={fullwidth} to={`/wallet/assets/${ticker}`}>
       <Column>
-        <Title>{ticker}</Title>
+        <Title left>{ticker}</Title>
         <Subtitle>{price}</Subtitle>
       </Column>
 
