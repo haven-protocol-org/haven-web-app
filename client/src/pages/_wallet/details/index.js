@@ -114,7 +114,7 @@ class Details extends Component {
           />
           <Row>
             <Statistic label="Amount" value={amount} />
-            <Statistic label="Price" value={price.toFixed(4)} />
+            <Statistic label="Price" value={`$` + price.toFixed(4)} />
             <Statistic
               label="Value"
               value={value.toLocaleString("en-US", {

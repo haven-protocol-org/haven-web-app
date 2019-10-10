@@ -22,11 +22,13 @@ export const PriceHistory = styled.div`
   flex-direction: column;
   grid-column: 1 / 3;
   margin-bottom: -20px;
+  box-shadow: inset -1px 0 0 0 ${props => props.theme.body.border};
+  box-shadow: inset 1px 0 0 0 ${props => props.theme.body.border};
 `;
 
 export const Value = styled.div`
   font-size: 36px;
-  color: white;
+  color: ${props => props.theme.type.primary};
   font-family: "Inter-Bold";
   text-align: center;
   margin-top: 12px;
@@ -34,14 +36,14 @@ export const Value = styled.div`
 
 export const Label = styled.div`
   font-size: 16px;
-  color: #999;
+  color: ${props => props.theme.type.secondary};
   text-align: center;
 `;
 
 export const Title = styled.div`
   font-size: 16px;
   font-family: "Inter-SemiBold";
-  color: white;
+  color: ${props => props.theme.type.primary};
 `;
 
 export const Placeholder = styled.div`

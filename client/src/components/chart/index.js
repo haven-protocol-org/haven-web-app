@@ -132,18 +132,17 @@ class Chart extends Component {
           <Title>Price History</Title>
           {dateRangeButtons}
         </Header>
-
+        <PriceHistory>
+          {isDevMode() ? (
+            <PriceHistory>
+              <Value>{this.state.hoveredValue}</Value>
+              <Label>{this.state.hoveredLabel}</Label>
+            </PriceHistory>
+          ) : (
+            <PriceHistory />
+          )}
+        </PriceHistory>
         <Container>
-          <PriceHistory>
-            {isDevMode() ? (
-              <PriceHistory>
-                <Value>{this.state.hoveredValue}</Value>
-                <Label>{this.state.hoveredLabel}</Label>
-              </PriceHistory>
-            ) : (
-              <PriceHistory />
-            )}
-          </PriceHistory>
           <Line
             ref={ref => (this.chartJs = ref)}
             options={{
