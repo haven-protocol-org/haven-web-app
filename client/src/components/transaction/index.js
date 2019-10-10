@@ -12,38 +12,46 @@ import {
   Row,
   Data
 } from "./styles";
-import {isDevMode} from "../../constants/env";
+import { isDevMode } from "../../constants/env";
 
-const Transaction = ({ type, date, tx, amount, block, price, status, lockedReason }) => {
+const Transaction = ({
+  type,
+  date,
+  tx,
+  amount,
+  block,
+  price,
+  status,
+  lockedReason
+}) => {
   const first = tx.substring(0, 4);
   const last = tx.substring(tx.length - 4);
   const truncated = first + "...." + last;
   const value = price * amount;
 
   console.log("PROPS", type);
-  console.log(lockedReason);
+  console.log("LR", lockedReason);
 
   return (
-
-
     <Container
       href={`https://explorer-test.havenprotocol.org/tx/${tx}`}
       target="_blank"
     >
-
       <State status={type}>
         <Status>{type}</Status>
       </State>
       <Column>
-        {isDevMode() ? lockedReason : ''}
-
         <Row>
           <Data>
             <Value alignment="left">{amount}</Value>
             <Label alignment="left">Amount</Label>
           </Data>
           <Data>
-            <Value alignment="center">{status}</Value>
+            <Value alignment="center">
+              {lockedReason === "Transaction is unlocked"
+                ? status
+                : `Pending ~6 min`}
+            </Value>
             <Label alignment="center">Status</Label>
           </Data>
           <Data>
@@ -51,7 +59,7 @@ const Transaction = ({ type, date, tx, amount, block, price, status, lockedReaso
             <Label alignment="right">Current Value</Label>
           </Data>
         </Row>
-        <Row margin>
+        <Row>
           <Data>
             <Value alignment="left">{block}</Value>
             <Label alignment="left">Block</Label>
