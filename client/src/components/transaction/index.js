@@ -12,7 +12,7 @@ import {
   Row,
   Data
 } from "./styles";
-import { isDevMode } from "../../constants/env";
+// import { isDevMode } from "../../constants/env";
 
 const Transaction = ({
   type,
@@ -29,8 +29,8 @@ const Transaction = ({
   const truncated = first + "...." + last;
   const value = price * amount;
 
-  console.log("PROPS", type);
-  console.log("LR", lockedReason);
+  // console.log("PROPS", type);
+  // console.log("LR", lockedReason);
 
   return (
     <Container
