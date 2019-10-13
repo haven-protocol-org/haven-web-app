@@ -9,6 +9,7 @@ import Body from "../../../components/_layout/body";
 import Menu from "../../../components/_layout/menu";
 import Header from "../../../components/_layout/header";
 import Input from "../../../components/_inputs/input";
+import InputButton from "../../../components/_inputs/input_button";
 import Form from "../../../components/_inputs/form";
 import Dropdown from "../../../components/_inputs/dropdown";
 import Footer from "../../../components/_inputs/footer";
@@ -123,6 +124,10 @@ class Transfer extends Component {
     this.setState({ checked: checked, validated: true });
   };
 
+  sendMax = () => {
+    alert("Send Max");
+  };
+
   render() {
     const {
       send_asset,
@@ -163,14 +168,17 @@ class Transfer extends Component {
                   options={options}
                   onClick={this.setSendAsset}
                 />
-                <Input
+                <InputButton
                   label="Amount"
                   placeholder="Enter amount"
+                  button="Max"
+                  onClick={this.sendMax}
                   type="number"
                   name="send_amount"
                   value={send_amount}
                   onChange={this.handleChange}
                 />
+
                 <Input
                   label="Recipient"
                   placeholder="Enter recipient address"
