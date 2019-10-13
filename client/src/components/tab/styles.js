@@ -20,10 +20,7 @@ export const Item = styled.div`
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  color: ${props =>
-    props.active
-      ? `${props.theme.type.primary}`
-      : `${props.theme.type.secondary}`};
+  color: ${props => (props.active ? "#fff" : `${props.theme.type.secondary}`)};
   background: ${props =>
     props.active
       ? `${props.theme.button.primary}`
