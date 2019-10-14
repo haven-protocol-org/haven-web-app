@@ -97,9 +97,11 @@ export const Item = styled(NavLink).attrs({
   border-bottom: 1px solid ${props => props.theme.body.border};
   text-decoration: none;
   font-size: 16px;
+  transition: 500ms;
 
   &:hover {
     color: ${props => props.theme.type.primary};
+    transition: 500ms;
   }
 
   &.${activeClassName} {
