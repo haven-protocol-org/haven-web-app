@@ -25,4 +25,13 @@ export const Item = styled.div`
     props.active
       ? `${props.theme.button.primary}`
       : `${props.theme.body.foreground}`};
+  transition: 500ms;
+
+  &:hover {
+    background: ${props =>
+      props.active
+        ? `${props.theme.button.primary_hover}`
+        : `${props.theme.body.foreground}`};
+  }
+  transition: 500ms;
 `;
