@@ -12,7 +12,7 @@ export const dark = {
     primary_hover: "#677bc4"
   },
   type: {
-    primary: "#ffffff",
+    primary: "#FAFAFA",
     secondary: "#8FA0B0"
   },
   input: {
