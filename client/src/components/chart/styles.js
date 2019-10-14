@@ -105,19 +105,19 @@ export const Button = styled.div`
   justify-content: center;
   font-size: 12px;
   border-left: 1px solid ${props => props.theme.body.border};
-  font-family: ${props => (props.active ? "Inter-SemiBold" : "Inter-Regular")}
+  font-family: "Inter-Regular";
   color: ${props =>
     props.active ? props.theme.type.primary : props.theme.type.secondary};
   background: ${props =>
-    props.active ? props.theme.body.background : props.theme.body.foreground};
- transition: 500ms;
+    props.active ? props.theme.button.primary : props.theme.body.foreground};
+  transition: 500ms;
 
- &:hover {
-   cursor: pointer;
-   background: ${props => props.theme.body.background};
-   transition: 500ms;
- }
-
+  &:hover {
+    cursor: pointer;
+    background: ${props => props.theme.button.primary_hover};
+    color: white;
+    transition: 500ms;
+  }
 `;
 
 export const Buttons = styled.div`
