@@ -37,7 +37,7 @@ export const light = {
   body: {
     navigation: "#26282C",
     background: "#F7F7FB",
-    foreground: "#F1F2F8",
+    foreground: "#F4F5F9",
     border: "#D9E2ED",
     active_menu: "#7289da"
   },
@@ -50,10 +50,10 @@ export const light = {
     secondary: "#697786"
   },
   input: {
-    input_border: "#E4EBF2",
-    input_border_focus: "#768696",
+    input_border: "#c6c7cf",
+    input_border_focus: "#b0b1b8",
     input_placeholder: "#9CAAB9",
-    input_background: "#F1F2F8",
+    input_background: "#E6E7EF",
     input_value: "#384451",
     input_select: "#5c5f63",
     input_foreground: "#d9dadf",

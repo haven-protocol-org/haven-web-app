@@ -22,8 +22,8 @@ export const PriceHistory = styled.div`
   flex-direction: column;
   grid-column: 1 / 3;
   margin-bottom: -20px;
-  box-shadow: inset -1px 0 0 0 ${props => props.theme.body.border};
-  box-shadow: inset 1px 0 0 0 ${props => props.theme.body.border};
+  box-shadow: inset -1px 0 0 0 ${props => props.theme.body.border},
+    inset 1px 0 0 0 ${props => props.theme.body.border};
 `;
 
 export const Value = styled.div`
@@ -106,8 +106,7 @@ export const Button = styled.div`
   font-size: 12px;
   border-left: 1px solid ${props => props.theme.body.border};
   font-family: "Inter-Regular";
-  color: ${props =>
-    props.active ? props.theme.type.primary : props.theme.type.secondary};
+  color: ${props => (props.active ? "#fff" : props.theme.type.secondary)};
   background: ${props =>
     props.active ? props.theme.button.primary : props.theme.body.foreground};
   transition: 500ms;
