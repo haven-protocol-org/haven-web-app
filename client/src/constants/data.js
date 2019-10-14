@@ -6,6 +6,12 @@ module.exports = [
     change: "~ 0.00"
   },
   {
+    token: "Bitcoin",
+    ticker: "xBTC",
+    price: "$1.00",
+    change: "~ 0.00"
+  },
+  {
     token: "New Zealand Dollar",
     ticker: "xNZD",
     price: "$1.00",
@@ -53,12 +59,7 @@ module.exports = [
     price: "$1.00",
     change: "~ 0.00"
   },
-  {
-    token: "Bitcoin",
-    ticker: "xBTC",
-    price: "$1.00",
-    change: "~ 0.00"
-  },
+
   {
     token: "Australian Dollar",
     ticker: "xAUD",
