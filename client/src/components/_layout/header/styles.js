@@ -24,7 +24,7 @@ export const Row = styled.div`
 export const Back = styled(Link)`
   font-family: Inter-Regular;
   font-size: 20px;
-  color: #8a8d90;
+  color: ${props => props.theme.type.secondary};
   letter-spacing: 0;
   line-height: 30px;
   margin-right: 12px;
