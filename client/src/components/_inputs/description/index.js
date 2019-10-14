@@ -5,14 +5,14 @@ import React from "react";
 import { Container, Field, Labels, Error } from "./styles";
 import { Label } from "../../../constants/type.js";
 
-const Description = ({ label, error, width, onClick, type, ...rest }) => {
+const Description = ({ label, error, width, onClick, ref, type, ...rest }) => {
   return (
     <Container width={width}>
       <Labels>
         <Label>{label}</Label>
         <Error>{error}</Error>
       </Labels>
-      <Field {...rest} />
+      <Field ref={ref} {...rest} />
     </Container>
   );
 };

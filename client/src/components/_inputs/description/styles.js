@@ -18,7 +18,7 @@ export const Container = styled.div`
 
 export const Field = styled.textarea.attrs({
   type: "password",
-  rows: "4"
+  rows: props => (props.rows ? props.rows : "4")
 })`
   display: flex;
   align-items: flex-start;

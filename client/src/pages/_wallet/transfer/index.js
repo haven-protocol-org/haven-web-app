@@ -9,6 +9,7 @@ import Body from "../../../components/_layout/body";
 import Menu from "../../../components/_layout/menu";
 import Header from "../../../components/_layout/header";
 import Input from "../../../components/_inputs/input";
+import Description from "../../../components/_inputs/description";
 import InputButton from "../../../components/_inputs/input_button";
 import Form from "../../../components/_inputs/form";
 import Dropdown from "../../../components/_inputs/dropdown";
@@ -37,11 +38,13 @@ class Transfer extends Component {
     firstTabState: true,
     secondTabState: false,
     checked: false,
-    copyButtonState: "Copy Address"
+    copyButtonState: "Copy Address",
+    address: ""
   };
 
   componentDidMount() {
     window.scrollTo(0, 0);
+    this.setState({ address: this.props.address });
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -104,6 +107,15 @@ class Transfer extends Component {
     });
   };
 
+  copyToClipboard = e => {
+    this.state.address.select(e);
+    document.execCommand("copy");
+    // This is just personal preference.
+    // I prefer to not show the the whole text area selected.
+    e.target.focus();
+    this.setState({ copySuccess: "Copied!" });
+  };
+
   copyAddressToClipBoard = () => {
     this.addressValue.select();
     document.execCommand("copy");
@@ -128,6 +140,19 @@ class Transfer extends Component {
     alert("Send Max");
   };
 
+  copyAddress = () => {
+    navigator.clipboard.writeText(this.state.address);
+    this.setState({
+      copyButtonState: "Copied Address"
+    });
+
+    setTimeout(() => {
+      this.setState({
+        copyButtonState: "Copy Address"
+      });
+    }, 1000);
+  };
+
   render() {
     const {
       send_asset,
@@ -139,6 +164,7 @@ class Transfer extends Component {
 
     const checkValidation =
       send_amount.length > 0 && recipient_address.length > 97;
+    const windowWidth = window.innerWidth;
 
     return (
       <Page>
@@ -178,15 +204,26 @@ class Transfer extends Component {
                   value={send_amount}
                   onChange={this.handleChange}
                 />
-
-                <Input
-                  label="Recipient"
-                  placeholder="Enter recipient address"
-                  width="true"
-                  name="recipient_address"
-                  value={recipient_address}
-                  onChange={this.handleChange}
-                />
+                {windowWidth < 1380 ? (
+                  <Description
+                    label="Recipient"
+                    placeholder="Enter recipient address"
+                    width="true"
+                    name="recipient_address"
+                    value={recipient_address}
+                    rows={windowWidth < 600 ? "3" : "2"}
+                    onChange={this.handleChange}
+                  />
+                ) : (
+                  <Input
+                    label="Recipient"
+                    placeholder="Enter recipient address"
+                    width="true"
+                    name="recipient_address"
+                    value={recipient_address}
+                    onChange={this.handleChange}
+                  />
+                )}
               </Form>
               <Container>
                 <Transaction
@@ -250,21 +287,33 @@ class Transfer extends Component {
                   options={options}
                   onClick={this.setSendAsset}
                 />
-
-                <Input
-                  ref={textarea => (this.addressValue = textarea)}
-                  label="Haven Address"
-                  placeholder="...load address"
-                  width="true"
-                  name="recipient_address"
-                  value={this.props.address}
-                  readOnly={true}
-                />
+                {windowWidth < 1380 ? (
+                  <Description
+                    label="Haven Address"
+                    placeholder="...load address"
+                    width="true"
+                    name="address"
+                    value={this.props.address}
+                    readOnly={true}
+                    rows={windowWidth < 600 ? "3" : "2"}
+                  />
+                ) : (
+                  <Input
+                    ref={textarea => (this.addressValue = textarea)}
+                    label="Haven Address"
+                    placeholder="...load address"
+                    width="true"
+                    name="address"
+                    value={this.props.address}
+                    readOnly={true}
+                  />
+                )}
               </Form>
               <Container>
                 <Footer
-                  onClick={this.copyAddressToClipBoard}
+                  // onClick={this.copyAddressToClipBoard}
                   label={this.state.copyButtonState}
+                  onClick={this.copyAddress}
                 />
               </Container>
             </>
