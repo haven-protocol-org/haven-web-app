@@ -13,7 +13,7 @@ export const dark = {
   },
   type: {
     primary: "#ffffff",
-    secondary: "#8a8d90"
+    secondary: "#8FA0B0"
   },
   input: {
     input_border: "#4a4d52",
@@ -35,7 +35,7 @@ export const dark = {
 export const light = {
   value: "Light Theme",
   body: {
-    navigation: "red",
+    navigation: "#26282C",
     background: "#F7F7FB",
     foreground: "#F1F2F8",
     border: "#D9E2ED",
@@ -47,7 +47,7 @@ export const light = {
   },
   type: {
     primary: "#384451",
-    secondary: "#9a9a9a"
+    secondary: "#697786"
   },
   input: {
     input_border: "#E4EBF2",

@@ -22,19 +22,19 @@ export const Field = styled.textarea.attrs({
 })`
   display: flex;
   align-items: flex-start;
-  justify-content: flex-end;
-  background: #2b2e32;
   border: 1px solid #4a4d52;
   border-radius: 4px;
   padding: 16px;
   font-family: Inter-Regular;
   font-size: 16px;
-  color: #ffffff;
   line-height: 26px;
   resize: none;
   outline: none;
   transition: 500ms;
   -webkit-appearance: none;
+  background: ${props => props.theme.input.input_background};
+  border: 1px solid ${props => props.theme.input.input_border};
+  color: ${props => props.theme.input.input_value};
 
   &:focus {
     border: 1px solid #5c5f63;

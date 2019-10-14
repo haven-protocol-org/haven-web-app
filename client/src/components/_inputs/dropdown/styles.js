@@ -87,7 +87,7 @@ export const Row = styled.div`
 `;
 
 export const Ticker = styled.div`
-  color: ${props => props.theme.input.input_placeholder};
+  color: ${props => props.theme.type.secondary};
   margin-left: 12px;
 `;
 
