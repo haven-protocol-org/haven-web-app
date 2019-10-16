@@ -16,10 +16,10 @@ export const Container = styled.div`
   grid-column: ${props => (props.width ? "1 / 3" : null)};
 `;
 
-export const Field = styled.textarea.attrs({
+export const Field = styled.textarea.attrs(props => ({
   type: "password",
-  rows: props => (props.rows ? props.rows : "4")
-})`
+  rows: props.rows ? props.rows : "4"
+}))`
   display: flex;
   align-items: flex-start;
   border: 1px solid #4a4d52;

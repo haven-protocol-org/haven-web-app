@@ -67,10 +67,6 @@ class Settings extends Component {
     const first = seed.substring(0, 32);
     const last = seed.substring(seed.length - 32);
     const truncated = first + last;
-    console.log("SEED", seed);
-    console.log("first", first);
-    console.log("last", last);
-    console.log("Trunc", truncated);
 
     return (
       <Page>
