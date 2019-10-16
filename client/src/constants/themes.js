@@ -13,7 +13,7 @@ export const dark = {
   },
   type: {
     primary: "#FAFAFA",
-    secondary: "#8FA0B0"
+    secondary: "#ffffff"
   },
   input: {
     input_border: "#4a4d52",
