@@ -1,6 +1,6 @@
 {
   "name": "haven_web_wallet",
-  "version": "1.2.10",
+  "version": "1.4.0",
   "private": true,
   "dependencies": {
     "@sentry/browser": "^5.5.0",
@@ -24,6 +24,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "start:mainnet": "sh -ac '. .env.production;react-scripts start'",
     "build:test": "sh -ac '. .env.test; npm version patch; react-scripts build'",
     "build:production": "sh -ac '. .env.production; npm version minor; react-scripts build'",
     "test": "react-scripts test",
