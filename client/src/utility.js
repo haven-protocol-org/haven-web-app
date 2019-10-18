@@ -1,6 +1,7 @@
 import { NO_BALANCE } from "./reducers/balance";
 import { notificationList} from "./constants/notificationList";
 import {NO_PRICE} from "./reducers/priceHistory";
+import {core, lWallet} from "./declarations/open_monero.service";
 
 export const convertTimestampToDateString = timestamp =>
   new Date(timestamp).toLocaleDateString();
@@ -41,6 +42,13 @@ export const getMessageOfError = (error) => {
 
   const errorNotification = notificationList.find( notification => notification.code === error.code );
   return errorNotification? errorNotification.message : error.message;
+
+};
+
+export const estimateFee = () => {
+
+  const fee = lWallet.estimated_tx_network_fee(null, 1, "24658");
+  return fee;
 
 };
 
