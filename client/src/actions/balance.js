@@ -60,7 +60,3 @@ export const getBalancesSucceed = result => ({
   type: GET_BALANCES_SUCCEED,
   payload: result
 });
-// const getBalancesFailed = error => ({
-//   type: GET_BALANCES_FAILED,
-//   payload: error
-// });
