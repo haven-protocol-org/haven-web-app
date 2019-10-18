@@ -20,7 +20,7 @@ export const closeWallet = () => {
 export const refresh = () => {
 
     return dispatch => {
-        dispatch(getBalances());
+        // dispatch(getBalances());
         dispatch(getTransfers());
     }
 };

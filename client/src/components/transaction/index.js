@@ -22,15 +22,24 @@ const Transaction = ({
   block,
   price,
   status,
-  lockedReason
+    mempool,
+  bHeight
 }) => {
   const first = tx.substring(0, 4);
   const last = tx.substring(tx.length - 4);
   const truncated = first + "...." + last;
   const value = price * amount;
 
-  // console.log("PROPS", type);
-  // console.log("LR", lockedReason);
+
+  let statusDetails = "Completed";
+
+  if (status === "pending") {
+    statusDetails = `Pending ~${(block + 10 - bHeight) * 2} min`
+  }
+
+  if (mempool) {
+    statusDetails = "Not confirmed yet";
+  }
 
   return (
     <Container
@@ -48,9 +57,7 @@ const Transaction = ({
           </Data>
           <Data>
             <Value alignment="center">
-              {lockedReason === "Transaction is unlocked"
-                ? status
-                : `Pending ~6 min`}
+              {statusDetails}
             </Value>
             <Label alignment="center">Status</Label>
           </Data>

@@ -55,7 +55,8 @@ const parseAddressInfo = (rawAddressInfo, state) => {
 };
 
 const getBalancesFetching = () => ({ type: GET_BALANCES_FETCHING });
-const getBalancesSucceed = result => ({
+
+export const getBalancesSucceed = result => ({
   type: GET_BALANCES_SUCCEED,
   payload: result
 });

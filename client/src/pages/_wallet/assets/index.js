@@ -1,7 +1,7 @@
 // Library Imports
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getBalances, getSimplePrice } from "../../../actions";
+import { getSimplePrice } from "../../../actions";
 
 // Relative Imports
 import Page from "../../../components/_layout/page";
@@ -96,5 +96,5 @@ export const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getBalances, getSimplePrice }
+  {getSimplePrice }
 )(Assets);

@@ -64,24 +64,13 @@ class Details extends Component {
   }
 
   getTransactionStatus(tx) {
-    if (
-      core.monero_txParsing_utils.IsTransactionUnlocked(
-        tx,
-        this.props.height
-      ) ||
-      core.monero_txParsing_utils.IsTransactionConfirmed(tx, this.props.height)
-    ) {
-      return "completed";
-    } else {
-      return "pending";
-    }
-  }
 
-  getLockedReason(tx) {
-    return core.monero_txParsing_utils.TransactionLockedReason(
-      tx,
-      this.props.height
-    );
+    if (tx.mempool || tx.height > this.props.height - core.monero_config.txMinConfirms)
+    {
+      return "pending";
+    } else {
+      return "completed";
+    }
   }
 
   render() {
@@ -140,15 +129,16 @@ class Details extends Component {
                   return (
                     <Transaction
                       key={index}
+                      bHeight={this.props.height}
                       type={this.getTransactionType(transaction)}
                       status={this.getTransactionStatus(transaction)}
-                      lockedReason={this.getLockedReason(transaction)}
                       price={price}
                       block={transaction.height}
                       date={new Date(
                         transaction.timestamp
                       ).toLocaleDateString()}
                       tx={transaction.hash}
+                      memPool={transaction.mempool}
                       amount={convertBalanceForReading(
                         Math.abs(transaction.amount)
                       )}

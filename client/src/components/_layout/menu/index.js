@@ -12,17 +12,12 @@ import {
   Amount
 } from "./styles";
 import { connect } from "react-redux";
-import { getBalances } from "../../../actions";
 import { NO_BALANCE } from "../../../reducers/balance";
 import { convertBalanceForReading } from "../../../utility";
 import { Spinner } from "../../spinner";
 
 class Menu extends Component {
-  componentDidMount() {
-    if (this.props.balance === NO_BALANCE) {
-      this.props.getBalances();
-    }
-  }
+
 
   render() {
     const { unlockedBalance, lockedBalance } = this.props;
@@ -64,5 +59,5 @@ export const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getBalances }
+  null
 )(Menu);

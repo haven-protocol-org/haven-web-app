@@ -19,6 +19,8 @@ import Tab from "../../../components/tab";
 
 import { Container } from "./styles";
 import { isDevMode } from "../../../constants/env";
+import {convertBalanceForReading, estimateFee} from "../../../utility";
+import {core} from "../../../declarations/open_monero.service";
 
 const options = [{ asset: "Haven", ticker: "XHV" }];
 
@@ -79,6 +81,7 @@ class Transfer extends Component {
     });
   };
 
+
   handleSubmit = () => {
     const { send_amount, recipient_address } = this.state;
     if (send_amount.length === 0 && recipient_address.length === 0) {
@@ -137,7 +140,25 @@ class Transfer extends Component {
   };
 
   sendMax = () => {
-    alert("Send Max");
+
+    const unlockedBalance = this.props.unlockedBalance;
+    const fee = core.JSBigInt(estimateFee());
+
+    let availableBalance = unlockedBalance.subtract(fee);
+
+
+    if (availableBalance < 0){
+      availableBalance = core.JSBigInt("0");
+    }
+
+    console.log(fee.toString());
+    console.log(unlockedBalance.toString());
+    console.log(availableBalance.toString());
+
+
+    availableBalance = convertBalanceForReading(availableBalance);
+    this.setState({send_amount: availableBalance.toString()});
+
   };
 
   copyAddress = () => {
@@ -194,7 +215,8 @@ class Transfer extends Component {
                   options={options}
                   onClick={this.setSendAsset}
                 />
-                <InputButton
+                {isDevMode()?
+                    (<InputButton
                   label="Amount"
                   placeholder="Enter amount"
                   button="Max"
@@ -203,7 +225,8 @@ class Transfer extends Component {
                   name="send_amount"
                   value={send_amount}
                   onChange={this.handleChange}
-                />
+                />):""
+                }
                 {windowWidth < 1380 ? (
                   <Description
                     label="Recipient"
@@ -326,7 +349,8 @@ class Transfer extends Component {
 
 export const mapStateToProps = state => ({
   address: state.address.main,
-  tx: state.txProcess
+  tx: state.txProcess,
+  unlockedBalance: state.balance.unlockedBalance
 });
 
 export default connect(
