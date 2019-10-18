@@ -21,7 +21,9 @@ import {refresh} from "../../actions";
  */
 class PrivateRoutes extends Component {
   componentDidMount() {
-      refresh();
+
+
+      this.props.refresh();
     this.timer = setInterval(this.props.refresh, 15000);
   }
 

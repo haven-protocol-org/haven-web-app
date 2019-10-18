@@ -15,12 +15,16 @@ import { connect } from "react-redux";
 import { NO_BALANCE } from "../../../reducers/balance";
 import { convertBalanceForReading } from "../../../utility";
 import { Spinner } from "../../spinner";
+import {SyncBar} from "../../sync-bar";
+import {selectSyncState} from "../../../reducers/chain";
+import {isDevMode} from "../../../constants/env";
 
 class Menu extends Component {
 
 
   render() {
-    const { unlockedBalance, lockedBalance } = this.props;
+    const { unlockedBalance, lockedBalance, isSyncing, bHeight, scannedHeight } = this.props;
+
 
     return (
       <Container>
@@ -42,7 +46,12 @@ class Menu extends Component {
                   Your balances will be updated shortly.
                 </Pending>
               </div>
+
             ) : null}
+              { isDevMode()? ( <SyncBar bHeight={bHeight} scannedHeight={scannedHeight}/>) :null
+
+              }
+
           </Wrapper>
         </Overview>
         <Item to="/wallet/assets">Assets</Item>
@@ -54,7 +63,7 @@ class Menu extends Component {
 }
 
 export const mapStateToProps = state => ({
-  ...state.balance
+  ...state.balance, ...selectSyncState(state)
 });
 
 export default connect(
