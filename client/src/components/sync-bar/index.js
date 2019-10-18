@@ -1,41 +1,17 @@
 import { RotateDiv } from "./styles";
 import React from "react";
+import { Progress, Container } from "./styles";
 
-export const SyncBar = ({ bHeight, scannedHeight, barWidth = 100, barHeight = 10 }) => {
-
-
-  scannedHeight = 50;
-  bHeight = 100;
-
-
-
-  const progressWidth = parseInt((scannedHeight / bHeight ) * barWidth);
-
-
-  const outerdiv = {
-
-    height:barHeight + 'px',
-    backgroundColor: 'yellow',
-    width: barWidth + 'px'
-  };
-
-
-  const innerdiv = {
-    height:barHeight + 'px',
-    backgroundColor: 'red',
-    width:progressWidth + 'px'
-  };
-
-
-
+export const SyncBar = ({ max, value }) => {
   return (
-      <div>
-      <div style={outerdiv}>
-        <div style={innerdiv}>
-
-        </div>
-      </div>
-        {scannedHeight} / {bHeight}
-      </div>
+    <Container>
+      <Progress
+        style={{ background: "#fff", appearance: "none" }}
+        max={max}
+        value={value}
+      />
+    </Container>
   );
 };
+
+export default SyncBar;
