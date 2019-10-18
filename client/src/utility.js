@@ -1,6 +1,6 @@
 import { NO_BALANCE } from "./reducers/balance";
-import { notificationList} from "./constants/notificationList";
-import {NO_PRICE} from "./reducers/priceHistory";
+import { notificationList } from "./constants/notificationList";
+import { NO_PRICE } from "./reducers/priceHistory";
 
 export const convertTimestampToDateString = timestamp =>
   new Date(timestamp).toLocaleDateString();
@@ -37,20 +37,17 @@ export const uuidv4 = () => {
   );
 };
 
-export const getMessageOfError = (error) => {
-
-  const errorNotification = notificationList.find( notification => notification.code === error.code );
-  return errorNotification? errorNotification.message : error.message;
-
+export const getMessageOfError = error => {
+  const errorNotification = notificationList.find(
+    notification => notification.code === error.code
+  );
+  return errorNotification ? errorNotification.message : error.message;
 };
 
-
 export const calcValue = (amount, price) => {
-
-  if (amount === NO_BALANCE || price === NO_PRICE ) {
-    return '--';
-  }
-  else {
+  if (amount === NO_BALANCE || price === NO_PRICE) {
+    return "--";
+  } else {
     return (amount * price).toLocaleString("en-US", {
       style: "currency",
       currency: "USD"
@@ -58,18 +55,14 @@ export const calcValue = (amount, price) => {
   }
 };
 
-export const getPriceDates = (prices) =>  {
-  return prices.map(priceItem =>
-      convertTimestampToDateString(priceItem[0])
-  );
+export const getPriceDates = prices => {
+  return prices.map(priceItem => convertTimestampToDateString(priceItem[0]));
 };
 
-export const getPriceValues = (prices) => {
+export const getPriceValues = prices => {
   return prices.map(priceItem => priceItem[1]);
 };
 
-
-
-export const logM =  (message) => {
+export const logM = message => {
   console.log(message);
 };
