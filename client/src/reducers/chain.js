@@ -21,7 +21,7 @@ export const selectBlockchainHeight = state => {
 
 export const selectSyncState = (state) => {
 
-  const isSyncing =  state.chain.blockchain_height > state.chain.scanned_block_Height + 5;
+  const isSyncing =  state.chain.blockchain_height > state.chain.scanned_block_height + 5;
   const bHeight = state.chain.blockchain_height;
   const scannedHeight = state.chain.scanned_block_height;
 

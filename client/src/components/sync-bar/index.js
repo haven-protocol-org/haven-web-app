@@ -3,6 +3,12 @@ import React from "react";
 
 export const SyncBar = ({ bHeight, scannedHeight, barWidth = 100, barHeight = 10 }) => {
 
+
+  scannedHeight = 50;
+  bHeight = 100;
+
+
+
   const progressWidth = parseInt((scannedHeight / bHeight ) * barWidth);
 
 
