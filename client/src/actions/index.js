@@ -15,11 +15,11 @@ export const addPubAddress = address => ({
 export const updateChainData = ({
   start_height,
   scanned_block_height,
-  blockchain_height
+  blockchain_height,scanned_block_timestamp
 }) => {
   return {
     type: UPDATE_CHAIN_DATA,
-    payload: { start_height, scanned_block_height, blockchain_height }
+    payload: { start_height, scanned_block_height, blockchain_height, scanned_block_timestamp }
   };
 };
 

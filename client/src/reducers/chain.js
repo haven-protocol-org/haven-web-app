@@ -4,6 +4,7 @@ const INITIAL_STATE = {
   start_height: -1,
   scanned_block_Height: -1,
   blockchain_height: -1,
+  scanned_block_timestamp: -1
 };
 
 export const chain = (state = INITIAL_STATE, action) => {
@@ -24,8 +25,9 @@ export const selectSyncState = (state) => {
   const isSyncing =  state.chain.blockchain_height > state.chain.scanned_block_height + 5;
   const bHeight = state.chain.blockchain_height;
   const scannedHeight = state.chain.scanned_block_height;
+  const scannedDate = new Date(state.chain.scanned_block_timestamp * 1000);
 
-  return {isSyncing, bHeight, scannedHeight}
+  return {isSyncing, bHeight, scannedHeight, scannedDate}
 
 
 };
