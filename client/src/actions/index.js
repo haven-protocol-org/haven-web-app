@@ -7,6 +7,7 @@ export * from "./key";
 export * from "./theme";
 export * from "./transferHistory";
 export * from "./sendFunds";
+export * from "./forex";
 
 export const addPubAddress = address => ({
   type: ADD_PUB_ADDRESS,

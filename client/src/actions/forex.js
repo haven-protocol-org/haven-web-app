@@ -1,4 +1,4 @@
-
+import {GET_FOREX_FAILED, GET_FOREX_FETCHING, GET_FOREX_SUCCEED} from "./types";
 
 
 export const getForex = () => {
@@ -18,8 +18,8 @@ export const getForex = () => {
     };
 };
 
-const getForexFetching = () => {};
+const getForexFetching = () => ({type: GET_FOREX_FETCHING});
 
-const getForexSucceed = () => {};
+const getForexSucceed = (res) => ({type: GET_FOREX_SUCCEED, payload:res});
 
-const getForexFailed = () => {};
+const getForexFailed = (error) => ({type: GET_FOREX_FAILED, payload: error});
