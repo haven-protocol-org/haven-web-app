@@ -12,7 +12,7 @@ import { core, lWallet } from "../declarations/open_monero.service";
 import { NET_TYPE_ID } from "../constants/env";
 import { addNotificationByKey } from "./notification";
 
-export const sendFunds = (toAddress, amount) => {
+export const sendFunds = (toAddress, amount, paymentId = "") => {
   const parsedAmount = core.monero_amount_format_utils.parseMoney(amount);
 
   return (dispatch, getState) => {
@@ -35,7 +35,7 @@ export const sendFunds = (toAddress, amount) => {
     sendFundsArgs.priority = 1;
     sendFundsArgs.is_sweeping = false;
     sendFundsArgs.nettype = NET_TYPE_ID;
-    sendFundsArgs.payment_id_string = "";
+    sendFundsArgs.payment_id_string = paymentId;
 
     sendFundsArgs.sending_amount = parsedAmount.toString();
 

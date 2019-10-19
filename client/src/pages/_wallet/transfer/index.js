@@ -89,7 +89,7 @@ class Transfer extends Component {
     } else if (send_amount.length > 0 && recipient_address.length > 0) {
       this.props.sendFunds(
         this.state.recipient_address,
-        this.state.send_amount
+        this.state.send_amount, this.state.payment_id
       );
     }
 
