@@ -189,7 +189,7 @@ class Transfer extends Component {
                   onClick={this.setSendAsset}
                 />
                 {isDevMode() ? (
-                  <InputButton
+                  <Input
                     label="Amount"
                     placeholder="Enter amount"
                     button="Max"
