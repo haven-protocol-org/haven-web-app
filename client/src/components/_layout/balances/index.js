@@ -3,15 +3,12 @@ import React, { Component } from "react";
 
 // Relative Imports
 import { Pending, Value, Wrapper, Amount } from "./styles";
-
 import { connect } from "react-redux";
 import { NO_BALANCE } from "../../../reducers/balance";
 import { convertBalanceForReading } from "../../../utility";
-import { Spinner } from "../../spinner";
-
-import { ProgressBar } from "../../progress-bar";
-
 import { selectSyncState } from "../../../reducers/chain";
+import { Spinner } from "../../spinner";
+import { ProgressBar } from "../../progress-bar";
 
 class Balances extends Component {
   render() {
@@ -21,8 +18,10 @@ class Balances extends Component {
       isSyncing,
       bHeight,
       scannedHeight
-      // scannedDate
     } = this.props;
+
+    const amount = (scannedHeight / bHeight) * 100;
+    const percentage = amount.toFixed(2);
 
     return (
       <Wrapper>
@@ -33,8 +32,10 @@ class Balances extends Component {
             convertBalanceForReading(unlockedBalance)
           )}
         </Amount>
-        <Value>{isSyncing ? "Syncing Wallet..." : "XHV Balance"}</Value>
-        {isSyncing && <ProgressBar max={bHeight} value={scannedHeight} />}
+        <Value>
+          {isSyncing ? `Syncing Wallet... ${percentage}%` : "XHV Balance"}
+        </Value>
+        {isSyncing && <ProgressBar percentage={percentage} />}
         {lockedBalance > 0 ? (
           <Pending>
             You have {convertBalanceForReading(lockedBalance)} XHV pending
