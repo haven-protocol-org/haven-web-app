@@ -16,11 +16,29 @@ import {
 import b1 from "../../../assets/blog/b_v1.svg";
 import b2 from "../../../assets/blog/b_v2.svg";
 import b3 from "../../../assets/blog/b_v3.svg";
+import b4 from "../../../assets/blog/b_v4.svg";
 
 const Content = () => {
   return (
     <Wrapper>
       <Container>
+        <Cell>
+          <Aspect>
+            <Image src={b4} />
+          </Aspect>
+          <Title>Update - Oct 2019</Title>
+          <Description>
+            It’s been nine months since the Haven community took over the
+            project’s development...
+          </Description>
+          <Route
+            rel="noopener"
+            target="_blank"
+            href="https://medium.com/@havencurrency/haven-offshore-testnet-update-october-2019-49057d6329de"
+          >
+            Read More
+          </Route>
+        </Cell>
         <Cell>
           <Aspect>
             <Image src={b1} />

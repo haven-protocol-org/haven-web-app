@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="640px" height="360px" viewBox="0 0 640 360" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 59 (86127) - https://sketch.com -->
+    <title>b_v4</title>
+    <desc>Created with Sketch.</desc>
+    <g id="b_v4" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="layers">
+            <g id="background" fill="#26292F">
+                <rect id="Rectangle" x="0" y="0" width="640" height="360"></rect>
+            </g>
+            <g id="icon" transform="translate(396.000000, 79.500000)"></g>
+        </g>
+        <g id="Group" transform="translate(484.000000, 180.500000) rotate(90.000000) translate(-484.000000, -180.500000) translate(290.000000, 6.000000)" stroke="#FF7A7A" stroke-width="1.2">
+            <g id="Group-2" opacity="0.25" stroke-dasharray="3.6,4.8">
+                <path d="M0,348.8 L193.8,80 L387.6,348.8" id="Path"></path>
+                <path d="M0,268.8 L193.8,0 L387.6,268.8" id="Path"></path>
+                <path d="M0,348.8 L193.8,80 L387.6,348.8" id="Path" transform="translate(193.800000, 214.400000) scale(-1, -1) translate(-193.800000, -214.400000) "></path>
+            </g>
+            <g id="Group-2" transform="translate(0.000000, 38.000000)">
+                <polyline id="Path" points="0 268.8 193.8 0 387.6 268.8"></polyline>
+                <polyline id="Path" transform="translate(193.800000, 134.400000) scale(-1, -1) translate(-193.800000, -134.400000) " points="0 268.8 193.8 0 387.6 268.8"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>
