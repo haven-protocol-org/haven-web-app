@@ -4,70 +4,70 @@ module.exports = [
     ticker: "USD",
     price: "$1.00",
     change: "~ 0.00",
-    symbol:"$"
+    symbol: "$"
   },
   {
     token: "Bitcoin",
     ticker: "BTC",
     price: "$1.00",
     change: "~ 0.00",
-    symbol:""
+    symbol: ""
   },
   {
     token: "New Zealand Dollar",
     ticker: "NZD",
     price: "$1.00",
     change: "~ 0.00",
-    symbol:"$"
+    symbol: "$"
   },
   {
     token: "Norwegian Krone",
     ticker: "NOK",
     price: "$1.00",
     change: "~ 0.00",
-    symbol:"kr"
+    symbol: "kr"
   },
   {
     token: "Japanese Yen",
     ticker: "JPY",
     price: "$1.00",
     change: "~ 0.00",
-    symbol:"¥"
+    symbol: "¥"
   },
   {
     token: "British Pound",
     ticker: "GBP",
     price: "$1.00",
     change: "~ 0.00",
-    symbol:"£"
+    symbol: "£"
   },
   {
     token: "Euro",
     ticker: "EUR",
     price: "$1.00",
     change: "~ 0.00",
-    symbol:"€"
+    symbol: "€"
   },
   {
     token: "Chinese Yuan",
     ticker: "CNY",
     price: "$1.00",
     change: "~ 0.00",
-    symbol:"¥"
+    symbol: "¥"
   },
   {
     token: "Swiss Franc",
     ticker: "CHF",
     price: "$1.00",
     change: "~ 0.00",
-    symbol:"₣"
+    symbol: "₣"
   },
   {
     token: "Canadian Dollar",
-    ticker: "CAN",
+    ticker: "CAD",
     price: "$1.00",
     change: "~ 0.00",
-    symbol:"$"
+    symbol: "$"
   },
 
   {
@@ -75,6 +75,6 @@ module.exports = [
     ticker: "AUD",
     price: "$1.00",
     change: "~ 0.00",
-    symbol:"$"
+    symbol: "$"
   }
 ];

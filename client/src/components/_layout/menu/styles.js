@@ -73,7 +73,6 @@ export const Overview = styled.div`
   height: 240px;
   width: 100%;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   border-bottom: 1px solid ${props => props.theme.body.border};

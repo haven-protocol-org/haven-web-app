@@ -1,14 +1,14 @@
 // Library Imports
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {getForex, getSimplePrice} from "../../../actions";
+import { getForex, getSimplePrice } from "../../../actions";
 
 // Relative Imports
 import Page from "../../../components/_layout/page";
 import Body from "../../../components/_layout/body";
 import Menu from "../../../components/_layout/menu";
 import Header from "../../../components/_layout/header";
-import Overview from "../../../components/overview";
+import Overview from "../../../components/_layout/overview";
 import Cell from "../../../components/cell";
 import CellDisabled from "../../../components/cell_disabled";
 
@@ -32,14 +32,11 @@ class Assets extends Component {
     }
   }
 
-
-
   handleState = () => {
     this.setState(state => ({
       status: !state.status
     }));
   };
-
 
   renderTokens = () => {
     const { token } = this.state;
@@ -52,13 +49,12 @@ class Assets extends Component {
       let price = rates[ticker] ? rates[ticker] : 0;
       price = symbol + price.toFixed(2);
 
-
       return (
         <CellDisabled
           fullwidth="fullwidth"
           key={token}
           tokenName={token}
-          ticker={'x'+ticker}
+          ticker={"x" + ticker}
           price={price}
           change={change}
         />
@@ -76,11 +72,12 @@ class Assets extends Component {
       <Page>
         <Menu />
         <Body>
+          <Overview />
           <Header
             title="Available Assets"
             description="Overview of all available Haven Assets"
           />
-          <Overview {...this.props.balance} />
+
           <Cell
             fullwidth="fullwidth"
             key={1}
@@ -89,7 +86,6 @@ class Assets extends Component {
             price={price}
             change={value}
           />
-
           <Header
             title="Coming Soon"
             description="Overview of Haven Assets coming soon"
@@ -105,7 +101,7 @@ export const mapStateToProps = state => ({
   balance: state.balance,
   readableBalance: selectReadableBalance(state),
   ...state.simplePrice,
-      ...state.forex
+  ...state.forex
 });
 
 export default connect(

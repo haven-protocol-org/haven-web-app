@@ -2,62 +2,16 @@
 import React, { Component } from "react";
 
 // Relative Imports
-import {
-  Container,
-  Overview,
-  Pending,
-  Item,
-  Value,
-  Wrapper,
-  Amount
-} from "./styles";
+import { Container, Overview, Item } from "./styles";
 
-import { connect } from "react-redux";
-import { NO_BALANCE } from "../../../reducers/balance";
-import { convertBalanceForReading } from "../../../utility";
-import { Spinner } from "../../spinner";
-
-import { ProgressBar } from "../../progress-bar";
-
-import { selectSyncState } from "../../../reducers/chain";
-import { isDevMode } from "../../../constants/env";
+import Balances from "../balances/index.js";
 
 class Menu extends Component {
   render() {
-    const {
-      unlockedBalance,
-      lockedBalance,
-      isSyncing,
-      bHeight,
-      scannedHeight, scannedDate
-    } = this.props;
-
-    // These are temporary props to mock the progress bar
-    // const tempHeight = 552251; // Prop for missing bHeight prop
-    // const tempSync = true; // If syncing then show the progress bar
-    // const tempLockedBalance = 3; // If there's a locked balance
-
     return (
       <Container>
         <Overview>
-          <Wrapper>
-            <Amount>
-              {unlockedBalance === NO_BALANCE ? (
-                <Spinner />
-              ) : (
-                convertBalanceForReading(unlockedBalance)
-              )}
-            </Amount>
-            <Value>{isSyncing ? "Syncing Wallet" : "XHV Balance"}</Value>
-            {isSyncing && <ProgressBar max={bHeight} value={scannedHeight} />}
-            {lockedBalance > 0 ? (
-              <Pending>
-                You have {convertBalanceForReading(lockedBalance)} XHV pending
-                <br />
-                Balances are updating.
-              </Pending>
-            ) : null}
-          </Wrapper>
+          <Balances />
         </Overview>
         <Item to="/wallet/assets">Assets</Item>
         <Item to="/wallet/transfer">Transfer</Item>
@@ -67,12 +21,4 @@ class Menu extends Component {
   }
 }
 
-export const mapStateToProps = state => ({
-  ...state.balance,
-  ...selectSyncState(state)
-});
-
-export default connect(
-  mapStateToProps,
-  null
-)(Menu);
+export default Menu;

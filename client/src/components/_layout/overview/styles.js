@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import media from "../../constants/media.js";
+import media from "../../../constants/media.js";
 
 export const Container = styled.div`
   height: auto;
