@@ -12,7 +12,7 @@ import {
   Row,
   Data
 } from "./styles";
-import {isMainnet, NET_TYPE_ID} from "../../constants/env";
+import { isMainnet } from "../../constants/env";
 // import { isDevMode } from "../../constants/env";
 
 const Transaction = ({
@@ -23,7 +23,7 @@ const Transaction = ({
   block,
   price,
   status,
-    mempool,
+  mempool,
   bHeight
 }) => {
   const first = tx.substring(0, 4);
@@ -31,24 +31,22 @@ const Transaction = ({
   const truncated = first + "...." + last;
   const value = price * amount;
 
-
   let statusDetails = "Completed";
 
   if (status === "pending") {
-    statusDetails = `Pending ~${(block + 10 - bHeight) * 2} min`
+    statusDetails = `Pending ~${(block + 10 - bHeight) * 2} min`;
   }
 
   if (mempool) {
     statusDetails = "Not confirmed yet";
   }
 
-  const txExplorerLink = `https://explorer${isMainnet()?'': '-test'}.havenprotocol.org/tx/${tx}`;
+  const txExplorerLink = `https://explorer${
+    isMainnet() ? "" : "-test"
+  }.havenprotocol.org/tx/${tx}`;
 
   return (
-    <Container
-      href={txExplorerLink}
-      target="_blank"
-    >
+    <Container href={txExplorerLink} target="_blank">
       <State status={type}>
         <Status>{type}</Status>
       </State>
@@ -59,9 +57,7 @@ const Transaction = ({
             <Label alignment="left">Amount</Label>
           </Data>
           <Data>
-            <Value alignment="center">
-              {statusDetails}
-            </Value>
+            <Value alignment="center">{statusDetails}</Value>
             <Label alignment="center">Status</Label>
           </Data>
           <Data>

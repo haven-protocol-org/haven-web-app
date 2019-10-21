@@ -1,4 +1,3 @@
-import { RotateDiv } from "./styles";
 import React from "react";
 import { Container, Progress } from "./styles";
 

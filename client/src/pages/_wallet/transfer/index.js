@@ -10,7 +10,7 @@ import Menu from "../../../components/_layout/menu";
 import Header from "../../../components/_layout/header";
 import Input from "../../../components/_inputs/input";
 import Description from "../../../components/_inputs/description";
-import InputButton from "../../../components/_inputs/input_button";
+// import InputButton from "../../../components/_inputs/input_button";
 import Form from "../../../components/_inputs/form";
 import Dropdown from "../../../components/_inputs/dropdown";
 import Footer from "../../../components/_inputs/footer";
@@ -89,7 +89,8 @@ class Transfer extends Component {
     } else if (send_amount.length > 0 && recipient_address.length > 0) {
       this.props.sendFunds(
         this.state.recipient_address,
-        this.state.send_amount, this.state.payment_id
+        this.state.send_amount,
+        this.state.payment_id
       );
     }
 
