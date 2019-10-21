@@ -1,83 +1,68 @@
-
-import React, { Component } from "react";
-import {connect} from "react-redux";
-import {closeWallet} from "../../actions";
-
+import { Component } from "react";
+import { connect } from "react-redux";
+import { closeWallet } from "../../actions";
 
 const ACTIVITY_EVENTS = [
-    'mousemove',
-    'keydown',
-    'wheel',
-    'DOMMouseScroll',
-    'mouseWheel',
-    'mousedown',
-    'touchstart',
-    'touchmove',
-    'MSPointerDown',
-    'MSPointerMove'
+  "mousemove",
+  "keydown",
+  "wheel",
+  "DOMMouseScroll",
+  "mouseWheel",
+  "mousedown",
+  "touchstart",
+  "touchmove",
+  "MSPointerDown",
+  "MSPointerMove"
 ];
 
 // set a limit of 2 minutes inactivity
 const IDLE_TIME = 2 * 60 * 1000;
 
 class Idle extends Component {
+  idleTimer = null;
 
-    idleTimer = null;
+  componentDidMount() {
+    ACTIVITY_EVENTS.forEach(event => {
+      document.addEventListener(event, this.onActivity, {
+        capture: true,
+        passive: true
+      });
+    });
 
+    clearTimeout(this.idleTimer);
+    this.idleTimer = null;
+    this.idleTimer = setTimeout(this.onIdle, IDLE_TIME);
+  }
 
-    componentDidMount() {
+  onActivity = event => {
+    clearTimeout(this.idleTimer);
+    this.idleTimer = null;
+    this.idleTimer = setTimeout(this.onIdle, IDLE_TIME);
+  };
 
-        ACTIVITY_EVENTS.forEach( event => {
-            document.addEventListener(event, this.onActivity, {capture: true, passive:true});
-        } );
+  componentWillUnmount() {
+    console.log("will unmount");
 
-        clearTimeout(this.idleTimer);
-        this.idleTimer = null;
-        this.idleTimer = setTimeout(this.onIdle, IDLE_TIME);
-    }
+    ACTIVITY_EVENTS.forEach(event => {
+      document.removeEventListener(event, this.onActivity, { capture: true });
+    });
 
-    onActivity = (event) => {
+    clearTimeout(this.idleTimer);
+    this.idleTimer = null;
+  }
 
-        clearTimeout(this.idleTimer);
-        this.idleTimer = null;
-        this.idleTimer = setTimeout(this.onIdle, IDLE_TIME);
-    };
+  onIdle = event => {
+    clearTimeout(this.idleTimer);
+    this.idleTimer = null;
+    this.props.closeWallet();
+  };
 
-
-    componentWillUnmount() {
-
-        console.log('will unmount');
-
-        ACTIVITY_EVENTS.forEach( event => {
-            document.removeEventListener(event, this.onActivity, {capture: true})
-        } );
-
-        clearTimeout(this.idleTimer);
-        this.idleTimer = null;
-    }
-
-
-    onIdle = (event) => {
-
-        clearTimeout(this.idleTimer);
-        this.idleTimer = null;
-        this.props.closeWallet();
-
-    };
-
-
-    render() {
-
-        return null;
-    }
-
+  render() {
+    return null;
+  }
 }
 
 export default connect(
-    null,
-    { closeWallet }
+  null,
+  { closeWallet }
 )(Idle);
-
-
-
-
