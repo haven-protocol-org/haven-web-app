@@ -13,6 +13,7 @@ import { account } from "./account";
 import { simplePrice } from "./simplePrice";
 import { chain } from "./chain";
 import txProcess from "./txProcess";
+import forex from "./forex";
 
 const appReducer = combineReducers({
   theme,
@@ -25,7 +26,8 @@ const appReducer = combineReducers({
   notification,
   account,
   simplePrice,
-    txProcess
+    txProcess,
+  forex
 });
 
 const rootReducer = (state, action) => {

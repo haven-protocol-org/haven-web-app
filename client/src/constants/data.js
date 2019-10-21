@@ -1,69 +1,80 @@
 module.exports = [
   {
     token: "United States Dollar",
-    ticker: "xUSD",
+    ticker: "USD",
     price: "$1.00",
-    change: "~ 0.00"
+    change: "~ 0.00",
+    symbol:"$"
   },
   {
     token: "Bitcoin",
-    ticker: "xBTC",
+    ticker: "BTC",
     price: "$1.00",
-    change: "~ 0.00"
+    change: "~ 0.00",
+    symbol:""
   },
   {
     token: "New Zealand Dollar",
-    ticker: "xNZD",
+    ticker: "NZD",
     price: "$1.00",
-    change: "~ 0.00"
+    change: "~ 0.00",
+    symbol:"$"
   },
   {
     token: "Norwegian Krone",
-    ticker: "xNOK",
+    ticker: "NOK",
     price: "$1.00",
-    change: "~ 0.00"
+    change: "~ 0.00",
+    symbol:"kr"
   },
   {
     token: "Japanese Yen",
-    ticker: "xJPY",
+    ticker: "JPY",
     price: "$1.00",
-    change: "~ 0.00"
+    change: "~ 0.00",
+    symbol:"¥"
   },
   {
     token: "British Pound",
-    ticker: "xGBP",
+    ticker: "GBP",
     price: "$1.00",
-    change: "~ 0.00"
+    change: "~ 0.00",
+    symbol:"£"
   },
   {
     token: "Euro",
-    ticker: "xEUR",
+    ticker: "EUR",
     price: "$1.00",
-    change: "~ 0.00"
+    change: "~ 0.00",
+    symbol:"€"
   },
   {
     token: "Chinese Yuan",
-    ticker: "xCNY",
+    ticker: "CNY",
     price: "$1.00",
-    change: "~ 0.00"
+    change: "~ 0.00",
+    symbol:"¥"
   },
   {
     token: "Swiss Franc",
-    ticker: "xCHF",
+    ticker: "CHF",
     price: "$1.00",
-    change: "~ 0.00"
+    change: "~ 0.00",
+    symbol:"₣"
   },
   {
     token: "Canadian Dollar",
-    ticker: "xCAN",
+    ticker: "CAN",
     price: "$1.00",
-    change: "~ 0.00"
+    change: "~ 0.00",
+    symbol:"$"
   },
 
   {
     token: "Australian Dollar",
-    ticker: "xAUD",
+    ticker: "AUD",
     price: "$1.00",
-    change: "~ 0.00"
+    change: "~ 0.00",
+    symbol:"$"
   }
 ];

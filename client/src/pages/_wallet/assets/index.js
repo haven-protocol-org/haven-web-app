@@ -1,7 +1,7 @@
 // Library Imports
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getSimplePrice } from "../../../actions";
+import {getForex, getSimplePrice} from "../../../actions";
 
 // Relative Imports
 import Page from "../../../components/_layout/page";
@@ -19,7 +19,8 @@ import { selectReadableBalance } from "../../../reducers/balance";
 
 class Assets extends Component {
   state = {
-    token: data
+    token: data,
+    forexPriceFetched: false
   };
 
   componentDidMount() {
@@ -27,8 +28,11 @@ class Assets extends Component {
 
     if (this.props.price === NO_PRICE) {
       this.props.getSimplePrice();
+      this.props.getForex();
     }
   }
+
+
 
   handleState = () => {
     this.setState(state => ({
@@ -36,16 +40,25 @@ class Assets extends Component {
     }));
   };
 
+
   renderTokens = () => {
     const { token } = this.state;
+
     return token.map(data => {
-      const { token, ticker, price, change } = data;
+      const { token, ticker, change, symbol } = data;
+
+      const rates = this.props.rates;
+
+      let price = rates[ticker] ? rates[ticker] : 0;
+      price = symbol + price.toFixed(2);
+
+
       return (
         <CellDisabled
           fullwidth="fullwidth"
           key={token}
           tokenName={token}
-          ticker={ticker}
+          ticker={'x'+ticker}
           price={price}
           change={change}
         />
@@ -91,10 +104,11 @@ class Assets extends Component {
 export const mapStateToProps = state => ({
   balance: state.balance,
   readableBalance: selectReadableBalance(state),
-  ...state.simplePrice
+  ...state.simplePrice,
+      ...state.forex
 });
 
 export default connect(
   mapStateToProps,
-  {getSimplePrice }
+  { getForex, getSimplePrice }
 )(Assets);

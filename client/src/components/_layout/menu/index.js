@@ -29,13 +29,13 @@ class Menu extends Component {
       lockedBalance,
       isSyncing,
       bHeight,
-      scannedHeight
+      scannedHeight, scannedDate
     } = this.props;
 
     // These are temporary props to mock the progress bar
-    const tempHeight = 552251; // Prop for missing bHeight prop
-    const tempSync = true; // If syncing then show the progress bar
-    const tempLockedBalance = 3; // If there's a locked balance
+    // const tempHeight = 552251; // Prop for missing bHeight prop
+    // const tempSync = true; // If syncing then show the progress bar
+    // const tempLockedBalance = 3; // If there's a locked balance
 
     return (
       <Container>
@@ -48,9 +48,9 @@ class Menu extends Component {
                 convertBalanceForReading(unlockedBalance)
               )}
             </Amount>
-            <Value>{tempSync ? "Syncing Wallet" : "XHV Balance"}</Value>
-            {tempSync && <ProgressBar max={tempHeight} value={bHeight} />}
-            {tempLockedBalance > 0 ? (
+            <Value>{isSyncing ? "Syncing Wallet" : "XHV Balance"}</Value>
+            {isSyncing && <ProgressBar max={bHeight} value={scannedHeight} />}
+            {lockedBalance > 0 ? (
               <Pending>
                 You have {convertBalanceForReading(lockedBalance)} XHV pending
                 <br />

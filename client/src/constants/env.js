@@ -7,7 +7,12 @@ export const MODE = process.env.NODE_ENV;
 export const DEV_MODE = "development";
 export const PRODUCTION_MODE = "production";
 
+export const isMainnet = () => {
+
+    return NET_TYPE_ID === 0;
+};
+
 
 export const isDevMode = () => {
     return DEV_MODE === MODE;
-}
+};

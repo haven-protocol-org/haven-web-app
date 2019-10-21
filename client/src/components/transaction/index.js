@@ -12,6 +12,7 @@ import {
   Row,
   Data
 } from "./styles";
+import {isMainnet, NET_TYPE_ID} from "../../constants/env";
 // import { isDevMode } from "../../constants/env";
 
 const Transaction = ({
@@ -41,9 +42,11 @@ const Transaction = ({
     statusDetails = "Not confirmed yet";
   }
 
+  const txExplorerLink = `https://explorer${isMainnet()?'': '-test'}.havenprotocol.org/tx/${tx}`;
+
   return (
     <Container
-      href={`https://explorer-test.havenprotocol.org/tx/${tx}`}
+      href={txExplorerLink}
       target="_blank"
     >
       <State status={type}>

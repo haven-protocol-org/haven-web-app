@@ -7,6 +7,7 @@ export * from "./key";
 export * from "./theme";
 export * from "./transferHistory";
 export * from "./sendFunds";
+export * from "./forex";
 
 export const addPubAddress = address => ({
   type: ADD_PUB_ADDRESS,
@@ -15,11 +16,11 @@ export const addPubAddress = address => ({
 export const updateChainData = ({
   start_height,
   scanned_block_height,
-  blockchain_height
+  blockchain_height,scanned_block_timestamp
 }) => {
   return {
     type: UPDATE_CHAIN_DATA,
-    payload: { start_height, scanned_block_height, blockchain_height }
+    payload: { start_height, scanned_block_height, blockchain_height, scanned_block_timestamp }
   };
 };
 
