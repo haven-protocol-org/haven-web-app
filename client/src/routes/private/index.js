@@ -12,6 +12,7 @@ import Settings from "../../pages/_wallet/settings";
 import { connect } from "react-redux";
 import {selectIsLoggedIn} from "../../reducers/account";
 import {refresh} from "../../actions";
+import Idle from "../../components/idle";
 
 /**
  *root component for private wallet
@@ -40,6 +41,7 @@ class PrivateRoutes extends Component {
 
     return (
       <div>
+          <Idle/>
         <Route path={`${match.url}/assets`} exact component={Assets} />
         <Route path={`${match.url}/assets/:id`} exact component={Details} />
         <Route path={`${match.url}/exchange`} exact component={Exchange} />
