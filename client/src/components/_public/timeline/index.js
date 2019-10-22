@@ -18,6 +18,7 @@ import {
   Progress
 } from "./styles";
 import tick from "../../../assets/icons/tick.svg";
+import incomplete from "../../../assets/icons/incomplete_dark.svg";
 
 const Content = () => {
   return (
@@ -90,7 +91,7 @@ const Content = () => {
         <Separator>
           <Line />
           <Circle>
-            <Icon src={""} />
+            <Icon src={incomplete} />
           </Circle>
           <Line />
         </Separator>
@@ -112,7 +113,7 @@ const Content = () => {
         <Separator>
           <Line />
           <Circle>
-            <Icon src={""} />
+            <Icon src={incomplete} />
           </Circle>
           <Line />
         </Separator>
