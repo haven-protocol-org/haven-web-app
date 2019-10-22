@@ -8,6 +8,7 @@ import { Container } from "./styles";
 import Auth from "../../../components/_auth/login";
 import Description from "../../../components/_inputs/description";
 import { Information } from "../../../constants/type.js";
+// import MultiLogin from "../../../components/_auth/multi_login";
 
 import { restoreWallet } from "../../../actions";
 import {
@@ -54,7 +55,7 @@ class Login extends Component {
     return (
       <Container>
         <Auth
-          title="Vault Login"
+          title=" Vault Login"
           description="To access your vault please enter your seed phrase"
           link="/create"
           route="Create a Vault"
@@ -63,7 +64,7 @@ class Login extends Component {
           onClick={() => this.handleLogin()}
           loading={this.props.isRequestingLogin}
           information="Before entering your seed phrase please ensure you’re not on a public
-        or unsecured wifi connection."
+      or unsecured wifi connection."
           submit="Submit"
         >
           <Description
