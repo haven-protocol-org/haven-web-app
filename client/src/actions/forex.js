@@ -16,7 +16,7 @@ export const getForex = () => {
     dispatch(getForexFetching());
     fetch(forexUrl)
       .then(res => res.json())
-      .then(res => dispatch(getForexSucceed(res)))
+      .then(res => dispatch(getForexSucceed(res.rates)))
       .catch(error => dispatch(getForexFailed(error)));
   };
 };

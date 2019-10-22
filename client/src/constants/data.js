@@ -11,7 +11,7 @@ module.exports = [
     ticker: "BTC",
     price: "$1.00",
     change: "~ 0.00",
-    symbol: ""
+    symbol: "$"
   },
   {
     token: "New Zealand Dollar",

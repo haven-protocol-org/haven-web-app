@@ -3,6 +3,7 @@
 
 import {decreasePricePoints} from "../utility";
 import {
+    GET_BITCOIN_SUCEED,
     GET_PRICE_HISTORY_FAILED,
     GET_PRICE_HISTORY_FETCHING,
     GET_PRICE_HISTORY_SUCCEED,
@@ -55,15 +56,20 @@ const getPriceDataSucceed = ( prices, rangeInDays) => {
 export const getSimplePrice = () => {
     return dispatch => {
         fetch(
-            "https://api.coingecko.com/api/v3/simple/price?ids=haven&vs_currencies=usd")
+            "https://api.coingecko.com/api/v3/simple/price?ids=haven,bitcoin&vs_currencies=usd")
             .then(response => response.json())
-            .then(priceData => dispatch(getSimplePriceSucceed(priceData.haven.usd)))
+            .then(priceData => {
+
+                dispatch(getSimplePriceSucceed(priceData.haven.usd));
+                const BTC = {'BTC' : priceData.bitcoin.usd};
+                dispatch(getBitcoinSucceed(BTC));
+
+            })
             .catch(error => dispatch(getSimplePriceFailed(error)));
     };
-
-
 };
 
 
 const getSimplePriceSucceed = (result) => ({type: GET_SIMPLE_PRICE_SUCCEED, payload: result});
 const getSimplePriceFailed = (error) => ({type: GET_SIMPLE_PRICE_SUCCEED, payload: error});
+const getBitcoinSucceed = (btc) => ({type: GET_BITCOIN_SUCEED, payload: btc});

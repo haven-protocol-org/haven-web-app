@@ -61,6 +61,8 @@ export const GET_FOREX_FETCHING = "get_forex_fetching";
 export const GET_FOREX_SUCCEED = "get_forex_succeed";
 export const GET_FOREX_FAILED = "get_forex_failed";
 
+export const GET_BITCOIN_SUCEED = "get_bitcoin_succeed";
+
 
 // ACCOUNT
 
