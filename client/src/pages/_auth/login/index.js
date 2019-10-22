@@ -46,6 +46,7 @@ class Login extends Component {
   };
 
   render() {
+    const windowWidth = window.innerWidth;
     if (this.props.isLoggedIn) {
       return <Redirect to="/wallet/assets" />;
     }
@@ -55,8 +56,8 @@ class Login extends Component {
     return (
       <Container>
         <Auth
-          title=" Vault Login"
-          description="To access your vault please enter your seed phrase"
+          title="Vault Login"
+          description="To access your Vault enter your seed phrase"
           link="/create"
           route="Create a Vault"
           label="Don’t have a Vault?"
@@ -73,6 +74,7 @@ class Login extends Component {
             name="seed_phrase"
             value={seed_phrase}
             error={error}
+            rows={windowWidth < 600 ? "6" : "4"}
             onChange={event => this.handleChange(event)}
           />
           <Information>
