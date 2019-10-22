@@ -34,7 +34,7 @@ const Transaction = ({
   let statusDetails = "Completed";
 
   if (status === "pending") {
-    statusDetails = `Pending ~${(block + 10 - bHeight) * 2} min`;
+    statusDetails = `~${(block + 10 - bHeight) * 2} min`;
   }
 
   if (mempool) {
@@ -56,10 +56,17 @@ const Transaction = ({
             <Value alignment="left">{amount}</Value>
             <Label alignment="left">Amount</Label>
           </Data>
-          <Data>
-            <Value alignment="center">{statusDetails}</Value>
-            <Label alignment="center">Status</Label>
-          </Data>
+          {status === "pending" ? (
+            <Data>
+              <Value alignment="center">{statusDetails}</Value>
+              <Label alignment="center">{status}</Label>
+            </Data>
+          ) : (
+            <Data>
+              <Value alignment="center">{statusDetails}</Value>
+              <Label alignment="center">Status</Label>
+            </Data>
+          )}
           <Data>
             <Value alignment="right">${value.toFixed(2)}</Value>
             <Label alignment="right">Current Value</Label>
