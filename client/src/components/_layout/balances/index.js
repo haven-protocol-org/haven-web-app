@@ -33,12 +33,12 @@ class Balances extends Component {
           )}
         </Amount>
         <Value>
-          {isSyncing ? `Syncing Wallet... ${percentage}%` : "XHV Balance"}
+          {isSyncing ? `Syncing Vault... ${percentage}%` : "XHV Balance"}
         </Value>
         {isSyncing && <ProgressBar percentage={percentage} />}
         {lockedBalance > 0 ? (
           <Pending>
-            You have {convertBalanceForReading(lockedBalance)} XHV pending
+            You have {convertBalanceForReading(lockedBalance)} XHV pending.
             <br />
             Balances are updating.
           </Pending>

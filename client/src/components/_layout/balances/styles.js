@@ -19,7 +19,7 @@ export const Overview = styled.div`
 
 export const Wrapper = styled.div`
   height: auto;
-  width: 80%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
