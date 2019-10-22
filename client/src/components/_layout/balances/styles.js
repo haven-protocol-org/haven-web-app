@@ -19,7 +19,7 @@ export const Overview = styled.div`
 
 export const Wrapper = styled.div`
   height: auto;
-  width: auto;
+  width: 80%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -27,7 +27,7 @@ export const Wrapper = styled.div`
 `;
 
 export const Value = styled.div`
-  width: auto;
+  width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
