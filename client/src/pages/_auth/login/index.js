@@ -51,6 +51,8 @@ class Login extends Component {
       return <Redirect to="/wallet/assets" />;
     }
 
+    // <External href="/team">Learn more</External>
+
     const { seed_phrase, error } = this.state;
 
     return (
@@ -64,8 +66,6 @@ class Login extends Component {
           disable={seed_phrase === "" ? true : this.props.isRequestingLogin}
           onClick={() => this.handleLogin()}
           loading={this.props.isRequestingLogin}
-          information="Before entering your seed phrase please ensure you’re not on a public
-      or unsecured wifi connection."
           submit="Submit"
         >
           <Description
@@ -78,8 +78,12 @@ class Login extends Component {
             onChange={event => this.handleChange(event)}
           />
           <Information>
-            Before entering your Seed Phrase please ensure you're not on a
-            public wifi and no one is looking at your screen.
+            Ensure you’re not on a public or unsecured wifi when entering your
+            seed.{" "}
+            <strong>
+              For your security, your seed is encrypted on your device and never
+              sent to a server.
+            </strong>
           </Information>
         </Auth>
       </Container>

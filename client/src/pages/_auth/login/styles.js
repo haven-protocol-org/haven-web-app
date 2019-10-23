@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 import media from "../../../constants/media.js";
-import { background } from "../../../constants/colors.js";
+import { background, link, link_hover } from "../../../constants/colors.js";
 
 export const Container = styled.div`
   min-height: 100vh;
@@ -16,6 +16,23 @@ export const Container = styled.div`
   ${media.mobile`
     padding-top: 50px;
   `}
+`;
+
+export const External = styled.a`
+  font-family: Inter-Regular;
+  font-size: 13px;
+  color: ${link}
+  letter-spacing: 0;
+  text-align: center;
+  line-height: 22px;
+  text-decoration: none;
+  transition: 750ms;
+
+
+  &:hover {
+    color: ${link_hover};
+    transition: 750ms;
+  }
 `;
 
 export const Image = styled.img`

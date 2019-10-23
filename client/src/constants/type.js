@@ -31,8 +31,8 @@ export const Error = styled.div`
 export const Information = styled.div`
   font-family: Inter-Regular;
   font-size: 13px;
-  color: ${props => props.theme.type.secondary};
   line-height: 22px;
+  color: ${props => props.theme.type.secondary};
 `;
 
 export const Header = styled.div`
