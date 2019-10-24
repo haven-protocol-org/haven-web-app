@@ -35,7 +35,7 @@ const Content = () => {
           <Route
             rel="noopener"
             target="_blank"
-            href="https://medium.com/@havencurrency/haven-offshore-testnet-update-october-2019-49057d6329de"
+            href="http://docs.havenprotocol.org/whitepapers/english.pdf"
           >
             Read more
           </Route>
@@ -55,7 +55,7 @@ const Content = () => {
           <Route
             rel="noopener"
             target="_blank"
-            href="https://medium.com/@havencurrency/haven-protocol-april-2019-update-ca2e911176c8"
+            href="http://docs.havenprotocol.org/whitepapers/french.pdf"
           >
             Lire la suite
           </Route>
@@ -77,7 +77,7 @@ const Content = () => {
           <Route
             rel="noopener"
             target="_blank"
-            href="https://medium.com/@havencurrency/haven-added-to-zelcore-ecosystem-ab3bb530153f"
+            href="http://docs.havenprotocol.org/whitepapers/chinese.pdf"
           >
             阅读更多
           </Route>
