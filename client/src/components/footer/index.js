@@ -163,7 +163,7 @@ const Footer = () => {
         <Internal to="/blog">Blog</Internal>
         <Internal to="/faq">F.A.Q</Internal>
         <Internal to="/timeline">Timeline</Internal>
-        <Internal to="/whitepaper">Whitepapers</Internal>
+        <Internal to="/whitepaper">White Papers</Internal>
         <External
           rel="noopener"
           href="https://github.com/haven-protocol-org/brand-assets"

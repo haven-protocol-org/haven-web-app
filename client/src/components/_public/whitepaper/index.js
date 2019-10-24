@@ -6,7 +6,6 @@ import {
   Container,
   Cell,
   Description,
-  Title,
   Wrapper,
   Image,
   Route,
