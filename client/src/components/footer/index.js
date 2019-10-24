@@ -109,9 +109,10 @@ const Footer = () => {
         >
           CLI Wallet
         </External>
+
         <External
           rel="noopener"
-          href="https://explorer-test.havenprotocol.org/"
+          href="https://explorer.havenprotocol.org/"
           target="_blank"
         >
           Block Explorer
