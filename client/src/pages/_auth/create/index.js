@@ -115,7 +115,6 @@ class Create extends Component {
       <Container>
         <Auth
           title="Create a Vault"
-          description="Generate a new Vault and seed phrase"
           link="/login"
           route="Sign In!"
           label="Have a Vault already?"

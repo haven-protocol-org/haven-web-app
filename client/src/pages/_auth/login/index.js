@@ -51,6 +51,14 @@ class Login extends Component {
       return <Redirect to="/wallet/assets" />;
     }
 
+    // <Information>
+    //   <strong>
+    //     Your seed and private keys are never sent across the internet
+    //   </strong>
+    //   However, for your security ensure you're not on public or unsecured
+    //   wifi, and verify the domain is{" "}
+    //   <strong>https://havenprotocol.org</strong>
+    // </Information>
     // <External href="/team">Learn more</External>
 
     const { seed_phrase, error } = this.state;
@@ -59,7 +67,6 @@ class Login extends Component {
       <Container>
         <Auth
           title="Vault Login"
-          description="To access your Vault enter your seed phrase"
           link="/create"
           route="Create a Vault"
           label="Don’t have a Vault?"
@@ -78,12 +85,10 @@ class Login extends Component {
             onChange={event => this.handleChange(event)}
           />
           <Information>
-            Ensure you’re not on a public or unsecured wifi when entering your
-            seed.{" "}
-            <strong>
-              For your security, your seed is encrypted on your device and never
-              sent to a server.
-            </strong>
+            <strong>Disclaimer:</strong> Your seed is used to generate an
+            encrypted signature on your device and unlock your account. This
+            ensures the security of your seed or keys, as they're never
+            submitted to a server or sent across the internet.
           </Information>
         </Auth>
       </Container>

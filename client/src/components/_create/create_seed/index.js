@@ -21,7 +21,7 @@ const CreateSeed = ({ value, name, rows, readOnly, ...rest }) => {
         A Seed Phrase is a algorithmically generated password and provides full
         access to your account and assets.{" "}
         <strong>
-          Store your seed in a safe location and do not share this with anyone
+          Store your seed in a safe location and do not share this with anyone.
         </strong>
       </Information>
     </>

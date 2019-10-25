@@ -13,9 +13,10 @@ const Placeholder = () => {
         <Image src={vault} />
       </Wrapper>
       <Information>
-        You're about to create a Vault for your assets. Before Generating a seed
-        please ensure you're not on a public wifi and have a pen or password
-        manager ready.
+        Upon clicking <strong>"Next"</strong> your Haven Vault Seed Phrase will
+        be revealed. Have a Password Manager ready, ensure you're not on public
+        or unsecured wifi, and verify the domain is{" "}
+        <strong>https://havenprotocol.org</strong>
       </Information>
     </Container>
   );
