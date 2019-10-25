@@ -4,6 +4,8 @@ export const APP_VERSION = process.env.REACT_APP_VERSION;
 export const NET_TYPE_NAME = process.env.REACT_APP_NET_TYPE_NAME;
 export const MODE = process.env.NODE_ENV;
 
+export const API_URL = process.env.REACT_APP_API_URL;
+
 export const DEV_MODE = "development";
 export const PRODUCTION_MODE = "production";
 

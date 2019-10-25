@@ -1,7 +1,7 @@
 // API layer for communication with an adjusted MyMonero-API-compatible server
 
 
-const API_URL = "http://213.136.85.14:1984";
+import {API_URL} from "../constants/env";
 
 const INIT_REQUEST = {
     method: "POST",
