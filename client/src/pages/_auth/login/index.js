@@ -46,25 +46,26 @@ class Login extends Component {
   };
 
   render() {
+    const windowWidth = window.innerWidth;
     if (this.props.isLoggedIn) {
       return <Redirect to="/wallet/assets" />;
     }
+
+    // <External href="/team">Learn more</External>
 
     const { seed_phrase, error } = this.state;
 
     return (
       <Container>
         <Auth
-          title=" Vault Login"
-          description="To access your vault please enter your seed phrase"
+          title="Vault Login"
+          description="To access your Vault enter your seed phrase"
           link="/create"
           route="Create a Vault"
           label="Don’t have a Vault?"
           disable={seed_phrase === "" ? true : this.props.isRequestingLogin}
           onClick={() => this.handleLogin()}
           loading={this.props.isRequestingLogin}
-          information="Before entering your seed phrase please ensure you’re not on a public
-      or unsecured wifi connection."
           submit="Submit"
         >
           <Description
@@ -73,11 +74,16 @@ class Login extends Component {
             name="seed_phrase"
             value={seed_phrase}
             error={error}
+            rows={windowWidth < 600 ? "6" : "4"}
             onChange={event => this.handleChange(event)}
           />
           <Information>
-            Before entering your Seed Phrase please ensure you're not on a
-            public wifi and no one is looking at your screen.
+            Ensure you’re not on a public or unsecured wifi when entering your
+            seed.{" "}
+            <strong>
+              For your security, your seed is encrypted on your device and never
+              sent to a server.
+            </strong>
           </Information>
         </Auth>
       </Container>

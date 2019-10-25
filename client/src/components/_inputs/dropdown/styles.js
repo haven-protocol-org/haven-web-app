@@ -53,7 +53,7 @@ export const Wrapper = styled.ul`
 
 export const Labels = styled.div`
   height: auto;
-  width: auto;
+  width: auto
   display: flex;
   justify-content: space-between;
   margin-bottom: 4px;

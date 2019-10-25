@@ -75,13 +75,20 @@ class Create extends Component {
   };
 
   handleSwitch = () => {
+    const windowWidth = window.innerWidth;
     const { step, verify_seed, error } = this.state;
 
     switch (step) {
       case 1:
         return <Placeholder />;
       case 2:
-        return <CreateSeed value={this.props.mnemonicString} readOnly={true} />;
+        return (
+          <CreateSeed
+            value={this.props.mnemonicString}
+            rows={windowWidth < 600 ? "6" : "4"}
+            readOnly={true}
+          />
+        );
       case 3:
         return (
           <VerifySeed
@@ -89,6 +96,7 @@ class Create extends Component {
             name="verify_seed"
             value={verify_seed}
             error={error}
+            rows={windowWidth < 600 ? "6" : "4"}
             onChange={this.handleChange}
           />
         );
@@ -107,7 +115,7 @@ class Create extends Component {
       <Container>
         <Auth
           title="Create a Vault"
-          description="To create a new vault please generate a new seed phrase."
+          description="Generate a new Vault and seed phrase"
           link="/login"
           route="Sign In!"
           label="Have a Vault already?"

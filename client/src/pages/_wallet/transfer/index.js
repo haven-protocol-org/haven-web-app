@@ -181,7 +181,7 @@ class Transfer extends Component {
             <>
               <Form>
                 <Dropdown
-                  label="Send Asset"
+                  label="Asset"
                   placeholder="Select Asset"
                   name="send_asset"
                   ticker={send_ticker}
@@ -295,7 +295,7 @@ class Transfer extends Component {
             <>
               <Form>
                 <Dropdown
-                  label="Receiving Asset"
+                  label="Asset"
                   placeholder="Select Asset"
                   name="send_asset"
                   width="true"

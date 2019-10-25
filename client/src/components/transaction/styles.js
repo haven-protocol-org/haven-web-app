@@ -70,7 +70,6 @@ export const Status = styled.div`
   transform: rotate(-90deg);
   font-family: Inter-SemiBold;
   font-size: 10px;
-
   letter-spacing: 0;
   text-align: center;
   line-height: 16px;
@@ -93,6 +92,7 @@ export const Label = styled.div`
   color: ${props => props.theme.type.secondary};
   line-height: 12px;
   text-align: ${props => props.alignment};
+  text-transform: capitalize;
 `;
 
 export const Data = styled.div`

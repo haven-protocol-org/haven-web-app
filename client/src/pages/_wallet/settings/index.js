@@ -102,7 +102,7 @@ class Settings extends Component {
                   value={this.props.mnemonic_string}
                   readOnly
                   type={reveal ? "type" : "password"}
-                  rows={windowWidth < 600 && "4"}
+                  rows={windowWidth < 600 && "6"}
                 />
                 <Description
                   label="Public View Key"

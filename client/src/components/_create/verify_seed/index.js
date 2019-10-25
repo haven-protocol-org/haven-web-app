@@ -12,6 +12,7 @@ const VerifySeed = ({
   onChange,
   error,
   label,
+  rows,
   ...rest
 }) => {
   return (
@@ -24,6 +25,7 @@ const VerifySeed = ({
         error={error}
         onChange={onChange}
         rest={rest}
+        rows={rows}
         loading={loading}
       />
       <Information>

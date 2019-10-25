@@ -5,7 +5,7 @@ import React from "react";
 import { Information } from "../../../constants/type.js";
 import Description from "../../_inputs/description";
 
-const CreateSeed = ({ value, name, readOnly, ...rest }) => {
+const CreateSeed = ({ value, name, rows, readOnly, ...rest }) => {
   return (
     <>
       <Description
@@ -13,6 +13,7 @@ const CreateSeed = ({ value, name, readOnly, ...rest }) => {
         value={value}
         placeholder=""
         name={name}
+        rows={rows}
         readOnly={readOnly}
         rest={rest}
       />

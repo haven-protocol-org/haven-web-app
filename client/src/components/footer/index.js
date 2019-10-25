@@ -109,9 +109,10 @@ const Footer = () => {
         >
           CLI Wallet
         </External>
+
         <External
           rel="noopener"
-          href="https://explorer-test.havenprotocol.org/"
+          href="https://explorer.havenprotocol.org/"
           target="_blank"
         >
           Block Explorer
@@ -163,14 +164,7 @@ const Footer = () => {
         <Internal to="/blog">Blog</Internal>
         <Internal to="/faq">F.A.Q</Internal>
         <Internal to="/timeline">Timeline</Internal>
-
-        <External
-          rel="noopener"
-          href="http://docs.havenprotocol.org/haven-protocol-wp-2_0.pdf"
-          target="_blank"
-        >
-          Whitepaper
-        </External>
+        <Internal to="/whitepaper">White Papers</Internal>
         <External
           rel="noopener"
           href="https://github.com/haven-protocol-org/brand-assets"

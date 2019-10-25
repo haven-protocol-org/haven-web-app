@@ -89,15 +89,15 @@ export const Separator = styled.div`
 export const Line = styled.div`
   height: 20px;
   width: 1px;
-  background: #222528;
-  margin-left: 34px;
+  background: #2b2e34;
+  margin-left: 33px;
 `;
 
 export const Circle = styled.div`
   height: 24px;
   width: 24px;
   border-radius: 24px;
-  border: 2px solid ${props => props.theme.body.foreground};
+  border: 1px solid #2b2e34;
   background: ${props =>
     props.complete ? `${props.theme.states.success}` : null};
   margin-left: 20px;

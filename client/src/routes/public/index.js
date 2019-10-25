@@ -11,6 +11,7 @@ import Login from "../../pages/_auth/login";
 import Blog from "../../pages/_public/blog";
 import Team from "../../pages/_public/team";
 import Timeline from "../../pages/_public/timeline";
+import Whitepaper from "../../pages/_public/whitepaper";
 
 class PublicRoutes extends Component {
   render() {
@@ -23,6 +24,7 @@ class PublicRoutes extends Component {
         <Route path="/team" exact component={Team} />
         <Route path="/create" exact component={Create} />
         <Route path="/login" exact component={Login} />
+        <Route path="/whitepaper" exact component={Whitepaper} />
       </div>
     );
   }
