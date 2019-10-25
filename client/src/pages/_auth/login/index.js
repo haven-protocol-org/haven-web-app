@@ -51,16 +51,6 @@ class Login extends Component {
       return <Redirect to="/wallet/assets" />;
     }
 
-    // <Information>
-    //   <strong>
-    //     Your seed and private keys are never sent across the internet
-    //   </strong>
-    //   However, for your security ensure you're not on public or unsecured
-    //   wifi, and verify the domain is{" "}
-    //   <strong>https://havenprotocol.org</strong>
-    // </Information>
-    // <External href="/team">Learn more</External>
-
     const { seed_phrase, error } = this.state;
 
     return (

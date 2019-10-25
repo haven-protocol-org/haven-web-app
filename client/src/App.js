@@ -28,7 +28,7 @@ class App extends Component {
 }
 
 export const mapStateToProps = state => ({
-  theme: state.theme,
+  theme: state.theme
 });
 
 export default connect(mapStateToProps)(App);

@@ -20,17 +20,16 @@ import { APP_VERSION, NET_TYPE_NAME } from "../../../constants/env";
 class Navigation extends Component {
   handleLogout = () => {
     this.props.logout();
-    //TODO handle routing to private/public by checking session in root component
-    //history.push("/");
   };
 
   render() {
     const auth = this.props.isLoggedIn;
+
     return (
       <Container>
         <Brand to={auth === true ? "/wallet/assets" : "/"}>
           <Logo src={Icon} />
-          <Haven>HAVEN</Haven>
+          <Haven>HAVEN </Haven>
           <Tag>
             v{APP_VERSION} {NET_TYPE_NAME}
           </Tag>
