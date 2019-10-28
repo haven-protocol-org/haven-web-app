@@ -7,7 +7,7 @@ import {
 } from "./types";
 
 import { keysGeneratedFailed, keysGeneratedSucceed } from "./key";
-import { core, lWallet } from "../declarations/open_monero.service";
+import { core } from "../declarations/open_monero.service";
 import { addPubAddress, getTransfers } from "./index";
 import { login } from "../api/api";
 import { NET_TYPE_ID } from "../constants/env";
@@ -18,28 +18,29 @@ export const closeWallet = () => {
 
 export const refresh = () => {
   return dispatch => {
-    // dispatch(getBalances());
     dispatch(getTransfers());
   };
 };
 
-export const restoreWallet = seed => {
+export const restoreWallet = (seed) => {
+
   let keys = null;
 
-  return dispatch => {
+  return async (dispatch) => {
     dispatch(accountCreationRequested());
 
     try {
-      keys = lWallet.seed_and_keys_from_mnemonic(seed, NET_TYPE_ID);
-      keys.mnemonic_string = seed;
-      dispatch(keysGeneratedSucceed(keys));
-      dispatch(addPubAddress(keys.address_string));
+      const lWallet = await core.monero_utils_promise
+        keys = lWallet.seed_and_keys_from_mnemonic(seed, NET_TYPE_ID);
+        keys.mnemonic_string = seed;
+        seed = null;
+        dispatch(keysGeneratedSucceed(keys));
+        dispatch(addPubAddress(keys.address_string));
     } catch (e) {
       dispatch(keysGeneratedFailed(e));
       dispatch(accountCreationFailed(e));
       return;
     }
-
     dispatch(loginBE(keys.address_string, keys.sec_viewKey_string, false));
   };
 };

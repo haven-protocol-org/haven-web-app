@@ -1,7 +1,6 @@
 import { NO_BALANCE } from "./reducers/balance";
 import { notificationList } from "./constants/notificationList";
 import { NO_PRICE } from "./reducers/priceHistory";
-import { lWallet } from "./declarations/open_monero.service";
 
 export const convertTimestampToDateString = timestamp =>
   new Date(timestamp).toLocaleDateString();
@@ -46,8 +45,8 @@ export const getMessageOfError = error => {
 };
 
 export const estimateFee = () => {
-  const fee = lWallet.estimated_tx_network_fee(null, 1, "24658");
-  return fee;
+ // const fee = lWallet.estimated_tx_network_fee(null, 1, "24658");
+  return null;
 };
 
 export const calcValue = (amount, price) => {
@@ -72,3 +71,59 @@ export const getPriceValues = prices => {
 export const logM = message => {
   console.log(message);
 };
+
+let encKey = null;
+let iv = crypto.getRandomValues(new Uint8Array(12));
+
+export const createKey = async () => {
+
+  if (encKey) {
+    return encKey
+  }
+  else {
+
+    encKey = await window.crypto.subtle.generateKey(
+      {
+        name: "AES-GCM",
+        length: 256
+      },
+      true,
+      ["encrypt", "decrypt"]
+  );
+
+    return encKey;
+  }
+};
+
+
+
+export const encrypt = async (message) => {
+
+  const enc = new TextEncoder();
+  const encMessage = enc.encode(message);
+
+
+  return await window.crypto.subtle.encrypt(
+      {
+        name:"AES-GCM",
+        iv:iv
+      },
+      encKey,
+      encMessage
+  );
+};
+
+export const decrypt = async (cipher) => {
+
+  const decrypted = await window.crypto.subtle.decrypt(
+      {
+        name:"AES-GCM",
+        iv:iv
+      },
+      encKey,
+      cipher
+  );
+  let dec = new TextDecoder();
+  return dec.decode(decrypted);
+};
+

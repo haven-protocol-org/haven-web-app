@@ -5,34 +5,40 @@ import {
 } from "./types";
 import {getAddressTxs} from "../api/api";
 import {selectCredentials} from "../reducers/account";
-import {core, lWallet} from "../declarations/open_monero.service";
+import {core} from "../declarations/open_monero.service";
 import {getBalancesSucceed, updateChainData} from "./index";
+import {decrypt} from "../utility";
 
 
 export const getTransfers = () => {
   return (dispatch, getState) => {
     dispatch(getTransfersFetching());
     getAddressTxs(selectCredentials(getState()))
-        .then(result => {
-          const txList =  parseTx(result, getState());
-          const balance = calcBalanceByTxs(txList, result.blockchain_height);
+        .then(result =>  parseTx(result, getState()))
+        .then(parsedTxData => {
+          const balance = calcBalanceByTxs(parsedTxData.serialized_transactions, parsedTxData.blockchain_height);
           dispatch(getBalancesSucceed(balance));
-          dispatch(getTransfersSucceed(txList));
-          dispatch(updateChainData(result));
+          dispatch(getTransfersSucceed(parsedTxData.serialized_transactions));
+          dispatch(updateChainData(parsedTxData));
         })
         .catch(error => dispatch(getTransfersFailed(error)));
   };
 };
 
-const parseTx = (rawTXs, state) => {
+const parseTx = async (rawTXs, state) => {
 
   const address = state.address.main;
-  const {sec_viewKey_string, pub_spendKey_string, sec_spendKey_string } = state.keys;
-
+  let {sec_viewKey_string, pub_spendKey_string, sec_spendKey_string } = state.keys;
+  sec_spendKey_string = await decrypt(sec_spendKey_string);
+  let lWallet = await core.monero_utils_promise;
   let parsedData = core.api_response_parser_utils.Parsed_AddressTransactions__sync__keyImageManaged(rawTXs,
       address, sec_viewKey_string, pub_spendKey_string, sec_spendKey_string, lWallet);
 
-  return parsedData.serialized_transactions;
+  parsedData.scanned_block_height = rawTXs.scanned_block_height;
+  parsedData.scanned_block_timestamp = rawTXs.scanned_block_timestamp;
+  parsedData.start_height = rawTXs.start_height;
+
+  return parsedData;
 };
 
 const calcBalanceByTxs = (txList, bHeight) => {

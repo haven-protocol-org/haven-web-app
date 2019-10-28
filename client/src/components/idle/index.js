@@ -41,7 +41,6 @@ class Idle extends Component {
   };
 
   componentWillUnmount() {
-    console.log("will unmount");
 
     ACTIVITY_EVENTS.forEach(event => {
       document.removeEventListener(event, this.onActivity, { capture: true });
