@@ -63,8 +63,7 @@ class Login extends Component {
           disable={seed_phrase === "" ? true : this.props.isRequestingLogin}
           onClick={() => this.handleLogin()}
           loading={this.props.isRequestingLogin}
-          submit="Submit"
-        >
+          submit="Submit">
           <Description
             label="Seed Phrase or Private Spend Key"
             placeholder="Enter your 25 word seed phrase or Private Spend Key..."

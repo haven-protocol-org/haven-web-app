@@ -26,11 +26,12 @@ export const restoreWallet = (seed) => {
 
   let keys = null;
 
+
   return async (dispatch) => {
     dispatch(accountCreationRequested());
 
     try {
-      const lWallet = await core.monero_utils_promise
+      const lWallet = await core.monero_utils_promise;
         keys = lWallet.seed_and_keys_from_mnemonic(seed, NET_TYPE_ID);
         keys.mnemonic_string = seed;
         seed = null;

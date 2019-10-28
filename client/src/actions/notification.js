@@ -33,7 +33,9 @@ export const addErrorNotification = (error) => {
 
     if (errorNotification)
         return {type:ADD_NOTIFICATION, payload: {...errorNotification, id:uuidv4()}};
-    return buildNotification(error.message, ERROR);
+
+    const message = error.message || error.err_msg;
+    return buildNotification(message, ERROR);
 };
 
 

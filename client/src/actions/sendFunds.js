@@ -10,7 +10,7 @@ import { getRandomOuts, getUnspentOuts, submitRawTx } from "../api/api";
 // import {logM} from "../utility";
 import { core } from "../declarations/open_monero.service";
 import { NET_TYPE_ID } from "../constants/env";
-import { addNotificationByKey } from "./notification";
+import {addErrorNotification, addNotificationByKey} from "./notification";
 import {decrypt} from "../utility";
 
 export const sendFunds = (toAddress, amount, paymentId = "") => {
@@ -33,7 +33,7 @@ export const sendFunds = (toAddress, amount, paymentId = "") => {
 
     // default values
     sendFundsArgs.unlock_time = 0;
-    sendFundsArgs.priority = 1;
+    sendFundsArgs.priority = 0;
     sendFundsArgs.is_sweeping = false;
     sendFundsArgs.nettype = NET_TYPE_ID;
     sendFundsArgs.payment_id_string = paymentId;
@@ -48,6 +48,7 @@ export const sendFunds = (toAddress, amount, paymentId = "") => {
       dispatch(sendFundsSucceed(params));
     };
     sendFundsArgs.error_fn = err => {
+      dispatch(addErrorNotification(err));
       dispatch(sendFundsFailed(err));
     };
 

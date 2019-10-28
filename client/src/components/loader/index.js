@@ -1,10 +1,9 @@
 import React from "react";
-import { Container, Progress } from "./styles";
+import { Container } from "./styles";
 
 const Loader = () => {
   return (
     <Container>
-      ...
     </Container>
   );
 };
