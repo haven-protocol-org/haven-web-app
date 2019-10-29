@@ -45,7 +45,7 @@ export const getMessageOfError = error => {
 };
 
 export const estimateFee = () => {
- // const fee = lWallet.estimated_tx_network_fee(null, 1, "24658");
+  // const fee = lWallet.estimated_tx_network_fee(null, 1, "24658");
   return null;
 };
 
@@ -76,12 +76,9 @@ let encKey = null;
 let iv = crypto.getRandomValues(new Uint8Array(12));
 
 export const createKey = async () => {
-
   if (encKey) {
-    return encKey
-  }
-  else {
-
+    return encKey;
+  } else {
     encKey = await window.crypto.subtle.generateKey(
       {
         name: "AES-GCM",
@@ -89,41 +86,35 @@ export const createKey = async () => {
       },
       true,
       ["encrypt", "decrypt"]
-  );
+    );
 
     return encKey;
   }
 };
 
-
-
-export const encrypt = async (message) => {
-
+export const encrypt = async message => {
   const enc = new TextEncoder();
   const encMessage = enc.encode(message);
 
-
   return await window.crypto.subtle.encrypt(
-      {
-        name:"AES-GCM",
-        iv:iv
-      },
-      encKey,
-      encMessage
+    {
+      name: "AES-GCM",
+      iv: iv
+    },
+    encKey,
+    encMessage
   );
 };
 
-export const decrypt = async (cipher) => {
-
+export const decrypt = async cipher => {
   const decrypted = await window.crypto.subtle.decrypt(
-      {
-        name:"AES-GCM",
-        iv:iv
-      },
-      encKey,
-      cipher
+    {
+      name: "AES-GCM",
+      iv: iv
+    },
+    encKey,
+    cipher
   );
   let dec = new TextDecoder();
   return dec.decode(decrypted);
 };
-
