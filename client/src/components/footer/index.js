@@ -138,13 +138,6 @@ const Footer = () => {
         </External>
         <External
           rel="noopener"
-          href="https://upbit.com/exchange?code=CRIX.UPBIT.BTC-XHV"
-          target="_blank"
-        >
-          Upbit
-        </External>
-        <External
-          rel="noopener"
           href="https://tradeogre.com/exchange/BTC-XHV"
           target="_blank"
         >
