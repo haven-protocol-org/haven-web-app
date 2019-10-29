@@ -10,12 +10,12 @@ import Menu from "../../../components/_layout/menu";
 import Header from "../../../components/_layout/header";
 import Input from "../../../components/_inputs/input";
 import Description from "../../../components/_inputs/description";
-// import InputButton from "../../../components/_inputs/input_button";
 import Form from "../../../components/_inputs/form";
 import Dropdown from "../../../components/_inputs/dropdown";
 import Footer from "../../../components/_inputs/footer";
 import Transaction from "../../../components/_transactions/transfer";
 import Tab from "../../../components/tab";
+// import InputButton from "../../../components/_inputs/input_button";
 
 import { Container } from "./styles";
 import { isDevMode } from "../../../constants/env";
@@ -126,7 +126,6 @@ class Transfer extends Component {
       availableBalance = core.JSBigInt("0");
     }
 
-
     availableBalance = convertBalanceForReading(availableBalance);
     this.setState({ send_amount: availableBalance.toString() });
   };
@@ -187,16 +186,16 @@ class Transfer extends Component {
                   options={options}
                   onClick={this.setSendAsset}
                 />
-                  <Input
-                    label="Amount"
-                    placeholder="Enter amount"
-                    button="Max"
-                    onClick={this.sendMax}
-                    type="number"
-                    name="send_amount"
-                    value={send_amount}
-                    onChange={this.handleChange}
-                  />
+                <Input
+                  label="Amount"
+                  placeholder="Enter amount"
+                  button="Max"
+                  onClick={this.sendMax}
+                  type="number"
+                  name="send_amount"
+                  value={send_amount}
+                  onChange={this.handleChange}
+                />
                 {windowWidth < 1380 ? (
                   <>
                     <Description
