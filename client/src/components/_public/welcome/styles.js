@@ -18,6 +18,24 @@ export const Container = styled.div`
   `}
 `;
 
+export const Title = styled.h3`
+  color: #fff;
+  letter-spacing: 0;
+  line-height: 26px;
+  text-align: left;
+  width: 100%;
+`;
+
+export const Header = styled.div`
+  font-weight: 900;
+  font-family: "Playfair Display", serif;
+  font-size: 60px;
+  color: #ffffff;
+  letter-spacing: 0;
+  line-height: 80px;
+  margin-bottom: 40px;
+`;
+
 export const Image = styled.img`
   width: 80%;
   height: 80%;
