@@ -18,16 +18,28 @@ import {
   selectIsLoggedIn,
   selectIsRequestingLogin
 } from "../../../reducers/account";
+import {decrypt} from "../../../utility";
 
 class Create extends Component {
   state = {
     step: 1,
     error: "",
-    verify_seed: ""
+    verify_seed: "",
+    mnemonicString:""
   };
 
   componentDidMount() {
     this.props.getSeed();
+
+  }
+
+
+  async componentDidUpdate(prevProps, prevState) {
+
+    if (prevProps.mnemonicString === "" || this.props.mnemonicString !== "") {
+      const seed = await decrypt(this.props.mnemonicString);
+      this.setState({mnemonicString: seed});
+    }
   }
 
   nextStep = () => {
@@ -41,7 +53,7 @@ class Create extends Component {
     // On step three, if seed is invalid display error messsage for 2s
     else if (stepThree) {
       const validationSucceed =
-        this.props.mnemonicString === this.state.verify_seed;
+        this.state.mnemonicString === this.state.verify_seed;
 
       if (!validationSucceed) {
         this.setState({ error: "Sorry, that seed is incorrect" });
@@ -84,7 +96,7 @@ class Create extends Component {
       case 2:
         return (
           <CreateSeed
-            value={this.props.mnemonicString}
+            value={this.state.mnemonicString}
             rows={windowWidth < 600 ? "6" : "4"}
             readOnly={true}
           />

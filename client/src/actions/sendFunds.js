@@ -8,14 +8,15 @@ import {
 } from "./types";
 import { getRandomOuts, getUnspentOuts, submitRawTx } from "../api/api";
 // import {logM} from "../utility";
-import { core, lWallet } from "../declarations/open_monero.service";
+import { core } from "../declarations/open_monero.service";
 import { NET_TYPE_ID } from "../constants/env";
-import { addNotificationByKey } from "./notification";
+import {addErrorNotification, addNotificationByKey} from "./notification";
+import {decrypt} from "../utility";
 
 export const sendFunds = (toAddress, amount, paymentId = "") => {
   const parsedAmount = core.monero_amount_format_utils.parseMoney(amount);
 
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     dispatch({ type: SEND_FUNDS_STARTED });
 
     // arguments for the send funds routine, including functions for backend requests
@@ -27,12 +28,12 @@ export const sendFunds = (toAddress, amount, paymentId = "") => {
 
     const keys = getState().keys;
     sendFundsArgs.sec_viewKey_string = keys.sec_viewKey_string;
-    sendFundsArgs.sec_spendKey_string = keys.sec_spendKey_string;
+    sendFundsArgs.sec_spendKey_string = await decrypt(keys.sec_spendKey_string);
     sendFundsArgs.pub_spendKey_string = keys.pub_spendKey_string;
 
     // default values
     sendFundsArgs.unlock_time = 0;
-    sendFundsArgs.priority = 1;
+    sendFundsArgs.priority = 0;
     sendFundsArgs.is_sweeping = false;
     sendFundsArgs.nettype = NET_TYPE_ID;
     sendFundsArgs.payment_id_string = paymentId;
@@ -47,6 +48,7 @@ export const sendFunds = (toAddress, amount, paymentId = "") => {
       dispatch(sendFundsSucceed(params));
     };
     sendFundsArgs.error_fn = err => {
+      dispatch(addErrorNotification(err));
       dispatch(sendFundsFailed(err));
     };
 
@@ -54,6 +56,7 @@ export const sendFunds = (toAddress, amount, paymentId = "") => {
     sendFundsArgs.get_random_outs_fn = getRandomOutsReq;
     sendFundsArgs.get_unspent_outs_fn = getUnspentOutsReq;
     sendFundsArgs.submit_raw_tx_fn = submitRawTxReq;
+    const lWallet = await core.monero_utils_promise;
 
     lWallet.async__send_funds(sendFundsArgs);
   };

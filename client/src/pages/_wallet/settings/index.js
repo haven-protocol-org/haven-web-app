@@ -17,6 +17,7 @@ import Footer from "../../../components/_inputs/footer";
 import { Container } from "./styles";
 
 import { dark, light } from "../../../constants/themes.js";
+import {decrypt} from "../../../utility";
 
 const options = [
   { theme: "dark", value: "Dark Theme" },
@@ -28,7 +29,9 @@ class Settings extends Component {
     status: false,
     value: "",
     reveal: false,
-    validated: true
+    validated: true,
+    psk:"",
+    seed:""
   };
 
   componentDidMount() {
@@ -36,6 +39,14 @@ class Settings extends Component {
     this.setState({
       value: this.props.theme.value
     });
+
+
+    Promise.all([decrypt(this.props.mnemonic_string),decrypt(this.props.sec_spendKey_string)]).
+    then(data => {
+      this.setState({seed: data[0], psk:data[1]});
+    })
+
+
   }
 
   handleClick = ({ theme, value }) => {
@@ -61,12 +72,18 @@ class Settings extends Component {
   };
 
   render() {
-    const { value, reveal } = this.state;
-    const seed = this.props.mnemonic_string;
 
-    const first = seed.substring(0, 32);
-    const last = seed.substring(seed.length - 32);
-    const truncated = first + last;
+
+    const { value, reveal, psk, seed } = this.state;
+
+    let truncated = "";
+    if (seed.length > 0) {
+      const first = seed.substring(0, 32);
+      const last = seed.substring(seed.length - 32);
+      truncated = first + last;
+    }
+
+
 
     const windowWidth = window.innerWidth;
 
@@ -99,7 +116,7 @@ class Settings extends Component {
                 <Description
                   label="Seed Phrase"
                   width="true"
-                  value={this.props.mnemonic_string}
+                  value={seed}
                   readOnly
                   type={reveal ? "type" : "password"}
                   rows={windowWidth < 600 && "6"}
@@ -123,7 +140,7 @@ class Settings extends Component {
                 <Description
                   label="Private Spend Key"
                   width="true"
-                  value={this.props.sec_spendKey_string}
+                  value={psk}
                   readOnly
                   type={reveal ? "type" : "password"}
                   rows={windowWidth < 600 && "2"}
@@ -163,7 +180,7 @@ class Settings extends Component {
                 <Input
                   label="Private Spend Key"
                   width="true"
-                  value={this.props.sec_spendKey_string}
+                  value={psk}
                   readOnly
                   type={reveal ? "type" : "password"}
                 />

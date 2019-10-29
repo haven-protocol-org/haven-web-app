@@ -15,8 +15,8 @@ const ACTIVITY_EVENTS = [
   "MSPointerMove"
 ];
 
-// set a limit of 2 minutes inactivity
-const IDLE_TIME = 2 * 60 * 1000;
+// set a limit of 10 minutes inactivity
+const IDLE_TIME = 10 * 60 * 1000;
 
 class Idle extends Component {
   idleTimer = null;
@@ -41,7 +41,6 @@ class Idle extends Component {
   };
 
   componentWillUnmount() {
-    console.log("will unmount");
 
     ACTIVITY_EVENTS.forEach(event => {
       document.removeEventListener(event, this.onActivity, { capture: true });

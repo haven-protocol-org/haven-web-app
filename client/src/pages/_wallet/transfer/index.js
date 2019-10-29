@@ -126,9 +126,6 @@ class Transfer extends Component {
       availableBalance = core.JSBigInt("0");
     }
 
-    console.log(fee.toString());
-    console.log(unlockedBalance.toString());
-    console.log(availableBalance.toString());
 
     availableBalance = convertBalanceForReading(availableBalance);
     this.setState({ send_amount: availableBalance.toString() });
@@ -190,7 +187,6 @@ class Transfer extends Component {
                   options={options}
                   onClick={this.setSendAsset}
                 />
-                {isDevMode() ? (
                   <Input
                     label="Amount"
                     placeholder="Enter amount"
@@ -201,9 +197,6 @@ class Transfer extends Component {
                     value={send_amount}
                     onChange={this.handleChange}
                   />
-                ) : (
-                  ""
-                )}
                 {windowWidth < 1380 ? (
                   <>
                     <Description
