@@ -135,6 +135,7 @@ class Transfer extends Component {
   };
 
   copyAddress = () => {
+    console.log(this.state.address);
     navigator.clipboard.writeText(this.state.address);
     this.setState({
       copyButtonState: "Copied Address"
