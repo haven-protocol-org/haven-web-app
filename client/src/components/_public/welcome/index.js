@@ -8,9 +8,11 @@ import {
   Words,
   Description,
   LearnMore,
-  Test
+  Test,
+  Title,
+  Header
 } from "./styles";
-import { Header } from "../../../constants/type.js";
+// import { Header } from "../../../constants/type.js";
 import how from "../../../assets/how.svg";
 
 import what from "../../../assets/what.svg";
@@ -28,13 +30,15 @@ const Content = ({ ref }) => {
             What is <br />
             Haven Protocol?
           </Header>
+          <Title>BUY. SWAP. STORE.</Title>
           <Description>
-            Haven is a multi-asset protocol offering diversified investments
-            across a range of assets. The assets such as Haven (XHV), United
-            States Dollar (xUSD), Swiss Francs (xCHF) and Gold (xGOLD) enable
-            users to take part in and offset market volatility.
-          </Description>
-          <Description>
+            Be your own bank with Haven. Simply buy Haven [XHV] from any
+            exchange it’s listed on, send it to your own private digital vault
+            where you can swap between all supported Haven currencies and
+            securely store them without giving up control to anyone else.
+            <br />
+            <br />
+            Complete privacy so that YOUR money is 100% yours. No bank needed.
             All Haven asset exchanges occur within the Haven vault, without a
             third party. All Haven transactions are private, anonymous and
             completely untraceable.
@@ -51,16 +55,19 @@ const Content = ({ ref }) => {
             How does <br />
             Haven work?
           </Header>
+          <Title>PRIVATE. SECURE. FLEXIBLE.</Title>
           <Description>
-            Haven utilizes a mint and burn protocol available within the Haven
-            vault. Once you own XHV, the coin can be burned for the stable
-            digital asset, xUSD. You are also able to mint xUSD back to the
-            volatile coin, XHV.
-          </Description>
-          <Description>
-            The value of XHV will always fluctuate, but 1 xUSD will always be
-            equal to 1 USD worth of XHV. Investors can choose to hold the
-            volatile coin, XHV, or lock in their portfolio value in xUSD
+            Haven uses an innovative mechanism to swap between all supported
+            currencies. For example, when you swap from Haven [XHV] to xUSD the
+            system destroys the XHV and creates xUSD equivalent to the USD
+            value. If you want to go back to XHV you will always receive the
+            same USD worth of XHV.
+            <br />
+            <br />
+            There are many different stablecoin projects but very few that can
+            offer the privacy, security and the flexibility of Haven with all
+            currency swaps completed in your own Haven vault. No 3rd party
+            needed.
           </Description>
           <LearnMore to="/faq">Read F.A.Q's</LearnMore>
         </Words>
@@ -74,16 +81,16 @@ const Content = ({ ref }) => {
             Why should I <br />
             use Haven?
           </Header>
+          <Title>ANYONE. ANYWHERE. ANYTIME.</Title>
           <Description>
-            Haven offers a unique solution to the risks of storing value in
-            crypto-currencies. The mint and burn protocol allows the asset,
-            xUSD, to remain stable without the use of fiat backing
-          </Description>
-          <Description>
-            Being based on Monero, Haven is private by default and all balances
-            and transactions are anonymous. The price stability of Haven's
-            assets gives investors exposure to market volatility, when they
-            choose it.
+            Use Haven to store or send your money anywhere in the world at any
+            time with little cost and complete privacy.
+            <br />
+            <br />
+            Haven is based on Monero, a well regarded cryptocurrency, and as
+            such inherits all of its privacy features giving you complete
+            financial control.no permission needed to store or transfer your
+            wealth.
           </Description>
           <LearnMore to="/faq">Read F.A.Q's</LearnMore>
         </Words>

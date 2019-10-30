@@ -17,7 +17,7 @@ import Footer from "../../../components/_inputs/footer";
 import { Container } from "./styles";
 
 import { dark, light } from "../../../constants/themes.js";
-import {decrypt} from "../../../utility";
+import { decrypt } from "../../../utility";
 
 const options = [
   { theme: "dark", value: "Dark Theme" },
@@ -30,8 +30,8 @@ class Settings extends Component {
     value: "",
     reveal: false,
     validated: true,
-    psk:"",
-    seed:""
+    psk: "",
+    seed: ""
   };
 
   componentDidMount() {
@@ -40,13 +40,12 @@ class Settings extends Component {
       value: this.props.theme.value
     });
 
-
-    Promise.all([decrypt(this.props.mnemonic_string),decrypt(this.props.sec_spendKey_string)])
-        .then(data => {
-      this.setState({seed: data[0], psk:data[1]});
-    })
-
-
+    Promise.all([
+      decrypt(this.props.mnemonic_string),
+      decrypt(this.props.sec_spendKey_string)
+    ]).then(data => {
+      this.setState({ seed: data[0], psk: data[1] });
+    });
   }
 
   handleClick = ({ theme, value }) => {
@@ -72,8 +71,6 @@ class Settings extends Component {
   };
 
   render() {
-
-
     const { value, reveal, psk, seed } = this.state;
 
     let truncated = "";
@@ -82,8 +79,6 @@ class Settings extends Component {
       const last = seed.substring(seed.length - 32);
       truncated = first + last;
     }
-
-
 
     const windowWidth = window.innerWidth;
 

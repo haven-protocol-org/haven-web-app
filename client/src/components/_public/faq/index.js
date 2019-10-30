@@ -15,53 +15,6 @@ const Content = ({ ref }) => {
   return (
     <>
       <Container>
-        <Heading>What is Haven?</Heading>
-        <Cell>
-          <Title>BUY. SWAP. STORE.</Title>
-          <Description>
-            Be your own bank with Haven. Simply buy Haven [XHV] from any
-            exchange it’s listed on, send it to your own private digital vault
-            where you can swap between all supported Haven currencies and
-            securely store them without giving up control to anyone else.
-            <br />
-            <br />
-            Complete privacy so that YOUR money is 100% yours. No bank needed.
-          </Description>
-        </Cell>
-        <Heading>Why use Haven?</Heading>
-        <Cell>
-          <Title>ANYONE. ANYWHERE. ANYTIME.</Title>
-          <Description>
-            Use Haven to store or send your money anywhere in the world at any
-            time with little cost and complete privacy.
-            <br />
-            <br />
-            Haven is based on Monero, a well regarded cryptocurrency, and as
-            such inherits all of its privacy features giving you complete
-            financial control.no permission needed to store or transfer your
-            wealth.
-          </Description>
-        </Cell>
-        <Heading>How does Haven work?</Heading>
-        <Cell>
-          <Title>PRIVATE. SECURE. FLEXIBLE.</Title>
-          <Description>
-            Haven uses an innovative mechanism to swap between all supported
-            currencies.
-            <br />
-            <br />
-            For example, when you swap from Haven [XHV] to xUSD the system
-            destroys the XHV and creates xUSD equivalent to the USD value. If
-            you want to go back to XHV you will always receive the same USD
-            worth of XHV.
-            <br />
-            <br />
-            There are many different stablecoin projects but very few that can
-            offer the privacy, security and the flexibility of Haven with all
-            currency swaps completed in your own Haven vault. No 3rd party
-            needed.
-          </Description>
-        </Cell>
         <Heading>What can Haven be used for? </Heading>
         <Cell>
           <Title>Storage</Title>
