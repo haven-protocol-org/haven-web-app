@@ -21,6 +21,7 @@ import { Container } from "./styles";
 import { isDevMode } from "../../../constants/env";
 import { convertBalanceForReading, estimateFee } from "../../../utility";
 import { core } from "../../../declarations/open_monero.service";
+import {Redirect} from "react-router-dom";
 
 const options = [{ asset: "Haven", ticker: "XHV" }];
 
@@ -42,7 +43,8 @@ class Transfer extends Component {
     secondTabState: false,
     checked: false,
     copyButtonState: "Copy Address",
-    address: ""
+    address: "",
+    txSucceed:false
   };
 
   componentDidMount() {
@@ -60,7 +62,8 @@ class Transfer extends Component {
         ...prevState,
         recipient_address: "",
         send_amount: "",
-        tx_submitted: false
+        tx_submitted: false,
+        txSucceed: true
       }));
     }
   }
@@ -145,14 +148,27 @@ class Transfer extends Component {
   };
 
   render() {
+    
+    
+    
+    
+    
     const {
       send_asset,
       send_amount,
       send_ticker,
       recipient_address,
       checked,
-      payment_id
+      payment_id,
+        txSucceed
     } = this.state;
+    
+    
+    
+    if (txSucceed) {
+      return <Redirect to="./assets/XHV"/>
+    }
+    
 
     const checkValidation =
       send_amount.length > 0 && recipient_address.length > 97;
