@@ -89,7 +89,7 @@ const Content = ({ ref }) => {
             <br />
             Haven is based on Monero, a well regarded cryptocurrency, and as
             such inherits all of its privacy features giving you complete
-            financial control.no permission needed to store or transfer your
+            financial control. No permission needed to store or transfer your
             wealth.
           </Description>
           <LearnMore to="/faq">Read F.A.Q's</LearnMore>
