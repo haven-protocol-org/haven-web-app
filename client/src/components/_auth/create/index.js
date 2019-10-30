@@ -67,7 +67,7 @@ const Create = ({
             </div>
           ) : (
             <Submit disabled={true} onClick={nextStep}>
-              <Spinner color={"black"} />
+              <Spinner color={"white"} />
             </Submit>
           )}
         </Buttons>
