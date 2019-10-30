@@ -2,6 +2,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { sendFunds, resetSendFunds } from "../../../actions";
+import * as clipboard from "clipboard-polyfill";
 
 // Relative Imports
 import Page from "../../../components/_layout/page";
@@ -21,7 +22,7 @@ import { Container } from "./styles";
 import { isDevMode } from "../../../constants/env";
 import { convertBalanceForReading, estimateFee } from "../../../utility";
 import { core } from "../../../declarations/open_monero.service";
-import {Redirect} from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 const options = [{ asset: "Haven", ticker: "XHV" }];
 
@@ -44,7 +45,7 @@ class Transfer extends Component {
     checked: false,
     copyButtonState: "Copy Address",
     address: "",
-    txSucceed:false
+    txSucceed: false
   };
 
   componentDidMount() {
@@ -133,12 +134,28 @@ class Transfer extends Component {
     this.setState({ send_amount: availableBalance.toString() });
   };
 
-  copyAddress = () => {
-    console.log(this.state.address);
-    navigator.clipboard.writeText(this.state.address);
+  // copyAddress = () => {
+  //   console.log(this.state.address);
+  //   navigator.clipboard.writeText(this.state.address);
+  //   this.setState({
+  //     copyButtonState: "Copied Address"
+  //   });
+  //
+  //   setTimeout(() => {
+  //     this.setState({
+  //       copyButtonState: "Copy Address"
+  //     });
+  //   }, 1000);
+  // };
+
+  clipboardAddress = () => {
+    const { address } = this.state;
+
     this.setState({
       copyButtonState: "Copied Address"
     });
+
+    clipboard.writeText(address);
 
     setTimeout(() => {
       this.setState({
@@ -148,11 +165,6 @@ class Transfer extends Component {
   };
 
   render() {
-    
-    
-    
-    
-    
     const {
       send_asset,
       send_amount,
@@ -160,15 +172,12 @@ class Transfer extends Component {
       recipient_address,
       checked,
       payment_id,
-        txSucceed
+      txSucceed
     } = this.state;
-    
-    
-    
+
     if (txSucceed) {
-      return <Redirect to="./assets/XHV"/>
+      return <Redirect to="./assets/XHV" />;
     }
-    
 
     const checkValidation =
       send_amount.length > 0 && recipient_address.length > 97;
@@ -338,7 +347,7 @@ class Transfer extends Component {
               <Container>
                 <Footer
                   label={this.state.copyButtonState}
-                  onClick={this.copyAddress}
+                  onClick={this.clipboardAddress}
                 />
               </Container>
             </>

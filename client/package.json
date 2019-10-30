@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "chart.js": "^2.9.1",
+    "clipboard-polyfill": "^2.8.6",
     "react": "^16.11.0",
     "react-chartjs-2": "^2.8.0",
     "react-dom": "^16.11.0",
