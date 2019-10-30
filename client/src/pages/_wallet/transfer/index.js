@@ -32,7 +32,7 @@ class Transfer extends Component {
   }
 
   state = {
-    tx_submitted: true,
+    tx_submitted: false,
     send_asset: "Haven",
     send_amount: "",
     send_ticker: "XHV",

@@ -29,20 +29,16 @@ export const restoreWallet = (seed) => {
 
   return async (dispatch) => {
     dispatch(accountCreationRequested());
-
-
     const lWallet = await core.monero_utils_promise;
     // check if user submitted privKey
 
     try {
 
       if (seed.length === 64) {
-
         keys = lWallet.address_and_keys_from_seed(seed, NET_TYPE_ID);
         keys.mnemonic_string = lWallet.mnemonic_from_seed(seed, 'English');
       }
-      else
-      {
+      else {
         keys = lWallet.seed_and_keys_from_mnemonic(seed, NET_TYPE_ID);
         keys.mnemonic_string = seed;
       }
