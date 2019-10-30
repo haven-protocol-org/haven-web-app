@@ -1,9 +1,9 @@
 {
   "name": "haven_web_wallet",
-  "version": "1.23.0",
+  "version": "1.25.0",
   "private": true,
   "dependencies": {
-    "chart.js": "^2.8.0",
+    "chart.js": "^2.9.1",
     "react": "^16.11.0",
     "react-chartjs-2": "^2.8.0",
     "react-dom": "^16.11.0",

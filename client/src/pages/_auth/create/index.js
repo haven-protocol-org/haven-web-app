@@ -36,7 +36,7 @@ class Create extends Component {
 
   async componentDidUpdate(prevProps, prevState) {
 
-    if (prevProps.mnemonicString === "" || this.props.mnemonicString !== "") {
+    if (this.props.mnemonicString !== "" && this.state.mnemonicString === "") {
       const seed = await decrypt(this.props.mnemonicString);
       this.setState({mnemonicString: seed});
     }
@@ -144,7 +144,7 @@ class Create extends Component {
   }
 }
 
-export const mapStateToProps = state => ({
+const mapStateToProps = state => ({
   mnemonicString: state.keys.mnemonic_string,
   isLoggedIn: selectIsLoggedIn(state),
   isRequestingLogin: selectIsRequestingLogin(state)

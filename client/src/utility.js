@@ -1,6 +1,7 @@
 import { NO_BALANCE } from "./reducers/balance";
 import { notificationList } from "./constants/notificationList";
 import { NO_PRICE } from "./reducers/priceHistory";
+import {isDevMode} from "./constants/env";
 
 export const convertTimestampToDateString = timestamp =>
   new Date(timestamp).toLocaleDateString();
@@ -99,6 +100,10 @@ export const createKey = async () => {
 
 export const encrypt = async (message) => {
 
+  if (isDevMode()) {
+    return message;
+  }
+
   const enc = new TextEncoder();
   const encMessage = enc.encode(message);
 
@@ -114,6 +119,10 @@ export const encrypt = async (message) => {
 };
 
 export const decrypt = async (cipher) => {
+
+  if (isDevMode()) {
+    return cipher;
+  }
 
   const decrypted = await window.crypto.subtle.decrypt(
       {

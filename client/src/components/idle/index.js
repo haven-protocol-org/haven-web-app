@@ -1,6 +1,7 @@
 import { Component } from "react";
 import { connect } from "react-redux";
 import { closeWallet } from "../../actions";
+import {selectSyncState} from "../../reducers/chain";
 
 const ACTIVITY_EVENTS = [
   "mousemove",
@@ -22,37 +23,75 @@ class Idle extends Component {
   idleTimer = null;
 
   componentDidMount() {
+
+    // do not track idle time while syncing
+    if (this.props.isInSyncProcess) {
+      return;
+    }
+
+    this.addActivityListener();
+    this.clearTimer();
+    this.startTimer();
+  }
+
+  addActivityListener() {
+
     ACTIVITY_EVENTS.forEach(event => {
       document.addEventListener(event, this.onActivity, {
         capture: true,
         passive: true
       });
     });
-
-    clearTimeout(this.idleTimer);
-    this.idleTimer = null;
-    this.idleTimer = setTimeout(this.onIdle, IDLE_TIME);
   }
 
-  onActivity = event => {
-    clearTimeout(this.idleTimer);
-    this.idleTimer = null;
-    this.idleTimer = setTimeout(this.onIdle, IDLE_TIME);
-  };
-
-  componentWillUnmount() {
+  removeActivityListener() {
 
     ACTIVITY_EVENTS.forEach(event => {
       document.removeEventListener(event, this.onActivity, { capture: true });
     });
 
+  }
+
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+
+    if (!prevProps.isInSyncProcess && this.props.isInSyncProcess) {
+      this.clearTimer();
+      this.removeActivityListener();
+    }
+    else if (prevProps.isInSyncProcess && !this.props.isInSyncProcess) {
+      this.clearTimer();
+      this.startTimer();
+      this.addActivityListener();
+    }
+
+  }
+
+  onActivity = event => {
+
+    this.clearTimer();
+    this.startTimer();
+  };
+
+  componentWillUnmount() {
+
+    this.removeActivityListener();
+    this.clearTimer();
+  }
+
+  clearTimer() {
     clearTimeout(this.idleTimer);
     this.idleTimer = null;
   }
 
+
+  startTimer(){
+    this.idleTimer = setTimeout(this.onIdle, IDLE_TIME);
+  }
+
   onIdle = event => {
-    clearTimeout(this.idleTimer);
-    this.idleTimer = null;
+
+    this.clearTimer();
     this.props.closeWallet();
   };
 
@@ -61,7 +100,12 @@ class Idle extends Component {
   }
 }
 
+
+const mapStateToProps = state => ({
+    isInSyncProcess: selectSyncState(state).isSyncing
+});
+
 export default connect(
-  null,
+    mapStateToProps,
   { closeWallet }
 )(Idle);

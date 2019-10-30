@@ -80,7 +80,7 @@ export const submitRawTx = (signedTx) => {
         .then(handleError)
 };
 
-const handleError = async (response) => {
+export const handleError = async (response) => {
 
 
     // intercept error on protocol level

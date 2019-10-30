@@ -21,7 +21,7 @@ class PublicRoutes extends Component {
   render() {
     return (
       <div>
-          <Suspense fallback={Loader}>
+          <Suspense fallback={<Loader/>}>
         <Route path="/" exact component={Welcome} />
         <Route path="/faq" exact component={Faq} />
         <Route path="/blog" exact component={Blog} />

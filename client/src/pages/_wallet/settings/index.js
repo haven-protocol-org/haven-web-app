@@ -41,8 +41,8 @@ class Settings extends Component {
     });
 
 
-    Promise.all([decrypt(this.props.mnemonic_string),decrypt(this.props.sec_spendKey_string)]).
-    then(data => {
+    Promise.all([decrypt(this.props.mnemonic_string),decrypt(this.props.sec_spendKey_string)])
+        .then(data => {
       this.setState({seed: data[0], psk:data[1]});
     })
 

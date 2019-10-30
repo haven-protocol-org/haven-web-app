@@ -9,6 +9,7 @@ import {
     GET_PRICE_HISTORY_SUCCEED,
     GET_SIMPLE_PRICE_SUCCEED
 } from "./types";
+import {handleError} from "../api/api";
 
 
 
@@ -57,7 +58,7 @@ export const getSimplePrice = () => {
     return dispatch => {
         fetch(
             "https://api.coingecko.com/api/v3/simple/price?ids=haven,bitcoin&vs_currencies=usd")
-            .then(response => response.json())
+            .then(handleError)
             .then(priceData => {
 
                 dispatch(getSimplePriceSucceed(priceData.haven.usd));

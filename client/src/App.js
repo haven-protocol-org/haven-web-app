@@ -25,7 +25,7 @@ class App extends Component {
           <Navigation />
           <Status />
           <PublicRoutes />
-          <Suspense fallback={Loader}>
+          <Suspense fallback={<Loader/>}>
           <Route path="/wallet" component={PrivateRoutes} />
           </Suspense>
         </Router>

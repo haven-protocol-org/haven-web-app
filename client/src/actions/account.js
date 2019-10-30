@@ -38,6 +38,7 @@ export const restoreWallet = (seed) => {
         dispatch(keysGeneratedSucceed(keys));
         dispatch(addPubAddress(keys.address_string));
     } catch (e) {
+
       dispatch(keysGeneratedFailed(e));
       dispatch(accountCreationFailed(e));
       return;
@@ -65,11 +66,12 @@ const accountCreationFailed = error => ({
 });
 
 export const createWallet = () => {
+
   return dispatch => {
     core.monero_utils_promise.then(bridge => {
       const newWallet = bridge.newly_created_wallet("english", NET_TYPE_ID);
       dispatch(addPubAddress(newWallet.address_string));
-      delete newWallet.adress_string;
+       delete newWallet.adress_string;
       dispatch(keysGeneratedSucceed(newWallet));
     });
   };

@@ -12,6 +12,7 @@ import { core } from "../declarations/open_monero.service";
 import { NET_TYPE_ID } from "../constants/env";
 import {addErrorNotification, addNotificationByKey} from "./notification";
 import {decrypt} from "../utility";
+import {getTransfers} from "./transferHistory";
 
 export const sendFunds = (toAddress, amount, paymentId = "") => {
   const parsedAmount = core.monero_amount_format_utils.parseMoney(amount);
@@ -33,7 +34,7 @@ export const sendFunds = (toAddress, amount, paymentId = "") => {
 
     // default values
     sendFundsArgs.unlock_time = 0;
-    sendFundsArgs.priority = 0;
+    sendFundsArgs.priority = "0";
     sendFundsArgs.is_sweeping = false;
     sendFundsArgs.nettype = NET_TYPE_ID;
     sendFundsArgs.payment_id_string = paymentId;
@@ -46,6 +47,7 @@ export const sendFunds = (toAddress, amount, paymentId = "") => {
     sendFundsArgs.success_fn = params => {
       dispatch(addNotificationByKey(TRANSFER_SUCCEED));
       dispatch(sendFundsSucceed(params));
+      dispatch(getTransfers());
     };
     sendFundsArgs.error_fn = err => {
       dispatch(addErrorNotification(err));
