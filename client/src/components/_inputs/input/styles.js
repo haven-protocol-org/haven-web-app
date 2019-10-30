@@ -24,6 +24,8 @@ export const Field = styled.input`
   color: ${props => props.theme.input.input_value};
   line-height: 26px;
   outline: none;
+  width: auto;
+
   transition: 500ms;
   -webkit-appearance: none;
 
