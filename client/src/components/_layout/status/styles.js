@@ -1,10 +1,12 @@
 import styled from "styled-components";
 import media from "../../../constants/media.js";
 
+// background: ${props => props.theme.states[props.type]};
+
 export const Container = styled.div`
   height: 40px;
   width: 100vw;
-  background: ${props => props.theme.states[props.type]};
+  background: #2D8872;
   color: white;
   display: flex;
   font-size: 16px
