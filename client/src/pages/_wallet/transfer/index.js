@@ -134,20 +134,6 @@ class Transfer extends Component {
     this.setState({ send_amount: availableBalance.toString() });
   };
 
-  // copyAddress = () => {
-  //   console.log(this.state.address);
-  //   navigator.clipboard.writeText(this.state.address);
-  //   this.setState({
-  //     copyButtonState: "Copied Address"
-  //   });
-  //
-  //   setTimeout(() => {
-  //     this.setState({
-  //       copyButtonState: "Copy Address"
-  //     });
-  //   }, 1000);
-  // };
-
   clipboardAddress = () => {
     const { address } = this.state;
 
