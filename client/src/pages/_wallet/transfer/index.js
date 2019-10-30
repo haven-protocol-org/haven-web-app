@@ -200,7 +200,6 @@ class Transfer extends Component {
                 <Input
                   label="Amount"
                   placeholder="Enter amount"
-                  button="Max"
                   onClick={this.sendMax}
                   type="number"
                   name="send_amount"
