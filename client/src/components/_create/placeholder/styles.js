@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  height: 220px;
+  height: auto;
   width: auto;
   display: flex;
   flex-direction: column;
@@ -21,5 +21,5 @@ export const Wrapper = styled.div`
   margin-bottom: 12px;
 `;
 export const Image = styled.img`
-  height: 90%;
+  height: 200px;
 `;

@@ -26,7 +26,7 @@ export const dark = {
     input_error: "#f04747"
   },
   states: {
-    success: "#34d8ac",
+    success: "#2D8872",
     error: "#F04747",
     warning: "#FFC246"
   }

@@ -18,27 +18,25 @@ import {
   selectIsLoggedIn,
   selectIsRequestingLogin
 } from "../../../reducers/account";
-import {decrypt} from "../../../utility";
+import { decrypt } from "../../../utility";
 
 class Create extends Component {
   state = {
     step: 1,
     error: "",
     verify_seed: "",
-    mnemonicString:""
+    mnemonicString: ""
   };
 
   componentDidMount() {
+    window.scrollTo(0, 0);
     this.props.getSeed();
-
   }
 
-
   async componentDidUpdate(prevProps, prevState) {
-
     if (this.props.mnemonicString !== "" && this.state.mnemonicString === "") {
       const seed = await decrypt(this.props.mnemonicString);
-      this.setState({mnemonicString: seed});
+      this.setState({ mnemonicString: seed });
     }
   }
 
