@@ -3,23 +3,27 @@ import {
   VALIDATE_MNEMONIC_FAILED,
   ACCOUNT_CREATED,
   ACCOUNT_CREATION_FAILED,
-  ACCOUNT_CREATION_REQUESTED
+  ACCOUNT_CREATION_REQUESTED, KEEP_ALIVE
 } from "./types";
 
 import { keysGeneratedFailed, keysGeneratedSucceed } from "./key";
 import { core } from "../declarations/open_monero.service";
 import { addPubAddress, getTransfers } from "./index";
-import { login } from "../api/api";
+import {login, ping} from "../api/api";
 import { NET_TYPE_ID } from "../constants/env";
+import {selectCredentials} from "../reducers/account";
 
 export const closeWallet = () => {
   return { type: CLOSE_WALLET };
 };
 
-export const refresh = () => {
-  return dispatch => {
-    dispatch(getTransfers());
-  };
+export const keepAlive = () => {
+
+  return (dispatch, getState) => {
+    ping(selectCredentials(getState()));
+    dispatch({type:KEEP_ALIVE});
+  }
+
 };
 
 export const restoreWallet = (seed) => {

@@ -21,9 +21,8 @@ export const login = (address, view_key, generated_locally, create_account = tru
  * @param address
  * @param view_key
  */
-export const keepAlive = (address, view_key) => {
+export const ping = (params) => {
 
-    const params = {address, view_key};
    return fetch( `${API_URL}/ping`, { ...INIT_REQUEST, body: JSON.stringify(params) } )
        .then(handleError)
 
