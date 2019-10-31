@@ -20,16 +20,13 @@ export const Container = styled.div`
   `};
 `;
 
-export const Scroller = styled.div``;
-
-export const Padding = styled.div`
+export const Spacing = styled.div`
   height: 60px;
   grid-column: 1 / 3;
-  margin-top: -20px;
 
   ${media.mobile`
-    height: 120px;
-    `};
+    height: 200px;
+  `};
 `;
 
 /*

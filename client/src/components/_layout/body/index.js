@@ -2,13 +2,13 @@
 import React from "react";
 
 // Relative Imports
-import { Container, Padding } from "./styles";
+import { Container, Spacing } from "./styles";
 
 const Body = ({ children, span }) => {
   return (
     <Container span={span}>
       {children}
-      <Padding />
+      <Spacing />
     </Container>
   );
 };
