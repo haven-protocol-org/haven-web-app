@@ -11,7 +11,7 @@ import Transfer from "../../pages/_wallet/transfer";
 import Settings from "../../pages/_wallet/settings";
 import { connect } from "react-redux";
 import {selectIsLoggedIn} from "../../reducers/account";
-import {refresh} from "../../actions";
+import {keepAlive, getTransfers} from "../../actions";
 import Idle from "../../components/idle";
 
 /**
@@ -23,13 +23,30 @@ import Idle from "../../components/idle";
 class PrivateRoutes extends Component {
   componentDidMount() {
 
-
-      this.props.refresh();
+    this.props.getTransfers();
+    this.props.keepAlive();
     this.timer = setInterval(this.props.refresh, 15000);
+    this.addTimer();
+  }
+
+
+  addTimer() {
+
+      this.getTxTimer = setInterval(this.props.getTransfers, 30000);
+      this.keepAliveTimer = setInterval(this.props.keepAlive, 15000);
+  }
+
+  removeTimer() {
+
+      clearInterval(this.getTxTimer);
+      clearInterval(this.keepAliveTimer);
+      this.getTxTimer = null;
+      this.keepAliveTimer = null;
+
   }
 
   componentWillUnmount() {
-    clearInterval(this.timer);
+   this.removeTimer();
   }
 
   render() {
@@ -58,5 +75,5 @@ export const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { refresh }
+  { keepAlive, getTransfers }
 )(PrivateRoutes);

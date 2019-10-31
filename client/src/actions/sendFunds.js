@@ -47,7 +47,8 @@ export const sendFunds = (toAddress, amount, paymentId = "") => {
     sendFundsArgs.success_fn = params => {
       dispatch(addNotificationByKey(TRANSFER_SUCCEED));
       dispatch(sendFundsSucceed(params));
-      dispatch(getTransfers());
+      setTimeout((() => dispatch(getTransfers())), 500);
+
     };
     sendFundsArgs.error_fn = err => {
       dispatch(addErrorNotification(err));
