@@ -123,7 +123,6 @@ const Footer = () => {
         >
           Block Explorer
         </External>
-        <Internal to="/create">Web Wallet</Internal>
       </Section>
 
       <Section>
