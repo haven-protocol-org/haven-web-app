@@ -87,27 +87,33 @@ const Footer = () => {
         <Title>Products</Title>
         <External
           rel="noopener"
-          href="https://github.com/haven-protocol-org/haven-legacy/releases/download/3.2.2/haven-macOS-gui-3.2.2.zip"
+          href="https://github.com/haven-protocol-org/haven/releases/download/v0.14.1-release/haven-macos-4.0.0-gui.zip"
         >
           Mac Wallet
         </External>
         <External
           rel="noopener"
-          href="https://github.com/haven-protocol-org/haven-legacy/releases/download/3.2.2/haven-windows-gui-3.2.2b.zip"
+          href="https://github.com/haven-protocol-org/haven/releases/download/v0.14.1-release/haven-win-x64-4.0.0-gui.zip"
         >
           Windows Wallet
         </External>
         <External
           rel="noopener"
-          href="https://github.com/haven-protocol-org/haven-legacy/releases/download/3.2.2/haven-linux-x64-3.2.2-cli.tar.gz"
+          href="https://github.com/haven-protocol-org/haven-protocol/releases/tag/v0.14.1.2a"
         >
           Linux Wallet
         </External>
         <External
           rel="noopener"
-          href="https://github.com/haven-protocol-org/haven-legacy/releases"
+          href="https://github.com/haven-protocol-org/haven/releases/download/v0.14.1-release/haven-macos-v0.14.1-cli.zip"
         >
-          CLI Wallet
+          Mac CLI
+        </External>
+        <External
+          rel="noopener"
+          href="https://github.com/haven-protocol-org/haven/releases/download/v0.14.1-release/haven-win-x64-v0.14.1-cli.zip"
+        >
+          Windows CLI
         </External>
 
         <External
