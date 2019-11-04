@@ -1,6 +1,7 @@
 // Library Imports
 import React, { Component } from "react";
 import { Line } from "react-chartjs-2";
+import { defaults } from 'react-chartjs-2';
 import { Spinner } from "../spinner/index.js";
 
 // Relative Imports
@@ -48,19 +49,14 @@ class Chart extends Component {
     });
   };
 
-  onHoverChart(event) {
-    const hoveredElementArr = this.chartJs.chartInstance.getElementAtEvent(
-      event
-    );
+  onHoverChart(data) {
 
-    if (hoveredElementArr.length === 0) return;
+    const dataPoint = data.dataPoints ? data.dataPoints[0] : null;
+    if (!dataPoint) return;
 
-    const hoveredElement = hoveredElementArr[0];
 
-    const label = this.chartJs.chartInstance.data.labels[hoveredElement._index];
-    const value = this.chartJs.chartInstance.data.datasets[
-      hoveredElement._datasetIndex
-    ].data[hoveredElement._index];
+    const label = dataPoint.xLabel;
+    const value = dataPoint.yLabel;
 
     this.setState(prev => ({
       ...prev,
@@ -146,10 +142,11 @@ class Chart extends Component {
           <Line
             ref={ref => (this.chartJs = ref)}
             options={{
+                hover: {
+                  mode:'index'
+                },
               responsive: true,
               maintainAspectRatio: false,
-              onHover: event => this.onHoverChart(event),
-
               legend: {
                 display: false
               },
@@ -165,16 +162,24 @@ class Chart extends Component {
                 ],
                 xAxes: [{ display: false }]
               },
-              tooltips: { enabled: false }
+                tooltips: {
+                  enabled:false,
+                    mode: 'index',
+                    intersect: false,
+                     custom:(data) => this.onHoverChart(data)
+                },
+
             }}
             data={{
               labels: this.props.labels,
+
               datasets: [
                 {
                   backgroundColor: "rgba(114, 137, 218, 0.20)",
                   borderColor: "rgba(114, 137, 218, 1)",
                   pointBackgroundColor: "rgba(114, 137, 218, 1)",
-                  data: this.props.prices
+                  data: this.props.prices,
+
                 }
               ]
             }}
