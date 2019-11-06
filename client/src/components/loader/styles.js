@@ -15,6 +15,7 @@ export const Container = styled.div`
 export const Icon = styled.img`
   height: 240px;
   width: 240px;
+  fill: red;
 `;
 
 export const Title = styled.div`
