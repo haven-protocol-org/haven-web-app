@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import media from "../../../constants/media.js";
 
 export const Container = styled.header`
   height: 64px;
@@ -24,6 +25,10 @@ export const Tag = styled.div`
   border-radius: 3px;
   margin-left: 12px;
   color: #26282c;
+
+  ${media.mobile`
+     font-size: 8px
+   `};
 `;
 
 export const Haven = styled.div`

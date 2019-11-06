@@ -1,7 +1,6 @@
 // Library Imports
 import React, { Component } from "react";
 import { Line } from "react-chartjs-2";
-import { defaults } from 'react-chartjs-2';
 import { Spinner } from "../spinner/index.js";
 
 // Relative Imports
@@ -50,10 +49,8 @@ class Chart extends Component {
   };
 
   onHoverChart(data) {
-
     const dataPoint = data.dataPoints ? data.dataPoints[0] : null;
     if (!dataPoint) return;
-
 
     const label = dataPoint.xLabel;
     const value = dataPoint.yLabel;
@@ -142,9 +139,9 @@ class Chart extends Component {
           <Line
             ref={ref => (this.chartJs = ref)}
             options={{
-                hover: {
-                  mode:'index'
-                },
+              hover: {
+                mode: "index"
+              },
               responsive: true,
               maintainAspectRatio: false,
               legend: {
@@ -162,13 +159,12 @@ class Chart extends Component {
                 ],
                 xAxes: [{ display: false }]
               },
-                tooltips: {
-                  enabled:false,
-                    mode: 'index',
-                    intersect: false,
-                     custom:(data) => this.onHoverChart(data)
-                },
-
+              tooltips: {
+                enabled: false,
+                mode: "index",
+                intersect: false,
+                custom: data => this.onHoverChart(data)
+              }
             }}
             data={{
               labels: this.props.labels,
@@ -178,8 +174,7 @@ class Chart extends Component {
                   backgroundColor: "rgba(114, 137, 218, 0.20)",
                   borderColor: "rgba(114, 137, 218, 1)",
                   pointBackgroundColor: "rgba(114, 137, 218, 1)",
-                  data: this.props.prices,
-
+                  data: this.props.prices
                 }
               ]
             }}
