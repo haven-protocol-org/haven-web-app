@@ -103,7 +103,6 @@ export const HeadingWrapper = styled.div`
   height: auto;
   text-align: center;
   margin-top: -80px;
-  background: pink;
 
   ${media.tablet`
     width: 90%;
