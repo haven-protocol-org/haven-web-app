@@ -19,7 +19,7 @@ import Tab from "../../../components/tab";
 // import InputButton from "../../../components/_inputs/input_button";
 
 import { Container } from "./styles";
-import { isDevMode } from "../../../constants/env";
+import { isDevMode } from "../../../env";
 import { convertBalanceForReading, estimateFee } from "../../../utility";
 import { core } from "../../../declarations/open_monero.service";
 import { Redirect } from "react-router-dom";

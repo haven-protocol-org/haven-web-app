@@ -15,7 +15,7 @@ import {
 import Icon from "../../../assets/haven.svg";
 import { closeWallet } from "../../../actions";
 import { selectIsLoggedIn } from "../../../reducers/account";
-import { APP_VERSION, NET_TYPE_NAME } from "../../../constants/env";
+import { APP_VERSION, NET_TYPE_NAME } from "../../../env";
 
 class Navigation extends Component {
   handleLogout = () => {

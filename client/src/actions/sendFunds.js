@@ -9,7 +9,7 @@ import {
 import { getRandomOuts, getUnspentOuts, submitRawTx } from "../api/api";
 // import {logM} from "../utility";
 import { core } from "../declarations/open_monero.service";
-import { NET_TYPE_ID } from "../constants/env";
+import { NET_TYPE_ID } from "../env";
 import {addErrorNotification, addNotificationByKey} from "./notification";
 import {decrypt} from "../utility";
 import {getTransfers} from "./transferHistory";

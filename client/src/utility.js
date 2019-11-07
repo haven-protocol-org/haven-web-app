@@ -1,7 +1,7 @@
 import { NO_BALANCE } from "./reducers/balance";
 import { notificationList } from "./constants/notificationList";
 import { NO_PRICE } from "./reducers/priceHistory";
-import {isDevMode} from "./constants/env";
+import {isDevMode} from "./env";
 
 export const convertTimestampToDateString = timestamp =>
   new Date(timestamp).toLocaleDateString();

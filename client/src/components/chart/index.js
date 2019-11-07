@@ -23,7 +23,7 @@ import {
   PRICE_RANGE_MONTH,
   PRICE_RANGE_YEAR
 } from "../../reducers/priceHistory";
-import { isDevMode } from "../../constants/env";
+import { isDevMode } from "../../env";
 
 class Chart extends Component {
   constructor(props) {

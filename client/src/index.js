@@ -15,7 +15,7 @@ import reduxThunk from "redux-thunk";
 import reducers from "./reducers";
 import { loadState } from "./localStorage";
 import { saveState } from "./localStorage";
-import { isDevMode } from "./constants/env";
+import { isDevMode } from "./env";
 
 const logger = store => next => action => {
   console.group(action.type);

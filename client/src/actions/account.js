@@ -10,7 +10,7 @@ import { keysGeneratedFailed, keysGeneratedSucceed } from "./key";
 import { core } from "../declarations/open_monero.service";
 import { addPubAddress, getTransfers } from "./index";
 import {login, ping} from "../api/api";
-import { NET_TYPE_ID } from "../constants/env";
+import { NET_TYPE_ID } from "../env";
 import {selectCredentials} from "../reducers/account";
 
 export const closeWallet = () => {

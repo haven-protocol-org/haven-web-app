@@ -12,7 +12,7 @@ import {
   Row,
   Data
 } from "./styles";
-import { isMainnet } from "../../constants/env";
+import { isMainnet } from "../../env";
 // import { isDevMode } from "../../constants/env";
 
 const Transaction = ({
