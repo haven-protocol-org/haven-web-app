@@ -35,12 +35,15 @@ class Welcome extends Component {
   };
 
   render() {
+    const windowWidth = window.innerWidth;
+    console.log("windowWidth", windowWidth);
+
     return (
       <Page>
         <Container>
           <Microcopy>
             <HeadingWrapper>
-              <Heading>
+              <Heading size={windowWidth < 340 && "44px"}>
                 Private <br /> Decentralized Finance
               </Heading>
             </HeadingWrapper>

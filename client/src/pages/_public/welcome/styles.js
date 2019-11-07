@@ -76,12 +76,6 @@ export const Page = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-
-  /* &::-webkit-scrollbar {
-    width: 0px;
-    background: transparent;
-     display: none;
-  } */
 `;
 
 export const Container = styled.div`
@@ -109,6 +103,14 @@ export const HeadingWrapper = styled.div`
   height: auto;
   text-align: center;
   margin-top: -80px;
+
+  ${media.tablet`
+    width: 90%;
+  `};
+
+  ${media.mobile`
+    width: 98%;
+  `};
 `;
 
 export const Heading = styled.h1`
@@ -118,8 +120,12 @@ export const Heading = styled.h1`
   color: #ffffff;
   letter-spacing: 0;
 
+  ${media.tablet`
+    font-size: 72px;
+  `};
+
   ${media.mobile`
-    font-size: 50px;
+    font-size: ${props => (props.size ? `${props.size}` : "55px")}
   `};
 `;
 

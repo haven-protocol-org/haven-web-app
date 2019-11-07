@@ -3,7 +3,8 @@ import {
   VALIDATE_MNEMONIC_FAILED,
   ACCOUNT_CREATED,
   ACCOUNT_CREATION_FAILED,
-  ACCOUNT_CREATION_REQUESTED, KEEP_ALIVE
+  ACCOUNT_CREATION_REQUESTED,
+  KEEP_ALIVE
 } from "./types";
 
 import { keysGeneratedFailed, keysGeneratedSucceed } from "./key";
@@ -18,40 +19,33 @@ export const closeWallet = () => {
 };
 
 export const keepAlive = () => {
-
   return (dispatch, getState) => {
     ping(selectCredentials(getState()));
-    dispatch({type:KEEP_ALIVE});
-  }
-
+    dispatch({ type: KEEP_ALIVE });
+  };
 };
 
-export const restoreWallet = (seed) => {
-
+export const restoreWallet = seed => {
   let keys = null;
 
-
-  return async (dispatch) => {
+  return async dispatch => {
     dispatch(accountCreationRequested());
     const lWallet = await core.monero_utils_promise;
     // check if user submitted privKey
 
     try {
-
       if (seed.length === 64) {
         keys = lWallet.address_and_keys_from_seed(seed, NET_TYPE_ID);
-        keys.mnemonic_string = lWallet.mnemonic_from_seed(seed, 'English');
-      }
-      else {
+        keys.mnemonic_string = lWallet.mnemonic_from_seed(seed, "English");
+      } else {
         keys = lWallet.seed_and_keys_from_mnemonic(seed, NET_TYPE_ID);
         keys.mnemonic_string = seed;
       }
 
-        seed = null;
-        dispatch(keysGeneratedSucceed(keys));
-        dispatch(addPubAddress(keys.address_string));
+      seed = null;
+      dispatch(keysGeneratedSucceed(keys));
+      dispatch(addPubAddress(keys.address_string));
     } catch (e) {
-
       dispatch(keysGeneratedFailed(e));
       dispatch(accountCreationFailed(e));
       return;
@@ -79,12 +73,11 @@ const accountCreationFailed = error => ({
 });
 
 export const createWallet = () => {
-
   return dispatch => {
     core.monero_utils_promise.then(bridge => {
       const newWallet = bridge.newly_created_wallet("english", NET_TYPE_ID);
       dispatch(addPubAddress(newWallet.address_string));
-       delete newWallet.adress_string;
+      delete newWallet.adress_string;
       dispatch(keysGeneratedSucceed(newWallet));
     });
   };
