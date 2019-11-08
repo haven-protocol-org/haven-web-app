@@ -3,24 +3,26 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 // Relative Imports
-import Auth from "../../../components/_auth/create/index.js";
-import Placeholder from "../../../components/_create/placeholder";
-import CreateSeed from "../../../components/_create/create_seed";
-import VerifySeed from "../../../components/_create/verify_seed";
+import Auth from "../../../../components/_auth/create/index.js";
+import Placeholder from "../../../../components/_create/placeholder";
+import CreateSeed from "../../../../components/_create/create_seed";
+import VerifySeed from "../../../../components/_create/verify_seed";
 import { Container } from "./styles";
-import {
-  createWallet,
-  mnenomicVerificationSucceed,
-  mneomicVerifcationFailed
-} from "../../../actions";
-import { Redirect } from "react-router";
-import {
-  selectIsLoggedIn,
-  selectIsRequestingLogin
-} from "../../../reducers/account";
-import { decrypt } from "../../../utility";
+import { decrypt } from "../../../../utility";
+import PropTypes from 'prop-types';
 
-class Create extends Component {
+
+Create.propTypes = {
+
+  getSeed:PropTypes.func.required,
+  isRequestingLogin:PropTypes.bool,
+  verifySeed:PropTypes.func.required,
+  createdSeed:PropTypes.string.required
+};
+
+
+
+export class Create extends Component {
   state = {
     step: 1,
     error: "",
@@ -35,7 +37,7 @@ class Create extends Component {
 
   async componentDidUpdate(prevProps, prevState) {
     if (this.props.mnemonicString !== "" && this.state.mnemonicString === "") {
-      const seed = await decrypt(this.props.mnemonicString);
+      const seed = await decrypt(this.props.createdSeed);
       this.setState({ mnemonicString: seed });
     }
   }
@@ -115,9 +117,7 @@ class Create extends Component {
   };
 
   render() {
-    if (this.props.isLoggedIn) {
-      return <Redirect to="/wallet/assets" />;
-    }
+
 
     const { step, verify_seed } = this.state;
     const disabled = step === 3 && verify_seed === "";
@@ -142,17 +142,4 @@ class Create extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  mnemonicString: state.keys.mnemonic_string,
-  isLoggedIn: selectIsLoggedIn(state),
-  isRequestingLogin: selectIsRequestingLogin(state)
-});
 
-export default connect(
-  mapStateToProps,
-  {
-    getSeed: createWallet,
-    mnenomicVerificationSucceed,
-    mneomicVerifcationFailed
-  }
-)(Create);

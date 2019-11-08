@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
-import media from "../../../constants/media.js";
-import { background, link, link_hover } from "../../../constants/colors.js";
+import media from "../../../../constants/media.js";
+import { background } from "../../../../constants/colors.js";
 
 export const Container = styled.div`
   min-height: 100vh;
@@ -14,25 +14,8 @@ export const Container = styled.div`
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='30' viewBox='0 0 1000 120'%3E%3Cg fill='none' stroke='%23222' stroke-width='5' stroke-opacity='0.25'%3E%3Cpath d='M-500 75c0 0 125-30 250-30S0 75 0 75s125 30 250 30s250-30 250-30s125-30 250-30s250 30 250 30s125 30 250 30s250-30 250-30'/%3E%3Cpath d='M-500 45c0 0 125-30 250-30S0 45 0 45s125 30 250 30s250-30 250-30s125-30 250-30s250 30 250 30s125 30 250 30s250-30 250-30'/%3E%3Cpath d='M-500 105c0 0 125-30 250-30S0 105 0 105s125 30 250 30s250-30 250-30s125-30 250-30s250 30 250 30s125 30 250 30s250-30 250-30'/%3E%3Cpath d='M-500 15c0 0 125-30 250-30S0 15 0 15s125 30 250 30s250-30 250-30s125-30 250-30s250 30 250 30s125 30 250 30s250-30 250-30'/%3E%3Cpath d='M-500-15c0 0 125-30 250-30S0-15 0-15s125 30 250 30s250-30 250-30s125-30 250-30s250 30 250 30s125 30 250 30s250-30 250-30'/%3E%3Cpath d='M-500 135c0 0 125-30 250-30S0 135 0 135s125 30 250 30s250-30 250-30s125-30 250-30s250 30 250 30s125 30 250 30s250-30 250-30'/%3E%3C/g%3E%3C/svg%3E");
 
   ${media.mobile`
-    padding-top: 70px;
+    padding-top: 50px;
   `}
-`;
-
-export const External = styled.a`
-  font-family: Inter-Regular;
-  font-size: 13px;
-  color: ${link}
-  letter-spacing: 0;
-  text-align: center;
-  line-height: 22px;
-  text-decoration: none;
-  transition: 750ms;
-
-
-  &:hover {
-    color: ${link_hover};
-    transition: 750ms;
-  }
 `;
 
 export const Image = styled.img`

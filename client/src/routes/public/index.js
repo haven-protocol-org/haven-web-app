@@ -5,8 +5,8 @@ import { Route } from "react-router-dom";
 // Relative Imports
 
 import Welcome from "../../pages/_public/welcome";
-import Create from "../../pages/_auth/create";
-import Login from "../../pages/_auth/login";
+import Create from "../../pages/_auth/create/presentational";
+import Login from "../../pages/_auth/login/presentational";
 import Loader from "../../components/loader";
 
 const Faq = lazy(() => import("../../pages/_public/faq"));

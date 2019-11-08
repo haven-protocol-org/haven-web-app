@@ -1,23 +1,28 @@
 // Library Imports
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
+import PropTypes from 'prop-types';
 
 // Relative Imports
 import { Container } from "./styles";
-import Auth from "../../../components/_auth/login";
-import Description from "../../../components/_inputs/description";
-import { Information } from "../../../constants/type.js";
-// import MultiLogin from "../../../components/_auth/multi_login";
+import Auth from "../../../../components/_auth/login";
+import Description from "../../../../components/_inputs/description";
+import { Information } from "../../../../constants/type.js";
 
-import { restoreWallet } from "../../../actions";
-import {
-  selectErrorMessageForLogin,
-  selectIsLoggedIn,
-  selectIsRequestingLogin
-} from "../../../reducers/account";
 
-class Login extends Component {
+Login.propTypes = {
+
+  errorMessage: PropTypes.string,
+  login:PropTypes.func.isRequired,
+  isRequestingLogin:PropTypes.bool,
+
+
+
+};
+
+
+
+
+export default class Login extends Component {
   state = {
     seed_phrase: "",
     error: ""
@@ -51,9 +56,7 @@ class Login extends Component {
 
   render() {
     const windowWidth = window.innerWidth;
-    if (this.props.isLoggedIn) {
-      return <Redirect to="/wallet/assets" />;
-    }
+
 
     const { seed_phrase, error } = this.state;
 
@@ -89,14 +92,3 @@ class Login extends Component {
     );
   }
 }
-
-const mapStateToProps = state => ({
-  isRequestingLogin: selectIsRequestingLogin(state),
-  isLoggedIn: selectIsLoggedIn(state),
-  errorMessage: selectErrorMessageForLogin(state)
-});
-
-export default connect(
-  mapStateToProps,
-  { login: restoreWallet }
-)(Login);
