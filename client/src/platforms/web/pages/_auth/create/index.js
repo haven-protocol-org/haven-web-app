@@ -1,17 +1,15 @@
 import {selectIsLoggedIn, selectIsRequestingLogin} from "../../../../reducers/account";
 import {connect} from "react-redux";
 import {createWallet, mnenomicVerificationSucceed, mneomicVerifcationFailed} from "../../../../actions";
-import {Create} from "../presentational";
 import {Component} from "react";
 import React from "react";
 import {Redirect} from "react-router";
+import {Create} from "../../../../../pages/_auth/create";
 
 
 
 
-export class CreatePage extends Component {
-
-
+class CreateWebContainer extends Component {
 
 
     verifySeed(typedSeed) {
@@ -27,11 +25,8 @@ export class CreatePage extends Component {
             return <Redirect to="/wallet/assets" />;
         }
 
-        return (<Create/>)
-
+        return (<Create verifySeed={this.verifySeed} isRequestingLogin={this.props.isRequestingLogin} getSeed={this.props.getSeed} createdSeed={this.props.mnemonicString}/>)
     }
-
-
 
 }
 
@@ -41,11 +36,11 @@ const mapStateToProps = state => ({
     isRequestingLogin: selectIsRequestingLogin(state)
 });
 
-export default connect(
+export const CreateWeb =  connect(
     mapStateToProps,
     {
         getSeed: createWallet,
         mnenomicVerificationSucceed,
         mneomicVerifcationFailed
     }
-)(CreatePage);
+)(CreateWebContainer);

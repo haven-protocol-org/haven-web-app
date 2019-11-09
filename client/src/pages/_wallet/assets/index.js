@@ -15,9 +15,11 @@ import CellDisabled from "../../../components/cell_disabled";
 import data from "../../../constants/data.js";
 import { NO_PRICE } from "../../../reducers/priceHistory";
 import { calcValue } from "../../../utility";
-import { selectReadableBalance } from "../../../reducers/balance";
 
-class Assets extends Component {
+
+
+
+class AssetsPage extends Component {
   state = {
     token: data,
     forexPriceFetched: false
@@ -32,11 +34,6 @@ class Assets extends Component {
     }
   }
 
-  handleState = () => {
-    this.setState(state => ({
-      status: !state.status
-    }));
-  };
 
   renderTokens = () => {
     const { token } = this.state;
@@ -98,13 +95,19 @@ class Assets extends Component {
 }
 
 export const mapStateToProps = state => ({
-  balance: state.balance,
-  readableBalance: selectReadableBalance(state),
   ...state.simplePrice,
   ...state.forex
 });
 
-export default connect(
+export const Assets =  connect(
   mapStateToProps,
   { getForex, getSimplePrice }
-)(Assets);
+)(AssetsPage);
+
+
+AssetsPage.propTypes = {
+
+  balance:PropTypes.any.required,
+  readableBalance: PropTypes.any.required
+
+};

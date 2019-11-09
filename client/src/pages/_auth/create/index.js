@@ -3,12 +3,12 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 // Relative Imports
-import Auth from "../../../../components/_auth/create/index.js";
-import Placeholder from "../../../../components/_create/placeholder";
-import CreateSeed from "../../../../components/_create/create_seed";
-import VerifySeed from "../../../../components/_create/verify_seed";
+import Auth from "../../../components/_auth/create/index.js";
+import Placeholder from "../../../components/_create/placeholder";
+import CreateSeed from "../../../components/_create/create_seed";
+import VerifySeed from "../../../components/_create/verify_seed";
 import { Container } from "./styles";
-import { decrypt } from "../../../../utility";
+import { decrypt } from "../../../utility";
 import PropTypes from 'prop-types';
 
 

@@ -65,9 +65,6 @@ export const sendFunds = (toAddress, amount, paymentId = "") => {
   };
 };
 
-export const resetSendFunds = () => {
-  return { type: SEND_FUNDS_RESET };
-};
 
 const updateStatus = status => {
   return { type: SEND_FUNDS_STATUS_UPDATE, payload: status };

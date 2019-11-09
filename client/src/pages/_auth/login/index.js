@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 
 // Relative Imports
 import { Container } from "./styles";
-import Auth from "../../../../components/_auth/login";
-import Description from "../../../../components/_inputs/description";
-import { Information } from "../../../../constants/type.js";
+import Auth from "../../../components/_auth/login";
+import Description from "../../../components/_inputs/description";
+import { Information } from "../../../constants/type.js";
 
 
 Login.propTypes = {
@@ -14,8 +14,6 @@ Login.propTypes = {
   errorMessage: PropTypes.string,
   login:PropTypes.func.isRequired,
   isRequestingLogin:PropTypes.bool,
-
-
 
 };
 

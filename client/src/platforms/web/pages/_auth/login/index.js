@@ -1,14 +1,14 @@
-import {selectErrorMessageForLogin, selectIsLoggedIn, selectIsRequestingLogin} from "../../../../reducers/account";
+import {selectErrorMessageForLogin, selectIsLoggedIn, selectIsRequestingLogin} from "../../../../../reducers/account";
 import {connect} from "react-redux";
-import {restoreWallet} from "../../../../actions";
-import Login from "../presentational";
+import {restoreWallet} from "../../../../../actions";
+import Login from "../../../../../pages/_auth/login";
 import {Redirect} from "react-router";
 import {Component} from "react";
 
 
 
 
-class LoginPage extends Component {
+class Login extends Component {
 
 
     render(){
@@ -36,7 +36,7 @@ const mapStateToProps = state => ({
     errorMessage: selectErrorMessageForLogin(state)
 });
 
-export default connect(
+export const LoginWeb =   connect(
     mapStateToProps,
     { login: restoreWallet }
-)(LoginPage);
+)(Login);

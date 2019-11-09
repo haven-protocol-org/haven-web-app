@@ -3,6 +3,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { selectTheme } from "../../../actions";
 
+import PropTypes from 'prop-types';
+
 // Relative Imports
 import Page from "../../../components/_layout/page";
 import Body from "../../../components/_layout/body";
@@ -24,7 +26,16 @@ const options = [
   { theme: "light", value: "Light Theme" }
 ];
 
-class Settings extends Component {
+
+
+SettingsPage.propTypes = {
+
+  keys:PropTypes.any.required
+
+
+};
+
+class SettingsPage extends Component {
   state = {
     status: false,
     value: "",
@@ -204,10 +215,9 @@ class Settings extends Component {
 
 const mapStateToProps = state => ({
   theme: state.theme,
-  ...state.keys
 });
 
-export default connect(
+export const Settings = connect(
   mapStateToProps,
   { selectTheme }
-)(Settings);
+)(SettingsPage);

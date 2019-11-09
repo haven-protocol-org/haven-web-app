@@ -1,8 +1,7 @@
 // Library Imports
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import { sendFunds, resetSendFunds } from "../../../actions";
 import * as clipboard from "clipboard-polyfill";
+import PropTypes from 'prop-types';
 
 // Relative Imports
 import Page from "../../../components/_layout/page";
@@ -26,7 +25,7 @@ import { Redirect } from "react-router-dom";
 
 const options = [{ asset: "Haven", ticker: "XHV" }];
 
-class Transfer extends Component {
+export class Transfer extends Component {
   constructor(props) {
     super(props);
     this.addressValue = React.createRef();
@@ -343,13 +342,12 @@ class Transfer extends Component {
   }
 }
 
-export const mapStateToProps = state => ({
-  address: state.address.main,
-  tx: state.txProcess,
-  unlockedBalance: state.balance.unlockedBalance
-});
 
-export default connect(
-  mapStateToProps,
-  { sendFunds, resetSendFunds }
-)(Transfer);
+Transfer.propTypes = {
+
+  sendFunds:PropTypes.func.required,
+  address: PropTypes.string.required,
+  tx: PropTypes.any,
+  unlockedBalance: PropTypes.any.required
+
+};
