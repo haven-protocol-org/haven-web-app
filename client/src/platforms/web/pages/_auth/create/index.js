@@ -1,6 +1,6 @@
 import {selectIsLoggedIn, selectIsRequestingLogin} from "../../../../../reducers/account";
 import {connect} from "react-redux";
-import {createWallet, mnenomicVerificationSucceed, mneomicVerifcationFailed} from "../../../../../actions";
+import {createWallet, mnenomicVerificationSucceed, mneomicVerifcationFailed} from "../../../actions";
 import {Component} from "react";
 import React from "react";
 import {Redirect} from "react-router";

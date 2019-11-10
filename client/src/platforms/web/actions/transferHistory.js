@@ -2,12 +2,13 @@ import {
   GET_TRANSFERS_FAILED,
   GET_TRANSFERS_FETCHING,
   GET_TRANSFERS_SUCCEED
-} from "./types";
-import {getAddressTxs} from "../api/api";
-import {selectCredentials} from "../reducers/account";
-import {core} from "../declarations/open_monero.service";
-import {getBalancesSucceed, updateChainData} from "./index";
-import {decrypt} from "../utility";
+} from "../../../actions/types";
+import {getAddressTxs} from "../../../api/api";
+import {selectCredentials} from "../../../reducers/account";
+import {core} from "../../../declarations/open_monero.service";
+import {getBalancesSucceed} from "./index";
+import {updateChainData} from "./index";
+import {decrypt} from "../../../utility";
 
 
 export const getTransfers = () => {

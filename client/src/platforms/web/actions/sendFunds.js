@@ -5,13 +5,13 @@ import {
   SEND_FUNDS_STATUS_UPDATE,
   SEND_FUNDS_SUCCEED,
   TRANSFER_SUCCEED
-} from "./types";
-import { getRandomOuts, getUnspentOuts, submitRawTx } from "../api/api";
+} from "../../../actions/types";
+import { getRandomOuts, getUnspentOuts, submitRawTx } from "../../../api/api";
 // import {logM} from "../utility";
-import { core } from "../declarations/open_monero.service";
-import { NET_TYPE_ID } from "../env";
-import {addErrorNotification, addNotificationByKey} from "./notification";
-import {decrypt} from "../utility";
+import { core } from "../../../declarations/open_monero.service";
+import { NET_TYPE_ID } from "../../../env";
+import {addErrorNotification, addNotificationByKey} from "../../../actions/notification";
+import {decrypt} from "../../../utility";
 import {getTransfers} from "./transferHistory";
 
 export const sendFunds = (toAddress, amount, paymentId = "") => {
@@ -47,7 +47,7 @@ export const sendFunds = (toAddress, amount, paymentId = "") => {
     sendFundsArgs.success_fn = params => {
       dispatch(addNotificationByKey(TRANSFER_SUCCEED));
       dispatch(sendFundsSucceed(params));
-      setTimeout((() => dispatch(getTransfers())), 500);
+      setTimeout((() => dispatch(getTransfers())), 1500);
 
     };
     sendFundsArgs.error_fn = err => {

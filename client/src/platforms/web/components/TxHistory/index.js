@@ -4,7 +4,7 @@ import {convertBalanceForReading} from "../../../../utility";
 import empty from "../../../../assets/illustration/no_transactions.svg";
 import React, {Component} from "react";
 import {selectBlockchainHeight} from "../../../../reducers/chain";
-import {getSimplePrice, getTransfers} from "../../../../actions";
+import {getTransfers} from "../../actions";
 import {connect} from "react-redux";
 import {core} from "../../../../declarations/open_monero.service";
 import {Transaction} from "../../../../components/transaction";

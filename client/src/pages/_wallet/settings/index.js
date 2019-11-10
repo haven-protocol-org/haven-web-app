@@ -214,12 +214,3 @@ export const Settings = connect(
   { selectTheme }
 )(SettingsPage);
 
-
-
-
-SettingsPage.propTypes = {
-
-  keys:PropTypes.any.isRequired
-
-
-};

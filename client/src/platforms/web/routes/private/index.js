@@ -12,7 +12,7 @@ import { connect } from "react-redux";
 import {selectIsLoggedIn} from "../../../../reducers/account";
 import Idle from "../../../../components/idle";
 import {SettingsWeb} from "../../pages/_wallet/settings";
-import {keepAlive, getTransfers} from "../../../../actions";
+import {keepAlive, getTransfers} from "../../actions";
 
 /**
  *root component for private web wallet

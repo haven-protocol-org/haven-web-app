@@ -1,27 +1,19 @@
-import { ADD_PUB_ADDRESS, UPDATE_CHAIN_DATA } from "./types";
+import {ADD_PUB_ADDRESS, CLOSE_WALLET, UPDATE_CHAIN_DATA} from "./types";
 
 export * from "./prices";
-export * from "./account";
-export * from "./balance";
-export * from "./key";
 export * from "./theme";
-export * from "./transferHistory";
-export * from "./sendFunds";
 export * from "./forex";
 
 export const addPubAddress = address => ({
   type: ADD_PUB_ADDRESS,
   payload: address
 });
-export const updateChainData = ({
-  start_height,
-  scanned_block_height,
-  blockchain_height,scanned_block_timestamp
-}) => {
-  return {
-    type: UPDATE_CHAIN_DATA,
-    payload: { start_height, scanned_block_height, blockchain_height, scanned_block_timestamp }
-  };
+
+
+
+export const closeWallet = () => {
+  return { type: CLOSE_WALLET };
 };
+
 
 
