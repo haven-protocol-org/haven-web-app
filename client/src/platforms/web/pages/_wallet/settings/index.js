@@ -9,7 +9,7 @@ class SettingsWebContainer extends Component {
     render() {
 
         return (
-            <Settings keys={this.props.keys}/>
+            <Settings {...this.props.keys}/>
             )
 
     }
