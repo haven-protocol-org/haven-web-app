@@ -12,7 +12,7 @@ import { core } from "../../../declarations/open_monero.service";
 import { addPubAddress, getTransfers } from "../../../actions";
 import {login, ping} from "../../../api/api";
 import { NET_TYPE_ID } from "../../../env";
-import {selectCredentials} from "../../../reducers/account";
+import {selectCredentials} from "../reducers/account";
 
 export const keepAlive = () => {
   return (dispatch, getState) => {

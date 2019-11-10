@@ -1,4 +1,4 @@
-import {selectErrorMessageForLogin, selectIsLoggedIn, selectIsRequestingLogin} from "../../../../../reducers/account";
+import {selectErrorMessageForLogin, selectIsLoggedIn, selectIsRequestingLogin} from "../../../reducers/account";
 import {connect} from "react-redux";
 import {restoreWallet} from "../../../actions";
 import Login from "../../../../../pages/_auth/login";

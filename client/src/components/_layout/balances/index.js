@@ -6,7 +6,7 @@ import { Pending, Value, Wrapper, Amount } from "./styles";
 import { connect } from "react-redux";
 import { NO_BALANCE } from "../../../reducers/balance";
 import { convertBalanceForReading } from "../../../utility";
-import { selectSyncState } from "../../../reducers/chain";
+import { selectSyncState } from "../../../platforms/web/reducers/chain";
 import { Spinner } from "../../spinner";
 import { ProgressBar } from "../../progress-bar";
 

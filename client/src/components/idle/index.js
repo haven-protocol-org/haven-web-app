@@ -1,7 +1,7 @@
 import { Component } from "react";
 import { connect } from "react-redux";
 import { closeWallet } from "../../actions";
-import {selectSyncState} from "../../reducers/chain";
+import {selectSyncState} from "../../platforms/web/reducers/chain";
 
 const ACTIVITY_EVENTS = [
   "mousemove",

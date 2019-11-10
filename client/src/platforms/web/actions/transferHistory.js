@@ -4,7 +4,7 @@ import {
   GET_TRANSFERS_SUCCEED
 } from "../../../actions/types";
 import {getAddressTxs} from "../../../api/api";
-import {selectCredentials} from "../../../reducers/account";
+import {selectCredentials} from "../reducers/account";
 import {core} from "../../../declarations/open_monero.service";
 import {getBalancesSucceed} from "./index";
 import {updateChainData} from "./index";

@@ -9,7 +9,7 @@ import {DetailsWeb} from "../../pages/_wallet/details";
 import Exchange from "../../../../pages/_wallet/exchange";
 import {TransferWeb} from "../../pages/_wallet/transfer";
 import { connect } from "react-redux";
-import {selectIsLoggedIn} from "../../../../reducers/account";
+import {selectIsLoggedIn} from "../../reducers/account";
 import Idle from "../../../../components/idle";
 import {SettingsWeb} from "../../pages/_wallet/settings";
 import {keepAlive, getTransfers} from "../../actions";

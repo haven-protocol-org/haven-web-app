@@ -3,7 +3,7 @@ import {Spinner} from "../../../../components/spinner";
 import {convertBalanceForReading} from "../../../../utility";
 import empty from "../../../../assets/illustration/no_transactions.svg";
 import React, {Component} from "react";
-import {selectBlockchainHeight} from "../../../../reducers/chain";
+import {selectBlockchainHeight} from "../../reducers/chain";
 import {getTransfers} from "../../actions";
 import {connect} from "react-redux";
 import {core} from "../../../../declarations/open_monero.service";

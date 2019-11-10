@@ -4,7 +4,7 @@ import {
   GET_BALANCES_SUCCEED
 } from "../../../actions/types";
 import { getAddressInfo } from "../../../api/api";
-import { selectCredentials } from "../../../reducers/account";
+import { selectCredentials } from "../reducers/account";
 import { core } from "../../../declarations/open_monero.service";
 import { updateChainData } from "../actions";
 import {decrypt} from "../../../utility";

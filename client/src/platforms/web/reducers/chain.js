@@ -1,4 +1,4 @@
-import { UPDATE_CHAIN_DATA } from "../actions/types";
+import { UPDATE_CHAIN_DATA } from "../../../actions/types";
 
 const INITIAL_STATE = {
   start_height: -1,
