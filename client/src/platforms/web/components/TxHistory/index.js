@@ -101,7 +101,7 @@ render () {
 export const mapStateToProps = state => ({
     transferList: state.transferList,
     height: selectBlockchainHeight(state),
-    price: getSimplePrice(state)
+    price: state.simplePrice.price
 });
 
 export const TxHistoryWeb =  withRouter(connect(

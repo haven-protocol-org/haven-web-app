@@ -8,7 +8,7 @@ import {Row} from "./styles";
 import {connect} from "react-redux";
 import {NO_PRICE, PRICE_RANGE_MONTH} from "../../reducers/priceHistory";
 import {NO_BALANCE} from "../../reducers/balance";
-import {getPriceDates, getPriceValues} from "../../utility";
+import {convertBalanceForReading, getPriceDates, getPriceValues} from "../../utility";
 import {selectSimplePrice} from "../../reducers/simplePrice";
 import {getPriceHistory} from "../../actions";
 import Statistic from "../statistic";
@@ -27,7 +27,7 @@ class ChartWrapper extends Component {
     }
 
     getBalancePriceStats() {
-        let amount = this.props.balance === NO_BALANCE ? 1 : this.props.balance;
+        let amount = this.props.balance === NO_BALANCE ? 1 : convertBalanceForReading(this.props.balance);
         let price = this.props.lastPrice === NO_PRICE ? 1 : this.props.lastPrice;
         let value = price * amount;
 
