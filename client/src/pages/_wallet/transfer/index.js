@@ -13,8 +13,8 @@ import Description from "../../../components/_inputs/description";
 import Form from "../../../components/_inputs/form";
 import Dropdown from "../../../components/_inputs/dropdown";
 import Footer from "../../../components/_inputs/footer";
-import Transaction from "../../../components/_transactions/transfer";
 import Tab from "../../../components/tab";
+import {Transaction} from "../../../components/_transactions/transfer";
 // import InputButton from "../../../components/_inputs/input_button";
 
 import { Container } from "./styles";
@@ -345,9 +345,9 @@ export class Transfer extends Component {
 
 Transfer.propTypes = {
 
-  sendFunds:PropTypes.func.required,
-  address: PropTypes.string.required,
+  sendFunds:PropTypes.func.isRequired,
+  address: PropTypes.string.isRequired,
   tx: PropTypes.any,
-  unlockedBalance: PropTypes.any.required
+  unlockedBalance: PropTypes.any.isRequired
 
 };

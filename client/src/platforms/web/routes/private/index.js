@@ -5,14 +5,14 @@ import { Redirect, Route } from "react-router-dom";
 // Relative Imports
 
 import {AssetsWeb} from "../../pages/_wallet/assets";
-import Details from "../../pages/_wallet/details";
-import Exchange from "../../pages/_wallet/exchange";
+import {DetailsWeb} from "../../pages/_wallet/details";
+import Exchange from "../../../../pages/_wallet/exchange";
 import {TransferWeb} from "../../pages/_wallet/transfer";
 import { connect } from "react-redux";
-import {selectIsLoggedIn} from "../../reducers/account";
-import {keepAlive, getTransfers} from "../../actions";
-import Idle from "../../components/idle";
+import {selectIsLoggedIn} from "../../../../reducers/account";
+import Idle from "../../../../components/idle";
 import {SettingsWeb} from "../../pages/_wallet/settings";
+import {keepAlive, getTransfers} from "../../../../actions";
 
 /**
  *root component for private web wallet
@@ -20,7 +20,7 @@ import {SettingsWeb} from "../../pages/_wallet/settings";
  * it is responsible for updating blockheight related data ( balances, transfers )
  * which is done in the action getHeight which might not be the best place -> c'est la vie
  */
-class PrivateRoutesWeb extends Component {
+class PrivateRoutes extends Component {
   componentDidMount() {
 
     this.props.getTransfers();
@@ -76,4 +76,4 @@ export const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { keepAlive, getTransfers }
-)(PrivateRoutesWeb);
+)(PrivateRoutes);

@@ -15,6 +15,7 @@ import CellDisabled from "../../../components/cell_disabled";
 import data from "../../../constants/data.js";
 import { NO_PRICE } from "../../../reducers/priceHistory";
 import { calcValue } from "../../../utility";
+import PropTypes from "prop-types";
 
 
 
@@ -61,7 +62,7 @@ class AssetsPage extends Component {
 
   render() {
     const price =
-      this.props.price === NO_PRICE ? "--" : this.props.price.toFixed(4);
+      this.props.price === NO_PRICE || isNaN(this.props.price) ? "--" : this.props.price.toFixed(4);
 
     const value = calcValue(this.props.readableBalance, this.props.price);
 
@@ -107,7 +108,7 @@ export const Assets =  connect(
 
 AssetsPage.propTypes = {
 
-  balance:PropTypes.any.required,
-  readableBalance: PropTypes.any.required
+  balance:PropTypes.any.isRequired,
+  readableBalance: PropTypes.any.isRequired
 
 };

@@ -3,12 +3,12 @@ import {connect} from "react-redux";
 import {restoreWallet} from "../../../../../actions";
 import Login from "../../../../../pages/_auth/login";
 import {Redirect} from "react-router";
-import {Component} from "react";
+import React,{Component} from "react";
 
 
 
 
-class Login extends Component {
+class LoginWebContainer extends Component {
 
 
     render(){
@@ -39,4 +39,4 @@ const mapStateToProps = state => ({
 export const LoginWeb =   connect(
     mapStateToProps,
     { login: restoreWallet }
-)(Login);
+)(LoginWebContainer);

@@ -12,13 +12,7 @@ import { decrypt } from "../../../utility";
 import PropTypes from 'prop-types';
 
 
-Create.propTypes = {
 
-  getSeed:PropTypes.func.required,
-  isRequestingLogin:PropTypes.bool,
-  verifySeed:PropTypes.func.required,
-  createdSeed:PropTypes.string.required
-};
 
 
 
@@ -142,4 +136,10 @@ export class Create extends Component {
   }
 }
 
+Create.propTypes = {
 
+  getSeed:PropTypes.func.isRequired,
+  isRequestingLogin:PropTypes.bool,
+  verifySeed:PropTypes.func.isRequired,
+  createdSeed:PropTypes.string.isRequired
+};

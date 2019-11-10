@@ -17,7 +17,7 @@ class SettingsWebContainer extends Component {
 }
 
 
- mapStateToProps = state => ({
+const mapStateToProps = state => ({
     keys: state.keys,
 });
 
@@ -25,4 +25,3 @@ export const SettingsWeb = connect(
     mapStateToProps,
     {  }
 )(SettingsWebContainer);
-

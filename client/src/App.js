@@ -7,14 +7,11 @@ import history from "./history.js";
 
 // Relative Imports
 import Navigation from "./components/_layout/navigation/index.js";
-import PublicRoutes from "./routes/public/index.js";
 import { Route } from "react-router";
 import Status from "./components/_layout/status";
 import Loader from "./components/loader";
-
-// import PrivateRoutes from "./routes/private/index.js"
-
-const PrivateRoutes = lazy(() => import("./routes/private/index.js"));
+import PublicRoutesWeb from "./platforms/web/routes/public";
+const PrivateRoutesWeb = lazy(() => import("./platforms/web/routes/private"));
 
 
 class App extends Component {
@@ -24,9 +21,9 @@ class App extends Component {
         <Router history={history}>
           <Navigation />
           <Status />
-          <PublicRoutes />
+          <PublicRoutesWeb />
           <Suspense fallback={<Loader/>}>
-          <Route path="/wallet" component={PrivateRoutes} />
+          <Route path="/wallet" component={PrivateRoutesWeb} />
           </Suspense>
         </Router>
       </ThemeProvider>

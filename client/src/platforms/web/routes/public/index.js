@@ -4,18 +4,18 @@ import { Route } from "react-router-dom";
 
 // Relative Imports
 
-import Welcome from "../../pages/_public/welcome";
-import Loader from "../../components/loader";
+import Welcome from "../../../../pages/_public/welcome";
+import Loader from "../../../../components/loader";
 import {CreateWeb} from "../../pages/_auth/create";
 import {LoginWeb} from "../../pages/_auth/login";
 
-const Faq = lazy(() => import("../../pages/_public/faq"));
+const Faq = lazy(() => import("../../../../pages/_public/faq"));
 // const Create = lazy(() =>  import("../../pages/_auth/create"));
 // const Login = lazy(() => import("../../pages/_auth/login"));
-const Blog = lazy (() => import("../../pages/_public/blog"));
-const Team = lazy(() =>  import("../../pages/_public/team"));
-const Timeline = lazy(() => import("../../pages/_public/timeline"));
-const Whitepaper = lazy(() => import("../../pages/_public/whitepaper"));
+const Blog = lazy (() => import("../../../../pages/_public/blog"));
+const Team = lazy(() =>  import("../../../../pages/_public/team"));
+const Timeline = lazy(() => import("../../../../pages/_public/timeline"));
+const Whitepaper = lazy(() => import("../../../../pages/_public/whitepaper"));
 
 class PublicRoutesWeb extends Component {
   render() {

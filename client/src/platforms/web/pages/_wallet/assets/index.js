@@ -9,13 +9,9 @@ class AssetsWebContainer extends Component {
     render() {
 
         return (
-            <Assets {this.props}/>
+            <Assets {...this.props}/>
         )
-
     }
-
-
-
 }
 
 export const mapStateToProps = state => ({

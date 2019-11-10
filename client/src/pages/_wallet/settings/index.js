@@ -27,14 +27,6 @@ const options = [
 ];
 
 
-
-SettingsPage.propTypes = {
-
-  keys:PropTypes.any.required
-
-
-};
-
 class SettingsPage extends Component {
   state = {
     status: false,
@@ -221,3 +213,13 @@ export const Settings = connect(
   mapStateToProps,
   { selectTheme }
 )(SettingsPage);
+
+
+
+
+SettingsPage.propTypes = {
+
+  keys:PropTypes.any.isRequired
+
+
+};

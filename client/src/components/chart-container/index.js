@@ -13,7 +13,7 @@ import {selectSimplePrice} from "../../reducers/simplePrice";
 import {getPriceHistory} from "../../actions";
 import Statistic from "../statistic";
 
-class Chart extends Component {
+class ChartWrapper extends Component {
     state = { selectedRangeInDays: PRICE_RANGE_MONTH };
 
     componentDidMount() {
@@ -82,7 +82,7 @@ const mapStateToProps = state => ({
 export const ChartContainer = connect(
     mapStateToProps,
     { getPriceHistory }
-)(Chart);
+)(ChartWrapper);
 
 
 Chart.propTypes = {

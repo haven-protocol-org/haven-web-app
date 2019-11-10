@@ -1,6 +1,5 @@
 import {connect} from "react-redux";
 import {sendFunds} from "../../../../../actions";
-import {Component} from "react";
 import {Transfer} from "../../../../../pages/_wallet/transfer";
 import React, {Component} from "react";
 

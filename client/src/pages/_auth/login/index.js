@@ -9,13 +9,7 @@ import Description from "../../../components/_inputs/description";
 import { Information } from "../../../constants/type.js";
 
 
-Login.propTypes = {
 
-  errorMessage: PropTypes.string,
-  login:PropTypes.func.isRequired,
-  isRequestingLogin:PropTypes.bool,
-
-};
 
 
 
@@ -90,3 +84,11 @@ export default class Login extends Component {
     );
   }
 }
+
+Login.propTypes = {
+
+  errorMessage: PropTypes.string,
+  login:PropTypes.func.isRequired,
+  isRequestingLogin:PropTypes.bool,
+
+};

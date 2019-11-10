@@ -1,4 +1,3 @@
-import Header from "../../../../pages/_wallet/details";
 import {EmptyState, History, Message, NoTransactions} from "../../../../pages/_wallet/details/styles";
 import {Spinner} from "../../../../components/spinner";
 import {convertBalanceForReading} from "../../../../utility";
@@ -9,6 +8,7 @@ import {getSimplePrice, getTransfers} from "../../../../actions";
 import {connect} from "react-redux";
 import {core} from "../../../../declarations/open_monero.service";
 import {Transaction} from "../../../../components/_transactions/transfer";
+import Header from "../../../../components/_layout/header/index.js"
 
 
 class TxHistoryContainer extends Component {

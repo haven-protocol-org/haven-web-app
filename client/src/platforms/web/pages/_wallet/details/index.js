@@ -1,6 +1,5 @@
 import {Details} from "../../../../../pages/_wallet/details";
 import React, {Component} from "react";
-import {Details} from "../../../../../pages/_wallet/details";
 import {TxHistoryWeb} from "../../../components/TxHistory";
 import {connect} from "react-redux";
 
@@ -15,7 +14,7 @@ class DetailsWebContainer extends Component {
         return (
 
             <Details balance={this.props.balance}>
-                <TxHistoryWeb/>
+                <TxHistoryWeb />
             </Details>
 
                 );
