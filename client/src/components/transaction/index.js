@@ -15,7 +15,7 @@ import {
 import { isMainnet } from "../../env";
 // import { isDevMode } from "../../constants/env";
 
-const Transaction = ({
+export const Transaction = ({
   type,
   date,
   tx,
@@ -90,5 +90,3 @@ const Transaction = ({
     </Container>
   );
 };
-
-export default Transaction;

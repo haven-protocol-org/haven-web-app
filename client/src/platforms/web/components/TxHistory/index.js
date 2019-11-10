@@ -7,8 +7,9 @@ import {selectBlockchainHeight} from "../../../../reducers/chain";
 import {getSimplePrice, getTransfers} from "../../../../actions";
 import {connect} from "react-redux";
 import {core} from "../../../../declarations/open_monero.service";
-import {Transaction} from "../../../../components/_transactions/transfer";
+import {Transaction} from "../../../../components/transaction";
 import Header from "../../../../components/_layout/header/index.js"
+import {withRouter} from "react-router-dom";
 
 
 class TxHistoryContainer extends Component {
@@ -40,7 +41,7 @@ class TxHistoryContainer extends Component {
 
 render () {
 
-    const { id } = this.props.match.params;
+    const assetId = this.props.match.id;
     const { txs, isFetching } = this.props.transferList;
 
 
@@ -49,7 +50,7 @@ render () {
         <>
         <Header
             title="History"
-            description={`Review your ${id} transaction history`}
+            description={`Review your ${assetId} transaction history`}
         />
     {isFetching && txs == null ? (
         <EmptyState>
@@ -103,7 +104,7 @@ export const mapStateToProps = state => ({
     price: getSimplePrice(state)
 });
 
-export const TxHistoryWeb =  connect(
+export const TxHistoryWeb =  withRouter(connect(
     mapStateToProps,
     { getTransfers }
-)(TxHistoryContainer);
+)(TxHistoryContainer));

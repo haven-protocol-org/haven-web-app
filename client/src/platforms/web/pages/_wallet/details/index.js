@@ -13,7 +13,7 @@ class DetailsWebContainer extends Component {
 
         return (
 
-            <Details balance={this.props.balance}>
+            <Details assetId={this.props.match.id} balance={this.props.balance}>
                 <TxHistoryWeb />
             </Details>
 

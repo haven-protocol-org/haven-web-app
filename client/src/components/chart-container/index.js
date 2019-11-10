@@ -12,6 +12,7 @@ import {getPriceDates, getPriceValues} from "../../utility";
 import {selectSimplePrice} from "../../reducers/simplePrice";
 import {getPriceHistory} from "../../actions";
 import Statistic from "../statistic";
+import {withRouter} from "react-router-dom";
 
 class ChartWrapper extends Component {
     state = { selectedRangeInDays: PRICE_RANGE_MONTH };
@@ -46,18 +47,19 @@ class ChartWrapper extends Component {
         const prices = getPriceValues(priceRangeEntry.prices);
         const labels = getPriceDates(priceRangeEntry.prices);
 
-        return [
+        return (
+            <>
                 <Header
                     back
                     title={`${id} Overview`}
                     description="Pricing history and asset values"
-                />,
+                />
                 <Chart
                     prices={prices}
                     labels={labels}
                     price={price.toFixed(4)}
                     onChangePriceRange={args => this.selectPriceHistory(args)}
-                />,
+                />
                 <Row>
                     <Statistic label="Amount" value={amount} />
                     <Statistic label="Price" value={`$` + price.toFixed(4)} />
@@ -69,7 +71,8 @@ class ChartWrapper extends Component {
                         })}
                     />
                 </Row>
-    ];
+                </>
+    );
     }
 }
 
@@ -79,16 +82,18 @@ const mapStateToProps = state => ({
 
 });
 
-export const ChartContainer = connect(
+export const ChartContainer = withRouter(connect(
     mapStateToProps,
     { getPriceHistory }
-)(ChartWrapper);
+)(ChartWrapper));
 
 
-Chart.propTypes = {
 
-    balance:PropTypes.any.required,
-    lastPrice:PropTypes.number.required,
-    priceHistory:PropTypes.any.required,
+ChartWrapper.propTypes = {
+
+    balance:PropTypes.any.isRequired,
+    lastPrice:PropTypes.number.isRequired,
+    priceHistory:PropTypes.any.isRequired,
 
 };
+
