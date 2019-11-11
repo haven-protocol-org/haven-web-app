@@ -1,6 +1,4 @@
-export const THEME = "theme";
-export const AUTH = "auth";
-export const USER = "user";
+
 
 // WALLET RELATED
 
@@ -25,9 +23,17 @@ export const GET_BALANCES_FAILED = "get_balances_failed";
 export const CREATE_WALLET_FETCHING = "create_wallet_fetching";
 export const CREATE_WALLET_SUCCEED = "create_wallet_succeed";
 export const CREATE_WALLET_FAILED = "create_wallet_failed";
+
+//
+
 export const QUERY_MNEMONIC_FOR_WALLET_GENERATION_SUCCEED = "query_mnemonic_for_wallet_generation_succeed";
 export const VALIDATE_MNEMONIC_SUCCEED = "validate_mnemonic_succeed";
 export const VALIDATE_MNEMONIC_FAILED = "validate_mnemonic_failed";
+
+
+export const OPEN_WALLET_FETCHING = "open_wallet";
+export const OPEN_WALLET_SUCCEED = "open_wallet";
+export const OPEN_WALLET_FAILED = "open_wallet";
 
 export const CLOSE_WALLET = "close_wallet";
 
@@ -53,16 +59,6 @@ export const GET_TRANSFERS_FETCHING = "get_transfers_fetching";
 export const GET_TRANSFERS_SUCCEED = "get_transfers_succeed";
 export const GET_TRANSFERS_FAILED = "get_transfers_failed";
 
-//PRICE DATA
-
-export const GET_PRICE_HISTORY_FETCHING = "get_price_data_fetching";
-export const GET_PRICE_HISTORY_SUCCEED = "get_price_data_succeed";
-export const GET_PRICE_HISTORY_FAILED = "get_price_data_failed";
-
-//SIMPLE PRICE
-export const GET_SIMPLE_PRICE_FETCHING = "get_simple_price_fetching";
-export const GET_SIMPLE_PRICE_SUCCEED = "get_simple_price_succeed";
-export const GET_SIMPLE_PRICE_FAILED = "get_simple_price_failed";
 
 
 export const GET_BLOCK_HEIGHT_FETCHING = "get_block_height_fetching";
@@ -70,13 +66,5 @@ export const GET_BLOCK_HEIGHT_SUCEED = "get_block_height_succeed";
 export const GET_BLOCK_HEIGHT_FAILED = "get_block_height_failed";
 
 
-export const ADD_NOTIFICATION = "add_notifications";
-export const REMOVE_NOTIFICATION = "remove_notifications";
 
-
-// FOREX DATA
-
-export const GET_FOREX_FETCHING = "get_forex_fetching";
-export const GET_FOREX_SUCCEED = "get_forex_succeed";
-export const GET_FOREX_FAILED = "get_forex_failed";
 

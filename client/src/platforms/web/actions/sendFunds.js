@@ -4,9 +4,10 @@ import {
   SEND_FUNDS_STARTED,
   SEND_FUNDS_STATUS_UPDATE,
   SEND_FUNDS_SUCCEED,
-  TRANSFER_SUCCEED
-} from "../../../actions/types";
-import { getRandomOuts, getUnspentOuts, submitRawTx } from "../../../api/api";
+} from "./types";
+
+
+import { getRandomOuts, getUnspentOuts, submitRawTx } from "../api/api";
 // import {logM} from "../utility";
 import { core } from "../../../declarations/open_monero.service";
 import { NET_TYPE_ID } from "../../../env";
@@ -45,7 +46,7 @@ export const sendFunds = (toAddress, amount, paymentId = "") => {
       dispatch(updateStatus(params));
     };
     sendFundsArgs.success_fn = params => {
-      dispatch(addNotificationByKey(TRANSFER_SUCCEED));
+      dispatch(addNotificationByKey("transfer_succeed"));
       dispatch(sendFundsSucceed(params));
       setTimeout((() => dispatch(getTransfers())), 1500);
 

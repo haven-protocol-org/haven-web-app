@@ -9,7 +9,7 @@ import {
     GET_PRICE_HISTORY_SUCCEED,
     GET_SIMPLE_PRICE_SUCCEED
 } from "./types";
-import {handleError} from "../api/api";
+import {handleError} from "../platforms/web/api/api";
 
 
 

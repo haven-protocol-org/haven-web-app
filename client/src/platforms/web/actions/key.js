@@ -2,7 +2,7 @@ import {
 
     KEYS_GENERATED_FAILED, KEYS_GENERATED_SUCCEED,
 
-} from "../../../actions/types";
+} from "./types";
 import {createKey, encrypt} from "../../../utility";
 
 

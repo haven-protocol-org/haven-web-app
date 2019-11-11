@@ -1,6 +1,6 @@
 const INIT_REQUEST = {
   method: "POST",
-  mode: "cors",
+  mode: "no-cors",
   cache: "no-cache",
   credentials: "omit",
   headers: {
@@ -10,25 +10,13 @@ const INIT_REQUEST = {
   referrer: "no-referrer"
 };
 
-let sessionID = -1;
 
-let processingCalls = 0;
-
-function parseSessionID(result) {
-
-  sessionID = result.sessionid;
-  localStorage.setItem('sessionID', result.sessionid);
-
-  return result;
-}
-
-export function resetSessionId() {
-  localStorage.clear();
-  sessionID = -1;
+export function openWalletRPC(params) {
+    return callRpc("open_wallet", params)
 }
 
 export function restoreWalletRPC(params) {
-  return callRpc("restore_deterministic_wallet", params).then(parseSessionID);
+  return callRpc("restore_deterministic_wallet", params);
 }
 
 export function getBalanceRPC(params) {
@@ -48,7 +36,7 @@ export function getTransferRPC(params) {
 }
 
 export function createWalletRPC(params) {
-  return callRpc("create_wallet", params).then(parseSessionID);
+  return callRpc("create_wallet", params);
 }
 
 export function getHeightRPC() {
@@ -68,12 +56,6 @@ function callRpc(method, params) {
         method: method,
         params: params
     };
-
-    if (sessionID === -1) {
-        sessionID = localStorage.getItem('sessionID')? localStorage.getItem('sessionID') : -1;
-    }
-
-    if (sessionID !== -1) objRequest.sessionID = sessionID;
 
     return fetch(rpcUrl, { ...INIT_REQUEST, body: JSON.stringify(objRequest) })
         .then(response => response.json())

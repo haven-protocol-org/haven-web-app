@@ -7,7 +7,7 @@ import {
     QUERY_MNEMONIC_FETCHING,
     QUERY_MNEMONIC_SUCCEED, QUERY_MNEMONIC_FOR_WALLET_GENERATION_SUCCEED
 } from "./types";
-import {createWalletRPC, resetSessionId, restoreWalletRPC, queryMnemonicKeyRPC} from "../rpc/rpc";
+import {createWalletRPC, restoreWalletRPC, queryMnemonicKeyRPC} from "../rpc/rpc";
 import {derivatePrivKeysBySeed} from "./key";
 import {mnemonic} from "../declarations/open_monero.service";
 
@@ -22,55 +22,9 @@ const createWalletFailed = error => ({
     payload: error
 });
 
-export const closeWallet = () => {
-    resetSessionId();
-    return { type: CLOSE_WALLET };
-};
 
 
-
-export const restoreWallet = seed => {
-
-    return dispatch => {
-
-
-        // check if user submitted privKey
-        if (seed.length === 64) {
-
-            seed = mnemonic.mn_encode(seed);
-        }
-
-        dispatch(closeWallet());
-        const language = "English";
-        const seed_offset = "";
-
-        const params = { seed, language, seed_offset };
-
-        dispatch(restoreWalletFetching());
-        restoreWalletRPC(params)
-            .then(result => {
-                dispatch(derivatePrivKeysBySeed(seed));
-                dispatch(restoreWalletSucceed(result));
-            })
-            .catch(error => {
-                dispatch(restoreWalletFailed(error));
-            });
-    };
-};
-
-
-
-const restoreWalletFetching = () => ({ type: RESTORE_WALLET_BY_SEED_FETCHING });
-const restoreWalletSucceed = result => ({
-    type: RESTORE_WALLET_BY_SEED_SUCCEED,
-    payload: result
-});
-const restoreWalletFailed = error => ({
-    type: RESTORE_WALLET_BY_SEED_FAILED,
-    payload: error
-});
-
-export const createWallet = seed => {
+export const createWallet = (seed, filename, password) => {
     return dispatch => {
 
         dispatch(closeWallet());

@@ -3,7 +3,7 @@ import {
   RESTORE_WALLET_BY_SEED_FETCHING,
   RESTORE_WALLET_BY_SEED_SUCCEED, VALIDATE_MNEMONIC_SUCCEED
 } from "../actions/types";
-import {getMessageOfError} from "../utility";
+import {getMessageOfError} from "../../../utility";
 
 export const NO_SESSION = "no_session";
 export const REQUESTING_SESSION = "requesting_session";
