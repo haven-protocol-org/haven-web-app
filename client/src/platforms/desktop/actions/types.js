@@ -35,7 +35,6 @@ export const OPEN_WALLET_FETCHING = "open_wallet";
 export const OPEN_WALLET_SUCCEED = "open_wallet";
 export const OPEN_WALLET_FAILED = "open_wallet";
 
-export const CLOSE_WALLET = "close_wallet";
 
 
 // GENERATE KEYS

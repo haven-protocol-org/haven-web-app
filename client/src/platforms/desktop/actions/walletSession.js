@@ -1,5 +1,6 @@
-import {CLOSE_WALLET, OPEN_WALLET_FAILED, OPEN_WALLET_SUCCEED} from "./types";
+import { OPEN_WALLET_FAILED, OPEN_WALLET_SUCCEED} from "./types";
 import {openWalletRPC} from "../rpc/rpc";
+import {CLOSE_WALLET} from "../../../actions/types";
 
 
 export const closeWallet = () => {

@@ -3,21 +3,20 @@ import { combineReducers } from "redux";
 // Reducers
 import theme from "../../../reducers/currentTheme.js";
 import address from "./address.js";
-import {appState} from "./appState.js";
 import { balance } from "./balance.js";
 import transfer from "./transfer";
 import { transferList } from "./transferList";
 import { priceHistory } from "../../../reducers/priceHistory";
 import notification from "../../../reducers/notification";
 import walletCreation from "./walletCreation";
-import { CLOSE_WALLET } from "../actions/types";
+import {CLOSE_WALLET} from "../../../actions/types";
 import chain from "./chain";
 import {simplePrice} from "../../../reducers/simplePrice";
+import {walletSession} from "./walletSession";
 
 const appReducer = combineReducers({
   theme,
   address,
-  appState,
   balance,
   transfer,
   transferList,
