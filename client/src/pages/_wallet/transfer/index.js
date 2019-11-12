@@ -21,7 +21,6 @@ import { Container } from "./styles";
 import { isDevMode } from "../../../env";
 import { convertBalanceForReading, estimateFee } from "../../../utility";
 import { core } from "../../../declarations/open_monero.service";
-import { Redirect } from "react-router-dom";
 
 const options = [{ asset: "Haven", ticker: "XHV" }];
 
@@ -32,7 +31,6 @@ export class Transfer extends Component {
   }
 
   state = {
-    tx_submitted: false,
     send_asset: "Haven",
     send_amount: "",
     send_ticker: "XHV",
@@ -44,7 +42,6 @@ export class Transfer extends Component {
     checked: false,
     copyButtonState: "Copy Address",
     address: "",
-    txSucceed: false
   };
 
   componentDidMount() {
@@ -52,21 +49,7 @@ export class Transfer extends Component {
     this.setState({ address: this.props.address });
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (
-      this.state.tx_submitted &&
-      (this.props.tx.update.code === 5 && prevProps.tx.update !== 5)
-    ) {
-      console.log("new tx");
-      this.setState(prevState => ({
-        ...prevState,
-        recipient_address: "",
-        send_amount: "",
-        tx_submitted: false,
-        txSucceed: true
-      }));
-    }
-  }
+
 
   handleChange = event => {
     const name = event.target.name;
@@ -157,12 +140,8 @@ export class Transfer extends Component {
       recipient_address,
       checked,
       payment_id,
-      txSucceed
     } = this.state;
 
-    if (txSucceed) {
-      return <Redirect to="./assets/XHV" />;
-    }
 
     const checkValidation =
       send_amount.length > 0 && recipient_address.length > 97;

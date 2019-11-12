@@ -9,15 +9,15 @@ import Create from "../../pages/_auth/create";
 import Login from "../../pages/_auth/login";
 import Loader from "../../components/loader";
 
-const Faq = lazy(() => import("../../pages/_public/faq"));
+const Faq = lazy(() => import("../../../../pages/_public/faq"));
 // const Create = lazy(() =>  import("../../pages/_auth/create"));
 // const Login = lazy(() => import("../../pages/_auth/login"));
-const Blog = lazy (() => import("../../pages/_public/blog"));
-const Team = lazy(() =>  import("../../pages/_public/team"));
-const Timeline = lazy(() => import("../../pages/_public/timeline"));
-const Whitepaper = lazy(() => import("../../pages/_public/whitepaper"));
+const Blog = lazy (() => import("../../../../pages/_public/blog"));
+const Team = lazy(() =>  import("../../../../pages/_public/team"));
+const Timeline = lazy(() => import("../../../../pages/_public/timeline"));
+const Whitepaper = lazy(() => import("../../../../pages/_public/whitepaper"));
 
-class PublicRoutes extends Component {
+class PublicRoutesDesktop extends Component {
   render() {
     return (
       <div>
@@ -35,5 +35,3 @@ class PublicRoutes extends Component {
     );
   }
 }
-
-export default PublicRoutes;

@@ -31,7 +31,10 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>Private Decentralized Finance</title>
+    <% if (process.env.REACT_APP_PLATFORM === 'web') { %>
     <script src="%PUBLIC_URL%/libs/openmonero/mymonero-core.js"></script>
+
+   <% } %>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

@@ -1,15 +1,19 @@
 import { transferRPC } from "../rpc/rpc";
 import { getTransfers } from "./";
-import { TRANSFER_FAILED, TRANSFER_FETCHING, TRANSFER_SUCCEED } from "./types";
+import {TRANSFER_FAILED, TRANSFER_FETCHING, TRANSFER_RESET, TRANSFER_SUCCEED} from "./types";
 
 import { getBalances } from "./";
-import { addErrorNotification, addNotificationByKey } from "./notification";
+import { addErrorNotification, addNotificationByKey} from "../../../actions/notification";
 
-export const transfer = (address, amount) => {
+export const transfer  = (address, amount, paymentId) => {
   amount = amount * 1e12;
   return (dispatch, getState) => {
     dispatch(transferFetch({ address, amount }));
     const params = { destinations: [{ address, amount }], ring_size: 11 };
+
+    if (paymentId !== "") {
+      params.payment_id = paymentId;
+    }
 
     transferRPC(params)
       .then(result => {
@@ -42,3 +46,9 @@ const transferFailed = error => ({
   type: TRANSFER_FAILED,
   payload: { ...error, isFetching: false }
 });
+
+
+
+export const resetTransferProcess = () => {
+  return {type: TRANSFER_RESET}
+};

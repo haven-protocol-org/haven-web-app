@@ -96,3 +96,8 @@ const submitRawTxReq = (reqParams, cb) => {
     .then(res => cb(null, res))
     .catch(err => cb(err, null));
 };
+
+
+export const resetTransferProcess = () => {
+  return {type:SEND_FUNDS_RESET};
+};

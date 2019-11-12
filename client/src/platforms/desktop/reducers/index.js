@@ -4,13 +4,13 @@ import { combineReducers } from "redux";
 import theme from "../../../reducers/currentTheme.js";
 import address from "./address.js";
 import { balance } from "./balance.js";
-import transfer from "./transfer";
+import {transferProcess} from "./transferProcess";
 import { transferList } from "./transferList";
 import { priceHistory } from "../../../reducers/priceHistory";
 import notification from "../../../reducers/notification";
 import walletCreation from "./walletCreation";
 import {CLOSE_WALLET} from "../../../actions/types";
-import chain from "./chain";
+import {chain} from "./chain";
 import {simplePrice} from "../../../reducers/simplePrice";
 import {walletSession} from "./walletSession";
 
@@ -18,7 +18,7 @@ const appReducer = combineReducers({
   theme,
   address,
   balance,
-  transfer,
+  transferProcess,
   transferList,
   walletCreation,
   walletSession,

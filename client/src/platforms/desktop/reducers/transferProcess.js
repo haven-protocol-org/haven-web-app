@@ -1,10 +1,10 @@
 import {
   TRANSFER_FAILED,
   TRANSFER_FETCHING,
-  TRANSFER_SUCCEED
+  TRANSFER_SUCCEED,
+    TRANSFER_RESET
 } from "../actions/types";
 
-export const NO_KEY = -1;
 
 const INITIAL_STATE = {
   address: "",
@@ -13,11 +13,14 @@ const INITIAL_STATE = {
   txHash: "",
   isFetching: false,
   info: "",
-  error: ""
+  error: "",
+  succeed:false
 };
 
-export default function(state = INITIAL_STATE, action) {
+export const transferProcess = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case TRANSFER_RESET:
+      return INITIAL_STATE;
     case TRANSFER_FETCHING:
       return {
         ...state,
@@ -26,10 +29,17 @@ export default function(state = INITIAL_STATE, action) {
         isFetching: true
       };
     case TRANSFER_SUCCEED:
-      return { ...state, ...action.payload, isFetching: false };
+      return { ...state, ...action.payload, isFetching: false, succeed:true };
     case TRANSFER_FAILED:
-      return { ...state, error: action.payload.error, isFetching: false };
+      return { ...state, error: action.payload.error, isFetching: false, succeed:false };
     default:
       return state;
   }
 }
+
+
+export const transferSucceed = (state) => {
+
+    return state.transferProcess.succeed;
+
+};

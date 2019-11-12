@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 
-// Reduceers
+// Reducers
 import theme from "../../../reducers/currentTheme.js";
 import address from "../../../reducers/address.js";
 import { balance } from "../../../reducers/balance.js";
@@ -12,7 +12,7 @@ import { CLOSE_WALLET } from "../../../actions/types";
 import { account } from "./account";
 import { simplePrice } from "../../../reducers/simplePrice";
 import { chain } from "./chain";
-import txProcess from "./txProcess";
+import {transferProcess} from "./transferProcess";
 import forex from "../../../reducers/forex";
 
 const appReducer = combineReducers({
@@ -26,7 +26,7 @@ const appReducer = combineReducers({
   notification,
   account,
   simplePrice,
-    txProcess,
+  transferProcess,
   forex
 });
 

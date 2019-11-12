@@ -4,10 +4,10 @@ import { Redirect, Route } from "react-router-dom";
 
 // Relative Imports
 
-import Assets from "../../pages/_wallet/assets";
-import Details from "../../pages/_wallet/details";
+import Assets, {AssetsDesktop} from "../../pages/_wallet/assets";
+import Details, {DetailsDesktop} from "../../pages/_wallet/details";
 import Exchange from "../../pages/_wallet/exchange";
-import Transfer from "../../pages/_wallet/transfer";
+import Transfer, {TransferDesktop} from "../../pages/_wallet/transfer";
 import Settings from "../../pages/_wallet/settings";
 import { connect } from "react-redux";
 import {selectIsLoggedIn} from "../../reducers/account";
@@ -59,10 +59,10 @@ class PrivateRoutes extends Component {
     return (
       <div>
           <Idle/>
-        <Route path={`${match.url}/assets`} exact component={Assets} />
-        <Route path={`${match.url}/assets/:id`} exact component={Details} />
+        <Route path={`${match.url}/assets`} exact component={AssetsDesktop} />
+        <Route path={`${match.url}/assets/:id`} exact component={DetailsDesktop} />
         <Route path={`${match.url}/exchange`} exact component={Exchange} />
-        <Route path={`${match.url}/transfer`} exact component={Transfer} />
+        <Route path={`${match.url}/transfer`} exact component={TransferDesktop} />
         <Route path={`${match.url}/settings`} exact component={Settings} />
       </div>
     );
