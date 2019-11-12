@@ -4,15 +4,14 @@ import { Redirect, Route } from "react-router-dom";
 
 // Relative Imports
 
-import Assets, {AssetsDesktop} from "../../pages/_wallet/assets";
-import Details, {DetailsDesktop} from "../../pages/_wallet/details";
-import Exchange from "../../pages/_wallet/exchange";
-import Transfer, {TransferDesktop} from "../../pages/_wallet/transfer";
-import Settings from "../../pages/_wallet/settings";
+import {AssetsDesktop} from "../../pages/_wallet/assets";
+import {DetailsDesktop} from "../../pages/_wallet/details";
+import {Exchange} from "../../../../universal/pages/_wallet/exchange";
+import {TransferDesktop} from "../../pages/_wallet/transfer";
+import {SettingsDesktop} from "../../pages/_wallet/settings";
 import { connect } from "react-redux";
-import {selectIsLoggedIn} from "../../reducers/account";
-import {keepAlive, getTransfers} from "../../actions";
-import Idle from "../../components/idle";
+import {selectIsLoggedIn} from "../../reducers/walletSession";
+import {getTransfers, getBalances} from "../../actions";
 
 /**
  *root component for private wallet
@@ -25,7 +24,6 @@ class PrivateRoutes extends Component {
 
     this.props.getTransfers();
     this.props.keepAlive();
-    this.timer = setInterval(this.props.refresh, 15000);
     this.addTimer();
   }
 
@@ -33,15 +31,15 @@ class PrivateRoutes extends Component {
   addTimer() {
 
       this.getTxTimer = setInterval(this.props.getTransfers, 30000);
-      this.keepAliveTimer = setInterval(this.props.keepAlive, 15000);
+      this.getBalancesTimer = setInterval(this.props.getBalances, 30000);
   }
 
   removeTimer() {
 
       clearInterval(this.getTxTimer);
-      clearInterval(this.keepAliveTimer);
+      clearInterval(this.getBalancesTimer);
       this.getTxTimer = null;
-      this.keepAliveTimer = null;
+      this.getBalancesTimer = null;
 
   }
 
@@ -58,12 +56,11 @@ class PrivateRoutes extends Component {
 
     return (
       <div>
-          <Idle/>
         <Route path={`${match.url}/assets`} exact component={AssetsDesktop} />
         <Route path={`${match.url}/assets/:id`} exact component={DetailsDesktop} />
         <Route path={`${match.url}/exchange`} exact component={Exchange} />
         <Route path={`${match.url}/transfer`} exact component={TransferDesktop} />
-        <Route path={`${match.url}/settings`} exact component={Settings} />
+        <Route path={`${match.url}/settings`} exact component={SettingsDesktop} />
       </div>
     );
   }
@@ -75,5 +72,5 @@ export const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { keepAlive, getTransfers }
+  { getTransfers, getBalances }
 )(PrivateRoutes);

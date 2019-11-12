@@ -43,12 +43,6 @@ class SettingsPage extends Component {
       value: this.props.theme.value
     });
 
-    Promise.all([
-      decrypt(this.props.mnemonic_string),
-      decrypt(this.props.sec_spendKey_string)
-    ]).then(data => {
-      this.setState({ seed: data[0], psk: data[1] });
-    });
   }
 
   handleClick = ({ theme, value }) => {
@@ -74,8 +68,8 @@ class SettingsPage extends Component {
   };
 
   render() {
-    const { value, reveal, psk, seed } = this.state;
-
+    const { value, reveal } = this.state;
+    const seed = this.props.seed;
     let truncated = "";
     if (seed.length > 0) {
       const first = seed.substring(0, 32);
@@ -114,7 +108,7 @@ class SettingsPage extends Component {
                 <Description
                   label="Seed Phrase"
                   width="true"
-                  value={seed}
+                  value={this.props.seed}
                   readOnly
                   type={reveal ? "type" : "password"}
                   rows={windowWidth < 600 && "6"}
@@ -138,7 +132,7 @@ class SettingsPage extends Component {
                 <Description
                   label="Private Spend Key"
                   width="true"
-                  value={psk}
+                  value={this.prop.psk}
                   readOnly
                   type={reveal ? "type" : "password"}
                   rows={windowWidth < 600 && "2"}
@@ -213,4 +207,14 @@ export const Settings = connect(
   mapStateToProps,
   { selectTheme }
 )(SettingsPage);
+
+Settings.propTypes = {
+
+  psk:PropTypes.string.isRequired,
+  seed:PropTypes.string.isRequired,
+  sec_viewKey_string:PropTypes.string.isRequired,
+  pub_spendKey_string:PropTypes.string.isRequired,
+  pub_viewKey_string:PropTypes.string.isRequired,
+
+};
 

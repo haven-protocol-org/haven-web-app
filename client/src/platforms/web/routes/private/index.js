@@ -25,7 +25,6 @@ class PrivateRoutes extends Component {
 
     this.props.getTransfers();
     this.props.keepAlive();
-    this.timer = setInterval(this.props.refresh, 15000);
     this.addTimer();
   }
 

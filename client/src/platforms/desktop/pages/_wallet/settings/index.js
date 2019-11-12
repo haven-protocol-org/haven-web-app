@@ -2,14 +2,36 @@
 import React, { Component } from "react";
 import {connect} from "react-redux";
 import {Settings} from "../../../../../universal/pages/_wallet/settings";
+import {queryMnemonicKeyRPC} from "../../../rpc/rpc";
+import PropTypes from "prop-types";
 
-class SettingsWebContainer extends Component {
+class SettingsDesktopContainer extends Component {
+
+
+    state = {
+        psk:"",
+        seed:"",
+        sec_viewKey_string:"",
+        pub_spendKey_string:"",
+        pub_viewKey_string:""
+    };
+
+
+
+    componentDidMount() {
+
+        queryMnemonicKeyRPC()
+            .then(res => this.setState({seed:res.key}))
+
+
+    }
 
 
     render() {
 
+
         return (
-            <Settings {...this.props.keys}/>
+            <Settings {...this.state}/>
             )
 
     }
@@ -21,7 +43,7 @@ const mapStateToProps = state => ({
     keys: state.keys,
 });
 
-export const SettingsWeb = connect(
+export const SettingsDesktop = connect(
     mapStateToProps,
     {  }
-)(SettingsWebContainer);
+)(SettingsDesktopContainer);

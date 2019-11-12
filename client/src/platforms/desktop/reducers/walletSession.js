@@ -20,7 +20,7 @@ export const walletSession =  function(state = INITIAL_STATE, action) {
 };
 
 
-export const isLoggedIn = (state) => {
+export const selectIsLoggedIn = (state) => {
 
     return state.walletSession.isWalletOpen;
 

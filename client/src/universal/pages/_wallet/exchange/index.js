@@ -20,7 +20,7 @@ const options = [
   { asset: "United States Dollar", ticker: "xUSD", price: 1.0012 }
 ];
 
-class Exchange extends Component {
+export class Exchange extends Component {
   state = {
     from_asset: "Select Asset",
     from_amount: "",
@@ -140,5 +140,3 @@ class Exchange extends Component {
     );
   }
 }
-
-export default Exchange;
