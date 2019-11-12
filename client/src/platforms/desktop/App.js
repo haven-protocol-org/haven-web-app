@@ -2,7 +2,7 @@ import {ThemeProvider} from "styled-components";
 import {connect} from "react-redux";
 import React, {Component, Suspense} from "react";
 import {Route, Router} from "react-router";
-import history from "../../history";
+import history from "../../utility/history";
 import Navigation from "../web/App";
 import PublicRoutes from "./routes/public";
 

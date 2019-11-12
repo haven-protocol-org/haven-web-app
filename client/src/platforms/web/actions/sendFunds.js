@@ -9,10 +9,10 @@ import {
 
 import { getRandomOuts, getUnspentOuts, submitRawTx } from "../api/api";
 // import {logM} from "../utility";
-import { core } from "../../../declarations/open_monero.service";
-import { NET_TYPE_ID } from "../../../env";
-import {addErrorNotification, addNotificationByKey} from "../../../actions/notification";
-import {decrypt} from "../../../utility";
+import { core } from "../declarations/open_monero.service";
+import { NET_TYPE_ID } from "../../../constants/env";
+import {addErrorNotification, addNotificationByKey} from "../../../universal/actions/notification";
+import {decrypt} from "../../../utility/utility";
 import {getTransfers} from "./transferHistory";
 
 export const sendFunds = (toAddress, amount, paymentId = "") => {

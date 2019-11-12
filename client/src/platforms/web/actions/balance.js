@@ -2,12 +2,12 @@ import {
   // GET_BALANCES_FAILED,
   GET_BALANCES_FETCHING,
   GET_BALANCES_SUCCEED
-} from "../../../actions/types";
+} from "../../../universal/actions/types";
 import { getAddressInfo } from "../api/api";
 import { selectCredentials } from "../reducers/account";
-import { core } from "../../../declarations/open_monero.service";
+import { core } from "../declarations/open_monero.service";
 import { updateChainData } from "../actions";
-import {decrypt} from "../../../utility";
+import {decrypt} from "../../../utility/utility";
 
 export const getBalances = () => {
   return (dispatch, getState) => {

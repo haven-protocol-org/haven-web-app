@@ -1,4 +1,4 @@
-import { TRANSFER_SUCCEED } from "../actions/types";
+import { TRANSFER_SUCCEED } from "../universal/actions/types";
 
 export const SUCCESS = "success";
 export const ERROR = "error";

@@ -1,4 +1,4 @@
-import {Details} from "../../../../../pages/_wallet/details";
+import {Details} from "../../../../../universal/pages/_wallet/details";
 import React, {Component} from "react";
 import {TxHistoryWeb} from "../../../components/TxHistory";
 import {connect} from "react-redux";

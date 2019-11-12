@@ -1,7 +1,7 @@
 import {applyMiddleware, createStore} from "redux";
 import reduxThunk from "redux-thunk";
 import reducers from "./reducers";
-import {loadState, logger, saveState} from "../../localStorage";
+import {loadState, logger, saveState} from "../../utility/dev-helper";
 import ReactDOM from "react-dom";
 import {Provider} from "react-redux";
 import {GlobalStyle} from "../../globalStyle";

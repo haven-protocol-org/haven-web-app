@@ -1,7 +1,7 @@
 
 import React, { Component } from "react";
 import {connect} from "react-redux";
-import {Settings} from "../../../../../pages/_wallet/settings";
+import {Settings} from "../../../../../universal/pages/_wallet/settings";
 
 class SettingsWebContainer extends Component {
 

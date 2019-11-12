@@ -3,7 +3,7 @@ import { getTransfers } from "./";
 import {TRANSFER_FAILED, TRANSFER_FETCHING, TRANSFER_RESET, TRANSFER_SUCCEED} from "./types";
 
 import { getBalances } from "./";
-import { addErrorNotification, addNotificationByKey} from "../../../actions/notification";
+import { addErrorNotification, addNotificationByKey} from "../../../universal/actions/notification";
 
 export const transfer  = (address, amount, paymentId) => {
   amount = amount * 1e12;

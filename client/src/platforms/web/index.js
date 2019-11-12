@@ -3,11 +3,11 @@ import {Provider} from "react-redux";
 import {GlobalStyle} from "../../globalStyle";
 import {AppWeb} from "./App";
 import React from "react";
-import {loadState, saveState} from "../../localStorage";
+import {loadState, saveState} from "../../utility/dev-helper";
 import {applyMiddleware, createStore} from "redux";
 import reduxThunk from "redux-thunk";
 import reducers from "./reducers";
-import {logger} from "../../localStorage";
+import {logger} from "../../utility/dev-helper";
 
 let store  = null;
 

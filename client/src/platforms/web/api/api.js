@@ -1,7 +1,7 @@
 // API layer for communication with an adjusted MyMonero-API-compatible server
 
 
-import {API_URL} from "../../../env";
+import {API_URL} from "../../../constants/env";
 
 const INIT_REQUEST = {
     method: "POST",

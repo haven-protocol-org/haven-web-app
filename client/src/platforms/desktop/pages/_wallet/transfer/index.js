@@ -1,6 +1,6 @@
 import {connect} from "react-redux";
 import {transfer, resetTransferProcess} from "../../../actions";
-import {Transfer} from "../../../../../pages/_wallet/transfer";
+import {Transfer} from "../../../../../universal/pages/_wallet/transfer";
 import React, {Component} from "react";
 import {transferSucceed} from "../../../reducers/transferProcess";
 
