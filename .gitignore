@@ -26,3 +26,5 @@ yarn-error.log*
 
 newrelic_agent.log
 client/deploy/deploy.sh
+
+/haven-node/wallets

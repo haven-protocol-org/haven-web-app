@@ -1,62 +1,31 @@
-// Library Imports
-import React from "react";
-import ReactDOM from "react-dom";
-import { GlobalStyle } from "./globalStyle.js";
+
 import * as serviceWorker from "./serviceWorker";
+import {isDesktop, isDevMode} from "./constants/env";
 
-// Relative Imports
-import App from "./App.js";
 
-// Redux Setup
-import { Provider } from "react-redux";
-import { createStore, applyMiddleware } from "redux";
-import reduxThunk from "redux-thunk";
+if (isDesktop()) {
 
-import reducers from "./platforms/web/reducers";
-import { loadState } from "./localStorage";
-import { saveState } from "./localStorage";
-import { isDevMode } from "./env";
+import ("./platforms/desktop")
+    .then(desktop => {
 
-const logger = store => next => action => {
-  console.group(action.type);
-  console.info("dispatching", action);
-  let result = next(action);
-  console.log("next state", store.getState());
-  console.groupEnd();
-  return result;
-};
+      isDevMode()? desktop.startDesktopAppInDevMode(): desktop.startDesktopApp();
 
-if (isDevMode()) {
-  const persistedState = loadState();
-  const createStoreWithMiddleware = applyMiddleware(reduxThunk, logger)(
-    createStore
-  );
-  const store = createStoreWithMiddleware(reducers, persistedState);
+    });
 
-  store.subscribe(() => {
-    saveState(store.getState());
-  });
-  ReactDOM.render(
-    <Provider store={store}>
-      <GlobalStyle />
-      <App />
-    </Provider>,
-    document.querySelector("#root")
-  );
+
 } else {
-  const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore);
-  const store = createStoreWithMiddleware(reducers);
 
-  ReactDOM.render(
-    <Provider store={store}>
-      <GlobalStyle />
-      <App />
-    </Provider>,
-    document.querySelector("#root")
-  );
+import ("./platforms/web")
+    .then(web => {
+
+      isDevMode()? web.startWebAppInDevMode(): web.startWebApp();
+
+    });
+
+
+
 }
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
+
+
 serviceWorker.unregister();

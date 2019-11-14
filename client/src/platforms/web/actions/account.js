@@ -1,17 +1,18 @@
 import {
-  CLOSE_WALLET,
-  VALIDATE_MNEMONIC_FAILED,
+
   ACCOUNT_CREATED,
   ACCOUNT_CREATION_FAILED,
   ACCOUNT_CREATION_REQUESTED,
   KEEP_ALIVE
-} from "../../../actions/types";
+} from "./types";
+
+import {VALIDATE_MNEMONIC_FAILED} from "../../../universal/actions/types";
 
 import { keysGeneratedFailed, keysGeneratedSucceed } from "./key";
-import { core } from "../../../declarations/open_monero.service";
-import { addPubAddress, getTransfers } from "../../../actions";
-import {login, ping} from "../../../api/api";
-import { NET_TYPE_ID } from "../../../env";
+import { core } from "../declarations/open_monero.service";
+import { addPubAddress, getTransfers } from "../../../universal/actions";
+import {login, ping} from "../api/api";
+import { NET_TYPE_ID } from "../../../constants/env";
 import {selectCredentials} from "../reducers/account";
 
 export const keepAlive = () => {

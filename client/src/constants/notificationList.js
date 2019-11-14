@@ -1,13 +1,14 @@
-import { TRANSFER_SUCCEED } from "../actions/types";
 
 export const SUCCESS = "success";
 export const ERROR = "error";
+
+export const TRANSFER_SUCCEED_MESSAGE = "transfer_succeed_message";
 
 export const INCOMING_TRANSFER_MESSAGE = "incoming_transfer_message";
 
 export const notificationList = [
   {
-    key: TRANSFER_SUCCEED,
+    key: TRANSFER_SUCCEED_MESSAGE,
     code: 0,
     message: "Your transfer was successfully submitted...",
     type: SUCCESS

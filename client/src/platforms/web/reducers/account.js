@@ -2,8 +2,8 @@ import {
   ACCOUNT_CREATED,
   ACCOUNT_CREATION_FAILED,
   ACCOUNT_CREATION_REQUESTED
-} from "../../../actions/types";
-import { getMessageOfError } from "../../../utility";
+} from "../actions/types";
+import { getMessageOfError } from "../../../utility/utility";
 
 const INITIAL_STATE = {
   status: "",

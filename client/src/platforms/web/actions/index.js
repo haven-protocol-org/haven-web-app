@@ -1,4 +1,4 @@
-import { ADD_PUB_ADDRESS, UPDATE_CHAIN_DATA } from "../../../actions/types";
+import { ADD_PUB_ADDRESS, UPDATE_CHAIN_DATA } from "../../../universal/actions/types";
 
 export * from "./account";
 export * from "./balance";

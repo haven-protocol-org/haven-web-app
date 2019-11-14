@@ -1,7 +1,7 @@
 import {selectErrorMessageForLogin, selectIsLoggedIn, selectIsRequestingLogin} from "../../../reducers/account";
 import {connect} from "react-redux";
 import {restoreWallet} from "../../../actions";
-import Login from "../../../../../pages/_auth/login";
+import Login from "../../../../../universal/pages/_auth/login";
 import {Redirect} from "react-router";
 import React,{Component} from "react";
 
