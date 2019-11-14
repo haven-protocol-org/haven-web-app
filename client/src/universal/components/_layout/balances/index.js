@@ -50,7 +50,7 @@ class Balances extends Component {
 
 export const mapStateToProps = state => ({
   ...state.balance,
-  ...selectSyncState(state)
+   ...selectSyncState(state)
 });
 
 export default connect(

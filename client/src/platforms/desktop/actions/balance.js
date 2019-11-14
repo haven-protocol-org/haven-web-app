@@ -8,7 +8,7 @@ export const getBalances = () => {
         const account_index = 0;
 
         getBalanceRPC({ account_index })
-            .then(result => dispatch(getBalancesSucceed(result)))
+            .then(result => dispatch(getBalancesSucceed(parseBalances(result))))
             .catch(error => dispatch(getBalancesFailed(error)));
     };
 };
@@ -22,3 +22,16 @@ const getBalancesFailed = error => ({
     type: GET_BALANCES_FAILED,
     payload: error
 });
+
+
+const parseBalances = (rpcBalanceData) => {
+
+
+    return {
+        balance:rpcBalanceData.balance,
+        unlockedBalance:rpcBalanceData.unlocked_balance,
+        lockedBalance:rpcBalanceData.balance - rpcBalanceData.unlocked_balance
+    }
+
+};
+

@@ -3,6 +3,7 @@ import {sendFunds, resetTransferProcess} from "../../../actions";
 import {Transfer} from "../../../../../universal/pages/_wallet/transfer";
 import React, {Component} from "react";
 import {transferSucceed} from "../../../reducers/transferProcess";
+import {history} from "../../../../../utility/history";
 
 
 class TransferWebContainer extends Component {
@@ -19,7 +20,7 @@ class TransferWebContainer extends Component {
 
   render() {
     return (
-        <Transfer tx={this.props.tx} unlockedBalance={this.props.unlockedBalance}
+        <Transfer isProcessing={this.props.tx.isProcessing} unlockedBalance={this.props.unlockedBalance}
                   address={this.props.address} sendFunds={this.props.sendFunds}/>
     )
   }
@@ -28,7 +29,7 @@ class TransferWebContainer extends Component {
 
 export const mapStateToProps = state => ({
   address: state.address.main,
-  tx: state.txProcess,
+  tx: state.transferProcess,
   unlockedBalance: state.balance.unlockedBalance,
   transferSucceed:transferSucceed(state)
 });

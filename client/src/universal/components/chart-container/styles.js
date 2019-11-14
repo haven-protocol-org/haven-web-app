@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import media from "../../../assets/constants/media";
+import media from "../../../assets/styles/media";
 
 export const Row = styled.div`
   display: grid;

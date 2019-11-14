@@ -2,7 +2,7 @@
 import React from "react";
 
 // Relative Imports
-import { Information } from "../../../../assets/constants/type.js";
+import { Information } from "../../../../assets/styles/type.js";
 import Description from "../../_inputs/description";
 
 const VerifySeed = ({

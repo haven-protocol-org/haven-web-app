@@ -10,7 +10,7 @@ import {
   Name,
   Row
 } from "./styles";
-import { Label, Error } from "../../../../assets/constants/type.js";
+import { Label, Error } from "../../../../assets/styles/type.js";
 
 class Theme extends React.Component {
   state = {

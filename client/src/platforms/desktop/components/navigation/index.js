@@ -14,7 +14,7 @@ import {
 } from "./styles.js";
 import Icon from "../../../../assets/haven.svg";
 import { closeWallet } from "../../actions";
-import {isLoggedIn} from "../../reducers/walletSession";
+import {selectIsLoggedIn} from "../../reducers/walletSession";
 import { APP_VERSION, NET_TYPE_NAME } from "../../../../constants/env";
 
 class Navigation extends Component {
@@ -45,7 +45,7 @@ class Navigation extends Component {
 }
 
 const mapStateToProps = state => ({
-  isLoggedIn: isLoggedIn(state)
+  isLoggedIn: selectIsLoggedIn(state)
 });
 
 export const NavigationDesktop =  connect(

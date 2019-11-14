@@ -14,6 +14,7 @@ import { NET_TYPE_ID } from "../../../constants/env";
 import {addErrorNotification, addNotificationByKey} from "../../../universal/actions/notification";
 import {decrypt} from "../../../utility/utility";
 import {getTransfers} from "./transferHistory";
+import {TRANSFER_SUCCEED_MESSAGE} from "../../../constants/notificationList";
 
 export const sendFunds = (toAddress, amount, paymentId = "") => {
   const parsedAmount = core.monero_amount_format_utils.parseMoney(amount);
@@ -46,7 +47,7 @@ export const sendFunds = (toAddress, amount, paymentId = "") => {
       dispatch(updateStatus(params));
     };
     sendFundsArgs.success_fn = params => {
-      dispatch(addNotificationByKey("transfer_succeed"));
+      dispatch(addNotificationByKey(TRANSFER_SUCCEED_MESSAGE));
       dispatch(sendFundsSucceed(params));
       setTimeout((() => dispatch(getTransfers())), 1500);
 

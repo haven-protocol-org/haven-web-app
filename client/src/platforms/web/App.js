@@ -3,7 +3,7 @@ import React, { Component, Suspense, lazy } from "react";
 import { Router } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import { connect } from "react-redux";
-import history from "../../utility/history.js";
+import {history} from "../../utility/history.js";
 
 // Relative Imports
 import Navigation from "../../universal/components/_layout/navigation/index.js";

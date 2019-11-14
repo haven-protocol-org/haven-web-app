@@ -3,7 +3,7 @@ import React from "react";
 
 // Relative Imports
 import { Container, Image, Wrapper } from "./styles";
-import { Information } from "../../../../assets/constants/type.js";
+import { Information } from "../../../../assets/styles/type.js";
 import vault from "../../../../assets/vault.svg";
 
 const Placeholder = () => {

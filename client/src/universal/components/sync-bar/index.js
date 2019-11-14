@@ -1,7 +1,7 @@
 import React from "react";
 import { Progress, Container } from "./styles";
 
-export const SyncBar = ({ max, value }) => {
+export const SyncBar = ({ max = 0, value = 0 }) => {
   return (
     <Container>
       <Progress

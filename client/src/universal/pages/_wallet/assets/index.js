@@ -12,7 +12,7 @@ import Overview from "../../../components/_layout/overview";
 import Cell from "../../../components/cell";
 import CellDisabled from "../../../components/cell_disabled";
 
-import data from "../../../../assets/constants/assets.js";
+import data from "../../../../constants/assets.js";
 import { NO_PRICE } from "../../../reducers/priceHistory";
 import { calcValue } from "../../../../utility/utility";
 import PropTypes from "prop-types";

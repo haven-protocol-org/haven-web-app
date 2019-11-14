@@ -1,15 +1,23 @@
+
+
+
 const INIT_REQUEST = {
   method: "POST",
-  mode: "no-cors",
-  cache: "no-cache",
-  credentials: "omit",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  redirect: "follow",
-  referrer: "no-referrer"
+  // mode: "cors",
+ // cache: "no-cache",
+  //credentials: "omit",
+  //redirect: "follow",
+ // referrer: "no-referrer"
 };
 
+
+//const headers = new Headers();
+//headers.append( 'Content-Type', 'application/json');
+
+//INIT_REQUEST.headers = headers;
+
+
+const client = new window.DigestFetch('monero', 'monero', { logger:console });
 
 export function openWalletRPC(params) {
     return callRpc("open_wallet", params)
@@ -57,16 +65,32 @@ function callRpc(method, params) {
         params: params
     };
 
-    return fetch(rpcUrl, { ...INIT_REQUEST, body: JSON.stringify(objRequest) })
-        .then(response => response.json())
-        .then(function(response) {
-
-            processingCalls--;
-            const error = response.error || response.result.error;
-            if (error)
-                throw error;
-            return response.result;
-        });
+    return client.fetch(rpcUrl, { ...INIT_REQUEST, body: JSON.stringify(objRequest) })
+       // .then(response => response.json())
+        .then(response => handleError(response));
 }
 
 
+
+export const handleError = async (response) => {
+
+
+    console.log(response);
+    // intercept error on protocol level
+    if (!response.ok)
+        return Promise.reject (response.statusText);
+
+    const responseBody = await response.json();
+
+    //intercept error on application level
+    if (responseBody.error)
+    {
+        return Promise.reject(responseBody.error);
+    }
+    else
+    {
+        return responseBody.result;
+
+    }
+
+};

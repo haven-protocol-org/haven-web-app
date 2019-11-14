@@ -1,5 +1,7 @@
 import {RESTORE_WALLET_BY_SEED_FAILED, RESTORE_WALLET_BY_SEED_FETCHING, RESTORE_WALLET_BY_SEED_SUCCEED} from "./types";
-import {closeWallet} from "./walletCreation";
+import {closeWallet} from "./walletSession";
+import {restoreWalletRPC} from "../rpc/rpc";
+import {addPubAddress} from "../../../universal/actions";
 
 
 
@@ -13,7 +15,7 @@ export const restoreWallet = (seed, filename, password) => {
         // check if user submitted privKey
         if (seed.length === 64) {
 
-            seed = mnemonic.mn_encode(seed);
+          //  seed = mnemonic.mn_encode(seed);
         }
 
         dispatch(closeWallet());
@@ -25,9 +27,11 @@ export const restoreWallet = (seed, filename, password) => {
         dispatch(restoreWalletFetching());
         restoreWalletRPC(params)
             .then(result => {
-                dispatch(restoreWalletSucceed(result));
+                dispatch(restoreWalletSucceed(filename));
+                dispatch(addPubAddress(result.address))
             })
             .catch(error => {
+                console.log(error);
                 dispatch(restoreWalletFailed(error));
             });
     };

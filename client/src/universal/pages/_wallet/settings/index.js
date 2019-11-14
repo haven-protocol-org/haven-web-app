@@ -18,7 +18,7 @@ import Footer from "../../../components/_inputs/footer";
 
 import { Container } from "./styles";
 
-import { dark, light } from "../../../../assets/constants/themes.js";
+import { dark, light } from "../../../../assets/styles/themes.js";
 import { decrypt } from "../../../../utility/utility";
 
 const options = [
@@ -132,7 +132,7 @@ class SettingsPage extends Component {
                 <Description
                   label="Private Spend Key"
                   width="true"
-                  value={this.prop.psk}
+                  value={this.props.psk}
                   readOnly
                   type={reveal ? "type" : "password"}
                   rows={windowWidth < 600 && "2"}
@@ -172,7 +172,7 @@ class SettingsPage extends Component {
                 <Input
                   label="Private Spend Key"
                   width="true"
-                  value={psk}
+                  value={this.props.psk}
                   readOnly
                   type={reveal ? "type" : "password"}
                 />
@@ -217,4 +217,3 @@ Settings.propTypes = {
   pub_viewKey_string:PropTypes.string.isRequired,
 
 };
-

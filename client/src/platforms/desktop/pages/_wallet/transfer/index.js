@@ -3,6 +3,7 @@ import {transfer, resetTransferProcess} from "../../../actions";
 import {Transfer} from "../../../../../universal/pages/_wallet/transfer";
 import React, {Component} from "react";
 import {transferSucceed} from "../../../reducers/transferProcess";
+import {history} from "../../../../../utility/history";
 
 
 class TransferDesktopContainer extends Component {
@@ -20,7 +21,7 @@ class TransferDesktopContainer extends Component {
   render() {
     return (
         <Transfer tx={this.props.tx} unlockedBalance={this.props.unlockedBalance}
-                  address={this.props.address} sendFunds={this.props.sendFunds}/>
+                  address={this.props.address} sendFunds={this.props.transfer}/>
     )
   }
 

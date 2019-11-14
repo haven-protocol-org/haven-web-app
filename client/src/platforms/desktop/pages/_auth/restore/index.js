@@ -1,4 +1,6 @@
-import {selectErrorMessageForLogin, selectIsLoggedIn, selectIsRequestingLogin} from "../../../reducers/account";
+
+
+import {selectErrorMessageForLogin, selectIsLoggedIn, selectIsRequestingLogin} from "../../../reducers/walletSession";
 import {connect} from "react-redux";
 import {restoreWallet} from "../../../actions";
 import Login from "../../../../../universal/pages/_auth/login";
@@ -8,7 +10,7 @@ import React,{Component} from "react";
 
 
 
-class LoginDesktopContainer extends Component {
+class RestoreDesktopContainer extends Component {
 
 
     render(){
@@ -20,15 +22,17 @@ class LoginDesktopContainer extends Component {
         return (
 
             <Login isRequestingLogin={this.props.isRequestingLogin}
-                   errorMessage={this.props.errorMessage} login={this.props.login}/>
+                   errorMessage={this.props.errorMessage} login={this.restoreWalletBySeed}/>
         )
     }
 
+
+    restoreWalletBySeed = (seed) => {
+
+        const randomNum = parseInt(Math.random() *  100);
+        this.props.restoreWallet(seed, 'test' + randomNum, 'test');
+    }
 }
-
-
-
-
 
 const mapStateToProps = state => ({
     isRequestingLogin: selectIsRequestingLogin(state),
@@ -36,7 +40,7 @@ const mapStateToProps = state => ({
     errorMessage: selectErrorMessageForLogin(state)
 });
 
-export const LoginDesktop =   connect(
+export const RestoreDesktop =   connect(
     mapStateToProps,
-    { login: restoreWallet }
-)(LoginWebContainer);
+    { restoreWallet }
+)(RestoreDesktopContainer);

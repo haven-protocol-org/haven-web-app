@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import media from "../../../../assets/constants/media.js";
-import * as _ from "../../../../assets/constants/colors.js";
+import media from "../../../../assets/styles/media.js";
+import * as _ from "../../../../assets/styles/colors.js";
 
 export const Wrapper = styled.div`
   height: auto;

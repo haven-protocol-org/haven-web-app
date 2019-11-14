@@ -11,7 +11,7 @@ import {
   Name,
   Row
 } from "./styles";
-import { Label, Error } from "../../../../assets/constants/type.js";
+import { Label, Error } from "../../../../assets/styles/type.js";
 
 class Dropdown extends React.Component {
   state = {

@@ -23,7 +23,6 @@ class PrivateRoutes extends Component {
   componentDidMount() {
 
     this.props.getTransfers();
-    this.props.keepAlive();
     this.addTimer();
   }
 
@@ -70,7 +69,7 @@ export const mapStateToProps = state => ({
   isLoggedIn: selectIsLoggedIn(state)
 });
 
-export default connect(
+export const PrivateRoutesDesktop =  connect(
   mapStateToProps,
   { getTransfers, getBalances }
 )(PrivateRoutes);

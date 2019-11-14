@@ -17,8 +17,8 @@ class SettingsWebContainer extends Component {
     componentDidMount() {
 
         Promise.all([
-            decrypt(this.props.mnemonic_string),
-            decrypt(this.props.sec_spendKey_string)
+            decrypt(this.props.keys.mnemonic_string),
+            decrypt(this.props.keys.sec_spendKey_string)
         ]).then(data => {
             this.setState({ seed: data[0], psk: data[1] });
         });

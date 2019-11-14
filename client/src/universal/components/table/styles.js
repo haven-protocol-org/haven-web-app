@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import * as _ from "../../../assets/constants/colors.js";
+import * as _ from "../../../assets/styles/colors.js";
 
 export const Container = styled.div`
   height: auto;

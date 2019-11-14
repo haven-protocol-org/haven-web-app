@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import media from "../../../../assets/constants/media.js";
-import { link, link_hover } from "../../../../assets/constants/colors.js";
+import media from "../../../../assets/styles/media.js";
+import { link, link_hover } from "../../../../assets/styles/colors.js";
 
 import img from "../../../../assets/binary.svg";
 

@@ -2,7 +2,7 @@
 import React from "react";
 
 // Relative Imports
-import { Title, Description } from "../../../../assets/constants/type.js";
+import { Title, Description } from "../../../../assets/styles/type.js";
 import {
   Container,
   Main,

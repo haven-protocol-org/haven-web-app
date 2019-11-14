@@ -6,7 +6,7 @@ import {
   Title,
   Description as Subtitle,
   Information
-} from "../../../../assets/constants/type.js";
+} from "../../../../assets/styles/type.js";
 import {
   Container,
   Main,

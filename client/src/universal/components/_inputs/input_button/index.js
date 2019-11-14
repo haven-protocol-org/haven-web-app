@@ -3,7 +3,7 @@ import React from "react";
 
 // Relative Imports
 import { Container, Field, Labels, Wrapped, Button } from "./styles";
-import { Label, Error } from "../../../../assets/constants/type.js";
+import { Label, Error } from "../../../../assets/styles/type.js";
 
 const InputButton = React.forwardRef(
   (

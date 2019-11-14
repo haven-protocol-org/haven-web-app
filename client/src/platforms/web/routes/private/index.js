@@ -6,7 +6,7 @@ import { Redirect, Route } from "react-router-dom";
 
 import {AssetsWeb} from "../../pages/_wallet/assets";
 import {DetailsWeb} from "../../pages/_wallet/details";
-import Exchange from "../../../../universal/pages/_wallet/exchange";
+import {Exchange} from "../../../../universal/pages/_wallet/exchange";
 import {TransferWeb} from "../../pages/_wallet/transfer";
 import { connect } from "react-redux";
 import {selectIsLoggedIn} from "../../reducers/account";

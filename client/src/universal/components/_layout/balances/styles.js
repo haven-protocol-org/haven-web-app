@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import media from "../../../../assets/constants/media.js";
+import media from "../../../../assets/styles/media.js";
 
 export const Overview = styled.div`
   height: 240px;

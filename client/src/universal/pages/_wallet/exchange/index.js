@@ -1,6 +1,6 @@
 // Library Imports
 import React, { Component } from "react";
-import history from "../../../../utility/history.js";
+import {history} from "../../../../utility/history.js";
 
 // Relative Imports
 import Page from "../../../components/_layout/page";

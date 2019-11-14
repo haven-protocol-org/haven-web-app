@@ -13,6 +13,7 @@ import {CLOSE_WALLET} from "../../../universal/actions/types";
 import {chain} from "./chain";
 import {simplePrice} from "../../../universal/reducers/simplePrice";
 import {walletSession} from "./walletSession";
+import forex from "../../../universal/reducers/forex";
 
 const appReducer = combineReducers({
   theme,
@@ -20,6 +21,7 @@ const appReducer = combineReducers({
   balance,
   transferProcess,
   transferList,
+  forex,
   walletCreation,
   walletSession,
   priceHistory,

@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { Container } from "./styles";
 import Auth from "../../../components/_auth/login";
 import Description from "../../../components/_inputs/description";
-import { Information } from "../../../../assets/constants/type.js";
+import { Information } from "../../../../assets/styles/type.js";
 
 
 

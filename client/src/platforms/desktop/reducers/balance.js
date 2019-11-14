@@ -3,13 +3,14 @@ import {
   GET_BALANCES_FETCHING,
   GET_BALANCES_SUCCEED
 } from "../actions/types";
-import {convertBalanceForReading} from "../utility";
+import {convertBalanceForReading} from "../../../utility/utility";
 
 export const NO_BALANCE = -1;
 
 const INITIAL_STATE = {
   balance: NO_BALANCE,
-  unlocked_balance: NO_BALANCE,
+  unlockedBalance: NO_BALANCE,
+  lockedBalance: NO_BALANCE,
   isFetching: false
 };
 

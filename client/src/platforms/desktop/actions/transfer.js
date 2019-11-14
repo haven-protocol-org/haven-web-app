@@ -4,6 +4,7 @@ import {TRANSFER_FAILED, TRANSFER_FETCHING, TRANSFER_RESET, TRANSFER_SUCCEED} fr
 
 import { getBalances } from "./";
 import { addErrorNotification, addNotificationByKey} from "../../../universal/actions/notification";
+import {TRANSFER_SUCCEED_MESSAGE} from "../../../constants/notificationList";
 
 export const transfer  = (address, amount, paymentId) => {
   amount = amount * 1e12;
@@ -18,7 +19,7 @@ export const transfer  = (address, amount, paymentId) => {
     transferRPC(params)
       .then(result => {
         dispatch(transferSucceed(result));
-        dispatch(addNotificationByKey(TRANSFER_SUCCEED));
+        dispatch(addNotificationByKey(TRANSFER_SUCCEED_MESSAGE));
         dispatch(getTransfers());
         dispatch(getBalances());
       })

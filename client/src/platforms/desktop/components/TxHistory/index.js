@@ -31,7 +31,7 @@ class TxHistoryContainer extends Component {
 render () {
 
     const assetId = this.props.match.id;
-    const { txs, isFetching } = this.props.transferList;
+    const { all, isFetching } = this.props.transferList;
 
 
     return (
@@ -40,15 +40,15 @@ render () {
             title="History"
             description={`Review your ${assetId} transaction history`}
         />
-    {isFetching && txs == null ? (
+    {isFetching && all == null ? (
         <EmptyState>
             <Spinner />
             <Message>Loading transaction history...</Message>
         </EmptyState>
     ) : (
         <History>
-            {txs && txs.length > 0 ? (
-                txs.map((transaction, index) => {
+            {all && all.length > 0 ? (
+                all.map((transaction, index) => {
                     return (
                         <Transaction
                             key={index}
@@ -60,7 +60,7 @@ render () {
                             date={new Date(
                                 transaction.timestamp
                             ).toLocaleDateString()}
-                            tx={transaction.hash}
+                            tx={transaction.txid}
                             memPool={transaction.mempool}
                             amount={convertBalanceForReading(
                                 Math.abs(transaction.amount)

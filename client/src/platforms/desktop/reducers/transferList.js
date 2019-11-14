@@ -7,7 +7,7 @@ import {
 const INITIAL_STATE = {
   out: [],
   in: [],
-  all: [],
+  all: null,
   pending: [],
   isFetching: false,
   error: {},
@@ -34,9 +34,3 @@ export function transferList(state = INITIAL_STATE, action) {
   }
 }
 
-
-export function selectNumOfTransferPending(state) {
-
-  return state.transferList.pending.length;
-
-};

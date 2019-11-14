@@ -1,8 +1,7 @@
 // Library Imports
-import React, { Component } from "react";
+import React, {Component} from "react";
 import * as clipboard from "clipboard-polyfill";
 import PropTypes from 'prop-types';
-
 // Relative Imports
 import Page from "../../../components/_layout/page";
 import Body from "../../../components/_layout/body";
@@ -15,12 +14,10 @@ import Dropdown from "../../../components/_inputs/dropdown";
 import Footer from "../../../components/_inputs/footer";
 import Tab from "../../../components/tab";
 import {Transaction} from "../../../components/_transactions/transfer";
+import {Container} from "./styles";
+import {convertBalanceForReading, estimateFee} from "../../../../utility/utility";
+import {core} from "../../../../platforms/web/declarations/open_monero.service";
 // import InputButton from "../../../components/_inputs/input_button";
-
-import { Container } from "./styles";
-import { isDevMode } from "../../../../constants/env";
-import { convertBalanceForReading, estimateFee } from "../../../../utility/utility";
-import { core } from "../../../../platforms/web/declarations/open_monero.service";
 
 const options = [{ asset: "Haven", ticker: "XHV" }];
 
@@ -80,7 +77,6 @@ export class Transfer extends Component {
       );
     }
 
-    this.setState(prevState => ({ ...prevState, tx_submitted: true }));
   };
 
   toggleSend = () => {
@@ -234,42 +230,11 @@ export class Transfer extends Component {
 
                 <Footer
                   onClick={this.handleSubmit}
-                  loading={this.props.tx.isProcessing}
+                  loading={this.props.isProcessing}
                   label="Transfer"
-                  validated={checked && checkValidation ? true : false}
+                  validated={checked && checkValidation}
                 />
 
-                {isDevMode() ? (
-                  <div>
-                    Tx Status Update <br />{" "}
-                    {Object.entries(this.props.tx.update).map(
-                      ([key, value]) => {
-                        return (
-                          <div key={key}>
-                            {key} : {value}
-                          </div>
-                        );
-                      }
-                    )}{" "}
-                    <br />{" "}
-                  </div>
-                ) : null}
-
-                {isDevMode() ? (
-                  <div>
-                    {" "}
-                    <div>Transfer Stats after submission : </div>{" "}
-                    {Object.entries(this.props.tx.stats).map(([key, value]) => {
-                      return (
-                        <div>
-                          {key} : {value}
-                        </div>
-                      );
-                    })}
-                  </div>
-                ) : (
-                  ""
-                )}
               </Container>
             </>
           ) : (
@@ -326,7 +291,7 @@ Transfer.propTypes = {
 
   sendFunds:PropTypes.func.isRequired,
   address: PropTypes.string.isRequired,
-  tx: PropTypes.any,
+  isProcessing: PropTypes.bool.isRequired,
   unlockedBalance: PropTypes.any.isRequired
 
 };

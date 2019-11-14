@@ -5,7 +5,7 @@ import React, { Component, Fragment } from "react";
 
 // Relative Imports
 import { Container, Header, Cell, Heading, Row, Label, Column } from "./styles";
-import data from "../../../assets/constants/assets.js";
+import data from "../../../constants/assets.js";
 
 class Table extends Component {
   state = {

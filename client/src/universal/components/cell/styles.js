@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import media from "../../../assets/constants/media.js";
+import media from "../../../assets/styles/media.js";
 
 export const Container = styled(Link)`
   background: ${props => props.theme.body.foreground};
