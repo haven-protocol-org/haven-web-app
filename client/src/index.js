@@ -1,17 +1,27 @@
 
 import * as serviceWorker from "./serviceWorker";
 import {isDesktop, isDevMode} from "./constants/env";
-import {startWebAppInDevMode, startWebApp} from "./platforms/web";
-import {startDesktopAppInDevMode, startDesktopApp} from "./platforms/desktop";
 
 
-if (isDevMode()) {
+if (isDesktop()) {
 
-  isDesktop()? startDesktopAppInDevMode(): startWebAppInDevMode();
+import ("./platforms/desktop")
+    .then(desktop => {
+
+      isDevMode()? desktop.startDesktopAppInDevMode(): desktop.startDesktopApp();
+
+    });
+
 
 } else {
 
-  isDesktop()? startDesktopApp(): startWebApp();
+import ("./platforms/web")
+    .then(web => {
+
+      isDevMode()? web.startWebAppInDevMode(): web.startWebApp();
+
+    });
+
 
 
 }
