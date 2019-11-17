@@ -1,0 +1,56 @@
+import {ipcMain} from 'electron';
+import IpcMainInvokeEvent = Electron.IpcMainInvokeEvent;
+import {RPCHRequestHandler, RPCRequestObject} from "../rpc/RPCHRequestHandler";
+
+enum CommunicationChannels {
+
+    RPC="rpc",
+    DAEMON="daemon"
+
+}
+
+
+/**
+ * this class establishes the communication between client app and daemons
+ */
+export class IPCHandler {
+
+
+    private readonly WALLET_METHODS:string[] = ['refresh','open_wallet','restore_deterministic_wallet',
+        'get_balance','query_key','transfer','get_transfers','create_wallet' ,'refresh'];
+
+    private readonly DAEMON_METHODS: string[] = ['get_last_block_header','get_block_count','get_height'] ;
+
+    private daemonRpcHandler: RPCHRequestHandler;
+    private walletRpcHandler: RPCHRequestHandler;
+
+
+    constructor() {
+
+        ipcMain.handle(CommunicationChannels.RPC,(event, args) => this.handleRPCRequests(event, args) );
+        ipcMain.handle(CommunicationChannels.DAEMON,(event, args) => this.handleRPCRequests(event, args) );
+
+    }
+
+
+    private handleRPCRequests(event:IpcMainInvokeEvent, requestObject: RPCRequestObject):Promise<any> {
+
+        if (this.DAEMON_METHODS.some( daemonMethod => daemonMethod === requestObject.method)) {
+            return this.daemonRpcHandler.sendRequest(requestObject);
+        }
+        else if (this.WALLET_METHODS.some( walletMethod => walletMethod === requestObject.method)) {
+            return this.walletRpcHandler.sendRequest(requestObject);
+        }
+
+    }
+
+
+
+
+    public  sendToClientApp() {
+
+
+    }
+
+
+}
