@@ -1,13 +1,15 @@
 #!/usr/bin/env bash
 
+trap "kill 0" EXIT
+
 #electron envs
 HAVEN_DESKTOP_DEVELOPMENT=true
 NET_TYPE=Testnet
 BROWSER=none
 
 # start rpc client
-#cd client && npm run start:desktop:testnet & (cd .. &&
-cd haven-desktop-app && npm run start
-#)
+npm run start:desktop:testnet --prefix client & npm run start --prefix haven-desktop-app
 
 #start electron
+
+wait

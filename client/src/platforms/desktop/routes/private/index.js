@@ -22,6 +22,8 @@ import {getTransfers, getBalances} from "../../actions";
 class PrivateRoutes extends Component {
   componentDidMount() {
 
+
+      this.props.getBalances();
     this.props.getTransfers();
     this.addTimer();
   }
