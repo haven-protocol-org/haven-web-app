@@ -3,7 +3,7 @@ import React, {Component} from "react";
 import {TxHistoryDesktop} from "../../../components/TxHistory";
 import {connect} from "react-redux";
 
-class DetailsDesktopContainer extends Component {
+class DetailsWebContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);
@@ -29,4 +29,4 @@ export const mapStateToProps = state => ({
 export const DetailsDesktop = connect(
     mapStateToProps,
     {  }
-)(DetailsDesktopContainer);
+)(DetailsWebContainer);

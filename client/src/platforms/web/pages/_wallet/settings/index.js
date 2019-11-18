@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import {connect} from "react-redux";
 import {Settings} from "../../../../../universal/pages/_wallet/settings";
-import {decrypt} from "../../../../../utility/utility-encrypt";
+import {decrypt} from "../../../../../utility/utility";
 
 class SettingsWebContainer extends Component {
 

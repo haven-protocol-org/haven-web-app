@@ -7,7 +7,7 @@ import { getAddressInfo } from "../api/api";
 import { selectCredentials } from "../reducers/account";
 import { core } from "../declarations/open_monero.service";
 import { updateChainData } from "../actions";
-import {decrypt} from "../../../utility/utility-encrypt";
+import {decrypt} from "../../../utility/utility";
 
 export const getBalances = () => {
   return (dispatch, getState) => {

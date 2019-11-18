@@ -1,43 +1,20 @@
+import {Havend} from "./daemons/Havend";
+import {RPCWallet} from "./daemons/RPCWallet";
+
+
+
 /**
  * responsible to wire everything together
  */
-import {IDaemonManager} from "./daemons/IDaemonManager";
-import {BasicDaemonManager} from "./daemons/BasicDaemonManager";
-import {daemonConfig} from "./daemonConfig";
-import {IPCHandler} from "./ipc/IPCHandler";
+class HavenWallet {
 
 
-export class HavenWallet {
-
-
-    private havend:IDaemonManager = new BasicDaemonManager();
-    private rpcWallet:IDaemonManager = new BasicDaemonManager();
-    private ipcHandler: IPCHandler = new IPCHandler();
-
-
-    public start() {
-
-
-        this.havend.setConfig(daemonConfig.havend);
-        this.rpcWallet.setConfig(daemonConfig.wallet);
-        this.havend.startDaemon();
-        this.rpcWallet.startDaemon();
-        this.ipcHandler.start();
+    private readonly netConfig:NetConfig = process.env.HAVEN_NET === NET_TYPES.Mainnet ? MainnetConfig : TestNetConfig;
 
 
 
-    }
-
-
-    public quit() {
-
-        this.havend.killDaemon();
-        this.rpcWallet.killDaemon();
-        this.ipcHandler.quit();
-
-    }
-
-
+    private havend:Havend = new Havend();
+    private rpcWallet:RPCWallet = new RPCWallet();
 
 
 
@@ -50,3 +27,36 @@ export class HavenWallet {
 
 
 }
+
+
+
+
+enum NET_TYPES {
+
+    Mainnet='Mainnet',
+    Testnet='Testnet'
+
+}
+
+
+interface NetConfig {
+
+    havendPort:number,
+    walletPort:number
+
+}
+
+const TestNetConfig:NetConfig = {
+
+    havendPort:12345,
+    walletPort:233232
+
+};
+
+
+const MainnetConfig:NetConfig = {
+
+    havendPort:12345,
+    walletPort:12345
+
+};

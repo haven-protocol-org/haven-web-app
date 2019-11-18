@@ -8,7 +8,7 @@ import {selectCredentials} from "../reducers/account";
 import {core} from "../declarations/open_monero.service";
 import {getBalancesSucceed} from "./index";
 import {updateChainData} from "./index";
-import {decrypt} from "../../../utility/utility-encrypt";
+import {decrypt} from "../../../utility/utility";
 
 
 export const getTransfers = () => {

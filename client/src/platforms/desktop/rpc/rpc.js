@@ -1,4 +1,4 @@
-const ipcRenderer = window.ipcRenderer;
+
 
 
 const INIT_REQUEST = {
@@ -57,7 +57,7 @@ export function refreshRPC(start_height = 0) {
 
 function callRpc(method, params) {
 
-    // const rpcUrl = process.env.REACT_APP_RPC_URL;
+    const rpcUrl = process.env.REACT_APP_RPC_URL;
     const objRequest = {
         id: 0,
         jsonrpc: "2.0",
@@ -65,16 +65,9 @@ function callRpc(method, params) {
         params: params
     };
 
-
-
-    return ipcRenderer.invoke('rpc', objRequest)
-        .then(response => handleError(response));
-
-
-
- /*   return client.fetch(rpcUrl, { ...INIT_REQUEST, body: JSON.stringify(objRequest) })
+    return client.fetch(rpcUrl, { ...INIT_REQUEST, body: JSON.stringify(objRequest) })
        // .then(response => response.json())
-        .then(response => handleError(response));*/
+        .then(response => handleError(response));
 }
 
 
@@ -84,10 +77,20 @@ export const handleError = async (response) => {
 
     console.log(response);
     // intercept error on protocol level
-    if (response.data.error)
-        return Promise.reject (response.data.error);
+    if (!response.ok)
+        return Promise.reject (response.statusText);
 
+    const responseBody = await response.json();
 
-    return response.data.result;
+    //intercept error on application level
+    if (responseBody.error)
+    {
+        return Promise.reject(responseBody.error);
+    }
+    else
+    {
+        return responseBody.result;
+
+    }
 
 };

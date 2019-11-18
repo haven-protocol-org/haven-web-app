@@ -13,8 +13,6 @@ const tryConnection = ():void => {
 
 };
 tryConnection();
-
-
 client.on('error', (error) => {
     devServerStartedObservable.next(false)
     setTimeout(tryConnection, 1000);
