@@ -8,7 +8,9 @@ NET_TYPE=Testnet
 BROWSER=none
 
 # start rpc client
-npm run start:desktop:testnet --prefix client & npm run start --prefix haven-desktop-app
+#npm run start:desktop:testnet --prefix client
+#&
+npm run start --prefix haven-desktop-app
 
 #start electron
 

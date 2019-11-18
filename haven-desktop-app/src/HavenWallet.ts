@@ -9,6 +9,7 @@ import {IPCHandler} from "./ipc/IPCHandler";
 
 export class HavenWallet {
 
+    private _isRunning:boolean = false;
 
     private havend:IDaemonManager = new BasicDaemonManager();
     private rpcWallet:IDaemonManager = new BasicDaemonManager();
@@ -17,12 +18,18 @@ export class HavenWallet {
 
     public start() {
 
+        if (this._isRunning) {
+            return;
+        }
+
 
         this.havend.setConfig(daemonConfig.havend);
         this.rpcWallet.setConfig(daemonConfig.wallet);
         this.havend.startDaemon();
         this.rpcWallet.startDaemon();
         this.ipcHandler.start();
+
+        this._isRunning = true;
 
 
 
@@ -34,6 +41,8 @@ export class HavenWallet {
         this.havend.killDaemon();
         this.rpcWallet.killDaemon();
         this.ipcHandler.quit();
+
+        this._isRunning = false;
 
     }
 

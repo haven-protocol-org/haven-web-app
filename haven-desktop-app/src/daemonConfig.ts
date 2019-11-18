@@ -1,4 +1,27 @@
 import {isMainnet} from "./env";
+import { app } from 'electron';
+import * as fs  from 'fs';
+
+const MAINNET_WALLET_PATH = '/wallet/main';
+const TESTNET_WALLET_PATH = '/wallet/test';
+
+
+const pathToAppLib = app.getPath('userData');
+
+
+if (isMainnet) {
+
+    if (!fs.existsSync(pathToAppLib + MAINNET_WALLET_PATH)) {
+        fs.mkdir(pathToAppLib + MAINNET_WALLET_PATH, (error)=> console.log(error));
+    }
+} else {
+
+    if (!fs.existsSync(pathToAppLib + TESTNET_WALLET_PATH)) {
+
+        fs.mkdir(pathToAppLib + TESTNET_WALLET_PATH, (error)=> console.log(error));
+    }
+}
+
 
 
 const daemonConfigMainnet = {
@@ -19,12 +42,11 @@ const daemonConfigMainnet = {
             'mainnet':'',
             'rpc-bind-port': 12345,
             'disable-rpc-login': '',
-            'wallet-dir': 'wallet/main',
+            'wallet-dir': pathToAppLib + MAINNET_WALLET_PATH,
         }
     }
 
 };
-
 
 const daemonConfigTestnet = {
 
@@ -44,7 +66,7 @@ const daemonConfigTestnet = {
             'testnet':'',
             'rpc-bind-port': 12345,
             'disable-rpc-login': '',
-            'wallet-dir': 'wallet/test',
+            'wallet-dir': pathToAppLib + TESTNET_WALLET_PATH,
         }
 
     },
@@ -56,7 +78,6 @@ export interface IDaemonConfig {
         port:number,
         args:{}
 }
-
 
 export const daemonConfig:{havend: IDaemonConfig, wallet:IDaemonConfig} = isMainnet? daemonConfigMainnet : daemonConfigTestnet;
 
