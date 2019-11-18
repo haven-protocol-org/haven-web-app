@@ -19,7 +19,7 @@ const daemonConfigMainnet = {
             'mainnet':'',
             'rpc-bind-port': 12345,
             'disable-rpc-login': '',
-            'wallet-dir': './',
+            'wallet-dir': 'wallet/main',
         }
     }
 
@@ -44,7 +44,7 @@ const daemonConfigTestnet = {
             'testnet':'',
             'rpc-bind-port': 12345,
             'disable-rpc-login': '',
-            'wallet-dir': './',
+            'wallet-dir': 'wallet/test',
         }
 
     },
