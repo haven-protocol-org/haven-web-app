@@ -4,7 +4,7 @@ import {Assets} from "../../../../../universal/pages/_wallet/assets";
 import { connect } from "react-redux";
 import {selectReadableBalance} from "../../../../../universal/reducers/balance";
 
-class AssetsWebContainer extends Component {
+class AssetsDesktopContainer extends Component {
 
     render() {
 
@@ -22,4 +22,4 @@ export const mapStateToProps = state => ({
 export const AssetsDesktop =  connect(
     mapStateToProps,
     { }
-)(AssetsWebContainer);
+)(AssetsDesktopContainer);

@@ -2,12 +2,12 @@
 
 #electron envs
 HAVEN_DESKTOP_DEVELOPMENT=true
-HAVEN_NET=Testnet
+NET_TYPE=Testnet
+BROWSER=none
 
 # start rpc client
-cd client && npm run start:desktop:testnet
-
-cd ..
+#cd client && npm run start:desktop:testnet & (cd .. &&
+cd haven-desktop-app && npm run start
+#)
 
 #start electron
-cd haven-desktop-app && npm run start

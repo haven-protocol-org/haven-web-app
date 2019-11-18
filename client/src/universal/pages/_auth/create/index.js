@@ -8,7 +8,7 @@ import Placeholder from "../../../components/_create/placeholder";
 import CreateSeed from "../../../components/_create/create_seed";
 import VerifySeed from "../../../components/_create/verify_seed";
 import { Container } from "./styles";
-import { decrypt } from "../../../../utility/utility";
+import { decrypt } from "../../../../utility/utility-encrypt";
 import PropTypes from 'prop-types';
 
 
