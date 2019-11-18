@@ -1,6 +1,11 @@
 import {
-    OPEN_WALLET_FAILED, OPEN_WALLET_FETCHING, OPEN_WALLET_SUCCEED,RESTORE_WALLET_BY_SEED_SUCCEED
+    OPEN_WALLET_FAILED,
+    OPEN_WALLET_FETCHING,
+    OPEN_WALLET_SUCCEED,
+    RESTORE_WALLET_BY_SEED_FAILED,
+    RESTORE_WALLET_BY_SEED_SUCCEED
 } from "../actions/types";
+import {getMessageOfError} from "../../../utility/utility";
 
 
 const INITIAL_STATE = { filename:"", error: null, isFetching:false, isWalletOpen:false};
@@ -9,6 +14,7 @@ export const walletSession =  function(state = INITIAL_STATE, action) {
     switch (action.type) {
 
         case OPEN_WALLET_FAILED:
+        case RESTORE_WALLET_BY_SEED_FAILED:
             return {...state, error: action.payload, isFetching:false, isWalletOpen:false};
         case OPEN_WALLET_SUCCEED:
         case RESTORE_WALLET_BY_SEED_SUCCEED:
@@ -30,7 +36,11 @@ export const selectIsLoggedIn = (state) => {
 
 export const selectErrorMessageForLogin = (state) => {
 
-    return state.walletSession.error
+    if (state.walletSession.error) {
+        return getMessageOfError(state.walletSession.error);
+    }
+
+    return "";
 
 };
 

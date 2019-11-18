@@ -1,6 +1,7 @@
 import {ChildProcess, execFile} from "child_process";
 import {BehaviorSubject, Observable} from "rxjs";
-import {IDaemonManager, IDaemonConfig} from "./IDaemonManager";
+import {IDaemonManager} from "./IDaemonManager";
+import {IDaemonConfig} from "../daemonConfig";
 
 
 
@@ -10,7 +11,7 @@ export class BasicDaemonManager implements IDaemonManager {
 
 
     private filePath: string;
-    private startArgs: string[];
+    private startArgs: Object;
 
     private daemonProcess:ChildProcess;
     private isDaemonRunnigSubject:BehaviorSubject<{ isRunning: boolean; code?: number; signal?: string }> =
@@ -20,14 +21,28 @@ export class BasicDaemonManager implements IDaemonManager {
 
 
 
-    public isDaemonRunning(): Observable<{ isRunning: boolean; code?: number; signal?: string }> {
+    public daemonStatus(): Observable<{ isRunning: boolean; code?: number; signal?: string }> {
         return this.isDaemonRunnigSubject.asObservable();
     }
 
     public startDaemon():void {
 
-        this.daemonProcess = execFile(this.filePath);
+
+        const args: ReadonlyArray<string> = Object.entries(this.startArgs)
+            .map( ([key, value]) => {
+                console.log('key : ' +  key);
+                console.log('value : ' +  value);
+                return '--' +  key + ( value !=='' ? '=' + value :'');
+            } );
+        console.log(args);
+        this.daemonProcess = execFile(this.filePath, args,(error, stdout, stderr) => {
+            if (error) {
+                console.log(error);
+            }
+            console.log(stdout);
+        } );
         this.daemonProcess.on('exit', (code: number | null, signal: string | null) => this.onDaemonStopped(code, signal));
+        this.daemonProcess.on('error', (error: Error) => this.onDaemonError(error));
         this.isDaemonRunnigSubject.next({isRunning:true});
     }
 
@@ -41,14 +56,23 @@ export class BasicDaemonManager implements IDaemonManager {
 
     private onDaemonStopped(code: number | null, signal: string | null) {
 
+
+        console.log(code, signal);
+
         this.isDaemonRunnigSubject.next({isRunning:false, code, signal})
+
+    }
+
+    private onDaemonError(error: Error) {
+
+        console.log(error.message);
 
     }
 
     public setConfig(config: IDaemonConfig): void {
 
-        this.filePath = config.filePath;
-        this.startArgs = config.startArgs;
+        this.filePath = config.path;
+        this.startArgs = config.args;
 
     }
 
