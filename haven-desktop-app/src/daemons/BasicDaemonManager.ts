@@ -8,17 +8,12 @@ import {IDaemonConfig} from "../daemonConfig";
 
 export class BasicDaemonManager implements IDaemonManager {
 
-
-
     private filePath: string;
     private startArgs: Object;
 
     private daemonProcess:ChildProcess;
     private isDaemonRunnigSubject:BehaviorSubject<{ isRunning: boolean; code?: number; signal?: string }> =
         new BehaviorSubject<{ isRunning: boolean; code?: number; signal?: string }>({isRunning:false});
-
-
-
 
 
     public daemonStatus(): Observable<{ isRunning: boolean; code?: number; signal?: string }> {
@@ -30,8 +25,6 @@ export class BasicDaemonManager implements IDaemonManager {
 
         const args: ReadonlyArray<string> = Object.entries(this.startArgs)
             .map( ([key, value]) => {
-                console.log('key : ' +  key);
-                console.log('value : ' +  value);
                 return '--' +  key + ( value !=='' ? '=' + value :'');
             } );
         console.log(args);

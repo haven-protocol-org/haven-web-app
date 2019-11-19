@@ -32,10 +32,9 @@ const startApp = () => {
     nodeIntegration: false,
     preload:path.join(__dirname , '../preload.js')
   };
-
   // Create the browser window.
   mainWindow = new BrowserWindow(browserOptions);
-  console.log(process.env.HAVEN_DESKTOP_DEVELOPMENT);
+  console.log("Haven development ? " + process.env.HAVEN_DESKTOP_DEVELOPMENT);
 
   if (process.env.HAVEN_DESKTOP_DEVELOPMENT) {
 
