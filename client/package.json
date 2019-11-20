@@ -3,6 +3,10 @@
   "version": "1.32.0",
   "private": true,
   "dependencies": {
+    "@types/jest": "^24.0.23",
+    "@types/node": "^12.12.11",
+    "@types/react": "^16.9.11",
+    "@types/react-dom": "^16.9.4",
     "chart.js": "^2.9.1",
     "clipboard-polyfill": "^2.8.6",
     "digest-fetch": "^1.0.7",
@@ -16,7 +20,8 @@
     "react-scripts": "^3.2.0",
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
-    "styled-components": "^4.4.0"
+    "styled-components": "^4.4.0",
+    "typescript": "^3.7.2"
   },
   "scripts": {
     "start:desktop:mainnet": "sh -ac '. ./env/.env.mainnet; . ./env/.env.desktop; react-scripts start'",
