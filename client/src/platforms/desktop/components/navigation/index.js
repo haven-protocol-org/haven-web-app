@@ -14,7 +14,7 @@ import {
 } from "./styles.js";
 import Icon from "../../../../assets/haven.svg";
 import { closeWallet } from "../../actions";
-import {selectIsLoggedIn} from "../../reducers/walletSession";
+import { selectIsLoggedIn } from "../../reducers/walletSession";
 import { APP_VERSION, NET_TYPE_NAME } from "../../../../constants/env";
 
 class Navigation extends Component {
@@ -29,7 +29,7 @@ class Navigation extends Component {
       <Container>
         <Brand to={auth === true ? "/wallet/assets" : "/"}>
           <Logo src={Icon} />
-          <Haven>HAVEN </Haven>
+          <Haven>HAVEN</Haven>
           <Tag>
             v{APP_VERSION} {NET_TYPE_NAME}
           </Tag>
@@ -48,7 +48,7 @@ const mapStateToProps = state => ({
   isLoggedIn: selectIsLoggedIn(state)
 });
 
-export const NavigationDesktop =  connect(
+export const NavigationDesktop = connect(
   mapStateToProps,
   { logout: closeWallet }
 )(Navigation);
