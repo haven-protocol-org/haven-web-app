@@ -68,3 +68,36 @@ export const GET_BLOCK_HEIGHT_FAILED = "get_block_height_failed";
 
 
 
+
+export const OFFSHORE_FETCHING = "offshore_fetching";
+export const OFFSHORE_FAILED = "offshore_failed";
+export const OFFSHORE_SUCCEED = "offshore_succeed";
+
+export const ONSHORE_FETCHING = "onshore_fetching";
+export const ONSHORE_FAILED = "onshore_failed";
+export const ONSHORE_SUCCEED = "onshore_succeed";
+
+
+export const OFFSHORE_TRANSFER_FETCHING = "offshore_transfer_fetching";
+export const OFFSHORE_TRANSFER_FAILED = "offshore_transfer_failed";
+export const OFFSHORE_TRANSFER_SUCCEED = "offshore_transfer_succeed";
+
+
+export const GET_OFFSHORE_BALANCE_FETCHING = "get_offshore_balance_fetching";
+export const GET_OFFSHORE_BALANCE_FAILED = "get_offshore_balance_failed";
+export const GET_OFFSHORE_BALANCE_SUCCEED = "get_offshore_balance_succeed";
+
+
+export const GET_OFFSHORE_TRANSFERS_FETCHING = "get_offshore_transfers_fetching";
+export const GET_OFFSHORE_TRANSFERS_FAILED = "get_offshore_transfers_failed";
+export const GET_OFFSHORE_TRANSFERS_SUCCEED = "get_offshore_transfers_succeed";
+
+
+
+
+// Block header exchange rate data
+export const GET_BLOCK_HEADER_EXCHANGE_RATE_FETCH = "get_block_header_exchange_rate_fetch";
+export const GET_BLOCK_HEADER_EXCHANGE_RATE_SUCCEED = "get_block_header_exchange_rate_succeed";
+export const GET_BLOCK_HEADER_EXCHANGE_RATE_FAILED = "get_block_header_exchange_rate_failed";
+
+

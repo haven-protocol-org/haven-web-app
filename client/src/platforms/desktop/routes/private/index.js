@@ -62,6 +62,7 @@ class PrivateRoutes extends Component {
         <Route path={`${match.url}/exchange`} exact component={Exchange} />
         <Route path={`${match.url}/transfer`} exact component={TransferDesktop} />
         <Route path={`${match.url}/settings`} exact component={SettingsDesktop} />
+        <Route path={`${match.url}/exchange`} exact component={Exchange} />
       </div>
     );
   }

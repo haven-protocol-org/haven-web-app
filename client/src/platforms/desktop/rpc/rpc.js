@@ -55,6 +55,44 @@ export function refreshRPC(start_height = 0) {
   return callRpc('refresh' ,{start_height});
 }
 
+
+export function onshoreRPC(params) {
+    return callRpc('onshore')
+}
+
+export function offshoreRPC(params) {
+    return callRpc('offshore')
+}
+
+export function getOffshoreBalanceRPC() {
+
+    return callRpc('get_offshore_balance')
+
+}
+
+export function getOffshoreTransfersRPC() {
+    return callRpc('get_offshore_transfers')
+}
+
+
+export function offshoreTransferRPC(params) {
+    return callRpc('offshore_transfer')
+}
+
+
+export function getLastBlockHeader() {
+
+    return callRpc('get_last_block_header');
+
+}
+export function getBlockHeaderByHeight(params) {
+
+    return callRpc('get_block_header_by_height');
+
+}
+
+
+
 function callRpc(method, params) {
 
     // const rpcUrl = process.env.REACT_APP_RPC_URL;
@@ -70,11 +108,6 @@ function callRpc(method, params) {
     return ipcRenderer.invoke('rpc', objRequest)
         .then(response => handleError(response));
 
-
-
- /*   return client.fetch(rpcUrl, { ...INIT_REQUEST, body: JSON.stringify(objRequest) })
-       // .then(response => response.json())
-        .then(response => handleError(response));*/
 }
 
 

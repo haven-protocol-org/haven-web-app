@@ -5,6 +5,7 @@ import React, { Component } from "react";
 import { Container, Overview, Item } from "./styles";
 
 import Balances from "../balances/index.js";
+import {OFFSHORE_ENABLED} from "../../../../constants/env";
 
 class Menu extends Component {
   render() {
@@ -16,6 +17,7 @@ class Menu extends Component {
         <Item to="/wallet/assets">Assets</Item>
         <Item to="/wallet/transfer">Transfer</Item>
         <Item to="/wallet/settings">Settings</Item>
+          {OFFSHORE_ENABLED ? (<Item to="/wallet/exchange">Exchange</Item>):''}
       </Container>
     );
   }

@@ -14,7 +14,9 @@ const INITIAL_STATE = {
   isFetching: false
 };
 
-export function balance (state = INITIAL_STATE, action) {
+
+
+export function balance (state = INITIAL_STATE, action: any) {
   switch (action.type) {
     case GET_BALANCES_SUCCEED:
       return {
@@ -30,7 +32,7 @@ export function balance (state = INITIAL_STATE, action) {
   }
 }
 
-export function selectReadableBalance(state) {
+export function selectReadableBalance(state: any) {
 
   if (state.balance.balance === NO_BALANCE)
     return state.balance.balance;

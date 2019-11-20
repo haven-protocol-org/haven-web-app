@@ -5,14 +5,6 @@ import {
   GET_TRANSFERS_SUCCEED
 } from "./types";
 
-/**
- * just refresh tx from interest - latest pending tx
- */
-export const updateLatestTransfers = () => {
-
-
-};
-
 
 export const getTransfers = () => {
   return dispatch => {

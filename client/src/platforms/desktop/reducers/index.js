@@ -3,7 +3,7 @@ import { combineReducers } from "redux";
 // Reducers
 import theme from "../../../universal/reducers/currentTheme.js";
 import address from "./address.js";
-import { balance } from "./balance.js";
+import { balance } from "./balance.ts";
 import {transferProcess} from "./transferProcess";
 import { transferList } from "./transferList";
 import { priceHistory } from "../../../universal/reducers/priceHistory";

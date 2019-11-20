@@ -12,6 +12,8 @@ class AssetsDesktopContainer extends Component {
             <Assets {...this.props}/>
         )
     }
+
+
 }
 
 export const mapStateToProps = state => ({
