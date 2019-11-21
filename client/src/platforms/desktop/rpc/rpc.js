@@ -80,14 +80,20 @@ export function offshoreTransferRPC(params) {
 }
 
 
-export function getLastBlockHeader() {
+export function getLastBlockHeaderRPC() {
 
     return callRpc('get_last_block_header');
 
 }
-export function getBlockHeaderByHeight(params) {
+export function getBlockHeaderByHeightRPC(params) {
 
     return callRpc('get_block_header_by_height');
+
+}
+
+export function getInfoRPC() {
+
+    return callRpc('get_info');
 
 }
 

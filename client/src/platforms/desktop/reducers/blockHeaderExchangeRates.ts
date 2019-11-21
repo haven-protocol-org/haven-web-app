@@ -1,3 +1,5 @@
+import {Action, AnyAction} from "redux";
+import {GET_BLOCK_HEADER_EXCHANGE_RATE_SUCCEED} from "../actions/types";
 
 
 export interface IBlockHeaderRate  {
@@ -25,9 +27,19 @@ export interface IBlockHeaderRate  {
 const INITIAL_STATE: Record<number, IBlockHeaderRate> = {};
 
 
-export const blockHeaderExchangeRate = (): Record<number,IBlockHeaderRate> => {
+export const blockHeaderExchangeRate = (state: Record<number,IBlockHeaderRate>, action: AnyAction): Record<number,IBlockHeaderRate> => {
 
-    return INITIAL_STATE;
+    switch (action.type) {
+
+
+        case GET_BLOCK_HEADER_EXCHANGE_RATE_SUCCEED:
+        return {...state, ...action.payload };
+
+
+        default:
+            return state;
+
+    }
 
 
 };

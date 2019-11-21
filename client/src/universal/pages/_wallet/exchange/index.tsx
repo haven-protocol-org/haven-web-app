@@ -15,22 +15,33 @@ import Transaction from "../../../components/_transactions/exchange";
 
 import { Container } from "./styles";
 
-const options = [
-  { asset: "Haven Token", ticker: "XHV", price: 0.3293 },
-  { asset: "United States Dollar", ticker: "xUSD", price: 1.0012 }
+interface Asset {
+
+  ticker: string;
+  asset: string;
+}
+
+type ExchangeProps = {
+
+  conversionRates:{
+
+  }
+
+}
+
+
+const options: Asset[] = [
+  { asset: "Haven Token", ticker: "XHV"},
+  { asset: "United States Dollar", ticker: "xUSD" }
 ];
 
-export class Exchange extends Component {
+
+
+
+export class Exchange extends Component<> {
   state = {
-    from_asset: "Select Asset",
-    from_amount: "",
-    from_ticker: "",
-    from_price: "",
-    to_asset: "Select Asset",
-    to_amount: "",
-    to_ticker: "",
-    to_price: "",
-    time: 7
+    from:Asset,
+
   };
 
   componentDidMount() {

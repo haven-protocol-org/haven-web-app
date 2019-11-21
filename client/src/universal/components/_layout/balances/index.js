@@ -16,11 +16,11 @@ class Balances extends Component {
       unlockedBalance,
       lockedBalance,
       isSyncing,
-      bHeight,
+      blockHeight,
       scannedHeight
     } = this.props;
 
-    const amount = (scannedHeight / bHeight) * 100;
+    const amount = (scannedHeight / blockHeight) * 100;
     const percentage = amount.toFixed(2);
 
     return (

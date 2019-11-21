@@ -61,10 +61,24 @@ export const GET_TRANSFERS_FAILED = "get_transfers_failed";
 
 
 
+export const GET_BLOCK_INFO_FETCHING = "get_block_info_fetching";
+export const GET_BLOCK_INFO_SUCEED = "get_block_info_suceed";
+export const GET_BLOCK_INFO_FAILED = "get_block_info_failed";
+
+
+
 export const GET_BLOCK_HEIGHT_FETCHING = "get_block_height_fetching";
 export const GET_BLOCK_HEIGHT_SUCEED = "get_block_height_succeed";
 export const GET_BLOCK_HEIGHT_FAILED = "get_block_height_failed";
 
+
+export const GET_DAEMON_HEIGHT_FETCHING = "get_daemon_height_fetching";
+export const GET_DAEMON_HEIGHT_SUCEED = "get_daemon_height_suceed";
+export const GET_DAEMON_HEIGHT_FAILED = "get_daemon_height_failed";
+
+export const GET_WALLET_HEIGHT_FETCHING = "get_wallet_height_fetching";
+export const GET_WALLET_HEIGHT_SUCEED = "get_wallet_height_suceed";
+export const GET_WALLET_HEIGHT_FAILED = "get_wallet_height_failed";
 
 
 

@@ -8,7 +8,7 @@ import {connect} from "react-redux";
 import {Transaction} from "../../../../universal/components/transaction";
 import Header from "../../../../universal/components/_layout/header/index.js"
 import {withRouter} from "react-router-dom";
-import {selectHeight} from "../../reducers/chain";
+import {selectBlockHeight} from "../../reducers/chain";
 
 
 class TxHistoryContainer extends Component {
@@ -88,7 +88,7 @@ render () {
 
 export const mapStateToProps = state => ({
     transferList: state.transferList,
-    height: selectHeight(state),
+    height: selectBlockHeight(state),
     price: state.simplePrice.price
 });
 

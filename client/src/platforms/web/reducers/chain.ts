@@ -1,4 +1,6 @@
 import { UPDATE_CHAIN_DATA } from "../../../universal/actions/types";
+import {SyncState} from "../../../universal/types/types";
+import {AnyAction} from "redux";
 
 const INITIAL_STATE = {
   start_height: -1,
@@ -7,7 +9,7 @@ const INITIAL_STATE = {
   scanned_block_timestamp: -1
 };
 
-export const chain = (state = INITIAL_STATE, action) => {
+export const chain = (state = INITIAL_STATE, action: AnyAction) => {
   switch (action.type) {
     case UPDATE_CHAIN_DATA:
       return { ...action.payload };
@@ -16,18 +18,18 @@ export const chain = (state = INITIAL_STATE, action) => {
   }
 };
 
-export const selectBlockchainHeight = state => {
+export const selectBlockchainHeight = (state:any) => {
   return state.chain.blockchain_height;
 };
 
-export const selectSyncState = (state) => {
+export const selectSyncState = (state: any): SyncState => {
 
   const isSyncing =  state.chain.blockchain_height > state.chain.scanned_block_height + 5;
-  const bHeight = state.chain.blockchain_height;
+  const blockHeight = state.chain.blockchain_height;
   const scannedHeight = state.chain.scanned_block_height;
   const scannedDate = new Date(state.chain.scanned_block_timestamp * 1000);
 
-  return {isSyncing, bHeight, scannedHeight, scannedDate}
+  return {isSyncing, blockHeight, scannedHeight, scannedDate}
 
 
 };
