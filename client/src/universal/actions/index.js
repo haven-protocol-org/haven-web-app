@@ -1,4 +1,4 @@
-import {ADD_PUB_ADDRESS, CLOSE_WALLET, UPDATE_CHAIN_DATA} from "./types";
+import { ADD_PUB_ADDRESS, CLOSE_WALLET } from "./types";
 
 export * from "./prices";
 export * from "./theme";
@@ -9,11 +9,6 @@ export const addPubAddress = address => ({
   payload: address
 });
 
-
-
 export const closeWallet = () => {
   return { type: CLOSE_WALLET };
 };
-
-
-

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="240px" height="288px" viewBox="0 0 240 288" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 59.1 (86144) - https://sketch.com -->
+    <title>rounded</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" fill-opacity="0.530649038">
+        <g id="rounded" fill="#222222" fill-rule="nonzero">
+            <path d="M168,92.633682 L168,92.688889 L24,175.720696 L24,264 L72,264 L72,223.617315 L72,196.096157 L72,196.051672 L72.038227,196.074076 L216,112.92058 L216,24 L168,24 L168,92.633682 Z M144.074262,78.819702 L144,78.776825 L144,0 L240,0 L240,126.746873 L95.708287,209.946885 L96,210.117855 L96,288 L0,288 L0,162.038173 L144.074262,78.819702 Z M0,134.205943 L0,0 L96,0 L96,78.776825 L72,92.633682 L72,24 L24,24 L24,120.350056 L0,134.205943 Z M144,210.027123 L168,195.96094 L168,263.909268 L216,263.909268 L216,167.909268 L240,154 L240,287.909268 L144,287.909268 L144,210.027123 Z" id="Combined-Shape"></path>
+        </g>
+    </g>
+</svg>

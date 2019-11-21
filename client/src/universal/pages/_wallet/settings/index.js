@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { selectTheme } from "../../../actions";
 
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 // Relative Imports
 import Page from "../../../components/_layout/page";
@@ -19,13 +19,11 @@ import Footer from "../../../components/_inputs/footer";
 import { Container } from "./styles";
 
 import { dark, light } from "../../../../assets/styles/themes.js";
-import { decrypt } from "../../../../utility/utility";
 
 const options = [
   { theme: "dark", value: "Dark Theme" },
   { theme: "light", value: "Light Theme" }
 ];
-
 
 class SettingsPage extends Component {
   state = {
@@ -42,7 +40,6 @@ class SettingsPage extends Component {
     this.setState({
       value: this.props.theme.value
     });
-
   }
 
   handleClick = ({ theme, value }) => {
@@ -200,7 +197,7 @@ class SettingsPage extends Component {
 }
 
 const mapStateToProps = state => ({
-  theme: state.theme,
+  theme: state.theme
 });
 
 export const Settings = connect(
@@ -209,11 +206,9 @@ export const Settings = connect(
 )(SettingsPage);
 
 Settings.propTypes = {
-
-  psk:PropTypes.string.isRequired,
-  seed:PropTypes.string.isRequired,
-  sec_viewKey_string:PropTypes.string.isRequired,
-  pub_spendKey_string:PropTypes.string.isRequired,
-  pub_viewKey_string:PropTypes.string.isRequired,
-
+  psk: PropTypes.string.isRequired,
+  seed: PropTypes.string.isRequired,
+  sec_viewKey_string: PropTypes.string.isRequired,
+  pub_spendKey_string: PropTypes.string.isRequired,
+  pub_viewKey_string: PropTypes.string.isRequired
 };

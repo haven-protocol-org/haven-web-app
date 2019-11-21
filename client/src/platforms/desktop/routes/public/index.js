@@ -1,20 +1,24 @@
 // Library Imports
-import React, { Component, lazy, Suspense } from "react";
+import React, { Component, lazy } from "react";
 import { Route } from "react-router-dom";
 
 // Relative Imports
 
 import Welcome from "../../../../universal/pages/_public/welcome";
 //import Create from "../../pages/_auth/create";
-import {RestoreDesktop} from "../../pages/_auth/restore";
+import { RestoreDesktop } from "../../pages/_auth/restore";
 
 const Faq = lazy(() => import("../../../../universal/pages/_public/faq"));
 // const Create = lazy(() =>  import("../../pages/_auth/create"));
 // const Login = lazy(() => import("../../pages/_auth/login"));
-const Blog = lazy (() => import("../../../../universal/pages/_public/blog"));
-const Team = lazy(() =>  import("../../../../universal/pages/_public/team"));
-const Timeline = lazy(() => import("../../../../universal/pages/_public/timeline"));
-const Whitepaper = lazy(() => import("../../../../universal/pages/_public/whitepaper"));
+const Blog = lazy(() => import("../../../../universal/pages/_public/blog"));
+const Team = lazy(() => import("../../../../universal/pages/_public/team"));
+const Timeline = lazy(() =>
+  import("../../../../universal/pages/_public/timeline")
+);
+const Whitepaper = lazy(() =>
+  import("../../../../universal/pages/_public/whitepaper")
+);
 
 export class PublicRoutesDesktop extends Component {
   render() {

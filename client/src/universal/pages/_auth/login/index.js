@@ -1,23 +1,18 @@
 // Library Imports
 import React, { Component } from "react";
-import PropTypes from 'prop-types';
-
+import PropTypes from "prop-types";
+import * as clipboard from "clipboard-polyfill";
 // Relative Imports
 import { Container } from "./styles";
 import Auth from "../../../components/_auth/login";
-import Description from "../../../components/_inputs/description";
+import Seed from "../../../components/_inputs/seed";
 import { Information } from "../../../../assets/styles/type.js";
-
-
-
-
-
-
 
 export default class Login extends Component {
   state = {
     seed_phrase: "",
-    error: ""
+    error: "",
+    action: "Paste Seed"
   };
 
   componentDidMount() {
@@ -46,11 +41,32 @@ export default class Login extends Component {
     this.props.login(seed_phrase);
   };
 
+  handlePaste = () => {
+    clipboard
+      .readText()
+      .then(response => {
+        this.setState({
+          seed_phrase: response,
+          action: "Seed Pasted"
+        });
+      })
+      .then(
+        setTimeout(() => {
+          this.setState({
+            action: "Paste Seed"
+          });
+        }, 1000)
+      )
+      .catch(error => {
+        this.setState({
+          error: "Clipboard is empty"
+        });
+      });
+  };
+
   render() {
     const windowWidth = window.innerWidth;
-
-
-    const { seed_phrase, error } = this.state;
+    const { seed_phrase, error, action } = this.state;
 
     return (
       <Container>
@@ -64,12 +80,14 @@ export default class Login extends Component {
           loading={this.props.isRequestingLogin}
           submit="Submit"
         >
-          <Description
+          <Seed
             label="Seed Phrase or Private Spend Key"
             placeholder="Enter your 25 word seed phrase or Private Spend Key..."
             name="seed_phrase"
             value={seed_phrase}
             error={error}
+            actionEvent={this.handlePaste}
+            action={action}
             rows={windowWidth < 600 ? "6" : "4"}
             onChange={event => this.handleChange(event)}
           />
@@ -86,9 +104,7 @@ export default class Login extends Component {
 }
 
 Login.propTypes = {
-
   errorMessage: PropTypes.string,
-  login:PropTypes.func.isRequired,
-  isRequestingLogin:PropTypes.bool,
-
+  login: PropTypes.func.isRequired,
+  isRequestingLogin: PropTypes.bool
 };

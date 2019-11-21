@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="640px" height="360px" viewBox="0 0 640 360" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55.2 (78181) - https://sketchapp.com -->
+    <title>b_v3</title>
+    <desc>Created with Sketch.</desc>
+    <g id="b_v3" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="layers">
+            <g id="background" fill="#26292F">
+                <rect id="Rectangle" x="0" y="0" width="640" height="360"></rect>
+            </g>
+            <g id="icon" transform="translate(396.000000, 79.500000)"></g>
+        </g>
+        <g id="Group" transform="translate(365.000000, -89.000000)" stroke="#FFC246" stroke-width="2">
+            <polygon id="Polygon" opacity="0.650553385" points="265 77 427.812776 171 427.812776 359 265 453 102.187224 359 102.187224 171"></polygon>
+            <polygon id="Polygon" opacity="0.625581287" transform="translate(265.000000, 265.000000) rotate(40.000000) translate(-265.000000, -265.000000) " points="265 77 427.812776 171 427.812776 359 265 453 102.187224 359 102.187224 171"></polygon>
+            <polygon id="Polygon" opacity="0.176781064" transform="translate(265.000000, 265.000000) rotate(80.000000) translate(-265.000000, -265.000000) " points="265 77 427.812776 171 427.812776 359 265 453 102.187224 359 102.187224 171"></polygon>
+        </g>
+    </g>
+</svg>

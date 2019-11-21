@@ -36,6 +36,7 @@ class Welcome extends Component {
 
   render() {
     const windowWidth = window.innerWidth;
+
     return (
       <Page>
         <Container>

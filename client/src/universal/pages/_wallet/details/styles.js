@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import media from "../../../../assets/styles/media.js";
 
 export const Container = styled.div`
   grid-column: 1 / 3;
@@ -11,8 +10,6 @@ export const History = styled.div`
   height: auto;
   width: 100%;
 `;
-
-
 
 export const NoTransactions = styled.img`
   height: 250px;

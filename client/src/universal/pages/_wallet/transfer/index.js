@@ -1,7 +1,7 @@
 // Library Imports
-import React, {Component} from "react";
+import React, { Component } from "react";
 import * as clipboard from "clipboard-polyfill";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 // Relative Imports
 import Page from "../../../components/_layout/page";
 import Body from "../../../components/_layout/body";
@@ -13,10 +13,13 @@ import Form from "../../../components/_inputs/form";
 import Dropdown from "../../../components/_inputs/dropdown";
 import Footer from "../../../components/_inputs/footer";
 import Tab from "../../../components/tab";
-import {Transaction} from "../../../components/_transactions/transfer";
-import {Container} from "./styles";
-import {convertBalanceForReading, estimateFee} from "../../../../utility/utility";
-import {core} from "../../../../platforms/web/declarations/open_monero.service";
+import { Transaction } from "../../../components/_transactions/transfer";
+import { Container } from "./styles";
+import {
+  convertBalanceForReading,
+  estimateFee
+} from "../../../../utility/utility";
+import { core } from "../../../../platforms/web/declarations/open_monero.service";
 // import InputButton from "../../../components/_inputs/input_button";
 
 const options = [{ asset: "Haven", ticker: "XHV" }];
@@ -38,15 +41,13 @@ export class Transfer extends Component {
     secondTabState: false,
     checked: false,
     copyButtonState: "Copy Address",
-    address: "",
+    address: ""
   };
 
   componentDidMount() {
     window.scrollTo(0, 0);
     this.setState({ address: this.props.address });
   }
-
-
 
   handleChange = event => {
     const name = event.target.name;
@@ -76,7 +77,6 @@ export class Transfer extends Component {
         this.state.payment_id
       );
     }
-
   };
 
   toggleSend = () => {
@@ -135,9 +135,8 @@ export class Transfer extends Component {
       send_ticker,
       recipient_address,
       checked,
-      payment_id,
+      payment_id
     } = this.state;
-
 
     const checkValidation =
       send_amount.length > 0 && recipient_address.length > 97;
@@ -234,7 +233,6 @@ export class Transfer extends Component {
                   label="Transfer"
                   validated={checked && checkValidation}
                 />
-
               </Container>
             </>
           ) : (
@@ -286,12 +284,9 @@ export class Transfer extends Component {
   }
 }
 
-
 Transfer.propTypes = {
-
-  sendFunds:PropTypes.func.isRequired,
+  sendFunds: PropTypes.func.isRequired,
   address: PropTypes.string.isRequired,
   isProcessing: PropTypes.bool.isRequired,
   unlockedBalance: PropTypes.any.isRequired
-
 };
