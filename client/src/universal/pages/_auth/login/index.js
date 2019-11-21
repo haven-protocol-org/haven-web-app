@@ -12,7 +12,7 @@ export default class Login extends Component {
   state = {
     seed_phrase: "",
     error: "",
-    action: "Paste Seed"
+    action: "Paste from Clipboard"
   };
 
   componentDidMount() {
@@ -47,13 +47,13 @@ export default class Login extends Component {
       .then(response => {
         this.setState({
           seed_phrase: response,
-          action: "Seed Pasted"
+          action: "Pasted from Clipboard"
         });
       })
       .then(
         setTimeout(() => {
           this.setState({
-            action: "Paste Seed"
+            action: "Paste from Clipboard"
           });
         }, 1000)
       )
