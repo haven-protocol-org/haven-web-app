@@ -4,12 +4,24 @@ import React, { Component } from "react";
 // Relative Imports
 import { Container, Microcopy, Heading, Page } from "./styles";
 
-import Content from "../../../components/_public/faq";
+import English from "../../../components/_public/faq/english/index";
 import Footer from "../../../components/footer";
 
 class Faq extends Component {
+  state = {
+    language: "english"
+  };
+
   componentDidMount() {
     window.scrollTo(0, 0);
+  }
+
+  handleTranslate(language) {
+    return () => {
+      this.setState({
+        language: language
+      });
+    };
   }
 
   render() {
@@ -20,7 +32,7 @@ class Faq extends Component {
             <Heading>Haven Protocol F.A.Qs</Heading>
           </Microcopy>
         </Container>
-        <Content />
+        <English />
         <Footer />
       </Page>
     );
