@@ -4,9 +4,9 @@ import React from "react";
 // Relative Imports
 import { Container, Spacing } from "./styles";
 
-const Body = ({ children, span }) => {
+const Body = ({ children }) => {
   return (
-    <Container span={span}>
+    <Container>
       {children}
       <Spacing />
     </Container>

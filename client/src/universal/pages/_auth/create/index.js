@@ -13,9 +13,6 @@ import PropTypes from 'prop-types';
 
 
 
-
-
-
 export class Create extends Component {
   state = {
     step: 1,

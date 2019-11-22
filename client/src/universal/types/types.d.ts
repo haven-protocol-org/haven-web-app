@@ -4,8 +4,8 @@
 export interface SyncState {
 
     isSyncing: boolean,
-    blockHeight: bigint,
-    scannedHeight: bigint,
+    blockHeight: number,
+    scannedHeight: number,
     scannedDate?: Date
 
 

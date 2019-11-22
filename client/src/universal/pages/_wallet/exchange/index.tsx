@@ -14,6 +14,7 @@ import Dropdown from "../../../components/_inputs/dropdown";
 import Transaction from "../../../components/_transactions/exchange";
 
 import { Container } from "./styles";
+import {ConversionRate, Ticker} from "../../../../platforms/desktop/reducers/blockHeaderExchangeRates";
 
 interface Asset {
 
@@ -21,16 +22,31 @@ interface Asset {
   asset: string;
 }
 
+
 type ExchangeProps = {
 
-  conversionRates:{
+  conversionRates:ConversionRate[];
 
-  }
+}
+
+type ExchangeState = {
+
+  fromAsset: AssetOption;
+  fromAmount: number;
+  toAmount: number;
+  toAsset: AssetOption;
+  xRate: number;
 
 }
 
 
-const options: Asset[] = [
+interface AssetOption {
+  ticker: Ticker;
+  asset: string;
+}
+
+
+const options:AssetOption[] = [
   { asset: "Haven Token", ticker: "XHV"},
   { asset: "United States Dollar", ticker: "xUSD" }
 ];
@@ -38,61 +54,41 @@ const options: Asset[] = [
 
 
 
-export class Exchange extends Component<> {
-  state = {
-    from:Asset,
+export class Exchange extends Component<ExchangeProps, ExchangeState> {
 
-  };
 
   componentDidMount() {
     window.scrollTo(0, 0);
   }
 
-  handleChange = event => {
-    const name = event.target.name;
-    const value = event.target.value;
+  handleChange = (event: any) => {
 
-    this.setState({
-      [name]: value
-    });
+
+
   };
 
-  setFromAsset = option => {
-    const { asset, ticker, price } = option;
-    // Call back function from Dropdown
-    this.setState({
-      from_asset: asset,
-      from_ticker: ticker,
-      from_price: price
-    });
-  };
+  setFromAsset = ( (option: AssetOption) => {
 
-  setToAsset = option => {
-    const { asset, ticker, price } = option;
+    // Call back function from Dropdown
+    this.setState({ fromAsset: option});
+  });
+
+  setToAsset = (option: AssetOption)  => {
     // Call back function from Dropdown
     this.setState({
-      to_asset: asset,
-      to_ticker: ticker,
-      to_price: price
+     toAsset: option
     });
   };
 
   handleSubmit = () => {
-    const { send_ticker } = this.state;
-    setTimeout(() => this.setState({ status: true, loading: true }), 500);
-    setInterval(() => this.setState({ time: this.state.time - 1 }), 1000);
-    setTimeout(() => history.push(`/wallet/assets/${send_ticker}`), 7000);
+
+
+
   };
 
   render() {
-    const {
-      from_asset,
-      from_amount,
-      from_ticker,
-      to_asset,
-      to_ticker,
-      to_amount
-    } = this.state;
+
+    const { fromAsset, toAsset, fromAmount, toAmount } = this.state;
 
     return (
       <Page>
@@ -101,14 +97,15 @@ export class Exchange extends Component<> {
           <Header
             title="Exchange "
             description="Swap to and from various Haven Assets"
+            back="/"
           />
           <Form onSubmit={this.handleSubmit}>
             <Dropdown
               label="From Asset"
               placeholder="Select Asset"
               name="from_asset"
-              ticker={from_ticker}
-              value={from_asset}
+              ticker={fromAsset.ticker}
+              value={fromAsset.asset}
               options={options}
               onClick={this.setFromAsset}
             />
@@ -117,15 +114,15 @@ export class Exchange extends Component<> {
               placeholder="Enter amount"
               type="number"
               name="from_amount"
-              value={from_amount}
+              value={fromAmount}
               onChange={this.handleChange}
             />
             <Dropdown
               label="To Asset"
               placeholder="Select Asset"
               name="to_asset"
-              value={to_asset}
-              ticker={to_ticker}
+              value={toAsset.asset}
+              ticker={toAsset.ticker}
               options={options}
               onClick={this.setToAsset}
             />
@@ -134,7 +131,7 @@ export class Exchange extends Component<> {
               placeholder="Enter amount"
               name="to_amount"
               type="number"
-              value={to_amount}
+              value={toAmount}
               onChange={this.handleChange}
             />
           </Form>
@@ -144,6 +141,7 @@ export class Exchange extends Component<> {
               onClick={this.handleSubmit}
               label="Exchange"
               validated={true}
+              loading={true}
             />
           </Container>
         </Body>

@@ -5,9 +5,18 @@ import React from "react";
 import { Container, Field, Labels } from "./styles";
 import { Label, Error } from "../../../../assets/styles/type.js";
 
-const Input = React.forwardRef(
+
+type Ref = HTMLInputElement;
+type Props = {
+    type: string, placeholder: string, label: string, error?: string, onChange:Function , name: string, value: any, width?: number, readOnly?: boolean
+}
+
+
+
+
+const Input = React.forwardRef<Ref, Props>(
   (
-    { type, placeholder, label, error, onChange, name, value, width, readOnly },
+   { type, placeholder, label, error, onChange, name, value, width, readOnly = false},
     ref
   ) => {
     return (

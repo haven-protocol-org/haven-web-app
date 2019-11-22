@@ -1,9 +1,9 @@
-import { combineReducers } from "redux";
+import {AnyAction, combineReducers} from "redux";
 
 // Reducers
 import theme from "../../../universal/reducers/currentTheme.js";
 import address from "./address.js";
-import { balance } from "./balance.ts";
+import { balance } from "./balance";
 import {transferProcess} from "./transferProcess";
 import { transferList } from "./transferList";
 import { priceHistory } from "../../../universal/reducers/priceHistory";
@@ -23,14 +23,16 @@ const appReducer = combineReducers({
   transferList,
   forex,
   walletCreation,
+  notification,
   walletSession,
   priceHistory,
-  notification,
   chain,
   simplePrice
 });
 
-const rootReducer = (state, action) => {
+
+
+const rootReducer = (state: any, action: AnyAction) => {
   if (action.type === CLOSE_WALLET) {
     state = undefined;
   }

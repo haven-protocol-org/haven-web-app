@@ -1,22 +1,22 @@
 import {GET_BLOCK_INFO_SUCEED} from "../actions/types";
 import {AnyAction} from "redux";
-import {AppState} from "./index";
+import {AppState} from ".";
 import {SyncState} from "../../../universal/types/types";
 
 
 
 interface Chain {
 
-    walletHeight:0;
-    nodeHeight:0;
-    chainHeight:0;
+    walletHeight:number;
+    nodeHeight:number;
+    chainHeight:number;
 }
 
 
 
 const INITIAL_STATE: Chain = { walletHeight: 0, chainHeight: 0, nodeHeight: 0 };
 
-const chain = (state = INITIAL_STATE, action: AnyAction): Chain =>  {
+export const chain = (state = INITIAL_STATE, action: AnyAction): Chain =>  {
     switch (action.type) {
         case GET_BLOCK_INFO_SUCEED:
             return {...state, ...action.payload};
@@ -31,7 +31,7 @@ const chain = (state = INITIAL_STATE, action: AnyAction): Chain =>  {
 
 
 export const selectBlockHeight = (state: AppState) => {
-    return state.chain.blockHeight;
+    return state.chain.chainHeight;
 };
 
 
