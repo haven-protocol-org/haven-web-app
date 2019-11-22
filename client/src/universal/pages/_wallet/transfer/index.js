@@ -261,7 +261,7 @@ export class Transfer extends Component {
                 ) : (
                   <Input
                     ref={textarea => (this.addressValue = textarea)}
-                    label="Haven Address"
+                    label={`Your ${send_ticker} address`}
                     placeholder="...load address"
                     width="true"
                     name="address"
