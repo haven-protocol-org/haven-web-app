@@ -134,6 +134,9 @@ const Footer = () => {
         >
           Bittrex
         </External>
+        <External rel="noopener" href="https://www.abra.com/" target="_blank">
+          Abra
+        </External>
         <External
           rel="noopener"
           href="https://www.tokok.com/market?symbol=XHV_BTC"
