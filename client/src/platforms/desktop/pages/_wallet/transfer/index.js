@@ -31,7 +31,6 @@ class TransferDesktopContainer extends Component {
 
 export const mapStateToProps = state => ({
   address: state.address.main,
-  unlockedBalance: state.balance.unlockedBalance,
   transferSucceed:transferSucceed
 });
 

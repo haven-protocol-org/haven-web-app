@@ -1,6 +1,15 @@
-import {GET_BALANCES_FAILED, GET_BALANCES_FETCHING, GET_BALANCES_SUCCEED} from "../../platforms/desktop/actions/types";
-import {convertBalanceForReading} from "../../utility/utility";
-import {NO_BALANCE} from "../../platforms/desktop/reducers/balance";
+import {
+    GET_BALANCES_FAILED,
+    GET_BALANCES_FETCHING,
+    GET_BALANCES_SUCCEED,
+    GET_OFFSHORE_BALANCE_SUCCEED
+} from "../../platforms/desktop/actions/types";
+import {Ticker} from "../../platforms/desktop/reducers/blockHeaderExchangeRates";
+import {AnyAction} from "redux";
+import {AppState} from "../../platforms/desktop/reducers";
+
+
+const NO_BALANCE = BigInt(-1);
 
 
 export interface Balance {
@@ -8,48 +17,72 @@ export interface Balance {
     balance:bigint,
     unlockedBalance:bigint,
     lockedBalance:bigint,
-    isFetching:boolean
 
 }
 
+interface Loading {
+    isLoading:boolean,
+    error:{}
+}
 
-export interface XBalance {
+type BalanceLoading = {
 
-    xhv: Balance,
-    xUSD:Balance
+    [key in Ticker]:Loading;
 
 }
+
+const INITAL_STATE_BALANCE_LOADING: BalanceLoading = {
+
+    xUSD:{isLoading: false, error:{}},
+    XHV: {isLoading: false, error:{}}
+
+};
+
+
+export type XBalance = Partial<{[key in Ticker]: Balance}>
 
 const INITIAL_BALANCE: Balance = {
     balance:  BigInt(-1),
     unlockedBalance: BigInt( -1),
-    lockedBalance: BigInt( -1),
-    isFetching: false};
+    lockedBalance: BigInt( -1),};
 
 
-const INITIAL_STATE:XBalance = {
+const INITIAL_STATE: Record<Ticker, Balance> = {
     xUSD:{...INITIAL_BALANCE},
-    xhv: {...INITIAL_BALANCE}
+    XHV: {...INITIAL_BALANCE}
 };
 
 
-export function balance (state = INITIAL_STATE, action: any): XBalance {
+
+export function balanceLoading(state = INITAL_STATE_BALANCE_LOADING, action: AnyAction): BalanceLoading {
+
     switch (action.type) {
-        case GET_BALANCES_SUCCEED:
-            return { ...state, xhv: { ...action.payload,isFetching: false}};
         case GET_BALANCES_FETCHING:
-            return { ...state, xhv: { ...state.xhv, isFetching: true} };
+            return {...state,};
         case GET_BALANCES_FAILED:
-            return { ...state, xhv: { ...state.xhv, isFetching: false} };
+            return {...state,};
         default:
             return state;
     }
 }
 
-export function selectReadableBalance(state: any) {
 
-    if (state.balance.balance === NO_BALANCE)
-        return state.balance.balance;
+export function xBalance (state = INITIAL_STATE, action: {type: string, payload:XBalance}): Record<Ticker, Balance> {
+    switch (action.type) {
+        case GET_BALANCES_SUCCEED:
+        case GET_OFFSHORE_BALANCE_SUCCEED:
+            return { ...state, ... action.payload};
+        default:
+            return state;
+    }
+}
 
-    return convertBalanceForReading(state.balance.balance);
+export function selectReadableBalance(state: AppState): number {
+
+    if (state.xBalance.XHV.balance === NO_BALANCE)
+        return -1;
+
+    const readableNum = Number(state.xBalance.XHV.balance / BigInt(Math.pow(10, 12)));
+
+    return Math.round(readableNum/10000) * 10000;
 }

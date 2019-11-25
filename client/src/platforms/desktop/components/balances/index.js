@@ -18,7 +18,7 @@ class Balances extends Component {
       isSyncing,
       blockHeight,
       scannedHeight
-    } = this.props.XHV;
+    } = this.props;
 
     const amount = (scannedHeight / blockHeight) * 100;
     const percentage = amount.toFixed(2);
@@ -49,7 +49,7 @@ class Balances extends Component {
 }
 
 export const mapStateToProps = state => ({
-  ...state.xBalance,
+  ...state.balance,
    ...selectSyncState(state)
 });
 

@@ -5,7 +5,7 @@ import React from "react";
 import { Container, Header, Row, Key, Value } from "./styles";
 
 const Transaction = ({ state }) => {
-  const { from_ticker, from_amount, to_amount, to_ticker } = state;
+  const { xRate, fromAmount, toAmount, fromAsset, toAsset } = state;
 
   return (
     <Container>
@@ -13,27 +13,24 @@ const Transaction = ({ state }) => {
         <Value>Transaction Details</Value>
         <Value />
       </Header>
+        <Row>
+            <Key>Conversion Rate</Key>
+            <Value>{(xRate && fromAsset && toAsset)? `1 ${fromAsset.ticker} =  ${xRate.toFixed(4)} ${toAsset.ticker}`:''}</Value>
+        </Row>
       <Row>
         <Key>From Asset</Key>
         <Value>
-          {from_amount > 0 && from_ticker !== ""
-            ? `${from_amount}${" "}${from_ticker}`
-            : "--"}
+            {(fromAsset? fromAsset.ticker : '') + ' ' + (fromAmount? fromAmount : '--') }
         </Value>
       </Row>
       <Row>
         <Key>To Asset</Key>
         <Value>
-          {to_amount > 0 && to_ticker !== ""
-            ? `${to_amount}${" "}${to_ticker}`
-            : "--"}
+            {(toAsset? toAsset.ticker : '' ) + ' ' + (toAmount? toAmount : '--')}
         </Value>
       </Row>
 
-      <Row>
-        <Key>Exchange Fee</Key>
-        <Value>0.0203 XHV</Value>
-      </Row>
+
     </Container>
   );
 };

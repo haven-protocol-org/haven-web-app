@@ -2,8 +2,9 @@ import {Details} from "../../../../../universal/pages/_wallet/details";
 import React, {Component} from "react";
 import {TxHistoryDesktop} from "../../../components/TxHistory";
 import {connect} from "react-redux";
+import {AppState} from "../../../reducers";
 
-class DetailsDesktopContainer extends Component {
+class DetailsDesktopContainer extends Component<any, any> {
 
     componentDidMount() {
         window.scrollTo(0, 0);
@@ -22,8 +23,8 @@ class DetailsDesktopContainer extends Component {
 }
 
 
-export const mapStateToProps = state => ({
-    balance: state.balance.unlockedBalance,
+export const mapStateToProps = (state: AppState) => ({
+    balance: Number(state.xBalance.XHV.unlockedBalance),
 });
 
 export const DetailsDesktop = connect(

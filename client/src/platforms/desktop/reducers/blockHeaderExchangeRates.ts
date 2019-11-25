@@ -14,12 +14,9 @@ export interface ConversionRate {
 }
 
 
+export interface BlockHeaderRate  {
 
-export const ATOMIC_UNITS = 1000000000000;
-
-
-export interface IBlockHeaderRate  {
-
+    height:number
     signature: string,
     unused1: number,
     unused2: number,
@@ -40,17 +37,15 @@ export interface IBlockHeaderRate  {
 };
 
 
-const INITIAL_STATE: Record<number, IBlockHeaderRate> = {};
+const INITIAL_STATE: BlockHeaderRate[] = [];
 
 
-export const blockHeaderExchangeRate = (state: Record<number,IBlockHeaderRate>, action: AnyAction): Record<number,IBlockHeaderRate> => {
+export const blockHeaderExchangeRate = (state: BlockHeaderRate[] = INITIAL_STATE, action: AnyAction): BlockHeaderRate [] => {
 
     switch (action.type) {
 
         case GET_BLOCK_HEADER_EXCHANGE_RATE_SUCCEED:
-        return {...state, ...action.payload };
-
-
+        return [...state, action.payload ];
         default:
             return state;
 
@@ -59,7 +54,21 @@ export const blockHeaderExchangeRate = (state: Record<number,IBlockHeaderRate>, 
 };
 
 
-export const selectConversionRates = (state:AppState) => {
+export const selectLatestConversionRates = (state:AppState):ConversionRate[] | null => {
 
+    if (state.blockHeaderExchangeRate.length === 0) {
+        return null;
+    }
+
+   const latestBlockerHeader =  state.blockHeaderExchangeRate[state.blockHeaderExchangeRate.length -1];
+
+   const conversionRate: ConversionRate = {
+       fromTicker:'XHV',
+       toTicker:'xUSD',
+       xRate:latestBlockerHeader.unused1 / Math.pow(10, 12),
+       xRateRevert: 1 / (latestBlockerHeader.unused1 / Math.pow(10, 12)),
+   };
+
+   return [conversionRate];
 
 };

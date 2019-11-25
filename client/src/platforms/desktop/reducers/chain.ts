@@ -27,12 +27,15 @@ export const chain = (state = INITIAL_STATE, action: AnyAction): Chain =>  {
 
 
 
-
-
-
 export const selectBlockHeight = (state: AppState) => {
     return state.chain.chainHeight;
 };
+
+
+export const selectNodeHeight = (state: AppState) => {
+    return state.chain.nodeHeight;
+};
+
 
 
 

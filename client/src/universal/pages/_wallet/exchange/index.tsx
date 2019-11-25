@@ -1,6 +1,6 @@
 // Library Imports
 import React, { Component } from "react";
-import {history} from "../../../../utility/history.js";
+import { connect } from "react-redux";
 
 // Relative Imports
 import Page from "../../../components/_layout/page";
@@ -14,7 +14,16 @@ import Dropdown from "../../../components/_inputs/dropdown";
 import Transaction from "../../../components/_transactions/exchange";
 
 import { Container } from "./styles";
-import {ConversionRate, Ticker} from "../../../../platforms/desktop/reducers/blockHeaderExchangeRates";
+import {
+  ConversionRate,
+  selectLatestConversionRates,
+  Ticker
+} from "../../../../platforms/desktop/reducers/blockHeaderExchangeRates";
+import {selectTheme} from "../../../actions";
+import {AppState} from "../../../../platforms/desktop/reducers";
+import {selectNodeHeight} from "../../../../platforms/desktop/reducers/chain";
+import {getLastBlockHeader} from "../../../../platforms/desktop/actions/blockHeaderExchangeRate";
+import {offshore, onshore} from "../../../../platforms/desktop/actions";
 
 interface Asset {
 
@@ -25,74 +34,241 @@ interface Asset {
 
 type ExchangeProps = {
 
-  conversionRates:ConversionRate[];
+  conversionRates:ConversionRate[] | null;
+  nodeHeight:number;
+  getLastBlockHeader: () => void;
+  onshore: (amount:number) => void
+  offshore: (amount: number) => void
 
 }
 
 type ExchangeState = {
 
-  fromAsset: AssetOption;
-  fromAmount: number;
-  toAmount: number;
-  toAsset: AssetOption;
-  xRate: number;
+  fromAsset?: AssetOption;
+  fromAmount?: string;
+  toAmount?: string;
+  toAsset?: AssetOption;
+  xRate?: number;
+  xRateRevert?: number;
 
 }
 
 
 interface AssetOption {
   ticker: Ticker;
-  asset: string;
+  name: string;
 }
 
 
 const options:AssetOption[] = [
-  { asset: "Haven Token", ticker: "XHV"},
-  { asset: "United States Dollar", ticker: "xUSD" }
+  { name: "Haven Token", ticker: "XHV"},
+  { name: "United States Dollar", ticker: "xUSD" }
 ];
 
 
 
 
-export class Exchange extends Component<ExchangeProps, ExchangeState> {
+
+class Exchange extends Component<ExchangeProps, ExchangeState> {
+
+  state:ExchangeState = {
+    fromAsset:undefined,
+    fromAmount: "",
+    toAmount:"",
+    toAsset: undefined,
+    xRate:undefined,
+    xRateRevert:undefined
+  };
+
+
+
 
 
   componentDidMount() {
     window.scrollTo(0, 0);
+
+
+    if (this.props.conversionRates === null) {
+      this.props.getLastBlockHeader();
+    }
+
+
   }
 
-  handleChange = (event: any) => {
+  componentDidUpdate(prevProps: ExchangeProps) {
 
+    if (prevProps.nodeHeight !== this.props.nodeHeight) {
+
+      this.props.getLastBlockHeader();
+
+    }
+
+  }
+
+  onEnterFromAmount = (event: any) => {
+
+
+    const name = event.target.name;
+    const value = event.target.value;
+
+    this.setState({
+      [name]: value
+    }, () => this.calcConversion(true));
+
+  };
+
+  onEnterToAmount = (event: any) => {
+
+    const name = event.target.name;
+    const value = event.target.value;
+
+    this.setState({
+      [name]: value
+    }, () => this.calcConversion(false));
 
 
   };
 
   setFromAsset = ( (option: AssetOption) => {
 
+
     // Call back function from Dropdown
-    this.setState({ fromAsset: option});
-  });
+    this.setState({ fromAsset: option},()=> this.setRates());
+
+    if (this.state.toAsset === option) {this.setState({ toAsset: undefined} );}});
 
   setToAsset = (option: AssetOption)  => {
     // Call back function from Dropdown
     this.setState({
      toAsset: option
-    });
+    },()=> this.setRates());
+
+    if (this.state.fromAsset === option) {this.setState({ fromAsset: undefined}, );}
+
   };
+
+
+  setRates() {
+
+
+    const {fromAsset, toAsset } = this.state;
+
+    if (fromAsset === undefined || toAsset === undefined || toAsset === fromAsset) {
+      this.setState({xRate:undefined, xRateRevert:undefined});
+      return;
+    }
+
+    let isReverted = false;
+    let matchedConversionRate: ConversionRate | undefined = undefined;
+
+
+    const fromTicker = fromAsset.ticker;
+    const toTicker = toAsset.ticker;
+
+    if (this.props.conversionRates === null) {
+      return;
+    }
+
+    for (const conversionRate of this.props.conversionRates) {
+      if (conversionRate.fromTicker === fromTicker && conversionRate.toTicker === toTicker) {
+        matchedConversionRate = conversionRate;
+          break;
+      }
+      if (conversionRate.toTicker === fromTicker && conversionRate.fromTicker === toTicker) {
+        matchedConversionRate = conversionRate;
+        isReverted = true;
+        break;
+      }
+    }
+    if (matchedConversionRate === undefined) {
+      return;
+    }
+
+    this.setState((state) => {
+
+      if (matchedConversionRate === undefined) {
+        return state;
+      }
+
+      return {xRate: isReverted? matchedConversionRate.xRateRevert:matchedConversionRate.xRate,
+          xRateRevert: isReverted? matchedConversionRate.xRate: matchedConversionRate.xRateRevert};
+    }, () => {this.calcConversion()});
+  }
+
+  calcConversion(convertFromTo: boolean = true) {
+
+
+
+        let {xRate, xRateRevert, toAmount, fromAmount} = this.state;
+
+        if (xRate === undefined) {
+          return;
+        }
+
+        if (xRateRevert === undefined) {
+          return;
+        }
+
+        if (fromAmount !== undefined && convertFromTo) {
+          this.setState({toAmount:(parseFloat(fromAmount)*xRate).toFixed(4)}, () => console.log(this.state));
+          return;
+        }
+
+        if (toAmount !== undefined && !convertFromTo) {
+          this.setState({fromAmount:(parseFloat(toAmount)*xRateRevert).toFixed(4)}, () => console.log(this.state)
+        );
+        }
+
+  }
 
   handleSubmit = () => {
 
+    if (!this.state.fromAmount || !this.state.fromAsset || !this.state.toAsset)
+      return;
+
+    const isOffShore = this.state.fromAsset.ticker === 'XHV' && this.state.toAsset.ticker !== "XHV";
+    const amount = parseFloat(this.state.fromAmount);
+
+
+    if (isOffShore)
+    {
+      this.props.offshore(amount)
+    } else {
+      this.props.onshore(amount);
+    }
+
 
 
   };
+
+
+
+
+
+
+
 
   render() {
 
     const { fromAsset, toAsset, fromAmount, toAmount } = this.state;
 
+
+    const fromName = fromAsset? fromAsset.name : "Select Asset";
+    const fromTicker = fromAsset? fromAsset.ticker : '';
+
+
+    const toName = toAsset? toAsset.name : "Select Asset";
+    const toTicker = toAsset? toAsset.ticker : '';
+
+    const isValid: boolean = !!(fromAsset && toAsset && fromAmount && toAmount);
+
+
+
+
+
+
     return (
-      <Page>
-        <Menu />
+
         <Body>
           <Header
             title="Exchange "
@@ -104,8 +280,8 @@ export class Exchange extends Component<ExchangeProps, ExchangeState> {
               label="From Asset"
               placeholder="Select Asset"
               name="from_asset"
-              ticker={fromAsset.ticker}
-              value={fromAsset.asset}
+              ticker={fromTicker}
+              value={fromName}
               options={options}
               onClick={this.setFromAsset}
             />
@@ -113,26 +289,31 @@ export class Exchange extends Component<ExchangeProps, ExchangeState> {
               label="From Amount"
               placeholder="Enter amount"
               type="number"
-              name="from_amount"
+              name="fromAmount"
               value={fromAmount}
-              onChange={this.handleChange}
+              onChange={this.onEnterFromAmount}
+              error={fromAsset === undefined? 'Please select an asset first': ''}
+              readOnly={fromAsset === undefined}
             />
             <Dropdown
               label="To Asset"
               placeholder="Select Asset"
               name="to_asset"
-              value={toAsset.asset}
-              ticker={toAsset.ticker}
+              value={toName}
+              ticker={toTicker}
               options={options}
               onClick={this.setToAsset}
             />
             <Input
               label="To Amount"
               placeholder="Enter amount"
-              name="to_amount"
+              name="toAmount"
               type="number"
               value={toAmount}
-              onChange={this.handleChange}
+              onChange={this.onEnterToAmount}
+              error={toAsset === undefined? 'Please select an asset first': ''}
+              readOnly={toAsset === undefined}
+
             />
           </Form>
           <Container>
@@ -140,12 +321,21 @@ export class Exchange extends Component<ExchangeProps, ExchangeState> {
             <Footer
               onClick={this.handleSubmit}
               label="Exchange"
-              validated={true}
-              loading={true}
+              validated={isValid}
+              loading={false}
             />
           </Container>
         </Body>
-      </Page>
     );
   }
 }
+
+
+const mapStateToProps = (state: AppState) => ({
+  conversionRates: selectLatestConversionRates(state),
+  nodeHeight: selectNodeHeight(state)
+});
+
+export const ExchangePage = connect(
+    mapStateToProps, {getLastBlockHeader, onshore, offshore}
+)(Exchange);

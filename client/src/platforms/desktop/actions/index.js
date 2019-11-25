@@ -1,4 +1,3 @@
-import {ADD_PUB_ADDRESS} from "./types";
 
 export * from "./balance";
 export * from "./transfer";
@@ -7,8 +6,10 @@ export * from "./chain";
 export * from "./walletSession";
 export * from "./walletRestoring";
 export * from "./walletCreation";
+export * from "./refresh";
+export * from "./offshore";
+export * from "./offshoreBalance"
+export * from "./offshoreTransfer"
+export * from "./offshoreTransferHistory"
 
-
-
-export const addPubAddress = (address) => ({type: ADD_PUB_ADDRESS, payload:address});
 

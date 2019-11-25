@@ -1,3 +1,5 @@
+import {logM} from "../../../utility/utility";
+
 const ipcRenderer = window.ipcRenderer;
 
 
@@ -57,11 +59,11 @@ export function refreshRPC(start_height = 0) {
 
 
 export function onshoreRPC(params) {
-    return callRpc('onshore')
+    return callRpc('onshore', params)
 }
 
 export function offshoreRPC(params) {
-    return callRpc('offshore')
+    return callRpc('offshore', params)
 }
 
 export function getOffshoreBalanceRPC() {
@@ -70,8 +72,8 @@ export function getOffshoreBalanceRPC() {
 
 }
 
-export function getOffshoreTransfersRPC() {
-    return callRpc('get_offshore_transfers')
+export function getOffshoreTransfersRPC(params) {
+    return callRpc('get_offshore_transfers', params)
 }
 
 
@@ -110,6 +112,8 @@ function callRpc(method, params) {
     };
 
 
+    logM(objRequest);
+
 
     return ipcRenderer.invoke('rpc', objRequest)
         .then(response => handleError(response));
@@ -121,8 +125,8 @@ function callRpc(method, params) {
 export const handleError = async (response) => {
 
 
-    console.log(response);
     // intercept error on protocol level
+
     if (response.data.error)
         return Promise.reject (response.data.error);
 

@@ -6,12 +6,14 @@ import { Redirect, Route } from "react-router-dom";
 
 import {AssetsDesktop} from "../../pages/_wallet/assets";
 import {DetailsDesktop} from "../../pages/_wallet/details";
-import {Exchange} from "../../../../universal/pages/_wallet/exchange";
+import { ExchangePage} from "../../../../universal/pages/_wallet/exchange";
 import {TransferDesktop} from "../../pages/_wallet/transfer";
 import {SettingsDesktop} from "../../pages/_wallet/settings";
 import { connect } from "react-redux";
 import {selectIsLoggedIn} from "../../reducers/walletSession";
-import {getTransfers, getBalances} from "../../actions";
+import {refresh, updateApp} from "../../actions";
+import Page from "../../../../universal/components/_layout/page"
+import Menu from "../../../../universal/components/_layout/menu"
 
 /**
  *root component for private wallet
@@ -22,25 +24,20 @@ import {getTransfers, getBalances} from "../../actions";
 class PrivateRoutes extends Component {
   componentDidMount() {
 
-
-      this.props.getBalances();
-    this.props.getTransfers();
+    this.props.refreshApp();
     this.addTimer();
   }
 
 
   addTimer() {
 
-      this.getTxTimer = setInterval(this.props.getTransfers, 30000);
-      this.getBalancesTimer = setInterval(this.props.getBalances, 30000);
+      this.updateTimer = setInterval(this.props.updateApp, 30000);
   }
 
   removeTimer() {
 
-      clearInterval(this.getTxTimer);
-      clearInterval(this.getBalancesTimer);
-      this.getTxTimer = null;
-      this.getBalancesTimer = null;
+      clearInterval(this.updateTimer);
+      this.updateTimer = null;
 
   }
 
@@ -57,12 +54,14 @@ class PrivateRoutes extends Component {
 
     return (
       <div>
+          <Page>
+              <Menu/>
         <Route path={`${match.url}/assets`} exact component={AssetsDesktop} />
         <Route path={`${match.url}/assets/:id`} exact component={DetailsDesktop} />
-        <Route path={`${match.url}/exchange`} exact component={Exchange} />
         <Route path={`${match.url}/transfer`} exact component={TransferDesktop} />
         <Route path={`${match.url}/settings`} exact component={SettingsDesktop} />
-        <Route path={`${match.url}/exchange`} exact component={Exchange} />
+        <Route path={`${match.url}/exchange`} exact component={ExchangePage} />
+          </Page>
       </div>
     );
   }
@@ -74,5 +73,5 @@ export const mapStateToProps = state => ({
 
 export const PrivateRoutesDesktop =  connect(
   mapStateToProps,
-  { getTransfers, getBalances }
+  { refreshApp: refresh, updateApp}
 )(PrivateRoutes);

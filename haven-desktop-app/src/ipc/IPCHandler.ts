@@ -21,7 +21,7 @@ export class IPCHandler {
         'get_balance', 'get_offshore_balance', 'get_offshore_transfers', 'query_key','transfer','get_transfers','create_wallet', 'offshore_transfer' ,'refresh', 'onshore', 'offshore'];
 
 
-    private readonly DAEMON_METHODS: string[] = ['get_last_block_header','get_block_count','get_height', 'get_block_header_by_height'] ;
+    private readonly DAEMON_METHODS: string[] = ['get_info', 'get_last_block_header','get_block_count','get_height', 'get_block_header_by_height'] ;
 
 
     private havendRpcHandler: RPCHRequestHandler = new RPCHRequestHandler();

@@ -2,7 +2,7 @@ import { transferRPC } from "../rpc/rpc";
 import { getTransfers } from "./";
 import {TRANSFER_FAILED, TRANSFER_FETCHING, TRANSFER_RESET, TRANSFER_SUCCEED} from "./types";
 
-import { getBalances } from "./";
+import { getBalance } from "./";
 import { addErrorNotification, addNotificationByKey} from "../../../universal/actions/notification";
 import {TRANSFER_SUCCEED_MESSAGE} from "../../../constants/notificationList";
 
@@ -21,7 +21,7 @@ export const transfer  = (address, amount, paymentId) => {
         dispatch(transferSucceed(result));
         dispatch(addNotificationByKey(TRANSFER_SUCCEED_MESSAGE));
         dispatch(getTransfers());
-        dispatch(getBalances());
+        dispatch(getBalance());
       })
       .catch(error => dispatch(manageTransferFailed(error)));
   };

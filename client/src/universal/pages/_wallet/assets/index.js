@@ -67,8 +67,6 @@ class AssetsPage extends Component {
     const value = calcValue(this.props.readableBalance, this.props.price);
 
     return (
-      <Page>
-        <Menu />
         <Body>
           <Overview />
           <Header
@@ -90,7 +88,6 @@ class AssetsPage extends Component {
           />
           {this.renderTokens()}
         </Body>
-      </Page>
     );
   }
 }
@@ -108,7 +105,6 @@ export const Assets =  connect(
 
 AssetsPage.propTypes = {
 
-  balance:PropTypes.any.isRequired,
   readableBalance: PropTypes.any.isRequired
 
 };

@@ -1,4 +1,4 @@
-import { notificationList, ERROR} from "../../constants/notificationList";
+import {notificationList, ERROR, SUCCESS} from "../../constants/notificationList";
 import {uuidv4} from "../../utility/utility";
 import {ADD_NOTIFICATION, REMOVE_NOTIFICATION} from "./types";
 
@@ -19,6 +19,20 @@ export const addNotificationByCode = (code) => {
 export const addNotificationByMessage = (type, message) => {
     const statusObj = {type, message, id:uuidv4()};
     return {type: ADD_NOTIFICATION, payload:statusObj};
+};
+
+export const addOffShoreSucceedMessage = (amount) => {
+
+    const message = `You offshored ${amount} xUSD`;
+    return addNotificationByMessage(SUCCESS, message);
+
+};
+
+export const addOnShoreSucceedMessage = (amount) => {
+
+    const message = `You onshored ${amount} XHV`;
+    return addNotificationByMessage(SUCCESS, message);
+
 };
 
 

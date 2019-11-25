@@ -19,7 +19,6 @@ import Footer from "../../../components/_inputs/footer";
 import { Container } from "./styles";
 
 import { dark, light } from "../../../../assets/styles/themes.js";
-import { decrypt } from "../../../../utility/utility";
 
 const options = [
   { theme: "dark", value: "Dark Theme" },
@@ -80,8 +79,6 @@ class SettingsPage extends Component {
     const windowWidth = window.innerWidth;
 
     return (
-      <Page>
-        <Menu />
         <Body>
           <Header
             title="Theme "
@@ -194,7 +191,6 @@ class SettingsPage extends Component {
             />
           </Container>
         </Body>
-      </Page>
     );
   }
 }

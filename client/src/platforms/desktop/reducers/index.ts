@@ -2,8 +2,7 @@ import {AnyAction, combineReducers} from "redux";
 
 // Reducers
 import theme from "../../../universal/reducers/currentTheme.js";
-import address from "./address.js";
-import { balance } from "./balance";
+import address from "../../../universal/reducers/address.js";
 import {transferProcess} from "./transferProcess";
 import { transferList } from "./transferList";
 import { priceHistory } from "../../../universal/reducers/priceHistory";
@@ -14,14 +13,17 @@ import {chain} from "./chain";
 import {simplePrice} from "../../../universal/reducers/simplePrice";
 import {walletSession} from "./walletSession";
 import forex from "../../../universal/reducers/forex";
+import {blockHeaderExchangeRate} from "./blockHeaderExchangeRates";
+import {xBalance} from "../../../universal/reducers/xBalance";
 
 const appReducer = combineReducers({
   theme,
   address,
-  balance,
+  xBalance,
   transferProcess,
   transferList,
   forex,
+  blockHeaderExchangeRate,
   walletCreation,
   notification,
   walletSession,

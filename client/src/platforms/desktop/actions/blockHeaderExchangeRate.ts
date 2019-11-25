@@ -1,7 +1,7 @@
 import {AnyAction, Dispatch} from "redux";
 import {GET_BLOCK_HEADER_EXCHANGE_RATE_FETCH, GET_BLOCK_HEADER_EXCHANGE_RATE_SUCCEED} from "./types";
 import {getLastBlockHeaderRPC} from "../rpc/rpc";
-import {IBlockHeaderRate} from "../reducers/blockHeaderExchangeRates";
+import {BlockHeaderRate} from "../reducers/blockHeaderExchangeRates";
 
 
 
@@ -16,7 +16,7 @@ export const getLastBlockHeader = () => {
 
         getLastBlockHeaderRPC()
             .then( (res: any) => createRecordEntry(res))
-            .then( (priceEntry: Record<number, IBlockHeaderRate>) => dispatch(getLastBlockerHeaderSucceed(priceEntry)))
+            .then( (priceEntry: BlockHeaderRate) => dispatch(getLastBlockerHeaderSucceed(priceEntry)))
             .catch()
 
     }
@@ -25,18 +25,20 @@ export const getLastBlockHeader = () => {
 
 
 
-const createRecordEntry = (rawBlockHeaderData: any): Record<number, IBlockHeaderRate> => {
+const createRecordEntry = (rawBlockHeaderData: any): BlockHeaderRate => {
 
-    const blockHeight:number = rawBlockHeaderData.height;
-    const record: Record<number, IBlockHeaderRate> = { blockHeight : rawBlockHeaderData.pricing_record } as Record<number, IBlockHeaderRate>;
-    return record;
+    const blockHeader = rawBlockHeaderData.block_header;
+    const blockHeight:number = blockHeader.height;
+    const priceRecord: BlockHeaderRate = blockHeader.pricing_record;
+    priceRecord.height = blockHeight;
+    return priceRecord;
 };
 
 
 
 
 
-export const getLastBlockerHeaderSucceed = (priceRecord: Record<number, IBlockHeaderRate>): AnyAction  => {
+export const getLastBlockerHeaderSucceed = (priceRecord: BlockHeaderRate): AnyAction  => {
 
     return {type: GET_BLOCK_HEADER_EXCHANGE_RATE_SUCCEED, payload: priceRecord};
 

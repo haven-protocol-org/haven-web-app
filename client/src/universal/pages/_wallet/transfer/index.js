@@ -98,19 +98,6 @@ export class Transfer extends Component {
     this.setState({ checked: checked, validated: true });
   };
 
-  sendMax = () => {
-    const unlockedBalance = this.props.unlockedBalance;
-    const fee = core.JSBigInt(estimateFee());
-
-    let availableBalance = unlockedBalance.subtract(fee);
-
-    if (availableBalance < 0) {
-      availableBalance = core.JSBigInt("0");
-    }
-
-    availableBalance = convertBalanceForReading(availableBalance);
-    this.setState({ send_amount: availableBalance.toString() });
-  };
 
   clipboardAddress = () => {
     const { address } = this.state;
@@ -144,8 +131,6 @@ export class Transfer extends Component {
     const windowWidth = window.innerWidth;
 
     return (
-      <Page>
-        <Menu />
         <Body>
           <Header
             title="Transfer"
@@ -174,7 +159,6 @@ export class Transfer extends Component {
                 <Input
                   label="Amount"
                   placeholder="Enter amount"
-                  onClick={this.sendMax}
                   type="number"
                   name="send_amount"
                   value={send_amount}
@@ -281,7 +265,6 @@ export class Transfer extends Component {
             </>
           )}
         </Body>
-      </Page>
     );
   }
 }
@@ -292,6 +275,5 @@ Transfer.propTypes = {
   sendFunds:PropTypes.func.isRequired,
   address: PropTypes.string.isRequired,
   isProcessing: PropTypes.bool.isRequired,
-  unlockedBalance: PropTypes.any.isRequired
 
 };

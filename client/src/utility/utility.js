@@ -1,3 +1,6 @@
+/* global BigInt */
+
+
 import { NO_BALANCE } from "../universal/reducers/balance";
 import { notificationList } from "../constants/notificationList";
 import { NO_PRICE } from "../universal/reducers/priceHistory";
@@ -23,7 +26,14 @@ export const decreasePricePoints = priceData => {
 export const convertBalanceForReading = balance => {
   if (balance === NO_BALANCE) return balance;
 
-  const readableBalance = (balance / Math.pow(10, 12)).toFixed(4);
+  let readableBalance;
+  if (typeof  balance === 'bigint') {
+    readableBalance = Number(balance / BigInt(Math.pow(10, 8)));
+
+    return readableBalance/10000;
+  }
+
+   readableBalance = (balance / Math.pow(10, 12)).toFixed(4);
 
   if (readableBalance % 1 === 0) return parseInt(readableBalance);
   return readableBalance;
