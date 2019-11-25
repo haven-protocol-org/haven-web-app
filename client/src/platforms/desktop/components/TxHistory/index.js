@@ -9,6 +9,7 @@ import {Transaction} from "../../../../universal/components/transaction";
 import Header from "../../../../universal/components/_layout/header/index.js"
 import {withRouter} from "react-router-dom";
 import {selectBlockHeight} from "../../reducers/chain";
+import {getTransferListByTicker} from "../../../../universal/reducers/xTransferList";
 
 
 class TxHistoryContainer extends Component {
@@ -22,7 +23,7 @@ class TxHistoryContainer extends Component {
         } else if (status === "block") {
             return "Mined";
         } else {
-            return null;
+            return status;
         }
     }
 
@@ -31,7 +32,8 @@ class TxHistoryContainer extends Component {
 render () {
 
     const assetId = this.props.match.id;
-    const { all, isFetching } = this.props.transferList;
+    const all = this.props.transferList;
+    const isFetching = false;
 
 
     return (
@@ -53,15 +55,15 @@ render () {
                         <Transaction
                             key={index}
                             bHeight={this.props.height}
-                            type={this.getTransactionType(transaction.status)}
-                            status={transaction.status}
+                            type={this.getTransactionType(transaction.type)}
+                            status={transaction.type}
                             price={this.props.price}
                             block={transaction.height}
                             date={new Date(
-                                transaction.timestamp
+                                transaction.timestamp * 1000
                             ).toLocaleDateString()}
                             tx={transaction.txid}
-                            memPool={transaction.mempool}
+                            mempool={transaction.height === 0}
                             amount={convertBalanceForReading(
                                 Math.abs(transaction.amount)
                             )}
@@ -86,8 +88,8 @@ render () {
 }
 
 
-export const mapStateToProps = state => ({
-    transferList: state.transferList,
+export const mapStateToProps = (state, props) => ({
+    transferList: getTransferListByTicker(state, props.match.params.id),
     height: selectBlockHeight(state),
     price: state.simplePrice.price
 });

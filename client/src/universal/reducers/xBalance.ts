@@ -4,12 +4,13 @@ import {
     GET_BALANCES_SUCCEED,
     GET_OFFSHORE_BALANCE_SUCCEED
 } from "../../platforms/desktop/actions/types";
-import {Ticker} from "../../platforms/desktop/reducers/blockHeaderExchangeRates";
 import {AnyAction} from "redux";
 import {AppState} from "../../platforms/desktop/reducers";
+import {Ticker} from "./types";
 
 
 const NO_BALANCE = BigInt(-1);
+
 
 
 export interface Balance {
@@ -21,8 +22,8 @@ export interface Balance {
 }
 
 interface Loading {
-    isLoading:boolean,
-    error:{}
+    isFetching:boolean,
+    error:{} | null
 }
 
 type BalanceLoading = {
@@ -33,8 +34,8 @@ type BalanceLoading = {
 
 const INITAL_STATE_BALANCE_LOADING: BalanceLoading = {
 
-    xUSD:{isLoading: false, error:{}},
-    XHV: {isLoading: false, error:{}}
+    xUSD:{isFetching: false, error:null},
+    XHV: {isFetching: false, error:null}
 
 };
 
@@ -54,7 +55,7 @@ const INITIAL_STATE: Record<Ticker, Balance> = {
 
 
 
-export function balanceLoading(state = INITAL_STATE_BALANCE_LOADING, action: AnyAction): BalanceLoading {
+export function fetching(state = INITAL_STATE_BALANCE_LOADING, action: AnyAction): BalanceLoading {
 
     switch (action.type) {
         case GET_BALANCES_FETCHING:

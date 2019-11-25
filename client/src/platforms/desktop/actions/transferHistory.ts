@@ -1,21 +1,18 @@
 import { getTransferRPC } from "../rpc/rpc";
-import {
-  GET_TRANSFERS_FAILED,
-  GET_TRANSFERS_FETCHING,
-  GET_TRANSFERS_SUCCEED
-} from "./types";
+import {GET_TRANSFERS_FAILED, GET_TRANSFERS_FETCHING, GET_TRANSFERS_SUCCEED} from "./types";
+import {XTransferListAsset} from "../../../universal/reducers/xTransferList";
 
 
 export const getTransfers = () => {
-  return dispatch => {
+  return (dispatch:any) => {
     dispatch(getTransfersFetching());
     const params = { in: true, out: true, pending: true };
     getTransferRPC(params)
       .then(mergeAndSort)
-      .then(result => {
-        dispatch(getTransfersSucceed(result));
+      .then( (txList:any[]) => {
+        dispatch(getTransfersSucceed({XHV:txList}));
       })
-      .catch(error => {
+      .catch( (error: any) => {
         dispatch(getTransfersFailed(error));
       });
   };
@@ -26,23 +23,22 @@ const getTransfersFetching = () => ({
   payload: { isFetching: true }
 });
 
-const getTransfersSucceed = result => ({
+const getTransfersSucceed = (txListEntry: XTransferListAsset) => ({
   type: GET_TRANSFERS_SUCCEED,
-  payload: result
+  payload: txListEntry
 });
 
-const getTransfersFailed = error => ({
+const getTransfersFailed = (error: any) => ({
   type: GET_TRANSFERS_FAILED,
   payload: error
 });
 
-const mergeAndSort = result => {
+export const mergeAndSort = (result: any) => {
   const all = [
     ...result.in||[],
     ...result.out||[],
     ...result.pending||[]
   ];
   all.sort((a, b) => b.timestamp - a.timestamp);
-  result.all = all;
-  return result;
+  return all;
 };

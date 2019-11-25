@@ -1,9 +1,9 @@
 import { AnyAction} from "redux";
 import {GET_BLOCK_HEADER_EXCHANGE_RATE_SUCCEED} from "../actions/types";
 import {AppState} from ".";
+import {Ticker} from "../../../universal/reducers/types";
 
 
-export type Ticker = 'xUSD' | 'XHV';
 
 export interface ConversionRate {
 
@@ -63,8 +63,8 @@ export const selectLatestConversionRates = (state:AppState):ConversionRate[] | n
    const latestBlockerHeader =  state.blockHeaderExchangeRate[state.blockHeaderExchangeRate.length -1];
 
    const conversionRate: ConversionRate = {
-       fromTicker:'XHV',
-       toTicker:'xUSD',
+       fromTicker:Ticker.XHV,
+       toTicker:Ticker.xUSD,
        xRate:latestBlockerHeader.unused1 / Math.pow(10, 12),
        xRateRevert: 1 / (latestBlockerHeader.unused1 / Math.pow(10, 12)),
    };

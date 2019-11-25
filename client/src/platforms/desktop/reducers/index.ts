@@ -4,7 +4,6 @@ import {AnyAction, combineReducers} from "redux";
 import theme from "../../../universal/reducers/currentTheme.js";
 import address from "../../../universal/reducers/address.js";
 import {transferProcess} from "./transferProcess";
-import { transferList } from "./transferList";
 import { priceHistory } from "../../../universal/reducers/priceHistory";
 import notification from "../../../universal/reducers/notification";
 import walletCreation from "./walletCreation";
@@ -15,13 +14,14 @@ import {walletSession} from "./walletSession";
 import forex from "../../../universal/reducers/forex";
 import {blockHeaderExchangeRate} from "./blockHeaderExchangeRates";
 import {xBalance} from "../../../universal/reducers/xBalance";
+import {xTransferList} from "../../../universal/reducers/xTransferList";
 
 const appReducer = combineReducers({
   theme,
   address,
   xBalance,
   transferProcess,
-  transferList,
+  xTransferList,
   forex,
   blockHeaderExchangeRate,
   walletCreation,

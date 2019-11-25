@@ -5,7 +5,7 @@ import React from "react";
 import { Container, Back, Row } from "./styles";
 import { Title, Description } from "../../../../assets/styles/type.js";
 
-const Header = ({ title, description, back }) => {
+const Header = ({ title, description, back = false }) => {
   return (
     <Container>
       <Row>

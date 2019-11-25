@@ -4,25 +4,24 @@ import { connect } from "react-redux";
 import { getForex, getSimplePrice } from "../../../actions";
 
 // Relative Imports
-import Page from "../../../components/_layout/page";
 import Body from "../../../components/_layout/body";
-import Menu from "../../../components/_layout/menu";
 import Header from "../../../components/_layout/header";
 import Overview from "../../../components/_layout/overview";
 import Cell from "../../../components/cell";
 import CellDisabled from "../../../components/cell_disabled";
 
-import data from "../../../../constants/assets.js";
+import token from "../../../../constants/assets.js";
 import { NO_PRICE } from "../../../reducers/priceHistory";
 import { calcValue } from "../../../../utility/utility";
-import PropTypes from "prop-types";
+import {Ticker} from "../../../reducers/types";
+import {OFFSHORE_ENABLED} from "../../../../constants/env";
+import {AppState} from "../../../../platforms/desktop/reducers";
 
 
 
 
-class AssetsPage extends Component {
+class AssetsPage extends Component<any, any> {
   state = {
-    token: data,
     forexPriceFetched: false
   };
 
@@ -35,28 +34,58 @@ class AssetsPage extends Component {
     }
   }
 
+  renderEnabledTokens = () => {
 
-  renderTokens = () => {
-    const { token } = this.state;
+      if (!OFFSHORE_ENABLED){
+          return null;
+      }
 
-    return token.map(data => {
+
+      const enabledTokens = token.filter( (asset: any) => (('x' + asset.ticker) in Ticker));
+      return enabledTokens.map(data => {
       const { token, ticker, change, symbol } = data;
 
       const rates = this.props.rates;
-
       let price = rates[ticker] ? rates[ticker] : 0;
       price = symbol + price.toFixed(2);
 
       return (
-        <CellDisabled
-          fullwidth="fullwidth"
-          key={token}
-          tokenName={token}
-          ticker={"x" + ticker}
-          price={price}
-          change={change}
-        />
-      );
+          <Cell
+              fullwidth="fullwidth"
+              key={token}
+              tokenName={token}
+              ticker={"x" + ticker}
+              price={price}
+              change={change}
+          />
+      )})};
+
+
+
+  renderDisabledTokens = () => {
+
+
+
+      const disabledTokens = OFFSHORE_ENABLED? token.filter( (asset: any) => (!(asset.ticker in Ticker))): token;
+
+      return disabledTokens.map(data => {
+          const { token, ticker, change, symbol } = data;
+
+
+          const rates = this.props.rates;
+          let price = rates[ticker] ? rates[ticker] : 0;
+          price = symbol + price.toFixed(2);
+
+          return (
+            <CellDisabled
+              fullwidth="fullwidth"
+              key={token}
+              tokenName={token}
+              ticker={"x" + ticker}
+              price={price}
+              change={change}
+            />
+          );
     });
   };
 
@@ -79,20 +108,21 @@ class AssetsPage extends Component {
             key={1}
             tokenName={"Haven"}
             ticker={"XHV"}
-            price={price}
+            price={'$' + price}
             change={value}
           />
+          {this.renderEnabledTokens()}
           <Header
             title="Coming Soon"
             description="Overview of Haven Assets coming soon"
           />
-          {this.renderTokens()}
+          {this.renderDisabledTokens()}
         </Body>
     );
   }
 }
 
-export const mapStateToProps = state => ({
+export const mapStateToProps = (state: AppState) => ({
   ...state.simplePrice,
   ...state.forex
 });
@@ -101,10 +131,3 @@ export const Assets =  connect(
   mapStateToProps,
   { getForex, getSimplePrice }
 )(AssetsPage);
-
-
-AssetsPage.propTypes = {
-
-  readableBalance: PropTypes.any.isRequired
-
-};

@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   grid-column: 1 / 3;
-  min-height: 480px;
+  height: 180px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -49,7 +49,7 @@ export const Title = styled.div`
 export const Placeholder = styled.div`
   grid-column: 1 / 3;
   max-height: 584px;
-  height: 480px;
+  height: 260px;
   overflow: hidden;
   display: flex;
   flex-direction: column;

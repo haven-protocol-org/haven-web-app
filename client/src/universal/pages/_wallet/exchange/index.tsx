@@ -1,11 +1,8 @@
 // Library Imports
-import React, { Component } from "react";
-import { connect } from "react-redux";
-
+import React, {Component} from "react";
+import {connect} from "react-redux";
 // Relative Imports
-import Page from "../../../components/_layout/page";
 import Body from "../../../components/_layout/body";
-import Menu from "../../../components/_layout/menu";
 import Header from "../../../components/_layout/header";
 import Input from "../../../components/_inputs/input";
 import Form from "../../../components/_inputs/form";
@@ -13,17 +10,17 @@ import Footer from "../../../components/_inputs/footer";
 import Dropdown from "../../../components/_inputs/dropdown";
 import Transaction from "../../../components/_transactions/exchange";
 
-import { Container } from "./styles";
+import {Container} from "./styles";
 import {
   ConversionRate,
-  selectLatestConversionRates,
-  Ticker
+  selectLatestConversionRates
 } from "../../../../platforms/desktop/reducers/blockHeaderExchangeRates";
 import {selectTheme} from "../../../actions";
 import {AppState} from "../../../../platforms/desktop/reducers";
 import {selectNodeHeight} from "../../../../platforms/desktop/reducers/chain";
 import {getLastBlockHeader} from "../../../../platforms/desktop/actions/blockHeaderExchangeRate";
 import {offshore, onshore} from "../../../../platforms/desktop/actions";
+import {Ticker} from "../../../reducers/types";
 
 interface Asset {
 
@@ -61,8 +58,8 @@ interface AssetOption {
 
 
 const options:AssetOption[] = [
-  { name: "Haven Token", ticker: "XHV"},
-  { name: "United States Dollar", ticker: "xUSD" }
+  { name: "Haven Token", ticker: Ticker.XHV},
+  { name: "United States Dollar", ticker: Ticker.xUSD }
 ];
 
 
@@ -273,7 +270,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
           <Header
             title="Exchange "
             description="Swap to and from various Haven Assets"
-            back="/"
+            back={true}
           />
           <Form onSubmit={this.handleSubmit}>
             <Dropdown
