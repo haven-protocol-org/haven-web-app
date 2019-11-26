@@ -1,7 +1,7 @@
 type XFetchingStats = {isFetching: boolean, failed: boolean, error:object|null|string}
 export enum Ticker {
-
-    xUSD='xUSD', XHV='XHV'
+    XHV='XHV',
+    xUSD='xUSD'
 }
 export type XFetchingItem = Partial<{[key in Ticker] : XFetchingStats}>
 export type XFetching = Record<Ticker, XFetchingStats>

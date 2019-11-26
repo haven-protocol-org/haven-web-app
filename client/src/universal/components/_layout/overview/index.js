@@ -3,7 +3,7 @@ import React from "react";
 
 // Relative Imports
 import { Container } from "./styles";
-import Balances from "../balances/index.js";
+import Balances from "../balances";
 
 const Overview = () => {
   return (

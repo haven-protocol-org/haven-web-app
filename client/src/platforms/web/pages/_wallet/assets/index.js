@@ -2,7 +2,7 @@
 import React,{Component} from "react"
 import {Assets} from "../../../../../universal/pages/_wallet/assets";
 import { connect } from "react-redux";
-import {selectReadableBalance} from "../../../../../universal/reducers/balance";
+import {selectReadableBalance} from "../../../../../universal/reducers/xBalance";
 
 class AssetsWebContainer extends Component {
 

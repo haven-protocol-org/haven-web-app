@@ -16,7 +16,7 @@ import {
   selectLatestConversionRates
 } from "../../../../platforms/desktop/reducers/blockHeaderExchangeRates";
 import {selectTheme} from "../../../actions";
-import {AppState} from "../../../../platforms/desktop/reducers";
+import {DesktopAppState} from "../../../../platforms/desktop/reducers";
 import {selectNodeHeight} from "../../../../platforms/desktop/reducers/chain";
 import {getLastBlockHeader} from "../../../../platforms/desktop/actions/blockHeaderExchangeRate";
 import {offshore, onshore} from "../../../../platforms/desktop/actions";
@@ -328,7 +328,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
 }
 
 
-const mapStateToProps = (state: AppState) => ({
+const mapStateToProps = (state: DesktopAppState) => ({
   conversionRates: selectLatestConversionRates(state),
   nodeHeight: selectNodeHeight(state)
 });

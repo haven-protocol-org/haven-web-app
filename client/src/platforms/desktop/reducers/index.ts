@@ -45,4 +45,4 @@ const rootReducer = (state: any, action: AnyAction) => {
 export default rootReducer;
 
 
-export type AppState = ReturnType<typeof rootReducer>
+export type DesktopAppState = ReturnType<typeof rootReducer>

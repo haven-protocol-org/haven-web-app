@@ -1,6 +1,6 @@
 import { AnyAction} from "redux";
 import {GET_BLOCK_HEADER_EXCHANGE_RATE_SUCCEED} from "../actions/types";
-import {AppState} from ".";
+import {DesktopAppState} from ".";
 import {Ticker} from "../../../universal/reducers/types";
 
 
@@ -54,7 +54,7 @@ export const blockHeaderExchangeRate = (state: BlockHeaderRate[] = INITIAL_STATE
 };
 
 
-export const selectLatestConversionRates = (state:AppState):ConversionRate[] | null => {
+export const selectLatestConversionRates = (state:DesktopAppState):ConversionRate[] | null => {
 
     if (state.blockHeaderExchangeRate.length === 0) {
         return null;

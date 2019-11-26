@@ -15,7 +15,7 @@ import { NO_PRICE } from "../../../reducers/priceHistory";
 import { calcValue } from "../../../../utility/utility";
 import {Ticker} from "../../../reducers/types";
 import {OFFSHORE_ENABLED} from "../../../../constants/env";
-import {AppState} from "../../../../platforms/desktop/reducers";
+import {DesktopAppState} from "../../../../platforms/desktop/reducers";
 
 
 
@@ -122,7 +122,7 @@ class AssetsPage extends Component<any, any> {
   }
 }
 
-export const mapStateToProps = (state: AppState) => ({
+export const mapStateToProps = (state: DesktopAppState) => ({
   ...state.simplePrice,
   ...state.forex
 });

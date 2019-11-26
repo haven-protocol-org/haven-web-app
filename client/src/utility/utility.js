@@ -1,10 +1,10 @@
 /* global BigInt */
 
 
-import { NO_BALANCE } from "../universal/reducers/balance";
 import { notificationList } from "../constants/notificationList";
 import { NO_PRICE } from "../universal/reducers/priceHistory";
 import {isDevMode} from "../constants/env";
+import {NO_BALANCE} from "../universal/reducers/xBalance";
 
 export const convertTimestampToDateString = timestamp =>
   new Date(timestamp).toLocaleDateString();

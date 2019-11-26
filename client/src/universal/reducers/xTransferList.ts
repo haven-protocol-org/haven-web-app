@@ -7,7 +7,7 @@ import {
     GET_OFFSHORE_TRANSFERS_SUCCEED
 } from "../../platforms/desktop/actions/types";
 import {INITAL_FETCHING_STATE, XFetching} from "./types";
-import {AppState} from "../../platforms/desktop/reducers";
+import {DesktopAppState} from "../../platforms/desktop/reducers";
 
 
 
@@ -61,7 +61,7 @@ const INITAL_STATE:XTransferList = {
 
 
 
- export const getTransferListByTicker = (state: AppState, tickerId: Ticker) => {
+ export const getTransferListByTicker = (state: DesktopAppState, tickerId: Ticker) => {
 
      return state.xTransferList.list[tickerId];
 

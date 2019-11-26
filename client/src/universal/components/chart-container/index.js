@@ -7,12 +7,12 @@ import Header from "../_layout/header";
 import {Row} from "./styles";
 import {connect} from "react-redux";
 import {NO_PRICE, PRICE_RANGE_MONTH} from "../../reducers/priceHistory";
-import {NO_BALANCE} from "../../reducers/balance";
 import {convertBalanceForReading, getPriceDates, getPriceValues} from "../../../utility/utility";
 import {selectSimplePrice} from "../../reducers/simplePrice";
 import {getPriceHistory} from "../../actions";
 import Statistic from "../statistic";
 import {withRouter} from "react-router-dom";
+import {NO_BALANCE} from "../../reducers/xBalance";
 
 class ChartWrapper extends Component {
     state = { selectedRangeInDays: PRICE_RANGE_MONTH };

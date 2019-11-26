@@ -1,7 +1,7 @@
 import { Component } from "react";
 import { connect } from "react-redux";
 import { closeWallet } from "../../actions";
-import {selectSyncState} from "../../../platforms/web/reducers/chain";
+import {selectWebSyncState} from "../../../platforms/web/reducers/chain";
 
 const ACTIVITY_EVENTS = [
   "mousemove",
@@ -102,7 +102,7 @@ class Idle extends Component {
 
 
 const mapStateToProps = state => ({
-    isInSyncProcess: selectSyncState(state).isSyncing
+    isInSyncProcess: selectWebSyncState(state).isSyncing
 });
 
 export default connect(

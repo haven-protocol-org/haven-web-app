@@ -1,51 +1,29 @@
-import {
-    GET_BALANCES_FAILED,
-    GET_BALANCES_FETCHING,
-    GET_BALANCES_SUCCEED,
-    GET_OFFSHORE_BALANCE_SUCCEED
-} from "../../platforms/desktop/actions/types";
+import { GET_BALANCES_FAILED,GET_BALANCES_FETCHING, GET_BALANCES_SUCCEED, GET_OFFSHORE_BALANCE_SUCCEED} from "../../platforms/desktop/actions/types";
 import {AnyAction} from "redux";
-import {AppState} from "../../platforms/desktop/reducers";
-import {Ticker} from "./types";
+import {DesktopAppState} from "../../platforms/desktop/reducers";
+import {INITAL_FETCHING_STATE, Ticker, XFetching} from "./types";
+import {WebAppState} from "../../platforms/web/reducers";
 
 
-const NO_BALANCE = BigInt(-1);
+export const NO_BALANCE = BigInt(-1);
 
 
 
 export interface Balance {
-
     balance:bigint,
     unlockedBalance:bigint,
     lockedBalance:bigint,
-
 }
 
-interface Loading {
-    isFetching:boolean,
-    error:{} | null
-}
-
-type BalanceLoading = {
-
-    [key in Ticker]:Loading;
-
-}
-
-const INITAL_STATE_BALANCE_LOADING: BalanceLoading = {
-
-    xUSD:{isFetching: false, error:null},
-    XHV: {isFetching: false, error:null}
-
-};
 
 
 export type XBalance = Partial<{[key in Ticker]: Balance}>
+export type XBalances = Record<Ticker, Balance>;
 
 const INITIAL_BALANCE: Balance = {
-    balance:  BigInt(-1),
-    unlockedBalance: BigInt( -1),
-    lockedBalance: BigInt( -1),};
+    balance:  NO_BALANCE,
+    unlockedBalance: NO_BALANCE,
+    lockedBalance: NO_BALANCE};
 
 
 const INITIAL_STATE: Record<Ticker, Balance> = {
@@ -55,7 +33,7 @@ const INITIAL_STATE: Record<Ticker, Balance> = {
 
 
 
-export function fetching(state = INITAL_STATE_BALANCE_LOADING, action: AnyAction): BalanceLoading {
+export function fetching(state = INITAL_FETCHING_STATE, action: AnyAction): XFetching {
 
     switch (action.type) {
         case GET_BALANCES_FETCHING:
@@ -68,7 +46,7 @@ export function fetching(state = INITAL_STATE_BALANCE_LOADING, action: AnyAction
 }
 
 
-export function xBalance (state = INITIAL_STATE, action: {type: string, payload:XBalance}): Record<Ticker, Balance> {
+export function xBalance (state = INITIAL_STATE, action: {type: string, payload:XBalance}):XBalances {
     switch (action.type) {
         case GET_BALANCES_SUCCEED:
         case GET_OFFSHORE_BALANCE_SUCCEED:
@@ -78,7 +56,7 @@ export function xBalance (state = INITIAL_STATE, action: {type: string, payload:
     }
 }
 
-export function selectReadableBalance(state: AppState): number {
+export function selectReadableBalance(state:DesktopAppState | WebAppState): number {
 
     if (state.xBalance.XHV.balance === NO_BALANCE)
         return -1;

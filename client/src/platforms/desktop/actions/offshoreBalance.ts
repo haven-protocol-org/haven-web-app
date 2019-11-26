@@ -26,7 +26,7 @@ const getOffshoreBalanceSucceed = (res: any) => {
 
     const xBalance:XBalance = {xUSD: balance};
 
-    return {type: GET_OFFSHORE_BALANCE_SUCCEED, xBalance}
+    return {type: GET_OFFSHORE_BALANCE_SUCCEED, payload: xBalance}
 };
 
 const getOffshoreBalanceFetching = () => {

@@ -56,7 +56,7 @@ render () {
                             key={index}
                             bHeight={this.props.height}
                             type={this.getTransactionType(transaction.type)}
-                            status={transaction.type}
+                            status={transaction.type }
                             price={this.props.price}
                             block={transaction.height}
                             date={new Date(

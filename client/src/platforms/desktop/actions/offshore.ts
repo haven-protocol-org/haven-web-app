@@ -13,18 +13,18 @@ import {
 } from "./types";
 import {updateApp} from "./refresh";
 import {Dispatch} from "redux";
-import {AppState} from "../reducers";
+import {DesktopAppState} from "../reducers";
 
 
 export function onshore(amount: number) {
 
     amount = amount * 1e12;
-    return (dispatch: any, getState:() => AppState ) => {
+    return (dispatch: any, getState:() => DesktopAppState ) => {
 
         dispatch(onshoreFetch());
 
         const address = getState().address.main;
-        const params = { destinations: [{ address, amount }] };
+        const params = { destinations: [{ address, amount }], ring_size: 11 };
 
         onshoreRPC(params)
             .then((result: any) => {
@@ -40,7 +40,7 @@ export function onshore(amount: number) {
 export function offshore(amount: number) {
 
     amount = amount * 1e12;
-    return (dispatch: Dispatch, getState: () => AppState) => {
+    return (dispatch: Dispatch, getState: () => DesktopAppState) => {
 
         const address = getState().address.main;
         dispatch(offshoreFetch());

@@ -1,4 +1,4 @@
-import { combineReducers } from "redux";
+import {AnyAction, combineReducers} from "redux";
 
 // Reducers
 import theme from "../../../universal/reducers/currentTheme.js";
@@ -30,7 +30,7 @@ const appReducer = combineReducers({
   forex
 });
 
-const rootReducer = (state, action) => {
+const rootReducer = (state: any, action: AnyAction) => {
   if (action.type === CLOSE_WALLET) {
     state = undefined;
   }
@@ -39,3 +39,6 @@ const rootReducer = (state, action) => {
 };
 
 export default rootReducer;
+
+
+export type WebAppState = ReturnType<typeof rootReducer>

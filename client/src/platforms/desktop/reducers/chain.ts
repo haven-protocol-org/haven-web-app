@@ -1,6 +1,6 @@
 import {GET_BLOCK_INFO_SUCEED} from "../actions/types";
 import {AnyAction} from "redux";
-import {AppState} from ".";
+import {DesktopAppState} from ".";
 import {SyncState} from "../../../universal/types/types";
 
 
@@ -27,19 +27,19 @@ export const chain = (state = INITIAL_STATE, action: AnyAction): Chain =>  {
 
 
 
-export const selectBlockHeight = (state: AppState) => {
+export const selectBlockHeight = (state: DesktopAppState) => {
     return state.chain.chainHeight;
 };
 
 
-export const selectNodeHeight = (state: AppState) => {
+export const selectNodeHeight = (state: DesktopAppState) => {
     return state.chain.nodeHeight;
 };
 
 
 
 
-export const selectSyncState = (state: AppState): SyncState => {
+export const selectDesktopSyncState = (state: DesktopAppState): SyncState => {
 
     const isSyncing =  state.chain.chainHeight > state.chain.nodeHeight;
     const blockHeight = state.chain.chainHeight;

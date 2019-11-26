@@ -2,7 +2,7 @@ import {Details} from "../../../../../universal/pages/_wallet/details";
 import React, {Component} from "react";
 import {TxHistoryDesktop} from "../../../components/TxHistory";
 import {connect} from "react-redux";
-import {AppState} from "../../../reducers";
+import {DesktopAppState} from "../../../reducers";
 
 class DetailsDesktopContainer extends Component<any, any> {
 
@@ -23,7 +23,7 @@ class DetailsDesktopContainer extends Component<any, any> {
 }
 
 
-export const mapStateToProps = (state: AppState) => ({
+export const mapStateToProps = (state: DesktopAppState) => ({
     balance: Number(state.xBalance.XHV.unlockedBalance),
 });
 

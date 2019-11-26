@@ -22,7 +22,7 @@ export const selectBlockchainHeight = (state:any) => {
   return state.chain.blockchain_height;
 };
 
-export const selectSyncState = (state: any): SyncState => {
+export const selectWebSyncState = (state: any): SyncState => {
 
   const isSyncing =  state.chain.blockchain_height > state.chain.scanned_block_height + 5;
   const blockHeight = state.chain.blockchain_height;
