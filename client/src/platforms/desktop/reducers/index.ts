@@ -15,6 +15,7 @@ import forex from "../../../universal/reducers/forex";
 import {blockHeaderExchangeRate} from "./blockHeaderExchangeRates";
 import {xBalance} from "../../../universal/reducers/xBalance";
 import {xTransferList} from "../../../universal/reducers/xTransferList";
+import {offshoreProcess} from "./offshoreProcess";
 
 const appReducer = combineReducers({
   theme,
@@ -25,6 +26,7 @@ const appReducer = combineReducers({
   forex,
   blockHeaderExchangeRate,
   walletCreation,
+  offshoreProcess,
   notification,
   walletSession,
   priceHistory,

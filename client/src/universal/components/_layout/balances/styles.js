@@ -25,6 +25,7 @@ export const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  user-select:none;
 `;
 
 export const Value = styled.div`

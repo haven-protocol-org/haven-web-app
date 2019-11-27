@@ -21,6 +21,7 @@ export const startDesktopApp = () => {
 
 export const startDesktopAppInDevMode = () => {
 
+
     const persistedState = loadState();
     const createStoreWithMiddleware = applyMiddleware(reduxThunk, logger)(
         createStore

@@ -66,7 +66,7 @@ class AssetsPage extends Component<any, any> {
 
 
 
-      const disabledTokens = OFFSHORE_ENABLED? token.filter( (asset: any) => (!(asset.ticker in Ticker))): token;
+      const disabledTokens = OFFSHORE_ENABLED? token.filter( (asset: any) => (!('x' + asset.ticker in Ticker))): token;
 
       return disabledTokens.map(data => {
           const { token, ticker, change, symbol } = data;

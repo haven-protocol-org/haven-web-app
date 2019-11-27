@@ -2,7 +2,7 @@ import {
     offshoreRPC,
     onshoreRPC
 } from "../rpc/rpc";
-import {addOffShoreSucceedMessage, addOnShoreSucceedMessage} from "../../../universal/actions/notification";
+import { addExchangeSucceedMessage} from "../../../universal/actions/notification";
 
 import {
     OFFSHORE_FAILED,
@@ -14,68 +14,70 @@ import {
 import {updateApp} from "./refresh";
 import {Dispatch} from "redux";
 import {DesktopAppState} from "../reducers";
+import {Ticker} from "../../../universal/reducers/types";
 
 
-export function onshore(amount: number) {
+export function onshore(fromTicker: Ticker, toTicker: Ticker, fromAmount: number, toAmount:number): any {
 
-    amount = amount * 1e12;
+    const amount = BigInt(fromAmount * 1e12);
     return (dispatch: any, getState:() => DesktopAppState ) => {
 
-        dispatch(onshoreFetch());
+        dispatch(onshoreFetch({fromTicker, toTicker, amount,isOffshore:false }));
 
         const address = getState().address.main;
         const params = { destinations: [{ address, amount }], ring_size: 11 };
 
         onshoreRPC(params)
             .then((result: any) => {
-                dispatch(onshoreSucceed());
-                dispatch(addOnShoreSucceedMessage(result.amount));
-                dispatch(updateApp());
+                dispatch(onshoreSucceed(result));
+                dispatch(addExchangeSucceedMessage(fromTicker, toTicker, fromAmount, toAmount));
+                // add a little delay to give the wallet some time for fresh data
+                dispatch(updateApp())
             })
             .catch( (error: any) => dispatch(onOnShoreFailed(error)));
     };
 }
 
 
-export function offshore(amount: number) {
+export function offshore(fromTicker: Ticker, toTicker: Ticker, fromAmount: number, toAmount:number): any {
 
-    amount = amount * 1e12;
-    return (dispatch: Dispatch, getState: () => DesktopAppState) => {
+    const amount = BigInt(fromAmount * 1e12);
+    return (dispatch: any, getState: () => DesktopAppState) => {
 
         const address = getState().address.main;
         dispatch(offshoreFetch());
-        const params = { destinations: [{ address, amount }] };
+        const params = { destinations: [{ address, amount:amount.toString() }] };
 
 
         offshoreRPC(params)
             .then( (result: any) => {
-                dispatch(offshoreSucceed());
-                dispatch(addOffShoreSucceedMessage(result.amount));
-                updateApp();
+                dispatch(offshoreSucceed(result));
+                dispatch(addExchangeSucceedMessage(fromTicker, toTicker, fromAmount, toAmount));
+                dispatch(updateApp())
             })
             .catch( (error: any) => dispatch(onOffShoreFailed(error)));
     };
 }
 
-const onshoreFetch = () => {
+const onshoreFetch = (payload: {fromTicker:Ticker, toTicker: Ticker, isOffshore: boolean ,amount: bigint}) => {
   return {type: ONSHORE_FETCHING};
 };
 
-const onshoreSucceed = () => {
-    return {type: ONSHORE_SUCCEED};
+const onshoreSucceed = (payload: any) => {
+    return {type: ONSHORE_SUCCEED, payload};
 };
 
 const onOnShoreFailed = (error: any) => {
 
-    return {type: ONSHORE_FAILED};
+    return {type: ONSHORE_FAILED, payload:error};
 };
 
 const offshoreFetch = () => {
   return {type: OFFSHORE_FETCHING};
 };
 
-const offshoreSucceed = () => {
-    return {type: ONSHORE_SUCCEED};
+const offshoreSucceed = (payload: any) => {
+    return {type: ONSHORE_SUCCEED, payload};
 };
 
 const onOffShoreFailed = (error: any) => {

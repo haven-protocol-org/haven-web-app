@@ -4,20 +4,24 @@ import {
   TRANSFER_SUCCEED,
     TRANSFER_RESET
 } from "../actions/types";
+import {AnyAction} from "redux";
+import {DesktopAppState} from "./index";
 
 
-const INITIAL_STATE = {
-  address: "",
-  amount: "",
-  fee: "",
-  txHash: "",
-  isFetching: false,
-  info: "",
-  error: "",
-  succeed:false
+export interface TxProcessInfo {
+      address: string,
+      amount: bigint,
+      fee: bigint,
+      isFetching: boolean,
+      info: string,
+      error: string,
+      succeed:boolean
 };
 
-export const transferProcess = (state = INITIAL_STATE, action) => {
+const INITIAL_STATE: TxProcessInfo = <TxProcessInfo>{};
+
+
+export const transferProcess = (state = INITIAL_STATE, action: AnyAction): TxProcessInfo => {
   switch (action.type) {
     case TRANSFER_RESET:
       return INITIAL_STATE;
@@ -38,7 +42,7 @@ export const transferProcess = (state = INITIAL_STATE, action) => {
 }
 
 
-export const transferSucceed = (state) => {
+export const transferSucceed = (state: DesktopAppState) => {
 
     return state.transferProcess.succeed;
 

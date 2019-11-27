@@ -21,6 +21,7 @@ import {selectNodeHeight} from "../../../../platforms/desktop/reducers/chain";
 import {getLastBlockHeader} from "../../../../platforms/desktop/actions/blockHeaderExchangeRate";
 import {offshore, onshore} from "../../../../platforms/desktop/actions";
 import {Ticker} from "../../../reducers/types";
+import {isProcessingExchange} from "../../../../platforms/desktop/reducers/offshoreProcess";
 
 interface Asset {
 
@@ -34,8 +35,9 @@ type ExchangeProps = {
   conversionRates:ConversionRate[] | null;
   nodeHeight:number;
   getLastBlockHeader: () => void;
-  onshore: (amount:number) => void
-  offshore: (amount: number) => void
+  onshore: typeof onshore;
+  offshore: typeof offshore;
+  isProcessingExchange: boolean;
 
 }
 
@@ -220,18 +222,19 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
 
   handleSubmit = () => {
 
-    if (!this.state.fromAmount || !this.state.fromAsset || !this.state.toAsset)
+    if (!this.state.fromAmount || !this.state.fromAsset || !this.state.toAsset || !this.state.toAmount)
       return;
 
     const isOffShore = this.state.fromAsset.ticker === 'XHV' && this.state.toAsset.ticker !== "XHV";
-    const amount = parseFloat(this.state.fromAmount);
+    const fromAmount = parseFloat(this.state.fromAmount);
+    const toAmount = parseFloat(this.state.toAmount);
 
 
     if (isOffShore)
     {
-      this.props.offshore(amount)
+      this.props.offshore(this.state.fromAsset.ticker, this.state.toAsset.ticker, fromAmount, toAmount);
     } else {
-      this.props.onshore(amount);
+      this.props.onshore(this.state.fromAsset.ticker, this.state.toAsset.ticker, fromAmount, toAmount);
     }
 
 
@@ -258,11 +261,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     const toTicker = toAsset? toAsset.ticker : '';
 
     const isValid: boolean = !!(fromAsset && toAsset && fromAmount && toAmount);
-
-
-
-
-
 
     return (
 
@@ -319,7 +317,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
               onClick={this.handleSubmit}
               label="Exchange"
               validated={isValid}
-              loading={false}
+              loading={this.props.isProcessingExchange}
             />
           </Container>
         </Body>
@@ -330,7 +328,8 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
 
 const mapStateToProps = (state: DesktopAppState) => ({
   conversionRates: selectLatestConversionRates(state),
-  nodeHeight: selectNodeHeight(state)
+  nodeHeight: selectNodeHeight(state),
+  isProcessingExchange:isProcessingExchange(state)
 });
 
 export const ExchangePage = connect(
