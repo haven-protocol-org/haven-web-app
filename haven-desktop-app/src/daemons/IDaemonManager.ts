@@ -1,13 +1,13 @@
-import {Observable} from "rxjs";
 import {IDaemonConfig} from "../daemonConfig";
+import {DaemonState} from "../ipc/types";
 
 
 export interface IDaemonManager {
 
     startDaemon():void
     killDaemon():void
-    daemonStatus():Observable<{isRunning: boolean, code?: number, signal?:string}>;
     setConfig(config: IDaemonConfig):void;
+    getDaemonState():DaemonState;
 
 
 }

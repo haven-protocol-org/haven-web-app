@@ -1,35 +1,23 @@
-import {logM} from "../../../utility/utility";
-
-const ipcRenderer = window.ipcRenderer;
-
-
-const INIT_REQUEST = {
-  method: "POST",
-  // mode: "cors",
- // cache: "no-cache",
-  //credentials: "omit",
-  //redirect: "follow",
- // referrer: "no-referrer"
-};
+import {logM} from "../../../../utility/utility";
+import {ipcRenderer} from "electron";
+import {CommunicationChannels} from "../ipc-types";
 
 
-//const headers = new Headers();
-//headers.append( 'Content-Type', 'application/json');
-
-//INIT_REQUEST.headers = headers;
+// @ts-ignore
+const ipcRender:typeof ipcRenderer= window.ipcRenderer;
 
 
-const client = new window.DigestFetch('monero', 'monero', { logger:console });
 
-export function openWalletRPC(params) {
+
+export function openWalletRPC(params:object) {
     return callRpc("open_wallet", params)
 }
 
-export function restoreWalletRPC(params) {
+export function restoreWalletRPC(params: object) {
   return callRpc("restore_deterministic_wallet", params);
 }
 
-export function getBalanceRPC(params) {
+export function getBalanceRPC(params: object) {
   return callRpc("get_balance", params);
 }
 
@@ -37,15 +25,15 @@ export function queryMnemonicKeyRPC() {
     return callRpc("query_key", { key_type: "mnemonic" });
 }
 
-export function transferRPC(params) {
+export function transferRPC(params: object) {
   return callRpc("transfer", params);
 }
 
-export function getTransferRPC(params) {
+export function getTransferRPC(params: object) {
   return callRpc('get_transfers', params);
 }
 
-export function createWalletRPC(params) {
+export function createWalletRPC(params: object) {
   return callRpc("create_wallet", params);
 }
 
@@ -58,11 +46,11 @@ export function refreshRPC(start_height = 0) {
 }
 
 
-export function onshoreRPC(params) {
+export function onshoreRPC(params: object) {
     return callRpc('onshore', params)
 }
 
-export function offshoreRPC(params) {
+export function offshoreRPC(params: object) {
     return callRpc('offshore', params)
 }
 
@@ -72,12 +60,12 @@ export function getOffshoreBalanceRPC() {
 
 }
 
-export function getOffshoreTransfersRPC(params) {
+export function getOffshoreTransfersRPC(params: object) {
     return callRpc('get_offshore_transfers', params)
 }
 
 
-export function offshoreTransferRPC(params) {
+export function offshoreTransferRPC(params: object) {
     return callRpc('offshore_transfer')
 }
 
@@ -87,7 +75,7 @@ export function getLastBlockHeaderRPC() {
     return callRpc('get_last_block_header');
 
 }
-export function getBlockHeaderByHeightRPC(params) {
+export function getBlockHeaderByHeightRPC(params: object) {
 
     return callRpc('get_block_header_by_height');
 
@@ -101,7 +89,7 @@ export function getInfoRPC() {
 
 
 
-function callRpc(method, params) {
+function callRpc(method: string, params: object | undefined = undefined) {
 
     // const rpcUrl = process.env.REACT_APP_RPC_URL;
     const objRequest = {
@@ -115,14 +103,14 @@ function callRpc(method, params) {
     logM(objRequest);
 
 
-    return ipcRenderer.invoke('rpc', objRequest)
+    return ipcRender.invoke(CommunicationChannels.RPC, objRequest)
         .then(response => handleError(response));
 
 }
 
 
 
-export const handleError = async (response) => {
+export const handleError = async (response: any) => {
 
 
     // intercept error on protocol level

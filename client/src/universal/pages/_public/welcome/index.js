@@ -17,6 +17,7 @@ import Link from "../../../components/_buttons/link";
 import Button from "../../../components/_buttons/button";
 
 import api from "../../../../dummy/priceData.js";
+import {MultiLogin} from "../../../components/_auth/multi_login";
 
 class Welcome extends Component {
   componentDidMount() {
@@ -47,10 +48,7 @@ class Welcome extends Component {
                 Private <br /> Decentralized Finance
               </Heading>
             </HeadingWrapper>
-            <Buttons>
-              <Link to="/create" label="Get Haven Vault" />
-              <Button onClick={this.handleClick} label="Learn More" />
-            </Buttons>
+        <MultiLogin/>
           </Microcopy>
         </Container>
         <Content />

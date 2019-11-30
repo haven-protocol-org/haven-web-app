@@ -3,9 +3,7 @@ import React, {Component} from "react";
 import * as clipboard from "clipboard-polyfill";
 import PropTypes from 'prop-types';
 // Relative Imports
-import Page from "../../../components/_layout/page";
 import Body from "../../../components/_layout/body";
-import Menu from "../../../components/_layout/menu";
 import Header from "../../../components/_layout/header";
 import Input from "../../../components/_inputs/input";
 import Description from "../../../components/_inputs/description";
@@ -15,9 +13,6 @@ import Footer from "../../../components/_inputs/footer";
 import Tab from "../../../components/tab";
 import {Transaction} from "../../../components/_transactions/transfer";
 import {Container} from "./styles";
-import {convertBalanceForReading, estimateFee} from "../../../../utility/utility";
-import {core} from "../../../../platforms/web/declarations/open_monero.service";
-// import InputButton from "../../../components/_inputs/input_button";
 
 const options = [{ asset: "Haven", ticker: "XHV" }];
 

@@ -2,13 +2,9 @@ import {ipcMain} from 'electron';
 import IpcMainInvokeEvent = Electron.IpcMainInvokeEvent;
 import {RPCHRequestHandler, RPCRequestObject} from "../rpc/RPCHRequestHandler";
 import {daemonConfig} from "../daemonConfig";
+import {CommunicationChannels} from "./types";
+import {getAvailableWallets} from "../userSettings";
 
-enum CommunicationChannels {
-
-    RPC="rpc",
-    DAEMON="daemon"
-
-}
 
 
 /**
@@ -47,12 +43,14 @@ export class IPCHandler {
     private addHandlers() {
 
         ipcMain.handle(CommunicationChannels.RPC,(event, args) => this.handleRPCRequests(event, args) );
+        ipcMain.handle(CommunicationChannels.WALLETS, (event,args) => this.handleWalletRequest())
        // ipcMain.handle(CommunicationChannels.DAEMON,(event, args) => this.handleRPCRequests(event, args) );
     }
 
     private removeHandlers() {
 
         ipcMain.removeHandler(CommunicationChannels.RPC );
+        ipcMain.removeHandler(CommunicationChannels.WALLETS );
     }
 
 
@@ -66,9 +64,9 @@ export class IPCHandler {
         }
     }
 
+    private handleWalletRequest() {
 
-    public  sendToClientApp() {
-
+        return getAvailableWallets();
 
     }
 

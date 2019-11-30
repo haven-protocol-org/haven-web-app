@@ -1,4 +1,4 @@
-import {getBalanceRPC} from "../rpc/rpc";
+import {getBalanceRPC} from "../ipc/rpc/rpc";
 import {GET_BALANCES_FAILED, GET_BALANCES_FETCHING, GET_BALANCES_SUCCEED} from "./types";
 import {Balance, XBalance} from "../../../universal/reducers/xBalance";
 

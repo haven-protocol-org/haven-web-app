@@ -5,7 +5,7 @@ import React from "react";
 import { Container, Field, Labels, Error } from "./styles";
 import { Label } from "../../../../assets/styles/type.js";
 
-const Description = ({ label, error, width, onClick, ref, type, ...rest }) => {
+const Description = ({ label, error = null, width = 100, ref = null, type = null, ...rest }) => {
   return (
     <Container width={width}>
       <Labels>

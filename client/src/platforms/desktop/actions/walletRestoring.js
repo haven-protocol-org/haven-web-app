@@ -1,6 +1,6 @@
 import {RESTORE_WALLET_BY_SEED_FAILED, RESTORE_WALLET_BY_SEED_FETCHING, RESTORE_WALLET_BY_SEED_SUCCEED} from "./types";
 import {closeWallet} from "./walletSession";
-import {restoreWalletRPC} from "../rpc/rpc";
+import {restoreWalletRPC} from "../ipc/rpc/rpc";
 import {addPubAddress} from "../../../universal/actions";
 
 

@@ -242,12 +242,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
   };
 
 
-
-
-
-
-
-
   render() {
 
     const { fromAsset, toAsset, fromAmount, toAmount } = this.state;

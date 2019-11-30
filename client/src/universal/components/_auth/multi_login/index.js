@@ -26,7 +26,7 @@ import Input from "../../_inputs/input";
 import InputButton from "../../_inputs/input_button";
 import Description from "../../_inputs/description";
 
-class MultiLogin extends Component {
+export class MultiLogin extends Component {
   state = {
     disabled: true,
     loading: false,
@@ -79,14 +79,14 @@ class MultiLogin extends Component {
           </Subtitle>
         </Header>
         <Tabs>
+          <Tab active={keystore} onClick={this.selectKeystore}>
+            Open Wallet
+          </Tab>
           <Tab active={seed} onClick={this.selectSeed}>
-            Seed Phrase
+            Create Wallet
           </Tab>
           <Tab active={ledger} onClick={this.selectLedger}>
-            Ledger
-          </Tab>
-          <Tab active={keystore} onClick={this.selectKeystore}>
-            Keystore
+            Restore Wallet
           </Tab>
         </Tabs>
         <Main>
@@ -163,5 +163,3 @@ class MultiLogin extends Component {
     );
   }
 }
-
-export default MultiLogin;

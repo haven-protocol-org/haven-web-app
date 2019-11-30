@@ -2,9 +2,10 @@ import {Dispatch} from "redux";
 import {getBalance} from "./balance";
 import {getNodeInfo} from "./chain";
 import {getTransfers} from "./transferHistory";
-import {refreshRPC} from "../rpc/rpc";
+import {refreshRPC} from "../ipc/rpc/rpc";
 import {getOffshoreBalance} from "./offshoreBalance";
 import {getOffshoreTransfers} from "./offshoreTransferHistory";
+import {getDaemonStates} from "./daemonState";
 
 
 export const refresh = () => {
@@ -25,6 +26,7 @@ export const updateApp = () =>  {
 
     return (dispatch: any) => {
 
+        dispatch(getDaemonStates());
         dispatch(getNodeInfo());
         dispatch(getBalance());
         dispatch(getOffshoreBalance());

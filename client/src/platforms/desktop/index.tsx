@@ -1,4 +1,4 @@
-import {applyMiddleware, createStore} from "redux";
+import {applyMiddleware, createStore, Store} from "redux";
 import reduxThunk from "redux-thunk";
 import reducers from "./reducers";
 import {loadState, logger, saveState} from "../../utility/dev-helper";
@@ -9,7 +9,7 @@ import React from "react";
 import {AppDesktop} from "./App";
 
 
-let store = null;
+let store: Store;
 
 export const startDesktopApp = () => {
 
@@ -48,3 +48,5 @@ const render = ()  => {
 
 
 };
+
+export {store};

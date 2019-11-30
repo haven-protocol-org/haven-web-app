@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import {connect} from "react-redux";
 import {Settings} from "../../../../../universal/pages/_wallet/settings";
-import {queryMnemonicKeyRPC} from "../../../rpc/rpc";
+import {queryMnemonicKeyRPC} from "../../../ipc/rpc/rpc";
 import PropTypes from "prop-types";
 
 class SettingsDesktopContainer extends Component {

@@ -2,7 +2,7 @@ import {
  GET_BLOCK_INFO_FAILED,
     GET_BLOCK_INFO_SUCEED
 } from "./types";
-import {getInfoRPC} from "../rpc/rpc";
+import {getInfoRPC} from "../ipc/rpc/rpc";
 import {Dispatch} from "redux";
 
 

@@ -1,7 +1,8 @@
 import {ChildProcess, execFile} from "child_process";
-import {BehaviorSubject, Observable} from "rxjs";
 import {IDaemonManager} from "./IDaemonManager";
 import {IDaemonConfig} from "../daemonConfig";
+import {DaemonState} from "../ipc/types";
+
 
 
 
@@ -11,14 +12,11 @@ export class BasicDaemonManager implements IDaemonManager {
     private filePath: string;
     private startArgs: Object;
 
+    private currentDaemonState: DaemonState;
     private daemonProcess:ChildProcess;
-    private isDaemonRunnigSubject:BehaviorSubject<{ isRunning: boolean; code?: number; signal?: string }> =
-        new BehaviorSubject<{ isRunning: boolean; code?: number; signal?: string }>({isRunning:false});
 
 
-    public daemonStatus(): Observable<{ isRunning: boolean; code?: number; signal?: string }> {
-        return this.isDaemonRunnigSubject.asObservable();
-    }
+
 
     public startDaemon():void {
 
@@ -30,13 +28,13 @@ export class BasicDaemonManager implements IDaemonManager {
         console.log(args);
         this.daemonProcess = execFile(this.filePath, args,(error, stdout, stderr) => {
             if (error) {
-                console.log(error);
+
             }
             console.log(stdout);
         } );
         this.daemonProcess.on('exit', (code: number | null, signal: string | null) => this.onDaemonStopped(code, signal));
         this.daemonProcess.on('error', (error: Error) => this.onDaemonError(error));
-        this.isDaemonRunnigSubject.next({isRunning:true});
+        this.currentDaemonState = {isRunning:true};
     }
 
 
@@ -46,13 +44,15 @@ export class BasicDaemonManager implements IDaemonManager {
 
     }
 
+    public getDaemonState(): DaemonState {
+        return this.currentDaemonState;
+    }
+
 
     private onDaemonStopped(code: number | null, signal: string | null) {
 
+        this.currentDaemonState = {isRunning: false, code, signal}
 
-        console.log(code, signal);
-
-        this.isDaemonRunnigSubject.next({isRunning:false, code, signal})
 
     }
 

@@ -1,6 +1,6 @@
 import {AnyAction, Dispatch} from "redux";
 import {GET_BLOCK_HEADER_EXCHANGE_RATE_FETCH, GET_BLOCK_HEADER_EXCHANGE_RATE_SUCCEED} from "./types";
-import {getLastBlockHeaderRPC} from "../rpc/rpc";
+import {getLastBlockHeaderRPC} from "../ipc/rpc/rpc";
 import {BlockHeaderRate} from "../reducers/blockHeaderExchangeRates";
 
 

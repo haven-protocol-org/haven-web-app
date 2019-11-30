@@ -1,7 +1,7 @@
 import {
     offshoreRPC,
     onshoreRPC
-} from "../rpc/rpc";
+} from "../ipc/rpc/rpc";
 import { addExchangeSucceedMessage} from "../../../universal/actions/notification";
 
 import {

@@ -31,9 +31,9 @@ export const VALIDATE_MNEMONIC_SUCCEED = "validate_mnemonic_succeed";
 export const VALIDATE_MNEMONIC_FAILED = "validate_mnemonic_failed";
 
 
-export const OPEN_WALLET_FETCHING = "open_wallet";
-export const OPEN_WALLET_SUCCEED = "open_wallet";
-export const OPEN_WALLET_FAILED = "open_wallet";
+export const OPEN_WALLET_FETCHING = "open_wallet_fetching";
+export const OPEN_WALLET_SUCCEED = "open_wallet_succeed";
+export const OPEN_WALLET_FAILED = "open_wallet_failed";
 
 
 
@@ -113,5 +113,11 @@ export const GET_OFFSHORE_TRANSFERS_SUCCEED = "get_offshore_transfers_succeed";
 export const GET_BLOCK_HEADER_EXCHANGE_RATE_FETCH = "get_block_header_exchange_rate_fetch";
 export const GET_BLOCK_HEADER_EXCHANGE_RATE_SUCCEED = "get_block_header_exchange_rate_succeed";
 export const GET_BLOCK_HEADER_EXCHANGE_RATE_FAILED = "get_block_header_exchange_rate_failed";
+
+
+export const UPDATE_DAEMON_STATES = "update_daemon_states";
+
+export const UPDATE_SAVED_WALLETS = "update_saved_wallets";
+
 
 

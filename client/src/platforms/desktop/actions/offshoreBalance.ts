@@ -1,4 +1,4 @@
-import {getOffshoreBalanceRPC} from "../rpc/rpc";
+import {getOffshoreBalanceRPC} from "../ipc/rpc/rpc";
 import {Balance, XBalance} from "../../../universal/reducers/xBalance";
 import {GET_OFFSHORE_BALANCE_FAILED, GET_OFFSHORE_BALANCE_FETCHING, GET_OFFSHORE_BALANCE_SUCCEED} from "./types";
 

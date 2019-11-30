@@ -4,7 +4,7 @@ import {
     CREATE_WALLET_SUCCEED,
      VALIDATE_MNEMONIC_FAILED, VALIDATE_MNEMONIC_SUCCEED, QUERY_MNEMONIC_FOR_WALLET_GENERATION_SUCCEED
 } from "./types";
-import {createWalletRPC, queryMnemonicKeyRPC} from "../rpc/rpc";
+import {createWalletRPC, queryMnemonicKeyRPC} from "../ipc/rpc/rpc";
 import {closeWallet} from "./walletSession";
 
 

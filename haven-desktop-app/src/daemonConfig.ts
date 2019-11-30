@@ -1,4 +1,4 @@
-import {isMainnet} from "./env";
+import {APP_DATA_PATH, isMainnet} from "./env";
 import { app } from 'electron';
 import * as fs  from 'fs';
 
@@ -6,21 +6,25 @@ const MAINNET_WALLET_PATH = '/wallet/main';
 const TESTNET_WALLET_PATH = '/wallet/test';
 
 
-const pathToAppLib = app.getPath('userData');
+export const  checkAndCreateWalletDir = () => {
 
+    if (isMainnet) {
 
-if (isMainnet) {
+        if (!fs.existsSync(APP_DATA_PATH + MAINNET_WALLET_PATH)) {
+            fs.mkdir(APP_DATA_PATH + MAINNET_WALLET_PATH, (error)=> console.log(error));
+        }
+    } else {
 
-    if (!fs.existsSync(pathToAppLib + MAINNET_WALLET_PATH)) {
-        fs.mkdir(pathToAppLib + MAINNET_WALLET_PATH, (error)=> console.log(error));
+        if (!fs.existsSync(APP_DATA_PATH + TESTNET_WALLET_PATH)) {
+
+            fs.mkdir(APP_DATA_PATH + TESTNET_WALLET_PATH, (error)=> console.log(error));
+        }
     }
-} else {
 
-    if (!fs.existsSync(pathToAppLib + TESTNET_WALLET_PATH)) {
+};
 
-        fs.mkdir(pathToAppLib + TESTNET_WALLET_PATH, (error)=> console.log(error));
-    }
-}
+
+
 
 
 
@@ -42,7 +46,7 @@ const daemonConfigMainnet = {
             'mainnet':'',
             'rpc-bind-port': 12345,
             'disable-rpc-login': '',
-            'wallet-dir': pathToAppLib + MAINNET_WALLET_PATH,
+            'wallet-dir': APP_DATA_PATH + MAINNET_WALLET_PATH,
         }
     }
 
@@ -66,7 +70,7 @@ const daemonConfigTestnet = {
             'testnet':'',
             'rpc-bind-port': 12345,
             'disable-rpc-login': '',
-            'wallet-dir': pathToAppLib + TESTNET_WALLET_PATH,
+            'wallet-dir': APP_DATA_PATH + TESTNET_WALLET_PATH,
         }
 
     },
@@ -74,9 +78,9 @@ const daemonConfigTestnet = {
 };
 
 export interface IDaemonConfig {
-        path:string,
-        port:number,
-        args:{}
+        path:string;
+        port:number;
+        args:{ [key: string]: string | number };
 }
 
 export const daemonConfig:{havend: IDaemonConfig, wallet:IDaemonConfig} = isMainnet? daemonConfigMainnet : daemonConfigTestnet;
