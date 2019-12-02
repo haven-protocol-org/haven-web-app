@@ -66,7 +66,7 @@ export function getOffshoreTransfersRPC(params: object) {
 
 
 export function offshoreTransferRPC(params: object) {
-    return callRpc('offshore_transfer')
+    return callRpc('offshore_transfer', params)
 }
 
 

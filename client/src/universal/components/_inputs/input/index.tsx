@@ -8,7 +8,7 @@ import { Label, Error } from "../../../../assets/styles/type.js";
 
 type Ref = HTMLInputElement;
 type Props = {
-    type: string, placeholder: string, label: string, error?: string, onChange?:Function , name: string, value: any, width?: number, readOnly?: boolean
+    type: string, placeholder: string, label: string, error?: string, onChange?:Function , name: string, value: any, width?: boolean, readOnly?: boolean
 }
 
 

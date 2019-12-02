@@ -9,7 +9,6 @@ export * from "./walletCreation";
 export * from "./refresh";
 export * from "./offshore";
 export * from "./offshoreBalance"
-export * from "./offshoreTransfer"
 export * from "./offshoreTransferHistory"
 
 

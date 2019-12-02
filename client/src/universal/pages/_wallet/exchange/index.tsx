@@ -23,12 +23,6 @@ import {offshore, onshore} from "../../../../platforms/desktop/actions";
 import {Ticker} from "../../../reducers/types";
 import {isProcessingExchange} from "../../../../platforms/desktop/reducers/offshoreProcess";
 
-interface Asset {
-
-  ticker: string;
-  asset: string;
-}
-
 
 type ExchangeProps = {
 
@@ -53,7 +47,7 @@ type ExchangeState = {
 }
 
 
-interface AssetOption {
+export interface AssetOption {
   ticker: Ticker;
   name: string;
 }
