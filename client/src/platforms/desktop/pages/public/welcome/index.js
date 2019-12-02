@@ -7,7 +7,7 @@ import {
   Microcopy,
   Page
 } from "./styles";
-import {MultiLoginDesktop} from "../../../components/_auth/multi_login";
+import {MultiLoginDesktop} from "../../_auth/multi_login";
 
 
 export class WelcomeDesktop extends Component {

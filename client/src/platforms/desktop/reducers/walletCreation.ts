@@ -7,11 +7,21 @@ import {
   VALIDATE_MNEMONIC_FAILED,
   VALIDATE_MNEMONIC_SUCCEED
 } from "../actions/types";
+import {AnyAction} from "redux";
 
 
-const INITIAL_STATE = { isCreated:false, mnemonicKey:'', isVerified:false, error: null, isFetching:false};
+export interface WalletCreation{
+  isCreated: boolean;
+  mnemonicKey: string;
+  isVerified: boolean;
+  error: string;
+  isFetching: boolean;
+}
 
-export default function(state = INITIAL_STATE, action) {
+
+const INITIAL_STATE: WalletCreation = { isCreated:false, mnemonicKey:'', isVerified:false, error: '', isFetching:false};
+
+export default function(state = INITIAL_STATE, action: AnyAction): WalletCreation {
   switch (action.type) {
     case RESTORE_WALLET_BY_SEED_SUCCEED:
     case VALIDATE_MNEMONIC_SUCCEED:

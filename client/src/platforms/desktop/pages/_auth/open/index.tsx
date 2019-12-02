@@ -1,7 +1,7 @@
 import {connect} from "react-redux";
 import {restoreWallet} from "../../../actions";
 import React, {Component} from "react";
-import {Buttons, Cancel, Submit} from "platforms/desktop/components/_auth/multi_login/styles";
+import {Buttons, Cancel, Submit} from "platforms/desktop/pages/_auth/multi_login/styles";
 import {Spinner} from "universal/components/spinner";
 import {Body} from "./styles";
 import {Information} from "assets/styles/type";
@@ -30,7 +30,7 @@ class OpenWalletDesktopContainer extends Component<OpenWalletProps, OpenWalletSt
         selectedWallet: null,
         pw:''
     };
-    
+
 
     onOpenWallet = () => {
 
@@ -59,37 +59,48 @@ class OpenWalletDesktopContainer extends Component<OpenWalletProps, OpenWalletSt
     render() {
 
         return (
-               <>
-                <Body>
 
-                <WalletSelection onClick={(wallet) => this.onSelectWallet(wallet)}
-                                 options={this.props.wallets}
-                                 placeholder={'Select your Wallet'}
-                                 label={'Saved Wallets'}
-                                 error={''}
-                                 value={this.state.selectedWallet}/>
 
-                <Input
-                    label="Wallet Password"
-                    placeholder="Enter the password for your wallet"
-                    name="pw"
-                    type={'text'}
-                    value={this.state.pw}
-                    onChange={this.onChangeHandler}
-                />
-                <Information>
-                    Upload your encrypted Keystore File and enter the password
-                    associated with it to unlock and access your funds.
-                </Information>
+             (this.props.wallets === null || this.props.wallets.length === 0)?  (
 
-                </Body>
-                <Buttons>
-                    <Cancel to="/">Cancel</Cancel>
-                    <Submit onClick={() => this.onOpenWallet()}>
-                        Continue
-                    </Submit>
-                </Buttons>
-                    </>
+                 <Body>
+                 No wallet found. You must first create or restore one.
+                 </Body>
+
+                ):
+
+                <>
+                    <Body>
+
+                    <WalletSelection onClick={(wallet) => this.onSelectWallet(wallet)}
+                                     options={this.props.wallets}
+                                     placeholder={'Select your Wallet'}
+                                     label={'Saved Wallets'}
+                                     error={''}
+                                     value={this.state.selectedWallet}/>
+
+                    <Input
+                        label="Wallet Password"
+                        placeholder="Enter the password for your wallet"
+                        name="pw"
+                        type={'text'}
+                        value={this.state.pw}
+                        onChange={this.onChangeHandler}
+                    />
+                    <Information>
+                        Upload your encrypted Keystore File and enter the password
+                        associated with it to unlock and access your funds.
+                    </Information>
+
+                    </Body>
+                    <Buttons>
+                        <Cancel to="/">Cancel</Cancel>
+                        <Submit onClick={() => this.onOpenWallet()}>
+                            Continue
+                        </Submit>
+                    </Buttons>
+                </>
+
 
         )
     }
