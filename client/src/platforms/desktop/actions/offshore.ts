@@ -2,7 +2,7 @@ import {
     offshoreRPC,
     onshoreRPC
 } from "../ipc/rpc/rpc";
-import { addExchangeSucceedMessage} from "../../../universal/actions/notification";
+import { addExchangeSucceedMessage} from "universal/actions/notification";
 
 import {
     OFFSHORE_FAILED,
@@ -12,9 +12,8 @@ import {
     ONSHORE_SUCCEED
 } from "./types";
 import {updateApp} from "./refresh";
-import {Dispatch} from "redux";
 import {DesktopAppState} from "../reducers";
-import {Ticker} from "../../../universal/reducers/types";
+import {Ticker} from "universal/reducers/types";
 
 
 export function onshore(fromTicker: Ticker, toTicker: Ticker, fromAmount: number, toAmount:number): any {
@@ -25,7 +24,7 @@ export function onshore(fromTicker: Ticker, toTicker: Ticker, fromAmount: number
         dispatch(onshoreFetch({fromTicker, toTicker, amount,isOffshore:false }));
 
         const address = getState().address.main;
-        const params = { destinations: [{ address, amount }], ring_size: 11 };
+        const params = { destinations: [{ address, amount: amount.toString() }], ring_size: 11 };
 
         onshoreRPC(params)
             .then((result: any) => {
