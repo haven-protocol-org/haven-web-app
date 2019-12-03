@@ -9,12 +9,7 @@ import { Redirect } from "react-router";
 import React, { Component } from "react";
 import { Information } from "../../../../../assets/styles/type";
 import Description from "../../../../../universal/components/_inputs/description";
-import {
-  Buttons,
-  Cancel,
-  Main,
-  Submit
-} from "../../../components/_auth/multi_login/styles";
+import { Buttons, Cancel, Main, Submit } from "../multi_login/styles";
 import { Spinner } from "../../../../../universal/components/spinner";
 import { Body } from "./styles";
 import Input from "../../../../../universal/components/_inputs/input";

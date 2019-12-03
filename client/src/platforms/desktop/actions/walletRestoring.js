@@ -22,7 +22,7 @@ export const restoreWallet = (seed, filename, password) => {
         const language = "English";
         const seed_offset = "";
 
-        const params = { seed, language, seed_offset, filename, password };
+        const params = { seed, filename, password };
 
         dispatch(restoreWalletFetching());
         restoreWalletRPC(params)

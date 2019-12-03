@@ -1,7 +1,6 @@
 // Library Imports
 import React, {Component} from "react";
 import * as clipboard from "clipboard-polyfill";
-import PropTypes from 'prop-types';
 // Relative Imports
 import Body from "../../../components/_layout/body";
 import Header from "../../../components/_layout/header";
@@ -13,19 +12,51 @@ import Footer from "../../../components/_inputs/footer";
 import Tab from "../../../components/tab";
 import {Transaction} from "../../../components/_transactions/transfer";
 import {Container} from "./styles";
+import {Ticker} from "universal/reducers/types";
+import {AssetOption} from "universal/pages/_wallet/exchange";
+import {OFFSHORE_ENABLED} from "constants/env";
 
-const options = [{ asset: "Haven", ticker: "XHV" }];
 
-export class Transfer extends Component {
-  constructor(props) {
-    super(props);
-    this.addressValue = React.createRef();
-  }
 
-  state = {
-    send_asset: "Haven",
+const options:AssetOption[] = [
+  { name: "Haven Token", ticker: Ticker.XHV},
+
+];
+
+if (OFFSHORE_ENABLED) {
+  options.push({ name: "United States Dollar", ticker: Ticker.xUSD });
+}
+
+interface TransferProps {
+  sendFunds:(address: string, amount: number, paymentId: string, ticker:Ticker) => void,
+  address: string,
+  isProcessing: boolean,
+}
+
+interface TransferState {
+
+  selectedAsset: AssetOption | null,
+  send_amount: string,
+  recipient_address: string,
+  payment_id: string,
+  validated: boolean,
+  firstTabState: boolean,
+  secondTabState: boolean,
+  checked: boolean,
+  copyButtonState: string,
+  address: string,
+}
+
+
+export class Transfer extends Component<TransferProps, TransferState> {
+
+
+  private addressValue: any = React.createRef();
+
+
+  state: TransferState = {
+    selectedAsset: null,
     send_amount: "",
-    send_ticker: "XHV",
     recipient_address: "",
     payment_id: "",
     validated: false,
@@ -43,34 +74,46 @@ export class Transfer extends Component {
 
 
 
-  handleChange = event => {
+  handleChange = (event: any) => {
     const name = event.target.name;
     const value = event.target.value;
 
-    this.setState({
+    this.setState <never>({
       [name]: value
     });
   };
 
-  setSendAsset = ({ asset, ticker }) => {
+  setSendAsset = (asset: AssetOption) => {
     // Call back function from Dropdown
     this.setState({
-      send_asset: asset,
-      send_ticker: ticker
+      selectedAsset:asset
     });
   };
 
   handleSubmit = () => {
-    const { send_amount, recipient_address } = this.state;
+
+
+
+    const { payment_id, send_amount, recipient_address, selectedAsset } = this.state;
+
+
+
+
     if (send_amount.length === 0 && recipient_address.length === 0) {
       this.setState({ validated: false });
-    } else if (send_amount.length > 0 && recipient_address.length > 0) {
+      return;
+    }
+
+    if (selectedAsset !== null) {
+
       this.props.sendFunds(
-        this.state.recipient_address,
-        this.state.send_amount,
-        this.state.payment_id
+          recipient_address,
+          Number(send_amount),
+          payment_id, selectedAsset.ticker
+
       );
     }
+
 
   };
 
@@ -88,7 +131,7 @@ export class Transfer extends Component {
     });
   };
 
-  handleCheckboxChange = event => {
+  handleCheckboxChange = (event: any) => {
     const { checked } = event.target;
     this.setState({ checked: checked, validated: true });
   };
@@ -112,9 +155,8 @@ export class Transfer extends Component {
 
   render() {
     const {
-      send_asset,
+      selectedAsset,
       send_amount,
-      send_ticker,
       recipient_address,
       checked,
       payment_id,
@@ -138,16 +180,17 @@ export class Transfer extends Component {
             secondTabState={this.state.secondTabState}
             toggleSend={this.toggleSend}
             toggleReceive={this.toggleReceive}
+            onClick={() => {}}
           />
           {this.state.firstTabState ? (
             <>
-              <Form>
+              <Form onSubmit={this.handleSubmit}>
                 <Dropdown
                   label="Asset"
                   placeholder="Select Asset"
                   name="send_asset"
-                  ticker={send_ticker}
-                  value={send_asset}
+                  ticker={selectedAsset? selectedAsset.ticker : ''}
+                  value={selectedAsset? selectedAsset.name: 'Select Asset'}
                   options={options}
                   onClick={this.setSendAsset}
                 />
@@ -164,17 +207,18 @@ export class Transfer extends Component {
                     <Description
                       label="Recipient"
                       placeholder="Enter recipients address"
-                      width="true"
                       name="recipient_address"
                       value={recipient_address}
+                      width={true}
                       rows={windowWidth < 600 ? "3" : "2"}
                       onChange={this.handleChange}
                     />
                     <Input
                       label="Payment ID (Optional)"
                       placeholder="Enter an optional payment ID"
-                      width="true"
+                      type="number"
                       name="payment_id"
+                      width={true}
                       value={payment_id}
                       onChange={this.handleChange}
                     />
@@ -184,7 +228,8 @@ export class Transfer extends Component {
                     <Input
                       label="Recipient"
                       placeholder="Enter recipient address"
-                      width="true"
+                      width={true}
+                      type={'text'}
                       name="recipient_address"
                       value={recipient_address}
                       onChange={this.handleChange}
@@ -192,7 +237,8 @@ export class Transfer extends Component {
                     <Input
                       label="Payment ID (Optional)"
                       placeholder="Enter an optional payment ID"
-                      width="true"
+                      type={'text'}
+                      width={true}
                       name="payment_id"
                       value={payment_id}
                       onChange={this.handleChange}
@@ -218,14 +264,14 @@ export class Transfer extends Component {
             </>
           ) : (
             <>
-              <Form>
+              <Form onSubmit={this.handleSubmit}>
                 <Dropdown
                   label="Asset"
                   placeholder="Select Asset"
                   name="send_asset"
                   width="true"
-                  ticker={send_ticker}
-                  value={send_asset}
+                  ticker={selectedAsset? selectedAsset.ticker : ''}
+                  value={selectedAsset? selectedAsset.name: 'Select Asset'}
                   options={options}
                   onClick={this.setSendAsset}
                 />
@@ -233,7 +279,7 @@ export class Transfer extends Component {
                   <Description
                     label="Haven Address"
                     placeholder="...load address"
-                    width="true"
+                    width={true}
                     name="address"
                     value={this.props.address}
                     readOnly={true}
@@ -244,7 +290,8 @@ export class Transfer extends Component {
                     ref={textarea => (this.addressValue = textarea)}
                     label="Haven Address"
                     placeholder="...load address"
-                    width="true"
+                    width={true}
+                    type={"text"}
                     name="address"
                     value={this.props.address}
                     readOnly={true}
@@ -263,12 +310,3 @@ export class Transfer extends Component {
     );
   }
 }
-
-
-Transfer.propTypes = {
-
-  sendFunds:PropTypes.func.isRequired,
-  address: PropTypes.string.isRequired,
-  isProcessing: PropTypes.bool.isRequired,
-
-};

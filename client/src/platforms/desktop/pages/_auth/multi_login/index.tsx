@@ -20,13 +20,14 @@ import {
 import Description from "../../../../../universal/components/_inputs/description";
 import Input from "../../../../../universal/components/_inputs/input";
 import {Spinner} from "../../../../../universal/components/spinner";
-import {RestoreDesktop} from "../../../pages/_auth/restore";
+import {RestoreDesktop} from "../restore";
 import {DesktopAppState} from "../../../reducers";
 import {connect} from "react-redux";
 import {getSavedWallets} from "../../../actions/walletSession";
 import {SavedWallet, selectIsLoggedIn} from "../../../reducers/walletSession";
 import {Redirect} from "react-router";
-import {OpenWalletDesktop} from "../../../pages/_auth/open";
+import {OpenWalletDesktop} from "../open";
+import {CreateDesktop} from "platforms/desktop/pages/_auth/create";
 
 
 interface MultiloginState {
@@ -115,16 +116,7 @@ class MultiLoginPage extends Component<MultiLoginProps, MultiloginState> {
             )}
             {loginType === LOGIN_TYPE.Create && (
               <>
-                <Description
-                  label="Ledger Signature"
-                  placeholder="Open the Ledger application and sign in"
-                  name=""
-                  value={""}
-                />
-                <Information>
-                  We recommend you login with a Ledger device as it's the most
-                  secure method possible for securing your funds.
-                </Information>
+               <CreateDesktop/>
               </>
             )}
             {loginType === LOGIN_TYPE.Open && (

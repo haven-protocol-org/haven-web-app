@@ -1,8 +1,8 @@
 import {
-  TRANSFER_FAILED,
-  TRANSFER_FETCHING,
-  TRANSFER_SUCCEED,
-    TRANSFER_RESET
+    TRANSFER_FAILED,
+    TRANSFER_FETCHING,
+    TRANSFER_SUCCEED,
+    TRANSFER_RESET, OFFSHORE_TRANSFER_SUCCEED, OFFSHORE_TRANSFER_FETCHING, OFFSHORE_TRANSFER_FAILED
 } from "../actions/types";
 import {AnyAction} from "redux";
 import {DesktopAppState} from "./index";
@@ -25,6 +25,7 @@ export const transferProcess = (state = INITIAL_STATE, action: AnyAction): TxPro
   switch (action.type) {
     case TRANSFER_RESET:
       return INITIAL_STATE;
+      case OFFSHORE_TRANSFER_FETCHING:
     case TRANSFER_FETCHING:
       return {
         ...state,
@@ -32,8 +33,10 @@ export const transferProcess = (state = INITIAL_STATE, action: AnyAction): TxPro
         address: action.payload.address,
         isFetching: true
       };
+      case OFFSHORE_TRANSFER_SUCCEED:
     case TRANSFER_SUCCEED:
       return { ...state, ...action.payload, isFetching: false, succeed:true };
+      case OFFSHORE_TRANSFER_FAILED:
     case TRANSFER_FAILED:
       return { ...state, error: action.payload.error, isFetching: false, succeed:false };
     default:

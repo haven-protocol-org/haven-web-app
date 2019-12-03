@@ -20,14 +20,14 @@ const createWalletFailed = error => ({
 
 
 
-export const createWallet = (seed, filename, password) => {
+export const createWallet = (filename, password) => {
     return dispatch => {
 
         dispatch(closeWallet());
         dispatch(createWalletFetch());
 
         const language = "English";
-        const params = {language};
+        const params = {language, filename, password};
 
         createWalletRPC(params)
             .then(result => queryMnemonicKeyRPC())
@@ -46,3 +46,4 @@ const queryMnemonicForWalletGenerationSucceed = (key) => ({type: QUERY_MNEMONIC_
 
 export const mnenomicVerificationSucceed = () =>  ({type: VALIDATE_MNEMONIC_SUCCEED});
 export const mneomicVerifcationFailed = () => ({type: VALIDATE_MNEMONIC_FAILED});
+

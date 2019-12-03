@@ -1,6 +1,6 @@
 import {OPEN_WALLET_FAILED, OPEN_WALLET_SUCCEED, UPDATE_SAVED_WALLETS} from "./types";
 import {openWalletRPC} from "../ipc/rpc/rpc";
-import {CLOSE_WALLET} from "../../../universal/actions/types";
+import {CLOSE_WALLET} from "universal/actions/types";
 import {requestSavedWalletsIPC} from "../ipc/misc";
 import {SavedWallet} from "../reducers/walletSession";
 
@@ -44,8 +44,6 @@ export const openWallet = (filename: string, password: string) => {
             .catch( (error: any) =>  dispatch(openWalletFailed(error)));
 
     }
-
-
 };
 
 const openWalletSucceed =  (fileName: string) => {
