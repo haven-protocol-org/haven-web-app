@@ -11,13 +11,13 @@ export const  checkAndCreateWalletDir = () => {
     if (isMainnet) {
 
         if (!fs.existsSync(APP_DATA_PATH + MAINNET_WALLET_PATH)) {
-            fs.mkdir(APP_DATA_PATH + MAINNET_WALLET_PATH, (error)=> console.log(error));
+            fs.mkdirSync(APP_DATA_PATH + MAINNET_WALLET_PATH, {recursive:true});
         }
     } else {
 
         if (!fs.existsSync(APP_DATA_PATH + TESTNET_WALLET_PATH)) {
 
-            fs.mkdir(APP_DATA_PATH + TESTNET_WALLET_PATH, (error)=> console.log(error));
+            fs.mkdirSync(APP_DATA_PATH + TESTNET_WALLET_PATH, {recursive:true});
         }
     }
 
