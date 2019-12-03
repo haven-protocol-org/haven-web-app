@@ -23,7 +23,6 @@
     "redux-thunk": "^2.3.0",
     "styled-components": "^4.4.0",
     "typescript": "^3.7.2"
-
   },
   "scripts": {
     "start:desktop:mainnet": "sh -ac '. ./env/.env.mainnet; . ./env/.env.desktop; react-scripts start'",

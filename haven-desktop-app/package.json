@@ -26,7 +26,7 @@
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "haven_desktop_app"
+            "name": "Haven"
           }
         },
         {

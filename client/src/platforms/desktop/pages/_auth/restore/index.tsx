@@ -1,189 +1,171 @@
-
-
-import {selectErrorMessageForLogin, selectIsLoggedIn, selectIsRequestingLogin} from "../../../reducers/walletSession";
-import {connect} from "react-redux";
-import {restoreWallet} from "../../../actions";
-import {Redirect} from "react-router";
-import React,{Component} from "react";
-import {Information} from "../../../../../assets/styles/type";
+import {
+  selectErrorMessageForLogin,
+  selectIsLoggedIn,
+  selectIsRequestingLogin
+} from "../../../reducers/walletSession";
+import { connect } from "react-redux";
+import { restoreWallet } from "../../../actions";
+import { Redirect } from "react-router";
+import React, { Component } from "react";
+import { Information } from "../../../../../assets/styles/type";
 import Description from "../../../../../universal/components/_inputs/description";
-import {Buttons, Cancel, Main, Submit} from "../../../components/_auth/multi_login/styles";
-import {Spinner} from "../../../../../universal/components/spinner";
-import {Body} from "./styles";
+import {
+  Buttons,
+  Cancel,
+  Main,
+  Submit
+} from "../../../components/_auth/multi_login/styles";
+import { Spinner } from "../../../../../universal/components/spinner";
+import { Body } from "./styles";
 import Input from "../../../../../universal/components/_inputs/input";
-import {DesktopAppState} from "../../../reducers";
-import {Back} from "../../../../../universal/components/_auth/create/styles";
-
-
+import { DesktopAppState } from "../../../reducers";
+import { Back } from "../../../../../universal/components/_auth/create/styles";
 
 interface RestoreProps {
-
-    restoreWallet:(seed: string, name: string, pw: string) => void;
-    isLoggedIn: boolean;
-    isRequestingLogin: boolean;
-    errorMessage: string;
+  restoreWallet: (seed: string, name: string, pw: string) => void;
+  isLoggedIn: boolean;
+  isRequestingLogin: boolean;
+  errorMessage: string;
 }
 
 enum RESTORE_STEP {
-
-    SEED_STEP,NAME_STEP
-
-};
-
+  SEED_STEP,
+  NAME_STEP
+}
 
 interface RestoreState {
-
-   step: RESTORE_STEP;
-    error:string | undefined;
-    seed: string;
-    pw: string;
-    name: string;
-
+  step: RESTORE_STEP;
+  error: string | undefined;
+  seed: string;
+  pw: string;
+  name: string;
 }
-
-
 
 class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
+  constructor(props: RestoreProps) {
+    super(props);
+  }
 
-    constructor(props: RestoreProps) {
-        super(props);
+  state: RestoreState = {
+    step: RESTORE_STEP.SEED_STEP,
+    error: undefined,
+    seed: "",
+    pw: "",
+    name: ""
+  };
 
+  onRestoreWallet = () => {
+    const { seed, pw, name } = this.state;
 
+    if (!seed || !name || !pw) {
+      return;
     }
 
-    state: RestoreState = {
+    this.validateNameAndPW();
 
-        step: RESTORE_STEP.SEED_STEP,
-        error: undefined,
-        seed:'',
-        pw:'',
-        name:''
+    this.props.restoreWallet(seed, name, pw);
+  };
 
-    };
+  onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const name = e.currentTarget.name;
+    const value: string = e.currentTarget.value;
 
+    this.setState<never>({ [name]: value });
+  };
 
-    onRestoreWallet = () => {
+  onBack() {
+    this.setState({ step: RESTORE_STEP.SEED_STEP });
+  }
 
-        const {seed,pw,name} = this.state;
+  onContinue() {
+    this.validateSeed();
+    this.setState({ step: RESTORE_STEP.NAME_STEP });
+  }
 
-        if (!seed || !name || !pw) {
-            return;
-        }
+  validateSeed() {}
 
-        this.validateNameAndPW();
+  validateNameAndPW() {}
 
-        this.props.restoreWallet(seed, name, pw);
-    };
+  render() {
+    const windowWidth = window.innerWidth;
+    const { error, step, seed, name, pw } = this.state;
 
-    onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-
-        const name = e.currentTarget.name;
-        const value: string = e.currentTarget.value;
-
-        this.setState<never>({[name]: value});
-
-    };
-
-
-    onBack() {
-        this.setState({step: RESTORE_STEP.SEED_STEP});
+    if (this.props.isLoggedIn) {
+      return <Redirect to="/wallet/assets" />;
     }
 
-    onContinue() {
-        this.validateSeed();
-        this.setState({step: RESTORE_STEP.NAME_STEP});
-    };
+    return (
+      <>
+        {step === RESTORE_STEP.SEED_STEP && (
+          <>
+            <Body>
+              <Description
+                label="Seed Phrase or Private Spend Key"
+                placeholder="Enter your 25 word seed phrase or Private Spend Key..."
+                name="seed"
+                value={seed}
+                error={error}
+                rows={windowWidth < 600 ? "6" : "4"}
+                onChange={this.onChangeHandler}
+              />
+              <Information>
+                <strong>Disclaimer:</strong> Your seed is used to generate an
+                encrypted signature on your device and unlock your account. This
+                ensures the security of your seed or keys, as they're never
+                submitted to a server or sent across the internet.
+              </Information>
+            </Body>
+            <Buttons>
+              <Cancel to="/">Cancel</Cancel>
+              <Submit onClick={() => this.onContinue()}>Continue</Submit>
+            </Buttons>
+          </>
+        )}
 
-    validateSeed() {
-
-    }
-
-    validateNameAndPW() {
-
-    }
-
-
-    render() {
-
-        const windowWidth = window.innerWidth;
-        const {error, step, seed, name, pw } = this.state;
-
-        if (this.props.isLoggedIn) {
-            return <Redirect to="/wallet/assets"/>;
-        }
-
-        return (
-            <>
-                {step === RESTORE_STEP.SEED_STEP && (
-               <>
-                <Body>
-                <Description
-                    label="Seed Phrase or Private Spend Key"
-                    placeholder="Enter your 25 word seed phrase or Private Spend Key..."
-                    name="seed"
-                    value={seed}
-                    error={error}
-                    rows={windowWidth < 600 ? "6" : "4"}
-                    onChange = {this.onChangeHandler}
-                />
-                <Information>
-                    <strong>Disclaimer:</strong> Your seed is used to generate an
-                    encrypted signature on your device and unlock your account. This
-                    ensures the security of your seed or keys, as they're never
-                    submitted to a server or sent across the internet.
-                </Information>
-                </Body>
-                <Buttons>
-                    <Cancel to="/">Cancel</Cancel>
-                    <Submit onClick={() => this.onContinue()}>
-                        Continue
-                    </Submit>
-                </Buttons>
-                    </>
-             )}
-
-                {step === RESTORE_STEP.NAME_STEP &&  (
-                    <>
-                    <Body>
-                <Input
-                    label="Wallet"
-                    placeholder="Give your Wallet a name"
-                    name="name"
-                    type={'text'}
-                    value={name}
-                    onChange = {this.onChangeHandler}
-                />
-                <Input
-                    label="Wallet Password"
-                    placeholder="Give Your Wallet a password"
-                    name="pw"
-                    type={'text'}
-                    value={pw}
-                    onChange = {this.onChangeHandler}
-
-                />
-                </Body>
-                <Buttons>
-                    <Back onClick={() => this.onBack()}>Back</Back>
-                    <Submit disabled={false} onClick={() => this.onRestoreWallet()}>
-                        {this.props.isRequestingLogin ? <Spinner color={"white"}/> : "Create Wallet"}
-                    </Submit>
-                </Buttons>
-                        </>)}
-
-                </>
-        )
-    }
+        {step === RESTORE_STEP.NAME_STEP && (
+          <>
+            <Body>
+              <Input
+                label="Wallet"
+                placeholder="Give your Wallet a name"
+                name="name"
+                type={"text"}
+                value={name}
+                onChange={this.onChangeHandler}
+              />
+              <Input
+                label="Wallet Password"
+                placeholder="Give Your Wallet a password"
+                name="pw"
+                type={"text"}
+                value={pw}
+                onChange={this.onChangeHandler}
+              />
+            </Body>
+            <Buttons>
+              <Back onClick={() => this.onBack()}>Back</Back>
+              <Submit disabled={false} onClick={() => this.onRestoreWallet()}>
+                {this.props.isRequestingLogin ? (
+                  <Spinner color={"white"} />
+                ) : (
+                  "Create Wallet"
+                )}
+              </Submit>
+            </Buttons>
+          </>
+        )}
+      </>
+    );
+  }
 }
 
-
 const mapStateToProps = (state: DesktopAppState) => ({
-    isRequestingLogin: selectIsRequestingLogin(state),
-    isLoggedIn: selectIsLoggedIn(state),
-    errorMessage: selectErrorMessageForLogin(state)
+  isRequestingLogin: selectIsRequestingLogin(state),
+  isLoggedIn: selectIsLoggedIn(state),
+  errorMessage: selectErrorMessageForLogin(state)
 });
 
-export const RestoreDesktop =   connect(
-    mapStateToProps,
-    { restoreWallet }
+export const RestoreDesktop = connect(
+  mapStateToProps,
+  { restoreWallet }
 )(RestoreDesktopContainer);
