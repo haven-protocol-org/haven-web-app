@@ -3,7 +3,7 @@ import React, { Component } from "react";
 
 // Relative Imports
 import { Container, Microcopy, Page } from "./styles";
-import { MultiLoginDesktop } from "../../../components/_auth/multi_login";
+import { MultiLoginDesktop } from "../../_auth/multi_login/index.tsx";
 
 export class WelcomeDesktop extends Component {
   componentDidMount() {
