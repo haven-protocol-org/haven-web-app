@@ -5,7 +5,7 @@ import React, { Component } from "react";
 import { Container, Microcopy, Page } from "./styles";
 import { MultiLoginDesktop } from "../../_auth/multi_login/index.tsx";
 
-export class LoginDesktop extends Component {
+export class CreateDesktop extends Component {
   componentDidMount() {
     window.scrollTo(0, 0);
   }
@@ -15,7 +15,7 @@ export class LoginDesktop extends Component {
       <Page>
         <Container>
           <Microcopy>
-            <MultiLoginDesktop />
+            <h1> CREATE </h1>
           </Microcopy>
         </Container>
       </Page>

@@ -5,7 +5,8 @@ import { Route } from "react-router-dom";
 // Relative Imports
 
 import { RestoreDesktop } from "../../pages/_auth/restore";
-import { LoginDesktop } from "../../pages/public/login/index.js";
+import { LoginDesktop } from "../../pages/public/login";
+import { CreateDesktop } from "../../pages/public/create";
 
 const Faq = lazy(() => import("../../../../shared/pages/_public/faq"));
 const Blog = lazy(() => import("../../../../shared/pages/_public/blog"));
@@ -22,6 +23,7 @@ export class PublicRoutesDesktop extends Component {
     return (
       <div>
         <Route path="/" exact component={LoginDesktop} />
+        <Route path="/create" exact component={CreateDesktop} />
         <Route path="/faq" exact component={Faq} />
         <Route path="/blog" exact component={Blog} />
         <Route path="/timeline" exact component={Timeline} />
