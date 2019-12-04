@@ -51,6 +51,16 @@ class OpenWalletDesktopContainer extends Component<
   }
 
   render() {
+    const { selectedWallet } = this.state;
+    if (selectedWallet === null) {
+      console.log("emtpy");
+    } else {
+      const { address } = selectedWallet;
+      const first = address.substring(0, 4);
+      const last = address.substring(address.length - 4);
+      const truncated = first + "...." + last;
+    }
+
     return this.props.wallets === null || this.props.wallets.length === 0 ? (
       <Body>No wallet found. You must first create or restore one.</Body>
     ) : (
