@@ -1,5 +1,5 @@
-import { UPDATE_CHAIN_DATA } from "../../../universal/actions/types";
-import {SyncState} from "../../../universal/types/types";
+import { UPDATE_CHAIN_DATA } from "../../../shared/actions/types";
+import {SyncState} from "../../../shared/types/types";
 import {AnyAction} from "redux";
 
 const INITIAL_STATE = {

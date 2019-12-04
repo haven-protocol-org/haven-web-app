@@ -1,7 +1,7 @@
 import { AnyAction} from "redux";
 import {GET_BLOCK_HEADER_EXCHANGE_RATE_SUCCEED} from "../actions/types";
 import {DesktopAppState} from ".";
-import {Ticker} from "../../../universal/reducers/types";
+import {Ticker} from "../../../shared/reducers/types";
 
 
 

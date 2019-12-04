@@ -3,10 +3,10 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 // Relative Imports
-import Auth from "../../../universal/components/_auth/create/index.js";
-import Placeholder from "../../../universal/components/_create/placeholder";
-import CreateSeed from "../../../universal/components/_create/create_seed";
-import VerifySeed from "../../../universal/components/_create/verify_seed";
+import Auth from "../../../shared/components/_auth/create/index.js";
+import Placeholder from "../../../shared/components/_create/placeholder";
+import CreateSeed from "../../../shared/components/_create/create_seed";
+import VerifySeed from "../../../shared/components/_create/verify_seed";
 import { Container } from "./styles";
 import { decrypt } from "../../../utility";
 import PropTypes from "prop-types";

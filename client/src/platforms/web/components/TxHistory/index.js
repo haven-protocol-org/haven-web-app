@@ -1,5 +1,5 @@
-import {EmptyState, History, Message, NoTransactions} from "../../../../universal/pages/_wallet/details/styles";
-import {Spinner} from "../../../../universal/components/spinner";
+import {EmptyState, History, Message, NoTransactions} from "../../../../shared/pages/_wallet/details/styles";
+import {Spinner} from "../../../../shared/components/spinner";
 import {convertBalanceForReading} from "../../../../utility/utility";
 import empty from "../../../../assets/illustration/no_transactions.svg";
 import React, {Component} from "react";
@@ -7,8 +7,8 @@ import {selectBlockchainHeight} from "../../reducers/chain";
 import {getTransfers} from "../../actions";
 import {connect} from "react-redux";
 import {core} from "../../declarations/open_monero.service";
-import {Transaction} from "../../../../universal/components/transaction";
-import Header from "../../../../universal/components/_layout/header/index.js"
+import {Transaction} from "../../../../shared/components/transaction";
+import Header from "../../../../shared/components/_layout/header/index.js"
 import {withRouter} from "react-router-dom";
 
 

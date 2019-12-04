@@ -2,19 +2,19 @@
 import React, { Component } from "react";
 
 // Relative Imports
-import Placeholder from "universal/components/_create/placeholder";
+import Placeholder from "shared/components/_create/placeholder";
 
 import {Body, Buttons, Submit} from "../multi_login/styles";
-import CreateSeed from "universal/components/_create/create_seed";
+import CreateSeed from "shared/components/_create/create_seed";
 import {createWallet} from "platforms/desktop/actions";
-import {Back} from "universal/components/_auth/create/styles";
+import {Back} from "shared/components/_auth/create/styles";
 import {DesktopAppState} from "platforms/desktop/reducers";
 import {connect} from "react-redux";
-import Input from "universal/components/_inputs/input";
+import Input from "shared/components/_inputs/input";
 import {WalletCreation} from "platforms/desktop/reducers/walletCreation";
-import {Spinner} from "universal/components/spinner";
+import {Spinner} from "shared/components/spinner";
 import {Information} from "assets/styles/type";
-import Description from "universal/components/_inputs/description";
+import Description from "shared/components/_inputs/description";
 import {openWallet, mnenomicVerificationSucceed} from "platforms/desktop/actions";
 
 

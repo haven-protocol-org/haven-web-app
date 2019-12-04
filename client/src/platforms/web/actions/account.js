@@ -6,11 +6,11 @@ import {
   KEEP_ALIVE
 } from "./types";
 
-import {VALIDATE_MNEMONIC_FAILED} from "../../../universal/actions/types";
+import {VALIDATE_MNEMONIC_FAILED} from "../../../shared/actions/types";
 
 import { keysGeneratedFailed, keysGeneratedSucceed } from "./key";
 import { core } from "../declarations/open_monero.service";
-import { addPubAddress, getTransfers } from "../../../universal/actions";
+import { addPubAddress, getTransfers } from "../../../shared/actions";
 import {login, ping} from "../api/api";
 import { NET_TYPE_ID } from "../../../constants/env";
 import {selectCredentials} from "../reducers/account";

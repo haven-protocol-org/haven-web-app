@@ -8,13 +8,13 @@ import { restoreWallet } from "../../../actions";
 import { Redirect } from "react-router";
 import React, { Component } from "react";
 import { Information } from "assets/styles/type";
-import Description from "../../../../../universal/components/_inputs/description";
+import Description from "../../../../../shared/components/_inputs/description";
 import { Buttons, Cancel, Submit } from "../multi_login/styles";
-import { Spinner } from "../../../../../universal/components/spinner";
+import { Spinner } from "../../../../../shared/components/spinner";
 import { Body } from "./styles";
-import Input from "../../../../../universal/components/_inputs/input";
+import Input from "../../../../../shared/components/_inputs/input";
 import { DesktopAppState } from "../../../reducers";
-import { Back } from "universal/components/_auth/create/styles";
+import { Back } from "shared/components/_auth/create/styles";
 
 interface RestoreProps {
   restoreWallet: (seed: string, name: string, pw: string) => void;

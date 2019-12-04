@@ -4,7 +4,7 @@ import {createWallet, mnenomicVerificationSucceed, mneomicVerifcationFailed} fro
 import {Component} from "react";
 import React from "react";
 import {Redirect} from "react-router";
-import {Create} from "../../../../../universal/pages/_auth/create";
+import {Create} from "../../../../../shared/pages/_auth/create";
 
 
 

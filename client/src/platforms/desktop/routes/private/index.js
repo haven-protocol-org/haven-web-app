@@ -6,14 +6,14 @@ import { Redirect, Route } from "react-router-dom";
 
 import {AssetsDesktop} from "../../pages/_wallet/assets";
 import {DetailsDesktop} from "../../pages/_wallet/details";
-import { ExchangePage} from "../../../../universal/pages/_wallet/exchange";
+import { ExchangePage} from "../../../../shared/pages/_wallet/exchange";
 import {TransferDesktop} from "../../pages/_wallet/transfer";
 import {SettingsDesktop} from "../../pages/_wallet/settings";
 import { connect } from "react-redux";
 import {selectIsLoggedIn} from "../../reducers/walletSession";
 import {refresh, updateApp} from "../../actions";
-import Page from "../../../../universal/components/_layout/page"
-import Menu from "../../../../universal/components/_layout/menu"
+import Page from "../../../../shared/components/_layout/page"
+import Menu from "../../../../shared/components/_layout/menu"
 
 /**
  *root component for private wallet

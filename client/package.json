@@ -1,6 +1,6 @@
 {
   "name": "haven_web_wallet",
-  "version": "1.32.0",
+  "version": "1.50.0",
   "private": true,
   "dependencies": {
     "@types/jest": "^24.0.23",
@@ -32,6 +32,7 @@
     "build:test": "sh -ac '. .env.test; npm version patch; react-scripts build'",
     "build:web:mainnet": "sh -ac '. ./env/.env.mainnet; . ./env/.env.web; npm version minor; react-scripts build'",
     "build:desktop:mainnet": "sh -ac '. ./env/.env.mainnet; . ./env/.env.desktop; npm version minor; react-scripts build'",
+    "build:desktop:testnet": "sh -ac '. ./env/.env.testnet; . ./env/.env.desktop; . ./env/.env.desktop.build; npm version minor; react-scripts build && cp -rf ./build/ ../haven-desktop-app/client/'",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

@@ -1,6 +1,6 @@
 import { getTransferRPC } from "../ipc/rpc/rpc";
 import {GET_TRANSFERS_FAILED, GET_TRANSFERS_FETCHING, GET_TRANSFERS_SUCCEED} from "./types";
-import {XTransferListAsset} from "../../../universal/reducers/xTransferList";
+import {XTransferListAsset} from "../../../shared/reducers/xTransferList";
 
 
 export const getTransfers = () => {

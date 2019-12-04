@@ -1,7 +1,7 @@
 import {GET_BLOCK_INFO_SUCEED} from "../actions/types";
 import {AnyAction} from "redux";
 import {DesktopAppState} from ".";
-import {SyncState} from "../../../universal/types/types";
+import {SyncState} from "../../../shared/types/types";
 
 
 

@@ -6,12 +6,12 @@ import {
   Cancel,
   Submit
 } from "platforms/desktop/pages/_auth/multi_login/styles";
-import { Spinner } from "universal/components/spinner";
+import { Spinner } from "shared/components/spinner";
 import { Body } from "./styles";
 import { Information } from "assets/styles/type";
-import Input from "universal/components/_inputs/input";
+import Input from "shared/components/_inputs/input";
 import { SavedWallet } from "../../../reducers/walletSession";
-import { WalletSelection } from "../../../../../universal/components/_inputs/wallet-selection";
+import { WalletSelection } from "../../../../../shared/components/_inputs/wallet-selection";
 import { openWallet } from "../../../actions/walletSession";
 
 interface OpenWalletState {

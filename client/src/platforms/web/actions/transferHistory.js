@@ -2,7 +2,7 @@ import {
   GET_TRANSFERS_FAILED,
   GET_TRANSFERS_FETCHING,
   GET_TRANSFERS_SUCCEED
-} from "../../../universal/actions/types";
+} from "../../../shared/actions/types";
 import {getAddressTxs} from "../api/api";
 import {selectCredentials} from "../reducers/account";
 import {core} from "../declarations/open_monero.service";

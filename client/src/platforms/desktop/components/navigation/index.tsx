@@ -43,7 +43,7 @@ class Navigation extends Component<NavigationProps, any> {
           <Logo src={Icon} />
           <Haven>HAVEN</Haven>
           <Tag>
-          {NET_TYPE_NAME}
+            {APP_VERSION} {NET_TYPE_NAME}
           </Tag>
           <div>{node.isRunning}</div>
           <div>{wallet.isRunning}</div>

@@ -1,10 +1,10 @@
 import {connect} from "react-redux";
 import {offshoreTransfer, resetTransferProcess, transfer} from "../../../actions";
-import {Transfer} from "universal/pages/_wallet/transfer";
+import {Transfer} from "shared/pages/_wallet/transfer";
 import React, {Component} from "react";
 import {transferProcess, transferSucceed} from "../../../reducers/transferProcess";
 import {history} from "utility/history";
-import {Ticker} from "universal/reducers/types";
+import {Ticker} from "shared/reducers/types";
 import {DesktopAppState} from "platforms/desktop/reducers";
 
 

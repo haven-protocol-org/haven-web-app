@@ -1,6 +1,6 @@
 import {OPEN_WALLET_FAILED, OPEN_WALLET_SUCCEED, UPDATE_SAVED_WALLETS} from "./types";
 import {openWalletRPC} from "../ipc/rpc/rpc";
-import {CLOSE_WALLET} from "universal/actions/types";
+import {CLOSE_WALLET} from "shared/actions/types";
 import {requestSavedWalletsIPC} from "../ipc/misc";
 import {SavedWallet} from "../reducers/walletSession";
 

@@ -9,7 +9,7 @@ import {
 import {AnyAction} from "redux";
 import {DesktopAppState} from "./index";
 import {TxProcessInfo} from "./transferProcess";
-import {Ticker} from "../../../universal/reducers/types";
+import {Ticker} from "../../../shared/reducers/types";
 
 
 export enum EXCHANGE_TYPE {

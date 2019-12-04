@@ -1,7 +1,7 @@
 
 import React, { Component } from "react";
 import {connect} from "react-redux";
-import {Settings} from "../../../../../universal/pages/_wallet/settings";
+import {Settings} from "../../../../../shared/pages/_wallet/settings";
 import {queryMnemonicKeyRPC} from "../../../ipc/rpc/rpc";
 import PropTypes from "prop-types";
 

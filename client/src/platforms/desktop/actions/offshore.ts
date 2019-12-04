@@ -2,7 +2,7 @@ import {
     offshoreRPC,
     onshoreRPC
 } from "../ipc/rpc/rpc";
-import { addExchangeSucceedMessage} from "universal/actions/notification";
+import { addExchangeSucceedMessage} from "shared/actions/notification";
 
 import {
     OFFSHORE_FAILED,
@@ -13,7 +13,7 @@ import {
 } from "./types";
 import {updateApp} from "./refresh";
 import {DesktopAppState} from "../reducers";
-import {Ticker} from "universal/reducers/types";
+import {Ticker} from "shared/reducers/types";
 
 
 export function onshore(fromTicker: Ticker, toTicker: Ticker, fromAmount: number, toAmount:number): any {

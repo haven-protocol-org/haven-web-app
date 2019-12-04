@@ -1,7 +1,7 @@
 import {
   KEYS_GENERATED_FAILED,
   KEYS_GENERATED_SUCCEED
-} from "../../../universal/actions/types";
+} from "../../../shared/actions/types";
 
 export const NO_KEY = -1;
 

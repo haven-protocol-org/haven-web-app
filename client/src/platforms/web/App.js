@@ -6,10 +6,10 @@ import { connect } from "react-redux";
 import {history} from "../../utility/history.js";
 
 // Relative Imports
-import Navigation from "../../universal/components/_layout/navigation/index.js";
+import Navigation from "../../shared/components/_layout/navigation/index.js";
 import { Route } from "react-router";
-import Status from "../../universal/components/_layout/status";
-import Loader from "../../universal/components/loader";
+import Status from "../../shared/components/_layout/status";
+import Loader from "../../shared/components/loader";
 import PublicRoutesWeb from "./routes/public";
 const PrivateRoutesWeb = lazy(() => import("./routes/private"));
 

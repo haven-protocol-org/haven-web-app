@@ -2,9 +2,9 @@
 
 
 import { notificationList } from "../constants/notificationList";
-import { NO_PRICE } from "../universal/reducers/priceHistory";
+import { NO_PRICE } from "../shared/reducers/priceHistory";
 import {isDevMode} from "../constants/env";
-import {NO_BALANCE} from "../universal/reducers/xBalance";
+import {NO_BALANCE} from "../shared/reducers/xBalance";
 
 export const convertTimestampToDateString = timestamp =>
   new Date(timestamp).toLocaleDateString();

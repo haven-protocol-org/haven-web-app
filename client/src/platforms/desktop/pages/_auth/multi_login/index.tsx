@@ -17,9 +17,9 @@ import {
   Tabs,
   Tab
 } from "./styles";
-import Description from "../../../../../universal/components/_inputs/description";
-import Input from "../../../../../universal/components/_inputs/input";
-import {Spinner} from "../../../../../universal/components/spinner";
+import Description from "../../../../../shared/components/_inputs/description";
+import Input from "../../../../../shared/components/_inputs/input";
+import {Spinner} from "../../../../../shared/components/spinner";
 import {RestoreDesktop} from "../restore";
 import {DesktopAppState} from "../../../reducers";
 import {connect} from "react-redux";

@@ -6,8 +6,8 @@ import { history } from "../../utility/history";
 import { NavigationDesktop } from "./components/navigation";
 import { PublicRoutesDesktop } from "./routes/public";
 import { PrivateRoutesDesktop } from "./routes/private";
-import Status from "../../universal/components/_layout/status";
-import Loader from "../../universal/components/loader";
+import Status from "../../shared/components/_layout/status";
+import Loader from "../../shared/components/loader";
 
 class App extends Component {
   render() {

@@ -3,7 +3,7 @@ import { getTransfers } from "./";
 import {TRANSFER_FAILED, TRANSFER_FETCHING, TRANSFER_RESET, TRANSFER_SUCCEED} from "./types";
 
 import { getBalance } from "./";
-import { addErrorNotification, addNotificationByKey} from "../../../universal/actions/notification";
+import { addErrorNotification, addNotificationByKey} from "../../../shared/actions/notification";
 import {TRANSFER_SUCCEED_MESSAGE} from "../../../constants/notificationList";
 import {getOffshoreTransfers} from "platforms/desktop/actions/offshoreTransferHistory";
 import {getOffshoreBalance} from "platforms/desktop/actions/offshoreBalance";

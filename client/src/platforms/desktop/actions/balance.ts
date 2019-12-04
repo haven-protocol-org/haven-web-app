@@ -1,6 +1,6 @@
 import {getBalanceRPC} from "../ipc/rpc/rpc";
 import {GET_BALANCES_FAILED, GET_BALANCES_FETCHING, GET_BALANCES_SUCCEED} from "./types";
-import {Balance, XBalance} from "../../../universal/reducers/xBalance";
+import {Balance, XBalance} from "../../../shared/reducers/xBalance";
 
 export const getBalance = () => {
     return (dispatch: any) => {

@@ -12,8 +12,8 @@ import Footer from "../../../components/_inputs/footer";
 import Tab from "../../../components/tab";
 import {Transaction} from "../../../components/_transactions/transfer";
 import {Container} from "./styles";
-import {Ticker} from "universal/reducers/types";
-import {AssetOption} from "universal/pages/_wallet/exchange";
+import {Ticker} from "shared/reducers/types";
+import {AssetOption} from "shared/pages/_wallet/exchange";
 import {OFFSHORE_ENABLED} from "constants/env";
 
 

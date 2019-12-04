@@ -36,13 +36,15 @@ const startApp = () => {
   mainWindow = new BrowserWindow(browserOptions);
   console.log("Haven development ? " + process.env.HAVEN_DESKTOP_DEVELOPMENT);
 
-  if (process.env.HAVEN_DESKTOP_DEVELOPMENT) {
+  if (false) {
 
     // Open the DevTools.
     mainWindow.webContents.openDevTools();
 
 
     devServerStarted.subscribe(hasStarted => {
+
+      mainWindow.loadURL(path.join(`file://${__dirname}` , '..client/index.html'));
 
       console.log("hasStarted : ", hasStarted);
       if (hasStarted) {
@@ -57,8 +59,9 @@ const startApp = () => {
   // TODO copy over build files from client app
   else {
 
+
     // and load the index.html of the app.
-    mainWindow.loadURL(path.join(`file://${__dirname}` , '../index.html'));
+    mainWindow.loadURL(path.join(`file://${__dirname}` , '../client/index.html'));
 
   }
   // Emitted when the window is closed.
