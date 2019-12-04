@@ -3,12 +3,19 @@ import { Link } from "react-router-dom";
 
 export const Container = styled.div`
   height: auto;
+  min-height: 550px;
   width: 624px;
   flex-direction: column;
   margin: 20px;
   border: 1px solid #3a4048;
   border-radius: 4px;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.05);
+`;
+
+export const Main = styled.div`
+  background: #36393f;
+  height: 100%;
+  padding: 10px;
 `;
 
 export const Tabs = styled.div`
@@ -36,13 +43,6 @@ export const Tab = styled.div`
   color: white;
   }
 
-`;
-
-export const Main = styled.div`
-  background: #36393f;
-  border-radius: 2px 2px 0px 0px;
-  height: auto;
-  padding: 10px;
 `;
 
 export const Header = styled.div`
