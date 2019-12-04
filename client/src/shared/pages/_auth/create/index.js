@@ -81,7 +81,7 @@ export class Create extends Component {
 
     switch (step) {
       case 1:
-        return <Placeholder />;
+        return <Placeholder platform={"web"} />;
       case 2:
         return (
           <CreateSeed

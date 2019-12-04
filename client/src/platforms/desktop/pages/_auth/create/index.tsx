@@ -11,6 +11,7 @@ import { Back } from "shared/components/_auth/create/styles";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { connect } from "react-redux";
 import Input from "shared/components/_inputs/input";
+import InputButton from "shared/components/_inputs/input_button";
 import { WalletCreation } from "platforms/desktop/reducers/walletCreation";
 import { Spinner } from "shared/components/spinner";
 import { Information } from "assets/styles/type";
@@ -186,10 +187,11 @@ class CreateDesktopContainer extends Component<
                 label="Wallet Password"
                 placeholder="Create a wallet password"
                 name="pw"
-                type={"text"}
+                type={"password"}
                 value={pw}
                 onChange={this.onChangeHandler}
               />
+
               <Information>
                 Creating a new wallet with a name and password means you’ll be
                 able to log in without entering your seed phrase. This makes
