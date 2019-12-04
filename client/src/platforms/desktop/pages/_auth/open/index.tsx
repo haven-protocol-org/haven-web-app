@@ -59,23 +59,24 @@ class OpenWalletDesktopContainer extends Component<
           <WalletSelection
             onClick={wallet => this.onSelectWallet(wallet)}
             options={this.props.wallets}
-            placeholder={"Select your Wallet"}
-            label={"Saved Wallets"}
+            placeholder={"Choose a wallet"}
+            label={"Select Wallet"}
             error={""}
             value={this.state.selectedWallet}
           />
 
           <Input
             label="Wallet Password"
-            placeholder="Enter the password for your wallet"
+            placeholder="Enter your wallet password"
             name="pw"
             type={"text"}
             value={this.state.pw}
             onChange={this.onChangeHandler}
           />
           <Information>
-            Upload your encrypted Keystore File and enter the password
-            associated with it to unlock and access your funds.
+            Select a wallet and enter the password. If you don't see a wallet
+            (or forgot your password) then please click{" "}
+            <strong>"Create a Vault"</strong> to create or restore an wallet.
           </Information>
         </Body>
         <Buttons>

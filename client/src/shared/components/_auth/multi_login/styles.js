@@ -24,7 +24,6 @@ export const Tab = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
   color:  ${props => (props.active ? "#fff" : "#8a8d90")};
   background: ${props => (props.active ? "#36393f" : "#313339")};
   border-top: none;
