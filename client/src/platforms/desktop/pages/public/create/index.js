@@ -3,7 +3,7 @@ import React, { Component } from "react";
 
 // Relative Imports
 import { Container, Microcopy, Page } from "./styles";
-import { MultiLoginDesktop } from "../../_auth/multi_login/index.tsx";
+import { CreateDesktop as Create } from "../../_auth/create/index.tsx";
 
 export class CreateDesktop extends Component {
   componentDidMount() {
@@ -15,7 +15,7 @@ export class CreateDesktop extends Component {
       <Page>
         <Container>
           <Microcopy>
-            <h1> CREATE </h1>
+            <Create />
           </Microcopy>
         </Container>
       </Page>

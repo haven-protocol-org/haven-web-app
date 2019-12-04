@@ -168,27 +168,34 @@ class CreateDesktopContainer extends Component<
 
     switch (step) {
       case CREATION_STEPS.Info:
-        return <Placeholder />;
+        return <Placeholder platform={"desktop"} />;
       case CREATION_STEPS.Credentials:
         return (
           <>
-            <Input
-              label="Wallet"
-              placeholder="Give your Wallet a name"
-              name="fileName"
-              type={"text"}
-              value={fileName}
-              onChange={this.onChangeHandler}
-            />
+            <>
+              <Input
+                label="Wallet Name"
+                placeholder="Create a wallet name"
+                name="fileName"
+                type={"text"}
+                value={fileName}
+                onChange={this.onChangeHandler}
+              />
 
-            <Input
-              label="Wallet Password"
-              placeholder="Give Your Wallet a password"
-              name="pw"
-              type={"text"}
-              value={pw}
-              onChange={this.onChangeHandler}
-            />
+              <Input
+                label="Wallet Password"
+                placeholder="Create a wallet password"
+                name="pw"
+                type={"text"}
+                value={pw}
+                onChange={this.onChangeHandler}
+              />
+              <Information>
+                Creating a new wallet with a name and password means you’ll be
+                able to log in without entering your seed phrase. This makes
+                your experience more secure, safe and efficient.
+              </Information>
+            </>
           </>
         );
       case CREATION_STEPS.Seed:
