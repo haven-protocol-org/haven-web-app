@@ -1,18 +1,21 @@
 import { getTransferRPC } from "../ipc/rpc/rpc";
-import {GET_TRANSFERS_FAILED, GET_TRANSFERS_FETCHING, GET_TRANSFERS_SUCCEED} from "./types";
-import {XTransferListAsset} from "../../../shared/reducers/xTransferList";
-
+import {
+  GET_TRANSFERS_FAILED,
+  GET_TRANSFERS_FETCHING,
+  GET_TRANSFERS_SUCCEED
+} from "./types";
+import { XTransferListAsset } from "../../../shared/reducers/xTransferList";
 
 export const getTransfers = () => {
-  return (dispatch:any) => {
+  return (dispatch: any) => {
     dispatch(getTransfersFetching());
     const params = { in: true, out: true, pending: true };
     getTransferRPC(params)
       .then(mergeAndSort)
-      .then( (txList:any[]) => {
-        dispatch(getTransfersSucceed({XHV:txList}));
+      .then((txList: any[]) => {
+        dispatch(getTransfersSucceed({ XHV: txList }));
       })
-      .catch( (error: any) => {
+      .catch((error: any) => {
         dispatch(getTransfersFailed(error));
       });
   };
@@ -35,9 +38,9 @@ const getTransfersFailed = (error: any) => ({
 
 export const mergeAndSort = (result: any) => {
   const all = [
-    ...result.in||[],
-    ...result.out||[],
-    ...result.pending||[]
+    ...(result.in || []),
+    ...(result.out || []),
+    ...(result.pending || [])
   ];
   all.sort((a, b) => b.timestamp - a.timestamp);
   return all;

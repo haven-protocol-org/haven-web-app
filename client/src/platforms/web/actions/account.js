@@ -1,19 +1,18 @@
 import {
-
   ACCOUNT_CREATED,
   ACCOUNT_CREATION_FAILED,
   ACCOUNT_CREATION_REQUESTED,
   KEEP_ALIVE
 } from "./types";
 
-import {VALIDATE_MNEMONIC_FAILED} from "../../../shared/actions/types";
+import { VALIDATE_MNEMONIC_FAILED } from "../../../shared/actions/types";
 
 import { keysGeneratedFailed, keysGeneratedSucceed } from "./key";
 import { core } from "../declarations/open_monero.service";
-import { addPubAddress, getTransfers } from "../../../shared/actions";
-import {login, ping} from "../api/api";
+import { addPubAddress } from "../../../shared/actions";
+import { login, ping } from "../api/api";
 import { NET_TYPE_ID } from "../../../constants/env";
-import {selectCredentials} from "../reducers/account";
+import { selectCredentials } from "../reducers/account";
 
 export const keepAlive = () => {
   return (dispatch, getState) => {

@@ -12,8 +12,8 @@ const INITIAL_STATE = {
   isFetching: false,
   error: {},
   isEmpty: true,
-  maxHeight:-1,
-  minHeight:-1
+  maxHeight: -1,
+  minHeight: -1
 };
 
 export function transferList(state = INITIAL_STATE, action) {
@@ -21,7 +21,8 @@ export function transferList(state = INITIAL_STATE, action) {
     case GET_TRANSFERS_FETCHING:
       return { ...state, isFetching: true };
     case GET_TRANSFERS_SUCCEED:
-      return { ...state,
+      return {
+        ...state,
         ...action.payload,
         isFetching: false,
         error: "",
@@ -33,4 +34,3 @@ export function transferList(state = INITIAL_STATE, action) {
       return state;
   }
 }
-

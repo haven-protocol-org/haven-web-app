@@ -1,18 +1,12 @@
 // Library Imports
 import React, { Component } from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 // Relative Imports
 import { Container } from "./styles";
 import Auth from "../../../components/_auth/login";
 import Description from "../../../components/_inputs/description";
 import { Information } from "../../../../assets/styles/type.js";
-
-
-
-
-
-
 
 export default class Login extends Component {
   state = {
@@ -48,7 +42,6 @@ export default class Login extends Component {
 
   render() {
     const windowWidth = window.innerWidth;
-
 
     const { seed_phrase, error } = this.state;
 
@@ -86,9 +79,7 @@ export default class Login extends Component {
 }
 
 Login.propTypes = {
-
   errorMessage: PropTypes.string,
-  login:PropTypes.func.isRequired,
-  isRequestingLogin:PropTypes.bool,
-
+  login: PropTypes.func.isRequired,
+  isRequestingLogin: PropTypes.bool
 };

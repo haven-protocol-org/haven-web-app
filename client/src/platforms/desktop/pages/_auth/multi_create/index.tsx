@@ -6,13 +6,24 @@ import {
   Title,
   Description as Subtitle
 } from "../../../../../assets/styles/type.js";
-import { Container, Main, Header, Footer, Route, Label } from "./styles";
+import {
+  Container,
+  Main,
+  Header,
+  Footer,
+  Route,
+  Label,
+  Tabs,
+  Tab
+} from "./styles";
+import { RestoreDesktop } from "../restore";
 import { DesktopAppState } from "../../../reducers";
 import { connect } from "react-redux";
 import { getSavedWallets } from "../../../actions/walletSession";
 import { SavedWallet, selectIsLoggedIn } from "../../../reducers/walletSession";
 import { Redirect } from "react-router";
 import { OpenWalletDesktop } from "../open";
+import { CreateDesktop } from "platforms/desktop/pages/_auth/create";
 
 interface MultiloginState {
   loginType: LOGIN_TYPE;
@@ -32,7 +43,7 @@ enum LOGIN_TYPE {
 
 class MultiLoginPage extends Component<MultiLoginProps, MultiloginState> {
   state: MultiloginState = {
-    loginType: LOGIN_TYPE.Open
+    loginType: LOGIN_TYPE.Create
   };
 
   componentDidMount(): void {
@@ -41,9 +52,15 @@ class MultiLoginPage extends Component<MultiLoginProps, MultiloginState> {
     }
   }
 
-  selectOpen = () => {
+  selectRestore = () => {
     this.setState({
-      loginType: LOGIN_TYPE.Open
+      loginType: LOGIN_TYPE.Restore
+    });
+  };
+
+  selectCreate = () => {
+    this.setState({
+      loginType: LOGIN_TYPE.Create
     });
   };
 
@@ -51,21 +68,44 @@ class MultiLoginPage extends Component<MultiLoginProps, MultiloginState> {
     if (this.props.isLoggedIn) {
       return <Redirect to="/wallet/assets" />;
     }
-
+    const loginType = this.state.loginType;
     return (
       <Container>
         <Header>
-          <Title>Vault Login</Title>
+          <Title>Create a Vault</Title>
           <Subtitle>
-            To access your Vault please select a wallet and enter a password
+            To create a vault please generate a new vault or restore and
+            existing one.
           </Subtitle>
         </Header>
+        <Tabs>
+          <Tab
+            active={loginType === LOGIN_TYPE.Create}
+            onClick={this.selectCreate}
+          >
+            Create
+          </Tab>
+          <Tab
+            active={loginType === LOGIN_TYPE.Restore}
+            onClick={this.selectRestore}
+          >
+            Restore
+          </Tab>
+        </Tabs>
         <Main>
-          <OpenWalletDesktop wallets={this.props.wallets} />
+          {loginType === LOGIN_TYPE.Restore && <RestoreDesktop />}
+          {loginType === LOGIN_TYPE.Create && (
+            <>
+              <CreateDesktop />
+            </>
+          )}
+          {loginType === LOGIN_TYPE.Open && (
+            <OpenWalletDesktop wallets={this.props.wallets} />
+          )}
         </Main>
         <Footer>
-          <Label>Don't have a Vault?</Label>
-          <Route to={"/create"}>Create a Vault</Route>
+          <Label>Have a Vault already?</Label>
+          <Route to={"/"}>Sign In</Route>
         </Footer>
       </Container>
     );
@@ -77,7 +117,7 @@ const mapStateToProps = (state: DesktopAppState) => ({
   isLoggedIn: selectIsLoggedIn(state)
 });
 
-export const MultiLoginDesktop = connect(
+export const MultiCreateDesktop = connect(
   mapStateToProps,
   { getSavedWallets }
 )(MultiLoginPage);

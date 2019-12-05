@@ -1,7 +1,11 @@
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 import media from "../../../../assets/styles/media.js";
-import { background, link, link_hover } from "../../../../assets/styles/colors.js";
+import {
+  background,
+  link,
+  link_hover
+} from "../../../../assets/styles/colors.js";
 
 export const Container = styled.div`
   min-height: 100vh;

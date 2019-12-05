@@ -1,7 +1,5 @@
-
-
 declare global {
-    interface Window {
-        ipcRenderer:any;
-    }
+  interface Window {
+    ipcRenderer: any;
+  }
 }

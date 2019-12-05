@@ -1,6 +1,5 @@
 // Library Imports
 import React, { Component } from "react";
-import { connect } from "react-redux";
 
 // Relative Imports
 import Auth from "../../../components/_auth/create/index.js";
@@ -9,9 +8,7 @@ import CreateSeed from "../../../components/_create/create_seed";
 import VerifySeed from "../../../components/_create/verify_seed";
 import { Container } from "./styles";
 import { decrypt } from "../../../../utility/utility-encrypt";
-import PropTypes from 'prop-types';
-
-
+import PropTypes from "prop-types";
 
 export class Create extends Component {
   state = {
@@ -83,7 +80,7 @@ export class Create extends Component {
 
     switch (step) {
       case 1:
-        return <Placeholder />;
+        return <Placeholder platform={"web"} />;
       case 2:
         return (
           <CreateSeed
@@ -108,8 +105,6 @@ export class Create extends Component {
   };
 
   render() {
-
-
     const { step, verify_seed } = this.state;
     const disabled = step === 3 && verify_seed === "";
     return (
@@ -134,9 +129,8 @@ export class Create extends Component {
 }
 
 Create.propTypes = {
-
-  getSeed:PropTypes.func.isRequired,
-  isRequestingLogin:PropTypes.bool,
-  verifySeed:PropTypes.func.isRequired,
-  createdSeed:PropTypes.string.isRequired
+  getSeed: PropTypes.func.isRequired,
+  isRequestingLogin: PropTypes.bool,
+  verifySeed: PropTypes.func.isRequired,
+  createdSeed: PropTypes.string.isRequired
 };

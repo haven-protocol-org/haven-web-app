@@ -1,22 +1,33 @@
-import {offshoreTransferRPC, transferRPC} from "../ipc/rpc/rpc";
+import { offshoreTransferRPC, transferRPC } from "../ipc/rpc/rpc";
 import { getTransfers } from "./";
-import {TRANSFER_FAILED, TRANSFER_FETCHING, TRANSFER_RESET, TRANSFER_SUCCEED} from "./types";
+import {
+  TRANSFER_FAILED,
+  TRANSFER_FETCHING,
+  TRANSFER_RESET,
+  TRANSFER_SUCCEED
+} from "./types";
 
 import { getBalance } from "./";
-import { addErrorNotification, addNotificationByKey} from "../../../shared/actions/notification";
-import {TRANSFER_SUCCEED_MESSAGE} from "../../../constants/notificationList";
-import {getOffshoreTransfers} from "platforms/desktop/actions/offshoreTransferHistory";
-import {getOffshoreBalance} from "platforms/desktop/actions/offshoreBalance";
+import {
+  addErrorNotification,
+  addNotificationByKey
+} from "../../../shared/actions/notification";
+import { TRANSFER_SUCCEED_MESSAGE } from "../../../constants/notificationList";
+import { getOffshoreTransfers } from "platforms/desktop/actions/offshoreTransferHistory";
+import { getOffshoreBalance } from "platforms/desktop/actions/offshoreBalance";
 
-export const transfer  = (address:  string, amount: number, paymentId: string) => {
-
+export const transfer = (
+  address: string,
+  amount: number,
+  paymentId: string
+) => {
   amount = amount * 1e12;
   return (dispatch: any) => {
     dispatch(transferFetch({ address, amount }));
     const params: any = { destinations: [{ address, amount }], ring_size: 11 };
 
     if (paymentId !== "") {
-      params['payment_id'] = paymentId;
+      params["payment_id"] = paymentId;
     }
 
     transferRPC(params)
@@ -30,28 +41,30 @@ export const transfer  = (address:  string, amount: number, paymentId: string) =
   };
 };
 
-export function offshoreTransfer(address: string,amount: number, paymentId: string) {
-
+export function offshoreTransfer(
+  address: string,
+  amount: number,
+  paymentId: string
+) {
   amount = amount * 1e12;
   return (dispatch: any) => {
     dispatch(transferFetch({ address, amount }));
     const params: any = { destinations: [{ address, amount }], ring_size: 11 };
 
     if (paymentId !== "") {
-      params['payment_id'] = paymentId;
+      params["payment_id"] = paymentId;
     }
 
     offshoreTransferRPC(params)
-        .then(result => {
-          dispatch(transferSucceed(result));
-          dispatch(addNotificationByKey(TRANSFER_SUCCEED_MESSAGE));
-          dispatch(getOffshoreTransfers());
-          dispatch(getOffshoreBalance());
-        })
-        .catch(error => dispatch(manageTransferFailed(error)));
+      .then(result => {
+        dispatch(transferSucceed(result));
+        dispatch(addNotificationByKey(TRANSFER_SUCCEED_MESSAGE));
+        dispatch(getOffshoreTransfers());
+        dispatch(getOffshoreBalance());
+      })
+      .catch(error => dispatch(manageTransferFailed(error)));
   };
 }
-
 
 const transferFetch = (params: object) => ({
   type: TRANSFER_FETCHING,
@@ -74,8 +87,6 @@ const transferFailed = (error: any) => ({
   payload: { ...error, isFetching: false }
 });
 
-
-
 export const resetTransferProcess = () => {
-  return {type: TRANSFER_RESET}
+  return { type: TRANSFER_RESET };
 };
