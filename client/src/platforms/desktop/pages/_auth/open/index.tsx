@@ -91,7 +91,7 @@ class OpenWalletDesktopContainer extends Component<
         />
         <Information>
           Select a wallet and enter the password. If you don't see a wallet, or
-          forgot your password, then please click{" "}
+          forgot your password, then please click the{" "}
           <strong>Create a Vault</strong> link below.
         </Information>
       </Body>
@@ -117,7 +117,7 @@ class OpenWalletDesktopContainer extends Component<
           />
           <Information>
             Select a wallet and enter the password. If you don't see a wallet,
-            or forgot your password, then please click{" "}
+            or forgot your password, then please click the{" "}
             <strong>Create a Vault</strong> link below.
           </Information>
         </Body>
