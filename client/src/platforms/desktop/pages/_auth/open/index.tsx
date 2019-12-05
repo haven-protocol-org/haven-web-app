@@ -65,7 +65,7 @@ class OpenWalletDesktopContainer extends Component<
 
     const noWallets = [
       {
-        name: "No Vault Detected. Please Create a Vault"
+        name: "No Vault detected. Please Create a Vault"
       }
     ];
 
