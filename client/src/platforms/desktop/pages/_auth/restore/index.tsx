@@ -108,7 +108,12 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
             </Body>
             <Buttons>
               <Cancel to="/">Cancel</Cancel>
-              <Submit onClick={() => this.onContinue()}>Continue</Submit>
+              <Submit
+                onClick={() => this.onContinue()}
+                disabled={seed.length > 0 ? false : true}
+              >
+                Restore
+              </Submit>
             </Buttons>
           </>
         )}
@@ -117,8 +122,8 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
           <>
             <Body>
               <Input
-                label="Wallet"
-                placeholder="Give your Wallet a name"
+                label="Wallet Name"
+                placeholder="Create a wallet name"
                 name="name"
                 type={"text"}
                 value={name}
@@ -126,20 +131,28 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
               />
               <Input
                 label="Wallet Password"
-                placeholder="Give Your Wallet a password"
+                placeholder="Create a wallet password"
                 name="pw"
                 type={"text"}
                 value={pw}
                 onChange={this.onChangeHandler}
               />
+              <Information>
+                Restoring a wallet with a name and password means you’ll be able
+                to log in without entering your seed phrase. This makes your
+                experience more secure, safe and efficient.
+              </Information>
             </Body>
             <Buttons>
               <Back onClick={() => this.onBack()}>Back</Back>
-              <Submit disabled={false} onClick={() => this.onRestoreWallet()}>
+              <Submit
+                disabled={name.length > 0 && pw.length > 0 ? false : true}
+                onClick={() => this.onRestoreWallet()}
+              >
                 {this.props.isRequestingLogin ? (
                   <Spinner color={"white"} />
                 ) : (
-                  "Create Wallet"
+                  "Finish"
                 )}
               </Submit>
             </Buttons>

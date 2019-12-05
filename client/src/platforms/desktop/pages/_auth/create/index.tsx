@@ -175,31 +175,29 @@ class CreateDesktopContainer extends Component<
       case CREATION_STEPS.Credentials:
         return (
           <>
-            <>
-              <Input
-                label="Wallet Name"
-                placeholder="Create a wallet name"
-                name="fileName"
-                type={"text"}
-                value={fileName}
-                onChange={this.onChangeHandler}
-              />
+            <Input
+              label="Wallet Name"
+              placeholder="Create a wallet name"
+              name="fileName"
+              type={"text"}
+              value={fileName}
+              onChange={this.onChangeHandler}
+            />
 
-              <Input
-                label="Wallet Password"
-                placeholder="Create a wallet password"
-                name="pw"
-                type={"password"}
-                value={pw}
-                onChange={this.onChangeHandler}
-              />
+            <Input
+              label="Wallet Password"
+              placeholder="Create a wallet password"
+              name="pw"
+              type={"text"}
+              value={pw}
+              onChange={this.onChangeHandler}
+            />
 
-              <Information>
-                Creating a new wallet with a name and password means you’ll be
-                able to log in without entering your seed phrase. This makes
-                your experience more secure, safe and efficient.
-              </Information>
-            </>
+            <Information>
+              Creating a new wallet with a name and password means you’ll be
+              able to log in without entering your seed phrase. This makes your
+              experience more secure, safe and efficient.
+            </Information>
           </>
         );
       case CREATION_STEPS.Seed:
@@ -215,12 +213,8 @@ class CreateDesktopContainer extends Component<
         return (
           <>
             <Description
-              label={`type in words ${this.state.wordsToVerify
-                .map(word => word.index + 1)
-                .join(", ")}`}
-              placeholder={`type in words ${this.state.wordsToVerify
-                .map(word => word.word)
-                .join(", ")}`}
+              label={"Enter Seed Phrase"}
+              placeholder={"Enter the seed phrase"}
               name={"verify_seed"}
               value={verify_seed}
               error={error}
@@ -228,6 +222,7 @@ class CreateDesktopContainer extends Component<
               rows={windowWidth < 600 ? "6" : "4"}
               loading={false}
             />
+
             <Information>
               Please verify your Seed Phrase this will ensure that your Seed
               Phrase has been correctly backed up.{" "}
@@ -243,19 +238,41 @@ class CreateDesktopContainer extends Component<
   };
 
   render() {
-    // const { step, verify_seed } = this.state;
-    // const disabled = step === 3 && verify_seed === "";
+    const { step, fileName, pw, verify_seed } = this.state;
+
+    const createIsValid = fileName.length > 0 && pw.length > 0;
+    const seedIsValid =
+      this.props.walletCreation.mnemonicKey === this.state.verify_seed;
+
     return (
       <>
         <Body>{this.handleSwitch()}</Body>
-
         <Buttons>
           <Back onClick={() => this.prevStep()}>Back</Back>
-          <Submit onClick={() => this.nextStep()}>
+          <Submit
+            disabled={
+              step == 0
+                ? false
+                : step === 1 && createIsValid
+                ? false
+                : step === 2
+                ? false
+                : step === 3 && seedIsValid === true
+                ? false
+                : true
+            }
+            onClick={() => this.nextStep()}
+          >
             {this.props.walletCreation.isFetching ? (
-              <Spinner color={"white"} />
-            ) : (
+              <Spinner />
+            ) : step === 0 ? (
               "Continue"
+            ) : step === 1 ? (
+              "Save"
+            ) : step === 2 ? (
+              "Verify"
+            ) : (
+              "Finish"
             )}
           </Submit>
         </Buttons>
