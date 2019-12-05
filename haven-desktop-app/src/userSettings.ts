@@ -1,14 +1,9 @@
 
-import {APP_DATA_PATH} from "./env";
-import * as path from "path";
 import * as fs from "fs";
 import {daemonConfig} from "./daemonConfig";
 
 // stores and reads data for user speific data e.g. wallet names, path to wallet, path to node etc...
 
-const filename = 'settings.json';
-
-const filePath = path.join(APP_DATA_PATH, filename);
 
 type SavedWallet = {address: string, name: string};
 
