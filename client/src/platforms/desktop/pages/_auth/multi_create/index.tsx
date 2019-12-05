@@ -43,7 +43,7 @@ enum LOGIN_TYPE {
 
 class MultiLoginPage extends Component<MultiLoginProps, MultiloginState> {
   state: MultiloginState = {
-    loginType: LOGIN_TYPE.Open
+    loginType: LOGIN_TYPE.Create
   };
 
   componentDidMount(): void {
@@ -64,12 +64,6 @@ class MultiLoginPage extends Component<MultiLoginProps, MultiloginState> {
     });
   };
 
-  selectOpen = () => {
-    this.setState({
-      loginType: LOGIN_TYPE.Open
-    });
-  };
-
   render() {
     if (this.props.isLoggedIn) {
       return <Redirect to="/wallet/assets" />;
@@ -85,9 +79,6 @@ class MultiLoginPage extends Component<MultiLoginProps, MultiloginState> {
           </Subtitle>
         </Header>
         <Tabs>
-          <Tab active={loginType === LOGIN_TYPE.Open} onClick={this.selectOpen}>
-            Open Wallet
-          </Tab>
           <Tab
             active={loginType === LOGIN_TYPE.Create}
             onClick={this.selectCreate}

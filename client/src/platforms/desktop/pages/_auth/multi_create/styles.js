@@ -26,7 +26,7 @@ export const Tabs = styled.div`
 `;
 
 export const Tab = styled.div`
-  width: calc(100% / 3);
+  width: calc(100% / 2);
   border: 1px
   display: flex;
   align-items: center;
