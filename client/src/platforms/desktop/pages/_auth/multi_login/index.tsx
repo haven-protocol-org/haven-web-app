@@ -6,24 +6,13 @@ import {
   Title,
   Description as Subtitle
 } from "../../../../../assets/styles/type.js";
-import {
-  Container,
-  Main,
-  Header,
-  Footer,
-  Route,
-  Label,
-  Tabs,
-  Tab
-} from "./styles";
-import { RestoreDesktop } from "../restore";
+import { Container, Main, Header, Footer, Route, Label } from "./styles";
 import { DesktopAppState } from "../../../reducers";
 import { connect } from "react-redux";
 import { getSavedWallets } from "../../../actions/walletSession";
 import { SavedWallet, selectIsLoggedIn } from "../../../reducers/walletSession";
 import { Redirect } from "react-router";
 import { OpenWalletDesktop } from "../open";
-import { CreateDesktop } from "platforms/desktop/pages/_auth/create";
 
 interface MultiloginState {
   loginType: LOGIN_TYPE;
@@ -62,7 +51,7 @@ class MultiLoginPage extends Component<MultiLoginProps, MultiloginState> {
     if (this.props.isLoggedIn) {
       return <Redirect to="/wallet/assets" />;
     }
-    const loginType = this.state.loginType;
+
     return (
       <Container>
         <Header>

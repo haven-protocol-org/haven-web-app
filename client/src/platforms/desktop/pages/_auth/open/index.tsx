@@ -60,7 +60,7 @@ class OpenWalletDesktopContainer extends Component<
   };
 
   render() {
-    const { validated, selectedWallet, pw } = this.state;
+    const { selectedWallet, pw } = this.state;
     const disabled = selectedWallet !== null && pw.length > 0 ? true : false;
 
     const noWallets = [
