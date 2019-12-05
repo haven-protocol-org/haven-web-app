@@ -45,6 +45,8 @@ export class Create extends Component {
       const { mnemonicString, verify_seed } = this.state;
       const validationSucceed = mnemonicString === verify_seed;
 
+      this.props.verifySeed(validationSucceed);
+
       if (!validationSucceed) {
         this.setState({ error: "Sorry, that seed is incorrect" });
         setTimeout(() => {
@@ -52,12 +54,6 @@ export class Create extends Component {
         }, 2000);
       }
 
-      // On step three, if seed is valid, set loading to true and push true to authUser reducer
-      if (validationSucceed) {
-        this.props.mnenomicVerificationSucceed();
-      } else {
-        return null;
-      }
     }
   };
 

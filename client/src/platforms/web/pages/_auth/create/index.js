@@ -12,10 +12,14 @@ import {Create} from "../../../../../universal/pages/_auth/create";
 class CreateWebContainer extends Component {
 
 
-    verifySeed(typedSeed) {
-        const verified =  typedSeed === this.props.mnemonic_string;
-        verified? this.props.mnenomicVerificationSucceed() :  this.props.mneomicVerifcationFailed();
-        return verified;
+
+    componentDidMount() {
+
+    }
+
+
+    verifySeed = (isVerified) => {
+        isVerified? this.props.mnenomicVerificationSucceed() :  this.props.mneomicVerifcationFailed();
     }
 
 
