@@ -5,16 +5,21 @@ import {
   Cancel,
   Submit
 } from "platforms/desktop/pages/_auth/multi_login/styles";
+import { Spinner } from "../../../../../shared/components/spinner";
 import { Body } from "./styles";
 import { Information } from "assets/styles/type";
 import Input from "shared/components/_inputs/input";
 import { SavedWallet } from "../../../reducers/walletSession";
 import { WalletSelection } from "../../../../../shared/components/_inputs/wallet-selection";
+import Dropdown from "../../../../../shared/components/_inputs/dropdown";
+
 import { openWallet } from "../../../actions/walletSession";
 
 interface OpenWalletState {
   selectedWallet: SavedWallet | null;
   pw: string;
+  validated: boolean;
+  loading: boolean;
 }
 
 interface OpenWalletProps {
@@ -28,7 +33,9 @@ class OpenWalletDesktopContainer extends Component<
 > {
   state: OpenWalletState = {
     selectedWallet: null,
-    pw: ""
+    pw: "",
+    validated: false,
+    loading: false
   };
 
   onOpenWallet = () => {
@@ -48,9 +55,46 @@ class OpenWalletDesktopContainer extends Component<
     this.setState({ selectedWallet: wallet });
   }
 
+  handleNoWallet = () => {
+    // Empty function but needed to prevent an error
+  };
+
   render() {
+    const { validated, selectedWallet, pw } = this.state;
+    const disabled = selectedWallet !== null && pw.length > 0 ? true : false;
+
+    const noWallets = [
+      {
+        name: "No Vault Detected. Please Create a Vault"
+      }
+    ];
+
     return this.props.wallets === null || this.props.wallets.length === 0 ? (
-      <Body>No wallet found. You must first create or restore one.</Body>
+      <Body>
+        <Dropdown
+          onClick={this.handleNoWallet}
+          options={noWallets}
+          placeholder="Choose a wallet"
+          label={"Select Wallet"}
+          error={""}
+          value={"Choose a wallet"}
+        >
+          {noWallets}
+        </Dropdown>
+        <Input
+          label="Wallet Password"
+          placeholder="Enter your wallet password"
+          name="pw"
+          type={"text"}
+          value={this.state.pw}
+          onChange={this.onChangeHandler}
+        />
+        <Information>
+          Select a wallet and enter the password. If you don't see a wallet, or
+          forgot your password, then please click{" "}
+          <strong>Create a Vault</strong> link below.
+        </Information>
+      </Body>
     ) : (
       <>
         <Body>
@@ -60,7 +104,7 @@ class OpenWalletDesktopContainer extends Component<
             placeholder={"Choose a wallet"}
             label={"Select Wallet"}
             error={""}
-            value={this.state.selectedWallet}
+            value={selectedWallet}
           />
 
           <Input
@@ -72,14 +116,22 @@ class OpenWalletDesktopContainer extends Component<
             onChange={this.onChangeHandler}
           />
           <Information>
-            Select a wallet and enter the password. If you don't see a wallet
-            (or forgot your password) then please click{" "}
-            <strong>"Create a Vault"</strong> to create or restore an wallet.
+            Select a wallet and enter the password. If you don't see a wallet,
+            or forgot your password, then please click{" "}
+            <strong>Create a Vault</strong> link below.
           </Information>
         </Body>
         <Buttons>
           <Cancel to="/">Cancel</Cancel>
-          <Submit onClick={() => this.onOpenWallet()}>Continue</Submit>
+          {this.state.loading ? (
+            <Submit>
+              <Spinner />
+            </Submit>
+          ) : (
+            <Submit disabled={!disabled} onClick={() => this.onOpenWallet()}>
+              Log In
+            </Submit>
+          )}
         </Buttons>
       </>
     );

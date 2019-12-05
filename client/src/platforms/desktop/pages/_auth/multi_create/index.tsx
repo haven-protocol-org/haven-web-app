@@ -83,13 +83,13 @@ class MultiLoginPage extends Component<MultiLoginProps, MultiloginState> {
             active={loginType === LOGIN_TYPE.Create}
             onClick={this.selectCreate}
           >
-            Create Wallet
+            Create
           </Tab>
           <Tab
             active={loginType === LOGIN_TYPE.Restore}
             onClick={this.selectRestore}
           >
-            Restore Wallet
+            Restore
           </Tab>
         </Tabs>
         <Main>

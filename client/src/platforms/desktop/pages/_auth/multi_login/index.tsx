@@ -52,18 +52,6 @@ class MultiLoginPage extends Component<MultiLoginProps, MultiloginState> {
     }
   }
 
-  selectRestore = () => {
-    this.setState({
-      loginType: LOGIN_TYPE.Restore
-    });
-  };
-
-  selectCreate = () => {
-    this.setState({
-      loginType: LOGIN_TYPE.Create
-    });
-  };
-
   selectOpen = () => {
     this.setState({
       loginType: LOGIN_TYPE.Open
@@ -80,36 +68,11 @@ class MultiLoginPage extends Component<MultiLoginProps, MultiloginState> {
         <Header>
           <Title>Vault Login</Title>
           <Subtitle>
-            To access your Vault please enter your preferred login option
+            To access your Vault please select a wallet and enter a password
           </Subtitle>
         </Header>
-        <Tabs>
-          <Tab active={loginType === LOGIN_TYPE.Open} onClick={this.selectOpen}>
-            Open Wallet
-          </Tab>
-          <Tab
-            active={loginType === LOGIN_TYPE.Create}
-            onClick={this.selectCreate}
-          >
-            Create Wallet
-          </Tab>
-          <Tab
-            active={loginType === LOGIN_TYPE.Restore}
-            onClick={this.selectRestore}
-          >
-            Restore Wallet
-          </Tab>
-        </Tabs>
         <Main>
-          {loginType === LOGIN_TYPE.Restore && <RestoreDesktop />}
-          {loginType === LOGIN_TYPE.Create && (
-            <>
-              <CreateDesktop />
-            </>
-          )}
-          {loginType === LOGIN_TYPE.Open && (
-            <OpenWalletDesktop wallets={this.props.wallets} />
-          )}
+          <OpenWalletDesktop wallets={this.props.wallets} />
         </Main>
         <Footer>
           <Label>Don't have a Vault?</Label>
