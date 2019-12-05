@@ -2,22 +2,13 @@
 import React, { Component } from "react";
 
 // Relative Imports
-import {
-  Container,
-  Microcopy,
-  Buttons,
-  Heading,
-  Page,
-  HeadingWrapper
-} from "./styles";
+import { Container, Microcopy, Heading, Page, HeadingWrapper } from "./styles";
 
 import Footer from "../../../components/footer";
 import Content from "../../../components/_public/welcome";
-import Link from "../../../components/_buttons/link";
-import Button from "../../../components/_buttons/button";
 
 import api from "../../../../dummy/priceData.js";
-import {MultiLogin} from "../../../components/_auth/multi_login";
+import { MultiLogin } from "../../../components/_auth/multi_login";
 
 class Welcome extends Component {
   componentDidMount() {
@@ -48,7 +39,7 @@ class Welcome extends Component {
                 Private <br /> Decentralized Finance
               </Heading>
             </HeadingWrapper>
-        <MultiLogin/>
+            <MultiLogin />
           </Microcopy>
         </Container>
         <Content />

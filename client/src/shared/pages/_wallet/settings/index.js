@@ -3,12 +3,10 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { selectTheme } from "../../../actions";
 
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 // Relative Imports
-import Page from "../../../components/_layout/page";
 import Body from "../../../components/_layout/body";
-import Menu from "../../../components/_layout/menu";
 import Header from "../../../components/_layout/header";
 import Input from "../../../components/_inputs/input";
 import Description from "../../../components/_inputs/description";
@@ -25,7 +23,6 @@ const options = [
   { theme: "light", value: "Light Theme" }
 ];
 
-
 class SettingsPage extends Component {
   state = {
     status: false,
@@ -41,7 +38,6 @@ class SettingsPage extends Component {
     this.setState({
       value: this.props.theme.value
     });
-
   }
 
   handleClick = ({ theme, value }) => {
@@ -79,124 +75,124 @@ class SettingsPage extends Component {
     const windowWidth = window.innerWidth;
 
     return (
-        <Body>
-          <Header
-            title="Theme "
-            description="Choose between light and dark themes"
+      <Body>
+        <Header
+          title="Theme "
+          description="Choose between light and dark themes"
+        />
+        <Form span="true">
+          <Theme
+            label="Select Theme"
+            placeholder="Dark Theme"
+            name="value"
+            value={value}
+            options={options}
+            onClick={this.handleClick}
           />
-          <Form span="true">
-            <Theme
-              label="Select Theme"
-              placeholder="Dark Theme"
-              name="value"
-              value={value}
-              options={options}
-              onClick={this.handleClick}
-            />
-          </Form>
+        </Form>
 
-          <Header
-            title="Private Keys"
-            description="Manage your wallets private keys"
+        <Header
+          title="Private Keys"
+          description="Manage your wallets private keys"
+        />
+        <Form span="true">
+          {reveal ? (
+            <>
+              <Description
+                label="Seed Phrase"
+                width="true"
+                value={this.props.seed}
+                readOnly
+                type={reveal ? "type" : "password"}
+                rows={windowWidth < 600 && "6"}
+              />
+              <Description
+                label="Public View Key"
+                width="true"
+                value={this.props.pub_viewKey_string}
+                readOnly
+                type={reveal ? "type" : "password"}
+                rows={windowWidth < 600 && "2"}
+              />
+              <Description
+                label="Private View Key"
+                width="true"
+                value={this.props.sec_viewKey_string}
+                readOnly
+                type={reveal ? "type" : "password"}
+                rows={windowWidth < 600 && "2"}
+              />
+              <Description
+                label="Private Spend Key"
+                width="true"
+                value={this.props.psk}
+                readOnly
+                type={reveal ? "type" : "password"}
+                rows={windowWidth < 600 && "2"}
+              />
+              <Description
+                label="Public Spend Key"
+                width="true"
+                value={this.props.pub_spendKey_string}
+                readOnly
+                type={reveal ? "type" : "password"}
+                rows={windowWidth < 600 && "2"}
+              />
+            </>
+          ) : (
+            <>
+              <Input
+                label="Seed Phrase"
+                width="true"
+                value={truncated}
+                readOnly
+                type={"password"}
+              />
+              <Input
+                label="Public View Key"
+                width="true"
+                value={this.props.pub_viewKey_string}
+                readOnly
+                type={reveal ? "type" : "password"}
+              />
+              <Input
+                label="Private View Key"
+                width="true"
+                value={this.props.sec_viewKey_string}
+                readOnly
+                type={reveal ? "type" : "password"}
+              />
+              <Input
+                label="Private Spend Key"
+                width="true"
+                value={this.props.psk}
+                readOnly
+                type={reveal ? "type" : "password"}
+              />
+              <Input
+                label="Public Spend Key"
+                width="true"
+                value={this.props.pub_spendKey_string}
+                readOnly
+                type={reveal ? "type" : "password"}
+              />
+            </>
+          )}
+        </Form>
+        <Container>
+          <Footer
+            onClick={this.toggleVisibility}
+            label={this.state.reveal ? "Hide Keys" : "Show Keys"}
+            validated={this.state.validated}
           />
-          <Form span="true">
-            {reveal ? (
-              <>
-                <Description
-                  label="Seed Phrase"
-                  width="true"
-                  value={this.props.seed}
-                  readOnly
-                  type={reveal ? "type" : "password"}
-                  rows={windowWidth < 600 && "6"}
-                />
-                <Description
-                  label="Public View Key"
-                  width="true"
-                  value={this.props.pub_viewKey_string}
-                  readOnly
-                  type={reveal ? "type" : "password"}
-                  rows={windowWidth < 600 && "2"}
-                />
-                <Description
-                  label="Private View Key"
-                  width="true"
-                  value={this.props.sec_viewKey_string}
-                  readOnly
-                  type={reveal ? "type" : "password"}
-                  rows={windowWidth < 600 && "2"}
-                />
-                <Description
-                  label="Private Spend Key"
-                  width="true"
-                  value={this.props.psk}
-                  readOnly
-                  type={reveal ? "type" : "password"}
-                  rows={windowWidth < 600 && "2"}
-                />
-                <Description
-                  label="Public Spend Key"
-                  width="true"
-                  value={this.props.pub_spendKey_string}
-                  readOnly
-                  type={reveal ? "type" : "password"}
-                  rows={windowWidth < 600 && "2"}
-                />
-              </>
-            ) : (
-              <>
-                <Input
-                  label="Seed Phrase"
-                  width="true"
-                  value={truncated}
-                  readOnly
-                  type={"password"}
-                />
-                <Input
-                  label="Public View Key"
-                  width="true"
-                  value={this.props.pub_viewKey_string}
-                  readOnly
-                  type={reveal ? "type" : "password"}
-                />
-                <Input
-                  label="Private View Key"
-                  width="true"
-                  value={this.props.sec_viewKey_string}
-                  readOnly
-                  type={reveal ? "type" : "password"}
-                />
-                <Input
-                  label="Private Spend Key"
-                  width="true"
-                  value={this.props.psk}
-                  readOnly
-                  type={reveal ? "type" : "password"}
-                />
-                <Input
-                  label="Public Spend Key"
-                  width="true"
-                  value={this.props.pub_spendKey_string}
-                  readOnly
-                  type={reveal ? "type" : "password"}
-                />
-              </>
-            )}
-          </Form>
-          <Container>
-            <Footer
-              onClick={this.toggleVisibility}
-              label={this.state.reveal ? "Hide Keys" : "Show Keys"}
-              validated={this.state.validated}
-            />
-          </Container>
-        </Body>
+        </Container>
+      </Body>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  theme: state.theme,
+  theme: state.theme
 });
 
 export const Settings = connect(
@@ -205,11 +201,9 @@ export const Settings = connect(
 )(SettingsPage);
 
 Settings.propTypes = {
-
-  psk:PropTypes.string.isRequired,
-  seed:PropTypes.string.isRequired,
-  sec_viewKey_string:PropTypes.string.isRequired,
-  pub_spendKey_string:PropTypes.string.isRequired,
-  pub_viewKey_string:PropTypes.string.isRequired,
-
+  psk: PropTypes.string.isRequired,
+  seed: PropTypes.string.isRequired,
+  sec_viewKey_string: PropTypes.string.isRequired,
+  pub_spendKey_string: PropTypes.string.isRequired,
+  pub_viewKey_string: PropTypes.string.isRequired
 };

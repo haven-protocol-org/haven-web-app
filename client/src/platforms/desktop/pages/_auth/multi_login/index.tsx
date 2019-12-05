@@ -4,8 +4,7 @@ import React, { Component } from "react";
 // Relative Imports
 import {
   Title,
-  Description as Subtitle,
-  Information
+  Description as Subtitle
 } from "../../../../../assets/styles/type.js";
 import {
   Container,
@@ -17,9 +16,6 @@ import {
   Tabs,
   Tab
 } from "./styles";
-import Description from "../../../../../shared/components/_inputs/description";
-import Input from "../../../../../shared/components/_inputs/input";
-import { Spinner } from "../../../../../shared/components/spinner";
 import { RestoreDesktop } from "../restore";
 import { DesktopAppState } from "../../../reducers";
 import { connect } from "react-redux";

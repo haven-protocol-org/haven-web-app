@@ -1,6 +1,5 @@
 // Library Imports
 import React, { Component } from "react";
-import { connect } from "react-redux";
 
 // Relative Imports
 import Auth from "../../../components/_auth/create/index.js";

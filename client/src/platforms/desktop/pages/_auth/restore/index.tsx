@@ -37,10 +37,6 @@ interface RestoreState {
 }
 
 class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
-  constructor(props: RestoreProps) {
-    super(props);
-  }
-
   state: RestoreState = {
     step: RESTORE_STEP.SEED_STEP,
     error: undefined,

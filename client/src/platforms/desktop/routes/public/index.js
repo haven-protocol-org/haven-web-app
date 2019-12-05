@@ -1,5 +1,5 @@
 // Library Imports
-import React, { Component, lazy, Suspense } from "react";
+import React, { Component, lazy } from "react";
 import { Route } from "react-router-dom";
 
 // Relative Imports

@@ -1,10 +1,8 @@
 /* global BigInt */
 
-
 import { notificationList } from "../constants/notificationList";
 import { NO_PRICE } from "../shared/reducers/priceHistory";
-import {isDevMode} from "../constants/env";
-import {NO_BALANCE} from "../shared/reducers/xBalance";
+import { NO_BALANCE } from "../shared/reducers/xBalance";
 
 export const convertTimestampToDateString = timestamp =>
   new Date(timestamp).toLocaleDateString();
@@ -27,22 +25,21 @@ export const convertBalanceForReading = balance => {
   if (balance === NO_BALANCE) return balance;
 
   let readableBalance;
-  if (typeof  balance === 'bigint') {
+  if (typeof balance === "bigint") {
     readableBalance = Number(balance / BigInt(Math.pow(10, 8)));
 
-    return readableBalance/10000;
+    return readableBalance / 10000;
   }
 
-   readableBalance = (balance / Math.pow(10, 12)).toFixed(4);
+  readableBalance = (balance / Math.pow(10, 12)).toFixed(4);
 
   if (readableBalance % 1 === 0) return parseInt(readableBalance);
   return readableBalance;
 };
 
 export const uuidv4 = () => {
-
-   return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
-   (
+  return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
+    (
       c ^
       (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
     ).toString(16)
@@ -83,4 +80,3 @@ export const getPriceValues = prices => {
 export const logM = message => {
   console.log(message);
 };
-

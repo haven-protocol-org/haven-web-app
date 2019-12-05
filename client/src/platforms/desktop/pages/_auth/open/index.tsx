@@ -1,12 +1,10 @@
 import { connect } from "react-redux";
-import { restoreWallet } from "../../../actions";
 import React, { Component } from "react";
 import {
   Buttons,
   Cancel,
   Submit
 } from "platforms/desktop/pages/_auth/multi_login/styles";
-import { Spinner } from "shared/components/spinner";
 import { Body } from "./styles";
 import { Information } from "assets/styles/type";
 import Input from "shared/components/_inputs/input";
@@ -51,16 +49,6 @@ class OpenWalletDesktopContainer extends Component<
   }
 
   render() {
-    const { selectedWallet } = this.state;
-    if (selectedWallet === null) {
-      console.log("emtpy");
-    } else {
-      const { address } = selectedWallet;
-      const first = address.substring(0, 4);
-      const last = address.substring(address.length - 4);
-      const truncated = first + "...." + last;
-    }
-
     return this.props.wallets === null || this.props.wallets.length === 0 ? (
       <Body>No wallet found. You must first create or restore one.</Body>
     ) : (

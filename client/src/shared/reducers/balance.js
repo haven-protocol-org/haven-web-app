@@ -5,7 +5,7 @@ import {
 } from "../actions/types";
 import { convertBalanceForReading } from "../../utility/utility";
 
- const NO_BALANCE = -1;
+const NO_BALANCE = -1;
 
 const INITIAL_STATE = {
   balance: NO_BALANCE,
@@ -14,7 +14,7 @@ const INITIAL_STATE = {
   isFetching: false
 };
 
- function balance(state = INITIAL_STATE, action) {
+function balance(state = INITIAL_STATE, action) {
   switch (action.type) {
     case GET_BALANCES_SUCCEED:
       return {
@@ -30,7 +30,7 @@ const INITIAL_STATE = {
   }
 }
 
- function selectReadableBalance(state) {
+function selectReadableBalance(state) {
   if (state.balance.balance === NO_BALANCE) return state.balance.balance;
 
   return convertBalanceForReading(state.balance.balance);

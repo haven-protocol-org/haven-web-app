@@ -10,12 +10,14 @@ import { createWallet } from "platforms/desktop/actions";
 import { Back } from "shared/components/_auth/create/styles";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { connect } from "react-redux";
-import Input from "shared/components/_inputs/input";
-import InputButton from "shared/components/_inputs/input_button";
 import { WalletCreation } from "platforms/desktop/reducers/walletCreation";
 import { Spinner } from "shared/components/spinner";
 import { Information } from "assets/styles/type";
 import Description from "shared/components/_inputs/description";
+import Input from "shared/components/_inputs/input";
+
+// Toggle this component on for the button
+// import InputButton from "shared/components/_inputs/input_button";
 import {
   openWallet,
   mnenomicVerificationSucceed
@@ -241,8 +243,8 @@ class CreateDesktopContainer extends Component<
   };
 
   render() {
-    const { step, verify_seed } = this.state;
-    const disabled = step === 3 && verify_seed === "";
+    // const { step, verify_seed } = this.state;
+    // const disabled = step === 3 && verify_seed === "";
     return (
       <>
         <Body>{this.handleSwitch()}</Body>
