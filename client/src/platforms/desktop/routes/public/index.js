@@ -22,6 +22,7 @@ export class PublicRoutesDesktop extends Component {
   render() {
     return (
       <div>
+        <Route path="./" exact component={LoginDesktop} />
         <Route path="/" exact component={LoginDesktop} />
         <Route path="/create" exact component={CreateDesktop} />
         <Route path="/faq" exact component={Faq} />

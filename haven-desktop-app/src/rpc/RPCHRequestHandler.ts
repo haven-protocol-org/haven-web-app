@@ -29,8 +29,4 @@ export class RPCHRequestHandler {
 
         return axios.post(`${this.baseUrl}:${this._port}/json_rpc`, requestObject);
     }
-
-
-
-
 }

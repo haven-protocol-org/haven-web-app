@@ -7,7 +7,9 @@
   "scripts": {
     "start": "npm run watch & electron-forge start",
     "package": "electron-forge package",
-    "make": "electron-forge make",
+    "make:macOS": "electron-forge make",
+    "make:win": "electron-forge make",
+    "make:linux": "electron-forge make",
     "publish": "electron-forge publish",
     "build": "tsc",
     "watch": "tsc -w",
@@ -20,7 +22,7 @@
   },
   "license": "MIT",
   "config": {
-    "forge":"./forge.config.js"
+    "forge": "./forge.config.js"
   },
   "dependencies": {
     "axios": "^0.19.0",
@@ -33,7 +35,8 @@
     "@electron-forge/maker-squirrel": "6.0.0-beta.45",
     "@electron-forge/maker-zip": "6.0.0-beta.45",
     "electron": "7.1.1",
+    "ncp": "^2.0.0",
     "tslint": "^5.20.1",
-    "typescript": "^3.7.2"
+    "typescript": "^3.7.3"
   }
 }
