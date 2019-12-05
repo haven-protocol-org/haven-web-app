@@ -13,11 +13,6 @@ class CreateWebContainer extends Component {
 
 
 
-    componentDidMount() {
-
-    }
-
-
     verifySeed = (isVerified) => {
         isVerified? this.props.mnenomicVerificationSucceed() :  this.props.mneomicVerifcationFailed();
     }

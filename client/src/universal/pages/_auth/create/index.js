@@ -156,5 +156,5 @@ Create.propTypes = {
   getSeed: PropTypes.func.isRequired,
   isRequestingLogin: PropTypes.bool,
   verifySeed: PropTypes.func.isRequired,
-  createdSeed: PropTypes.string.isRequired
+  createdSeed: PropTypes.any.isRequired
 };

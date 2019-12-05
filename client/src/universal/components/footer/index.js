@@ -145,6 +145,13 @@ const Footer = () => {
           Tokok
         </External>
         <External
+            rel="noopener"
+            href="https://vcc.exchange/exchange/chart?currency=btc&coin=xhv"
+            target="_blank"
+        >
+          VCC Exchange
+        </External>
+        <External
           rel="noopener"
           href="https://tradeogre.com/exchange/BTC-XHV"
           target="_blank"
