@@ -16,8 +16,6 @@ import { Information } from "assets/styles/type";
 import Description from "shared/components/_inputs/description";
 import Input from "shared/components/_inputs/input";
 
-// Toggle this component on for the button
-// import InputButton from "shared/components/_inputs/input_button";
 import {
   openWallet,
   mnenomicVerificationSucceed
