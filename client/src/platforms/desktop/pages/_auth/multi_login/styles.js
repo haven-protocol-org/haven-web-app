@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 
 export const Container = styled.div`
   height: auto;
-  min-height: 500px;
-  width: 624px;
+  min-height: 550px;
+  max-width: 624px;
   flex-direction: column;
   margin: 20px;
   border: 1px solid #3a4048;
@@ -14,6 +14,7 @@ export const Container = styled.div`
 
 export const Main = styled.div`
   background: #36393f;
+  min-height: 350px;
   height: auto;
   padding: 10px;
 `;

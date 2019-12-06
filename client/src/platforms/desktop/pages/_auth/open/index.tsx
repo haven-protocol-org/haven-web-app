@@ -72,13 +72,15 @@ class OpenWalletDesktopContainer extends Component<
     const { selectedWallet, pw } = this.state;
     const disabled = selectedWallet !== null && pw.length > 0 ? true : false;
 
+    const { wallets } = this.props;
+
     const noWallets = [
       {
         name: "No Vault detected. Please Create a Vault"
       }
     ];
 
-    return this.props.wallets === null || this.props.wallets.length === 0 ? (
+    return wallets === null || wallets.length === 0 ? (
       <Body>
         <Dropdown
           onClick={this.handleNoWallet}
