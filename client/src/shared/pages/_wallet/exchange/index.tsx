@@ -38,6 +38,7 @@ type ExchangeState = {
   toAsset?: AssetOption;
   xRate?: number;
   xRateRevert?: number;
+  // checked: boolean;
 };
 
 export interface AssetOption {
@@ -58,6 +59,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     toAsset: undefined,
     xRate: undefined,
     xRateRevert: undefined
+    // checked: false
   };
 
   componentDidMount() {
@@ -66,6 +68,11 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     if (this.props.conversionRates === null) {
       this.props.getLastBlockHeader();
     }
+
+    this.setState({
+      fromAsset: { name: "Haven Token", ticker: Ticker.XHV },
+      toAsset: { name: "United States Dollar", ticker: Ticker.xUSD }
+    });
   }
 
   componentDidUpdate(prevProps: ExchangeProps) {

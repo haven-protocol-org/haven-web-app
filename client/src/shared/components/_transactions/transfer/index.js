@@ -34,7 +34,11 @@ export const Transaction = ({ state, checked, onChange }) => {
         <Value>{payment_id === "" ? "--" : `${payment_id}`}</Value>
       </Row>
       <Footer>
-        <Confirm checked={checked} onChange={onChange} />
+        <Confirm
+          checked={checked}
+          onChange={onChange}
+          label="Confirm and Transfer"
+        />
       </Footer>
     </Container>
   );
