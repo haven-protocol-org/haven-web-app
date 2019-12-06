@@ -12,7 +12,7 @@ class DetailsDesktopContainer extends Component<any, any> {
   render() {
     return (
       <Details assetId={this.props.match.id} balance={this.props.balance}>
-        <TxHistoryDesktop />
+        <TxHistoryDesktop assetId={this.props.match.params.id} />
       </Details>
     );
   }
