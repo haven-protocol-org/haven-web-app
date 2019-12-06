@@ -14,36 +14,9 @@ export const Container = styled.div`
 
 export const Main = styled.div`
   background: #36393f;
-  min-height: 350px;
+  min-height: 380px;
   height: auto;
   padding: 10px;
-`;
-
-export const Tabs = styled.div`
-  height: 40px;
-  width: 100%;
-  background: #36393f;
-  display: flex;
-`;
-
-export const Tab = styled.div`
-  width: calc(100% / 3);
-  border: 1px
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 13px;
-  color:  ${props => (props.active ? "#fff" : "#8a8d90")};
-  background: ${props => (props.active ? "#36393f" : "#313339")};
-  border-top: none;
-  transition: 500ms;
-
-  &:hover {
-  cursor: pointer;
-  transition: 500ms;
-  color: white;
-  }
-
 `;
 
 export const Header = styled.div`
