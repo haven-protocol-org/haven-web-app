@@ -91,8 +91,8 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
           <>
             <Body>
               <Description
-                label="Seed Phrase or Private Spend Key"
-                placeholder="Enter your 25 word seed phrase or Private Spend Key..."
+                label="Seed Phrase"
+                placeholder="Enter your 25 word seed phrase..."
                 name="seed"
                 value={seed}
                 error={error}
