@@ -15,6 +15,7 @@ import { Spinner } from "shared/components/spinner";
 import { Information } from "assets/styles/type";
 import Description from "shared/components/_inputs/description";
 import Input from "shared/components/_inputs/input";
+import InputButton from "../../../../../shared/components/_inputs/input_button/index.js";
 
 import {
   openWallet,
@@ -34,6 +35,7 @@ interface CreateDesktopState {
   fileName: string;
   pw: string;
   verify_seed: string;
+  showPassword: boolean;
   wordsToVerify: SeedVerification[];
 }
 
@@ -56,6 +58,7 @@ class CreateDesktopContainer extends Component<
     verify_seed: "",
     fileName: "",
     pw: "",
+    showPassword: false,
     wordsToVerify: []
   };
 
@@ -163,6 +166,12 @@ class CreateDesktopContainer extends Component<
     });
   };
 
+  togglePassword = () => {
+    this.setState({
+      showPassword: !this.state.showPassword
+    });
+  };
+
   handleSwitch = () => {
     const windowWidth = window.innerWidth;
     const { pw, fileName, step, verify_seed, error } = this.state;
@@ -182,13 +191,16 @@ class CreateDesktopContainer extends Component<
               onChange={this.onChangeHandler}
             />
 
-            <Input
+            <InputButton
+              // @ts-ignore
               label="Wallet Password"
-              placeholder="Create a wallet password"
+              placeholder="Enter your wallet password"
               name="pw"
-              type={"text"}
-              value={pw}
+              type={this.state.showPassword === true ? "text" : "password"}
+              button={this.state.showPassword === true ? "hide" : "show"}
+              value={this.state.pw}
               onChange={this.onChangeHandler}
+              onClick={this.togglePassword}
             />
 
             <Information>

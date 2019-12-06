@@ -26,13 +26,17 @@ export const Wrapped = styled.div`
 `;
 
 export const Button = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 8px 16px;
+  width: 64px;
   background: ${props => props.theme.button.primary};
   color: white;
+  margin-right: 16px;
   border-radius: 2px;
   font-size: 12px;
-  margin-left: 16px;
-  margin-right: 16px;
+
   text-transform: uppercase;
   transition: 500ms;
   font-family: Inter-Regular;
