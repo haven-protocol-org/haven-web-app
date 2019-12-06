@@ -34,6 +34,8 @@ export const Tab = styled.div`
   font-size: 13px;
   color:  ${props => (props.active ? "#fff" : "#8a8d90")};
   background: ${props => (props.active ? "#36393f" : "#313339")};
+
+
   border-top: none;
   transition: 500ms;
 
