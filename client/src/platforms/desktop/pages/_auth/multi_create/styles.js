@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export const Container = styled.div`
   height: auto;
   min-height: 550px;
-  width: 624px;
+  max-width: 624px;
   flex-direction: column;
   margin: 20px;
   border: 1px solid #3a4048;
@@ -14,8 +14,15 @@ export const Container = styled.div`
 
 export const Main = styled.div`
   background: #36393f;
-  height: 100%;
+  min-height: 350px;
+  height: auto;
   padding: 10px;
+`;
+
+export const Body = styled.div`
+  min-height: 266px;
+  width: auto;
+  margin: 10px;
 `;
 
 export const Tabs = styled.div`
@@ -34,6 +41,8 @@ export const Tab = styled.div`
   font-size: 13px;
   color:  ${props => (props.active ? "#fff" : "#8a8d90")};
   background: ${props => (props.active ? "#36393f" : "#313339")};
+
+
   border-top: none;
   transition: 500ms;
 
@@ -84,12 +93,6 @@ export const Step = styled.div`
   background: #7289DA;
   height: auto;
   border-radius: 4px;
-`;
-
-export const Body = styled.div`
-  height: 266px;
-  width: auto;
-  margin: 10px;
 `;
 
 export const Buttons = styled.div`

@@ -15,6 +15,7 @@ import { Body } from "./styles";
 import Input from "../../../../../shared/components/_inputs/input";
 import { DesktopAppState } from "../../../reducers";
 import { Back } from "shared/components/_auth/create/styles";
+import InputButton from "../../../../../shared/components/_inputs/input_button/index.js";
 
 interface RestoreProps {
   restoreWallet: (seed: string, name: string, pw: string) => void;
@@ -34,6 +35,7 @@ interface RestoreState {
   seed: string;
   pw: string;
   name: string;
+  showPassword: boolean;
 }
 
 class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
@@ -42,7 +44,8 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
     error: undefined,
     seed: "",
     pw: "",
-    name: ""
+    name: "",
+    showPassword: false
   };
 
   onRestoreWallet = () => {
@@ -77,6 +80,12 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
 
   validateNameAndPW() {}
 
+  togglePassword = () => {
+    this.setState({
+      showPassword: !this.state.showPassword
+    });
+  };
+
   render() {
     const windowWidth = window.innerWidth;
     const { error, step, seed, name, pw } = this.state;
@@ -91,8 +100,8 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
           <>
             <Body>
               <Description
-                label="Seed Phrase or Private Spend Key"
-                placeholder="Enter your 25 word seed phrase or Private Spend Key..."
+                label="Seed Phrase"
+                placeholder="Enter your 25 word seed phrase..."
                 name="seed"
                 value={seed}
                 error={error}
@@ -129,13 +138,16 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
                 value={name}
                 onChange={this.onChangeHandler}
               />
-              <Input
+              <InputButton
+                // @ts-ignore
                 label="Wallet Password"
-                placeholder="Create a wallet password"
+                placeholder="Enter your wallet password"
                 name="pw"
-                type={"text"}
-                value={pw}
+                type={this.state.showPassword === true ? "text" : "password"}
+                button={this.state.showPassword === true ? "hide" : "show"}
+                value={this.state.pw}
                 onChange={this.onChangeHandler}
+                onClick={this.togglePassword}
               />
               <Information>
                 Restoring a wallet with a name and password means you’ll be able

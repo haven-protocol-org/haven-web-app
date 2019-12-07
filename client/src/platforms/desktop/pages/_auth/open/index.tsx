@@ -12,6 +12,7 @@ import Input from "shared/components/_inputs/input";
 import { SavedWallet } from "../../../reducers/walletSession";
 import { WalletSelection } from "../../../../../shared/components/_inputs/wallet-selection";
 import Dropdown from "../../../../../shared/components/_inputs/dropdown";
+import InputButton from "../../../../../shared/components/_inputs/input_button/index.js";
 
 import { openWallet } from "../../../actions/walletSession";
 
@@ -20,6 +21,7 @@ interface OpenWalletState {
   pw: string;
   validated: boolean;
   loading: boolean;
+  showPassword: boolean;
 }
 
 interface OpenWalletProps {
@@ -35,7 +37,8 @@ class OpenWalletDesktopContainer extends Component<
     selectedWallet: null,
     pw: "",
     validated: false,
-    loading: false
+    loading: false,
+    showPassword: false
   };
 
   onOpenWallet = () => {
@@ -59,9 +62,17 @@ class OpenWalletDesktopContainer extends Component<
     // Empty function but needed to prevent an error
   };
 
+  togglePassword = () => {
+    this.setState({
+      showPassword: !this.state.showPassword
+    });
+  };
+
   render() {
     const { selectedWallet, pw } = this.state;
     const disabled = selectedWallet !== null && pw.length > 0 ? true : false;
+
+    const { wallets } = this.props;
 
     const noWallets = [
       {
@@ -69,7 +80,7 @@ class OpenWalletDesktopContainer extends Component<
       }
     ];
 
-    return this.props.wallets === null || this.props.wallets.length === 0 ? (
+    return wallets === null || wallets.length === 0 ? (
       <Body>
         <Dropdown
           onClick={this.handleNoWallet}
@@ -106,15 +117,18 @@ class OpenWalletDesktopContainer extends Component<
             error={""}
             value={selectedWallet}
           />
-
-          <Input
+          <InputButton
+            // @ts-ignore
             label="Wallet Password"
             placeholder="Enter your wallet password"
             name="pw"
-            type={"text"}
+            type={this.state.showPassword === true ? "text" : "password"}
+            button={this.state.showPassword === true ? "hide" : "show"}
             value={this.state.pw}
             onChange={this.onChangeHandler}
+            onClick={this.togglePassword}
           />
+
           <Information>
             Select a wallet and enter the password. If you don't see a wallet,
             or forgot your password, then please click the{" "}
