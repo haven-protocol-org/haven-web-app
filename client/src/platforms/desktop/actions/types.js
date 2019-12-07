@@ -88,5 +88,6 @@ export const GET_BLOCK_HEADER_EXCHANGE_RATE_FAILED =
   "get_block_header_exchange_rate_failed";
 
 export const UPDATE_DAEMON_STATES = "update_daemon_states";
+export const UPDATE_DAEMON_STATES_FAILED = "update_daemon_states_failed";
 
 export const UPDATE_SAVED_WALLETS = "update_saved_wallets";
