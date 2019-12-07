@@ -7,6 +7,7 @@ import { Route } from "react-router-dom";
 import { RestoreDesktop } from "../../pages/_auth/restore";
 import { LoginDesktop } from "../../pages/public/login";
 import { CreateDesktop } from "../../pages/public/create";
+import {withRouter} from "react-router";
 
 const Faq = lazy(() => import("../../../../shared/pages/_public/faq"));
 const Blog = lazy(() => import("../../../../shared/pages/_public/blog"));
@@ -18,12 +19,12 @@ const Whitepaper = lazy(() =>
   import("../../../../shared/pages/_public/whitepaper")
 );
 
-export class PublicRoutesDesktop extends Component {
+class PublicRoutes extends Component {
   render() {
-    return (
+
+      return (
       <div>
-        <Route path="./" exact component={LoginDesktop} />
-        <Route path="/" exact component={LoginDesktop} />
+          <Route path="/" exact component={LoginDesktop} />
         <Route path="/create" exact component={CreateDesktop} />
         <Route path="/faq" exact component={Faq} />
         <Route path="/blog" exact component={Blog} />
@@ -35,3 +36,5 @@ export class PublicRoutesDesktop extends Component {
     );
   }
 }
+
+export const PublicRoutesDesktop = withRouter(PublicRoutes);
