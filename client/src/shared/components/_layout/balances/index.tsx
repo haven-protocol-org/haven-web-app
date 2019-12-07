@@ -84,14 +84,12 @@ class Balances extends Component<BalanceProps, BalanceState> {
   }
 }
 
-export const mapStateToProps = (state: DesktopAppState | WebAppState) => ({
+const mapStateToProps = (state: DesktopAppState | WebAppState) => ({
   balances: state.xBalance,
-  //@ts-ignore
   syncState: isDesktop()
-    ? selectDesktopSyncState(state)
+      ? selectDesktopSyncState(state as DesktopAppState)
     : selectWebSyncState(state)
 });
-
 export default connect(
   mapStateToProps,
   null
