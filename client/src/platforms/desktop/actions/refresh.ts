@@ -8,7 +8,9 @@ import { getDaemonStates } from "./daemonState";
 
 export const refresh = () => {
   return (dispatch: any) => {
-    refreshRPC().then(() => dispatch(updateApp()));
+    refreshRPC()
+        .then(()=> new Promise((resolve) => setTimeout(resolve, 1000)))
+        .then(() => dispatch(updateApp()));
   };
 };
 
