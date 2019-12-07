@@ -25,7 +25,7 @@ const startApp = () => {
 
   const browserOptions:BrowserWindowConstructorOptions = {
     width:800,
-    height:600,
+    height:800,
   };
 
   browserOptions.webPreferences  = {
@@ -59,7 +59,7 @@ const startApp = () => {
   else {
 
     // and load the index.html of the app.
-    mainWindow.loadURL(path.join(`file://${__dirname}` , '..client/index.html'));
+    mainWindow.loadURL(path.join(`file://${__dirname}` , '../client/index.html'));
 
   }
   // Emitted when the window is closed.
@@ -69,6 +69,11 @@ const startApp = () => {
     // when you should delete the corresponding element.
     mainWindow = null;
   });
+
+
+  mainWindow.on('ready-to-show', () => {
+    mainWindow.show();
+  })
 };
 
 // This method will be called when Electron has finished

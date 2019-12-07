@@ -6,7 +6,7 @@
   "main": "dist/index.js",
   "scripts": {
     "start": "npm run watch & electron-forge start",
-    "package": "electron-forge package",
+    "package": "npm run build && electron-forge package",
     "make:macOS": "electron-forge make",
     "make:win": "electron-forge make",
     "make:linux": "electron-forge make",
@@ -26,7 +26,8 @@
   },
   "dependencies": {
     "axios": "^0.19.0",
-    "electron-squirrel-startup": "^1.0.0"
+    "electron-squirrel-startup": "^1.0.0",
+    "rxjs": "^6.5.3"
   },
   "devDependencies": {
     "@electron-forge/cli": "6.0.0-beta.45",
