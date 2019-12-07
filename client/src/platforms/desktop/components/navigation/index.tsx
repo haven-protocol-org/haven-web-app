@@ -3,11 +3,11 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 // Relative Imports
-import { Container, Haven, Logo, Brand, Button, Logout, Tag } from "./styles";
-import Icon from "../../../../assets/haven.svg";
+import {Container, Haven, Logo, Brand, Button, Logout, Tag, Stripe} from "./styles";
+import Icon from "assets/haven.svg";
 import { closeWallet } from "../../actions";
 import { selectIsLoggedIn } from "../../reducers/walletSession";
-import { APP_VERSION, NET_TYPE_NAME } from "../../../../constants/env";
+import { APP_VERSION, NET_TYPE_NAME } from "constants/env";
 import { DesktopAppState } from "../../reducers";
 import { DaemonStates } from "../../reducers/daemonStates";
 
@@ -35,8 +35,8 @@ class Navigation extends Component<NavigationProps, any> {
           <Tag>
             {APP_VERSION} {NET_TYPE_NAME}
           </Tag>
-          <div>{node.isRunning}</div>
-          <div>{wallet.isRunning}</div>
+          <Stripe isActive={wallet.isRunning}/>
+          <Stripe isActive={node.isRunning}/>
         </Brand>
         {auth === false ? (
           <Button to="/">Login</Button>

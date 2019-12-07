@@ -67,6 +67,17 @@ export const Theme = styled.div`
   }
 `;
 
+export const Stripe = styled.div`
+    
+    min-height:20px
+    min-width: 5px;
+    margin-right:0px;
+    margin-left:6px;
+    background:${props => props.isActive ?  '#2D8872' : '#F04747' }
+
+
+`;
+
 export const Button = styled(Link)`
   padding: 12px 26px;
   background: #7289da;
