@@ -1,4 +1,4 @@
-import {OPEN_WALLET_FAILED, OPEN_WALLET_SUCCEED, UPDATE_SAVED_WALLETS} from "./types";
+import {OPEN_WALLET_FAILED, OPEN_WALLET_FETCHING, OPEN_WALLET_SUCCEED, UPDATE_SAVED_WALLETS} from "./types";
 import {openWalletRPC} from "../ipc/rpc/rpc";
 import {CLOSE_WALLET} from "shared/actions/types";
 import {requestSavedWalletsIPC} from "../ipc/misc";
@@ -38,7 +38,11 @@ export const openWallet = (filename: string, password: string) => {
 
     const params = {filename, password};
 
+
     return (dispatch: any) => {
+
+        dispatch(openWalletFetching());
+
         openWalletRPC(params)
             .then( () =>  dispatch(openWalletSucceed(filename)))
             .catch( (error: any) =>  dispatch(openWalletFailed(error)));
@@ -55,5 +59,12 @@ const openWalletSucceed =  (fileName: string) => {
 const openWalletFailed =  (error: object) => {
 
     return {type: OPEN_WALLET_FAILED, payload:error}
+
+};
+
+
+const openWalletFetching =  () => {
+
+    return {type: OPEN_WALLET_FETCHING}
 
 };

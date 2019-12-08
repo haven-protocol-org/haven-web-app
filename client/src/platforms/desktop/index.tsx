@@ -1,7 +1,7 @@
 import { applyMiddleware, createStore, Store } from "redux";
 import reduxThunk from "redux-thunk";
 import reducers from "./reducers";
-import { loadState, logger, saveState } from "../../utility/dev-helper";
+import { loadState, logger, saveState } from "utility/dev-helper";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { GlobalStyle } from "globalStyle";
@@ -18,9 +18,10 @@ export const startDesktopApp = () => {
 
 export const startDesktopAppInDevMode = () => {
   const persistedState = loadState();
-  const createStoreWithMiddleware = applyMiddleware(reduxThunk, logger)(
-    createStore
-  );
+  const createStoreWithMiddleware = applyMiddleware(
+    reduxThunk,
+    logger
+  )(createStore);
   store = createStoreWithMiddleware(reducers, persistedState);
   store.subscribe(() => {
     saveState(store.getState());

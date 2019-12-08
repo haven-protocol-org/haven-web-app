@@ -9,35 +9,37 @@ import { Spinner } from "../../../../../shared/components/spinner";
 import { Body } from "./styles";
 import { Information } from "assets/styles/type";
 import Input from "shared/components/_inputs/input";
-import { SavedWallet } from "../../../reducers/walletSession";
+import {SavedWallet, selectIsLoggedIn, selectIsRequestingLogin} from "../../../reducers/walletSession";
 import { WalletSelection } from "../../../../../shared/components/_inputs/wallet-selection";
 import Dropdown from "../../../../../shared/components/_inputs/dropdown";
 import InputButton from "../../../../../shared/components/_inputs/input_button/index.js";
 
 import { openWallet } from "../../../actions/walletSession";
+import {DesktopAppState} from "platforms/desktop/reducers";
 
 interface OpenWalletState {
   selectedWallet: SavedWallet | null;
   pw: string;
   validated: boolean;
-  loading: boolean;
   showPassword: boolean;
 }
 
 interface OpenWalletProps {
   wallets: SavedWallet[] | null;
   openWallet: (filename: string, pw: string) => void;
+  loading: boolean;
 }
 
 class OpenWalletDesktopContainer extends Component<
   OpenWalletProps,
   OpenWalletState
 > {
+
+
   state: OpenWalletState = {
     selectedWallet: null,
     pw: "",
     validated: false,
-    loading: false,
     showPassword: false
   };
 
@@ -73,6 +75,8 @@ class OpenWalletDesktopContainer extends Component<
     const disabled = selectedWallet !== null && pw.length > 0 ? true : false;
 
     const { wallets } = this.props;
+
+    console.log(this.props.loading);
 
     const noWallets = [
       {
@@ -137,7 +141,7 @@ class OpenWalletDesktopContainer extends Component<
         </Body>
         <Buttons>
           <Cancel to="/">Cancel</Cancel>
-          {this.state.loading ? (
+          {this.props.loading ? (
             <Submit>
               <Spinner />
             </Submit>
@@ -152,7 +156,12 @@ class OpenWalletDesktopContainer extends Component<
   }
 }
 
+const mapStateToProps = (state: DesktopAppState) => ({
+  loading: selectIsRequestingLogin(state)
+
+});
+
+
 export const OpenWalletDesktop = connect(
-  null,
-  { openWallet }
+    mapStateToProps,{ openWallet }
 )(OpenWalletDesktopContainer);

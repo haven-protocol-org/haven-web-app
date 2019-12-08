@@ -4,17 +4,17 @@ import React, { Component } from "react";
 // Relative Imports
 import { Pending, Value, Wrapper, Amount } from "./styles";
 import { connect } from "react-redux";
-import { convertBalanceForReading } from "../../../../utility/utility";
-import { selectWebSyncState } from "../../../../platforms/web/reducers/chain";
+import { convertBalanceForReading } from "utility/utility";
+import { selectWebSyncState } from "platforms/web/reducers/chain";
 import { Spinner } from "../../spinner";
 import { ProgressBar } from "../../progress-bar";
-import { DesktopAppState } from "../../../../platforms/desktop/reducers";
-import { WebAppState } from "../../../../platforms/web/reducers";
-import { SyncState } from "../../../types/types";
-import { isDesktop, OFFSHORE_ENABLED } from "../../../../constants/env";
-import { selectDesktopSyncState } from "../../../../platforms/desktop/reducers/chain";
-import { NO_BALANCE, XBalances } from "../../../reducers/xBalance";
-import { Ticker } from "../../../reducers/types";
+import { DesktopAppState } from "platforms/desktop/reducers";
+import { WebAppState } from "platforms/web/reducers";
+import { SyncState } from "shared/types/types";
+import { isDesktop, OFFSHORE_ENABLED } from "constants/env";
+import { selectDesktopSyncState } from "platforms/desktop/reducers/chain";
+import { NO_BALANCE, XBalances } from "shared/reducers/xBalance";
+import { Ticker } from "shared/reducers/types";
 
 interface BalanceProps {
   syncState: SyncState;
@@ -87,10 +87,7 @@ class Balances extends Component<BalanceProps, BalanceState> {
 const mapStateToProps = (state: DesktopAppState | WebAppState) => ({
   balances: state.xBalance,
   syncState: isDesktop()
-      ? selectDesktopSyncState(state as DesktopAppState)
+    ? selectDesktopSyncState(state as DesktopAppState)
     : selectWebSyncState(state)
 });
-export default connect(
-  mapStateToProps,
-  null
-)(Balances);
+export default connect(mapStateToProps, null)(Balances);
