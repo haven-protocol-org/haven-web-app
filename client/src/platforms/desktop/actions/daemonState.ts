@@ -5,7 +5,9 @@ import {UPDATE_DAEMON_STATES, UPDATE_DAEMON_STATES_FAILED} from "./types";
 export const getDaemonStates = () => {
   return (dispatch: any) => {
     getDaemonStatesIPC()
-        .then(res => dispatch(updateDaemonStates(res)))
+        .then(res => {
+          dispatch(updateDaemonStates(res))
+        })
         .catch(err => dispatch(updateDaemonStatesFailed(err)));
   };
 };

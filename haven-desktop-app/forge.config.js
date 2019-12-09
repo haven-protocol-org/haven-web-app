@@ -30,7 +30,7 @@ const copyTargetNodesToBuild = (buildPath, electronVersion,platform, arch, callb
 module.exports = {
 
 
-    packagerConfig:{ name:'Haven', ignore:ignoredPaths, afterCopy:[copyTargetNodesToBuild], icon:'./icons/haven'},
+    packagerConfig:{ name:'Haven', ignore:ignoredPaths, afterCopy:[copyTargetNodesToBuild], icon:'./icons/haven_icon'},
 
 
     makers: [

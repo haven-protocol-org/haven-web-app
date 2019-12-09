@@ -7,7 +7,6 @@ import {
   QUERY_MNEMONIC_FOR_WALLET_GENERATION_SUCCEED
 } from "./types";
 import { createWalletRPC, queryMnemonicKeyRPC } from "../ipc/rpc/rpc";
-import { closeWallet } from "./walletSession";
 
 const createWalletFetch = () => ({ type: CREATE_WALLET_FETCHING });
 const createWalletSucceed = () => ({

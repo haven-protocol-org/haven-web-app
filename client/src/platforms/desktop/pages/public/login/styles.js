@@ -72,14 +72,14 @@ export const Cards = styled.div`
 `;
 
 export const Page = styled.div`
-  height: 100%;
+  height: 100vh;
   width: 100%;
   display: flex;
   flex-direction: column;
 `;
 
 export const Container = styled.div`
-  min-height: 100vh;
+  flex: 1;
   display: flex;
   100flex-direction: column;
   background: #2b2e34;

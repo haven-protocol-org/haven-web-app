@@ -3,6 +3,7 @@ import * as path from "path";
 import { devServerStarted } from "./dev";
 import {HavenWallet, QUIT_EVENT} from "./HavenWallet";
 import {BrowserWindowConstructorOptions} from "electron";
+import {dialog} from "electron"
 
 const wallet = new HavenWallet();
 
@@ -18,13 +19,13 @@ if (require("electron-squirrel-startup")) {
 let mainWindow: Electron.BrowserWindow;
 
 const startApp = () => {
-  // start the app
-  wallet.start();
+
+
 
   const browserOptions: BrowserWindowConstructorOptions = {
-    width: 800,
+    width: 1400,
     minWidth: 500,
-    height: 600
+    height: 900
   };
 
   browserOptions.webPreferences = {
@@ -54,6 +55,9 @@ const startApp = () => {
     mainWindow.loadURL(path.join(`file://${__dirname}` , '../client/index.html'));
 
   }
+
+  // start the app
+  wallet.start();
   // Emitted when the window is closed.
   mainWindow.on("closed", () => {
     // Dereference the window object, usually you would store windows
