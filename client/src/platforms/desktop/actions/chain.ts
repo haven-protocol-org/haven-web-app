@@ -1,6 +1,8 @@
 import { GET_BLOCK_INFO_FAILED, GET_BLOCK_INFO_SUCEED } from "./types";
 import { getInfoRPC } from "../ipc/rpc/rpc";
 import { Dispatch } from "redux";
+import {DesktopAppState} from "platforms/desktop/reducers";
+import {getLastBlockHeader} from "platforms/desktop/actions/blockHeaderExchangeRate";
 
 interface NodeInfoHeights {
   nodeHeight: number;
@@ -8,12 +10,16 @@ interface NodeInfoHeights {
 }
 
 export const getNodeInfo = () => {
-  return (dispatch: Dispatch) => {
+  return (dispatch: any, getState:() => DesktopAppState) => {
     getInfoRPC()
       .then((res: any) => parseHeight(res))
-      .then((nodeInfoHeights: NodeInfoHeights) =>
+      .then((nodeInfoHeights: NodeInfoHeights) => {
+
+        if (getState().chain.nodeHeight !== nodeInfoHeights.nodeHeight){
+          dispatch(getLastBlockHeader())
+        }
         dispatch(getNodeInfoSucceed(nodeInfoHeights))
-      )
+          })
       .catch((err: any) => dispatch(getNodeInfoFailed(err)));
   };
 };
@@ -29,7 +35,7 @@ const getNodeInfoFailed = (error: any) => ({
 
 const parseHeight = (rawNodeInfo: any): NodeInfoHeights => {
   return {
-    chainHeight: rawNodeInfo.height,
-    nodeHeight: rawNodeInfo.height_without_bootstrap
+    chainHeight: rawNodeInfo.target_height,
+    nodeHeight: rawNodeInfo.height
   };
 };

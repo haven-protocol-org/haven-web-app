@@ -7,7 +7,8 @@ import { getLastBlockHeaderRPC } from "../ipc/rpc/rpc";
 import { BlockHeaderRate } from "../reducers/blockHeaderExchangeRates";
 
 export const getLastBlockHeader = () => {
-  return (dispatch: Dispatch) => {
+
+  return (dispatch: any) => {
     dispatch({ type: GET_BLOCK_HEADER_EXCHANGE_RATE_FETCH });
 
     getLastBlockHeaderRPC()

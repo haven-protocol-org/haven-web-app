@@ -33,7 +33,7 @@ class Navigation extends Component<NavigationProps, any> {
           <Logo src={Icon} />
           <Haven>HAVEN</Haven>
           <Tag>
-            {APP_VERSION} {NET_TYPE_NAME}
+            {NET_TYPE_NAME}
           </Tag>
           <Stripe isActive={wallet.isRunning}/>
           <Stripe isActive={node.isRunning}/>
