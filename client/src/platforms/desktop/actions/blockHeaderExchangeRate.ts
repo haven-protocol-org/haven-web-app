@@ -15,15 +15,16 @@ export const getLastBlockHeader = () => {
       .then((priceEntry: BlockHeaderRate) =>
         dispatch(getLastBlockerHeaderSucceed(priceEntry))
       )
-      .catch();
+      .catch((err) => console.log(err));
   };
 };
 
 const createRecordEntry = (rawBlockHeaderData: any): BlockHeaderRate => {
   const blockHeader = rawBlockHeaderData.block_header;
-  const blockHeight: number = blockHeader.height;
+  const blockHeight: number = blockHeader.height +1;
   const priceRecord: BlockHeaderRate = blockHeader.pricing_record;
   priceRecord.height = blockHeight;
+  priceRecord.timestamp = blockHeader.timestamp;
   return priceRecord;
 };
 

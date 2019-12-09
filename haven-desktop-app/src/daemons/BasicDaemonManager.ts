@@ -2,9 +2,11 @@ import {ChildProcess, execFile} from "child_process";
 import {IDaemonManager} from "./IDaemonManager";
 import {IDaemonConfig} from "../daemonConfig";
 import {DaemonState} from "../ipc/types";
+import {EventEmitter} from "events";
 
 
 
+export const UPDATE_DAEMON_STATUS_EVENT = 'updateDaemonEvent';
 
 
 export class BasicDaemonManager implements IDaemonManager {
@@ -14,6 +16,8 @@ export class BasicDaemonManager implements IDaemonManager {
 
     private currentDaemonState: DaemonState;
     private daemonProcess:ChildProcess;
+
+    private daemonStatusEmmitter: EventEmitter = new EventEmitter();
 
 
 
@@ -35,6 +39,7 @@ export class BasicDaemonManager implements IDaemonManager {
         this.daemonProcess.on('exit', (code: number | null, signal: string | null) => this.onDaemonStopped(code, signal));
         this.daemonProcess.on('error', (error: Error) => this.onDaemonError(error));
         this.currentDaemonState = {isRunning:true};
+        this.daemonStatusEmmitter.emit(UPDATE_DAEMON_STATUS_EVENT, this.currentDaemonState);
     }
 
 
@@ -52,6 +57,7 @@ export class BasicDaemonManager implements IDaemonManager {
     private onDaemonStopped(code: number | null, signal: string | null) {
 
         this.currentDaemonState = {isRunning: false, code, signal}
+        this.daemonStatusEmmitter.emit(UPDATE_DAEMON_STATUS_EVENT, this.currentDaemonState);
 
 
     }
@@ -66,6 +72,12 @@ export class BasicDaemonManager implements IDaemonManager {
 
         this.filePath = config.path;
         this.startArgs = config.args;
+
+    }
+
+    public getDaemonStatusEventEmitter(): EventEmitter {
+
+        return this.daemonStatusEmmitter;
 
     }
 

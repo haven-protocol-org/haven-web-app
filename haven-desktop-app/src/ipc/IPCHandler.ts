@@ -13,7 +13,7 @@ import {getAvailableWallets} from "../userSettings";
 export class IPCHandler {
 
 
-    private readonly WALLET_METHODS:string[] = ['refresh','open_wallet','restore_deterministic_wallet',
+    private readonly WALLET_METHODS:string[] = ['refresh','open_wallet', 'close_wallet', 'restore_deterministic_wallet',
         'get_balance', 'get_offshore_balance', 'get_offshore_transfers', 'query_key','transfer','get_transfers','create_wallet', 'offshore_transfer' ,'refresh', 'onshore', 'offshore'];
 
 

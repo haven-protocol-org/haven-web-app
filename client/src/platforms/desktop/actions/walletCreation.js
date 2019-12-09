@@ -21,7 +21,6 @@ const createWalletFailed = error => ({
 
 export const createWallet = (filename, password) => {
   return dispatch => {
-    dispatch(closeWallet());
     dispatch(createWalletFetch());
 
     const language = "English";

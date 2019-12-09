@@ -81,6 +81,10 @@ export function getBlockHeaderByHeightRPC(params: object) {
 
 }
 
+export function closeWalletRPC() {
+    return callRpc('close_wallet');
+}
+
 export function getInfoRPC() {
 
     return callRpc('get_info');

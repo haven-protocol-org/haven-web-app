@@ -8,33 +8,34 @@ import { RestoreDesktop } from "../../pages/_auth/restore";
 import { LoginDesktop } from "../../pages/public/login";
 import { CreateDesktop } from "../../pages/public/create";
 import {withRouter} from "react-router";
+import {connect} from "react-redux";
+import {getDaemonStates} from "../../actions/daemonState";
 
-const Faq = lazy(() => import("../../../../shared/pages/_public/faq"));
-const Blog = lazy(() => import("../../../../shared/pages/_public/blog"));
-const Team = lazy(() => import("../../../../shared/pages/_public/team"));
-const Timeline = lazy(() =>
-  import("../../../../shared/pages/_public/timeline")
-);
-const Whitepaper = lazy(() =>
-  import("../../../../shared/pages/_public/whitepaper")
-);
 
 class PublicRoutes extends Component {
-  render() {
+
+
+    componentDidMount() {
+        this.props.getDaemonStates();
+    }
+
+
+    render() {
 
       return (
       <div>
           <Route path="/" exact component={LoginDesktop} />
         <Route path="/create" exact component={CreateDesktop} />
-        <Route path="/faq" exact component={Faq} />
-        <Route path="/blog" exact component={Blog} />
-        <Route path="/timeline" exact component={Timeline} />
-        <Route path="/team" exact component={Team} />
         <Route path="/login" exact component={RestoreDesktop} />
-        <Route path="/whitepaper" exact component={Whitepaper} />
       </div>
     );
   }
 }
 
-export const PublicRoutesDesktop = withRouter(PublicRoutes);
+
+export const PublicRoutesDesktop = withRouter(
+    connect(
+        null,
+        { getDaemonStates }
+    )(PublicRoutes)
+);

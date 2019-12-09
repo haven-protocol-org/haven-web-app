@@ -1,12 +1,24 @@
 import {OPEN_WALLET_FAILED, OPEN_WALLET_FETCHING, OPEN_WALLET_SUCCEED, UPDATE_SAVED_WALLETS} from "./types";
-import {openWalletRPC} from "../ipc/rpc/rpc";
+import {closeWalletRPC, openWalletRPC} from "../ipc/rpc/rpc";
 import {CLOSE_WALLET} from "shared/actions/types";
 import {requestSavedWalletsIPC} from "../ipc/misc";
 import {SavedWallet} from "../reducers/walletSession";
 
 
 export const closeWallet = () => {
-    return { type: CLOSE_WALLET };
+
+
+    closeWalletRPC();
+    return (dispatch: any) => {
+        dispatch(closeWalletSucceed())
+    }
+
+};
+
+const closeWalletSucceed = () => {
+
+    return {type:CLOSE_WALLET};
+
 };
 
 

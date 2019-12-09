@@ -13,22 +13,23 @@ import Transaction from "../../../components/_transactions/exchange";
 import { Container } from "./styles";
 import {
   ConversionRate,
-  selectLatestConversionRates
-} from "../../../../platforms/desktop/reducers/blockHeaderExchangeRates";
-import { DesktopAppState } from "../../../../platforms/desktop/reducers";
-import { selectNodeHeight } from "../../../../platforms/desktop/reducers/chain";
-import { getLastBlockHeader } from "../../../../platforms/desktop/actions/blockHeaderExchangeRate";
-import { offshore, onshore } from "../../../../platforms/desktop/actions";
-import { Ticker } from "../../../reducers/types";
-import { isProcessingExchange } from "../../../../platforms/desktop/reducers/offshoreProcess";
+  selectLatestXRates, hasLatestXRate, XRates
+} from "platforms/desktop/reducers/blockHeaderExchangeRates";
+import { DesktopAppState } from "platforms/desktop/reducers";
+import { selectNodeHeight } from "platforms/desktop/reducers/chain";
+import { getLastBlockHeader } from "platforms/desktop/actions/blockHeaderExchangeRate";
+import { offshore, onshore } from "platforms/desktop/actions";
+import { Ticker } from "shared/reducers/types";
+import { isProcessingExchange } from "platforms/desktop/reducers/offshoreProcess";
 
 type ExchangeProps = {
-  conversionRates: ConversionRate[] | null;
+  conversionRates: XRates | null;
   nodeHeight: number;
   getLastBlockHeader: () => void;
   onshore: typeof onshore;
   offshore: typeof offshore;
   isProcessingExchange: boolean;
+  hasLatestXRate: boolean;
 };
 
 type ExchangeState = {
@@ -150,7 +151,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       return;
     }
 
-    for (const conversionRate of this.props.conversionRates) {
+    for (const conversionRate of this.props.conversionRates.rates) {
       if (
         conversionRate.fromTicker === fromTicker &&
         conversionRate.toTicker === toTicker
@@ -260,7 +261,9 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     const toName = toAsset ? toAsset.name : "Select Asset";
     const toTicker = toAsset ? toAsset.ticker : "";
 
-    const isValid: boolean = !!(fromAsset && toAsset && fromAmount && toAmount);
+    const {hasLatestXRate, conversionRates} = this.props;
+
+    const isValid: boolean = !!(fromAsset && toAsset && fromAmount && toAmount) && hasLatestXRate;
 
     return (
       <Body>
@@ -268,6 +271,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
           title="Exchange "
           description="Swap to and from various Haven Assets"
         />
+        {hasLatestXRate && conversionRates? `Lates rates are from ${new Date(conversionRates.timestamp * 1000).toLocaleDateString()}` :'the latest Exchange Rates are not available' }
         <Form onSubmit={this.handleSubmit}>
           <Dropdown
             label="From Asset"
@@ -325,9 +329,10 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
 }
 
 const mapStateToProps = (state: DesktopAppState) => ({
-  conversionRates: selectLatestConversionRates(state),
+  conversionRates: selectLatestXRates(state),
   nodeHeight: selectNodeHeight(state),
-  isProcessingExchange: isProcessingExchange(state)
+  isProcessingExchange: isProcessingExchange(state),
+  hasLatestXRate: hasLatestXRate(state)
 });
 
 export const ExchangePage = connect(

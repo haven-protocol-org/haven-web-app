@@ -1,13 +1,22 @@
 import { AnyAction } from "redux";
 import { GET_BLOCK_HEADER_EXCHANGE_RATE_SUCCEED } from "../actions/types";
 import { DesktopAppState } from ".";
-import { Ticker } from "../../../shared/reducers/types";
+import { Ticker } from "shared/reducers/types";
 
 export interface ConversionRate {
   fromTicker: Ticker;
   toTicker: Ticker;
   xRate: number;
   xRateRevert: number;
+}
+
+
+export interface XRates {
+
+  height:number;
+  timestamp:number;
+  rates:ConversionRate[]
+
 }
 
 export interface BlockHeaderRate {
@@ -29,9 +38,11 @@ export interface BlockHeaderRate {
   xNOK: number;
   xNZD: number;
   xUSD: number;
+  timestamp:number;
 }
 
 const INITIAL_STATE: BlockHeaderRate[] = [];
+
 
 export const blockHeaderExchangeRate = (
   state: BlockHeaderRate[] = INITIAL_STATE,
@@ -45,9 +56,9 @@ export const blockHeaderExchangeRate = (
   }
 };
 
-export const selectLatestConversionRates = (
+export const selectLatestXRates = (
   state: DesktopAppState
-): ConversionRate[] | null => {
+): XRates | null => {
   if (state.blockHeaderExchangeRate.length === 0) {
     return null;
   }
@@ -59,8 +70,15 @@ export const selectLatestConversionRates = (
     fromTicker: Ticker.XHV,
     toTicker: Ticker.xUSD,
     xRate: latestBlockerHeader.unused1 / Math.pow(10, 12),
-    xRateRevert: 1 / (latestBlockerHeader.unused1 / Math.pow(10, 12))
+    xRateRevert: 1 / (latestBlockerHeader.unused1 / Math.pow(10, 12)),
   };
 
-  return [conversionRate];
+  return {rates: [conversionRate], height:latestBlockerHeader.height, timestamp: latestBlockerHeader.timestamp};
+};
+
+export const hasLatestXRate = (state: DesktopAppState) => {
+
+    const chainHeight: number = state.chain.chainHeight;
+    return state.blockHeaderExchangeRate.some( xRate => xRate.height === chainHeight);
+
 };

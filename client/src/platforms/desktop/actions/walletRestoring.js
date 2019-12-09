@@ -3,7 +3,6 @@ import {
   RESTORE_WALLET_BY_SEED_FETCHING,
   RESTORE_WALLET_BY_SEED_SUCCEED
 } from "./types";
-import { closeWallet } from "./walletSession";
 import { restoreWalletRPC } from "../ipc/rpc/rpc";
 import { addPubAddress } from "../../../shared/actions";
 
@@ -13,8 +12,6 @@ export const restoreWallet = (seed, filename, password) => {
     if (seed.length === 64) {
       //  seed = mnemonic.mn_encode(seed);
     }
-
-    dispatch(closeWallet());
 
     const params = { seed, filename, password };
 

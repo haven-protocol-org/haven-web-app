@@ -1,5 +1,6 @@
 import {IDaemonConfig} from "../daemonConfig";
 import {DaemonState} from "../ipc/types";
+import {EventEmitter} from "events";
 
 
 export interface IDaemonManager {
@@ -8,6 +9,7 @@ export interface IDaemonManager {
     killDaemon():void
     setConfig(config: IDaemonConfig):void;
     getDaemonState():DaemonState;
+    getDaemonStatusEventEmitter():EventEmitter;
 
 
 }
