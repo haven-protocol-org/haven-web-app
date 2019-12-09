@@ -10,7 +10,11 @@ import { Container, Main, Header, Footer, Route, Label } from "./styles";
 import { DesktopAppState } from "../../../reducers";
 import { connect } from "react-redux";
 import { getSavedWallets } from "../../../actions/walletSession";
-import {SavedWallet, selectIsLoggedIn, selectIsRequestingLogin} from "../../../reducers/walletSession";
+import {
+  SavedWallet,
+  selectIsLoggedIn,
+  selectIsRequestingLogin
+} from "../../../reducers/walletSession";
 import { Redirect } from "react-router";
 import { OpenWalletDesktop } from "../open";
 
@@ -74,8 +78,7 @@ class MultiLoginPage extends Component<MultiLoginProps, MultiloginState> {
 
 const mapStateToProps = (state: DesktopAppState) => ({
   wallets: state.walletSession.savedWallets,
-  isLoggedIn: selectIsLoggedIn(state),
-
+  isLoggedIn: selectIsLoggedIn(state)
 });
 
 export const MultiLoginDesktop = connect(

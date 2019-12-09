@@ -11,7 +11,7 @@ import { Information } from "assets/styles/type";
 import Description from "shared/components/_inputs/description";
 import { Buttons, Cancel, Submit } from "../multi_login/styles";
 import { Spinner } from "shared/components/spinner";
-import { Body } from "./styles";
+import { Body, Wrapper } from "./styles";
 import Input from "shared/components/_inputs/input";
 import { DesktopAppState } from "../../../reducers";
 import { Back } from "shared/components/_auth/create/styles";
@@ -97,7 +97,7 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
     return (
       <>
         {step === RESTORE_STEP.SEED_STEP && (
-          <>
+          <Wrapper>
             <Body>
               <Description
                 label="Seed Phrase"
@@ -115,8 +115,7 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
                 submitted to a server or sent across the internet.
               </Information>
             </Body>
-            <Buttons>
-              <Cancel to="/">Cancel</Cancel>
+            <Buttons buttons="single">
               <Submit
                 onClick={() => this.onContinue()}
                 disabled={seed.length > 0 ? false : true}
@@ -124,11 +123,11 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
                 Restore
               </Submit>
             </Buttons>
-          </>
+          </Wrapper>
         )}
 
         {step === RESTORE_STEP.NAME_STEP && (
-          <>
+          <Wrapper>
             <Body>
               <Input
                 label="Wallet Name"
@@ -155,8 +154,7 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
                 experience more secure, safe and efficient.
               </Information>
             </Body>
-            <Buttons>
-              <Back onClick={() => this.onBack()}>Back</Back>
+            <Buttons buttons="single">
               <Submit
                 disabled={!(name.length > 0 && pw.length > 0)}
                 onClick={() => this.onRestoreWallet()}
@@ -168,7 +166,7 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
                 )}
               </Submit>
             </Buttons>
-          </>
+          </Wrapper>
         )}
       </>
     );

@@ -14,7 +14,8 @@ import {
   Route,
   Label,
   Tabs,
-  Tab
+  Tab,
+  Wrapper
 } from "./styles";
 import { RestoreDesktop } from "../restore";
 import { DesktopAppState } from "../../../reducers";
@@ -94,14 +95,7 @@ class MultiLoginPage extends Component<MultiLoginProps, MultiloginState> {
         </Tabs>
         <Main>
           {loginType === LOGIN_TYPE.Restore && <RestoreDesktop />}
-          {loginType === LOGIN_TYPE.Create && (
-            <>
-              <CreateDesktop />
-            </>
-          )}
-          {loginType === LOGIN_TYPE.Open && (
-            <OpenWalletDesktop wallets={this.props.wallets} />
-          )}
+          {loginType === LOGIN_TYPE.Create && <CreateDesktop />}
         </Main>
         <Footer>
           <Label>Have a Vault already?</Label>

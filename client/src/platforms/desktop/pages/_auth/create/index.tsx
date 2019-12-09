@@ -4,7 +4,7 @@ import React, { Component } from "react";
 // Relative Imports
 import Placeholder from "shared/components/_create/placeholder";
 
-import { Body, Buttons, Submit } from "../multi_login/styles";
+import { Body, Buttons, Submit, Cancel } from "../multi_login/styles";
 import CreateSeed from "shared/components/_create/create_seed";
 import { createWallet } from "platforms/desktop/actions";
 import { Back } from "shared/components/_auth/create/styles";
@@ -21,7 +21,7 @@ import {
   openWallet,
   mnenomicVerificationSucceed
 } from "platforms/desktop/actions";
-import {selectIsRequestingLogin} from "platforms/desktop/reducers/walletSession";
+import { selectIsRequestingLogin } from "platforms/desktop/reducers/walletSession";
 
 interface CreateDesktopProps {
   createWallet: (name: string, pw: string) => void;
@@ -225,12 +225,12 @@ class CreateDesktopContainer extends Component<
         return (
           <>
             <Description
-                label={`type in words ${this.state.wordsToVerify
-                    .map(word => word.index + 1)
-                    .join(", ")}`}
-                placeholder={`type in words ${this.state.wordsToVerify
-                    .map(word => word.word)
-                    .join(", ")}`}
+              label={`type in words ${this.state.wordsToVerify
+                .map(word => word.index + 1)
+                .join(", ")}`}
+              placeholder={`type in words ${this.state.wordsToVerify
+                .map(word => word.word)
+                .join(", ")}`}
               name={"verify_seed"}
               value={verify_seed}
               error={error}
@@ -261,8 +261,7 @@ class CreateDesktopContainer extends Component<
     return (
       <>
         <Body>{this.handleSwitch()}</Body>
-        <Buttons>
-          <Back onClick={() => this.prevStep()}>Back</Back>
+        <Buttons buttons="single">
           <Submit
             disabled={
               step == 0
@@ -280,7 +279,7 @@ class CreateDesktopContainer extends Component<
             ) : step === 0 ? (
               "Continue"
             ) : step === 1 ? (
-              "Save"
+              "Create"
             ) : step === 2 ? (
               "Verify"
             ) : (
@@ -295,7 +294,7 @@ class CreateDesktopContainer extends Component<
 
 const mapStateToProps = (state: DesktopAppState) => ({
   walletCreation: state.walletCreation,
-  loading:selectIsRequestingLogin(state)
+  loading: selectIsRequestingLogin(state)
 });
 
 export const CreateDesktop = connect(

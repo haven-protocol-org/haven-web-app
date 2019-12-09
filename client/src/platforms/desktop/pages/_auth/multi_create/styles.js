@@ -12,6 +12,12 @@ export const Container = styled.div`
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.05);
 `;
 
+export const Wrapper = styled.div`
+  height: 100%;
+  width: auto;
+  background: green;
+`;
+
 export const Main = styled.div`
   background: #36393f;
   min-height: 350px;

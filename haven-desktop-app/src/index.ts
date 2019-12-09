@@ -1,9 +1,8 @@
 import { app, BrowserWindow } from "electron";
 import * as path from "path";
 import { devServerStarted } from "./dev";
-import {HavenWallet, QUIT_EVENT} from "./HavenWallet";
-import {BrowserWindowConstructorOptions} from "electron";
-import {dialog} from "electron"
+import { HavenWallet, QUIT_EVENT } from "./HavenWallet";
+import { BrowserWindowConstructorOptions } from "electron";
 
 const wallet = new HavenWallet();
 
@@ -23,9 +22,9 @@ const startApp = () => {
 
 
   const browserOptions: BrowserWindowConstructorOptions = {
-    width: 1400,
-    minWidth: 500,
-    height: 900
+    width: 992,
+    minWidth: 380,
+    height: 600
   };
 
   browserOptions.webPreferences = {
@@ -48,12 +47,11 @@ const startApp = () => {
         mainWindow.loadURL(path.join(`file://${__dirname}`, "../index.html"));
       }
     });
-  }
-
-  else {
+  } else {
     // and load the index.html of the app.
-    mainWindow.loadURL(path.join(`file://${__dirname}` , '../client/index.html'));
-
+    mainWindow.loadURL(
+      path.join(`file://${__dirname}`, "../client/index.html")
+    );
   }
 
   // start the app
@@ -66,10 +64,9 @@ const startApp = () => {
     mainWindow = null;
   });
 
-
-  mainWindow.on('ready-to-show', () => {
+  mainWindow.on("ready-to-show", () => {
     mainWindow.show();
-  })
+  });
 };
 
 // This method will be called when Electron has finished
@@ -79,15 +76,10 @@ app.on("ready", startApp);
 
 // Quit when all windows are closed.
 app.on("window-all-closed", () => {
-
-    onAppQuit();
-
+  onAppQuit();
 });
 
-
 const onAppQuit = () => {
-
-
   // show dialog
   // add quite listener
   // quiet wallet
@@ -96,15 +88,9 @@ const onAppQuit = () => {
   // dialog.showMessageBox(null, {type:'info', title:'Shutting down node', message:'Shutting down node'});
 
   wallet.getAppStatus().once(QUIT_EVENT, () => {
-
-    console.log('quit app');
+    console.log("quit app");
     app.quit();
-
   });
 
   wallet.quit();
-
-
 };
-
-

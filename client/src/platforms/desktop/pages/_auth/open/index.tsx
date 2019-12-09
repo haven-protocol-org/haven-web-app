@@ -6,16 +6,20 @@ import {
   Submit
 } from "platforms/desktop/pages/_auth/multi_login/styles";
 import { Spinner } from "../../../../../shared/components/spinner";
-import { Body } from "./styles";
+import { Body, Wrapper } from "./styles";
 import { Information } from "assets/styles/type";
 import Input from "shared/components/_inputs/input";
-import {SavedWallet, selectIsLoggedIn, selectIsRequestingLogin} from "../../../reducers/walletSession";
+import {
+  SavedWallet,
+  selectIsLoggedIn,
+  selectIsRequestingLogin
+} from "../../../reducers/walletSession";
 import { WalletSelection } from "../../../../../shared/components/_inputs/wallet-selection";
 import Dropdown from "../../../../../shared/components/_inputs/dropdown";
 import InputButton from "../../../../../shared/components/_inputs/input_button/index.js";
 
 import { openWallet } from "../../../actions/walletSession";
-import {DesktopAppState} from "platforms/desktop/reducers";
+import { DesktopAppState } from "platforms/desktop/reducers";
 
 interface OpenWalletState {
   selectedWallet: SavedWallet | null;
@@ -34,8 +38,6 @@ class OpenWalletDesktopContainer extends Component<
   OpenWalletProps,
   OpenWalletState
 > {
-
-
   state: OpenWalletState = {
     selectedWallet: null,
     pw: "",
@@ -111,7 +113,7 @@ class OpenWalletDesktopContainer extends Component<
         </Information>
       </Body>
     ) : (
-      <>
+      <Wrapper>
         <Body>
           <WalletSelection
             onClick={wallet => this.onSelectWallet(wallet)}
@@ -139,8 +141,7 @@ class OpenWalletDesktopContainer extends Component<
             <strong>Create a Vault</strong> link below.
           </Information>
         </Body>
-        <Buttons>
-          <Cancel to="/">Cancel</Cancel>
+        <Buttons buttons="single">
           {this.props.loading ? (
             <Submit>
               <Spinner />
@@ -151,17 +152,16 @@ class OpenWalletDesktopContainer extends Component<
             </Submit>
           )}
         </Buttons>
-      </>
+      </Wrapper>
     );
   }
 }
 
 const mapStateToProps = (state: DesktopAppState) => ({
   loading: selectIsRequestingLogin(state)
-
 });
 
-
 export const OpenWalletDesktop = connect(
-    mapStateToProps,{ openWallet }
+  mapStateToProps,
+  { openWallet }
 )(OpenWalletDesktopContainer);
