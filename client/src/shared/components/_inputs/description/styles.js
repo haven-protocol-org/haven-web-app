@@ -13,7 +13,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding-bottom: 12px;
-  grid-column: ${props => (props.width ? "1 / 3" : null)};
+  grid-column: ${props => (props.useGridColumn ? "1 / 3" : null)};
 `;
 
 export const Field = styled.textarea.attrs(props => ({

@@ -21,12 +21,14 @@ import {
   openWallet,
   mnenomicVerificationSucceed
 } from "platforms/desktop/actions";
+import {selectIsRequestingLogin} from "platforms/desktop/reducers/walletSession";
 
 interface CreateDesktopProps {
   createWallet: (name: string, pw: string) => void;
   openWallet: (name: string, pw: string) => void;
   walletCreation: WalletCreation;
   mnenomicVerificationSucceed: () => void;
+  loading: boolean;
 }
 
 interface CreateDesktopState {
@@ -223,14 +225,17 @@ class CreateDesktopContainer extends Component<
         return (
           <>
             <Description
-              label={"Enter Seed Phrase"}
-              placeholder={"Enter the seed phrase"}
+                label={`type in words ${this.state.wordsToVerify
+                    .map(word => word.index + 1)
+                    .join(", ")}`}
+                placeholder={`type in words ${this.state.wordsToVerify
+                    .map(word => word.word)
+                    .join(", ")}`}
               name={"verify_seed"}
               value={verify_seed}
               error={error}
               onChange={this.onChangeHandler}
               rows={windowWidth < 600 ? "6" : "4"}
-              loading={false}
             />
 
             <Information>
@@ -251,8 +256,7 @@ class CreateDesktopContainer extends Component<
     const { step, fileName, pw, verify_seed } = this.state;
 
     const createIsValid = fileName.length > 0 && pw.length > 0;
-    const seedIsValid =
-      this.props.walletCreation.mnemonicKey === this.state.verify_seed;
+    const seedIsValid = this.verifySeed();
 
     return (
       <>
@@ -267,13 +271,11 @@ class CreateDesktopContainer extends Component<
                 ? false
                 : step === 2
                 ? false
-                : step === 3 && seedIsValid === true
-                ? false
-                : true
+                : !(step === 3 && seedIsValid === true)
             }
             onClick={() => this.nextStep()}
           >
-            {this.props.walletCreation.isFetching ? (
+            {this.props.walletCreation.isFetching || this.props.loading ? (
               <Spinner />
             ) : step === 0 ? (
               "Continue"
@@ -292,7 +294,8 @@ class CreateDesktopContainer extends Component<
 }
 
 const mapStateToProps = (state: DesktopAppState) => ({
-  walletCreation: state.walletCreation
+  walletCreation: state.walletCreation,
+  loading:selectIsRequestingLogin(state)
 });
 
 export const CreateDesktop = connect(

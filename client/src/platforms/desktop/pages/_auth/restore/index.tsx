@@ -8,14 +8,14 @@ import { restoreWallet } from "../../../actions";
 import { Redirect } from "react-router";
 import React, { Component } from "react";
 import { Information } from "assets/styles/type";
-import Description from "../../../../../shared/components/_inputs/description";
+import Description from "shared/components/_inputs/description";
 import { Buttons, Cancel, Submit } from "../multi_login/styles";
-import { Spinner } from "../../../../../shared/components/spinner";
+import { Spinner } from "shared/components/spinner";
 import { Body } from "./styles";
-import Input from "../../../../../shared/components/_inputs/input";
+import Input from "shared/components/_inputs/input";
 import { DesktopAppState } from "../../../reducers";
 import { Back } from "shared/components/_auth/create/styles";
-import InputButton from "../../../../../shared/components/_inputs/input_button/index.js";
+import InputButton from "shared/components/_inputs/input_button/index.js";
 
 interface RestoreProps {
   restoreWallet: (seed: string, name: string, pw: string) => void;
@@ -158,7 +158,7 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
             <Buttons>
               <Back onClick={() => this.onBack()}>Back</Back>
               <Submit
-                disabled={name.length > 0 && pw.length > 0 ? false : true}
+                disabled={!(name.length > 0 && pw.length > 0)}
                 onClick={() => this.onRestoreWallet()}
               >
                 {this.props.isRequestingLogin ? (

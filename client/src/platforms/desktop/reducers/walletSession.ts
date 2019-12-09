@@ -2,7 +2,7 @@ import {
   OPEN_WALLET_FAILED,
   OPEN_WALLET_FETCHING,
   OPEN_WALLET_SUCCEED,
-  RESTORE_WALLET_BY_SEED_FAILED,
+  RESTORE_WALLET_BY_SEED_FAILED, RESTORE_WALLET_BY_SEED_FETCHING,
   RESTORE_WALLET_BY_SEED_SUCCEED,
   UPDATE_SAVED_WALLETS
 } from "../actions/types";
@@ -61,6 +61,7 @@ export const walletSession = function(
           : [action.payload]
       };
     case OPEN_WALLET_FETCHING:
+    case RESTORE_WALLET_BY_SEED_FETCHING:
       return { ...state, isFetching: true };
     case UPDATE_SAVED_WALLETS:
       return { ...state, savedWallets: action.payload };
