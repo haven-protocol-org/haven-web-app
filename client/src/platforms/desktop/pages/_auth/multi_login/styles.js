@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export const Container = styled.div`
   height: auto;
-  min-height: 550px;
+  min-height: auto;
   max-width: 624px;
   flex-direction: column;
   margin: 20px;
@@ -13,10 +13,13 @@ export const Container = styled.div`
 `;
 
 export const Main = styled.div`
-  background: #36393f;
-  min-height: 380px;
-  height: auto;
+  min-height: auto;
+  height: 100%;
   padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: space-between;
+  background: #36393f;
 `;
 
 export const Header = styled.div`
@@ -71,7 +74,10 @@ export const Buttons = styled.div`
   margin: 10px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: ${props =>
+    props.buttons === "single" ? "flex-end" : "space-between"}
+  margin-top: 40px;
+
 `;
 
 export const Submit = styled.button`
@@ -90,6 +96,7 @@ export const Submit = styled.button`
   transition: 500ms;
   border: none;
   outline: none;
+  margin-right: left;
 
   &:hover {
     cursor: pointer;
