@@ -31,6 +31,27 @@ export const Tag = styled.div`
    `};
 `;
 
+export const Stripe = styled.div`
+    min-height:20px
+    min-width: 5px;
+    margin-right:0px;
+    margin-left:6px;
+    background:${props => (props.isActive ? "#2D8872" : "#F04747")}
+`;
+
+export const State = styled.div`
+  padding: 4px 8px;
+  background: #34d8ac;
+  font-size: 10px;
+  border-radius: 3px;
+  margin-left: 12px;
+  color: #26282c;
+  background: ${props => (props.isActive ? "#2D8872" : "#F04747")}
+    ${media.mobile`
+     font-size: 8px
+   `};
+`;
+
 export const Haven = styled.div`
   color: white;
   font-size: 20px;
@@ -65,17 +86,6 @@ export const Theme = styled.div`
     background: #5b6eae;
     transition: 500ms;
   }
-`;
-
-export const Stripe = styled.div`
-    
-    min-height:20px
-    min-width: 5px;
-    margin-right:0px;
-    margin-left:6px;
-    background:${props => props.isActive ?  '#2D8872' : '#F04747' }
-
-
 `;
 
 export const Button = styled(Link)`

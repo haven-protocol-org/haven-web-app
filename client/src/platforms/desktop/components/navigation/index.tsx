@@ -3,7 +3,17 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 // Relative Imports
-import {Container, Haven, Logo, Brand, Button, Logout, Tag, Stripe} from "./styles";
+import {
+  Container,
+  Haven,
+  Logo,
+  Brand,
+  Button,
+  Logout,
+  Tag,
+  Stripe,
+  State
+} from "./styles";
 import Icon from "assets/haven.svg";
 import { closeWallet } from "../../actions";
 import { selectIsLoggedIn } from "../../reducers/walletSession";
@@ -32,11 +42,13 @@ class Navigation extends Component<NavigationProps, any> {
         <Brand to={auth === true ? "/wallet/assets" : "/"}>
           <Logo src={Icon} />
           <Haven>HAVEN</Haven>
-          <Tag>
-            {NET_TYPE_NAME}
-          </Tag>
-          <Stripe isActive={wallet.isRunning}/>
-          <Stripe isActive={node.isRunning}/>
+          <Tag>{NET_TYPE_NAME}</Tag>
+          {!wallet.isRunning && (
+            <State isActive={wallet.isRunning}>Wallet Offline</State>
+          )}
+          {!node.isRunning && (
+            <State isActive={node.isRunning}>Node Offline</State>
+          )}
         </Brand>
         {auth === false ? (
           <Button to="/">Login</Button>
