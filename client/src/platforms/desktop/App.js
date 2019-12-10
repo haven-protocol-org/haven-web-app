@@ -18,9 +18,7 @@ class App extends Component {
           <NavigationDesktop />
           <Status />
           <PublicRoutesDesktop />
-          <Suspense fallback={<Loader />}>
             <Route path="/wallet" component={PrivateRoutesDesktop} />
-          </Suspense>
         </HashRouter>
       </ThemeProvider>
     );

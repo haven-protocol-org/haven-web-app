@@ -23,7 +23,7 @@ export const daemonStates = (
 ): DaemonStates => {
   switch (action.type) {
     case UPDATE_DAEMON_STATES:
-      return action.payload;
+      return {...action.payload};
 
     default:
       return state;

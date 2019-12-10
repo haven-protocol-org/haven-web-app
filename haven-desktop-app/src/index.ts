@@ -18,13 +18,13 @@ if (require("electron-squirrel-startup")) {
 let mainWindow: Electron.BrowserWindow;
 
 const startApp = () => {
-  // start the app
-  wallet.start();
+
+
 
   const browserOptions: BrowserWindowConstructorOptions = {
     width: 992,
     minWidth: 380,
-    height: 600
+    height: 600,
   };
 
   browserOptions.webPreferences = {
@@ -52,7 +52,12 @@ const startApp = () => {
     mainWindow.loadURL(
       path.join(`file://${__dirname}`, "../client/index.html")
     );
+
+    mainWindow.maximize();
   }
+
+  // start the app
+  wallet.start();
   // Emitted when the window is closed.
   mainWindow.on("closed", () => {
     // Dereference the window object, usually you would store windows
@@ -71,22 +76,33 @@ const startApp = () => {
 // Some APIs can only be used after this event occurs.
 app.on("ready", startApp);
 
+let willQuit = false;
+
+app.on('will-quit', (event) => {
+
+  if (!willQuit) {
+    willQuit = true;
+    event.preventDefault();
+    onAppQuit();
+  }
+
+
+});
+
 // Quit when all windows are closed.
 app.on("window-all-closed", () => {
-  onAppQuit();
+
+  app.quit();
+
 });
 
 const onAppQuit = () => {
-  // show dialog
-  // add quite listener
-  // quiet wallet
-  //quiet app
-
-  // dialog.showMessageBox(null, {type:'info', title:'Shutting down node', message:'Shutting down node'});
+  console.log("on App quit called");
 
   wallet.getAppStatus().once(QUIT_EVENT, () => {
-    console.log("quit app");
+
     app.quit();
+
   });
 
   wallet.quit();

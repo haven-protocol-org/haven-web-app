@@ -3,14 +3,14 @@ import media from "../../../../../assets/styles/media.js";
 import { border } from "../../../../../assets/styles/colors.js";
 
 export const Page = styled.div`
-  height: 100%;
+  height: 100vh;
   width: 100%;
   display: flex;
   flex-direction: column;
 `;
 
 export const Container = styled.div`
-  min-height: 100vh;
+  flex: 1;
   display: flex;
   flex-direction: column;
   background: #2b2e34;

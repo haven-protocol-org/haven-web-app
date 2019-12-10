@@ -76,12 +76,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     });
   }
 
-  componentDidUpdate(prevProps: ExchangeProps) {
-    if (prevProps.nodeHeight !== this.props.nodeHeight) {
-      this.props.getLastBlockHeader();
-    }
-  }
-
   onEnterFromAmount = (event: any) => {
     const name = event.target.name;
     const value = event.target.value;

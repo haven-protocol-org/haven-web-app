@@ -36,8 +36,9 @@ const appReducer = combineReducers({
 });
 
 const rootReducer = (state: any, action: AnyAction) => {
-  const {daemonStates} = state;
   if (action.type === CLOSE_WALLET) {
+    const {daemonStates} = state;
+
     state = {daemonStates};
   }
 
