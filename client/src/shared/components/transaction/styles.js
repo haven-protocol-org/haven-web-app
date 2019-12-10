@@ -61,6 +61,8 @@ export const State = styled.div`
         return "#34d8ac";
       case "Sent":
         return "#6A7FC8";
+      case "Exchange":
+        return "#E935A8";
       default:
     }
   }};
