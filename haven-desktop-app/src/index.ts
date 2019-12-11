@@ -21,7 +21,7 @@ const startApp = () => {
   const browserOptions: BrowserWindowConstructorOptions = {
     width: 992,
     minWidth: 470,
-    minHeight: 570,
+    minHeight: 720,
     height: 600
   };
 
