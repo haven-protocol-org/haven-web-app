@@ -31,7 +31,7 @@
     "build:test": "sh -ac '. .env.test; npm version patch; react-scripts build'",
     "build:web:mainnet": "sh -ac '. ./env/.env.mainnet; . ./env/.env.web; npm version minor; react-scripts build'",
     "build:desktop:mainnet": "sh -ac '. ./env/.env.mainnet; . ./env/.env.desktop; react-scripts build'",
-    "build:desktop:testnet": "sh -ac '. ./env/.env.testnet; . ./env/.env.desktop; . ./env/.env.desktop.build;  react-scripts build && cp -rf ./build/ ../haven-desktop-app/client/'",
+    "build:desktop:testnet": "sh -ac '. ./env/.env.testnet; . ./env/.env.desktop; . ./env/.env.desktop.build;  react-scripts build && rm -rf ../haven-desktop-app/client/* && rm -rf ./build/libs && cp -rf ./build/* ../haven-desktop-app/client/'",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

@@ -6,6 +6,7 @@ trap "kill 0" EXIT
 export HAVEN_DESKTOP_DEVELOPMENT=true
 export NET_TYPE=Testnet
 export BROWSER=none
+export NODE_INSTALLER=npm
 
 # start rpc client
 # npm run start:desktop:testnet --prefix client &
