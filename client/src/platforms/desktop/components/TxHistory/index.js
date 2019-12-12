@@ -24,6 +24,8 @@ class TxHistoryContainer extends Component {
       return "Sent";
     } else if (status === "block") {
       return "Mined";
+    } else if (status === "exchange") {
+      return "Exchange";
     } else {
       return status;
     }

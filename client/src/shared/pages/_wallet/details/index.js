@@ -14,7 +14,6 @@ export class Details extends Component {
     return (
       <Body>
         <ChartContainer balance={this.props.balance} />
-
         {this.props.children}
       </Body>
     );

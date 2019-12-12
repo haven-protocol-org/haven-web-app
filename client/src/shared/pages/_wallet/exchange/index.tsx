@@ -13,7 +13,9 @@ import Transaction from "../../../components/_transactions/exchange";
 import { Container } from "./styles";
 import {
   ConversionRate,
-  selectLatestXRates, hasLatestXRate, XRates
+  selectLatestXRates,
+  hasLatestXRate,
+  XRates
 } from "platforms/desktop/reducers/blockHeaderExchangeRates";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { selectNodeHeight } from "platforms/desktop/reducers/chain";
@@ -255,9 +257,10 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     const toName = toAsset ? toAsset.name : "Select Asset";
     const toTicker = toAsset ? toAsset.ticker : "";
 
-    const {hasLatestXRate, conversionRates} = this.props;
+    const { hasLatestXRate, conversionRates } = this.props;
 
-    const isValid: boolean = !!(fromAsset && toAsset && fromAmount && toAmount) && hasLatestXRate;
+    const isValid: boolean =
+      !!(fromAsset && toAsset && fromAmount && toAmount) && hasLatestXRate;
 
     return (
       <Body>
@@ -265,7 +268,11 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
           title="Exchange "
           description="Swap to and from various Haven Assets"
         />
-        {hasLatestXRate && conversionRates? `Lates rates are from ${new Date(conversionRates.timestamp * 1000).toLocaleDateString()}` :'the latest Exchange Rates are not available' }
+        {hasLatestXRate && conversionRates
+          ? `Latest rates are from ${new Date(
+              conversionRates.timestamp * 1000
+            ).toLocaleDateString()}`
+          : "the latest Exchange Rates are not available"}
         <Form onSubmit={this.handleSubmit}>
           <Dropdown
             label="From Asset"

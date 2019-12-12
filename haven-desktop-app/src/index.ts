@@ -18,13 +18,11 @@ if (require("electron-squirrel-startup")) {
 let mainWindow: Electron.BrowserWindow;
 
 const startApp = () => {
-
-
-
   const browserOptions: BrowserWindowConstructorOptions = {
     width: 992,
-    minWidth: 380,
-    height: 600,
+    minWidth: 470,
+    minHeight: 720,
+    height: 600
   };
 
   browserOptions.webPreferences = {
@@ -78,31 +76,24 @@ app.on("ready", startApp);
 
 let willQuit = false;
 
-app.on('will-quit', (event) => {
-
+app.on("will-quit", event => {
   if (!willQuit) {
     willQuit = true;
     event.preventDefault();
     onAppQuit();
   }
-
-
 });
 
 // Quit when all windows are closed.
 app.on("window-all-closed", () => {
-
   app.quit();
-
 });
 
 const onAppQuit = () => {
   console.log("on App quit called");
 
   wallet.getAppStatus().once(QUIT_EVENT, () => {
-
     app.quit();
-
   });
 
   wallet.quit();
