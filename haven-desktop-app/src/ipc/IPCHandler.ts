@@ -14,10 +14,10 @@ export class IPCHandler {
 
 
     private readonly WALLET_METHODS:string[] = ['refresh','open_wallet', 'close_wallet', 'restore_deterministic_wallet',
-        'get_balance', 'get_offshore_balance', 'get_offshore_transfers', 'query_key','transfer','get_transfers','create_wallet', 'offshore_transfer' ,'refresh', 'onshore', 'offshore'];
+        'get_balance', 'get_offshore_balance', 'save_wallet', 'get_height' , 'get_offshore_transfers', 'query_key','transfer','get_transfers','create_wallet', 'offshore_transfer' ,'refresh', 'onshore', 'offshore'];
 
 
-    private readonly DAEMON_METHODS: string[] = ['get_info', 'get_last_block_header','get_block_count','get_height', 'get_block_header_by_height'] ;
+    private readonly DAEMON_METHODS: string[] = ['get_info', 'get_last_block_header','get_block_count', 'get_block_header_by_height'] ;
 
 
     private havendRpcHandler: RPCHRequestHandler = new RPCHRequestHandler();

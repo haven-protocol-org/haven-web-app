@@ -21,7 +21,6 @@ const WALLET_RPC_PATH_MAINNET: string = path.resolve(__dirname,`../haven-node/${
 
 export const  checkAndCreateWalletDir = () => {
 
-    console.log(WALLET_PATH_TESTNET);
     if (isMainnet) {
 
         if (!fs.existsSync(WALLET_PATH_MAINNET)) {
@@ -34,11 +33,7 @@ export const  checkAndCreateWalletDir = () => {
             fs.mkdirSync(WALLET_PATH_TESTNET, {recursive:true});
         }
     }
-
 };
-
-
-
 
 
 
@@ -48,7 +43,6 @@ const daemonConfigMainnet = {
         path:HAVEND_PATH_MAINNET,
         port:17750,
         args:{
-            'mainnet':'',
             'rpc-bind-port': 17750,
         }
     },
@@ -57,13 +51,11 @@ const daemonConfigMainnet = {
         port:12345,
         args: {
 
-            'mainnet':'',
             'rpc-bind-port': 12345,
             'disable-rpc-login': '',
             'wallet-dir': WALLET_PATH_MAINNET,
         }
     }
-
 };
 
 const daemonConfigTestnet = {
@@ -86,9 +78,7 @@ const daemonConfigTestnet = {
             'disable-rpc-login': '',
             'wallet-dir': WALLET_PATH_TESTNET,
         }
-
     },
-
 };
 
 export interface IDaemonConfig {

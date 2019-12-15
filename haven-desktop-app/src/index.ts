@@ -3,6 +3,7 @@ import * as path from "path";
 import { devServerStarted } from "./dev";
 import { HavenWallet, QUIT_EVENT } from "./HavenWallet";
 import { BrowserWindowConstructorOptions } from "electron";
+import {isDevMode} from "./env";
 
 const wallet = new HavenWallet();
 
@@ -31,9 +32,8 @@ const startApp = () => {
   };
   // Create the browser window.
   mainWindow = new BrowserWindow(browserOptions);
-  console.log("Haven development ? " + process.env.HAVEN_DESKTOP_DEVELOPMENT);
 
-  if (process.env.HAVEN_DESKTOP_DEVELOPMENT) {
+  if (isDevMode) {
     // Open the DevTools.
     mainWindow.webContents.openDevTools();
 

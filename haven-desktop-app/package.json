@@ -5,11 +5,9 @@
   "description": "My Electron application description",
   "main": "dist/index.js",
   "scripts": {
-    "start": "npm run build && npm run watch & electron-forge start",
+    "start": "npm run build && electron-forge start",
     "package": "npm run build && electron-forge package",
-    "make:macOS": "electron-forge make",
-    "make:win": "electron-forge make",
-    "make:linux": "electron-forge make",
+    "make": "electron-forge make",
     "publish": "electron-forge publish",
     "build": "tsc",
     "watch": "tsc -w",

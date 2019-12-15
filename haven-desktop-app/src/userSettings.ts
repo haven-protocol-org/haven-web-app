@@ -5,28 +5,24 @@ import {daemonConfig} from "./daemonConfig";
 // stores and reads data for user speific data e.g. wallet names, path to wallet, path to node etc...
 
 
-type SavedWallet = {address: string, name: string};
 
 
 
-export const getAvailableWallets = ():SavedWallet [] => {
+export const getAvailableWallets = ():string [] => {
 
 
     const walletPath: string = daemonConfig.wallet.args['wallet-dir'] as string;
-    let availableWallets: SavedWallet[];
+    let availableWallets: string[];
 
     const files =  fs.readdirSync(walletPath);
 
-    availableWallets = files.filter((file => file.endsWith('address.txt')))
-            .map( name => {
+    availableWallets = files.filter((file => file.endsWith('.keys')))
 
-                const address = fs.readFileSync(walletPath +'/' + name, 'utf-8');
-                return {address, name};
-            } )
-            .map( wallet => {
-                wallet.name = wallet.name.replace('.address.txt', '')
-                return wallet;
+            .map( walletName => {
+                walletName = walletName.replace('.keys', '')
+                return walletName;
             } );
+
 
     return availableWallets;
 
