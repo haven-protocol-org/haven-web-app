@@ -6,12 +6,20 @@ import {transferProcess, transferSucceed} from "../../../reducers/transferProces
 import {history} from "utility/history";
 import {Ticker} from "shared/reducers/types";
 import {DesktopAppState} from "platforms/desktop/reducers";
+import {getOwnAddress} from "platforms/desktop/actions/walletSession";
 
 
 class TransferDesktopContainer extends Component<any, any> {
 
 
   private sendTicker: Ticker = Ticker.XHV;
+
+
+  componentDidMount(): void {
+    if (!this.props.address) {
+      this.props.getOwnAddress();
+    }
+  }
 
 
   componentDidUpdate(prevProps: Readonly<any>, prevState: Readonly<any>, snapshot?: any): void {
@@ -57,5 +65,5 @@ export const mapStateToProps = (state: DesktopAppState) => ({
 
 export const TransferDesktop = connect(
     mapStateToProps,
-    { transfer, resetTransferProcess, offshoreTransfer }
+    { transfer, resetTransferProcess, offshoreTransfer, getOwnAddress }
 )(TransferDesktopContainer);

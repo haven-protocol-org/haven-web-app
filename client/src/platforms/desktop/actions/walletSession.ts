@@ -1,7 +1,8 @@
 import {OPEN_WALLET_FAILED, OPEN_WALLET_FETCHING, OPEN_WALLET_SUCCEED, UPDATE_SAVED_WALLETS} from "./types";
-import {closeWalletRPC, openWalletRPC, storeWalletRPC} from "../ipc/rpc/rpc";
+import {getAddressRPC, openWalletRPC, storeWalletRPC} from "../ipc/rpc/rpc";
 import {CLOSE_WALLET} from "shared/actions/types";
 import {requestSavedWalletsIPC} from "../ipc/misc";
+import {addPubAddress} from "shared/actions";
 
 
 export const closeWallet = () => {
@@ -77,3 +78,16 @@ const openWalletFetching =  () => {
     return {type: OPEN_WALLET_FETCHING}
 
 };
+
+
+export const getOwnAddress = () => {
+
+    return (dispatch: any) => {
+
+        getAddressRPC()
+            .then(res => dispatch(addPubAddress(res.address)))
+    }
+
+
+};
+

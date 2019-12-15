@@ -6,7 +6,8 @@ import {
   VALIDATE_MNEMONIC_SUCCEED,
   QUERY_MNEMONIC_FOR_WALLET_GENERATION_SUCCEED
 } from "./types";
-import { createWalletRPC, queryMnemonicKeyRPC } from "../ipc/rpc/rpc";
+import {createWalletRPC, getAddressRPC, queryMnemonicKeyRPC} from "../ipc/rpc/rpc";
+import {addPubAddress} from "../../../shared/actions";
 
 const createWalletFetch = () => ({ type: CREATE_WALLET_FETCHING });
 const createWalletSucceed = () => ({
@@ -30,7 +31,10 @@ export const createWallet = (filename, password) => {
       .then(result => {
         dispatch(queryMnemonicForWalletGenerationSucceed(result.key));
       })
-      .then(() => dispatch(createWalletSucceed()))
+      .then(() => {
+        dispatch(createWalletSucceed());
+
+      })
       .catch(error => {
         dispatch(createWalletFailed(error));
       });

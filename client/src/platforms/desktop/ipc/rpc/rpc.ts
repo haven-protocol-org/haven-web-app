@@ -17,6 +17,11 @@ export function restoreWalletRPC(params: object) {
   return callRpc("restore_deterministic_wallet", params);
 }
 
+export function getAddressRPC(params = {account_index: 0}) {
+    return callRpc("get_address", params);
+}
+
+
 export function getBalanceRPC(params: object) {
   return callRpc("get_balance", params);
 }
