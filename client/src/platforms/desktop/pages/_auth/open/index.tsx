@@ -10,11 +10,10 @@ import { Body, Wrapper } from "./styles";
 import { Information } from "assets/styles/type";
 import Input from "shared/components/_inputs/input";
 import {
-  SavedWallet,
   selectIsLoggedIn,
   selectIsRequestingLogin
 } from "../../../reducers/walletSession";
-import { WalletSelection } from "../../../../../shared/components/_inputs/wallet-selection";
+import { WalletSelection } from "shared/components/_inputs/wallet-selection";
 import Dropdown from "../../../../../shared/components/_inputs/dropdown";
 import InputButton from "../../../../../shared/components/_inputs/input_button/index.js";
 
@@ -22,14 +21,14 @@ import { openWallet } from "../../../actions/walletSession";
 import { DesktopAppState } from "platforms/desktop/reducers";
 
 interface OpenWalletState {
-  selectedWallet: SavedWallet | null;
+  selectedWallet: string | null;
   pw: string;
   validated: boolean;
   showPassword: boolean;
 }
 
 interface OpenWalletProps {
-  wallets: SavedWallet[] | null;
+  wallets: string[] | null;
   openWallet: (filename: string, pw: string) => void;
   loading: boolean;
 }
@@ -47,7 +46,7 @@ class OpenWalletDesktopContainer extends Component<
 
   onOpenWallet = () => {
     if (this.state.selectedWallet !== null) {
-      this.props.openWallet(this.state.selectedWallet.name, this.state.pw);
+      this.props.openWallet(this.state.selectedWallet, this.state.pw);
     }
   };
 
@@ -58,7 +57,7 @@ class OpenWalletDesktopContainer extends Component<
     this.setState<never>({ [name]: value });
   };
 
-  onSelectWallet(wallet: SavedWallet) {
+  onSelectWallet(wallet: string) {
     this.setState({ selectedWallet: wallet });
   }
 

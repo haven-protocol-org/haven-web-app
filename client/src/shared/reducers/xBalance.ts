@@ -3,11 +3,11 @@ import {
   GET_BALANCES_FETCHING,
   GET_BALANCES_SUCCEED,
   GET_OFFSHORE_BALANCE_SUCCEED
-} from "../../platforms/desktop/actions/types";
+} from "platforms/desktop/actions/types";
 import { AnyAction } from "redux";
-import { DesktopAppState } from "../../platforms/desktop/reducers";
+import { DesktopAppState } from "platforms/desktop/reducers";
 import { INITAL_FETCHING_STATE, Ticker, XFetching } from "./types";
-import { WebAppState } from "../../platforms/web/reducers";
+import { WebAppState } from "platforms/web/reducers";
 
 export const NO_BALANCE = BigInt(-1);
 

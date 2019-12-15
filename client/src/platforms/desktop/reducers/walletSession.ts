@@ -6,15 +6,14 @@ import {
   RESTORE_WALLET_BY_SEED_SUCCEED,
   UPDATE_SAVED_WALLETS
 } from "../actions/types";
-import { getMessageOfError } from "../../../utility/utility";
+import { getMessageOfError } from "utility/utility";
 import { AnyAction } from "redux";
 import { DesktopAppState } from "./index";
 
-export type SavedWallet = { address: string; name: string };
 
 interface WalletSession {
   activeWallet: string | null;
-  savedWallets: SavedWallet[] | null;
+  savedWallets: string[] | null;
   isFetching: boolean;
   isWalletOpen: boolean;
   error: object | null;

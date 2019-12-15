@@ -1,16 +1,18 @@
 import {OPEN_WALLET_FAILED, OPEN_WALLET_FETCHING, OPEN_WALLET_SUCCEED, UPDATE_SAVED_WALLETS} from "./types";
-import {closeWalletRPC, openWalletRPC} from "../ipc/rpc/rpc";
+import {closeWalletRPC, openWalletRPC, storeWalletRPC} from "../ipc/rpc/rpc";
 import {CLOSE_WALLET} from "shared/actions/types";
 import {requestSavedWalletsIPC} from "../ipc/misc";
-import {SavedWallet} from "../reducers/walletSession";
 
 
 export const closeWallet = () => {
 
 
-    closeWalletRPC();
     return (dispatch: any) => {
-        dispatch(closeWalletSucceed())
+
+    storeWalletRPC()
+        .catch(err => console.log(err))
+       // .then(() => closeWalletRPC())
+        .then(() =>  dispatch(closeWalletSucceed()));
     }
 
 };
@@ -28,7 +30,7 @@ export const getSavedWallets = () => {
     return (dispatch: any) => {
 
             requestSavedWalletsIPC()
-                .then( (wallets: SavedWallet[]) => dispatch(updateSavedWallets(wallets)))
+                .then( (wallets: string[]) => dispatch(updateSavedWallets(wallets)))
                 .catch((err) => console.log(err));
     }
 
@@ -36,20 +38,15 @@ export const getSavedWallets = () => {
 
 
 
-const updateSavedWallets = (savedWallets: SavedWallet[]) => {
-
+const updateSavedWallets = (savedWallets: string[]) => {
 
     return {type: UPDATE_SAVED_WALLETS, payload: savedWallets};
 
 };
 
-
-
-
 export const openWallet = (filename: string, password: string) => {
 
     const params = {filename, password};
-
 
     return (dispatch: any) => {
 

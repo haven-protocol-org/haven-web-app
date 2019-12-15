@@ -37,7 +37,7 @@ export function createWalletRPC(params: object) {
   return callRpc("create_wallet", params);
 }
 
-export function getHeightRPC() {
+export function getWalletHeightRPC() {
   return callRpc('get_height');
 }
 
@@ -78,7 +78,10 @@ export function getLastBlockHeaderRPC() {
 export function getBlockHeaderByHeightRPC(params: object) {
 
     return callRpc('get_block_header_by_height');
+}
 
+export function storeWalletRPC() {
+    return callRpc('store');
 }
 
 export function closeWalletRPC() {

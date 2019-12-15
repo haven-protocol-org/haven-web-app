@@ -12,15 +12,14 @@ import {
   Ticker
 } from "./styles";
 import { Label, Error } from "assets/styles/type.js";
-import { SavedWallet } from "../../../../platforms/desktop/reducers/walletSession";
 
 interface WalletSelectionProps {
-  onClick: (option: SavedWallet) => void;
-  options: SavedWallet[] | null;
+  onClick: (option: string) => void;
+  options: string[] | null;
   placeholder: string;
   label: string;
   error: string;
-  value: SavedWallet | null;
+  value: string | null;
 }
 
 export class WalletSelection extends React.Component<
@@ -50,15 +49,11 @@ export class WalletSelection extends React.Component<
     return (
       options &&
       options.map(option => {
-        const { name, address } = option;
-        const first = address.substring(0, 4);
-        const last = address.substring(address.length - 4);
-        const truncated = first + "...." + last;
+
         return (
-          <Item key={name} onClick={() => onClick(option)}>
+          <Item key={option} onClick={() => onClick(option)}>
             <Row>
-              <Name>{name}: </Name>
-              <Ticker>{truncated}</Ticker>
+              <Name>{option}</Name>
             </Row>
           </Item>
         );
@@ -82,7 +77,7 @@ export class WalletSelection extends React.Component<
               placeholder
             ) : (
               <Row>
-                <Name>{value.name}</Name>
+                <Name>{value}</Name>
               </Row>
             )}
           </Button>

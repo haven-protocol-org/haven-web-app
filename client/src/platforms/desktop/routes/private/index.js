@@ -17,9 +17,6 @@ import Menu from "../../../../shared/components/_layout/menu";
 
 /**
  *root component for private wallet
- * by updating blockheight in given interval
- * it is responsible for updating blockheight related data ( balances, transfers )
- * which is done in the action getHeight which might not be the best place -> c'est la vie
  */
 class PrivateRoutes extends Component {
   componentDidMount() {
@@ -28,7 +25,7 @@ class PrivateRoutes extends Component {
   }
 
   addTimer() {
-    this.updateTimer = setInterval(this.props.updateApp, 30000);
+    this.updateTimer = setInterval(this.props.updateApp, 15000);
   }
 
   removeTimer() {

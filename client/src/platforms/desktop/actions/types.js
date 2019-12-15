@@ -58,6 +58,14 @@ export const GET_BLOCK_INFO_FETCHING = "get_block_info_fetching";
 export const GET_BLOCK_INFO_SUCEED = "get_block_info_suceed";
 export const GET_BLOCK_INFO_FAILED = "get_block_info_failed";
 
+export const GET_BLOCK_HEIGHT_FETCHING = "get_block_height_fetching";
+export const GET_BLOCK_HEIGHT_SUCCEED = "get_block_height_succeed";
+export const GET_BLOCK_HEIGHT_FAILED = "get_block_height_failed";
+
+export const START_REFRESH = "start_refresh";
+export const REFRESH_SUCCEED = "refresh_succeed";
+export const REFRESH_FAILED = "refresh_failed";
+
 export const OFFSHORE_FETCHING = "offshore_fetching";
 export const OFFSHORE_FAILED = "offshore_failed";
 export const OFFSHORE_SUCCEED = "offshore_succeed";

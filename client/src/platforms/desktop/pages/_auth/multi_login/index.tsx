@@ -11,7 +11,6 @@ import { DesktopAppState } from "../../../reducers";
 import { connect } from "react-redux";
 import { getSavedWallets } from "../../../actions/walletSession";
 import {
-  SavedWallet,
   selectIsLoggedIn,
   selectIsRequestingLogin
 } from "../../../reducers/walletSession";
@@ -24,7 +23,7 @@ interface MultiloginState {
 
 interface MultiLoginProps {
   getSavedWallets: () => void;
-  wallets: SavedWallet[] | null;
+  wallets: string[] | null;
   isLoggedIn: boolean;
 }
 
@@ -40,16 +39,9 @@ class MultiLoginPage extends Component<MultiLoginProps, MultiloginState> {
   };
 
   componentDidMount(): void {
-    if (this.props.wallets === null) {
       this.props.getSavedWallets();
-    }
-  }
 
-  selectOpen = () => {
-    this.setState({
-      loginType: LOGIN_TYPE.Open
-    });
-  };
+  }
 
   render() {
     if (this.props.isLoggedIn) {

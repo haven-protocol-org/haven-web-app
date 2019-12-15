@@ -21,7 +21,7 @@ import { RestoreDesktop } from "../restore";
 import { DesktopAppState } from "../../../reducers";
 import { connect } from "react-redux";
 import { getSavedWallets } from "../../../actions/walletSession";
-import { SavedWallet, selectIsLoggedIn } from "../../../reducers/walletSession";
+import { selectIsLoggedIn } from "../../../reducers/walletSession";
 import { Redirect } from "react-router";
 import { OpenWalletDesktop } from "../open";
 import { CreateDesktop } from "platforms/desktop/pages/_auth/create";
@@ -32,7 +32,7 @@ interface MultiloginState {
 
 interface MultiLoginProps {
   getSavedWallets: () => void;
-  wallets: SavedWallet[] | null;
+  wallets: string[] | null;
   isLoggedIn: boolean;
 }
 
