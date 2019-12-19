@@ -50,6 +50,10 @@ export function refreshRPC(start_height = 0) {
   return callRpc('refresh' ,{start_height});
 }
 
+export function rescanBlockchainRPC() {
+    return callRpc('rescan_blockchain');
+}
+
 
 export function onshoreRPC(params: object) {
     return callRpc('onshore', params)
