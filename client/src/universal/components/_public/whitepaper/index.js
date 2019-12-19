@@ -16,6 +16,8 @@ import {
 import chinese from "../../../../assets/whitepapers/wp_chinese.svg";
 import english from "../../../../assets/whitepapers/wp_english.svg";
 import french from "../../../../assets/whitepapers/wp_french.svg";
+import spanish from "../../../../assets/whitepapers/wp_spanish.svg";
+import vietnamese from "../../../../assets/whitepapers/wp_vietnamese.svg";
 
 const Content = () => {
   return (
@@ -60,6 +62,26 @@ const Content = () => {
             Lire la suite
           </Route>
         </Cell>
+        <Cell>
+          <Aspect>
+            <Image src={spanish} />
+          </Aspect>
+          <Clip>
+            <Description>
+              Bitcoin abrió el camino a las monedas electrónicas peer-to-peer.
+              Fue la primera moneda digital que implementó con éxito un registro
+              distribuido de transacciones tal que estuviera basado en prueba
+              criptográfica y no en terceros de confianza...
+            </Description>
+          </Clip>
+          <Route
+            rel="noopener"
+            target="_blank"
+            href="http://docs.havenprotocol.org/whitepapers/spanish.pdf"
+          >
+            Leer Mas
+          </Route>
+        </Cell>
 
         <Cell>
           <Aspect>
@@ -80,6 +102,26 @@ const Content = () => {
             href="http://docs.havenprotocol.org/whitepapers/chinese.pdf"
           >
             阅读更多
+          </Route>
+        </Cell>
+        <Cell>
+          <Aspect>
+            <Image src={vietnamese} />
+          </Aspect>
+          <Clip>
+            <Description>
+              Bitcoin đã mở ra kỷ nguyên tiền điện tử ngang hàng. Đây là loại
+              tiền số hóa đầu tiên ứng dụng thành công một sổ cái phân tán các
+              giao dịch dựa trên bằng chứng mật mã để giải quyết bài toán về
+              niềm tin đối với bên thứ ba.
+            </Description>
+          </Clip>
+          <Route
+            rel="noopener"
+            target="_blank"
+            href="http://docs.havenprotocol.org/whitepapers/vietnamese.pdf"
+          >
+            Đọc thêm
           </Route>
         </Cell>
       </Container>

@@ -17,11 +17,29 @@ import b1 from "../../../../assets/blog/b_v1.svg";
 import b2 from "../../../../assets/blog/b_v2.svg";
 import b3 from "../../../../assets/blog/b_v3.svg";
 import b4 from "../../../../assets/blog/b_v4.svg";
+import b5 from "../../../../assets/blog/b_v5.svg";
 
 const Content = () => {
   return (
     <Wrapper>
       <Container>
+        <Cell>
+          <Aspect>
+            <Image src={b5} />
+          </Aspect>
+          <Title>Update - Nov 2019</Title>
+          <Description>
+            As Haven approaches its first major project milestone — launching
+            the first private...
+          </Description>
+          <Route
+            rel="noopener"
+            target="_blank"
+            href="https://medium.com/@havencurrency/haven-november-2019-update-b46cee796e01"
+          >
+            Read More
+          </Route>
+        </Cell>
         <Cell>
           <Aspect>
             <Image src={b4} />
