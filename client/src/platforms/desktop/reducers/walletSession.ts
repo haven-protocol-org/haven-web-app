@@ -11,12 +11,19 @@ import { AnyAction } from "redux";
 import { DesktopAppState } from "./index";
 
 
+export type RPCError = {
+
+  code: number;
+  message: string;
+
+};
+
 interface WalletSession {
   activeWallet: string | null;
   savedWallets: string[] | null;
   isFetching: boolean;
   isWalletOpen: boolean;
-  error: object | null;
+  error: RPCError | null;
 }
 
 const INITIAL_STATE: WalletSession = {
@@ -61,7 +68,7 @@ export const walletSession = function(
       };
     case OPEN_WALLET_FETCHING:
     case RESTORE_WALLET_BY_SEED_FETCHING:
-      return { ...state, isFetching: true };
+      return { ...state, error:null, isFetching: true };
     case UPDATE_SAVED_WALLETS:
       return { ...state, savedWallets: action.payload };
     default:
@@ -74,8 +81,11 @@ export const selectIsLoggedIn = (state: DesktopAppState) => {
 };
 
 export const selectErrorMessageForLogin = (state: DesktopAppState) => {
-  if (state.walletSession.error) {
-    return getMessageOfError(state.walletSession.error);
+
+  const error = state.walletSession.error;
+
+  if (error) {
+    return error.message;
   }
 
   return "";

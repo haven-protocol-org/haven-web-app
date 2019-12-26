@@ -8,7 +8,7 @@ import { NO_PRICE } from "./priceHistory";
 const INITIAL_STATE = {
   error: "",
   isFetching: false,
-  price: NO_PRICE
+  price: -1
 };
 
 export function simplePrice(state = INITIAL_STATE, action) {

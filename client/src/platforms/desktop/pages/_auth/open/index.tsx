@@ -10,7 +10,7 @@ import { Body, Wrapper } from "./styles";
 import { Information } from "assets/styles/type";
 import Input from "shared/components/_inputs/input";
 import {
-  selectIsLoggedIn,
+  selectErrorMessageForLogin,
   selectIsRequestingLogin
 } from "../../../reducers/walletSession";
 import { WalletSelection } from "shared/components/_inputs/wallet-selection";
@@ -25,12 +25,14 @@ interface OpenWalletState {
   pw: string;
   validated: boolean;
   showPassword: boolean;
+  error: string;
 }
 
 interface OpenWalletProps {
   wallets: string[] | null;
   openWallet: (filename: string, pw: string) => void;
   loading: boolean;
+  errorMessage: string;
 }
 
 class OpenWalletDesktopContainer extends Component<
@@ -41,7 +43,8 @@ class OpenWalletDesktopContainer extends Component<
     selectedWallet: null,
     pw: "",
     validated: false,
-    showPassword: false
+    showPassword: false,
+    error:''
   };
 
   onOpenWallet = () => {
@@ -49,6 +52,13 @@ class OpenWalletDesktopContainer extends Component<
       this.props.openWallet(this.state.selectedWallet, this.state.pw);
     }
   };
+
+  componentWillReceiveProps(nextProps:OpenWalletProps , nextContext: any) {
+    if (nextProps.errorMessage) {
+      this.setState({ error: nextProps.errorMessage });
+      setTimeout(() => this.setState({ error: "" }), 2000);
+    }
+  }
 
   onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const name = e.currentTarget.name;
@@ -73,7 +83,7 @@ class OpenWalletDesktopContainer extends Component<
 
   render() {
     const { selectedWallet, pw } = this.state;
-    const disabled = selectedWallet !== null && pw.length > 0 ? true : false;
+    const disabled = selectedWallet !== null && pw.length > 0;
 
     const { wallets } = this.props;
 
@@ -119,7 +129,7 @@ class OpenWalletDesktopContainer extends Component<
             options={this.props.wallets}
             placeholder={"Choose a wallet"}
             label={"Select Wallet"}
-            error={""}
+            error={this.state.error}
             value={selectedWallet}
           />
           <InputButton
@@ -157,7 +167,9 @@ class OpenWalletDesktopContainer extends Component<
 }
 
 const mapStateToProps = (state: DesktopAppState) => ({
-  loading: selectIsRequestingLogin(state)
+  loading: selectIsRequestingLogin(state),
+  errorMessage: selectErrorMessageForLogin(state)
+
 });
 
 export const OpenWalletDesktop = connect(

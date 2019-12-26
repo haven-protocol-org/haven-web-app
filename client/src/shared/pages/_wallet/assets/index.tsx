@@ -11,13 +11,23 @@ import Cell from "../../../components/cell";
 import CellDisabled from "../../../components/cell_disabled";
 
 import token from "../../../../constants/assets.js";
-import { NO_PRICE } from "../../../reducers/priceHistory";
-import { calcValue } from "../../../../utility/utility";
-import {Ticker} from "../../../reducers/types";
-import {OFFSHORE_ENABLED} from "../../../../constants/env";
-import {DesktopAppState} from "../../../../platforms/desktop/reducers";
+import { NO_PRICE } from "shared/reducers/priceHistory";
+import { calcValue } from "utility/utility";
+import {Ticker} from "shared/reducers/types";
+import {OFFSHORE_ENABLED} from "constants/env";
+import {DesktopAppState} from "platforms/desktop/reducers";
+
+interface AssetsProps {
 
 
+};
+
+
+
+interface AssetsState {
+
+
+};
 
 
 class AssetsPage extends Component<any, any> {
@@ -46,7 +56,7 @@ class AssetsPage extends Component<any, any> {
       const { token, ticker, change, symbol } = data;
 
       const rates = this.props.rates;
-      let price = rates[ticker] ? rates[ticker] : 0;
+      let price = rates[ticker] ? rates[ticker] :0;
       price = symbol + price.toFixed(2);
 
       return (

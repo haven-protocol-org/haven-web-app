@@ -21,29 +21,32 @@ export const Transaction = ({
   tx,
   amount,
   block,
-  price,
+  currentValueInUSD,
   status,
   mempool,
-  bHeight
+    timeTillUnlocked
 }) => {
   const first = tx.substring(0, 4);
   const last = tx.substring(tx.length - 4);
   const truncated = first + "...." + last;
-  const value = price * amount;
+
+  const inUsd = isNaN(parseFloat(currentValueInUSD))? 0  : parseFloat(currentValueInUSD);
 
   let statusDetails = "Completed";
 
-  if (status === "pending") {
-    statusDetails = `~${(block + 10 - bHeight) * 2} min`;
-  }
-
   if (mempool) {
     statusDetails = "Not confirmed yet";
+  } else if (timeTillUnlocked) {
+    statusDetails = '~ ' + timeTillUnlocked;
   }
+
+
 
   const txExplorerLink = `https://explorer${
     isMainnet() ? "" : "-test"
   }.havenprotocol.org/tx/${tx}`;
+
+
 
   return (
     <Container href={txExplorerLink} target="_blank">
@@ -68,7 +71,7 @@ export const Transaction = ({
             </Data>
           )}
           <Data>
-            <Value alignment="right">${value.toFixed(2)}</Value>
+            <Value alignment="right">${inUsd.toFixed(2)}</Value>
             <Label alignment="right">Current Value</Label>
           </Data>
         </Row>

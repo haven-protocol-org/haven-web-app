@@ -10,14 +10,11 @@ export type RPCRequestObject  = {
 };
 
 export class RPCHRequestHandler {
-
     private baseUrl: string = "http://localhost";
     private _port:number;
     private _ssl:boolean;
 
-
     public set port(portValue:number) {
-
         this._port = portValue;
     }
 

@@ -68,14 +68,8 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
   componentDidMount() {
     window.scrollTo(0, 0);
 
-    if (this.props.conversionRates === null) {
       this.props.getLastBlockHeader();
-    }
 
-    this.setState({
-      fromAsset: { name: "Haven Token", ticker: Ticker.XHV },
-      toAsset: { name: "United States Dollar", ticker: Ticker.xUSD }
-    });
   }
 
   onEnterFromAmount = (event: any) => {
@@ -268,6 +262,12 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
           title="Exchange "
           description="Swap to and from various Haven Assets"
         />
+
+        {hasLatestXRate && conversionRates
+            ? `Latest rates are from ${new Date(
+                conversionRates.timestamp * 1000
+            ).toLocaleDateString()}`
+            : "the latest Exchange Rates are not available"}
 
         <Form onSubmit={this.handleSubmit}>
           <Dropdown
