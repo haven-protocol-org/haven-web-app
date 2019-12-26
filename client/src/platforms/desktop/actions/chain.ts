@@ -16,6 +16,7 @@ interface NodeInfoHeights {
 }
 
 export const getNodeInfo = () => {
+
   return (dispatch: any, getState:() => DesktopAppState) => {
     getInfoRPC()
       .then((res: any) => parseHeight(res))
@@ -68,7 +69,7 @@ const getNodeInfoFailed = (error: any) => ({
 
 const parseHeight = (rawNodeInfo: any): NodeInfoHeights => {
   return {
-    chainHeight: rawNodeInfo.target_height,
+    chainHeight: Math.max(rawNodeInfo.height, rawNodeInfo.target_height),
     nodeHeight: rawNodeInfo.height
   };
 };
