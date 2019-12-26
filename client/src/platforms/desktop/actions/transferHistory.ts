@@ -4,7 +4,7 @@ import {
   GET_TRANSFERS_FETCHING,
   GET_TRANSFERS_SUCCEED
 } from "./types";
-import {XTransferListAsset, TransferType, XTransferList} from "shared/reducers/xTransferList";
+import {TransferType, XTransferList} from "shared/reducers/xTransferList";
 import {Ticker} from "shared/reducers/types";
 
 export const getTransfers = () => {
@@ -38,30 +38,48 @@ const getTransfersFailed = (error: any) => ({
   payload: error
 });
 
+const filterForDoubleEntries = (entries:any[] | undefined) => {
+
+  if (entries === undefined){
+    return undefined;
+  }
+
+  return entries.filter((entry: any, index:number) => {
+    return index ===  entries.findIndex( (tempEntry) => tempEntry.txid === entry.txid && tempEntry.type === entry.type );});};
+
 
 const createTxListByCurrency = (txList: any) => {
 
-  const xUSDList = txList.filter( (txEntry: any) => txEntry.type === TransferType.xUSDIn || txEntry.type === TransferType.xUSDOut );
-  const xhvList = txList.filter( (txEntry: any) => txEntry.type === TransferType.XHVIn || txEntry.type === TransferType.XHVOut );
+  const xUSDList = txList.filter( (txEntry: any) =>
+      txEntry.type === TransferType.xUSDIn
+      || txEntry.type === TransferType.xUSDOut
+      || txEntry.type === TransferType.xUSDPending
+       );
+  const xhvList = txList.filter( (txEntry: any) =>
+      txEntry.type === TransferType.XHVIn
+      || txEntry.type === TransferType.XHVOut
+      || txEntry.type === TransferType.XHVPending
+      || txEntry.type === TransferType.Mining);
 
   return {
-  [Ticker.XHV]: xhvList,
+
+    [Ticker.XHV]: xhvList,
     [Ticker.xUSD]: xUSDList
   }
-
 };
 
-export const mergeAndSort = (result: {[key:string]: any | undefined [], in?: any [], out?: any[], pending?: any[] | null, pool?: any[] }) => {
+export const mergeAndSort = (result: {[key:string]: any | undefined [], in?: any [] | undefined, out?: any[] | undefined, pending?: any[] | undefined, pool?: any[] | undefined }) => {
 
+  result.out = filterForDoubleEntries(result.out);
 
   const txTypes: string[] = Object.keys(result);
-
   let all: any[] = [];
 
   txTypes.forEach( (txType: string) => {
-
     const txArray =  result[txType];
-
+    if (!txArray) {
+      return;
+    }
       txArray.forEach( (txEntry: any) => txEntry['direction'] = txType );
       all = [...all, ...txArray];
 
