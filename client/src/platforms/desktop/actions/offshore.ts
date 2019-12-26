@@ -1,5 +1,5 @@
 import { offshoreRPC, onshoreRPC } from "../ipc/rpc/rpc";
-import { addExchangeSucceedMessage } from "shared/actions/notification";
+import {addErrorNotification, addExchangeSucceedMessage} from "shared/actions/notification";
 
 import {
   OFFSHORE_FAILED,
@@ -37,7 +37,10 @@ export function onshore(
         // add a little delay to give the wallet some time for fresh data
         dispatch(updateApp());
       })
-      .catch((error: any) => dispatch(onOnShoreFailed(error)));
+      .catch((error: any) => {
+        dispatch(addErrorNotification(error));
+        dispatch(onOnShoreFailed(error))
+      });
   };
 }
 
@@ -61,7 +64,10 @@ export function offshore(
         );
         dispatch(updateApp());
       })
-      .catch((error: any) => dispatch(onOffShoreFailed(error)));
+      .catch((error: any) => {
+        dispatch(addErrorNotification(error));
+        dispatch(onOffShoreFailed(error))
+      });
   };
 }
 
