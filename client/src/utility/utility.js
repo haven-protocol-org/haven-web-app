@@ -80,3 +80,16 @@ export const getPriceValues = prices => {
 export const logM = message => {
   console.log(message);
 };
+
+
+export const createRemainingTimeString = (remainingTimeInMinutes) => {
+
+  const days = Math.floor(remainingTimeInMinutes / (60 * 24));
+  const hours = Math.floor((remainingTimeInMinutes % (1000 * 60 * 60 * 24)) / 60);
+  const minutes = Math.floor((remainingTimeInMinutes % (1000 * 60 * 60)));
+
+
+  return days > 0 ? days + 'd ' : '' + hours > 0 ? hours + 'h ': '' + minutes > 0 ? minutes + 'm' : '';
+
+
+};

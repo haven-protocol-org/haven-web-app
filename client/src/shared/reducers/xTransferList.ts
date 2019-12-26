@@ -9,9 +9,11 @@ export enum TransferType {
 
     xUSDIn='XUSD in',
     xUSDOut='XUSD out',
+    xUSDPending='XUSD pending',
     XHVIn='in',
     XHVOut='out',
-    Mining='block'
+    Mining='block',
+    XHVPending = 'pending'
 }
 
 

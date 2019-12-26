@@ -1,18 +1,13 @@
-import {
-  EmptyState,
-  History,
-  Message,
-  NoTransactions
-} from "shared/pages/_wallet/details/styles";
-import { Spinner } from "shared/components/spinner";
-import { convertBalanceForReading } from "utility/utility";
+import {EmptyState, History, Message, NoTransactions} from "shared/pages/_wallet/details/styles";
+import {Spinner} from "shared/components/spinner";
+import {convertBalanceForReading, createRemainingTimeString} from "utility/utility";
 import empty from "assets/illustration/no_transactions.svg";
-import React, { Component } from "react";
-import { getTransfers } from "../../actions";
-import { connect } from "react-redux";
-import { Transaction } from "shared/components/transaction";
+import React, {Component} from "react";
+import {getTransfers} from "../../actions";
+import {connect} from "react-redux";
+import {Transaction} from "shared/components/transaction";
 import Header from "shared/components/_layout/header/index.js";
-import { selectBlockHeight } from "../../reducers/chain";
+import {selectBlockHeight} from "../../reducers/chain";
 import {getTransferListByTicker} from "shared/reducers/xTransferList";
 import {withRouter} from "react-router";
 import {Ticker} from "shared/reducers/types";
@@ -31,23 +26,38 @@ interface TxHistoryProps {
 
 
 class TxHistoryContainer extends Component<TxHistoryProps, any> {
-  getTransactionType(status: string) {
-    if (status === "in") {
-      return "Received";
-    } else if (status === "out") {
-      return "Sent";
-    } else if (status === "block") {
+  getTransactionType(direction: string, type: string) {
+    if (direction === "in" && type === "block") {
       return "Mined";
-    } else if (status === "exchange") {
-      return "Exchange";
+    } else if (direction === "out") {
+      return "Sent";
+    } else if (direction === "in") {
+      return "Received";
     } else {
-      return status;
+      return direction;
     }
   }
+
+
+  getCurrentValueInUSD = (amount: number, ticker: Ticker ) => {
+
+    const humanAmount: number = convertBalanceForReading(Math.abs(amount));
+
+    switch (ticker) {
+
+      case Ticker.xUSD:
+        return humanAmount;
+      case Ticker.XHV:
+        return humanAmount * this.props.price;
+
+    }
+  };
+
 
   render() {
     const all = this.props.transferList;
     const isFetching = false;
+    const currentHeight = this.props.height;
 
     return (
       <>
@@ -64,22 +74,40 @@ class TxHistoryContainer extends Component<TxHistoryProps, any> {
           <History>
             {all && all.length > 0 ? (
               all.map((transaction: any, index: number) => {
+
+                const currentValueInUSD = this.getCurrentValueInUSD(transaction.amount, this.props.assetId);
+                const transactionDate = new Date(transaction.timestamp * 1000).toLocaleDateString();
+                const isMempool = transaction.direction === 'pending' || transaction.direction === 'pool';
+                const readableAmount = convertBalanceForReading(transaction.amount);
+                const txType = this.getTransactionType(transaction.direction, transaction.type);
+
+                let blocksTillUnlocked: number = 0;
+                  if (transaction.unlock_time > transaction.height) {
+                    if (transaction.unlock_time > currentHeight) {
+                      blocksTillUnlocked = transaction.unlock_time - currentHeight;
+                    }
+                  }
+                  else{
+
+                    blocksTillUnlocked = transaction.unlock_time - transaction.confirmations;
+                  }
+                  const minutesTillUnlocked = blocksTillUnlocked * 2;
+                  const timeTillUnlocked = minutesTillUnlocked > 0? createRemainingTimeString(minutesTillUnlocked): null;
+
+
+
                 return (
                   <Transaction
                     key={index}
-                    bHeight={this.props.height}
-                    type={this.getTransactionType(transaction.direction)}
+                    type={txType}
                     status={transaction.direction}
-                    price={this.props.price}
+                    currentValueInUSD={currentValueInUSD}
                     block={transaction.height}
-                    date={new Date(
-                      transaction.timestamp * 1000
-                    ).toLocaleDateString()}
+                    date={transactionDate}
                     tx={transaction.txid}
-                    mempool={transaction.height === 0}
-                    amount={convertBalanceForReading(
-                      Math.abs(transaction.amount)
-                    )}
+                    mempool={isMempool}
+                    amount={readableAmount}
+                    timeTillUnlocked={timeTillUnlocked}
                   />
                 );
               })
