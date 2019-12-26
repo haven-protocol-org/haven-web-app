@@ -7,6 +7,7 @@ import { getDaemonStates } from "./daemonState";
 import {OFFSHORE_ENABLED} from "constants/env";
 import {DesktopAppState} from "platforms/desktop/reducers";
 import {REFRESH_FAILED, REFRESH_SUCCEED, START_REFRESH} from "platforms/desktop/actions/types";
+import {getOwnAddress} from "platforms/desktop/actions/walletSession";
 
 export const refresh = () => {
   return (dispatch: any) => {
@@ -21,6 +22,7 @@ export const refresh = () => {
         })
         //. then(() =>  refreshRPC())
         .then(()=> dispatch(refreshSucceed()))
+        .then(() => dispatch(getOwnAddress()))
         //.catch(() => dispatch(refreshFailed()))
         .then(() => dispatch(updateApp()));
   };
