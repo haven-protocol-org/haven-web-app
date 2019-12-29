@@ -3,9 +3,16 @@ import React, { Component } from "react";
 // Relative Imports
 import Body from "../../../components/_layout/body";
 import { ChartContainer } from "../../../components/chart-container";
-import PropTypes from "prop-types";
 
-export class Details extends Component {
+
+interface DetailsProps {
+  amount:number,
+  price:number,
+  value:number,
+  assetId: string;
+}
+
+export class Details extends Component<DetailsProps, any> {
   componentDidMount() {
     window.scrollTo(0, 0);
   }
@@ -13,13 +20,9 @@ export class Details extends Component {
   render() {
     return (
       <Body>
-        <ChartContainer balance={this.props.balance} />
+        <ChartContainer {...this.props} />
         {this.props.children}
       </Body>
     );
   }
 }
-
-Details.propTypes = {
-  balance: PropTypes.any.isRequired
-};
