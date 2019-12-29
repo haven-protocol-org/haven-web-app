@@ -1,15 +1,30 @@
 import { AnyAction } from "redux";
 import { UPDATE_DAEMON_STATES } from "../actions/types";
 
-export interface DAEMON_STATE {
+export enum NodeLocation {
+  Local,Remote
+}
+
+
+export interface NodeState extends RunningState {
+
+  location:NodeLocation;
+  uri: string;
+  isMining:boolean;
+  connections:{in:number, out:number};
+
+}
+
+
+export interface RunningState {
   isRunning: boolean;
   code?: number;
   signal?: string;
 }
 
 export interface DaemonStates {
-  wallet: DAEMON_STATE;
-  node: DAEMON_STATE;
+  wallet: RunningState;
+  node: RunningState;
 }
 
 const INITAL_STATE: DaemonStates = {
