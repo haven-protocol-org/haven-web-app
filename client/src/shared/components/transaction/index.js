@@ -33,11 +33,14 @@ export const Transaction = ({
   const inUsd = isNaN(parseFloat(currentValueInUSD))? 0  : parseFloat(currentValueInUSD);
 
   let statusDetails = "Completed";
+  let statusLabel = "Status";
 
   if (mempool) {
     statusDetails = "Not confirmed yet";
+
   } else if (timeTillUnlocked) {
     statusDetails = '~ ' + timeTillUnlocked;
+    statusLabel = 'Spendable in'
   }
 
 
@@ -59,17 +62,12 @@ export const Transaction = ({
             <Value alignment="left">{amount}</Value>
             <Label alignment="left">Amount</Label>
           </Data>
-          {status === "pending" ? (
+
             <Data>
               <Value alignment="center">{statusDetails}</Value>
-              <Label alignment="center">{status}</Label>
+              <Label alignment="center">{statusLabel}</Label>
             </Data>
-          ) : (
-            <Data>
-              <Value alignment="center">{statusDetails}</Value>
-              <Label alignment="center">Status</Label>
-            </Data>
-          )}
+
           <Data>
             <Value alignment="right">${inUsd.toFixed(2)}</Value>
             <Label alignment="right">Current Value</Label>

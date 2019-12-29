@@ -16,6 +16,7 @@ import { xBalance } from "shared/reducers/xBalance";
 import { xTransferList } from "shared/reducers/xTransferList";
 import { offshoreProcess } from "./offshoreProcess";
 import { daemonStates } from "./daemonStates";
+import { mining } from "./mining";
 
 const appReducer = combineReducers({
   theme,
@@ -32,7 +33,8 @@ const appReducer = combineReducers({
   daemonStates,
   priceHistory,
   chain,
-  simplePrice
+  simplePrice,
+  mining
 });
 
 const rootReducer = (state: any, action: AnyAction) => {

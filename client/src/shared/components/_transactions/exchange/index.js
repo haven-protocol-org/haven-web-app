@@ -35,13 +35,13 @@ const Transaction = ({ state }) => {
         <Value>
           {(fromAsset ? fromAsset.ticker : "") +
             " " +
-            (fromAmount ? fromAmount : "--")}
+            (fromAmount && !isNaN(fromAmount) ? fromAmount : "--")}
         </Value>
       </Row>
       <Row>
         <Key>To Asset</Key>
         <Value>
-          {(toAsset ? toAsset.ticker : "") + " " + (toAmount ? toAmount : "--")}
+          {(toAsset ? toAsset.ticker : "") + " " + (toAmount && !isNaN(toAmount) ? toAmount : "--")}
         </Value>
       </Row>
       <Footer>

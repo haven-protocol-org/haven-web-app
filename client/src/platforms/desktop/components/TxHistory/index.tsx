@@ -26,7 +26,9 @@ interface TxHistoryProps {
 
 
 class TxHistoryContainer extends Component<TxHistoryProps, any> {
-  getTransactionType(direction: string, type: string) {
+
+
+  static getTransactionType(direction: string, type: string) {
     if (direction === "in" && type === "block") {
       return "Mined";
     } else if (direction === "out") {
@@ -79,20 +81,30 @@ class TxHistoryContainer extends Component<TxHistoryProps, any> {
                 const transactionDate = new Date(transaction.timestamp * 1000).toLocaleDateString();
                 const isMempool = transaction.direction === 'pending' || transaction.direction === 'pool';
                 const readableAmount = convertBalanceForReading(transaction.amount);
-                const txType = this.getTransactionType(transaction.direction, transaction.type);
+                const txType = TxHistoryContainer.getTransactionType(transaction.direction, transaction.type);
 
                 let blocksTillUnlocked: number = 0;
-                  if (transaction.unlock_time > transaction.height) {
+
+                  // when unlock_time is 0 we have a regular tx which is unlocked after 10 confirmations
+                  if (transaction.unlock_time === 0) {
+
+                    blocksTillUnlocked = Math.max(10 - transaction.confirmations,0)
+
+                  }
+                  // if unlock_time is higher than transaction height then we expect a mining
+                  // income where unlock_time is the index of the block where it is unlocked
+                  else if (transaction.unlock_time > transaction.height) {
                     if (transaction.unlock_time > currentHeight) {
                       blocksTillUnlocked = transaction.unlock_time - currentHeight;
                     }
                   }
+                  // we expect here to have a onshore/offshore tx where unlock_time is the number of blocks till unlocked
                   else{
 
                     blocksTillUnlocked = transaction.unlock_time - transaction.confirmations;
                   }
                   const minutesTillUnlocked = blocksTillUnlocked * 2;
-                  const timeTillUnlocked = minutesTillUnlocked > 0? createRemainingTimeString(minutesTillUnlocked): null;
+                  const timeTillUnlocked = minutesTillUnlocked > 0 ? createRemainingTimeString(minutesTillUnlocked): null;
 
 
 

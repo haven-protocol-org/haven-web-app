@@ -10,7 +10,7 @@ import Footer from "../../../components/_inputs/footer";
 import Dropdown from "../../../components/_inputs/dropdown";
 import Transaction from "../../../components/_transactions/exchange";
 
-import { Container } from "./styles";
+import {Container, Failed} from "./styles";
 import {
   ConversionRate,
   selectLatestXRates,
@@ -56,19 +56,20 @@ const options: AssetOption[] = [
 
 class Exchange extends Component<ExchangeProps, ExchangeState> {
   state: ExchangeState = {
-    fromAsset: undefined,
+    fromAsset: options[0],
     fromAmount: "",
     toAmount: "",
-    toAsset: undefined,
+    toAsset: options[1],
     xRate: undefined,
     xRateRevert: undefined
     // checked: false
   };
 
+
   componentDidMount() {
     window.scrollTo(0, 0);
-
       this.props.getLastBlockHeader();
+      this.setRates();
 
   }
 
@@ -263,11 +264,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
           description="Swap to and from various Haven Assets"
         />
 
-        {hasLatestXRate && conversionRates
-            ? `Latest rates are from ${new Date(
-                conversionRates.timestamp * 1000
-            ).toLocaleDateString()}`
-            : "the latest Exchange Rates are not available"}
+        { !(hasLatestXRate && conversionRates) && <Failed>Exchange is disabled when Wallet is not synced</Failed>}
 
         <Form onSubmit={this.handleSubmit}>
           <Dropdown

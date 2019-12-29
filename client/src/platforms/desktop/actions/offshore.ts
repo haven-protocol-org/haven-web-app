@@ -25,7 +25,7 @@ export function onshore(
     const address = getState().address.main;
     const params = {
       destinations: [{ address, amount: amount.toString() }],
-      ring_size: 11
+      priority:4
     };
 
     onshoreRPC(params)
@@ -54,7 +54,7 @@ export function offshore(
   return (dispatch: any, getState: () => DesktopAppState) => {
     const address = getState().address.main;
     dispatch(offshoreFetch());
-    const params = { destinations: [{ address, amount: amount.toString() }] };
+    const params = { destinations: [{ address, amount: amount.toString() }], priority:4 };
 
     offshoreRPC(params)
       .then((result: any) => {
