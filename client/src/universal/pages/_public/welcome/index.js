@@ -8,7 +8,7 @@ import {
   Buttons,
   Heading,
   Page,
-  HeadingWrapper
+  HeadingWrapper, Cards, Header, Section, Title, Subtitle, Scroller, Wrapper
 } from "./styles";
 
 import Footer from "../../../components/footer";
@@ -17,8 +17,16 @@ import Link from "../../../components/_buttons/link";
 import Button from "../../../components/_buttons/button";
 
 import api from "../../../../dummy/priceData.js";
+import {ScrollTickerWeb} from "../../../../platforms/web/components/ScrollTicker";
 
 class Welcome extends Component {
+
+  constructor(props) {
+    super(props);
+    this.contentRef = React.createRef();
+  }
+
+
   componentDidMount() {
     window.scrollTo(0, 0);
   }
@@ -28,11 +36,11 @@ class Welcome extends Component {
   };
 
   handleClick = () => {
-    window.scrollTo({
-      top: 800,
-      behavior: "smooth"
-    });
+    window.scrollTo(
+        {top:this.contentRef.current.offsetTop, behavior: 'smooth'});
   };
+
+
 
   render() {
     const windowWidth = window.innerWidth;
@@ -40,6 +48,7 @@ class Welcome extends Component {
     return (
       <Page>
         <Container>
+          <div></div>
           <Microcopy>
             <HeadingWrapper>
               <Heading size={windowWidth < 340 && "44px"}>
@@ -48,11 +57,12 @@ class Welcome extends Component {
             </HeadingWrapper>
             <Buttons>
               <Link to="/create" label="Get Haven Vault" />
-              <Button onClick={this.handleClick} label="Learn More" />
+              <Button onClick={() => this.handleClick()} label="Learn More" />
             </Buttons>
           </Microcopy>
-        </Container>
-        <Content />
+          <ScrollTickerWeb/>
+        </Container >
+        <Content ref={this.contentRef}  />
         <Footer />
       </Page>
     );

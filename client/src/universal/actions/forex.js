@@ -5,10 +5,7 @@ import {
 } from "./types";
 
 export const getForex = () => {
-  // const endDate = new Date();
-  // const startDate = endDate - 14 * 3600 * 24;
-  // const isoEndDate = endDate.toISOString().split("T")[0];
-  // const isoStartDate = endDate.toISOString().split("T")[0];
+
 
   const forexUrl = `https://api.exchangeratesapi.io/latest?base=USD`;
 

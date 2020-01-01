@@ -14,6 +14,7 @@ import { simplePrice } from "../../../universal/reducers/simplePrice";
 import { chain } from "./chain";
 import {transferProcess} from "./transferProcess";
 import forex from "../../../universal/reducers/forex";
+import {xhvVsCurrencies} from "./xhvVsCurrencies";
 
 const appReducer = combineReducers({
   theme,
@@ -27,7 +28,8 @@ const appReducer = combineReducers({
   account,
   simplePrice,
   transferProcess,
-  forex
+  forex,
+  xhvVsCurrencies
 });
 
 const rootReducer = (state, action) => {

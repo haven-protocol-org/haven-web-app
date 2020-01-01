@@ -5,6 +5,7 @@ export * from "./balance";
 export * from "./key";
 export * from "./transferHistory";
 export * from "./sendFunds";
+export * from "./xhvVsCurrencies";
 
 export const addPubAddress = address => ({
   type: ADD_PUB_ADDRESS,
