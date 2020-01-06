@@ -64,6 +64,7 @@ const daemonConfigTestnet = {
         port:27750,
         args:{
             'testnet':'',
+            'add-priority-node': 'seed01.testnet.havenprotocol.org'
         }
     },
     wallet: {
