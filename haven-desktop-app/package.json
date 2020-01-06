@@ -2,7 +2,7 @@
   "name": "haven-desktop-app",
   "productName": "haven-desktop-app",
   "version": "1.0.0",
-  "description": "My Electron application description",
+  "description": "Desktop App for Haven Vault",
   "main": "dist/index.js",
   "scripts": {
     "start": "npm run build && electron-forge start",
@@ -15,8 +15,8 @@
   },
   "keywords": [],
   "author": {
-    "name": "MartyHav",
-    "email": "lala"
+    "name": "Haven Team",
+    "email": "info@havenprotocol.org"
   },
   "license": "MIT",
   "config": {
