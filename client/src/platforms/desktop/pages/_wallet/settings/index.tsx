@@ -47,6 +47,9 @@ class SettingsDesktopPage extends Component<SettingsProps,any> {
   componentDidMount() {
 
     this.props.miningStatus();
+    if (this.props.mining.active) {
+      this.addMiningStatusRefresh();
+    }
     window.scrollTo(0, 0);
     this.setState({
       value: this.props.theme.value
@@ -66,10 +69,9 @@ class SettingsDesktopPage extends Component<SettingsProps,any> {
     }
   }
 
-  componentWillMount(): void {
 
+  componentWillUnmount(): void {
     this.removeMiningStatusRefresh();
-
   }
 
 
