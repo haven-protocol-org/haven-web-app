@@ -26,8 +26,8 @@ class TransferDesktopContainer extends Component<any, any> {
 
     if (this.props.transferSucceed) {
 
-      resetTransferProcess();
-      history.push("/wallet/assets/" + this.sendTicker);
+      this.props.resetTransferProcess();
+      this.props.history.push("/wallet/assets/" + this.sendTicker);
     }
 
   }
@@ -48,18 +48,17 @@ class TransferDesktopContainer extends Component<any, any> {
 
   render() {
     return (
-        <Transfer isProcessing={this.props.tx.isProcessing} address={this.props.address} sendFunds={this.onSendFunds}/>
+        <Transfer isProcessing={this.props.tx.isFetching} address={this.props.address} sendFunds={this.onSendFunds}/>
     )
   }
-
 }
 
 
 
 export const mapStateToProps = (state: DesktopAppState) => ({
   address: state.address.main,
-  transferSucceed:transferSucceed,
-  tx: transferProcess
+  transferSucceed:transferSucceed(state),
+  tx: state.transferProcess
 
 });
 
