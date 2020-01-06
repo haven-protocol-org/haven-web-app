@@ -6,8 +6,6 @@ const MAINNET_WALLET_PATH = '/wallet/main';
 const TESTNET_WALLET_PATH = '/wallet/test';
 const PLATFORM = process.platform;
 
-console.log(PLATFORM);
-
 const WALLET_PATH_TESTNET: string = path.join( APP_DATA_PATH , TESTNET_WALLET_PATH);
 const WALLET_PATH_MAINNET: string = path.join( APP_DATA_PATH , MAINNET_WALLET_PATH);
 

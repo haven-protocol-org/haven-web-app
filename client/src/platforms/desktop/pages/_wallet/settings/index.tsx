@@ -20,12 +20,26 @@ import {miningStatus, startMining, stopMining} from "platforms/desktop/actions/m
 
 type ThemeOption = {theme:string, value: string}
 
+
+interface SettingsProps {
+  theme:any;
+  mining:MiningStatus;
+  selectTheme:(theme: any) => void;
+  startMining:() => void;
+  stopMining:() => void;
+  miningStatus:() => void;
+}
+
+
 const options:ThemeOption[] = [
   { theme: "dark", value: "Dark Theme" },
   { theme: "light", value: "Light Theme" }
 ];
 
-class SettingsDesktopPage extends Component<any,any> {
+class SettingsDesktopPage extends Component<SettingsProps,any> {
+
+
+  refreshTimer:number = -1;
 
   state = {
     value: "",
@@ -39,6 +53,40 @@ class SettingsDesktopPage extends Component<any,any> {
       value: this.props.theme.value
     });
   }
+
+
+  componentWillReceiveProps(nextProps: Readonly<SettingsProps>, nextContext: any): void {
+
+    if (!this.props.mining.active && nextProps.mining.active) {
+      this.addMiningStatusRefresh();
+      return;
+    }
+
+    if (this.props.mining.active && !nextProps.mining.active) {
+      this.removeMiningStatusRefresh();
+    }
+  }
+
+  componentWillMount(): void {
+
+    this.removeMiningStatusRefresh();
+
+  }
+
+
+  addMiningStatusRefresh() {
+
+    this.refreshTimer = window.setInterval(() => this.props.miningStatus(), 2000);
+
+  }
+
+
+  removeMiningStatusRefresh() {
+
+    window.clearInterval(this.refreshTimer);
+
+  }
+
 
   handleClick = ({theme, value }:ThemeOption) => {
     if (theme === "light") {
@@ -65,7 +113,6 @@ class SettingsDesktopPage extends Component<any,any> {
       return;
     }
 
-
     if (mining.active) {
 
       this.props.stopMining();
@@ -75,9 +122,6 @@ class SettingsDesktopPage extends Component<any,any> {
       this.props.startMining();
 
     }
-
-
-
   };
 
 
