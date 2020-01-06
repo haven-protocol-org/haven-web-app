@@ -2,11 +2,12 @@ import { offshoreRPC, onshoreRPC } from "../ipc/rpc/rpc";
 import {addErrorNotification, addExchangeSucceedMessage} from "shared/actions/notification";
 
 import {
+  EXCHANGE_RESET,
   OFFSHORE_FAILED,
   OFFSHORE_FETCHING,
   ONSHORE_FAILED,
   ONSHORE_FETCHING,
-  ONSHORE_SUCCEED
+  ONSHORE_SUCCEED, TRANSFER_RESET
 } from "./types";
 import { updateApp } from "./refresh";
 import { DesktopAppState } from "../reducers";
@@ -99,4 +100,9 @@ const offshoreSucceed = (payload: any) => {
 const onOffShoreFailed = (error: any) => {
   console.log(error);
   return { type: OFFSHORE_FAILED };
+};
+
+
+export const resetExchangeProcess = () => {
+  return { type: EXCHANGE_RESET };
 };

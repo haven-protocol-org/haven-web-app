@@ -20,9 +20,9 @@ import {
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { selectNodeHeight } from "platforms/desktop/reducers/chain";
 import { getLastBlockHeader } from "platforms/desktop/actions/blockHeaderExchangeRate";
-import { offshore, onshore } from "platforms/desktop/actions";
+import { offshore, onshore,resetExchangeProcess } from "platforms/desktop/actions";
 import { Ticker } from "shared/reducers/types";
-import { isProcessingExchange } from "platforms/desktop/reducers/offshoreProcess";
+import {exchangeSucceed, isProcessingExchange} from "platforms/desktop/reducers/offshoreProcess";
 
 type ExchangeProps = {
   conversionRates: XRates | null;
@@ -30,8 +30,10 @@ type ExchangeProps = {
   getLastBlockHeader: () => void;
   onshore: typeof onshore;
   offshore: typeof offshore;
+  resetExchangeProcess: typeof resetExchangeProcess;
   isProcessingExchange: boolean;
   hasLatestXRate: boolean;
+  exchangeSucceed: boolean;
 };
 
 type ExchangeState = {
@@ -41,7 +43,7 @@ type ExchangeState = {
   toAsset?: AssetOption;
   xRate?: number;
   xRateRevert?: number;
-  // checked: boolean;
+  reviewed?:boolean;
 };
 
 export interface AssetOption {
@@ -49,27 +51,42 @@ export interface AssetOption {
   name: string;
 }
 
+
+
 const options: AssetOption[] = [
   { name: "Haven Token", ticker: Ticker.XHV },
   { name: "United States Dollar", ticker: Ticker.xUSD }
 ];
 
+const INITAIL_STATE = {
+  fromAsset: options[0],
+  fromAmount: "",
+  toAmount: "",
+  toAsset: options[1],
+  xRate: undefined,
+  xRateRevert: undefined,
+  reviewed:false
+};
 class Exchange extends Component<ExchangeProps, ExchangeState> {
-  state: ExchangeState = {
-    fromAsset: options[0],
-    fromAmount: "",
-    toAmount: "",
-    toAsset: options[1],
-    xRate: undefined,
-    xRateRevert: undefined
-    // checked: false
-  };
+  state: ExchangeState = INITAIL_STATE;
 
 
   componentDidMount() {
     window.scrollTo(0, 0);
       this.props.getLastBlockHeader();
       this.setRates();
+
+  }
+
+  componentWillReceiveProps(nextProps: Readonly<ExchangeProps>, nextContext: any): void {
+
+
+    if (!this.props.exchangeSucceed && nextProps.exchangeSucceed) {
+
+      this.props.resetExchangeProcess();
+      this.setState({...INITAIL_STATE});
+    }
+
 
   }
 
@@ -119,6 +136,13 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       this.setState({ fromAsset: undefined });
     }
   };
+
+
+  handleReviewSubmit = (event: any) => {
+    const { checked } = event.target;
+    this.setState({ reviewed: checked});
+  };
+
 
   setRates() {
     const { fromAsset, toAsset } = this.state;
@@ -216,7 +240,8 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       !this.state.fromAmount ||
       !this.state.fromAsset ||
       !this.state.toAsset ||
-      !this.state.toAmount
+      !this.state.toAmount ||
+        !this.state.reviewed
     )
       return;
 
@@ -244,7 +269,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
   };
 
   render() {
-    const { fromAsset, toAsset, fromAmount, toAmount } = this.state;
+    const { fromAsset, toAsset, fromAmount, toAmount, reviewed } = this.state;
 
     const fromName = fromAsset ? fromAsset.name : "Select Asset";
     const fromTicker = fromAsset ? fromAsset.ticker : "";
@@ -255,7 +280,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     const { hasLatestXRate, conversionRates } = this.props;
 
     const isValid: boolean =
-      !!(fromAsset && toAsset && fromAmount && toAmount) && hasLatestXRate;
+      !!(fromAsset && toAsset && fromAmount && toAmount && reviewed) && hasLatestXRate;
 
     return (
       <Body>
@@ -309,7 +334,9 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
           />
         </Form>
         <Container>
-          <Transaction state={this.state} />
+          <Transaction state={this.state}
+                       checked={reviewed}
+                       onChange={this.handleReviewSubmit}/>
           <Footer
             onClick={this.handleSubmit}
             label="Exchange"
@@ -326,10 +353,11 @@ const mapStateToProps = (state: DesktopAppState) => ({
   conversionRates: selectLatestXRates(state),
   nodeHeight: selectNodeHeight(state),
   isProcessingExchange: isProcessingExchange(state),
-  hasLatestXRate: hasLatestXRate(state)
+  hasLatestXRate: hasLatestXRate(state),
+  exchangeSucceed:exchangeSucceed(state)
 });
 
 export const ExchangePage = connect(
   mapStateToProps,
-  { getLastBlockHeader, onshore, offshore }
+  { getLastBlockHeader, onshore, offshore, resetExchangeProcess }
 )(Exchange);

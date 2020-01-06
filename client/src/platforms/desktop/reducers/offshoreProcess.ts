@@ -4,12 +4,12 @@ import {
   OFFSHORE_FAILED,
   ONSHORE_FETCHING,
   ONSHORE_SUCCEED,
-  ONSHORE_FAILED
+  ONSHORE_FAILED, EXCHANGE_RESET
 } from "../actions/types";
 import { AnyAction } from "redux";
 import { DesktopAppState } from "./index";
 import { TxProcessInfo } from "./transferProcess";
-import { Ticker } from "../../../shared/reducers/types";
+import { Ticker } from "shared/reducers/types";
 
 export enum EXCHANGE_TYPE {
   Onshore,
@@ -17,12 +17,23 @@ export enum EXCHANGE_TYPE {
 }
 
 export interface ExchangeProcessInfo extends TxProcessInfo {
-  offshoreType: EXCHANGE_TYPE;
-  toTicker: Ticker;
-  fromTicker: Ticker;
+  offshoreType: EXCHANGE_TYPE | null;
+  toTicker: Ticker | null;
+  fromTicker: Ticker | null;
 }
 
-const INITIAL_STATE: ExchangeProcessInfo = <ExchangeProcessInfo>{};
+const INITIAL_STATE: ExchangeProcessInfo = {
+  address:'',
+  amount:null,
+  fee:null,
+  isFetching:false,
+  info:'',
+  error:'',
+  succeed:false,
+  offshoreType:null,
+  toTicker:null,
+  fromTicker: null
+};
 
 export const offshoreProcess = (
   state = INITIAL_STATE,
@@ -49,6 +60,8 @@ export const offshoreProcess = (
         succeed: false,
         error: action.payload
       };
+    case EXCHANGE_RESET:
+      return INITIAL_STATE;
     default:
       return state;
   }
@@ -59,5 +72,5 @@ export const isProcessingExchange = (state: DesktopAppState) => {
 };
 
 export const exchangeSucceed = (state: DesktopAppState) => {
-  return state.transferProcess.succeed;
+  return state.offshoreProcess.succeed;
 };
