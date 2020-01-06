@@ -153,7 +153,7 @@ class SettingsDesktopPage extends Component<SettingsProps,any> {
         </Form>
         <Header
             title="Mining "
-            description="Decentralize and stable Haven while earning XHV"
+            description="Decentralize and secure the Haven network while earning XHV"
         />
         <MiningState><Information>{mining.active? `Mining with ${mining.speed} hashes per second` : 'Not Mining'}</Information></MiningState>
         <Button  onClick={() => this.onMiningButtonClicked()}>{ buttonLabel }</Button>

@@ -40,7 +40,7 @@ export const Transaction = ({
 
   } else if (timeTillUnlocked) {
     statusDetails = '~ ' + timeTillUnlocked;
-    statusLabel = 'Spendable in'
+    statusLabel = 'Unlocked in'
   }
 
 

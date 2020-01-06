@@ -237,9 +237,9 @@ class CreateDesktopContainer extends Component<
           <>
             <Description
               label={`type in the words ${this.state.wordsToVerify
-                .map(word => word.index + 1)
-                .join(", ")} seperated by blank space`}
-              placeholder="Take a look at your seed"
+                .map(word => '#'+ (word.index + 1))
+                .join(" ")} seperated by blank space`}
+              placeholder="Refer to the seed phrase to enter the words requested above"
               name={"verify_seed"}
               value={verify_seed}
               error={error}
