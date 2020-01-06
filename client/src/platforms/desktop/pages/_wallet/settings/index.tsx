@@ -38,7 +38,6 @@ const options:ThemeOption[] = [
 
 class SettingsDesktopPage extends Component<SettingsProps,any> {
 
-
   refreshTimer:number = -1;
 
   state = {
@@ -130,7 +129,7 @@ class SettingsDesktopPage extends Component<SettingsProps,any> {
 
 
     const mining: MiningStatus = this.props.mining;
-    let buttonLabel = mining.miningRequest !== MiningRequestTypes.None? (<Spinner/>) :
+    let buttonLabel = (mining.miningRequest !== MiningRequestTypes.None && mining.miningRequest !== MiningRequestTypes.Status) ? (<Spinner/>) :
         mining.active? 'Stop Mining' : 'Start Mining';
 
 
