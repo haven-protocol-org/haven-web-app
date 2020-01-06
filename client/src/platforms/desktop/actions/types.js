@@ -78,6 +78,9 @@ export const OFFSHORE_TRANSFER_FETCHING = "offshore_transfer_fetching";
 export const OFFSHORE_TRANSFER_FAILED = "offshore_transfer_failed";
 export const OFFSHORE_TRANSFER_SUCCEED = "offshore_transfer_succeed";
 
+export const EXCHANGE_RESET = "exchange_reset";
+
+
 export const GET_OFFSHORE_BALANCE_FETCHING = "get_offshore_balance_fetching";
 export const GET_OFFSHORE_BALANCE_FAILED = "get_offshore_balance_failed";
 export const GET_OFFSHORE_BALANCE_SUCCEED = "get_offshore_balance_succeed";

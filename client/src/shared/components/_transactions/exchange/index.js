@@ -5,15 +5,13 @@ import React from "react";
 import { Container, Header, Row, Key, Value, Footer } from "./styles";
 import Confirm from "../../confirm/index.js";
 
-const Transaction = ({ state }) => {
+const Transaction = ({ state, checked, onChange }) => {
   const {
     xRate,
     fromAmount,
     toAmount,
     fromAsset,
-    toAsset,
-    checked,
-    onChange
+    toAsset
   } = state;
 
   return (

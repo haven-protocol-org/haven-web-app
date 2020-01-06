@@ -12,15 +12,24 @@ import { DesktopAppState } from "./index";
 
 export interface TxProcessInfo {
   address: string;
-  amount: bigint;
-  fee: bigint;
+  amount: bigint|null;
+  fee: bigint|null;
   isFetching: boolean;
   info: string;
   error: string;
   succeed: boolean;
 }
 
-const INITIAL_STATE: TxProcessInfo = <TxProcessInfo>{};
+const INITIAL_STATE: TxProcessInfo = {
+  address:'',
+  amount:null,
+  fee:null,
+  isFetching:false,
+  info:'',
+  error:'',
+  succeed:false
+
+};
 
 export const transferProcess = (
   state = INITIAL_STATE,

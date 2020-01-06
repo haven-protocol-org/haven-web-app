@@ -38,10 +38,9 @@ interface TransferState {
   send_amount: string;
   recipient_address: string;
   payment_id: string;
-  validated: boolean;
   firstTabState: boolean;
   secondTabState: boolean;
-  checked: boolean;
+  reviewed: boolean;
   copyButtonState: string;
   address: string;
 }
@@ -54,10 +53,9 @@ export class Transfer extends Component<TransferProps, TransferState> {
     send_amount: "",
     recipient_address: "",
     payment_id: "",
-    validated: false,
     firstTabState: true,
     secondTabState: false,
-    checked: false,
+    reviewed: false,
     copyButtonState: "Copy Address",
     address: ""
   };
@@ -92,7 +90,6 @@ export class Transfer extends Component<TransferProps, TransferState> {
     } = this.state;
 
     if (send_amount.length === 0 && recipient_address.length === 0) {
-      this.setState({ validated: false });
       return;
     }
 
@@ -122,7 +119,7 @@ export class Transfer extends Component<TransferProps, TransferState> {
 
   handleCheckboxChange = (event: any) => {
     const { checked } = event.target;
-    this.setState({ checked: checked, validated: true });
+    this.setState({ reviewed: checked});
   };
 
   clipboardAddress = () => {
@@ -146,7 +143,7 @@ export class Transfer extends Component<TransferProps, TransferState> {
       selectedAsset,
       send_amount,
       recipient_address,
-      checked,
+      reviewed,
       payment_id
     } = this.state;
 
@@ -239,7 +236,7 @@ export class Transfer extends Component<TransferProps, TransferState> {
             <Container>
               <Transaction
                 state={this.state}
-                checked={this.state.checked}
+                checked={reviewed}
                 onChange={this.handleCheckboxChange}
               />
 
@@ -247,7 +244,7 @@ export class Transfer extends Component<TransferProps, TransferState> {
                 onClick={this.handleSubmit}
                 loading={this.props.isProcessing}
                 label="Transfer"
-                validated={checked && checkValidation}
+                validated={reviewed && checkValidation}
               />
             </Container>
           </>
