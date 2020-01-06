@@ -6,13 +6,11 @@ import PropTypes from "prop-types";
 import Header from "../_layout/header";
 import {Row} from "./styles";
 import {connect} from "react-redux";
-import {NO_PRICE, PRICE_RANGE_MONTH} from "../../reducers/priceHistory";
-import {convertBalanceForReading, getPriceDates, getPriceValues} from "../../../utility/utility";
-import {selectSimplePrice} from "../../reducers/simplePrice";
+import {PRICE_RANGE_MONTH} from "../../reducers/priceHistory";
+import {getPriceDates, getPriceValues} from "../../../utility/utility";
 import {getPriceHistory} from "../../actions";
 import Statistic from "../statistic";
 import {withRouter} from "react-router-dom";
-import {NO_BALANCE} from "../../reducers/xBalance";
 
 class ChartWrapper extends Component {
     state = { selectedRangeInDays: PRICE_RANGE_MONTH };
@@ -26,18 +24,12 @@ class ChartWrapper extends Component {
         this.setState({ selectedRangeInDays: rangeInDays });
     }
 
-    getBalancePriceStats() {
-        let amount = this.props.balance === NO_BALANCE ? 1 : convertBalanceForReading(this.props.balance);
-        let price = this.props.lastPrice === NO_PRICE ? 1 : this.props.lastPrice;
-        let value = price * amount;
 
-        return { amount, price, value };
-    }
 
     render() {
 
         const { id } = this.props.match.params;
-        const { amount, price, value } = this.getBalancePriceStats();
+        const { amount, price, value } = this.props;
 
         const priceRangeEntry = this.props.priceHistory.prices.find(
             priceRangeEntry =>
@@ -78,7 +70,6 @@ class ChartWrapper extends Component {
 
 const mapStateToProps = state => ({
     priceHistory: state.priceHistory,
-    lastPrice: selectSimplePrice(state),
 
 });
 
@@ -91,8 +82,9 @@ export const ChartContainer = withRouter(connect(
 
 ChartWrapper.propTypes = {
 
-    balance:PropTypes.any.isRequired,
-    lastPrice:PropTypes.number.isRequired,
+    amount:PropTypes.any.isRequired,
+    value:PropTypes.any.isRequired,
+    price:PropTypes.number.isRequired,
     priceHistory:PropTypes.any.isRequired,
 
 };

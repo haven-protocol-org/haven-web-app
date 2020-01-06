@@ -37,6 +37,24 @@ export const convertBalanceForReading = balance => {
   return readableBalance;
 };
 
+
+export const convertToMoney = atomicMoney => {
+
+  if (atomicMoney === NO_BALANCE) return -1;
+
+  let readableBalance;
+  if (typeof atomicMoney === "bigint") {
+    readableBalance = Number(atomicMoney / BigInt(Math.pow(10, 8)));
+
+    return readableBalance / 10000;
+  }
+
+  readableBalance = atomicMoney / Math.pow(10, 12);
+
+  if (readableBalance % 1 === 0) return parseInt(readableBalance);
+  return readableBalance;
+};
+
 export const uuidv4 = () => {
   return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
     (
@@ -79,4 +97,17 @@ export const getPriceValues = prices => {
 
 export const logM = message => {
   console.log(message);
+};
+
+
+export const createRemainingTimeString = (remainingTimeInMinutes) => {
+
+  const days = Math.floor(remainingTimeInMinutes / (60 * 24));
+  const hours = Math.floor((remainingTimeInMinutes / 60));
+  const minutes = Math.floor((remainingTimeInMinutes % 60));
+
+  const timeString =  (days > 0 ? days + 'd ' : '') + (hours > 0 ? hours + 'h ': '') + (minutes > 0 ? minutes + 'm' : '');
+  return timeString;
+
+
 };

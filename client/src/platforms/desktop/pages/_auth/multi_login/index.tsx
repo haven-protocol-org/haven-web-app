@@ -10,10 +10,7 @@ import { Container, Main, Header, Footer, Route, Label } from "./styles";
 import { DesktopAppState } from "../../../reducers";
 import { connect } from "react-redux";
 import { getSavedWallets } from "../../../actions/walletSession";
-import {
-  selectIsLoggedIn,
-  selectIsRequestingLogin
-} from "../../../reducers/walletSession";
+import { selectIsLoggedIn } from "../../../reducers/walletSession";
 import { Redirect } from "react-router";
 import { OpenWalletDesktop } from "../open";
 

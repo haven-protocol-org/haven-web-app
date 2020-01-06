@@ -2,12 +2,6 @@
 import * as fs from "fs";
 import {daemonConfig} from "./daemonConfig";
 
-// stores and reads data for user speific data e.g. wallet names, path to wallet, path to node etc...
-
-
-
-
-
 export const getAvailableWallets = ():string [] => {
 
 

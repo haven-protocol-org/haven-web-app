@@ -43,7 +43,6 @@ const daemonConfigMainnet = {
         path:HAVEND_PATH_MAINNET,
         port:17750,
         args:{
-            'rpc-bind-port': 17750,
         }
     },
     wallet: {
@@ -65,7 +64,6 @@ const daemonConfigTestnet = {
         port:27750,
         args:{
             'testnet':'',
-            'rpc-bind-port': 27750,
         }
     },
     wallet: {

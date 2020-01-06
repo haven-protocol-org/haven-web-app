@@ -99,3 +99,10 @@ export const UPDATE_DAEMON_STATES = "update_daemon_states";
 export const UPDATE_DAEMON_STATES_FAILED = "update_daemon_states_failed";
 
 export const UPDATE_SAVED_WALLETS = "update_saved_wallets";
+
+
+export const REQUEST_MINING_START = "request_mining_start";
+export const REQUEST_MINING_STOP = "request_mining_stop";
+export const REQUEST_MINING_STATUS = "request_mining_status";
+export const MINING_STATUS_RESPONSE = "mining_status_response";
+export const MINING_STATUS_RESPONSE_FAILED = "mining_status_response";

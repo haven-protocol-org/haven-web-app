@@ -1,8 +1,21 @@
 import styled from "styled-components";
+import media from "../../../../assets/styles/media";
 
 export const Container = styled.div`
   grid-column: 1 / 3;
   margin-top: -20px;
+`;
+
+
+export const Failed = styled.div`
+  color: black;
+  width: auto;
+  font-size: 16px
+  padding: 6px 12px;
+  background: #F04747;
+  border-radius:3px;
+  text-align:center;
+  grid-column: 1/-1;
 `;
 
 export const Footer = styled.div`

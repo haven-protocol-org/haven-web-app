@@ -1,9 +1,10 @@
-import { app, BrowserWindow } from "electron";
+import {app, BrowserWindow, Menu} from "electron";
 import * as path from "path";
 import { devServerStarted } from "./dev";
 import { HavenWallet, QUIT_EVENT } from "./HavenWallet";
 import { BrowserWindowConstructorOptions } from "electron";
 import {isDevMode} from "./env";
+import {havenMenu} from "./menu";
 
 const wallet = new HavenWallet();
 
@@ -17,6 +18,10 @@ if (require("electron-squirrel-startup")) {
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow: Electron.BrowserWindow;
+
+
+const menu = Menu.buildFromTemplate(havenMenu);
+Menu.setApplicationMenu(menu);
 
 const startApp = () => {
   const browserOptions: BrowserWindowConstructorOptions = {
@@ -52,6 +57,8 @@ const startApp = () => {
     );
 
     mainWindow.maximize();
+
+
   }
 
   // start the app
@@ -67,6 +74,8 @@ const startApp = () => {
   mainWindow.on("ready-to-show", () => {
     mainWindow.show();
   });
+
+
 };
 
 // This method will be called when Electron has finished

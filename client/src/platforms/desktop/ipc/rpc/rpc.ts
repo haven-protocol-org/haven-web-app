@@ -50,6 +50,10 @@ export function refreshRPC(start_height = 0) {
   return callRpc('refresh' ,{start_height});
 }
 
+export function rescanBlockchainRPC() {
+    return callRpc('rescan_blockchain');
+}
+
 
 export function onshoreRPC(params: object) {
     return callRpc('onshore', params)
@@ -100,6 +104,19 @@ export function getInfoRPC() {
 }
 
 
+export function startMiningRPC(params:object) {
+    return callRpc('start_mining', params);
+}
+
+export function stopMiningRPC() {
+    return callRpc('stop_mining');
+}
+
+export function miningStatusRPC() {
+    return callRpc('mining_status');
+}
+
+
 
 function callRpc(method: string, params: object | undefined = undefined) {
 
@@ -132,6 +149,13 @@ export const handleError = async (response: any) => {
         return Promise.reject (response.data.error);
 
 
-    return response.data.result;
+
+
+    // we must distinguish between two reponse styles from monero daemon rpc, oldschool vs new school
+    if (response.data.result) {
+        return response.data.result;
+    }
+
+    return response.data;
 
 };

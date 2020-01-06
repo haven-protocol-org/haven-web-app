@@ -10,6 +10,25 @@ const ignoredPaths = ['^/src', '.gitignore', 'tsconfig.json',
 
 
 
+
+
+const substituteEnvsForBuild = (buildPath, electronVersion,platform, arch, callback) => {
+
+    const envPath = path.resolve(buildPath, 'dist', 'env.js');
+    let envContent = fs.readFileSync(envPath, {encoding:'utf8'});
+
+    const envKeys = Object.keys(process.env);
+
+    envKeys.forEach( envKey => {envContent = envContent.replace(`process.env.${envKey}`, process.env[envKey]);});
+
+    fs.writeFileSync(envPath, envContent);
+    callback();
+
+};
+
+
+
+
 const copyTargetNodesToBuild = (buildPath, electronVersion,platform, arch, callback) => {
 
 
@@ -30,7 +49,7 @@ const copyTargetNodesToBuild = (buildPath, electronVersion,platform, arch, callb
 module.exports = {
 
 
-    packagerConfig:{ name:'Haven', ignore:ignoredPaths, afterCopy:[copyTargetNodesToBuild], icon:'./icons/haven_icon'},
+    packagerConfig:{ name:'Haven', ignore:ignoredPaths, afterCopy:[copyTargetNodesToBuild, substituteEnvsForBuild], icon:'./icons/haven_icon'},
 
 
     makers: [

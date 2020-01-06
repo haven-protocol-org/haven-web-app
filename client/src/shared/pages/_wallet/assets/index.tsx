@@ -11,16 +11,33 @@ import Cell from "../../../components/cell";
 import CellDisabled from "../../../components/cell_disabled";
 
 import token from "../../../../constants/assets.js";
-import { NO_PRICE } from "../../../reducers/priceHistory";
-import { calcValue } from "../../../../utility/utility";
-import {Ticker} from "../../../reducers/types";
-import {OFFSHORE_ENABLED} from "../../../../constants/env";
-import {DesktopAppState} from "../../../../platforms/desktop/reducers";
+import { NO_PRICE } from "shared/reducers/priceHistory";
+import {calcValue, convertToMoney} from "utility/utility";
+import {Ticker} from "shared/reducers/types";
+import {OFFSHORE_ENABLED} from "constants/env";
+import {DesktopAppState} from "platforms/desktop/reducers";
+import {selectReadableBalance, XBalances} from "shared/reducers/xBalance";
+
+interface AssetsProps {
+
+    balances:XBalances,
+    price:number,
+    rates:{[key:string]: any},
+    getSimplePrice:() => void,
+    getForex:() => void,
+
+
+};
 
 
 
+interface AssetsState {
 
-class AssetsPage extends Component<any, any> {
+
+};
+
+
+class AssetsPage extends Component<AssetsProps, any> {
   state = {
     forexPriceFetched: false
   };
@@ -40,13 +57,17 @@ class AssetsPage extends Component<any, any> {
           return null;
       }
 
+      const xUSDBalance = convertToMoney(this.props.balances.xUSD.unlockedBalance);
+      const value = calcValue(xUSDBalance,1);
+
+
 
       const enabledTokens = token.filter( (asset: any) => (('x' + asset.ticker) in Ticker));
       return enabledTokens.map(data => {
       const { token, ticker, change, symbol } = data;
 
       const rates = this.props.rates;
-      let price = rates[ticker] ? rates[ticker] : 0;
+      let price = rates[ticker] ? rates[ticker] :0;
       price = symbol + price.toFixed(2);
 
       return (
@@ -56,7 +77,7 @@ class AssetsPage extends Component<any, any> {
               tokenName={token}
               ticker={"x" + ticker}
               price={price}
-              change={change}
+              change={value}
           />
       )})};
 
@@ -93,7 +114,8 @@ class AssetsPage extends Component<any, any> {
     const price =
       this.props.price === NO_PRICE || isNaN(this.props.price) ? "--" : this.props.price.toFixed(4);
 
-    const value = calcValue(this.props.readableBalance, this.props.price);
+    const xhvBalance = convertToMoney(this.props.balances.XHV.unlockedBalance);
+    const value = calcValue(xhvBalance, this.props.price);
 
     return (
         <Body>
@@ -124,7 +146,8 @@ class AssetsPage extends Component<any, any> {
 
 export const mapStateToProps = (state: DesktopAppState) => ({
   ...state.simplePrice,
-  ...state.forex
+  ...state.forex,
+    balances:state.xBalance
 });
 
 export const Assets =  connect(

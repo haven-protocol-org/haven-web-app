@@ -82,3 +82,4 @@ export const hasLatestXRate = (state: DesktopAppState) => {
     return state.blockHeaderExchangeRate.some( xRate => xRate.height === chainHeight);
 
 };
+

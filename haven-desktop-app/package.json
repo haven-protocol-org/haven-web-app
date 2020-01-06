@@ -1,11 +1,11 @@
 {
   "name": "haven-desktop-app",
-  "productName": "haven-desktop-app",
+  "productName": "Haven",
   "version": "1.0.0",
   "description": "Desktop App for Haven Vault",
   "main": "dist/index.js",
   "scripts": {
-    "start": "npm run build && electron-forge start",
+    "start": "npm run build && npm run watch & electron-forge start",
     "package": "npm run build && electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
@@ -36,6 +36,7 @@
     "electron": "7.1.1",
     "ncp": "^2.0.0",
     "tslint": "^5.20.1",
-    "typescript": "^3.7.3"
+    "typescript": "^3.7.3",
+    "webpack": "^4.41.4"
   }
 }

@@ -1,4 +1,7 @@
 type XFetchingStats = {isFetching: boolean, failed: boolean, error:object|null|string}
+
+
+
 export enum Ticker {
     XHV='XHV',
     xUSD='xUSD'

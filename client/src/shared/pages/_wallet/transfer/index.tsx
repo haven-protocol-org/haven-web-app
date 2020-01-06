@@ -154,6 +154,9 @@ export class Transfer extends Component<TransferProps, TransferState> {
       send_amount.length > 0 && recipient_address.length > 97;
     const windowWidth = window.innerWidth;
 
+
+
+
     return (
       <Body>
         <Header

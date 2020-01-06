@@ -1,5 +1,5 @@
 import { offshoreRPC, onshoreRPC } from "../ipc/rpc/rpc";
-import { addExchangeSucceedMessage } from "shared/actions/notification";
+import {addErrorNotification, addExchangeSucceedMessage} from "shared/actions/notification";
 
 import {
   OFFSHORE_FAILED,
@@ -25,7 +25,7 @@ export function onshore(
     const address = getState().address.main;
     const params = {
       destinations: [{ address, amount: amount.toString() }],
-      ring_size: 11
+      priority:4
     };
 
     onshoreRPC(params)
@@ -37,7 +37,10 @@ export function onshore(
         // add a little delay to give the wallet some time for fresh data
         dispatch(updateApp());
       })
-      .catch((error: any) => dispatch(onOnShoreFailed(error)));
+      .catch((error: any) => {
+        dispatch(addErrorNotification(error));
+        dispatch(onOnShoreFailed(error))
+      });
   };
 }
 
@@ -51,7 +54,7 @@ export function offshore(
   return (dispatch: any, getState: () => DesktopAppState) => {
     const address = getState().address.main;
     dispatch(offshoreFetch());
-    const params = { destinations: [{ address, amount: amount.toString() }] };
+    const params = { destinations: [{ address, amount: amount.toString() }], priority:4 };
 
     offshoreRPC(params)
       .then((result: any) => {
@@ -61,7 +64,10 @@ export function offshore(
         );
         dispatch(updateApp());
       })
-      .catch((error: any) => dispatch(onOffShoreFailed(error)));
+      .catch((error: any) => {
+        dispatch(addErrorNotification(error));
+        dispatch(onOffShoreFailed(error))
+      });
   };
 }
 

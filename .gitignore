@@ -28,3 +28,5 @@ newrelic_agent.log
 client/deploy/deploy.sh
 
 /haven-node/wallets
+sh/team_deploy.sh
+sh/team_deploy.sh

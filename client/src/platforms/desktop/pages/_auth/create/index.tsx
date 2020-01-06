@@ -4,13 +4,12 @@ import React, { Component } from "react";
 // Relative Imports
 import Placeholder from "shared/components/_create/placeholder";
 
-import { Body, Buttons, Submit, Cancel } from "../multi_login/styles";
+import { Body, Buttons, Submit } from "../multi_login/styles";
 import CreateSeed from "shared/components/_create/create_seed";
 import { createWallet } from "platforms/desktop/actions";
-import { Back } from "shared/components/_auth/create/styles";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { connect } from "react-redux";
-import { WalletCreation } from "platforms/desktop/reducers/walletCreation";
+import {selectErrorMessage, WalletCreation} from "platforms/desktop/reducers/walletCreation";
 import { Spinner } from "shared/components/spinner";
 import { Information } from "assets/styles/type";
 import Description from "shared/components/_inputs/description";
@@ -29,6 +28,7 @@ interface CreateDesktopProps {
   walletCreation: WalletCreation;
   mnenomicVerificationSucceed: () => void;
   loading: boolean;
+  errorMessage:string | null;
 }
 
 interface CreateDesktopState {
@@ -116,6 +116,15 @@ class CreateDesktopContainer extends Component<
     );
   }
 
+
+  componentWillReceiveProps(nextProps:CreateDesktopProps , nextContext: any) {
+
+    if (nextProps.errorMessage) {
+      this.setState({ error: nextProps.errorMessage });
+      setTimeout(() => this.setState({ error: "" }), 2000);
+    }
+  }
+
   nextStep = () => {
     const { step } = this.state;
 
@@ -185,6 +194,8 @@ class CreateDesktopContainer extends Component<
         return (
           <>
             <Input
+
+                error={this.state.error}
               label="Wallet Name"
               placeholder="Create a wallet name"
               name="fileName"
@@ -225,12 +236,10 @@ class CreateDesktopContainer extends Component<
         return (
           <>
             <Description
-              label={`type in words ${this.state.wordsToVerify
+              label={`type in the words ${this.state.wordsToVerify
                 .map(word => word.index + 1)
-                .join(", ")}`}
-              placeholder={`type in words ${this.state.wordsToVerify
-                .map(word => word.word)
-                .join(", ")}`}
+                .join(", ")} seperated by blank space`}
+              placeholder="Take a look at your seed"
               name={"verify_seed"}
               value={verify_seed}
               error={error}
@@ -294,7 +303,8 @@ class CreateDesktopContainer extends Component<
 
 const mapStateToProps = (state: DesktopAppState) => ({
   walletCreation: state.walletCreation,
-  loading: selectIsRequestingLogin(state)
+  loading: selectIsRequestingLogin(state),
+  errorMessage:selectErrorMessage(state)
 });
 
 export const CreateDesktop = connect(

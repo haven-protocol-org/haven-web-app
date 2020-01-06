@@ -3,7 +3,7 @@ import React from "react";
 
 // Relative Imports
 import { Container, Field, Labels } from "./styles";
-import { Label, Error } from "../../../../assets/styles/type.js";
+import { Label, Error } from "assets/styles/type.js";
 
 
 type Ref = HTMLInputElement;

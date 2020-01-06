@@ -8,12 +8,14 @@ import {
   VALIDATE_MNEMONIC_SUCCEED
 } from "../actions/types";
 import { AnyAction } from "redux";
+import {RPCError} from "platforms/desktop/reducers/walletSession";
+import {DesktopAppState} from "platforms/desktop/reducers/index";
 
 export interface WalletCreation {
   isCreated: boolean;
   mnemonicKey: string;
   isVerified: boolean;
-  error: string;
+  error: RPCError | null;
   isFetching: boolean;
 }
 
@@ -21,14 +23,14 @@ const INITIAL_STATE: WalletCreation = {
   isCreated: false,
   mnemonicKey: "",
   isVerified: false,
-  error: "",
+  error: null,
   isFetching: false
 };
 
-export default function(
+export const walletCreation = (
   state = INITIAL_STATE,
   action: AnyAction
-): WalletCreation {
+): WalletCreation => {
   switch (action.type) {
     case RESTORE_WALLET_BY_SEED_SUCCEED:
     case VALIDATE_MNEMONIC_SUCCEED:
@@ -41,8 +43,20 @@ export default function(
     case CREATE_WALLET_SUCCEED:
       return { ...state, isFetching: false, isCreated: true };
     case CREATE_WALLET_FAILED:
-      return { ...state, error: action.payload.error, isFetching: false };
+      return { ...state, error: action.payload, isFetching: false };
     default:
       return state;
   }
-}
+};
+
+export const selectErrorMessage = (state: DesktopAppState) => {
+
+
+  const error = state.walletCreation.error;
+
+  if (error) {
+    return error.message;
+  }
+  return error;
+
+};
