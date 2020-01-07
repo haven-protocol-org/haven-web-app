@@ -98,11 +98,6 @@ class TxHistoryContainer extends Component<TxHistoryProps, any> {
                       blocksTillUnlocked = transaction.unlock_time - currentHeight;
                     }
                   }
-                  // we expect here to have a onshore/offshore tx where unlock_time is the number of blocks till unlocked
-                  else{
-
-                    blocksTillUnlocked = transaction.unlock_time - transaction.confirmations;
-                  }
                   const minutesTillUnlocked = blocksTillUnlocked * 2;
                   const timeTillUnlocked = minutesTillUnlocked > 0 ? createRemainingTimeString(minutesTillUnlocked): null;
 
