@@ -46,8 +46,8 @@ const queryMnemonicForWalletGenerationSucceed = key => ({
   payload: key
 });
 
-export const mnenomicVerificationSucceed = () => ({
-  type: VALIDATE_MNEMONIC_SUCCEED
+export const mnenomicVerificationSucceed = (fileName) => ({
+  type: VALIDATE_MNEMONIC_SUCCEED, payload:fileName
 });
 export const mneomicVerifcationFailed = () => ({
   type: VALIDATE_MNEMONIC_FAILED

@@ -1,5 +1,5 @@
 // Library Imports
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 
 // Relative Imports
 import Placeholder from "shared/components/_create/placeholder";
@@ -15,18 +15,13 @@ import { Information } from "assets/styles/type";
 import Description from "shared/components/_inputs/description";
 import Input from "shared/components/_inputs/input";
 import InputButton from "../../../../../shared/components/_inputs/input_button/index.js";
-
-import {
-  openWallet,
-  mnenomicVerificationSucceed
-} from "platforms/desktop/actions";
+import {mnenomicVerificationSucceed} from "platforms/desktop/actions";
 import { selectIsRequestingLogin } from "platforms/desktop/reducers/walletSession";
 
 interface CreateDesktopProps {
   createWallet: (name: string, pw: string) => void;
-  openWallet: (name: string, pw: string) => void;
   walletCreation: WalletCreation;
-  mnenomicVerificationSucceed: () => void;
+  mnenomicVerificationSucceed: (fileName: string) => void;
   loading: boolean;
   errorMessage:string | null;
 }
@@ -109,7 +104,7 @@ class CreateDesktopContainer extends Component<
   };
 
   verifySeed(): boolean {
-    const userInput = this.state.verify_seed;
+    const userInput = this.state.verify_seed.trim();
     return (
       userInput ===
       this.state.wordsToVerify.map(wordToVerify => wordToVerify.word).join(" ")
@@ -149,8 +144,7 @@ class CreateDesktopContainer extends Component<
       }
 
       if (validationSucceed) {
-        this.props.mnenomicVerificationSucceed();
-        this.props.openWallet(this.state.fileName, this.state.pw);
+        this.props.mnenomicVerificationSucceed(this.state.fileName);
       } else {
         return null;
       }
@@ -233,12 +227,14 @@ class CreateDesktopContainer extends Component<
           />
         );
       case CREATION_STEPS.Verification:
+
+        const labelString = (<Fragment>type in the words <span style={{color:'#34d8ac'}}> {this.state.wordsToVerify
+            .map(word => '#'+ (word.index + 1))
+            .join(" ")} </span> seperated by blank space</Fragment>);
         return (
           <>
             <Description
-              label={`type in the words ${this.state.wordsToVerify
-                .map(word => '#'+ (word.index + 1))
-                .join(" ")} seperated by blank space`}
+              label={labelString}
               placeholder="Refer to the seed phrase to enter the words requested above"
               name={"verify_seed"}
               value={verify_seed}
@@ -262,7 +258,7 @@ class CreateDesktopContainer extends Component<
   };
 
   render() {
-    const { step, fileName, pw, verify_seed } = this.state;
+    const { step, fileName, pw } = this.state;
 
     const createIsValid = fileName.length > 0 && pw.length > 0;
     const seedIsValid = this.verifySeed();
@@ -309,5 +305,5 @@ const mapStateToProps = (state: DesktopAppState) => ({
 
 export const CreateDesktop = connect(
   mapStateToProps,
-  { createWallet, openWallet, mnenomicVerificationSucceed }
+  { createWallet, mnenomicVerificationSucceed }
 )(CreateDesktopContainer);

@@ -33,13 +33,7 @@ export const OPEN_WALLET_FETCHING = "open_wallet_fetching";
 export const OPEN_WALLET_SUCCEED = "open_wallet_succeed";
 export const OPEN_WALLET_FAILED = "open_wallet_failed";
 
-// GENERATE KEYS
-export const KEYS_GENERATED_SUCCEED = "keys_generated_succeed";
-export const KEYS_GENERATED_FAILED = "keys_generated_failed";
 
-export const QUERY_MNEMONIC_FETCHING = "query_mnemonic_fetching";
-export const QUERY_MNEMONIC_FAILED = "query_mneomic_failed";
-export const QUERY_MNEMONIC_SUCCEED = "query_mneomic_succeed";
 
 /*
 TRANSFER

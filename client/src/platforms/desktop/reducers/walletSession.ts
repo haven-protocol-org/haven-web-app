@@ -4,7 +4,7 @@ import {
   OPEN_WALLET_SUCCEED,
   RESTORE_WALLET_BY_SEED_FAILED, RESTORE_WALLET_BY_SEED_FETCHING,
   RESTORE_WALLET_BY_SEED_SUCCEED,
-  UPDATE_SAVED_WALLETS
+  UPDATE_SAVED_WALLETS, VALIDATE_MNEMONIC_SUCCEED
 } from "../actions/types";
 import { getMessageOfError } from "utility/utility";
 import { AnyAction } from "redux";
@@ -57,6 +57,7 @@ export const walletSession = function(
         isWalletOpen: true
       };
     case RESTORE_WALLET_BY_SEED_SUCCEED:
+    case VALIDATE_MNEMONIC_SUCCEED:
       return {
         error: null,
         isFetching: false,
