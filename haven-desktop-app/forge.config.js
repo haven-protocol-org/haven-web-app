@@ -73,7 +73,19 @@ module.exports = {
         name: "@electron-forge/maker-rpm",
         config: {}
     }
-]
+    ],
+
+    publishers:[{
+        name: '@electron-forge/publisher-github',
+        config: {
+            repository: {
+                owner: 'haven-protocol-org',
+                name: 'haven-web-app'
+            },
+            prerelease: true,
+            draft:true
+        }
+    }]
 };
 
 
