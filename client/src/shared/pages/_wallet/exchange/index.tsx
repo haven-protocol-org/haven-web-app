@@ -62,9 +62,24 @@ export interface AssetOption {
   name: string;
 }
 
+export interface ExchangeOptions {
+  ticker: string;
+  name: string;
+}
+
 const options: AssetOption[] = [
   { name: "Haven Token", ticker: Ticker.XHV },
   { name: "United States Dollar", ticker: Ticker.xUSD }
+];
+
+const exchangeOptions: ExchangeOptions[] = [
+  {
+    name: "Unimportant",
+    ticker: "xUSD unlocks in ~2 days"
+  },
+  { name: "Normal", ticker: "xUSD unlocks ~18 hours" },
+  { name: "Elevated", ticker: "xUSD unlocks ~6 hours" },
+  { name: "Priority", ticker: "xUSD unlocks ~2 hours" }
 ];
 
 const INITIAL_STATE = {
@@ -274,7 +289,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
   };
 
   toggleBasic = () => {
-    alert("Basic");
+    // alert("Basic");
     // this.setState({
     //   firstTabState: true,
     //   secondTabState: false
@@ -282,7 +297,15 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
   };
 
   toggleAdvanced = () => {
-    alert("Advanced");
+    // alert("Advanced");
+    // this.setState({
+    //   firstTabState: false,
+    //   secondTabState: true
+    // });
+  };
+
+  setExchangePriority = () => {
+    // alert("Set Exchange Priority");
     // this.setState({
     //   firstTabState: false,
     //   secondTabState: true
@@ -429,6 +452,23 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                   toAsset === undefined ? "Please select an asset first" : ""
                 }
                 readOnly={toAsset === undefined}
+              />
+              <Dropdown
+                label="Priority"
+                placeholder="Select Priority"
+                name="exchange_priority"
+                value={"Unimportant"}
+                ticker={"xUSD unlocks ~18 hours"}
+                options={exchangeOptions}
+                onClick={this.setExchangePriority}
+              />
+              <Input
+                label="Exchange Address (Optional)"
+                placeholder="Transfer this xUSD to another address"
+                name="exchange_address"
+                type="text"
+                value={""}
+                onChange={this.onEnterToAmount}
               />
             </Form>
             <Container>
