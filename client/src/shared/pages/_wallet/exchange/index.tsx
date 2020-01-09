@@ -9,7 +9,7 @@ import Form from "../../../components/_inputs/form";
 import Footer from "../../../components/_inputs/footer";
 import Dropdown from "../../../components/_inputs/dropdown";
 import Transaction from "../../../components/_transactions/exchange";
-
+import Tab from "../../../components/tab";
 import { Container, Failed } from "./styles";
 import {
   ConversionRate,
@@ -51,6 +51,8 @@ type ExchangeState = {
   xRate?: number;
   xRateRevert?: number;
   reviewed?: boolean;
+  // firstTabState: boolean;
+  // secondTabState: boolean;
 };
 
 export interface AssetOption {
@@ -63,7 +65,7 @@ const options: AssetOption[] = [
   { name: "United States Dollar", ticker: Ticker.xUSD }
 ];
 
-const INITAIL_STATE = {
+const INITIAL_STATE = {
   fromAsset: options[0],
   fromAmount: "",
   toAmount: "",
@@ -71,9 +73,11 @@ const INITAIL_STATE = {
   xRate: undefined,
   xRateRevert: undefined,
   reviewed: false
+  // firstTabState: true,
+  // secondTabState: false
 };
 class Exchange extends Component<ExchangeProps, ExchangeState> {
-  state: ExchangeState = INITAIL_STATE;
+  state: ExchangeState = INITIAL_STATE;
 
   componentDidMount() {
     window.scrollTo(0, 0);
@@ -87,7 +91,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
   ): void {
     if (!this.props.exchangeSucceed && nextProps.exchangeSucceed) {
       this.props.resetExchangeProcess();
-      this.setState({ ...INITAIL_STATE });
+      this.setState({ ...INITIAL_STATE });
     }
   }
 
@@ -267,6 +271,22 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     }
   };
 
+  toggleBasic = () => {
+    alert("Basic");
+    // this.setState({
+    //   firstTabState: true,
+    //   secondTabState: false
+    // });
+  };
+
+  toggleAdvanced = () => {
+    alert("Advanced");
+    // this.setState({
+    //   firstTabState: false,
+    //   secondTabState: true
+    // });
+  };
+
   render() {
     const { fromAsset, toAsset, fromAmount, toAmount, reviewed } = this.state;
 
@@ -289,10 +309,18 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
           description="Swap to and from various Haven Assets"
         />
 
+        <Tab
+          firstTabLabel="Basic"
+          secondTabLabel="Advanced"
+          firstTabState={true}
+          secondTabState={false}
+          firstTabClickEvent={this.toggleBasic}
+          secondTabClickEvent={this.toggleAdvanced}
+          onClick={() => {}}
+        />
         {!(hasLatestXRate && conversionRates) && (
           <Failed>Exchange is disabled when Wallet is not synced</Failed>
         )}
-
         <Form onSubmit={this.handleSubmit}>
           <Dropdown
             label="From Asset"

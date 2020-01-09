@@ -119,7 +119,7 @@ export class Transfer extends Component<TransferProps, TransferState> {
 
   handleCheckboxChange = (event: any) => {
     const { checked } = event.target;
-    this.setState({ reviewed: checked});
+    this.setState({ reviewed: checked });
   };
 
   clipboardAddress = () => {
@@ -151,9 +151,6 @@ export class Transfer extends Component<TransferProps, TransferState> {
       send_amount.length > 0 && recipient_address.length > 97;
     const windowWidth = window.innerWidth;
 
-
-
-
     return (
       <Body>
         <Header
@@ -165,8 +162,8 @@ export class Transfer extends Component<TransferProps, TransferState> {
           secondTabLabel="Receive"
           firstTabState={this.state.firstTabState}
           secondTabState={this.state.secondTabState}
-          toggleSend={this.toggleSend}
-          toggleReceive={this.toggleReceive}
+          firstTabClickEvent={this.toggleSend}
+          secondTabClickEvent={this.toggleReceive}
           onClick={() => {}}
         />
         {this.state.firstTabState ? (
