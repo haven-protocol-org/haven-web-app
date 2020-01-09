@@ -41,6 +41,8 @@ type ExchangeProps = {
   isProcessingExchange: boolean;
   hasLatestXRate: boolean;
   exchangeSucceed: boolean;
+  // firstTabState: boolean;
+  // secondTabState: boolean;
 };
 
 type ExchangeState = {
@@ -72,9 +74,9 @@ const INITIAL_STATE = {
   toAsset: options[1],
   xRate: undefined,
   xRateRevert: undefined,
-  reviewed: false
-  // firstTabState: true,
-  // secondTabState: false
+  reviewed: false,
+  firstTabState: true,
+  secondTabState: false
 };
 class Exchange extends Component<ExchangeProps, ExchangeState> {
   state: ExchangeState = INITIAL_STATE;
@@ -302,6 +304,8 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       !!(fromAsset && toAsset && fromAmount && toAmount && reviewed) &&
       hasLatestXRate;
 
+    const firstTabState = false;
+    const secondTabState = true;
     return (
       <Body>
         <Header
@@ -312,8 +316,8 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
         <Tab
           firstTabLabel="Basic"
           secondTabLabel="Advanced"
-          firstTabState={true}
-          secondTabState={false}
+          firstTabState={firstTabState}
+          secondTabState={secondTabState}
           firstTabClickEvent={this.toggleBasic}
           secondTabClickEvent={this.toggleAdvanced}
           onClick={() => {}}
@@ -321,61 +325,127 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
         {!(hasLatestXRate && conversionRates) && (
           <Failed>Exchange is disabled when Wallet is not synced</Failed>
         )}
-        <Form onSubmit={this.handleSubmit}>
-          <Dropdown
-            label="From Asset"
-            placeholder="Select Asset"
-            name="from_asset"
-            ticker={fromTicker}
-            value={fromName}
-            options={options}
-            onClick={this.setFromAsset}
-          />
-          <Input
-            label="From Amount"
-            placeholder="Enter amount"
-            type="number"
-            name="fromAmount"
-            value={fromAmount}
-            onChange={this.onEnterFromAmount}
-            error={
-              fromAsset === undefined ? "Please select an asset first" : ""
-            }
-            readOnly={fromAsset === undefined}
-          />
-          <Dropdown
-            label="To Asset"
-            placeholder="Select Asset"
-            name="to_asset"
-            value={toName}
-            ticker={toTicker}
-            options={options}
-            onClick={this.setToAsset}
-          />
-          <Input
-            label="To Amount"
-            placeholder="Enter amount"
-            name="toAmount"
-            type="number"
-            value={toAmount}
-            onChange={this.onEnterToAmount}
-            error={toAsset === undefined ? "Please select an asset first" : ""}
-            readOnly={toAsset === undefined}
-          />
-        </Form>
-        <Container>
-          <Transaction
-            state={this.state}
-            checked={reviewed}
-            onChange={this.handleReviewSubmit}
-          />
-          <Footer
-            onClick={this.handleSubmit}
-            label="Exchange"
-            validated={isValid}
-            loading={this.props.isProcessingExchange}
-          />
-        </Container>
+        {firstTabState ? (
+          <>
+            <Form onSubmit={this.handleSubmit}>
+              <Dropdown
+                label="From Asset"
+                placeholder="Select Asset"
+                name="from_asset"
+                ticker={fromTicker}
+                value={fromName}
+                options={options}
+                onClick={this.setFromAsset}
+              />
+              <Input
+                label="From Amount"
+                placeholder="Enter amount"
+                type="number"
+                name="fromAmount"
+                value={fromAmount}
+                onChange={this.onEnterFromAmount}
+                error={
+                  fromAsset === undefined ? "Please select an asset first" : ""
+                }
+                readOnly={fromAsset === undefined}
+              />
+              <Dropdown
+                label="To Asset"
+                placeholder="Select Asset"
+                name="to_asset"
+                value={toName}
+                ticker={toTicker}
+                options={options}
+                onClick={this.setToAsset}
+              />
+              <Input
+                label="To Amount"
+                placeholder="Enter amount"
+                name="toAmount"
+                type="number"
+                value={toAmount}
+                onChange={this.onEnterToAmount}
+                error={
+                  toAsset === undefined ? "Please select an asset first" : ""
+                }
+                readOnly={toAsset === undefined}
+              />
+            </Form>
+            <Container>
+              <Transaction
+                state={this.state}
+                checked={reviewed}
+                onChange={this.handleReviewSubmit}
+              />
+              <Footer
+                onClick={this.handleSubmit}
+                label="Exchange"
+                validated={isValid}
+                loading={this.props.isProcessingExchange}
+              />
+            </Container>
+          </>
+        ) : (
+          <>
+            <Form onSubmit={this.handleSubmit}>
+              <Dropdown
+                label="From Asset"
+                placeholder="Select Asset"
+                name="from_asset"
+                ticker={fromTicker}
+                value={fromName}
+                options={options}
+                onClick={this.setFromAsset}
+              />
+              <Input
+                label="From Amount"
+                placeholder="Enter amount"
+                type="number"
+                name="fromAmount"
+                value={fromAmount}
+                onChange={this.onEnterFromAmount}
+                error={
+                  fromAsset === undefined ? "Please select an asset first" : ""
+                }
+                readOnly={fromAsset === undefined}
+              />
+              <Dropdown
+                label="To Asset"
+                placeholder="Select Asset"
+                name="to_asset"
+                value={toName}
+                ticker={toTicker}
+                options={options}
+                onClick={this.setToAsset}
+              />
+              <Input
+                label="To Amount"
+                placeholder="Enter amount"
+                name="toAmount"
+                type="number"
+                value={toAmount}
+                onChange={this.onEnterToAmount}
+                error={
+                  toAsset === undefined ? "Please select an asset first" : ""
+                }
+                readOnly={toAsset === undefined}
+              />
+            </Form>
+            <Container>
+              <Transaction
+                state={this.state}
+                checked={reviewed}
+                onChange={this.handleReviewSubmit}
+              />
+              <Footer
+                onClick={this.handleSubmit}
+                label="Exchange"
+                validated={isValid}
+                loading={this.props.isProcessingExchange}
+              />
+            </Container>
+          </>
+        )}
       </Body>
     );
   }
