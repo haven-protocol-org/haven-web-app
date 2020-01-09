@@ -10,7 +10,7 @@ import Footer from "../../../components/_inputs/footer";
 import Dropdown from "../../../components/_inputs/dropdown";
 import Transaction from "../../../components/_transactions/exchange";
 
-import {Container, Failed} from "./styles";
+import { Container, Failed } from "./styles";
 import {
   ConversionRate,
   selectLatestXRates,
@@ -20,9 +20,16 @@ import {
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { selectNodeHeight } from "platforms/desktop/reducers/chain";
 import { getLastBlockHeader } from "platforms/desktop/actions/blockHeaderExchangeRate";
-import { offshore, onshore,resetExchangeProcess } from "platforms/desktop/actions";
+import {
+  offshore,
+  onshore,
+  resetExchangeProcess
+} from "platforms/desktop/actions";
 import { Ticker } from "shared/reducers/types";
-import {exchangeSucceed, isProcessingExchange} from "platforms/desktop/reducers/offshoreProcess";
+import {
+  exchangeSucceed,
+  isProcessingExchange
+} from "platforms/desktop/reducers/offshoreProcess";
 
 type ExchangeProps = {
   conversionRates: XRates | null;
@@ -43,15 +50,13 @@ type ExchangeState = {
   toAsset?: AssetOption;
   xRate?: number;
   xRateRevert?: number;
-  reviewed?:boolean;
+  reviewed?: boolean;
 };
 
 export interface AssetOption {
   ticker: Ticker;
   name: string;
 }
-
-
 
 const options: AssetOption[] = [
   { name: "Haven Token", ticker: Ticker.XHV },
@@ -65,29 +70,25 @@ const INITAIL_STATE = {
   toAsset: options[1],
   xRate: undefined,
   xRateRevert: undefined,
-  reviewed:false
+  reviewed: false
 };
 class Exchange extends Component<ExchangeProps, ExchangeState> {
   state: ExchangeState = INITAIL_STATE;
 
-
   componentDidMount() {
     window.scrollTo(0, 0);
-      this.props.getLastBlockHeader();
-      this.setRates();
-
+    this.props.getLastBlockHeader();
+    this.setRates();
   }
 
-  componentWillReceiveProps(nextProps: Readonly<ExchangeProps>, nextContext: any): void {
-
-
+  componentWillReceiveProps(
+    nextProps: Readonly<ExchangeProps>,
+    nextContext: any
+  ): void {
     if (!this.props.exchangeSucceed && nextProps.exchangeSucceed) {
-
       this.props.resetExchangeProcess();
-      this.setState({...INITAIL_STATE});
+      this.setState({ ...INITAIL_STATE });
     }
-
-
   }
 
   onEnterFromAmount = (event: any) => {
@@ -137,12 +138,10 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     }
   };
 
-
   handleReviewSubmit = (event: any) => {
     const { checked } = event.target;
-    this.setState({ reviewed: checked});
+    this.setState({ reviewed: checked });
   };
-
 
   setRates() {
     const { fromAsset, toAsset } = this.state;
@@ -241,7 +240,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       !this.state.fromAsset ||
       !this.state.toAsset ||
       !this.state.toAmount ||
-        !this.state.reviewed
+      !this.state.reviewed
     )
       return;
 
@@ -280,7 +279,8 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     const { hasLatestXRate, conversionRates } = this.props;
 
     const isValid: boolean =
-      !!(fromAsset && toAsset && fromAmount && toAmount && reviewed) && hasLatestXRate;
+      !!(fromAsset && toAsset && fromAmount && toAmount && reviewed) &&
+      hasLatestXRate;
 
     return (
       <Body>
@@ -289,7 +289,9 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
           description="Swap to and from various Haven Assets"
         />
 
-        { !(hasLatestXRate && conversionRates) && <Failed>Exchange is disabled when Wallet is not synced</Failed>}
+        {!(hasLatestXRate && conversionRates) && (
+          <Failed>Exchange is disabled when Wallet is not synced</Failed>
+        )}
 
         <Form onSubmit={this.handleSubmit}>
           <Dropdown
@@ -334,9 +336,11 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
           />
         </Form>
         <Container>
-          <Transaction state={this.state}
-                       checked={reviewed}
-                       onChange={this.handleReviewSubmit}/>
+          <Transaction
+            state={this.state}
+            checked={reviewed}
+            onChange={this.handleReviewSubmit}
+          />
           <Footer
             onClick={this.handleSubmit}
             label="Exchange"
@@ -354,7 +358,7 @@ const mapStateToProps = (state: DesktopAppState) => ({
   nodeHeight: selectNodeHeight(state),
   isProcessingExchange: isProcessingExchange(state),
   hasLatestXRate: hasLatestXRate(state),
-  exchangeSucceed:exchangeSucceed(state)
+  exchangeSucceed: exchangeSucceed(state)
 });
 
 export const ExchangePage = connect(
