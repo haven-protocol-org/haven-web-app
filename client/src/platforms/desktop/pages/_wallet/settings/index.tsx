@@ -174,7 +174,7 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
             <Input
               width={true}
               label="Status"
-              placeholder="Enter daemon password"
+              placeholder="Mining Status"
               type="text"
               readOnly={true}
               name="daemon_password"
