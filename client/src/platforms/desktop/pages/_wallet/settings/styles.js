@@ -5,7 +5,6 @@ export const Container = styled.div`
   margin-top: -20px;
 `;
 
-
 export const MiningState = styled.div`
-    grid-column: 1 / 3;
-    `;
+  grid-column: 1 / 3;
+`;

@@ -10,15 +10,15 @@ const Tab = ({
   firstTabState,
   secondTabState,
   onClick,
-  toggleSend,
-  toggleReceive
+  firstTabClickEvent,
+  secondTabClickEvent
 }) => {
   return (
     <Container>
-      <Item onClick={toggleSend} active={firstTabState}>
+      <Item onClick={firstTabClickEvent} active={firstTabState}>
         {firstTabLabel}
       </Item>
-      <Item onClick={toggleReceive} active={secondTabState}>
+      <Item onClick={secondTabClickEvent} active={secondTabState}>
         {secondTabLabel}
       </Item>
     </Container>
