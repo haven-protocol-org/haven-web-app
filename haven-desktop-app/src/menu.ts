@@ -1,6 +1,7 @@
-import { app } from 'electron';
-import MenuItemConstructorOptions = Electron.MenuItemConstructorOptions;
+import {app} from 'electron';
 import {isDevMode} from "./env";
+import {KeyType, showKey} from "./keys";
+import MenuItemConstructorOptions = Electron.MenuItemConstructorOptions;
 
 const isMac = process.platform === 'darwin';
 
@@ -123,6 +124,7 @@ export const havenMenu: Array<(MenuItemConstructorOptions)> = [
         ]
     },
 
+
     {
         label:'White Papers',
         submenu: [
@@ -152,6 +154,32 @@ export const havenMenu: Array<(MenuItemConstructorOptions)> = [
 
         ]
 
+    },
+
+    {
+        label:'Keys',
+        submenu: [
+            {
+                label: 'Show Public Spend Key',
+                click: () => showKey(KeyType.PUBLIC_SPEND)
+            },
+            {
+                label: 'Show Public View Key',
+                click: () => showKey(KeyType.PUBLIC_VIEW)
+            },
+            {
+                label: 'Show Private View Key',
+                click: () => showKey(KeyType.PRIVATE_VIEW)
+            },
+            {
+                label: 'Show Private Spend Key',
+                click: () => showKey(KeyType.PRIVATE_SPEND)
+            },
+            {
+                label: 'Show Mneomic Seed',
+                click: () => showKey(KeyType.MNEMONIC)
+            }
+        ]
     },
     // { role: 'windowMenu' }
     {
