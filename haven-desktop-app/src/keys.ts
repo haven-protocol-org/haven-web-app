@@ -7,7 +7,6 @@
 
 // modified 2017 for some CN functions by luigi1111
 
-import {isMainnet} from "./env";
 import {RPCHRequestHandler} from "./rpc/RPCHRequestHandler";
 import {daemonConfig} from "./daemonConfig";
 import {dialog} from "electron";
@@ -19,12 +18,12 @@ export enum KeyType {
 };
 
 
-// const rpcUrl = process.env.REACT_APP_RPC_URL;
-
 
 const MNEMONIC = 'mnemonic';
 const PRIVATE_VIEW_KEY = 'view_key';
 const PRIVATE_SPEND_KEY = 'spend_key';
+const PUBLIC_VIEW_KEY = 'public_view_key';
+const PUBLIC_SPEND_KEY = 'public_spend_key';
 
 
 const rpcKeyHandler = new RPCHRequestHandler();
@@ -39,20 +38,20 @@ export const showKey = (key: KeyType) => {
     switch(key) {
 
         case KeyType.MNEMONIC:
-            fetchKey(MNEMONIC);
+            fetchKey('Seed', MNEMONIC);
             return;
         case KeyType.PRIVATE_VIEW:
-            fetchKey(PRIVATE_VIEW_KEY);
+            fetchKey('Private View Key', PRIVATE_VIEW_KEY);
             return;
         case KeyType.PRIVATE_SPEND:
-            fetchKey(PRIVATE_SPEND_KEY);
+            fetchKey('Private Spend Key', PRIVATE_SPEND_KEY);
             return;
 
         case KeyType.PUBLIC_VIEW:
-            fetchAdress();
+            fetchAdress(PUBLIC_VIEW_KEY);
             return;
         case KeyType.PUBLIC_SPEND:
-            fetchAdress();
+            fetchAdress(PUBLIC_SPEND_KEY);
             return;
 
     }
@@ -64,7 +63,7 @@ const showDialog = (title: string, message: string) => {
 };
 
 
-const fetchAdress = async() => {
+const fetchAdress = async(keyType: string) => {
 
     const objRequest = {
         id: 0,
@@ -77,18 +76,18 @@ const fetchAdress = async() => {
     const response = await rpcKeyHandler.sendRequest(objRequest);
 
     if (response.data.result) {
-
         const pubKeys = decode_address(response.data.result.address);
 
-        showDialog('juhu', pubKeys.spend);
-
+        if (keyType === PUBLIC_SPEND_KEY ) {
+            showDialog('Public Spend Key', pubKeys.spend);
+        } else {
+            showDialog('Public View Key', pubKeys.view);
+        }
     }
-
-
 };
 
 
-const fetchKey = async(keyType: string) => {
+const fetchKey = async(title: string, keyType: string) => {
 
 
     const objRequest = {
@@ -105,6 +104,6 @@ const fetchKey = async(keyType: string) => {
     if (response.data.result) {
 
         const key = response.data.result.key;
-        showDialog('test', key);
+        showDialog(title, key);
     }
 };
