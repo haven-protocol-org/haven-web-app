@@ -169,7 +169,7 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
           description="Decentralize the Haven protocol by mining and have the chance to earn XHV as a reward"
         />
 
-        <Form onSubmit={() => {}}>
+
           <>
             <Input
               width={true}
@@ -192,9 +192,8 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
               />
             </Container>
           </>
-        </Form>
 
-        <Header
+        {/*<Header
           title="Nodes"
           description="Choose between running a local or remote node"
         />
@@ -246,7 +245,7 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
               </Container>
             </>
           )}
-        </Form>
+        </Form>*/}
       </Body>
     );
   }

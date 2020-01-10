@@ -31,6 +31,12 @@ import {
   isProcessingExchange
 } from "platforms/desktop/reducers/offshoreProcess";
 
+
+
+enum ExchangeTab {
+  Basic,Adanvced
+}
+
 type ExchangeProps = {
   conversionRates: XRates | null;
   nodeHeight: number;
@@ -41,8 +47,7 @@ type ExchangeProps = {
   isProcessingExchange: boolean;
   hasLatestXRate: boolean;
   exchangeSucceed: boolean;
-  // firstTabState: boolean;
-  // secondTabState: boolean;
+
 };
 
 type ExchangeState = {
@@ -53,8 +58,10 @@ type ExchangeState = {
   xRate?: number;
   xRateRevert?: number;
   reviewed?: boolean;
-  // firstTabState: boolean;
-  // secondTabState: boolean;
+  selectedTab:ExchangeTab;
+  externAddress: string;
+  selectedPrio:ExchangePrioOption;
+
 };
 
 export interface AssetOption {
@@ -62,9 +69,10 @@ export interface AssetOption {
   name: string;
 }
 
-export interface ExchangeOptions {
+export interface ExchangePrioOption {
   ticker: string;
   name: string;
+  prio: number;
 }
 
 const options: AssetOption[] = [
@@ -72,17 +80,17 @@ const options: AssetOption[] = [
   { name: "United States Dollar", ticker: Ticker.xUSD }
 ];
 
-const exchangeOptions: ExchangeOptions[] = [
+const exchangePrioOptions: ExchangePrioOption[] = [
   {
     name: "Unimportant",
-    ticker: "xUSD unlocks in ~2 days"
+    ticker: "unlocks in ~2 days", prio:1
   },
-  { name: "Normal", ticker: "xUSD unlocks ~18 hours" },
-  { name: "Elevated", ticker: "xUSD unlocks ~6 hours" },
-  { name: "Priority", ticker: "xUSD unlocks ~2 hours" }
+  { name: "Normal", ticker: "unlocks ~18 hours", prio:2 },
+  { name: "Elevated", ticker: "unlocks ~6 hours", prio:3 },
+  { name: "Priority", ticker: "unlocks ~2 hours", prio:4 }
 ];
 
-const INITIAL_STATE = {
+const INITIAL_STATE: ExchangeState = {
   fromAsset: options[0],
   fromAmount: "",
   toAmount: "",
@@ -90,8 +98,10 @@ const INITIAL_STATE = {
   xRate: undefined,
   xRateRevert: undefined,
   reviewed: false,
-  firstTabState: true,
-  secondTabState: false
+  selectedTab:ExchangeTab.Basic,
+  externAddress: "",
+  selectedPrio:exchangePrioOptions[exchangePrioOptions.length-1]
+
 };
 class Exchange extends Component<ExchangeProps, ExchangeState> {
   state: ExchangeState = INITIAL_STATE;
@@ -108,7 +118,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
   ): void {
     if (!this.props.exchangeSucceed && nextProps.exchangeSucceed) {
       this.props.resetExchangeProcess();
-      this.setState({ ...INITIAL_STATE });
+      this.setState({ ...INITIAL_STATE, selectedTab:this.state.selectedTab });
     }
   }
 
@@ -117,11 +127,26 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     const value = event.target.value;
 
     this.setState(
-      {
+      {...this.state,
         [name]: value
       },
       () => this.calcConversion(true)
     );
+  };
+
+
+  onEnterExternAddress = (event:any) => {
+
+    const name = event.target.name;
+    const value = event.target.value;
+
+    this.setState(
+        {...this.state,
+          [name]: value
+        }
+    );
+
+
   };
 
   onEnterToAmount = (event: any) => {
@@ -129,7 +154,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     const value = event.target.value;
 
     this.setState(
-      {
+      {...this.state,
         [name]: value
       },
       () => this.calcConversion(false)
@@ -213,7 +238,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
           return state;
         }
 
-        return {
+        return {...state,
           xRate: isReverted
             ? matchedConversionRate.xRateRevert
             : matchedConversionRate.xRate,
@@ -276,44 +301,35 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
         this.state.fromAsset.ticker,
         this.state.toAsset.ticker,
         fromAmount,
-        toAmount
+        toAmount,
+          this.state.selectedPrio.prio,this.state.externAddress
       );
     } else {
       this.props.onshore(
         this.state.fromAsset.ticker,
         this.state.toAsset.ticker,
         fromAmount,
-        toAmount
+        toAmount, this.state.selectedPrio.prio, this.state.externAddress
       );
     }
   };
 
   toggleBasic = () => {
-    // alert("Basic");
-    // this.setState({
-    //   firstTabState: true,
-    //   secondTabState: false
-    // });
+    this.setState({selectedTab:ExchangeTab.Basic});
   };
 
   toggleAdvanced = () => {
-    // alert("Advanced");
-    // this.setState({
-    //   firstTabState: false,
-    //   secondTabState: true
-    // });
+    this.setState({selectedTab:ExchangeTab.Adanvced});
   };
 
-  setExchangePriority = () => {
-    // alert("Set Exchange Priority");
-    // this.setState({
-    //   firstTabState: false,
-    //   secondTabState: true
-    // });
+  setExchangePriority = (selectedOption:ExchangePrioOption) => {
+
+    this.setState({selectedPrio:selectedOption});
+
   };
 
   render() {
-    const { fromAsset, toAsset, fromAmount, toAmount, reviewed } = this.state;
+    const { fromAsset, toAsset, fromAmount, toAmount, reviewed, selectedTab, selectedPrio, externAddress } = this.state;
 
     const fromName = fromAsset ? fromAsset.name : "Select Asset";
     const fromTicker = fromAsset ? fromAsset.ticker : "";
@@ -327,8 +343,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       !!(fromAsset && toAsset && fromAmount && toAmount && reviewed) &&
       hasLatestXRate;
 
-    const firstTabState = false;
-    const secondTabState = true;
     return (
       <Body>
         <Header
@@ -339,8 +353,8 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
         <Tab
           firstTabLabel="Basic"
           secondTabLabel="Advanced"
-          firstTabState={firstTabState}
-          secondTabState={secondTabState}
+          firstTabState={selectedTab === ExchangeTab.Basic}
+          secondTabState={selectedTab === ExchangeTab.Adanvced}
           firstTabClickEvent={this.toggleBasic}
           secondTabClickEvent={this.toggleAdvanced}
           onClick={() => {}}
@@ -348,7 +362,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
         {!(hasLatestXRate && conversionRates) && (
           <Failed>Exchange is disabled when Wallet is not synced</Failed>
         )}
-        {firstTabState ? (
           <>
             <Form onSubmit={this.handleSubmit}>
               <Dropdown
@@ -393,83 +406,28 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 }
                 readOnly={toAsset === undefined}
               />
-            </Form>
-            <Container>
-              <Transaction
-                state={this.state}
-                checked={reviewed}
-                onChange={this.handleReviewSubmit}
-              />
-              <Footer
-                onClick={this.handleSubmit}
-                label="Exchange"
-                validated={isValid}
-                loading={this.props.isProcessingExchange}
-              />
-            </Container>
-          </>
-        ) : (
-          <>
-            <Form onSubmit={this.handleSubmit}>
-              <Dropdown
-                label="From Asset"
-                placeholder="Select Asset"
-                name="from_asset"
-                ticker={fromTicker}
-                value={fromName}
-                options={options}
-                onClick={this.setFromAsset}
-              />
-              <Input
-                label="From Amount"
-                placeholder="Enter amount"
-                type="number"
-                name="fromAmount"
-                value={fromAmount}
-                onChange={this.onEnterFromAmount}
-                error={
-                  fromAsset === undefined ? "Please select an asset first" : ""
-                }
-                readOnly={fromAsset === undefined}
-              />
-              <Dropdown
-                label="To Asset"
-                placeholder="Select Asset"
-                name="to_asset"
-                value={toName}
-                ticker={toTicker}
-                options={options}
-                onClick={this.setToAsset}
-              />
-              <Input
-                label="To Amount"
-                placeholder="Enter amount"
-                name="toAmount"
-                type="number"
-                value={toAmount}
-                onChange={this.onEnterToAmount}
-                error={
-                  toAsset === undefined ? "Please select an asset first" : ""
-                }
-                readOnly={toAsset === undefined}
-              />
-              <Dropdown
-                label="Priority"
-                placeholder="Select Priority"
-                name="exchange_priority"
-                value={"Unimportant"}
-                ticker={"xUSD unlocks ~18 hours"}
-                options={exchangeOptions}
-                onClick={this.setExchangePriority}
-              />
-              <Input
+              {selectedTab === ExchangeTab.Adanvced && (
+                  <>
+                  <Dropdown
+                      label="Priority"
+                      placeholder="Select Priority"
+                      name="exchange_priority"
+                      value={selectedPrio.name}
+                      ticker={selectedPrio.ticker}
+                      options={exchangePrioOptions}
+                      onClick={this.setExchangePriority}
+                  />
+                  <Input
                 label="Exchange Address (Optional)"
-                placeholder="Transfer this xUSD to another address"
-                name="exchange_address"
+                placeholder="Exchange to another address"
+                name="externAddress"
                 type="text"
-                value={""}
-                onChange={this.onEnterToAmount}
-              />
+                value={externAddress}
+                onChange={this.onEnterExternAddress}
+                />
+              </>
+              ) }
+
             </Form>
             <Container>
               <Transaction
@@ -485,7 +443,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
               />
             </Container>
           </>
-        )}
       </Body>
     );
   }

@@ -17,16 +17,19 @@ export function onshore(
   fromTicker: Ticker,
   toTicker: Ticker,
   fromAmount: number,
-  toAmount: number
+  toAmount: number,
+  priority: number,
+  externAddress:string
 ): any {
   const amount = BigInt(fromAmount * 1e12);
   return (dispatch: any, getState: () => DesktopAppState) => {
     dispatch(onshoreFetch({ fromTicker, toTicker, amount, isOffshore: false }));
 
-    const address = getState().address.main;
+
+    const address = (externAddress.trim() !== "")? externAddress : getState().address.main;
     const params = {
       destinations: [{ address, amount: amount.toString() }],
-      priority:4
+      priority
     };
 
     onshoreRPC(params)
@@ -49,13 +52,15 @@ export function offshore(
   fromTicker: Ticker,
   toTicker: Ticker,
   fromAmount: number,
-  toAmount: number
+  toAmount: number,
+  priority: number,
+  externAddress:string
 ): any {
   const amount = BigInt(fromAmount * 1e12);
   return (dispatch: any, getState: () => DesktopAppState) => {
-    const address = getState().address.main;
+    const address = (externAddress.trim() !== "")? externAddress : getState().address.main;
     dispatch(offshoreFetch());
-    const params = { destinations: [{ address, amount: amount.toString() }], priority:4 };
+    const params = { destinations: [{ address, amount: amount.toString() }], priority };
 
     offshoreRPC(params)
       .then((result: any) => {
