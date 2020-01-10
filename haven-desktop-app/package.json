@@ -7,8 +7,8 @@
   "scripts": {
     "start": "npm run build && electron-forge start",
     "package": "npm run build && electron-forge package",
-    "make": "electron-forge make",
-    "publish": "electron-forge publish",
+    "make": "npm run build && electron-forge make",
+    "publish": "npm run build && electron-forge publish",
     "build": "tsc",
     "watch": "tsc -w",
     "lint": "tslint -c tslint.json -p tsconfig.json"
