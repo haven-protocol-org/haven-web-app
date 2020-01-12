@@ -49,7 +49,9 @@ const copyTargetNodesToBuild = (buildPath, electronVersion,platform, arch, callb
 module.exports = {
 
 
-    packagerConfig:{ name:'Haven', ignore:ignoredPaths, afterCopy:[copyTargetNodesToBuild, substituteEnvsForBuild], icon:'./icons/haven_icon'},
+    packagerConfig:{ name:'Haven', ignore:ignoredPaths, afterCopy:[copyTargetNodesToBuild, substituteEnvsForBuild], icon:'./icons/haven_icon', asar:{
+        unpackDir:'haven-node/**'
+    }},
 
 
     makers: [
@@ -73,6 +75,10 @@ module.exports = {
         name: "@electron-forge/maker-rpm",
         config: {}
     }
+    ],
+
+    plugins: [
+        ['@electron-forge/plugin-auto-unpack-natives']
     ],
 
     publishers:[{

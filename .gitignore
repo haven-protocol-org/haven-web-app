@@ -29,4 +29,5 @@ client/deploy/deploy.sh
 
 sh/team_deploy.sh
 sh/git_deploy.sh
+sh/publish_testnet.sh
 .idea/

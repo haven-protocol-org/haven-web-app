@@ -126,14 +126,8 @@ class Chart extends Component {
           {dateRangeButtons}
         </Header>
         <PriceHistory>
-          {isDevMode() ? (
-            <PriceHistory>
               <Value>{this.state.hoveredValue}</Value>
               <Label>{this.state.hoveredLabel}</Label>
-            </PriceHistory>
-          ) : (
-            <PriceHistory />
-          )}
         </PriceHistory>
         <Container>
           <Line
