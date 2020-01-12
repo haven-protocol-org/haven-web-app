@@ -104,6 +104,7 @@ const INITIAL_STATE: ExchangeState = {
 
 };
 class Exchange extends Component<ExchangeProps, ExchangeState> {
+
   state: ExchangeState = INITIAL_STATE;
 
   componentDidMount() {
@@ -118,7 +119,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
   ): void {
     if (!this.props.exchangeSucceed && nextProps.exchangeSucceed) {
       this.props.resetExchangeProcess();
-      this.setState({ ...INITIAL_STATE, selectedTab:this.state.selectedTab });
+      this.setState({ fromAmount:"", toAmount:"", reviewed:false, externAddress:'' });
     }
   }
 
