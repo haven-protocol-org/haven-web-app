@@ -176,7 +176,7 @@ export const havenMenu: Array<(MenuItemConstructorOptions)> = [
                 click: () => showKey(KeyType.PRIVATE_SPEND)
             },
             {
-                label: 'Show Mnemonic Seed',
+                label: 'Show Mneomic Seed',
                 click: () => showKey(KeyType.MNEMONIC)
             }
         ]
