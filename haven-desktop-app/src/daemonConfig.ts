@@ -2,6 +2,8 @@ import {APP_DATA_PATH, isMainnet} from "./env";
 import * as fs  from 'fs';
 import * as path from "path";
 
+
+
 const MAINNET_WALLET_PATH = '/wallet/main';
 const TESTNET_WALLET_PATH = '/wallet/test';
 const PLATFORM = process.platform;
@@ -9,11 +11,11 @@ const PLATFORM = process.platform;
 const WALLET_PATH_TESTNET: string = path.join( APP_DATA_PATH , TESTNET_WALLET_PATH);
 const WALLET_PATH_MAINNET: string = path.join( APP_DATA_PATH , MAINNET_WALLET_PATH);
 
-const HAVEND_PATH_TESTNET: string = path.resolve(__dirname,`../haven-node/${PLATFORM}/testnet/havend`);
-const HAVEND_PATH_MAINNET: string = path.resolve(__dirname,`../haven-node/${PLATFORM}/mainnet/havend`);
+const HAVEND_PATH_TESTNET: string = checkForUnpackedPath(path.resolve(__dirname,`../haven-node/${PLATFORM}/testnet/havend`));
+const HAVEND_PATH_MAINNET: string = checkForUnpackedPath(path.resolve(__dirname,`../haven-node/${PLATFORM}/mainnet/havend`));
 
-const WALLET_RPC_PATH_TESTNET: string = path.resolve(__dirname,`../haven-node/${PLATFORM}/testnet/haven-wallet-rpc`);
-const WALLET_RPC_PATH_MAINNET: string = path.resolve(__dirname,`../haven-node/${PLATFORM}/mainnet/haven-wallet-rpc`);
+const WALLET_RPC_PATH_TESTNET: string = checkForUnpackedPath(path.resolve(__dirname,`../haven-node/${PLATFORM}/testnet/haven-wallet-rpc`));
+const WALLET_RPC_PATH_MAINNET: string = checkForUnpackedPath(path.resolve(__dirname,`../haven-node/${PLATFORM}/mainnet/haven-wallet-rpc`));
 
 
 
@@ -32,6 +34,15 @@ export const  checkAndCreateWalletDir = () => {
         }
     }
 };
+
+
+function checkForUnpackedPath  (path: string)  {
+
+    if (!path.includes('app.asar.unpacked')) {
+        return path.replace('app.asar', 'app.asar.unpacked');
+    }
+    return path;
+}
 
 
 
