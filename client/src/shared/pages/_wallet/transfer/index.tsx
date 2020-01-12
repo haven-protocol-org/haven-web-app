@@ -248,16 +248,6 @@ export class Transfer extends Component<TransferProps, TransferState> {
         ) : (
           <>
             <Form onSubmit={this.handleSubmit}>
-              <Dropdown
-                label="Asset"
-                placeholder="Select Asset"
-                name="send_asset"
-                width="true"
-                ticker={selectedAsset ? selectedAsset.ticker : ""}
-                value={selectedAsset ? selectedAsset.name : "Select Asset"}
-                options={options}
-                onClick={this.setSendAsset}
-              />
               {windowWidth < 1380 ? (
                 <Description
                   label="Haven Address"

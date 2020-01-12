@@ -7,19 +7,21 @@ import Header from "../_layout/header";
 import {Row} from "./styles";
 import {connect} from "react-redux";
 import {PRICE_RANGE_MONTH} from "../../reducers/priceHistory";
-import {getPriceDates, getPriceValues} from "../../../utility/utility";
+import {getPriceDates, getPriceValues} from "utility/utility";
 import {getPriceHistory} from "../../actions";
 import Statistic from "../statistic";
-import {withRouter} from "react-router-dom";
+import {withRouter} from "react-router";
+import {PriceRangeHistory, TickerPriceRangeHistory} from "shared/reducers/xPriceHistory";
+import {Ticker} from "shared/reducers/types";
 
-class ChartWrapper extends Component {
+class ChartWrapper extends Component<any, any> {
     state = { selectedRangeInDays: PRICE_RANGE_MONTH };
 
     componentDidMount() {
         this.selectPriceHistory(PRICE_RANGE_MONTH);
     }
 
-    selectPriceHistory(rangeInDays) {
+    selectPriceHistory(rangeInDays: number | string) {
         this.props.getPriceHistory(rangeInDays);
         this.setState({ selectedRangeInDays: rangeInDays });
     }
@@ -31,13 +33,25 @@ class ChartWrapper extends Component {
         const { id } = this.props.match.params;
         const { amount, price, value } = this.props;
 
-        const priceRangeEntry = this.props.priceHistory.prices.find(
-            priceRangeEntry =>
-                priceRangeEntry.rangeInDays === this.state.selectedRangeInDays
-        );
+        let prices;
+        let labels;
 
-        const prices = getPriceValues(priceRangeEntry.prices);
-        const labels = getPriceDates(priceRangeEntry.prices);
+        if (id === Ticker.XHV) {
+
+            const priceRangeEntry = this.props.priceHistory.prices.find(
+                (priceRangeEntry: PriceRangeHistory) =>
+                    priceRangeEntry.rangeInDays === this.state.selectedRangeInDays
+            );
+
+             prices = getPriceValues(priceRangeEntry.prices);
+             labels = getPriceDates(priceRangeEntry.prices);
+
+        } else if (id === Ticker.xUSD) {
+
+            prices = [1.00, 1.00];
+            labels = [new Date(1792, 3,2).toLocaleDateString(), new Date().toLocaleDateString()]
+        }
+
 
         return (
             <>
@@ -50,7 +64,7 @@ class ChartWrapper extends Component {
                     prices={prices}
                     labels={labels}
                     price={price.toFixed(4)}
-                    onChangePriceRange={args => this.selectPriceHistory(args)}
+                    onChangePriceRange={ (args: number | string) => this.selectPriceHistory(args)}
                 />
                 <Row>
                     <Statistic label="Amount" value={amount} />
@@ -68,7 +82,7 @@ class ChartWrapper extends Component {
     }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state: any) => ({
     priceHistory: state.priceHistory,
 
 });
@@ -77,15 +91,4 @@ export const ChartContainer = withRouter(connect(
     mapStateToProps,
     { getPriceHistory }
 )(ChartWrapper));
-
-
-
-ChartWrapper.propTypes = {
-
-    amount:PropTypes.any.isRequired,
-    value:PropTypes.any.isRequired,
-    price:PropTypes.number.isRequired,
-    priceHistory:PropTypes.any.isRequired,
-
-};
 
