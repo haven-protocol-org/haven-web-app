@@ -33,8 +33,6 @@ export const OPEN_WALLET_FETCHING = "open_wallet_fetching";
 export const OPEN_WALLET_SUCCEED = "open_wallet_succeed";
 export const OPEN_WALLET_FAILED = "open_wallet_failed";
 
-
-
 /*
 TRANSFER
  */
@@ -74,7 +72,6 @@ export const OFFSHORE_TRANSFER_SUCCEED = "offshore_transfer_succeed";
 
 export const EXCHANGE_RESET = "exchange_reset";
 
-
 export const GET_OFFSHORE_BALANCE_FETCHING = "get_offshore_balance_fetching";
 export const GET_OFFSHORE_BALANCE_FAILED = "get_offshore_balance_failed";
 export const GET_OFFSHORE_BALANCE_SUCCEED = "get_offshore_balance_succeed";
@@ -97,9 +94,13 @@ export const UPDATE_DAEMON_STATES_FAILED = "update_daemon_states_failed";
 
 export const UPDATE_SAVED_WALLETS = "update_saved_wallets";
 
-
 export const REQUEST_MINING_START = "request_mining_start";
 export const REQUEST_MINING_STOP = "request_mining_stop";
 export const REQUEST_MINING_STATUS = "request_mining_status";
 export const MINING_STATUS_RESPONSE = "mining_status_response";
 export const MINING_STATUS_RESPONSE_FAILED = "mining_status_response";
+
+//Exchange process
+
+export const SELECT_FROM_TICKER = "select_from_ticker";
+export const SELECT_TO_TICKER = "select_to_ticker";

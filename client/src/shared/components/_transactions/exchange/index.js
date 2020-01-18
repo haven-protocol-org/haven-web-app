@@ -5,14 +5,7 @@ import React from "react";
 import { Container, Header, Row, Key, Value, Footer } from "./styles";
 import Confirm from "../../confirm/index.js";
 
-const Transaction = ({ state, checked, onChange }) => {
-  const {
-    xRate,
-    fromAmount,
-    toAmount,
-    fromAsset,
-    toAsset
-  } = state;
+const Transaction = ({ xRate,fromAmount, toAmount,  fromTicker, toTicker, estimatedFee, checked, onChange }) => {
 
   return (
     <Container>
@@ -23,15 +16,15 @@ const Transaction = ({ state, checked, onChange }) => {
       <Row>
         <Key>Conversion Rate</Key>
         <Value>
-          {xRate && fromAsset && toAsset
-            ? `1 ${fromAsset.ticker} =  ${xRate.toFixed(4)} ${toAsset.ticker}`
+          {xRate && fromTicker && toTicker
+            ? `1 ${fromTicker} =  ${xRate.toFixed(4)} ${toTicker}`
             : ""}
         </Value>
       </Row>
       <Row>
         <Key>From Asset</Key>
         <Value>
-          {(fromAsset ? fromAsset.ticker : "") +
+          {(fromTicker ? fromTicker : "") +
             " " +
             (fromAmount && !isNaN(fromAmount) ? fromAmount : "--")}
         </Value>
@@ -39,7 +32,17 @@ const Transaction = ({ state, checked, onChange }) => {
       <Row>
         <Key>To Asset</Key>
         <Value>
-          {(toAsset ? toAsset.ticker : "") + " " + (toAmount && !isNaN(toAmount) ? toAmount : "--")}
+          {(toTicker ? toTicker : "") +
+            " " +
+            (toAmount && !isNaN(toAmount) ? toAmount : "--")}
+        </Value>
+      </Row>
+      <Row>
+        <Key>Estimated Fees</Key>
+        <Value>
+          {estimatedFee !== 0
+            ? `${estimatedFee.toFixed(4)} ${fromTicker}`
+            : "--"}
         </Value>
       </Row>
       <Footer>

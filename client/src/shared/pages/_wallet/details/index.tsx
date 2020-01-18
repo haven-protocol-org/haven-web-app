@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 // Relative Imports
 import Body from "../../../components/_layout/body";
-import { ChartContainer } from "../../../components/chart-container";
+import { ChartContainer } from "shared/components/chart-container";
 
 
 interface DetailsProps {

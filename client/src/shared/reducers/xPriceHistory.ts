@@ -1,11 +1,5 @@
-import {
-    GET_PRICE_HISTORY_FAILED,
-    GET_PRICE_HISTORY_FETCHING,
-    GET_PRICE_HISTORY_SUCCEED
-} from "../actions/types";
-import {AnyAction} from "redux";
+
 import {Ticker} from "shared/reducers/types";
-import {Balance} from "shared/reducers/xBalance";
 
 export const NO_PRICE = -1;
 
@@ -33,6 +27,6 @@ const emptyPriceHistory = [
 
 const INITIAL_STATE: XPriceRangeHistory = {
     xUSD:  emptyPriceHistory,
-    XHV: emptyPriceHistory
+    XHV: emptyPriceHistory,
+    xBTC: emptyPriceHistory
 };
-

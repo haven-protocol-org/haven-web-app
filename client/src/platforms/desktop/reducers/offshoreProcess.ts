@@ -4,7 +4,10 @@ import {
   OFFSHORE_FAILED,
   ONSHORE_FETCHING,
   ONSHORE_SUCCEED,
-  ONSHORE_FAILED, EXCHANGE_RESET
+  ONSHORE_FAILED,
+  EXCHANGE_RESET,
+  SELECT_FROM_TICKER,
+  SELECT_TO_TICKER
 } from "../actions/types";
 import { AnyAction } from "redux";
 import { DesktopAppState } from "./index";
@@ -23,16 +26,16 @@ export interface ExchangeProcessInfo extends TxProcessInfo {
 }
 
 const INITIAL_STATE: ExchangeProcessInfo = {
-  address:'',
-  amount:null,
-  fee:null,
-  isFetching:false,
-  info:'',
-  error:'',
-  succeed:false,
-  offshoreType:null,
-  toTicker:null,
-  fromTicker: null
+  address: "",
+  amount: null,
+  fee: null,
+  isFetching: false,
+  info: "",
+  error: "",
+  succeed: false,
+  offshoreType: null,
+  toTicker: Ticker.xUSD,
+  fromTicker: Ticker.XHV
 };
 
 export const offshoreProcess = (
@@ -40,6 +43,10 @@ export const offshoreProcess = (
   action: AnyAction
 ): ExchangeProcessInfo => {
   switch (action.type) {
+    case SELECT_FROM_TICKER:
+      return { ...state, ...action.payload };
+    case SELECT_TO_TICKER:
+      return { ...state, toTicker: action.payload };
     case ONSHORE_FETCHING:
     case OFFSHORE_FETCHING:
       return { ...state, ...action.payload, isFetching: true };
@@ -67,10 +74,20 @@ export const offshoreProcess = (
   }
 };
 
-export const isProcessingExchange = (state: DesktopAppState) => {
-  return state.offshoreProcess.isFetching;
+export const selectIsProcessingExchange = (offshoreProcess: ExchangeProcessInfo) => {
+  return offshoreProcess.isFetching;
 };
 
-export const exchangeSucceed = (state: DesktopAppState) => {
-  return state.offshoreProcess.succeed;
+export const selectExchangeSucceed = (offshoreProcess: ExchangeProcessInfo) => {
+  return offshoreProcess.succeed;
 };
+
+
+export const selectFromTicker = (offshoreProcess: ExchangeProcessInfo) => {
+  return offshoreProcess.fromTicker;
+};
+
+export const selectToTicker = (offshoreProcess: ExchangeProcessInfo) => {
+  return offshoreProcess.toTicker;
+};
+

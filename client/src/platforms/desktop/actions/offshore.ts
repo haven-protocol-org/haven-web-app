@@ -1,5 +1,8 @@
 import { offshoreRPC, onshoreRPC } from "../ipc/rpc/rpc";
-import {addErrorNotification, addExchangeSucceedMessage} from "shared/actions/notification";
+import {
+  addErrorNotification,
+  addExchangeSucceedMessage
+} from "shared/actions/notification";
 
 import {
   EXCHANGE_RESET,
@@ -7,11 +10,21 @@ import {
   OFFSHORE_FETCHING,
   ONSHORE_FAILED,
   ONSHORE_FETCHING,
-  ONSHORE_SUCCEED, TRANSFER_RESET
+  ONSHORE_SUCCEED,
+  SELECT_TO_TICKER,
+  SELECT_FROM_TICKER
 } from "./types";
 import { updateApp } from "./refresh";
 import { DesktopAppState } from "../reducers";
 import { Ticker } from "shared/reducers/types";
+
+export const setToTicker = (toTicker: Ticker | null) => {
+  return { type: SELECT_TO_TICKER, payload: toTicker };
+};
+
+export const setFromTicker = (fromTicker: Ticker | null) => {
+  return { type: SELECT_FROM_TICKER, payload: fromTicker };
+};
 
 export function onshore(
   fromTicker: Ticker,
@@ -19,14 +32,14 @@ export function onshore(
   fromAmount: number,
   toAmount: number,
   priority: number,
-  externAddress:string
+  externAddress: string
 ): any {
   const amount = BigInt(fromAmount * 1e12);
   return (dispatch: any, getState: () => DesktopAppState) => {
     dispatch(onshoreFetch({ fromTicker, toTicker, amount, isOffshore: false }));
 
-
-    const address = (externAddress.trim() !== "")? externAddress : getState().address.main;
+    const address =
+      externAddress.trim() !== "" ? externAddress : getState().address.main;
     const params = {
       destinations: [{ address, amount: amount.toString() }],
       priority
@@ -43,7 +56,7 @@ export function onshore(
       })
       .catch((error: any) => {
         dispatch(addErrorNotification(error));
-        dispatch(onOnShoreFailed(error))
+        dispatch(onOnShoreFailed(error));
       });
   };
 }
@@ -54,13 +67,17 @@ export function offshore(
   fromAmount: number,
   toAmount: number,
   priority: number,
-  externAddress:string
+  externAddress: string
 ): any {
   const amount = BigInt(fromAmount * 1e12);
   return (dispatch: any, getState: () => DesktopAppState) => {
-    const address = (externAddress.trim() !== "")? externAddress : getState().address.main;
+    const address =
+      externAddress.trim() !== "" ? externAddress : getState().address.main;
     dispatch(offshoreFetch());
-    const params = { destinations: [{ address, amount: amount.toString() }], priority };
+    const params = {
+      destinations: [{ address, amount: amount.toString() }],
+      priority
+    };
 
     offshoreRPC(params)
       .then((result: any) => {
@@ -72,7 +89,7 @@ export function offshore(
       })
       .catch((error: any) => {
         dispatch(addErrorNotification(error));
-        dispatch(onOffShoreFailed(error))
+        dispatch(onOffShoreFailed(error));
       });
   };
 }
@@ -106,7 +123,6 @@ const onOffShoreFailed = (error: any) => {
   console.log(error);
   return { type: OFFSHORE_FAILED };
 };
-
 
 export const resetExchangeProcess = () => {
   return { type: EXCHANGE_RESET };

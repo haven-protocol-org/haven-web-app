@@ -1,33 +1,35 @@
-import {EmptyState, History, Message, NoTransactions} from "shared/pages/_wallet/details/styles";
-import {Spinner} from "shared/components/spinner";
-import {convertBalanceForReading, createRemainingTimeString} from "utility/utility";
+import {
+  EmptyState,
+  History,
+  Message,
+  NoTransactions
+} from "shared/pages/_wallet/details/styles";
+import { Spinner } from "shared/components/spinner";
+import {
+  convertBalanceForReading,
+  createRemainingTimeString
+} from "utility/utility";
 import empty from "assets/illustration/no_transactions.svg";
-import React, {Component} from "react";
-import {getTransfers} from "../../actions";
-import {connect} from "react-redux";
-import {Transaction} from "shared/components/transaction";
+import React, { Component } from "react";
+import { getTransfers } from "../../actions";
+import { connect } from "react-redux";
+import { Transaction } from "shared/components/transaction";
 import Header from "shared/components/_layout/header/index.js";
-import {selectBlockHeight} from "../../reducers/chain";
-import {getTransferListByTicker} from "shared/reducers/xTransferList";
-import {withRouter} from "react-router";
-import {Ticker} from "shared/reducers/types";
-import {DesktopAppState} from "platforms/desktop/reducers";
-
+import { selectBlockHeight } from "../../reducers/chain";
+import {getTransferListByTicker, XTransferListAsset} from "shared/reducers/xTransferList";
+import { withRouter } from "react-router";
+import { Ticker } from "shared/reducers/types";
+import { DesktopAppState } from "platforms/desktop/reducers";
 
 interface TxHistoryProps {
-
-  transferList:any[] | null;
+  transferList: any [] | null | undefined;
   height: number;
   price: number;
   assetId: Ticker;
   getTransfers: () => void;
-
 }
 
-
 class TxHistoryContainer extends Component<TxHistoryProps, any> {
-
-
   static getTransactionType(direction: string, type: string) {
     if (direction === "in" && type === "block") {
       return "Mined";
@@ -40,21 +42,16 @@ class TxHistoryContainer extends Component<TxHistoryProps, any> {
     }
   }
 
-
-  getCurrentValueInUSD = (amount: number, ticker: Ticker ) => {
-
+  getCurrentValueInUSD = (amount: number, ticker: Ticker) => {
     const humanAmount: number = convertBalanceForReading(Math.abs(amount));
 
     switch (ticker) {
-
       case Ticker.xUSD:
         return humanAmount;
       case Ticker.XHV:
         return humanAmount * this.props.price;
-
     }
   };
-
 
   render() {
     const all = this.props.transferList;
@@ -76,32 +73,46 @@ class TxHistoryContainer extends Component<TxHistoryProps, any> {
           <History>
             {all && all.length > 0 ? (
               all.map((transaction: any, index: number) => {
-
-                const currentValueInUSD = this.getCurrentValueInUSD(transaction.amount, this.props.assetId);
-                const transactionDate = new Date(transaction.timestamp * 1000).toLocaleDateString();
-                const isMempool = transaction.direction === 'pending' || transaction.direction === 'pool';
-                const readableAmount = convertBalanceForReading(transaction.amount);
-                const txType = TxHistoryContainer.getTransactionType(transaction.direction, transaction.type);
+                const currentValueInUSD = this.getCurrentValueInUSD(
+                  transaction.amount,
+                  this.props.assetId
+                );
+                const transactionDate = new Date(
+                  transaction.timestamp * 1000
+                ).toLocaleDateString();
+                const isMempool =
+                  transaction.direction === "pending" ||
+                  transaction.direction === "pool";
+                const readableAmount = convertBalanceForReading(
+                  transaction.amount
+                );
+                const txType = TxHistoryContainer.getTransactionType(
+                  transaction.direction,
+                  transaction.type
+                );
 
                 let blocksTillUnlocked: number = 0;
 
-                  // when unlock_time is 0 we have a regular tx which is unlocked after 10 confirmations
-                  if (transaction.unlock_time === 0) {
-
-                    blocksTillUnlocked = Math.max(10 - transaction.confirmations,0)
-
+                // when unlock_time is 0 we have a regular tx which is unlocked after 10 confirmations
+                if (transaction.unlock_time === 0) {
+                  blocksTillUnlocked = Math.max(
+                    10 - transaction.confirmations,
+                    0
+                  );
+                }
+                // if unlock_time is higher than transaction height then we expect a mining
+                // income where unlock_time is the index of the block where it is unlocked
+                else if (transaction.unlock_time > transaction.height) {
+                  if (transaction.unlock_time > currentHeight) {
+                    blocksTillUnlocked =
+                      transaction.unlock_time - currentHeight;
                   }
-                  // if unlock_time is higher than transaction height then we expect a mining
-                  // income where unlock_time is the index of the block where it is unlocked
-                  else if (transaction.unlock_time > transaction.height) {
-                    if (transaction.unlock_time > currentHeight) {
-                      blocksTillUnlocked = transaction.unlock_time - currentHeight;
-                    }
-                  }
-                  const minutesTillUnlocked = blocksTillUnlocked * 2;
-                  const timeTillUnlocked = minutesTillUnlocked > 0 ? createRemainingTimeString(minutesTillUnlocked): null;
-
-
+                }
+                const minutesTillUnlocked = blocksTillUnlocked * 2;
+                const timeTillUnlocked =
+                  minutesTillUnlocked > 0
+                    ? createRemainingTimeString(minutesTillUnlocked)
+                    : null;
 
                 return (
                   <Transaction
@@ -112,6 +123,7 @@ class TxHistoryContainer extends Component<TxHistoryProps, any> {
                     block={transaction.height}
                     date={transactionDate}
                     tx={transaction.txid}
+                    fee={convertBalanceForReading(transaction.fee)}
                     mempool={isMempool}
                     amount={readableAmount}
                     timeTillUnlocked={timeTillUnlocked}
@@ -141,8 +153,5 @@ export const mapStateToProps = (state: DesktopAppState, props: any) => ({
 });
 
 export const TxHistoryDesktop = withRouter(
-  connect(
-    mapStateToProps,
-    { getTransfers }
-  )(TxHistoryContainer)
+  connect(mapStateToProps, { getTransfers })(TxHistoryContainer)
 );

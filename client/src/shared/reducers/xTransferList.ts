@@ -20,10 +20,10 @@ export enum TransferType {
 
 
 export type XTransferListAsset = Partial<{[key in Ticker]: any[]}>
-export type XTransferList = Record<Ticker,any[] | null >
+export type XTransferList = {[key in Ticker]?: any[] | null}
 
 
-const INITAL_STATE:XTransferList = {
+const INITAL_STATE:{[key in Ticker]?: any[] | null} = {
 
     xUSD:null,
     XHV:null

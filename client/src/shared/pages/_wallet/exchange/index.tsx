@@ -12,10 +12,10 @@ import Transaction from "../../../components/_transactions/exchange";
 import Tab from "../../../components/tab";
 import { Container, Failed } from "./styles";
 import {
-  ConversionRate,
-  selectLatestXRates,
+  selectXRate,
   hasLatestXRate,
-  XRates
+  XRates,
+  priceDelta
 } from "platforms/desktop/reducers/blockHeaderExchangeRates";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { selectNodeHeight } from "platforms/desktop/reducers/chain";
@@ -27,14 +27,15 @@ import {
 } from "platforms/desktop/actions";
 import { Ticker } from "shared/reducers/types";
 import {
-  exchangeSucceed,
-  isProcessingExchange
+  selectExchangeSucceed,
+  selectIsProcessingExchange,
+    selectFromTicker,selectToTicker
 } from "platforms/desktop/reducers/offshoreProcess";
-
-
+import {setFromTicker, setToTicker} from "platforms/desktop/actions/offshore";
 
 enum ExchangeTab {
-  Basic,Adanvced
+  Basic,
+  Adanvced
 }
 
 type ExchangeProps = {
@@ -47,21 +48,22 @@ type ExchangeProps = {
   isProcessingExchange: boolean;
   hasLatestXRate: boolean;
   exchangeSucceed: boolean;
-
+  priceDelta: number | null;
+  setFromTicker:(ticker: Ticker | null) => void;
+  setToTicker:(ticker: Ticker | null) => void;
+  xRate:number | null;
+  fromTicker: Ticker | null;
+  toTicker: Ticker | null;
 };
 
 type ExchangeState = {
-  fromAsset?: AssetOption;
   fromAmount?: string;
   toAmount?: string;
-  toAsset?: AssetOption;
-  xRate?: number;
-  xRateRevert?: number;
   reviewed?: boolean;
-  selectedTab:ExchangeTab;
+  selectedTab: ExchangeTab;
   externAddress: string;
-  selectedPrio:ExchangePrioOption;
-
+  selectedPrio: ExchangePrioOption;
+  estimatedFee: number;
 };
 
 export interface AssetOption {
@@ -75,42 +77,37 @@ export interface ExchangePrioOption {
   prio: number;
 }
 
-const options: AssetOption[] = [
+const assetOptions: AssetOption[] = [
   { name: "Haven Token", ticker: Ticker.XHV },
   { name: "United States Dollar", ticker: Ticker.xUSD }
 ];
 
 const exchangePrioOptions: ExchangePrioOption[] = [
   {
-    name: "Unimportant",
-    ticker: "unlocks in ~2 days", prio:1
+    name: "Low",
+    ticker: "unlocks in ~2 days",
+    prio: 1
   },
-  { name: "Normal", ticker: "unlocks ~18 hours", prio:2 },
-  { name: "Elevated", ticker: "unlocks ~6 hours", prio:3 },
-  { name: "Priority", ticker: "unlocks ~2 hours", prio:4 }
+  { name: "Medium", ticker: "unlocks ~18 hours", prio: 2 },
+  { name: "High", ticker: "unlocks ~6 hours", prio: 3 },
+  { name: "Very High", ticker: "unlocks ~2 hours", prio: 4 }
 ];
 
 const INITIAL_STATE: ExchangeState = {
-  fromAsset: options[0],
   fromAmount: "",
   toAmount: "",
-  toAsset: options[1],
-  xRate: undefined,
-  xRateRevert: undefined,
   reviewed: false,
-  selectedTab:ExchangeTab.Basic,
+  selectedTab: ExchangeTab.Basic,
   externAddress: "",
-  selectedPrio:exchangePrioOptions[exchangePrioOptions.length-1]
-
+  selectedPrio: exchangePrioOptions[exchangePrioOptions.length - 1],
+  estimatedFee: 0
 };
 class Exchange extends Component<ExchangeProps, ExchangeState> {
-
   state: ExchangeState = INITIAL_STATE;
 
   componentDidMount() {
     window.scrollTo(0, 0);
     this.props.getLastBlockHeader();
-    this.setRates();
   }
 
   componentWillReceiveProps(
@@ -119,7 +116,13 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
   ): void {
     if (!this.props.exchangeSucceed && nextProps.exchangeSucceed) {
       this.props.resetExchangeProcess();
-      this.setState({ fromAmount:"", toAmount:"", reviewed:false, externAddress:'' });
+      this.setState({
+        fromAmount: "",
+        toAmount: "",
+        reviewed: false,
+        externAddress: "",
+        estimatedFee: 0
+      });
     }
   }
 
@@ -127,61 +130,41 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     const name = event.target.name;
     const value = event.target.value;
 
-    this.setState(
-      {...this.state,
-        [name]: value
-      },
-      () => this.calcConversion(true)
-    );
+    this.setState({ ...this.state, [name]: value }, () => {
+      this.calcConversion(true);
+    });
   };
 
-
-  onEnterExternAddress = (event:any) => {
-
+  onEnterExternAddress = (event: any) => {
     const name = event.target.name;
     const value = event.target.value;
 
-    this.setState(
-        {...this.state,
-          [name]: value
-        }
-    );
-
-
+    this.setState({ ...this.state, [name]: value });
   };
 
   onEnterToAmount = (event: any) => {
     const name = event.target.name;
     const value = event.target.value;
 
-    this.setState(
-      {...this.state,
-        [name]: value
-      },
-      () => this.calcConversion(false)
-    );
+    this.setState({ ...this.state, [name]: value }, () => {
+      this.calcConversion(false);
+    })
   };
 
   setFromAsset = (option: AssetOption) => {
     // Call back function from Dropdown
-    this.setState({ fromAsset: option }, () => this.setRates());
+    this.props.setFromTicker(option.ticker);
 
-    if (this.state.toAsset === option) {
-      this.setState({ toAsset: undefined });
+    if (this.props.toTicker === option.ticker) {
+      this.props.setToTicker(null);
     }
   };
 
   setToAsset = (option: AssetOption) => {
     // Call back function from Dropdown
-    this.setState(
-      {
-        toAsset: option
-      },
-      () => this.setRates()
-    );
-
-    if (this.state.fromAsset === option) {
-      this.setState({ fromAsset: undefined });
+    this.props.setToTicker(option.ticker);
+    if (this.props.fromTicker === option.ticker) {
+      this.props.setFromTicker(null);
     }
   };
 
@@ -190,158 +173,119 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     this.setState({ reviewed: checked });
   };
 
-  setRates() {
-    const { fromAsset, toAsset } = this.state;
+  calculateFees = (): void => {
+    const priceDelta = this.props.priceDelta;
 
-    if (
-      fromAsset === undefined ||
-      toAsset === undefined ||
-      toAsset === fromAsset
-    ) {
-      this.setState({ xRate: undefined, xRateRevert: undefined });
+    const { fromAmount, selectedPrio } = this.state;
+
+    if (!fromAmount || !priceDelta) {
       return;
     }
 
-    let isReverted = false;
-    let matchedConversionRate: ConversionRate | undefined = undefined;
+    // Estimate the fee
+    const unLockTime: number = 60 * Math.pow(3, 4 - selectedPrio.prio);
+    const estimatedFee =
+      (priceDelta *
+        Math.exp((Math.PI / -1000.0) * (unLockTime - 60)) *
+        Number(fromAmount)) /
+      1000000000000;
+  };
 
-    const fromTicker = fromAsset.ticker;
-    const toTicker = toAsset.ticker;
 
-    if (this.props.conversionRates === null) {
+  calcConversion(setToAmount: boolean = true) {
+    const { toAmount, fromAmount } = this.state;
+    const {xRate} = this.props;
+
+    if (xRate === null) {
       return;
     }
 
-    for (const conversionRate of this.props.conversionRates.rates) {
-      if (
-        conversionRate.fromTicker === fromTicker &&
-        conversionRate.toTicker === toTicker
-      ) {
-        matchedConversionRate = conversionRate;
-        break;
-      }
-      if (
-        conversionRate.toTicker === fromTicker &&
-        conversionRate.fromTicker === toTicker
-      ) {
-        matchedConversionRate = conversionRate;
-        isReverted = true;
-        break;
-      }
-    }
-    if (matchedConversionRate === undefined) {
+
+    if (fromAmount !== undefined && setToAmount) {
+      this.setState({ toAmount: (parseFloat(fromAmount) * xRate).toFixed(4) });
       return;
     }
 
-    this.setState(
-      state => {
-        if (matchedConversionRate === undefined) {
-          return state;
-        }
-
-        return {...state,
-          xRate: isReverted
-            ? matchedConversionRate.xRateRevert
-            : matchedConversionRate.xRate,
-          xRateRevert: isReverted
-            ? matchedConversionRate.xRate
-            : matchedConversionRate.xRateRevert
-        };
-      },
-      () => {
-        this.calcConversion();
-      }
-    );
-  }
-
-  calcConversion(convertFromTo: boolean = true) {
-    let { xRate, xRateRevert, toAmount, fromAmount } = this.state;
-
-    if (xRate === undefined) {
-      return;
-    }
-
-    if (xRateRevert === undefined) {
-      return;
-    }
-
-    if (fromAmount !== undefined && convertFromTo) {
+    if (toAmount !== undefined && !setToAmount) {
       this.setState(
-        { toAmount: (parseFloat(fromAmount) * xRate).toFixed(4) },
-        () => console.log(this.state)
-      );
-      return;
-    }
-
-    if (toAmount !== undefined && !convertFromTo) {
-      this.setState(
-        { fromAmount: (parseFloat(toAmount) * xRateRevert).toFixed(4) },
+        { fromAmount: (parseFloat(toAmount) * (1/xRate)).toFixed(4) },
         () => console.log(this.state)
       );
     }
   }
 
   handleSubmit = () => {
+
+
+    const {fromTicker, toTicker} = this.props;
+
+
     if (
       !this.state.fromAmount ||
-      !this.state.fromAsset ||
-      !this.state.toAsset ||
+      !fromTicker ||
+      !toTicker ||
       !this.state.toAmount ||
       !this.state.reviewed
     )
       return;
 
     const isOffShore =
-      this.state.fromAsset.ticker === "XHV" &&
-      this.state.toAsset.ticker !== "XHV";
+      fromTicker === Ticker.XHV && toTicker !== Ticker.XHV;
     const fromAmount = parseFloat(this.state.fromAmount);
     const toAmount = parseFloat(this.state.toAmount);
 
     if (isOffShore) {
       this.props.offshore(
-        this.state.fromAsset.ticker,
-        this.state.toAsset.ticker,
+        fromTicker,
+        toTicker,
         fromAmount,
         toAmount,
-          this.state.selectedPrio.prio,this.state.externAddress
+        this.state.selectedPrio.prio,
+        this.state.externAddress
       );
     } else {
       this.props.onshore(
-        this.state.fromAsset.ticker,
-        this.state.toAsset.ticker,
+         fromTicker,
+        toTicker,
         fromAmount,
-        toAmount, this.state.selectedPrio.prio, this.state.externAddress
+        toAmount,
+        this.state.selectedPrio.prio,
+        this.state.externAddress
       );
     }
   };
 
   toggleBasic = () => {
-    this.setState({selectedTab:ExchangeTab.Basic});
+    this.setState({ selectedTab: ExchangeTab.Basic });
   };
 
   toggleAdvanced = () => {
-    this.setState({selectedTab:ExchangeTab.Adanvced});
+    this.setState({ selectedTab: ExchangeTab.Adanvced });
   };
 
-  setExchangePriority = (selectedOption:ExchangePrioOption) => {
-
-    this.setState({selectedPrio:selectedOption});
-
+  setExchangePriority = (selectedOption: ExchangePrioOption) => {
+    this.setState({ selectedPrio: selectedOption }, () => this.calculateFees());
   };
 
   render() {
-    const { fromAsset, toAsset, fromAmount, toAmount, reviewed, selectedTab, selectedPrio, externAddress } = this.state;
+    const {
+      fromAmount,
+      toAmount,
+      reviewed,
+      selectedTab,
+      selectedPrio,
+      externAddress
+    } = this.state;
 
-    const fromName = fromAsset ? fromAsset.name : "Select Asset";
-    const fromTicker = fromAsset ? fromAsset.ticker : "";
-
-    const toName = toAsset ? toAsset.name : "Select Asset";
-    const toTicker = toAsset ? toAsset.ticker : "";
-
+    const {fromTicker, toTicker} = this.props;
     const { hasLatestXRate, conversionRates } = this.props;
 
+
+    const fromAsset = assetOptions.find((option) => option.ticker === fromTicker);
+    const toAsset = assetOptions.find((option) => option.ticker === toTicker);
+
     const isValid: boolean =
-      !!(fromAsset && toAsset && fromAmount && toAmount && reviewed) &&
+      !!(fromTicker && toTicker && fromAmount && toAmount && reviewed) &&
       hasLatestXRate;
 
     return (
@@ -360,104 +304,115 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
           secondTabClickEvent={this.toggleAdvanced}
           onClick={() => {}}
         />
-        {!(hasLatestXRate && conversionRates) && (
+        {!(hasLatestXRate) && (
           <Failed>Exchange is disabled when Wallet is not synced</Failed>
         )}
-          <>
-            <Form onSubmit={this.handleSubmit}>
-              <Dropdown
-                label="From Asset"
-                placeholder="Select Asset"
-                name="from_asset"
-                ticker={fromTicker}
-                value={fromName}
-                options={options}
-                onClick={this.setFromAsset}
-              />
-              <Input
-                label="From Amount"
-                placeholder="Enter amount"
-                type="number"
-                name="fromAmount"
-                value={fromAmount}
-                onChange={this.onEnterFromAmount}
-                error={
-                  fromAsset === undefined ? "Please select an asset first" : ""
-                }
-                readOnly={fromAsset === undefined}
-              />
-              <Dropdown
-                label="To Asset"
-                placeholder="Select Asset"
-                name="to_asset"
-                value={toName}
-                ticker={toTicker}
-                options={options}
-                onClick={this.setToAsset}
-              />
-              <Input
-                label="To Amount"
-                placeholder="Enter amount"
-                name="toAmount"
-                type="number"
-                value={toAmount}
-                onChange={this.onEnterToAmount}
-                error={
-                  toAsset === undefined ? "Please select an asset first" : ""
-                }
-                readOnly={toAsset === undefined}
-              />
-              {selectedTab === ExchangeTab.Adanvced && (
-                  <>
-                  <Dropdown
-                      label="Priority"
-                      placeholder="Select Priority"
-                      name="exchange_priority"
-                      value={selectedPrio.name}
-                      ticker={selectedPrio.ticker}
-                      options={exchangePrioOptions}
-                      onClick={this.setExchangePriority}
-                  />
-                  <Input
-                label="Exchange Address (Optional)"
-                placeholder="Exchange to another address"
-                name="externAddress"
-                type="text"
-                value={externAddress}
-                onChange={this.onEnterExternAddress}
+        <>
+          <Form onSubmit={this.handleSubmit}>
+            <Dropdown
+              label="From Asset"
+              placeholder="Select Asset"
+              name="from_asset"
+              ticker={fromTicker}
+              value={fromAsset? fromAsset.name : 'Select Asset'}
+              options={assetOptions}
+              onClick={this.setFromAsset}
+            />
+            <Input
+              label="From Amount"
+              placeholder="Enter amount"
+              type="number"
+              name="fromAmount"
+              value={fromAmount}
+              onChange={this.onEnterFromAmount}
+              error={
+                fromTicker === null ? "Please select an asset first" : ""
+              }
+              readOnly={fromTicker === null}
+            />
+            <Dropdown
+              label="To Asset"
+              placeholder="Select Asset"
+              name="to_asset"
+              value={toAsset? toAsset.name: "Select Asset"}
+              ticker={toTicker}
+              options={assetOptions}
+              onClick={this.setToAsset}
+            />
+            <Input
+              label="To Amount"
+              placeholder="Enter amount"
+              name="toAmount"
+              type="number"
+              value={toAmount}
+              onChange={this.onEnterToAmount}
+              error={
+                toTicker === null ? "Please select an asset first" : ""
+              }
+              readOnly={toTicker === null}
+            />
+            {selectedTab === ExchangeTab.Adanvced && (
+              <>
+                <Dropdown
+                  label="Priority"
+                  placeholder="Select Priority"
+                  name="exchange_priority"
+                  value={selectedPrio.name}
+                  ticker={selectedPrio.ticker}
+                  options={exchangePrioOptions}
+                  onClick={this.setExchangePriority}
+                />
+                <Input
+                  label="Exchange Address (Optional)"
+                  placeholder="Exchange to another address"
+                  name="externAddress"
+                  type="text"
+                  value={externAddress}
+                  onChange={this.onEnterExternAddress}
                 />
               </>
-              ) }
-
-            </Form>
-            <Container>
-              <Transaction
-                state={this.state}
-                checked={reviewed}
-                onChange={this.handleReviewSubmit}
-              />
-              <Footer
-                onClick={this.handleSubmit}
-                label="Exchange"
-                validated={isValid}
-                loading={this.props.isProcessingExchange}
-              />
-            </Container>
-          </>
+            )}
+          </Form>
+          <Container>
+            <Transaction
+                xRate={this.props.xRate}
+                fromAmount={fromAmount}
+                toAmount={toAmount}
+                fromTicker={fromTicker}
+                toTicker={toTicker}
+                estimatedFee={0}
+              checked={reviewed}
+              onChange={this.handleReviewSubmit}
+            />
+            <Footer
+              onClick={this.handleSubmit}
+              label="Exchange"
+              validated={isValid}
+              loading={this.props.isProcessingExchange}
+            />
+          </Container>
+        </>
       </Body>
     );
   }
 }
 
 const mapStateToProps = (state: DesktopAppState) => ({
-  conversionRates: selectLatestXRates(state),
+  xRate: selectXRate(state.blockHeaderExchangeRate, state.offshoreProcess.fromTicker, state.offshoreProcess.toTicker),
   nodeHeight: selectNodeHeight(state),
-  isProcessingExchange: isProcessingExchange(state),
+  isProcessingExchange: selectIsProcessingExchange(state.offshoreProcess),
   hasLatestXRate: hasLatestXRate(state),
-  exchangeSucceed: exchangeSucceed(state)
+  exchangeSucceed: selectExchangeSucceed(state.offshoreProcess),
+  priceDelta: priceDelta(state),
+  fromTicker: selectFromTicker(state.offshoreProcess),
+  toTicker: selectToTicker(state.offshoreProcess)
+
 });
 
-export const ExchangePage = connect(
-  mapStateToProps,
-  { getLastBlockHeader, onshore, offshore, resetExchangeProcess }
-)(Exchange);
+export const ExchangePage = connect(mapStateToProps, {
+  getLastBlockHeader,
+  onshore,
+  offshore,
+  resetExchangeProcess,
+  setToTicker,setFromTicker
+})(Exchange);
