@@ -16,7 +16,7 @@ import {calcValue, convertToMoney} from "utility/utility";
 import {Ticker} from "shared/reducers/types";
 import {OFFSHORE_ENABLED} from "constants/env";
 import {DesktopAppState} from "platforms/desktop/reducers";
-import {selectReadableBalance, XBalances} from "shared/reducers/xBalance";
+import {XBalances} from "shared/reducers/xBalance";
 
 interface AssetsProps {
 
@@ -36,6 +36,9 @@ interface AssetsState {
 
 };
 
+
+
+const Enabled_TICKER = [Ticker.xUSD, Ticker.XHV];
 
 class AssetsPage extends Component<AssetsProps, any> {
   state = {
@@ -62,7 +65,7 @@ class AssetsPage extends Component<AssetsProps, any> {
 
 
 
-      const enabledTokens = token.filter( (asset: any) => (('x' + asset.ticker) in Ticker));
+      const enabledTokens = token.filter( (asset: any) => Enabled_TICKER.includes('x' + asset.ticker as Ticker));
       return enabledTokens.map(data => {
       const { token, ticker, change, symbol } = data;
 
@@ -87,7 +90,7 @@ class AssetsPage extends Component<AssetsProps, any> {
 
 
 
-      const disabledTokens = OFFSHORE_ENABLED? token.filter( (asset: any) => (!('x' + asset.ticker in Ticker))): token;
+      const disabledTokens = OFFSHORE_ENABLED? token.filter( (asset: any) => !Enabled_TICKER.includes('x' + asset.ticker as Ticker)): token;
 
       return disabledTokens.map(data => {
           const { token, ticker, change, symbol } = data;

@@ -44,7 +44,7 @@ export const offshoreProcess = (
 ): ExchangeProcessInfo => {
   switch (action.type) {
     case SELECT_FROM_TICKER:
-      return { ...state, ...action.payload };
+      return { ...state, fromTicker: action.payload };
     case SELECT_TO_TICKER:
       return { ...state, toTicker: action.payload };
     case ONSHORE_FETCHING:

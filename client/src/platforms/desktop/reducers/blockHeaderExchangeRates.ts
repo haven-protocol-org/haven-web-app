@@ -2,6 +2,7 @@ import {AnyAction} from "redux";
 import {GET_BLOCK_HEADER_EXCHANGE_RATE_SUCCEED} from "../actions/types";
 import {DesktopAppState} from ".";
 import {Ticker} from "shared/reducers/types";
+import bigInt from "big-integer";
 
 export interface ConversionRate {
   fromTicker: Ticker;
@@ -19,23 +20,23 @@ export interface XRates {
 export interface BlockHeaderRate {
   height: number;
   signature: string;
-  unused1: number;
-  unused2: number;
-  unused3: number;
-  xAG: number;
-  xAU: number;
-  xAUD: number;
-  xBTC: number;
-  xCAD: number;
-  xCHF: number;
-  xCNY: number;
-  xEUR: number;
-  xGBP: number;
-  xJPY: number;
-  xNOK: number;
-  xNZD: number;
-  xUSD: number;
-  timestamp: number;
+  unused1: bigInt.BigInteger;
+  unused2: bigInt.BigInteger;
+  unused3: bigInt.BigInteger;
+  xAG: bigInt.BigInteger;
+  xAU: bigInt.BigInteger;
+  xAUD: bigInt.BigInteger;
+  xBTC: bigInt.BigInteger;
+  xCAD: bigInt.BigInteger;
+  xCHF: bigInt.BigInteger;
+  xCNY: bigInt.BigInteger;
+  xEUR: bigInt.BigInteger;
+  xGBP: bigInt.BigInteger;
+  xJPY: bigInt.BigInteger;
+  xNOK: bigInt.BigInteger;
+  xNZD: bigInt.BigInteger;
+  xUSD: bigInt.BigInteger;
+  timestamp: bigInt.BigInteger;
 }
 
 const INITIAL_STATE: BlockHeaderRate[] = [];
@@ -58,15 +59,15 @@ export const selectXRateAtHeight = () => {
 
 };
 
-export const selectXRate = (blockHeaderExchangeRate: BlockHeaderRate[], fromTicker:Ticker | null, toTicker:Ticker | null): number | null => {
+export const selectXRate = (blockHeaderExchangeRate: BlockHeaderRate[], fromTicker:Ticker | null, toTicker:Ticker | null): number => {
 
 
   if (blockHeaderExchangeRate.length === 0) {
-    return null;
+    return 0;
   }
 
   if (fromTicker === null || toTicker === null) {
-    return null;
+    return 0;
   }
 
   const from = fromTicker === Ticker.xUSD? 'unused1' : fromTicker;
@@ -75,12 +76,12 @@ export const selectXRate = (blockHeaderExchangeRate: BlockHeaderRate[], fromTick
   const latestBlockerHeader: BlockHeaderRate = blockHeaderExchangeRate[blockHeaderExchangeRate.length - 1];
 
   if (from === Ticker.XHV && to !== Ticker.XHV) {
-      return latestBlockerHeader[to]/ Math.pow(10, 12);
+      return latestBlockerHeader[to].toJSNumber() / Math.pow(10,12);
   }
   else if (from !== Ticker.XHV && to === Ticker.XHV) {
-    return 1/(latestBlockerHeader[from]/Math.pow(10,12));
+    return bigInt(10).pow(24).divide(latestBlockerHeader[from]).toJSNumber() / Math.pow(10,12);
   }
-  return null;
+  return  0;
 
 };
 
@@ -99,5 +100,5 @@ export const priceDelta = (state: DesktopAppState): number | null => {
   const latestBlockerHeader =
     state.blockHeaderExchangeRate[state.blockHeaderExchangeRate.length - 1];
 
-  return Math.abs(latestBlockerHeader.xUSD - latestBlockerHeader.unused1);
+  return latestBlockerHeader.xUSD.subtract(latestBlockerHeader.unused1).abs().toJSNumber();
 };

@@ -4,7 +4,8 @@ import {
   GET_BALANCES_FETCHING,
   GET_BALANCES_SUCCEED
 } from "./types";
-import { Balance, XBalance } from "../../../shared/reducers/xBalance";
+import { Balance, XBalance } from "shared/reducers/xBalance";
+import bigInt  from "big-integer";
 
 export const getBalance = () => {
   return (dispatch: any) => {
@@ -32,10 +33,10 @@ const getBalancesFailed = (error: any) => ({
 
 const parseBalances = (rpcBalanceData: any): XBalance => {
   const balance: Balance = {
-    balance: BigInt(rpcBalanceData.balance),
-    unlockedBalance: BigInt(rpcBalanceData.unlocked_balance),
+    balance: bigInt(rpcBalanceData.balance),
+    unlockedBalance: bigInt(rpcBalanceData.unlocked_balance),
     lockedBalance:
-      BigInt(rpcBalanceData.balance) - BigInt(rpcBalanceData.unlocked_balance)
+      bigInt(rpcBalanceData.balance).subtract(rpcBalanceData.unlocked_balance)
   };
 
   return {

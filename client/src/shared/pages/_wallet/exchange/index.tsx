@@ -32,6 +32,8 @@ import {
     selectFromTicker,selectToTicker
 } from "platforms/desktop/reducers/offshoreProcess";
 import {setFromTicker, setToTicker} from "platforms/desktop/actions/offshore";
+import * as bigInt from "big-integer";
+import {fromAtomicUnit} from "platforms/desktop/utility";
 
 enum ExchangeTab {
   Basic,
@@ -51,7 +53,7 @@ type ExchangeProps = {
   priceDelta: number | null;
   setFromTicker:(ticker: Ticker | null) => void;
   setToTicker:(ticker: Ticker | null) => void;
-  xRate:number | null;
+  xRate: number;
   fromTicker: Ticker | null;
   toTicker: Ticker | null;
 };
@@ -196,9 +198,10 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     const { toAmount, fromAmount } = this.state;
     const {xRate} = this.props;
 
-    if (xRate === null) {
+    if (xRate === 0) {
       return;
     }
+
 
 
     if (fromAmount !== undefined && setToAmount) {
@@ -208,8 +211,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
 
     if (toAmount !== undefined && !setToAmount) {
       this.setState(
-        { fromAmount: (parseFloat(toAmount) * (1/xRate)).toFixed(4) },
-        () => console.log(this.state)
+        { fromAmount: (parseFloat(toAmount) * (1/xRate)).toFixed(4) }
       );
     }
   }
@@ -278,7 +280,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     } = this.state;
 
     const {fromTicker, toTicker} = this.props;
-    const { hasLatestXRate, conversionRates } = this.props;
+    const { hasLatestXRate } = this.props;
 
 
     const fromAsset = assetOptions.find((option) => option.ticker === fromTicker);

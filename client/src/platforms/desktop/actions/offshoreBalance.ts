@@ -5,6 +5,7 @@ import {
   GET_OFFSHORE_BALANCE_FETCHING,
   GET_OFFSHORE_BALANCE_SUCCEED
 } from "./types";
+import bigInt from "big-integer";
 
 export function getOffshoreBalance() {
   return (dispatch: any) => {
@@ -18,9 +19,9 @@ export function getOffshoreBalance() {
 
 const getOffshoreBalanceSucceed = (res: any) => {
   const balance: Balance = {
-    unlockedBalance: BigInt(res.unlocked_balance),
-    lockedBalance: BigInt(res.balance) - BigInt(res.unlocked_balance),
-    balance: BigInt(res.balance)
+    unlockedBalance: bigInt(res.unlocked_balance),
+    lockedBalance: bigInt(res.balance).subtract(res.unlocked_balance),
+    balance: bigInt(res.balance)
   };
 
   const xBalance: XBalance = { xUSD: balance };

@@ -54,7 +54,6 @@ const INITAL_STATE:{[key in Ticker]?: any[] | null} = {
             return {...action.payload};
         default:
             return state;
-
     }
 };
 
