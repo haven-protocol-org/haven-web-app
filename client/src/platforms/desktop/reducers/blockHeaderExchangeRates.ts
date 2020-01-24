@@ -1,7 +1,7 @@
-import {AnyAction} from "redux";
-import {GET_BLOCK_HEADER_EXCHANGE_RATE_SUCCEED} from "../actions/types";
-import {DesktopAppState} from ".";
-import {Ticker} from "shared/reducers/types";
+import { AnyAction } from "redux";
+import { GET_BLOCK_HEADER_EXCHANGE_RATE_SUCCEED } from "../actions/types";
+import { DesktopAppState } from ".";
+import { Ticker } from "shared/reducers/types";
 import bigInt from "big-integer";
 
 export interface ConversionRate {
@@ -53,15 +53,13 @@ export const blockHeaderExchangeRate = (
   }
 };
 
+export const selectXRateAtHeight = () => {};
 
-
-export const selectXRateAtHeight = () => {
-
-};
-
-export const selectXRate = (blockHeaderExchangeRate: BlockHeaderRate[], fromTicker:Ticker | null, toTicker:Ticker | null): number => {
-
-
+export const selectXRate = (
+  blockHeaderExchangeRate: BlockHeaderRate[],
+  fromTicker: Ticker | null,
+  toTicker: Ticker | null
+): number => {
   if (blockHeaderExchangeRate.length === 0) {
     return 0;
   }
@@ -70,19 +68,20 @@ export const selectXRate = (blockHeaderExchangeRate: BlockHeaderRate[], fromTick
     return 0;
   }
 
-  const from = fromTicker === Ticker.xUSD? 'unused1' : fromTicker;
-  const to = toTicker === Ticker.xUSD? 'unused1' : toTicker;
+  const from = fromTicker === Ticker.xUSD ? "unused1" : fromTicker;
+  const to = toTicker === Ticker.xUSD ? "unused1" : toTicker;
 
-  const latestBlockerHeader: BlockHeaderRate = blockHeaderExchangeRate[blockHeaderExchangeRate.length - 1];
+  const latestBlockerHeader: BlockHeaderRate =
+    blockHeaderExchangeRate[blockHeaderExchangeRate.length - 1];
 
   if (from === Ticker.XHV && to !== Ticker.XHV) {
-      return latestBlockerHeader[to].toJSNumber() / Math.pow(10,12);
+    return latestBlockerHeader[to].toJSNumber() / Math.pow(10, 12);
+  } else if (from !== Ticker.XHV && to === Ticker.XHV) {
+    if (!latestBlockerHeader[from].isZero()) {
+      return Math.pow(10, 12) / latestBlockerHeader[from].toJSNumber();
+    }
   }
-  else if (from !== Ticker.XHV && to === Ticker.XHV) {
-    return bigInt(10).pow(24).divide(latestBlockerHeader[from]).toJSNumber() / Math.pow(10,12);
-  }
-  return  0;
-
+  return 0;
 };
 
 export const hasLatestXRate = (state: DesktopAppState) => {
@@ -100,5 +99,8 @@ export const priceDelta = (state: DesktopAppState): number | null => {
   const latestBlockerHeader =
     state.blockHeaderExchangeRate[state.blockHeaderExchangeRate.length - 1];
 
-  return latestBlockerHeader.xUSD.subtract(latestBlockerHeader.unused1).abs().toJSNumber();
+  return latestBlockerHeader.xUSD
+    .subtract(latestBlockerHeader.unused1)
+    .abs()
+    .toJSNumber();
 };

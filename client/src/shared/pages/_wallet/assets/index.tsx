@@ -17,6 +17,7 @@ import {Ticker} from "shared/reducers/types";
 import {OFFSHORE_ENABLED} from "constants/env";
 import {DesktopAppState} from "platforms/desktop/reducers";
 import {XBalances} from "shared/reducers/xBalance";
+import {AssetAllocation} from "shared/components/asset-allocation/allocation";
 
 interface AssetsProps {
 
@@ -122,7 +123,10 @@ class AssetsPage extends Component<AssetsProps, any> {
 
     return (
         <Body>
+
+
           <Overview />
+
           <Header
             title="Available Assets"
             description="Overview of all available Haven Assets"

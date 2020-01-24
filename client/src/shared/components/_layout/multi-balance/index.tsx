@@ -13,47 +13,75 @@ import { WebAppState } from "platforms/web/reducers";
 import { SyncState } from "shared/types/types";
 import { isDesktop, OFFSHORE_ENABLED } from "constants/env";
 import { selectDesktopSyncState } from "platforms/desktop/reducers/chain";
-import {NO_BALANCE, selectTotalBalances, XBalances, XViewBalances} from "shared/reducers/xBalance";
+import {
+  NO_BALANCE,
+  selectTotalBalances,
+  XBalances,
+  XViewBalances
+} from "shared/reducers/xBalance";
 import { Ticker } from "shared/reducers/types";
-import {fromAtomicUnit} from "platforms/desktop/utility";
 
 interface BalanceProps {
   syncState: SyncState;
   balances: XViewBalances;
 }
 
+interface BalanceState {
+  currentTicker: Ticker;
+  currentIndex: number;
+}
 
+class Balances extends Component<BalanceProps, BalanceState> {
+  state: BalanceState = {
+    currentIndex: 0,
+    currentTicker: Object.keys(Ticker)[0] as Ticker
+  };
 
-class Balances extends Component<BalanceProps, any> {
+  onClickNext() {
+    if (!OFFSHORE_ENABLED) {
+      return;
+    }
+
+    const tickerNum: number = Object.keys(Ticker).length;
+
+    let nextIndex = this.state.currentIndex + 1;
+    if (nextIndex === tickerNum) {
+      nextIndex = 0;
+    }
+    this.setState({
+      currentIndex: nextIndex,
+      currentTicker: Object.keys(Ticker)[nextIndex] as Ticker
+    });
+  }
 
   render() {
+    const ticker = this.state.currentTicker;
+    const { prefix, suffix } =
+      ticker === Ticker.xUSD
+        ? { prefix: "$", suffix: "" }
+        : ticker === Ticker.xBTC
+        ? { prefix: "₿", suffix: "" }
+        : { prefix: "", suffix: " XHV" };
 
-    const xUsdAmount = '$' +  this.props.balances.xUSD.balance.toFixed(4);
-    const xUsdAmountLocked = '$' +  this.props.balances.xUSD.lockedBalance;
-    const btcAmount =  '₿' + this.props.balances.xBTC.balance.toFixed(4);
-    const xhvAmount = this.props.balances.XHV.balance.toFixed(2) + ' XHV';
+    const xUsdAmount =
+      prefix + this.props.balances[ticker].unlockedBalance.toFixed(4) + suffix;
+    const xUsdAmountLocked =
+      prefix + this.props.balances[ticker].lockedBalance.toFixed(2) + suffix;
     const { isSyncing, blockHeight, scannedHeight } = this.props.syncState;
 
     const amount = (scannedHeight / blockHeight) * 100;
     const percentage = amount.toFixed(2);
 
     return (
-      <Wrapper>
+      <Wrapper onClick={() => this.onClickNext()}>
         <Amount isSyncing={isSyncing}>
-          {this.props.balances.xUSD.balance === 0 ? (
-            <Spinner />
-          ) : (
-            xUsdAmount
-          )}
+          {this.props.balances.xUSD.balance === 0 ? <Spinner /> : xUsdAmount}
         </Amount>
-        <Value>
-          {isSyncing ? `Syncing Vault... ${percentage}%` : ` ${btcAmount}   |   ${xhvAmount}`}
-        </Value>
+        <Value>{isSyncing ? `Syncing Vault... ${percentage}%` : ``}</Value>
         {isSyncing && <ProgressBar percentage={percentage} />}
         {this.props.balances.xUSD.lockedBalance > 0 ? (
           <Pending>
-            You have {'$' + xUsdAmountLocked}
-            pending.
+            You have {xUsdAmountLocked} pending.
             <br />
             Balances are updating.
           </Pending>
@@ -63,10 +91,10 @@ class Balances extends Component<BalanceProps, any> {
   }
 }
 
-const mapStateToProps = (state: DesktopAppState ) => ({
+const mapStateToProps = (state: DesktopAppState) => ({
   balances: selectTotalBalances(state),
   syncState: isDesktop()
     ? selectDesktopSyncState(state as DesktopAppState)
     : selectWebSyncState(state)
 });
-export const MultiBalance =  connect(mapStateToProps, null)(Balances);
+export const MultiBalance = connect(mapStateToProps, null)(Balances);
