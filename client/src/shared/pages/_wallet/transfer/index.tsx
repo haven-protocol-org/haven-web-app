@@ -179,7 +179,7 @@ export class Transfer extends Component<TransferProps, TransferState> {
                 onClick={this.setSendAsset}
               />
               <Input
-                label="Amount"
+                label={"Amount " + `(Avail. ${"<value>"})`}
                 placeholder="Enter amount"
                 type="number"
                 name="send_amount"

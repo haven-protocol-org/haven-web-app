@@ -12,32 +12,22 @@ import CellDisabled from "../../../components/cell_disabled";
 
 import token from "../../../../constants/assets.js";
 import { NO_PRICE } from "shared/reducers/priceHistory";
-import {calcValue, convertToMoney} from "utility/utility";
-import {Ticker} from "shared/reducers/types";
-import {OFFSHORE_ENABLED} from "constants/env";
-import {DesktopAppState} from "platforms/desktop/reducers";
-import {XBalances} from "shared/reducers/xBalance";
-import {AssetAllocation} from "shared/components/asset-allocation/allocation";
+import { calcValue, convertToMoney } from "utility/utility";
+import { Ticker } from "shared/reducers/types";
+import { OFFSHORE_ENABLED } from "constants/env";
+import { DesktopAppState } from "platforms/desktop/reducers";
+import { XBalances } from "shared/reducers/xBalance";
+import { AssetAllocation } from "shared/components/asset-allocation/allocation";
 
 interface AssetsProps {
+  balances: XBalances;
+  price: number;
+  rates: { [key: string]: any };
+  getSimplePrice: () => void;
+  getForex: () => void;
+}
 
-    balances:XBalances,
-    price:number,
-    rates:{[key:string]: any},
-    getSimplePrice:() => void,
-    getForex:() => void,
-
-
-};
-
-
-
-interface AssetsState {
-
-
-};
-
-
+interface AssetsState {}
 
 const Enabled_TICKER = [Ticker.xUSD, Ticker.XHV];
 
@@ -56,97 +46,99 @@ class AssetsPage extends Component<AssetsProps, any> {
   }
 
   renderEnabledTokens = () => {
+    if (!OFFSHORE_ENABLED) {
+      return null;
+    }
 
-      if (!OFFSHORE_ENABLED){
-          return null;
-      }
+    const xUSDBalance = convertToMoney(
+      this.props.balances.xUSD.unlockedBalance
+    );
+    const value = calcValue(xUSDBalance, 1);
 
-      const xUSDBalance = convertToMoney(this.props.balances.xUSD.unlockedBalance);
-      const value = calcValue(xUSDBalance,1);
-
-
-
-      const enabledTokens = token.filter( (asset: any) => Enabled_TICKER.includes('x' + asset.ticker as Ticker));
-      return enabledTokens.map(data => {
+    const enabledTokens = token.filter((asset: any) =>
+      Enabled_TICKER.includes(("x" + asset.ticker) as Ticker)
+    );
+    return enabledTokens.map(data => {
       const { token, ticker, change, symbol } = data;
 
       const rates = this.props.rates;
-      let price = rates[ticker] ? rates[ticker] :0;
+      let price = rates[ticker] ? rates[ticker] : 0;
       price = symbol + price.toFixed(2);
 
       return (
-          <Cell
-              fullwidth="fullwidth"
-              key={token}
-              tokenName={token}
-              ticker={"x" + ticker}
-              price={price}
-              change={value}
-          />
-      )})};
-
-
+        <Cell
+          fullwidth="fullwidth"
+          key={token}
+          tokenName={token}
+          ticker={"x" + ticker}
+          price={price}
+          change={value}
+        />
+      );
+    });
+  };
 
   renderDisabledTokens = () => {
+    const disabledTokens = OFFSHORE_ENABLED
+      ? token.filter(
+          (asset: any) =>
+            !Enabled_TICKER.includes(("x" + asset.ticker) as Ticker)
+        )
+      : token;
 
+    return disabledTokens.map(data => {
+      const { token, ticker, change, symbol } = data;
 
+      const rates = this.props.rates;
+      let price = rates[ticker] ? rates[ticker] : 0;
+      price = symbol + price.toFixed(2);
 
-      const disabledTokens = OFFSHORE_ENABLED? token.filter( (asset: any) => !Enabled_TICKER.includes('x' + asset.ticker as Ticker)): token;
-
-      return disabledTokens.map(data => {
-          const { token, ticker, change, symbol } = data;
-
-
-          const rates = this.props.rates;
-          let price = rates[ticker] ? rates[ticker] : 0;
-          price = symbol + price.toFixed(2);
-
-          return (
-            <CellDisabled
-              fullwidth="fullwidth"
-              key={token}
-              tokenName={token}
-              ticker={"x" + ticker}
-              price={price}
-              change={change}
-            />
-          );
+      return (
+        <CellDisabled
+          fullwidth="fullwidth"
+          key={token}
+          tokenName={token}
+          ticker={"x" + ticker}
+          price={price}
+          change={change}
+        />
+      );
     });
   };
 
   render() {
     const price =
-      this.props.price === NO_PRICE || isNaN(this.props.price) ? "--" : this.props.price.toFixed(4);
+      this.props.price === NO_PRICE || isNaN(this.props.price)
+        ? "--"
+        : this.props.price.toFixed(4);
 
     const xhvBalance = convertToMoney(this.props.balances.XHV.unlockedBalance);
     const value = calcValue(xhvBalance, this.props.price);
 
     return (
-        <Body>
+      <Body>
+        <Overview />
 
+        <Header
+          title="Available Assets"
+          description="Overview of all available Haven Assets"
+        />
 
-          <Overview />
-
-          <Header
-            title="Available Assets"
-            description="Overview of all available Haven Assets"
-          />
-
-          <Cell
-            fullwidth="fullwidth"
-            key={1}
-            tokenName={"Haven"}
-            ticker={"XHV"}
-            price={'$' + price}
-            change={value}
-          />
-          {this.renderEnabledTokens()}
-          <Header
-            title="Coming Soon"
-            description="Overview of Haven Assets coming soon"
-          />
-          {this.renderDisabledTokens()}
-        </Body>
+        <Cell
+          fullwidth="fullwidth"
+          key={1}
+          tokenName={"Haven"}
+          ticker={"XHV"}
+          price={"$" + price}
+          change={value}
+        />
+        {this.renderEnabledTokens()}
+        <Header
+          title="Coming Soon"
+          description="Overview of Haven Assets coming soon"
+        />
+        {this.renderDisabledTokens()}
+      </Body>
     );
   }
 }
@@ -154,10 +146,10 @@ class AssetsPage extends Component<AssetsProps, any> {
 export const mapStateToProps = (state: DesktopAppState) => ({
   ...state.simplePrice,
   ...state.forex,
-    balances:state.xBalance
+  balances: state.xBalance
 });
 
-export const Assets =  connect(
+export const Assets = connect(
   mapStateToProps,
   { getForex, getSimplePrice }
 )(AssetsPage);
