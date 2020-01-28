@@ -314,7 +314,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
               onClick={this.setFromAsset}
             />
             <Input
-              label="From Amount"
+              label={"From Amount " + `(Avail. ${"<value>"})`}
               placeholder="Enter amount"
               type="number"
               name="fromAmount"
@@ -333,7 +333,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
               onClick={this.setToAsset}
             />
             <Input
-              label="To Amount"
+              label={"To Amount " + `(Avail. ${"<value>"})`}
               placeholder="Enter amount"
               name="toAmount"
               type="number"
