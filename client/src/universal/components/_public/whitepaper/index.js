@@ -79,7 +79,7 @@ const Content = () => {
             target="_blank"
             href="http://docs.havenprotocol.org/whitepapers/spanish.pdf"
           >
-            Leer Mas
+            Leer Más
           </Route>
         </Cell>
 
