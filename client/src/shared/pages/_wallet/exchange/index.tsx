@@ -29,11 +29,12 @@ import { Ticker } from "shared/reducers/types";
 import {
   selectExchangeSucceed,
   selectIsProcessingExchange,
-    selectFromTicker,selectToTicker
+  selectFromTicker,
+  selectToTicker
 } from "platforms/desktop/reducers/offshoreProcess";
-import {setFromTicker, setToTicker} from "platforms/desktop/actions/offshore";
+import { setFromTicker, setToTicker } from "platforms/desktop/actions/offshore";
 import * as bigInt from "big-integer";
-import {fromAtomicUnit} from "platforms/desktop/utility";
+import { fromAtomicUnit } from "platforms/desktop/utility";
 
 enum ExchangeTab {
   Basic,
@@ -51,8 +52,8 @@ type ExchangeProps = {
   hasLatestXRate: boolean;
   exchangeSucceed: boolean;
   priceDelta: number | null;
-  setFromTicker:(ticker: Ticker | null) => void;
-  setToTicker:(ticker: Ticker | null) => void;
+  setFromTicker: (ticker: Ticker | null) => void;
+  setToTicker: (ticker: Ticker | null) => void;
   xRate: number;
   fromTicker: Ticker | null;
   toTicker: Ticker | null;
@@ -86,13 +87,13 @@ const assetOptions: AssetOption[] = [
 
 const exchangePrioOptions: ExchangePrioOption[] = [
   {
-    name: "Low",
-    ticker: "unlocks in ~2 days",
+    name: "Low:",
+    ticker: "Unlocks in ~2 days",
     prio: 1
   },
-  { name: "Medium", ticker: "unlocks ~18 hours", prio: 2 },
-  { name: "High", ticker: "unlocks ~6 hours", prio: 3 },
-  { name: "Very High", ticker: "unlocks ~2 hours", prio: 4 }
+  { name: "Medium:", ticker: "Unlocks ~18 hours", prio: 2 },
+  { name: "High:", ticker: "Unlocks ~6 hours", prio: 3 },
+  { name: "Very High:", ticker: "Unlocks ~2 hours", prio: 4 }
 ];
 
 const INITIAL_STATE: ExchangeState = {
@@ -150,7 +151,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
 
     this.setState({ ...this.state, [name]: value }, () => {
       this.calcConversion(false);
-    })
+    });
   };
 
   setFromAsset = (option: AssetOption) => {
@@ -193,16 +194,13 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       1000000000000;
   };
 
-
   calcConversion(setToAmount: boolean = true) {
     const { toAmount, fromAmount } = this.state;
-    const {xRate} = this.props;
+    const { xRate } = this.props;
 
     if (xRate === 0) {
       return;
     }
-
-
 
     if (fromAmount !== undefined && setToAmount) {
       this.setState({ toAmount: (parseFloat(fromAmount) * xRate).toFixed(4) });
@@ -210,17 +208,14 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     }
 
     if (toAmount !== undefined && !setToAmount) {
-      this.setState(
-        { fromAmount: (parseFloat(toAmount) * (1/xRate)).toFixed(4) }
-      );
+      this.setState({
+        fromAmount: (parseFloat(toAmount) * (1 / xRate)).toFixed(4)
+      });
     }
   }
 
   handleSubmit = () => {
-
-
-    const {fromTicker, toTicker} = this.props;
-
+    const { fromTicker, toTicker } = this.props;
 
     if (
       !this.state.fromAmount ||
@@ -231,8 +226,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     )
       return;
 
-    const isOffShore =
-      fromTicker === Ticker.XHV && toTicker !== Ticker.XHV;
+    const isOffShore = fromTicker === Ticker.XHV && toTicker !== Ticker.XHV;
     const fromAmount = parseFloat(this.state.fromAmount);
     const toAmount = parseFloat(this.state.toAmount);
 
@@ -247,7 +241,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       );
     } else {
       this.props.onshore(
-         fromTicker,
+        fromTicker,
         toTicker,
         fromAmount,
         toAmount,
@@ -279,12 +273,11 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       externAddress
     } = this.state;
 
-    const {fromTicker, toTicker} = this.props;
+    const { fromTicker, toTicker } = this.props;
     const { hasLatestXRate } = this.props;
 
-
-    const fromAsset = assetOptions.find((option) => option.ticker === fromTicker);
-    const toAsset = assetOptions.find((option) => option.ticker === toTicker);
+    const fromAsset = assetOptions.find(option => option.ticker === fromTicker);
+    const toAsset = assetOptions.find(option => option.ticker === toTicker);
 
     const isValid: boolean =
       !!(fromTicker && toTicker && fromAmount && toAmount && reviewed) &&
@@ -306,7 +299,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
           secondTabClickEvent={this.toggleAdvanced}
           onClick={() => {}}
         />
-        {!(hasLatestXRate) && (
+        {!hasLatestXRate && (
           <Failed>Exchange is disabled when Wallet is not synced</Failed>
         )}
         <>
@@ -316,7 +309,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
               placeholder="Select Asset"
               name="from_asset"
               ticker={fromTicker}
-              value={fromAsset? fromAsset.name : 'Select Asset'}
+              value={fromAsset ? fromAsset.name : "Select Asset"}
               options={assetOptions}
               onClick={this.setFromAsset}
             />
@@ -327,16 +320,14 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
               name="fromAmount"
               value={fromAmount}
               onChange={this.onEnterFromAmount}
-              error={
-                fromTicker === null ? "Please select an asset first" : ""
-              }
+              error={fromTicker === null ? "Please select an asset first" : ""}
               readOnly={fromTicker === null}
             />
             <Dropdown
               label="To Asset"
               placeholder="Select Asset"
               name="to_asset"
-              value={toAsset? toAsset.name: "Select Asset"}
+              value={toAsset ? toAsset.name : "Select Asset"}
               ticker={toTicker}
               options={assetOptions}
               onClick={this.setToAsset}
@@ -348,9 +339,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
               type="number"
               value={toAmount}
               onChange={this.onEnterToAmount}
-              error={
-                toTicker === null ? "Please select an asset first" : ""
-              }
+              error={toTicker === null ? "Please select an asset first" : ""}
               readOnly={toTicker === null}
             />
             {selectedTab === ExchangeTab.Adanvced && (
@@ -377,12 +366,12 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
           </Form>
           <Container>
             <Transaction
-                xRate={this.props.xRate}
-                fromAmount={fromAmount}
-                toAmount={toAmount}
-                fromTicker={fromTicker}
-                toTicker={toTicker}
-                estimatedFee={0}
+              xRate={this.props.xRate}
+              fromAmount={fromAmount}
+              toAmount={toAmount}
+              fromTicker={fromTicker}
+              toTicker={toTicker}
+              estimatedFee={0}
               checked={reviewed}
               onChange={this.handleReviewSubmit}
             />
@@ -400,7 +389,11 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
 }
 
 const mapStateToProps = (state: DesktopAppState) => ({
-  xRate: selectXRate(state.blockHeaderExchangeRate, state.offshoreProcess.fromTicker, state.offshoreProcess.toTicker),
+  xRate: selectXRate(
+    state.blockHeaderExchangeRate,
+    state.offshoreProcess.fromTicker,
+    state.offshoreProcess.toTicker
+  ),
   nodeHeight: selectNodeHeight(state),
   isProcessingExchange: selectIsProcessingExchange(state.offshoreProcess),
   hasLatestXRate: hasLatestXRate(state),
@@ -408,13 +401,16 @@ const mapStateToProps = (state: DesktopAppState) => ({
   priceDelta: priceDelta(state),
   fromTicker: selectFromTicker(state.offshoreProcess),
   toTicker: selectToTicker(state.offshoreProcess)
-
 });
 
-export const ExchangePage = connect(mapStateToProps, {
-  getLastBlockHeader,
-  onshore,
-  offshore,
-  resetExchangeProcess,
-  setToTicker,setFromTicker
-})(Exchange);
+export const ExchangePage = connect(
+  mapStateToProps,
+  {
+    getLastBlockHeader,
+    onshore,
+    offshore,
+    resetExchangeProcess,
+    setToTicker,
+    setFromTicker
+  }
+)(Exchange);
