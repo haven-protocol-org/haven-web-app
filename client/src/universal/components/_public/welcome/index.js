@@ -18,7 +18,7 @@ import how from "../../../../assets/how.svg";
 import what from "../../../../assets/what.svg";
 import why from "../../../../assets/why.svg";
 
-const Content = ({ ref }) => {
+const Content =  React.forwardRef((props, ref) => {
   return (
     <>
       <Container ref={ref}>
@@ -97,6 +97,6 @@ const Content = ({ ref }) => {
       </Container>
     </>
   );
-};
+});
 
 export default Content;

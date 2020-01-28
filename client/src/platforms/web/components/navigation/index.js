@@ -12,10 +12,10 @@ import {
   Logout,
   Tag
 } from "./styles.js";
-import Icon from "../../../assets/haven.svg";
-import { closeWallet } from "../../../actions";
-import { selectIsLoggedIn } from "../../../platforms/web/reducers/account";
-import { APP_VERSION, NET_TYPE_NAME } from "../../../env";
+import Icon from "../../../../assets/haven.svg";
+import { closeWallet } from "../../../../universal/actions";
+import { selectIsLoggedIn } from "../../reducers/account";
+import { APP_VERSION, NET_TYPE_NAME } from "../../../../constants/env";
 
 class Navigation extends Component {
   handleLogout = () => {
