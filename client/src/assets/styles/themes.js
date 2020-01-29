@@ -4,7 +4,7 @@ export const dark = {
     navigation: "#26282C",
     background: "#36393F",
     foreground: "#2B2E32",
-    border: " #3A4048",
+    border: "#3A4048",
     active_menu: "#8ea1e1"
   },
   button: {
