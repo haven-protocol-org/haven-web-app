@@ -2,12 +2,23 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import media from "../../../../assets/styles/media.js";
 
+export const Wrapper = styled.div`
+  width: 100%;
+  height: auto;
+  background: ${props => (props.reverse ? "#2b2e34" : "#36393F")};
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
 export const Container = styled.div`
   display: grid;
   height: auto;
   grid-template-columns: 1fr 1fr;
   grid-gap: 20px;
   padding: 80px;
+  max-width: 1400px;
   background: ${props => (props.reverse ? "#2b2e34" : "#36393F")};
   justify-content: center;
   align-items: center;

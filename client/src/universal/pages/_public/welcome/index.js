@@ -1,5 +1,7 @@
 // Library Imports
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { xhvVsCurrenciesFetch } from "../../../../platforms/web/actions/xhvVsCurrencies.js";
 
 // Relative Imports
 import {
@@ -16,11 +18,12 @@ import {
   Subtitle,
   Scroller,
   Wrapper,
-  Table,
   Cell,
   CellTitle,
   CellSubtitle,
-  CellContainer
+  CellContainer,
+  Table,
+  TableHeader
 } from "./styles";
 
 import Footer from "../../../components/footer";
@@ -30,6 +33,7 @@ import Button from "../../../components/_buttons/button";
 
 import api from "../../../../dummy/priceData.js";
 import { ScrollTickerWeb } from "../../../../platforms/web/components/ScrollTicker";
+import { AssetTableWeb } from "../../../../platforms/web/components/AssetTable/index.js";
 
 class Welcome extends Component {
   constructor(props) {
@@ -45,23 +49,6 @@ class Welcome extends Component {
     oracle: api
   };
 
-  loadAssets = () => {
-    return (
-      <>
-        <Cell>
-          <CellContainer>
-            <CellTitle>Title 1</CellTitle>
-            <CellTitle>Title 2</CellTitle>
-          </CellContainer>
-          <CellContainer>
-            <CellSubtitle>Subtitle 1</CellSubtitle>
-            <CellSubtitle>Subtitle 2</CellSubtitle>
-          </CellContainer>
-        </Cell>
-      </>
-    );
-  };
-
   handleClick = () => {
     window.scrollTo({
       top: this.contentRef.current.offsetTop,
@@ -71,11 +58,10 @@ class Welcome extends Component {
 
   render() {
     const windowWidth = window.innerWidth;
-    // <ScrollTickerWeb />
+
     return (
       <Page>
         <Container>
-          <div />
           <Microcopy>
             <HeadingWrapper>
               <Heading size={windowWidth < 340 && "44px"}>
@@ -87,7 +73,16 @@ class Welcome extends Component {
               <Button onClick={() => this.handleClick()} label="Learn More" />
             </Buttons>
           </Microcopy>
-          <Table>{this.loadAssets()}</Table>
+          <Table>
+            <TableHeader>
+              <CellTitle>Haven Assets</CellTitle>
+              <Subtitle left>
+                Private, anonymous, and untraceable assets available within
+                Haven Vault
+              </Subtitle>
+            </TableHeader>
+            <AssetTableWeb />
+          </Table>
         </Container>
         <Content ref={this.contentRef} />
         <Footer />
@@ -97,3 +92,12 @@ class Welcome extends Component {
 }
 
 export default Welcome;
+
+const mapStateToProps = state => ({
+  xhvVsCurrencies: state.xhvVsCurrencies
+});
+
+export const WelcomeAction = connect(
+  mapStateToProps,
+  { fetchCurrencies: xhvVsCurrenciesFetch }
+)(Welcome);

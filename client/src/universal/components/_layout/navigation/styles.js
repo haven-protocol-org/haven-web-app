@@ -43,7 +43,7 @@ export const Brand = styled(Link)`
   height: 40px;
   display: flex;
   align-items: center;
-  margin-left: 16px;
+  margin-left: 20px;
   text-decoration: none;
 `;
 
@@ -77,6 +77,7 @@ export const Button = styled(Link)`
   font-size: 14px;
   border-radius: 4px;
   text-decoration: none;
+  margin-right: 20px;
 
   transition: 500ms;
 

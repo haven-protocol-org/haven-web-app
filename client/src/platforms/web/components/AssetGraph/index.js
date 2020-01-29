@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 
-const graphWidth = 480;
-const graphHeight = 50;
-const containerHeight = 90;
+const graphWidth = 120;
+const graphHeight = 45;
+const containerHeight = 45;
 
-export class GraphTicker extends Component {
+export class AssetGraph extends Component {
   transformIntoChart(prices) {
     const xPointDistance = graphWidth / (prices.length - 1);
 
@@ -47,7 +47,7 @@ export class GraphTicker extends Component {
           marginBottom: "0",
           padding: "0"
         }}
-        width={"100%"}
+        width={"120px"}
         height={containerHeight}
         xmlns="http://www.w3.org/2000/svg"
         preserveAspectRatio={"none"}
