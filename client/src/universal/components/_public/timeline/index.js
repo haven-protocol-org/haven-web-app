@@ -15,14 +15,15 @@ import {
   Line,
   Circle,
   Icon,
-  Progress
+  Progress,
+  Wrapper
 } from "./styles";
 import tick from "../../../../assets/icons/tick.svg";
 import incomplete from "../../../../assets/icons/incomplete_dark.svg";
 
 const Content = () => {
   return (
-    <>
+    <Wrapper>
       <Container>
         <Heading>Q3 2019</Heading>
         <Cell>
@@ -130,7 +131,7 @@ const Content = () => {
           </Data>
         </Cell>
       </Container>
-    </>
+    </Wrapper>
   );
 };
 

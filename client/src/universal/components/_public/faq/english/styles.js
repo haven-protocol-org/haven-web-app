@@ -1,12 +1,24 @@
 import styled from "styled-components";
 import media from "../../../../../assets/styles/media.js";
 
+export const Wrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  background: #36393f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 export const Container = styled.div`
   display: grid;
+  width: 100%;
   height: auto;
   grid-template-columns: 1fr;
   grid-gap: 20px;
   padding: 80px;
+  max-width: 1400px;
+
   background: ${props => (props.reverse ? "#2b2e34" : "#36393F")};
 
   justify-content: center;

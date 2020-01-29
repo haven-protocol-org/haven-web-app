@@ -2,14 +2,26 @@ import styled from "styled-components";
 import media from "../../../../assets/styles/media.js";
 import * as _ from "../../../../assets/styles/colors.js";
 
+export const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background: #36393f;
+`;
+
 export const Wrapper = styled.div`
   height: auto;
+  width: 100%;
   background: #36393f;
   display: flex;
   flex-direction: column;
   padding-top: 40px;
   padding-left: 40px;
   padding-right: 40px;
+  max-width: 1400px;
 
   ${media.laptop`
     padding-left: 20px;

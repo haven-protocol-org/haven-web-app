@@ -8,6 +8,7 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 40px;
+  align-items: center;
 `;
 
 export const Container = styled.div`
@@ -18,6 +19,7 @@ export const Container = styled.div`
   background: #36393f;
   justify-content: center;
   align-items: center;
+  max-width: 1400px;
 
   ${media.laptop`
     grid-template-columns: 1fr 1fr ;

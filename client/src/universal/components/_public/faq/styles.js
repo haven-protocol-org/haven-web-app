@@ -1,6 +1,17 @@
 import styled from "styled-components";
 import media from "../../../../assets/styles/media.js";
 
+export const Wrapper = styled.div`
+  height: auto;
+  width: 100%;
+  background: red;
+  display: flex;
+  flex-direction: column;
+  padding: 40px;
+  align-items: center;
+  justify-content: center;
+`;
+
 export const Container = styled.div`
   display: grid;
   height: auto;
@@ -8,6 +19,7 @@ export const Container = styled.div`
   grid-gap: 20px;
   padding: 80px;
   background: ${props => (props.reverse ? "#2b2e34" : "#36393F")};
+  max-width: 1400px;
 
   justify-content: center;
   align-items: center;

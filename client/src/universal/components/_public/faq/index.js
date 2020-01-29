@@ -1,16 +1,17 @@
 // Library Imports
 import React from "react";
 
+import { Wrapper } from "./styles";
+
 // Relative Imports
 import English from "./english/index.js";
 import French from "./french/index.js";
 
-const Content = ({ language }) => {
+const Content = () => {
   return (
-    <>
-      {language === "english" && <English />}
-      {language === "french" && <French />}
-    </>
+    <Wrapper>
+      <English />
+    </Wrapper>
   );
 };
 

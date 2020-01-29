@@ -10,7 +10,8 @@ import {
   Title,
   Avatar,
   Heading,
-  Wrapper
+  Wrapper,
+  Container
 } from "./styles";
 
 // Core
@@ -27,36 +28,9 @@ import goshiz from "../../../../assets/team/goshiz.png";
 import jriggs from "../../../../assets/team/jriggs.png";
 import luge from "../../../../assets/team/luge.png";
 
-// import news from "../../../assets/team/news.png";
-// import serpent from "../../../assets/team/serpent.png";
-// import rad from "../../../assets/team/rad.png";
-// import baki from "../../../assets/team/baki.png";
-
-// <Cell>
-//   <Avatar src={baki} />
-//   <Title>Nbourbaki</Title>
-//   <Description>Oracle Lead</Description>
-// </Cell>
-// <Cell>
-//   <Avatar src={news} />
-//   <Title>Newscutter</Title>
-//   <Description>Marketing</Description>
-// </Cell>
-
-// <Cell>
-//   <Avatar src={serpent} />
-//   <Title>Serpentchain</Title>
-//   <Description>Core Developer</Description>
-// </Cell>
-// <Cell>
-//   <Avatar src={rad} />
-//   <Title>Radvd</Title>
-//   <Description>Core Developer</Description>
-// </Cell>
-
 const Content = () => {
   return (
-    <>
+    <Container>
       <Wrapper>
         <Heading>Core Team</Heading>
         <Core>
@@ -119,7 +93,7 @@ const Content = () => {
           </Cell>
         </Contributors>
       </Wrapper>
-    </>
+    </Container>
   );
 };
 

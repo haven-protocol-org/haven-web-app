@@ -8,10 +8,6 @@ import English from "../../../components/_public/faq/english/index";
 import Footer from "../../../components/footer";
 
 class Faq extends Component {
-  state = {
-    language: "english"
-  };
-
   componentDidMount() {
     window.scrollTo(0, 0);
   }

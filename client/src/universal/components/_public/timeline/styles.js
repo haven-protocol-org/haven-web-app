@@ -1,7 +1,17 @@
 import styled from "styled-components";
 import media from "../../../../assets/styles/media.js";
 
+export const Wrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  background: #36393f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 export const Container = styled.div`
+  max-width: 1400px;
   display: grid;
   height: auto;
   grid-template-columns: 1fr;

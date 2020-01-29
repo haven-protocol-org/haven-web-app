@@ -8,12 +8,13 @@ import {
   Description,
   Title,
   Heading,
-  Important
+  Important,
+  Wrapper
 } from "./styles";
 
 const English = () => {
   return (
-    <>
+    <Wrapper>
       <Container>
         <Heading>What can Haven be used for? </Heading>
         <Cell>
@@ -221,7 +222,7 @@ const English = () => {
           </Description>
         </Cell>
       </Container>
-    </>
+    </Wrapper>
   );
 };
 
