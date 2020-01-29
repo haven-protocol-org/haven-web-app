@@ -37,6 +37,13 @@ const Footer = () => {
         >
           Fracking Miner
         </External>
+        <External
+          rel="noopener"
+          href="http://zergpool.com/site/mining?algo=cryptonight_haven"
+          target="_blank"
+        >
+          Zergpool
+        </External>
       </Section>
       <Section>
         <Title>Social</Title>
@@ -157,6 +164,13 @@ const Footer = () => {
           target="_blank"
         >
           Trade Ogre
+        </External>
+        <External
+          rel="noopener"
+          href="https://trade.citex.co.kr/trade/XHV_BTC"
+          target="_blank"
+        >
+          Citex
         </External>
         <External
           rel="noopener"
