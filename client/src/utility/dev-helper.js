@@ -12,11 +12,12 @@ export const loadState = () => {
 
 
 export const saveState = (state) => {
+
     try {
-        const serializedState = JSON.stringify(state);
+        const serializedState = JSON.stringify({walletSession : state.walletSession, address:state.address});
         localStorage.setItem('state', serializedState);
-    } catch {
-        // ignore write errors
+    } catch(e) {
+        console.log(e);
     }
 };
 

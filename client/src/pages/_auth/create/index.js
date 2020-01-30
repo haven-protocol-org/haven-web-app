@@ -3,18 +3,13 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 // Relative Imports
-import Auth from "../../../universal/components/_auth/create/index.js";
-import Placeholder from "../../../universal/components/_create/placeholder";
-import CreateSeed from "../../../universal/components/_create/create_seed";
-import VerifySeed from "../../../universal/components/_create/verify_seed";
+import Auth from "../../../shared/components/_auth/create/index.js";
+import Placeholder from "../../../shared/components/_create/placeholder";
+import CreateSeed from "../../../shared/components/_create/create_seed";
+import VerifySeed from "../../../shared/components/_create/verify_seed";
 import { Container } from "./styles";
 import { decrypt } from "../../../utility";
-import PropTypes from 'prop-types';
-
-
-
-
-
+import PropTypes from "prop-types";
 
 export class Create extends Component {
   state = {
@@ -111,8 +106,6 @@ export class Create extends Component {
   };
 
   render() {
-
-
     const { step, verify_seed } = this.state;
     const disabled = step === 3 && verify_seed === "";
     return (
@@ -137,9 +130,8 @@ export class Create extends Component {
 }
 
 Create.propTypes = {
-
-  getSeed:PropTypes.func.isRequired,
-  isRequestingLogin:PropTypes.bool,
-  verifySeed:PropTypes.func.isRequired,
-  createdSeed:PropTypes.string.isRequired
+  getSeed: PropTypes.func.isRequired,
+  isRequestingLogin: PropTypes.bool,
+  verifySeed: PropTypes.func.isRequired,
+  createdSeed: PropTypes.string.isRequired
 };

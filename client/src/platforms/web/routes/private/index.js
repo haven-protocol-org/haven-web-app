@@ -6,11 +6,10 @@ import { Redirect, Route } from "react-router-dom";
 
 import {AssetsWeb} from "../../pages/_wallet/assets";
 import {DetailsWeb} from "../../pages/_wallet/details";
-import {Exchange} from "../../../../universal/pages/_wallet/exchange";
 import {TransferWeb} from "../../pages/_wallet/transfer";
 import { connect } from "react-redux";
 import {selectIsLoggedIn} from "../../reducers/account";
-import Idle from "../../../../universal/components/idle";
+import Idle from "../../../../shared/components/idle";
 import {SettingsWeb} from "../../pages/_wallet/settings";
 import {keepAlive, getTransfers} from "../../actions";
 
@@ -60,7 +59,6 @@ class PrivateRoutes extends Component {
           <Idle/>
         <Route path={`${match.url}/assets`} exact component={AssetsWeb} />
         <Route path={`${match.url}/assets/:id`} exact component={DetailsWeb} />
-        <Route path={`${match.url}/exchange`} exact component={Exchange} />
         <Route path={`${match.url}/transfer`} exact component={TransferWeb} />
         <Route path={`${match.url}/settings`} exact component={SettingsWeb} />
       </div>

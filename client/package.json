@@ -3,9 +3,14 @@
   "version": "1.34.0",
   "private": true,
   "dependencies": {
+    "@types/jest": "^24.0.23",
+    "@types/node": "^12.12.11",
+    "@types/react": "^16.9.11",
+    "@types/react-dom": "^16.9.4",
+    "@types/react-router": "^5.1.3",
+    "big-integer": "^1.6.48",
     "chart.js": "^2.9.1",
     "clipboard-polyfill": "^2.8.6",
-    "digest-fetch": "^1.0.7",
     "prop-types": "^15.7.2",
     "react": "^16.11.0",
     "react-chartjs-2": "^2.8.0",
@@ -13,10 +18,11 @@
     "react-redux": "^7.1.1",
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "^3.2.0",
+    "react-scripts": "^3.3.0",
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
-    "styled-components": "^4.4.0"
+    "styled-components": "^4.4.0",
+    "typescript": "^3.7.2"
   },
   "scripts": {
     "start:desktop:mainnet": "sh -ac '. ./env/.env.mainnet; . ./env/.env.desktop; react-scripts start'",
@@ -25,7 +31,9 @@
     "start:web:testnet": "sh -ac '. ./env/.env.testnet; . ./env/.env.web; react-scripts start'",
     "build:test": "sh -ac '. .env.test; npm version patch; react-scripts build'",
     "build:web:mainnet": "sh -ac '. ./env/.env.mainnet; . ./env/.env.web; npm version minor; react-scripts build'",
-    "build:desktop:mainnet": "sh -ac '. ./env/.env.mainnet; . ./env/.env.desktop; npm version minor; react-scripts build'",
+    "build:desktop:mainnet": "sh -ac '. ./env/.env.mainnet; . ./env/.env.desktop; . ./env/.env.desktop.build;  react-scripts build && npm run copy-build'",
+    "build:desktop:testnet": "sh -ac '. ./env/.env.testnet; . ./env/.env.desktop; . ./env/.env.desktop.build;  react-scripts build && npm run copy-build'",
+    "copy-build": "rm -rf ../haven-desktop-app/client && rm -rf ./build/libs && cp -rf ./build ../haven-desktop-app/client",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -37,5 +45,10 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "@craco/craco": "^5.6.2",
+    "@types/react-redux": "^7.1.5",
+    "electron": "^7.1.1"
+  }
 }

@@ -1,7 +1,8 @@
-import { NO_BALANCE } from "../universal/reducers/balance";
+/* global BigInt */
+
 import { notificationList } from "../constants/notificationList";
-import { NO_PRICE } from "../universal/reducers/priceHistory";
-import {isDevMode} from "../constants/env";
+import { NO_PRICE } from "../shared/reducers/priceHistory";
+import { NO_BALANCE } from "../shared/reducers/xBalance";
 
 export const convertTimestampToDateString = timestamp =>
   new Date(timestamp).toLocaleDateString();
@@ -23,7 +24,32 @@ export const decreasePricePoints = priceData => {
 export const convertBalanceForReading = balance => {
   if (balance === NO_BALANCE) return balance;
 
-  const readableBalance = (balance / Math.pow(10, 12)).toFixed(4);
+  let readableBalance;
+  if (typeof balance === "bigint") {
+    readableBalance = Number(balance / BigInt(Math.pow(10, 8)));
+
+    return readableBalance / 10000;
+  }
+
+  readableBalance = (balance / Math.pow(10, 12)).toFixed(4);
+
+  if (readableBalance % 1 === 0) return parseInt(readableBalance);
+  return readableBalance;
+};
+
+
+export const convertToMoney = atomicMoney => {
+
+  if (atomicMoney === NO_BALANCE) return -1;
+
+  let readableBalance;
+  if (typeof atomicMoney === "bigint") {
+    readableBalance = Number(atomicMoney / BigInt(Math.pow(10, 8)));
+
+    return readableBalance / 10000;
+  }
+
+  readableBalance = atomicMoney / Math.pow(10, 12);
 
   if (readableBalance % 1 === 0) return parseInt(readableBalance);
   return readableBalance;
@@ -73,61 +99,15 @@ export const logM = message => {
   console.log(message);
 };
 
-let encKey = null;
-let iv = crypto.getRandomValues(new Uint8Array(12));
 
-export const createKey = async () => {
-  if (encKey) {
-    return encKey;
-  } else {
-    encKey = await window.crypto.subtle.generateKey(
-      {
-        name: "AES-GCM",
-        length: 256
-      },
-      true,
-      ["encrypt", "decrypt"]
-    );
+export const createRemainingTimeString = (remainingTimeInMinutes) => {
 
-    return encKey;
-  }
-};
+  const days = Math.floor(remainingTimeInMinutes / (60 * 24));
+  const hours = Math.floor(((remainingTimeInMinutes % (60 * 24))/60 ));
+  const minutes = Math.floor((remainingTimeInMinutes % 60));
+
+  const timeString =  (days > 0 ? days + 'd ' : '') + (hours > 0 ? hours + 'h ': '') + (minutes > 0 ? minutes + 'm' : '');
+  return timeString;
 
 
-
-export const encrypt = async (message) => {
-
-  if (isDevMode()) {
-    return message;
-  }
-
-  const enc = new TextEncoder();
-  const encMessage = enc.encode(message);
-
-  return await window.crypto.subtle.encrypt(
-    {
-      name: "AES-GCM",
-      iv: iv
-    },
-    encKey,
-    encMessage
-  );
-};
-
-export const decrypt = async (cipher) => {
-
-  if (isDevMode()) {
-    return cipher;
-  }
-
-  const decrypted = await window.crypto.subtle.decrypt(
-    {
-      name: "AES-GCM",
-      iv: iv
-    },
-    encKey,
-    cipher
-  );
-  let dec = new TextDecoder();
-  return dec.decode(decrypted);
 };

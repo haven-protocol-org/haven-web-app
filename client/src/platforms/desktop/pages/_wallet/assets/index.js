@@ -1,25 +1,19 @@
-
-import React,{Component} from "react"
-import {Assets} from "../../../../../universal/pages/_wallet/assets";
+import React, { Component } from "react";
+import { Assets } from "../../../../../shared/pages/_wallet/assets";
 import { connect } from "react-redux";
-import {selectReadableBalance} from "../../../../../universal/reducers/balance";
+import { selectReadableBalance } from "../../../../../shared/reducers/xBalance";
 
-class AssetsWebContainer extends Component {
-
-    render() {
-
-        return (
-            <Assets {...this.props}/>
-        )
-    }
+class AssetsDesktopContainer extends Component {
+  render() {
+    return <Assets {...this.props} />;
+  }
 }
 
 export const mapStateToProps = state => ({
-    balance: state.balance,
-    readableBalance: selectReadableBalance(state)
+  readableBalance: Number(selectReadableBalance(state))
 });
 
-export const AssetsDesktop =  connect(
-    mapStateToProps,
-    { }
-)(AssetsWebContainer);
+export const AssetsDesktop = connect(
+  mapStateToProps,
+  {}
+)(AssetsDesktopContainer);

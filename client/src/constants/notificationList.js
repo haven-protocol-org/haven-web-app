@@ -9,7 +9,7 @@ export const notificationList = [
   {
     key: TRANSFER_SUCCEED_MESSAGE,
     code: 0,
-    message: "Your transfer was successfully submitted...",
+    message: "Your transfer was successfully submitted!",
     type: SUCCESS
   },
   {

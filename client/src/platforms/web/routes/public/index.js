@@ -4,18 +4,18 @@ import { Route } from "react-router-dom";
 
 // Relative Imports
 
-import Welcome from "../../../../universal/pages/_public/welcome";
-import Loader from "../../../../universal/components/loader";
+import Welcome from "../../../../shared/pages/_public/welcome";
+import Loader from "../../../../shared/components/loader";
 import {CreateWeb} from "../../pages/_auth/create";
 import {LoginWeb} from "../../pages/_auth/login";
 
-const Faq = lazy(() => import("../../../../universal/pages/_public/faq"));
+const Faq = lazy(() => import("../../../../shared/pages/_public/faq"));
 // const Create = lazy(() =>  import("../../pages/_auth/create"));
 // const Login = lazy(() => import("../../pages/_auth/login"));
-const Blog = lazy (() => import("../../../../universal/pages/_public/blog"));
-const Team = lazy(() =>  import("../../../../universal/pages/_public/team"));
-const Timeline = lazy(() => import("../../../../universal/pages/_public/timeline"));
-const Whitepaper = lazy(() => import("../../../../universal/pages/_public/whitepaper"));
+const Blog = lazy (() => import("../../../../shared/pages/_public/blog"));
+const Team = lazy(() =>  import("../../../../shared/pages/_public/team"));
+const Timeline = lazy(() => import("../../../../shared/pages/_public/timeline"));
+const Whitepaper = lazy(() => import("../../../../shared/pages/_public/whitepaper"));
 
 class PublicRoutesWeb extends Component {
   render() {
