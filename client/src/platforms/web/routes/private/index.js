@@ -12,7 +12,8 @@ import {selectIsLoggedIn} from "../../reducers/account";
 import Idle from "../../../../shared/components/idle";
 import {SettingsWeb} from "../../pages/_wallet/settings";
 import {keepAlive, getTransfers} from "../../actions";
-
+import Menu from "../../../../shared/components/_layout/menu";
+import Page from "../../../../shared/components/_layout/page";
 /**
  *root component for private web wallet
  * by updating blockheight in given interval
@@ -57,10 +58,13 @@ class PrivateRoutes extends Component {
     return (
       <div>
           <Idle/>
+          <Page>
+          <Menu />
         <Route path={`${match.url}/assets`} exact component={AssetsWeb} />
         <Route path={`${match.url}/assets/:id`} exact component={DetailsWeb} />
         <Route path={`${match.url}/transfer`} exact component={TransferWeb} />
         <Route path={`${match.url}/settings`} exact component={SettingsWeb} />
+          </Page>
       </div>
     );
   }

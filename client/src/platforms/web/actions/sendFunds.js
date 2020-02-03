@@ -18,8 +18,10 @@ import { decrypt } from "../../../utility/utility-encrypt";
 import { getTransfers } from "./transferHistory";
 import { TRANSFER_SUCCEED_MESSAGE } from "../../../constants/notificationList";
 
-export const sendFunds = (toAddress, amount, paymentId = "") => {
-  const parsedAmount = core.monero_amount_format_utils.parseMoney(amount);
+export const sendFunds = (toAddress, amount, paymentId = "", ticker) => {
+  console.log(core.monero_amount_format_utils.parseMoney);
+
+  const parsedAmount = core.monero_amount_format_utils.parseMoney(amount.toString());
 
   return async (dispatch, getState) => {
     dispatch({ type: SEND_FUNDS_STARTED });

@@ -49,7 +49,7 @@ export class Transfer extends Component<TransferProps, TransferState> {
   private addressValue: any = React.createRef();
 
   state: TransferState = {
-    selectedAsset: null,
+    selectedAsset: options.length === 1 ? options[0]:null,
     send_amount: "",
     recipient_address: "",
     payment_id: "",

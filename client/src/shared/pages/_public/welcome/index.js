@@ -11,26 +11,18 @@ import {
   Heading,
   Page,
   HeadingWrapper,
-  Cards,
-  Header,
-  Section,
-  Title,
   Subtitle,
-  Scroller,
-  Wrapper,
-  Cell,
   CellTitle,
-  CellSubtitle,
-  CellContainer,
   Table,
   TableHeader
 } from "./styles";
 
 import Footer from "../../../components/footer";
 import Content from "../../../components/_public/welcome";
+import Link from "../../../components/_buttons/link";
+import Button from "../../../components/_buttons/button";
 
 import api from "../../../../dummy/priceData.js";
-import { ScrollTickerWeb } from "../../../../platforms/web/components/ScrollTicker";
 import { AssetTableWeb } from "../../../../platforms/web/components/AssetTable/index.js";
 
 class Welcome extends Component {
@@ -95,7 +87,6 @@ const mapStateToProps = state => ({
   xhvVsCurrencies: state.xhvVsCurrencies
 });
 
-export const WelcomeAction = connect(
-  mapStateToProps,
-  { fetchCurrencies: xhvVsCurrenciesFetch }
-)(Welcome);
+export const WelcomeAction = connect(mapStateToProps, {
+  fetchCurrencies: xhvVsCurrenciesFetch
+})(Welcome);

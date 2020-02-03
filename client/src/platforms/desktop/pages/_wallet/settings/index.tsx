@@ -8,9 +8,8 @@ import Body from "shared/components/_layout/body";
 import Header from "shared/components/_layout/header";
 import Form from "shared/components/_inputs/form";
 import Theme from "shared/components/_inputs/theme";
-import Nodes from "shared/components/_inputs/nodes";
 import Input from "shared/components/_inputs/input";
-import Footer from "../../../../../shared/components/_inputs/footer/index.js";
+import Footer from "shared/components/_inputs/footer/index.js";
 
 import { dark, light } from "assets/styles/themes.js";
 import { DesktopAppState } from "platforms/desktop/reducers";
@@ -18,9 +17,6 @@ import {
   MiningRequestTypes,
   MiningStatus
 } from "platforms/desktop/reducers/mining";
-import { MiningState } from "platforms/desktop/pages/_wallet/settings/styles";
-import { Information } from "assets/styles/type";
-import { Button } from "shared/components/chart/styles";
 import { Spinner } from "shared/components/spinner";
 import {
   miningStatus,

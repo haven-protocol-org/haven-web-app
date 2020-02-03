@@ -10,18 +10,14 @@ import {
   GraphContainer,
   Column,
   ColumnData,
-  Row,
   Cell,
   Data,
   Title
 } from "./styles";
 import { xhvVsCurrenciesFetch } from "../../actions/xhvVsCurrencies";
 import {
-  Header,
-  Section,
-  Subtitle,
-  Titl
-} from "../../../../universal/pages/_public/welcome/styles";
+  Subtitle
+} from "../../../../shared/pages/_public/welcome/styles";
 
 import { AssetGraph } from "../AssetGraph/index.js";
 

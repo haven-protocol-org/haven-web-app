@@ -2,15 +2,19 @@ import {
   // GET_BALANCES_FAILED,
   GET_BALANCES_FETCHING,
   GET_BALANCES_SUCCEED
-} from "../../../shared/actions/types";
+} from "shared/actions/types";
 import { getAddressInfo } from "../api/api";
 import { selectCredentials } from "../reducers/account";
 import { core } from "../declarations/open_monero.service";
 import { updateChainData } from "../actions";
-import { decrypt } from "../../../utility/utility-encrypt";
+import { decrypt } from "utility/utility-encrypt";
+import {WebAppState} from "platforms/web/reducers";
+import {XBalance} from "shared/reducers/xBalance";
+import {Ticker} from "shared/reducers/types";
+import bigInt from "big-integer";
 
 export const getBalances = () => {
-  return (dispatch, getState) => {
+  return (dispatch:any, getState: () => WebAppState) => {
     dispatch(getBalancesFetching());
 
     const credentials = selectCredentials(getState());
@@ -27,17 +31,16 @@ export const getBalances = () => {
   };
 };
 
-const setBalance = addressInfo => {
-  const balance = core
-    .JSBigInt(addressInfo.total_received_String)
-    .subtract(core.JSBigInt(addressInfo.total_sent_String));
+const setBalance = (addressInfo: any) => {
+  const balance = bigInt(addressInfo.total_received_String)
+    .subtract(bigInt(addressInfo.total_sent_String));
 
-  const lockedBalance = core.JSBigInt(addressInfo.locked_balance_String);
+  const lockedBalance = bigInt(addressInfo.locked_balance_String);
   const unlockedBalance = balance.subtract(lockedBalance);
-  return { balance, lockedBalance, unlockedBalance };
+  return { [Ticker.XHV] : { balance, lockedBalance, unlockedBalance }};
 };
 
-const parseAddressInfo = async (rawAddressInfo, state) => {
+const parseAddressInfo = async (rawAddressInfo: any, state: WebAppState) => {
   const address = state.address.main;
   let {
     sec_viewKey_string,
@@ -60,7 +63,7 @@ const parseAddressInfo = async (rawAddressInfo, state) => {
 
 const getBalancesFetching = () => ({ type: GET_BALANCES_FETCHING });
 
-export const getBalancesSucceed = result => ({
+export const getBalancesSucceed = (result: XBalance) => ({
   type: GET_BALANCES_SUCCEED,
   payload: result
 });

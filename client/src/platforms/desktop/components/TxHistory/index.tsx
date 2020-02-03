@@ -7,7 +7,7 @@ import {
 import { Spinner } from "shared/components/spinner";
 import {
   convertBalanceForReading,
-  createRemainingTimeString
+  createRemainingTimeString, getCurrentValueInUSD
 } from "utility/utility";
 import empty from "assets/illustration/no_transactions.svg";
 import React, { Component } from "react";
@@ -16,7 +16,7 @@ import { connect } from "react-redux";
 import { Transaction } from "shared/components/transaction";
 import Header from "shared/components/_layout/header/index.js";
 import { selectBlockHeight } from "../../reducers/chain";
-import {getTransferListByTicker, XTransferListAsset} from "shared/reducers/xTransferList";
+import {getTransferListByTicker} from "shared/reducers/xTransferList";
 import { withRouter } from "react-router";
 import { Ticker } from "shared/reducers/types";
 import { DesktopAppState } from "platforms/desktop/reducers";
@@ -42,16 +42,7 @@ class TxHistoryContainer extends Component<TxHistoryProps, any> {
     }
   }
 
-  getCurrentValueInUSD = (amount: number, ticker: Ticker) => {
-    const humanAmount: number = convertBalanceForReading(Math.abs(amount));
 
-    switch (ticker) {
-      case Ticker.xUSD:
-        return humanAmount;
-      case Ticker.XHV:
-        return humanAmount * this.props.price;
-    }
-  };
 
   render() {
     const all = this.props.transferList;
@@ -73,9 +64,9 @@ class TxHistoryContainer extends Component<TxHistoryProps, any> {
           <History>
             {all && all.length > 0 ? (
               all.map((transaction: any, index: number) => {
-                const currentValueInUSD = this.getCurrentValueInUSD(
+                const currentValueInUSD = getCurrentValueInUSD(
                   transaction.amount,
-                  this.props.assetId
+                  this.props.assetId, this.props.price
                 );
                 const transactionDate = new Date(
                   transaction.timestamp * 1000

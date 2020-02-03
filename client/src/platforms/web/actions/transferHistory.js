@@ -9,7 +9,8 @@ import { core } from "../declarations/open_monero.service";
 import { getBalancesSucceed } from "./index";
 import { updateChainData } from "./index";
 import { decrypt } from "../../../utility/utility-encrypt";
-
+import {Ticker} from "../../../shared/reducers/types";
+import bigInt from "big-integer";
 export const getTransfers = () => {
   return (dispatch, getState) => {
     dispatch(getTransfersFetching());
@@ -20,7 +21,7 @@ export const getTransfers = () => {
           parsedTxData.serialized_transactions,
           parsedTxData.blockchain_height
         );
-        dispatch(getBalancesSucceed(balance));
+        dispatch(getBalancesSucceed({[Ticker.XHV]:balance}));
         dispatch(getTransfersSucceed(parsedTxData.serialized_transactions));
         dispatch(updateChainData(parsedTxData));
       })
@@ -54,13 +55,13 @@ const parseTx = async (rawTXs, state) => {
 };
 
 const calcBalanceByTxs = (txList, bHeight) => {
-  let totalSend = new core.JSBigInt("0");
-  let totalReceived = new core.JSBigInt("0");
-  let totalReceivedLocked = new core.JSBigInt("0");
+  let totalSend =  bigInt("0");
+  let totalReceived = bigInt("0");
+  let totalReceivedLocked = bigInt("0");
 
   txList.forEach(tx => {
-    const received = new core.JSBigInt(tx.total_received);
-    const sent = new core.JSBigInt(tx.total_sent);
+    const received = bigInt(tx.total_received);
+    const sent = bigInt(tx.total_sent);
     const isLocked = tx.mempool || tx.height + 10 > bHeight;
 
     totalSend = totalSend.add(sent);

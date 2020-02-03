@@ -1,6 +1,6 @@
 import {EmptyState, History, Message, NoTransactions} from "../../../../shared/pages/_wallet/details/styles";
 import {Spinner} from "../../../../shared/components/spinner";
-import {convertBalanceForReading} from "../../../../utility/utility";
+import {convertBalanceForReading, getCurrentValueInUSD} from "../../../../utility/utility";
 import empty from "../../../../assets/illustration/no_transactions.svg";
 import React, {Component} from "react";
 import {selectBlockchainHeight} from "../../reducers/chain";
@@ -10,6 +10,7 @@ import {core} from "../../declarations/open_monero.service";
 import {Transaction} from "../../../../shared/components/transaction";
 import Header from "../../../../shared/components/_layout/header/index.js"
 import {withRouter} from "react-router-dom";
+import {Ticker} from "../../../../shared/reducers/types";
 
 
 class TxHistoryContainer extends Component {
@@ -65,6 +66,7 @@ render () {
                         <Transaction
                             key={index}
                             bHeight={this.props.height}
+                            currentValueInUSD={getCurrentValueInUSD(transaction.amount, Ticker.XHV, this.props.price )}
                             type={this.getTransactionType(transaction)}
                             status={this.getTransactionStatus(transaction)}
                             price={this.props.price}
