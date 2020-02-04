@@ -6,8 +6,6 @@ import { connect } from "react-redux";
 
 import {
   Cards,
-  Wrapper,
-  GraphContainer,
   Column,
   ColumnData,
   Cell,
@@ -15,8 +13,6 @@ import {
   Title,
   Table,
   TableFooter,
-  CellTitle,
-  CellSubtitle,
   TableHeader
 } from "./styles";
 import { xhvVsCurrenciesFetch } from "../../actions/xhvVsCurrencies";
