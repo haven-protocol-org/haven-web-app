@@ -1,11 +1,26 @@
 import styled from "styled-components";
-import { primary, secondary, background } from "../../../assets/styles/colors.js";
+import {
+  primary,
+  secondary,
+  background
+} from "../../../assets/styles/colors.js";
 import media from "../../../assets/styles/media.js";
 import { Link } from "react-router-dom";
 
 export const Container = styled.div`
   height: auto;
   width: auto;
+  background: ${background};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const Wrapper = styled.div`
+  height: auto;
+  width: 100%;
+  max-width: 1400px;
+  background: pink;
   background: ${background};
   padding: 80px 20px;
   display: grid;
