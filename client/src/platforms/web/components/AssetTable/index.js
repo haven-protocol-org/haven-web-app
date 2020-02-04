@@ -12,12 +12,15 @@ import {
   ColumnData,
   Cell,
   Data,
-  Title
+  Title,
+  Table,
+  TableFooter,
+  CellTitle,
+  CellSubtitle,
+  TableHeader
 } from "./styles";
 import { xhvVsCurrenciesFetch } from "../../actions/xhvVsCurrencies";
-import {
-  Subtitle
-} from "../../../../shared/pages/_public/welcome/styles";
+import { Subtitle } from "../../../../shared/pages/_public/welcome/styles";
 
 import { AssetGraph } from "../AssetGraph/index.js";
 
@@ -27,7 +30,7 @@ class AssetTable extends Component {
   }
 
   renderTokens = tickerList => {
-    return tickerList.map(info => {
+    return tickerList.slice(0, 6).map(info => {
       const [token, data] = info;
 
       return (
@@ -36,7 +39,7 @@ class AssetTable extends Component {
             <Column>
               <Title left="left">{data.token}</Title>
               <Subtitle left>
-                {data.symbol + data.lastPrice.toFixed(2)}
+                {data.symbol + data.lastPrice.toFixed(4)}
               </Subtitle>
             </Column>
             <Data>
@@ -65,7 +68,19 @@ class AssetTable extends Component {
       }
     );
 
-    return <>{this.renderTokens(tickerList)}</>;
+    return (
+      <Table>
+        <TableHeader>
+          <Title>Haven Assets</Title>
+          <Subtitle left>
+            Private, anonymous, and untraceable assets available within Haven
+            Vault
+          </Subtitle>
+        </TableHeader>
+        {this.renderTokens(tickerList)}
+        <TableFooter to="/create">View all 12 assets</TableFooter>
+      </Table>
+    );
   }
 }
 

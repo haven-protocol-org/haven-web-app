@@ -10,11 +10,7 @@ import {
   Buttons,
   Heading,
   Page,
-  HeadingWrapper,
-  Subtitle,
-  CellTitle,
-  Table,
-  TableHeader
+  HeadingWrapper
 } from "./styles";
 
 import Footer from "../../../components/footer";
@@ -63,16 +59,7 @@ class Welcome extends Component {
               <Button onClick={() => this.handleClick()} label="Learn More" />
             </Buttons>
           </Microcopy>
-          <Table>
-            <TableHeader>
-              <CellTitle>Haven Assets</CellTitle>
-              <Subtitle left>
-                Private, anonymous, and untraceable assets available within
-                Haven Vault
-              </Subtitle>
-            </TableHeader>
-            <AssetTableWeb />
-          </Table>
+          <AssetTableWeb />
         </Container>
         <Content ref={this.contentRef} />
         <Footer />
@@ -87,6 +74,9 @@ const mapStateToProps = state => ({
   xhvVsCurrencies: state.xhvVsCurrencies
 });
 
-export const WelcomeAction = connect(mapStateToProps, {
-  fetchCurrencies: xhvVsCurrenciesFetch
-})(Welcome);
+export const WelcomeAction = connect(
+  mapStateToProps,
+  {
+    fetchCurrencies: xhvVsCurrenciesFetch
+  }
+)(Welcome);
