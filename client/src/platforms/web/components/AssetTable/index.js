@@ -58,7 +58,6 @@ class AssetTable extends Component {
   render() {
     const tickerList = Object.entries(this.props.xhvVsCurrencies).filter(
       entry => {
-        const key = entry[0];
         const data = entry[1];
         return data.prices.length > 0;
       }

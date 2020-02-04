@@ -3,7 +3,7 @@
 import { notificationList } from "constants/notificationList";
 import { NO_PRICE } from "shared/reducers/priceHistory";
 import { NO_BALANCE } from "shared/reducers/xBalance";
-import {Ticker} from "shared/reducers/types";
+import { Ticker } from "shared/reducers/types";
 
 export const convertTimestampToDateString = (timestamp: any) =>
   new Date(timestamp).toLocaleDateString();
@@ -22,7 +22,11 @@ export const decreasePricePoints = (priceData: any) => {
   return { prices: decreasedPrices };
 };
 
-export const getCurrentValueInUSD = (amount: number, ticker: Ticker, priceInUSD: number) => {
+export const getCurrentValueInUSD = (
+  amount: number,
+  ticker: Ticker,
+  priceInUSD: number
+) => {
   const humanAmount: number = convertBalanceForReading(Math.abs(amount));
 
   switch (ticker) {
@@ -49,9 +53,7 @@ export const convertBalanceForReading = (balance: any) => {
   return readableBalance;
 };
 
-
 export const convertToMoney = (atomicMoney: any) => {
-
   if (atomicMoney === NO_BALANCE) return -1;
 
   let readableBalance;
@@ -68,14 +70,16 @@ export const convertToMoney = (atomicMoney: any) => {
 };
 
 export const uuidv4 = () => {
-  var uuid = "", i, random;
+  var uuid = "",
+    i,
+    random;
   for (i = 0; i < 32; i++) {
-    random = Math.random() * 16 | 0;
+    random = (Math.random() * 16) | 0;
 
-    if (i == 8 || i == 12 || i == 16 || i == 20) {
-      uuid += "-"
+    if (i === 8 || i === 12 || i === 16 || i === 20) {
+      uuid += "-";
     }
-    uuid += (i == 12 ? 4 : (i == 16 ? (random & 3 | 8) : random)).toString(16);
+    uuid += (i === 12 ? 4 : i === 16 ? (random & 3) | 8 : random).toString(16);
   }
   return uuid;
 };
@@ -104,26 +108,27 @@ export const calcValue = (amount: any, price: any) => {
 };
 
 export const getPriceDates = (prices: any) => {
-  return prices.map( (priceItem: any) => convertTimestampToDateString(priceItem[0]));
+  return prices.map((priceItem: any) =>
+    convertTimestampToDateString(priceItem[0])
+  );
 };
 
-export const getPriceValues = (prices:any) => {
+export const getPriceValues = (prices: any) => {
   return prices.map((priceItem: any) => priceItem[1]);
 };
 
-export const logM = (message:any) => {
+export const logM = (message: any) => {
   console.log(message);
 };
 
-
 export const createRemainingTimeString = (remainingTimeInMinutes: number) => {
-
   const days = Math.floor(remainingTimeInMinutes / (60 * 24));
-  const hours = Math.floor(((remainingTimeInMinutes % (60 * 24))/60 ));
-  const minutes = Math.floor((remainingTimeInMinutes % 60));
+  const hours = Math.floor((remainingTimeInMinutes % (60 * 24)) / 60);
+  const minutes = Math.floor(remainingTimeInMinutes % 60);
 
-  const timeString =  (days > 0 ? days + 'd ' : '') + (hours > 0 ? hours + 'h ': '') + (minutes > 0 ? minutes + 'm' : '');
+  const timeString =
+    (days > 0 ? days + "d " : "") +
+    (hours > 0 ? hours + "h " : "") +
+    (minutes > 0 ? minutes + "m" : "");
   return timeString;
-
-
 };

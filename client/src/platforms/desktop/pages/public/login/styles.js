@@ -1,6 +1,4 @@
-import styled, { keyframes } from "styled-components";
-import media from "../../../../../assets/styles/media.js";
-import { border } from "../../../../../assets/styles/colors.js";
+import styled from "styled-components";
 
 export const Page = styled.div`
   height: 100vh;

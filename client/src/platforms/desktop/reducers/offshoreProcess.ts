@@ -10,7 +10,6 @@ import {
   SELECT_TO_TICKER
 } from "../actions/types";
 import { AnyAction } from "redux";
-import { DesktopAppState } from "./index";
 import { TxProcessInfo } from "./transferProcess";
 import { Ticker } from "shared/reducers/types";
 
@@ -74,14 +73,15 @@ export const offshoreProcess = (
   }
 };
 
-export const selectIsProcessingExchange = (offshoreProcess: ExchangeProcessInfo) => {
+export const selectIsProcessingExchange = (
+  offshoreProcess: ExchangeProcessInfo
+) => {
   return offshoreProcess.isFetching;
 };
 
 export const selectExchangeSucceed = (offshoreProcess: ExchangeProcessInfo) => {
   return offshoreProcess.succeed;
 };
-
 
 export const selectFromTicker = (offshoreProcess: ExchangeProcessInfo) => {
   return offshoreProcess.fromTicker;
@@ -90,4 +90,3 @@ export const selectFromTicker = (offshoreProcess: ExchangeProcessInfo) => {
 export const selectToTicker = (offshoreProcess: ExchangeProcessInfo) => {
   return offshoreProcess.toTicker;
 };
-

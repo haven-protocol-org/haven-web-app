@@ -2,20 +2,18 @@ import {
   OPEN_WALLET_FAILED,
   OPEN_WALLET_FETCHING,
   OPEN_WALLET_SUCCEED,
-  RESTORE_WALLET_BY_SEED_FAILED, RESTORE_WALLET_BY_SEED_FETCHING,
+  RESTORE_WALLET_BY_SEED_FAILED,
+  RESTORE_WALLET_BY_SEED_FETCHING,
   RESTORE_WALLET_BY_SEED_SUCCEED,
-  UPDATE_SAVED_WALLETS, VALIDATE_MNEMONIC_SUCCEED
+  UPDATE_SAVED_WALLETS,
+  VALIDATE_MNEMONIC_SUCCEED
 } from "../actions/types";
-import { getMessageOfError } from "utility/utility";
 import { AnyAction } from "redux";
 import { DesktopAppState } from "./index";
 
-
 export type RPCError = {
-
   code: number;
   message: string;
-
 };
 
 interface WalletSession {
@@ -69,7 +67,7 @@ export const walletSession = function(
       };
     case OPEN_WALLET_FETCHING:
     case RESTORE_WALLET_BY_SEED_FETCHING:
-      return { ...state, error:null, isFetching: true };
+      return { ...state, error: null, isFetching: true };
     case UPDATE_SAVED_WALLETS:
       return { ...state, savedWallets: action.payload };
     default:
@@ -82,7 +80,6 @@ export const selectIsLoggedIn = (state: DesktopAppState) => {
 };
 
 export const selectErrorMessageForLogin = (state: DesktopAppState) => {
-
   const error = state.walletSession.error;
 
   if (error) {

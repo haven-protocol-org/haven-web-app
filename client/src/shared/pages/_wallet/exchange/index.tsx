@@ -33,8 +33,6 @@ import {
   selectToTicker
 } from "platforms/desktop/reducers/offshoreProcess";
 import { setFromTicker, setToTicker } from "platforms/desktop/actions/offshore";
-import * as bigInt from "big-integer";
-import { fromAtomicUnit } from "platforms/desktop/utility";
 
 enum ExchangeTab {
   Basic,

@@ -41,8 +41,6 @@ const options: ThemeOption[] = [
   { theme: "light", value: "Light Theme" }
 ];
 
-const nodes: NodeOptions[] = [{ value: "Remote" }, { value: "Local" }];
-
 class SettingsDesktopPage extends Component<SettingsProps, any> {
   refreshTimer: number = -1;
 
@@ -131,7 +129,6 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
 
   render() {
     const { value } = this.state;
-    const localeNode = true;
 
     const mining: MiningStatus = this.props.mining;
     let buttonLabel =
@@ -165,29 +162,28 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
           description="Decentralize the Haven protocol by mining and have the chance to earn XHV as a reward"
         />
 
-
-          <>
-            <Input
-              width={true}
-              label="Status"
-              placeholder="Mining Status"
-              type="text"
-              readOnly={true}
-              name="daemon_password"
-              value={
-                mining.active
-                  ? `Mining with ${mining.speed} hashes per second`
-                  : "Not Mining"
-              }
+        <>
+          <Input
+            width={true}
+            label="Status"
+            placeholder="Mining Status"
+            type="text"
+            readOnly={true}
+            name="daemon_password"
+            value={
+              mining.active
+                ? `Mining with ${mining.speed} hashes per second`
+                : "Not Mining"
+            }
+          />
+          <Container>
+            <Footer
+              onClick={this.onMiningButtonClicked}
+              loading={false}
+              label={buttonLabel}
             />
-            <Container>
-              <Footer
-                onClick={this.onMiningButtonClicked}
-                loading={false}
-                label={buttonLabel}
-              />
-            </Container>
-          </>
+          </Container>
+        </>
 
         {/*<Header
           title="Nodes"

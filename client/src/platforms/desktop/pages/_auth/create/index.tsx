@@ -9,13 +9,16 @@ import CreateSeed from "shared/components/_create/create_seed";
 import { createWallet } from "platforms/desktop/actions";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { connect } from "react-redux";
-import {selectErrorMessage, WalletCreation} from "platforms/desktop/reducers/walletCreation";
+import {
+  selectErrorMessage,
+  WalletCreation
+} from "platforms/desktop/reducers/walletCreation";
 import { Spinner } from "shared/components/spinner";
 import { Information } from "assets/styles/type";
 import Description from "shared/components/_inputs/description";
 import Input from "shared/components/_inputs/input";
 import InputButton from "../../../../../shared/components/_inputs/input_button/index.js";
-import {mnenomicVerificationSucceed} from "platforms/desktop/actions";
+import { mnenomicVerificationSucceed } from "platforms/desktop/actions";
 import { selectIsRequestingLogin } from "platforms/desktop/reducers/walletSession";
 
 interface CreateDesktopProps {
@@ -23,7 +26,7 @@ interface CreateDesktopProps {
   walletCreation: WalletCreation;
   mnenomicVerificationSucceed: (fileName: string) => void;
   loading: boolean;
-  errorMessage:string | null;
+  errorMessage: string | null;
 }
 
 interface CreateDesktopState {
@@ -111,9 +114,7 @@ class CreateDesktopContainer extends Component<
     );
   }
 
-
-  componentWillReceiveProps(nextProps:CreateDesktopProps , nextContext: any) {
-
+  componentWillReceiveProps(nextProps: CreateDesktopProps, nextContext: any) {
     if (nextProps.errorMessage) {
       this.setState({ error: nextProps.errorMessage });
       setTimeout(() => this.setState({ error: "" }), 2000);
@@ -179,7 +180,7 @@ class CreateDesktopContainer extends Component<
 
   handleSwitch = () => {
     const windowWidth = window.innerWidth;
-    const { pw, fileName, step, verify_seed, error } = this.state;
+    const { fileName, step, verify_seed, error } = this.state;
 
     switch (step) {
       case CREATION_STEPS.Info:
@@ -188,8 +189,7 @@ class CreateDesktopContainer extends Component<
         return (
           <>
             <Input
-
-                error={this.state.error}
+              error={this.state.error}
               label="Wallet Name"
               placeholder="Create a wallet name"
               name="fileName"
@@ -227,10 +227,18 @@ class CreateDesktopContainer extends Component<
           />
         );
       case CREATION_STEPS.Verification:
-
-        const labelString = (<Fragment>type in the words <span style={{color:'#34d8ac'}}> {this.state.wordsToVerify
-            .map(word => '#'+ (word.index + 1))
-            .join(" ")} </span> seperated by blank space</Fragment>);
+        const labelString = (
+          <Fragment>
+            type in the words{" "}
+            <span style={{ color: "#34d8ac" }}>
+              {" "}
+              {this.state.wordsToVerify
+                .map(word => "#" + (word.index + 1))
+                .join(" ")}{" "}
+            </span>{" "}
+            seperated by blank space
+          </Fragment>
+        );
         return (
           <>
             <Description
@@ -269,7 +277,7 @@ class CreateDesktopContainer extends Component<
         <Buttons buttons="single">
           <Submit
             disabled={
-              step == 0
+              step === 0
                 ? false
                 : step === 1 && createIsValid
                 ? false
@@ -300,7 +308,7 @@ class CreateDesktopContainer extends Component<
 const mapStateToProps = (state: DesktopAppState) => ({
   walletCreation: state.walletCreation,
   loading: selectIsRequestingLogin(state),
-  errorMessage:selectErrorMessage(state)
+  errorMessage: selectErrorMessage(state)
 });
 
 export const CreateDesktop = connect(

@@ -22,7 +22,6 @@ import {
   PRICE_RANGE_MONTH,
   PRICE_RANGE_YEAR
 } from "../../reducers/priceHistory";
-import { isDevMode } from "../../../constants/env";
 
 class Chart extends Component {
   constructor(props) {
@@ -126,8 +125,8 @@ class Chart extends Component {
           {dateRangeButtons}
         </Header>
         <PriceHistory>
-              <Value>{this.state.hoveredValue}</Value>
-              <Label>{this.state.hoveredLabel}</Label>
+          <Value>{this.state.hoveredValue}</Value>
+          <Label>{this.state.hoveredLabel}</Label>
         </PriceHistory>
         <Container>
           <Line

@@ -49,7 +49,7 @@ export class Transfer extends Component<TransferProps, TransferState> {
   private addressValue: any = React.createRef();
 
   state: TransferState = {
-    selectedAsset: options.length === 1 ? options[0]:null,
+    selectedAsset: options.length === 1 ? options[0] : null,
     send_amount: "",
     recipient_address: "",
     payment_id: "",
@@ -179,7 +179,7 @@ export class Transfer extends Component<TransferProps, TransferState> {
                 onClick={this.setSendAsset}
               />
               <Input
-                label={"Amount " + `(Avail. ${"<value>"})`}
+                label={"Amount " + `(Avail. ${"balance"})`}
                 placeholder="Enter amount"
                 type="number"
                 name="send_amount"

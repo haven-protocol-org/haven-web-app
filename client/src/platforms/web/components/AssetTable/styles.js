@@ -1,4 +1,3 @@
-import { keyframes } from "styled-components";
 import styled from "styled-components";
 import media from "../../../../assets/styles/media";
 import { Link } from "react-router-dom";

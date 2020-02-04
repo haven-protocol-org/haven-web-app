@@ -1,7 +1,6 @@
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import media from "../../../../assets/styles/media.js";
 import { border } from "../../../../assets/styles/colors.js";
-import { Link } from "react-router-dom";
 
 export const Page = styled.div`
   height: 100%;
