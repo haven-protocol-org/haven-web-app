@@ -11,11 +11,13 @@ import {
 import { Component } from "react";
 import React from "react";
 import { Redirect } from "react-router";
-import { Create } from "../../../../../shared/pages/_auth/create";
+import { CreateWebComponent } from "../../../../../shared/pages/_auth/create";
 
 class CreateWebContainer extends Component {
-  verifySeed(typedSeed) {
-    const verified = typedSeed === this.props.mnemonic_string;
+
+
+  verifySeed = (typedSeed) => {
+    const verified = typedSeed === this.props.mnemonicString;
     verified
       ? this.props.mnenomicVerificationSucceed()
       : this.props.mneomicVerifcationFailed();
@@ -28,7 +30,7 @@ class CreateWebContainer extends Component {
     }
 
     return (
-      <Create
+      <CreateWebComponent
         verifySeed={this.verifySeed}
         isRequestingLogin={this.props.isRequestingLogin}
         getSeed={this.props.getSeed}

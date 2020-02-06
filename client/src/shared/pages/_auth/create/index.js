@@ -11,7 +11,7 @@ import { Container } from "./styles";
 import { decrypt } from "../../../../utility/utility-encrypt";
 import PropTypes from "prop-types";
 
-export class Create extends Component {
+export class CreateWebComponent extends Component {
   state = {
     step: 1,
     error: "",
@@ -43,9 +43,8 @@ export class Create extends Component {
     // On step three, if seed is invalid display error messsage for 2s
     else if (stepThree) {
       const { mnemonicString, verify_seed } = this.state;
-      const validationSucceed = mnemonicString === verify_seed;
 
-      this.props.verifySeed(validationSucceed);
+        const validationSucceed = this.props.verifySeed(verify_seed);
 
       if (!validationSucceed) {
         this.setState({ error: "Sorry, that seed is incorrect" });
@@ -152,7 +151,7 @@ export class Create extends Component {
   }
 }
 
-Create.propTypes = {
+CreateWebComponent.propTypes = {
   getSeed: PropTypes.func.isRequired,
   isRequestingLogin: PropTypes.bool,
   verifySeed: PropTypes.func.isRequired,
