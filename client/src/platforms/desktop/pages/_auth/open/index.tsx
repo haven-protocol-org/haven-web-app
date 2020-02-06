@@ -2,7 +2,6 @@ import { connect } from "react-redux";
 import React, { Component } from "react";
 import {
   Buttons,
-  Cancel,
   Submit
 } from "platforms/desktop/pages/_auth/multi_login/styles";
 import { Spinner } from "../../../../../shared/components/spinner";
@@ -44,7 +43,7 @@ class OpenWalletDesktopContainer extends Component<
     pw: "",
     validated: false,
     showPassword: false,
-    error:''
+    error: ""
   };
 
   onOpenWallet = () => {
@@ -53,7 +52,7 @@ class OpenWalletDesktopContainer extends Component<
     }
   };
 
-  componentWillReceiveProps(nextProps:OpenWalletProps , nextContext: any) {
+  componentWillReceiveProps(nextProps: OpenWalletProps, nextContext: any) {
     if (nextProps.errorMessage) {
       this.setState({ error: nextProps.errorMessage });
       setTimeout(() => this.setState({ error: "" }), 2000);
@@ -169,7 +168,6 @@ class OpenWalletDesktopContainer extends Component<
 const mapStateToProps = (state: DesktopAppState) => ({
   loading: selectIsRequestingLogin(state),
   errorMessage: selectErrorMessageForLogin(state)
-
 });
 
 export const OpenWalletDesktop = connect(

@@ -1,11 +1,9 @@
 import styled from "styled-components";
-import media from "../../../../assets/styles/media";
 
 export const Container = styled.div`
   grid-column: 1 / 3;
   margin-top: -20px;
 `;
-
 
 export const Failed = styled.div`
   color: black;

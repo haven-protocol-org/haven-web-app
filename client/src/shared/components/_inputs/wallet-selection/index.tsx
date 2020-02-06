@@ -8,8 +8,7 @@ import {
   Button,
   Labels,
   Name,
-  Row,
-  Ticker
+  Row
 } from "./styles";
 import { Label, Error } from "assets/styles/type.js";
 
@@ -49,7 +48,6 @@ export class WalletSelection extends React.Component<
     return (
       options &&
       options.map(option => {
-
         return (
           <Item key={option} onClick={() => onClick(option)}>
             <Row>

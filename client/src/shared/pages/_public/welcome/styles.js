@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import media from "../../../../assets/styles/media.js";
 import { border } from "../../../../assets/styles/colors.js";
 
@@ -71,16 +71,6 @@ export const Buttons = styled.div`
   `};
 `;
 
-export const Title = styled.div`
-  font-family: Inter-Bold;
-  background: pink;
-  font-size: 17px;
-  color: white;
-  letter-spacing: 0;
-  line-height: 30px;
-  text-align: ${props => (props.left ? "left" : "right")};
-`;
-
 export const Subtitle = styled.div`
   font-family: Inter-Regular;
   font-size: 14px;
@@ -99,56 +89,4 @@ export const Header = styled.div`
   height: auto;
   border-bottom: 1px solid ${border};
   padding: 10px 20px;
-`;
-
-export const Table = styled.div`
-  height: auto;
-  width: 90%;
-  background: #3a4048;
-  max-width: 1200px;
-  margin-top: 80px;
-  border-radius: 4px;
-  max-width: 1400px;
-
-  margin-bottom: 50px;
-  border: 1px solid #4a4d52;
-`;
-
-export const Cell = styled.div`
-  height: auto;
-  width: auto;
-  padding: 16px 20px;
-  border-bottom: 1px solid #4a4d52;
-`;
-
-export const TableHeader = styled.div`
-  padding: 16px 20px;
-  border-bottom: 1px solid #4a4d52;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-`;
-
-export const CellTitle = styled.div`
-  font-family: Inter-Bold;
-  font-size: 20px;
-  color: #fafafa;
-  letter-spacing: 0;
-  line-height: 36px;
-  text-align: ${props => (props.left ? "left" : "right")};
-`;
-
-export const CellSubtitle = styled.div`
-  font-family: Inter-Regular;
-  font-size: 14px;
-  color: #8a8d90;
-  letter-spacing: 0;
-  line-height: 24px;
-`;
-
-export const CellContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: auto;
 `;

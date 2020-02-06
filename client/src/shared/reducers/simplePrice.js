@@ -3,7 +3,6 @@ import {
   GET_SIMPLE_PRICE_FETCHING,
   GET_SIMPLE_PRICE_SUCCEED
 } from "../actions/types";
-import { NO_PRICE } from "./priceHistory";
 
 const INITIAL_STATE = {
   error: "",
@@ -24,8 +23,6 @@ export function simplePrice(state = INITIAL_STATE, action) {
   }
 }
 
-export const selectSimplePrice = (state) => {
-
+export const selectSimplePrice = state => {
   return state.simplePrice.price;
-
 };

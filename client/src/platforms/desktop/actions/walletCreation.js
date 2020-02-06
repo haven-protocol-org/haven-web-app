@@ -6,8 +6,7 @@ import {
   VALIDATE_MNEMONIC_SUCCEED,
   QUERY_MNEMONIC_FOR_WALLET_GENERATION_SUCCEED
 } from "./types";
-import {createWalletRPC, getAddressRPC, queryMnemonicKeyRPC} from "../ipc/rpc/rpc";
-import {addPubAddress} from "../../../shared/actions";
+import { createWalletRPC, queryMnemonicKeyRPC } from "../ipc/rpc/rpc";
 
 const createWalletFetch = () => ({ type: CREATE_WALLET_FETCHING });
 const createWalletSucceed = () => ({
@@ -33,7 +32,6 @@ export const createWallet = (filename, password) => {
       })
       .then(() => {
         dispatch(createWalletSucceed());
-
       })
       .catch(error => {
         dispatch(createWalletFailed(error));
@@ -46,8 +44,9 @@ const queryMnemonicForWalletGenerationSucceed = key => ({
   payload: key
 });
 
-export const mnenomicVerificationSucceed = (fileName) => ({
-  type: VALIDATE_MNEMONIC_SUCCEED, payload:fileName
+export const mnenomicVerificationSucceed = fileName => ({
+  type: VALIDATE_MNEMONIC_SUCCEED,
+  payload: fileName
 });
 export const mneomicVerifcationFailed = () => ({
   type: VALIDATE_MNEMONIC_FAILED

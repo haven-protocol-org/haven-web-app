@@ -11,13 +11,12 @@ import {
   Button,
   Logout,
   Tag,
-  Stripe,
   State
 } from "./styles";
 import Icon from "assets/haven.svg";
 import { closeWallet } from "../../actions";
 import { selectIsLoggedIn } from "../../reducers/walletSession";
-import { APP_VERSION, NET_TYPE_NAME } from "constants/env";
+import { NET_TYPE_NAME } from "constants/env";
 import { DesktopAppState } from "../../reducers";
 import { DaemonStates } from "../../reducers/daemonStates";
 

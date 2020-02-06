@@ -4,21 +4,14 @@ import React, { Component } from "react";
 // Relative Imports
 import { Pending, Value, Wrapper, Amount } from "./styles";
 import { connect } from "react-redux";
-import { convertBalanceForReading } from "utility/utility";
 import { selectWebSyncState } from "platforms/web/reducers/chain";
 import { Spinner } from "../../spinner";
 import { ProgressBar } from "../../progress-bar";
 import { DesktopAppState } from "platforms/desktop/reducers";
-import { WebAppState } from "platforms/web/reducers";
 import { SyncState } from "shared/types/types";
 import { isDesktop, OFFSHORE_ENABLED } from "constants/env";
 import { selectDesktopSyncState } from "platforms/desktop/reducers/chain";
-import {
-  NO_BALANCE,
-  selectTotalBalances,
-  XBalances,
-  XViewBalances
-} from "shared/reducers/xBalance";
+import { selectTotalBalances, XViewBalances } from "shared/reducers/xBalance";
 import { Ticker } from "shared/reducers/types";
 
 interface BalanceProps {
@@ -97,4 +90,7 @@ const mapStateToProps = (state: DesktopAppState) => ({
     ? selectDesktopSyncState(state as DesktopAppState)
     : selectWebSyncState(state)
 });
-export const MultiBalance = connect(mapStateToProps, null)(Balances);
+export const MultiBalance = connect(
+  mapStateToProps,
+  null
+)(Balances);
