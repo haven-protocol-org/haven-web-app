@@ -2,12 +2,14 @@ import styled from "styled-components";
 import media from "../../../../assets/styles/media.js";
 
 export const Wrapper = styled.div`
-  width: 100%;
+  width: auto;
   height: 100%;
   background: #36393f;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding-right: 20px;
 `;
 
 export const Container = styled.div`
@@ -62,6 +64,8 @@ export const Cell = styled.div`
   border-radius: 4px;
   border: 1px solid ${props => props.theme.body.border};
   overflow: hidden;
+  padding-right: 16px;
+  margin-right: 20px;
 `;
 
 export const Complete = styled.div`
@@ -91,43 +95,25 @@ export const Soon = styled.div`
   justify-content: center;
 `;
 
-export const Separator = styled.div`
-  height: auto;
+export const List = styled.li`
+  font-size: 16px;
+  color: #8a8d90;
+  letter-spacing: 0;
+  line-height: 26px;
+  text-align: left;
   width: 100%;
+  margin-top: 8px;
+  margin-left: 16px;
 `;
 
-export const Line = styled.div`
-  height: 20px;
-  width: 1px;
-  background: #2b2e34;
-  margin-left: 33px;
-`;
-
-export const Circle = styled.div`
-  height: 24px;
-  width: 24px;
-  border-radius: 24px;
-  border: 1px solid #2b2e34;
-  background: ${props =>
-    props.complete ? `${props.theme.states.success}` : null};
-  margin-left: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-export const Icon = styled.img`
-  height: 16px;
-  width: 16px;
-`;
-
-export const Label = styled.div`
+export const Label = styled.p`
   transform: rotate(-90deg);
   font-family: Inter-SemiBold;
   font-size: 10px;
   text-align: center;
   line-height: 16px;
   text-transform: uppercase;
+  color: white;
 `;
 
 export const Title = styled.h3`
