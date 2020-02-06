@@ -1,0 +1,14 @@
+
+
+
+
+address: "hvta9X2bDHA5Gkt6Ne95E2d5cr5dGo9g6TsrhhSqeABWGtVdMAFTNt45CVwiRmaTFJ79kT2RTB9t3BPdLZVT5tCp3dpBC1dYTH"
+info: "Wallet has been restored successfully."
+seed: "paper tolerant sanity dotted pager leech darted verification awful plywood upright impel jerseys swagger pegs jazz spiders motherly bimonthly ungainly inexact suture obnoxious observant leech"
+sessionid: "3464a5b8502eb0ea269a7161f978e9b60d707b5f6d7dff11050b7b9411371283"
+was_deprecated: false
+
+
+{"status":"ok","result":{"error":{"code":-2,"message":"WALLET_RPC_ERROR_CODE_WRONG_ADDRESS: "},"id":"0","jsonrpc":"2.0"}}
+
+{"status":"error","error":{"message":"invalid session ID provided","code":-500}}

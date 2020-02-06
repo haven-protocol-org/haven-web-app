@@ -1,71 +1,63 @@
 // Library Imports
-
 import React, { Component } from "react";
-import history from "../../../history.js";
 import { connect } from "react-redux";
 
 // Relative Imports
-import Auth from "../../../components/_auth/create/index.js";
-import Placeholder from "../../../components/_create/placeholder";
-import CreateSeed from "../../../components/_create/create_seed";
-import VerifySeed from "../../../components/_create/verify_seed";
+import Auth from "../../../shared/components/_auth/create/index.js";
+import Placeholder from "../../../shared/components/_create/placeholder";
+import CreateSeed from "../../../shared/components/_create/create_seed";
+import VerifySeed from "../../../shared/components/_create/verify_seed";
 import { Container } from "./styles";
-import { createWallet } from "../../../actions";
+import { decrypt } from "../../../utility";
+import PropTypes from "prop-types";
 
-class Create extends Component {
+export class Create extends Component {
   state = {
-    auth: false,
     step: 1,
     error: "",
     verify_seed: "",
-    seed: ""
+    mnemonicString: ""
   };
 
   componentDidMount() {
+    window.scrollTo(0, 0);
     this.props.getSeed();
   }
 
+  async componentDidUpdate(prevProps, prevState) {
+    if (this.props.mnemonicString !== "" && this.state.mnemonicString === "") {
+      const seed = await decrypt(this.props.createdSeed);
+      this.setState({ mnemonicString: seed });
+    }
+  }
+
   nextStep = () => {
-    const { step, seed, verify_seed } = this.state;
-    const valid = seed === verify_seed;
+    const { step } = this.state;
     const stepThree = step === 3;
 
     // Until step three incremennt the steps
     if (step < 3) {
       this.setState({ step: step + 1 });
     }
-    // On step three, if seed_testnet.txt is invalid display error messsage for 2s
-    else if (stepThree && !valid) {
-      this.setState({ error: "Sorry, that seed is incorrect" });
+    // On step three, if seed is invalid display error messsage for 2s
+    else if (stepThree) {
+      const validationSucceed =
+        this.state.mnemonicString === this.state.verify_seed;
 
-      setTimeout(() => {
-        this.setState({ error: "" });
-      }, 2000);
-    }
-    // On step three, if seed_testnet.txt is valid, set loading to true and push true to authUser reducer
-    else if (stepThree && valid) {
-      // const auth = true;
+      if (!validationSucceed) {
+        this.setState({ error: "Sorry, that seed is incorrect" });
 
-      this.setState({
-        loading: true
-      });
-      setTimeout(() => {
-        /*     const user = {
-          auth: true,
-          seedPhrase:
-            "5b9b3c29734c60540d551eab0e7daa9b24cdf4be845f6cb8b457fc047deffe6a",
-          privateKey:
-            "df008d3b68990dcf4b7c7ee2876b076e962780ed3d1d3cb01e57c5c9913222b1",
-          spendKey:
-            "8ac0f2094ed292a5ca0bd65055475b182e33e09b4017d67b2a817f88a831b52e",
-          viewKey:
-            "dcbce83bf1ac67579757b080a9bc096e487e2a039086b1e2caeffca9ae1a3862"
-        };*/
+        setTimeout(() => {
+          this.setState({ error: "" });
+        }, 2000);
+      }
 
-        history.push("/wallet/assets");
-      }, 2500);
-    } else {
-      return null;
+      // On step three, if seed is valid, set loading to true and push true to authUser reducer
+      if (validationSucceed) {
+        this.props.mnenomicVerificationSucceed();
+      } else {
+        return null;
+      }
     }
   };
 
@@ -84,13 +76,20 @@ class Create extends Component {
   };
 
   handleSwitch = () => {
-    const { step, verify_seed, error, loading } = this.state;
+    const windowWidth = window.innerWidth;
+    const { step, verify_seed, error } = this.state;
 
     switch (step) {
       case 1:
         return <Placeholder />;
       case 2:
-        return <CreateSeed value={this.props.wallet.seed} readOnly={true} />;
+        return (
+          <CreateSeed
+            value={this.state.mnemonicString}
+            rows={windowWidth < 600 ? "6" : "4"}
+            readOnly={true}
+          />
+        );
       case 3:
         return (
           <VerifySeed
@@ -98,8 +97,8 @@ class Create extends Component {
             name="verify_seed"
             value={verify_seed}
             error={error}
+            rows={windowWidth < 600 ? "6" : "4"}
             onChange={this.handleChange}
-            loading={loading}
           />
         );
       default:
@@ -107,33 +106,32 @@ class Create extends Component {
   };
 
   render() {
-    const { step, loading } = this.state;
+    const { step, verify_seed } = this.state;
+    const disabled = step === 3 && verify_seed === "";
     return (
       <Container>
         <Auth
           title="Create a Vault"
-          description="To create a new vault please generate a new seed phrase."
-          link="/wallet/login"
+          link="/login"
           route="Sign In!"
           label="Have a Vault already?"
           submit="Generate"
           step={step}
-          loading={loading}
           nextStep={this.nextStep}
           prevStep={this.prevStep}
+          disabled={disabled}
+          loading={this.props.isRequestingLogin}
         >
-          <div>{this.handleSwitch()}</div>
+          <>{this.handleSwitch()}</>
         </Auth>
       </Container>
     );
   }
 }
 
-export const mapStateToProps = state => ({
-  wallet: state.walletCreation
-});
-
-export default connect(
-  mapStateToProps,
-  { getSeed: createWallet }
-)(Create);
+Create.propTypes = {
+  getSeed: PropTypes.func.isRequired,
+  isRequestingLogin: PropTypes.bool,
+  verifySeed: PropTypes.func.isRequired,
+  createdSeed: PropTypes.string.isRequired
+};

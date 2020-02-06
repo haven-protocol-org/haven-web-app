@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="640px" height="360px" viewBox="0 0 640 360" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 59.1 (86144) - https://sketch.com -->
+    <title>b_v4</title>
+    <desc>Created with Sketch.</desc>
+    <g id="b_v4" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="layers">
+            <g id="background" fill="#26292F">
+                <rect id="Rectangle" x="0" y="0" width="640" height="360"></rect>
+            </g>
+            <g id="icon" transform="translate(396.000000, 79.500000)"></g>
+        </g>
+        <polygon id="Polygon" stroke="#668DFE" stroke-width="2" opacity="0.176781064" points="506 -8 616.503627 27.9048051 684.798625 121.904805 684.798625 238.095195 616.503627 332.095195 506 368 395.496373 332.095195 327.201375 238.095195 327.201375 121.904805 395.496373 27.9048051"></polygon>
+        <polygon id="Polygon" stroke="#668DFE" stroke-width="2" opacity="0.176781064" transform="translate(506.000000, 180.000000) rotate(30.000000) translate(-506.000000, -180.000000) " points="506 -8.00000009 616.503627 27.904805 684.798625 121.904805 684.798625 238.095195 616.503627 332.095195 506 368 395.496373 332.095195 327.201375 238.095195 327.201375 121.904805 395.496373 27.904805"></polygon>
+        <polygon id="Polygon" stroke="#668DFE" stroke-width="2" opacity="0.176781064" transform="translate(506.000000, 188.000000) rotate(55.000000) translate(-506.000000, -188.000000) " points="506 0 616.503627 35.9048051 684.798625 129.904805 684.798625 246.095195 616.503627 340.095195 506 376 395.496373 340.095195 327.201375 246.095195 327.201375 129.904805 395.496373 35.9048051"></polygon>
+        <polygon id="Polygon" stroke="#668DFE" stroke-width="2" opacity="0.176781064" transform="translate(506.500000, 180.500000) rotate(55.000000) translate(-506.500000, -180.500000) " points="506.5 73 569.686915 93.5306731 608.738576 147.280673 608.738576 213.719327 569.686915 267.469327 506.5 288 443.313085 267.469327 404.261424 213.719327 404.261424 147.280673 443.313085 93.5306731"></polygon>
+        <polygon id="Polygon" stroke="#668DFE" stroke-width="2" opacity="0.176781064" transform="translate(506.500000, 180.500000) rotate(75.000000) translate(-506.500000, -180.500000) " points="506.5 73 569.686915 93.5306731 608.738576 147.280673 608.738576 213.719327 569.686915 267.469327 506.5 288 443.313085 267.469327 404.261424 213.719327 404.261424 147.280673 443.313085 93.5306731"></polygon>
+    </g>
+</svg>

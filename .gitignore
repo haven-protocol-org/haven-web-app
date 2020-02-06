@@ -23,3 +23,12 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+newrelic_agent.log
+client/deploy/deploy.sh
+
+sh/team_deploy.sh
+sh/git_deploy.sh
+sh/deploy.sh
+sh/publish_testnet.sh
+.idea/

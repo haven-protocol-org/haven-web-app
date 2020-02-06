@@ -1,10 +1,10 @@
 {
   "short_name": "Haven",
-  "name": "Haven: Private, Stable, Money.",
+  "name": "Haven - Private Decentralized Finance",
   "start_url": "/",
   "display": "standalone",
-  "theme_color": "#36393F",
-  "background_color": "#36393F",
+  "theme_color": "#26282c",
+  "background_color": "#26282c",
   "icons": [
     {
       "src": "./pwa/windows10/Square71x71Logo.scale-400.png",
