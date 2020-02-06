@@ -212,9 +212,9 @@ const Content = () => {
         </Cell>
         <TimelineSeparator progress="complete" />
         <Cell>
-          <Progress>
+          <Complete>
             <Label>Complete</Label>
-          </Progress>
+          </Complete>
           <Data>
             <Title complete>Offshore Testnet</Title>
             <Description>

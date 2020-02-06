@@ -71,7 +71,7 @@ export const Cell = styled.div`
 export const Complete = styled.div`
   width: 16px;
   height: 100%;
-  background: ${props => props.theme.states.success};
+  background: #34d8ac;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -113,11 +113,10 @@ export const Label = styled.p`
   text-align: center;
   line-height: 16px;
   text-transform: uppercase;
-  color: white;
 `;
 
 export const Title = styled.h3`
-  color: ${props => (props.complete ? `#ffffff` : "#8a8d90")};
+  color: #fff;
   letter-spacing: 0;
   line-height: 26px;
   text-align: left;
