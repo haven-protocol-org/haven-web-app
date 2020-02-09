@@ -1,11 +1,12 @@
 
 import currencies from "../../../constants/assets";
 import {XHV_VS_CURRENCIES_SUCCEED} from "../actions/types";
+import {WebAppState} from "platforms/web/reducers/index";
 
 
 
 
-const INITIAL_STATE = currencies.reduce( (initialState, currency) => {
+const INITIAL_STATE = currencies.reduce( (initialState: any, currency: any) => {
 
     initialState[currency.ticker] = {
         token:currency.token,
@@ -22,7 +23,7 @@ const INITIAL_STATE = currencies.reduce( (initialState, currency) => {
 
 
 
-export const xhvVsCurrencies = (state = INITIAL_STATE, action) => {
+export const xhvVsCurrencies = (state = INITIAL_STATE, action: any) => {
 
 
     switch (action.type) {
@@ -35,3 +36,5 @@ export const xhvVsCurrencies = (state = INITIAL_STATE, action) => {
             return state;
     }
 };
+
+
