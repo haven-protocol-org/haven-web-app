@@ -4,7 +4,7 @@ import {
   resetTransferProcess,
   transfer
 } from "../../../actions";
-import { Transfer } from "shared/pages/_wallet/transfer";
+import  {Transfer}  from "shared/pages/_wallet/transfer";
 import React, { Component } from "react";
 import { transferSucceed } from "../../../reducers/transferProcess";
 import { Ticker } from "shared/reducers/types";
@@ -48,6 +48,7 @@ class TransferDesktopContainer extends Component<any, any> {
 
   render() {
     return (
+        //@ts-ignore
       <Transfer
         isProcessing={this.props.tx.isFetching}
         address={this.props.address}

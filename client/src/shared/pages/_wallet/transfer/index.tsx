@@ -15,6 +15,11 @@ import { Container } from "./styles";
 import { Ticker } from "shared/reducers/types";
 import { AssetOption } from "shared/pages/_wallet/exchange";
 import { OFFSHORE_ENABLED } from "constants/env";
+import {XBalances} from "shared/reducers/xBalance";
+import {convertBalanceForReading} from "utility/utility";
+import {DesktopAppState} from "platforms/desktop/reducers";
+import {connect} from "react-redux";
+import {WebAppState} from "platforms/web/reducers";
 
 const options: AssetOption[] = [{ name: "Haven Token", ticker: Ticker.XHV }];
 
@@ -22,7 +27,7 @@ if (OFFSHORE_ENABLED) {
   options.push({ name: "United States Dollar", ticker: Ticker.xUSD });
 }
 
-interface TransferProps {
+interface TransferOwnProps {
   sendFunds: (
     address: string,
     amount: number,
@@ -31,6 +36,12 @@ interface TransferProps {
   ) => void;
   address: string;
   isProcessing: boolean;
+}
+
+
+interface TransferReduxProps {
+  xBalances: XBalances;
+
 }
 
 interface TransferState {
@@ -45,7 +56,10 @@ interface TransferState {
   address: string;
 }
 
-export class Transfer extends Component<TransferProps, TransferState> {
+
+type TransferProps = TransferOwnProps & TransferReduxProps;
+
+class TransferContainer extends Component<TransferProps, TransferState> {
   private addressValue: any = React.createRef();
 
   state: TransferState = {
@@ -151,6 +165,15 @@ export class Transfer extends Component<TransferProps, TransferState> {
       send_amount.length > 0 && recipient_address.length > 97;
     const windowWidth = window.innerWidth;
 
+
+    let availableBalance = null;
+    if (selectedAsset) {
+      availableBalance = convertBalanceForReading(this.props.xBalances[selectedAsset.ticker].unlockedBalance);
+    }
+
+    const amountLabel: string = availableBalance? `Amount (Avail. ${availableBalance})` :'';
+
+
     return (
       <Body>
         <Header
@@ -179,7 +202,7 @@ export class Transfer extends Component<TransferProps, TransferState> {
                 onClick={this.setSendAsset}
               />
               <Input
-                label={"Amount " + `(Avail. ${"balance"})`}
+                label={amountLabel}
                 placeholder="Enter amount"
                 type="number"
                 name="send_amount"
@@ -283,3 +306,12 @@ export class Transfer extends Component<TransferProps, TransferState> {
     );
   }
 }
+
+
+const mapStateToProps = (state:  any, ownProps: TransferOwnProps): TransferReduxProps => ({
+  xBalances: state.xBalance
+});
+
+export const Transfer = connect<TransferReduxProps, null, TransferOwnProps>(
+    mapStateToProps, null
+)(TransferContainer);
