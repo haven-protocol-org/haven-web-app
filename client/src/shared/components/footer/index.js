@@ -180,13 +180,6 @@ const Footer = () => {
           >
             Citex
           </External>
-          <External
-            rel="noopener"
-            href="https://zel.network/project/zelcore/"
-            target="_blank"
-          >
-            Zelcore
-          </External>
         </Section>
         <Section>
           <Title>About </Title>
