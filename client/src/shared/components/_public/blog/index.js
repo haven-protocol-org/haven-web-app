@@ -10,7 +10,8 @@ import {
   Wrapper,
   Image,
   Route,
-  Aspect
+  Aspect,
+  Date
 } from "./styles";
 
 import b1 from "../../../../assets/blog/b_v1.svg";
@@ -32,10 +33,12 @@ const Content = () => {
             <Image src={b9} />
           </Aspect>
           <Title>What is Haven (XHV)? Updated FAQs</Title>
+          <Date>Jan 28, 2020 · 8 min read</Date>
           <Description>
             The base currency for the Haven network is XHV. Haven is a
             Proof-of-Work...
           </Description>
+
           <Route
             rel="noopener"
             target="_blank"
@@ -49,6 +52,7 @@ const Content = () => {
             <Image src={b8} />
           </Aspect>
           <Title>xUSD Launch Update Part 1</Title>
+          <Date>Jan 24, 2020 · 4 min read</Date>
           <Description>
             On the heels of a public test phase, the Haven team has been busy
             preparing for...
@@ -66,6 +70,7 @@ const Content = () => {
             <Image src={b7} />
           </Aspect>
           <Title>Public Release of the Haven Vault</Title>
+          <Date>Jan 12, 2020 · 3 min read</Date>
           <Description>
             Today the Haven team is excited to release the final stage of the
             xUSD...
@@ -83,6 +88,7 @@ const Content = () => {
             <Image src={b6} />
           </Aspect>
           <Title>Preparing for Haven’s Mainnet</Title>
+          <Date>Jan 9, 2020 · 9 min read</Date>
           <Description>
             The Haven team and community has made significant progress over the
             last year building...
@@ -100,6 +106,7 @@ const Content = () => {
             <Image src={b5} />
           </Aspect>
           <Title>Update - Nov 2019</Title>
+          <Date>Nov 20, 2019 · 3 min read</Date>
           <Description>
             As Haven approaches its first major project milestone — launching
             the first private...
@@ -117,6 +124,7 @@ const Content = () => {
             <Image src={b4} />
           </Aspect>
           <Title>Update - Oct 2019</Title>
+          <Date>Oct 15, 2019 · 3 min read</Date>
           <Description>
             It’s been nine months since the Haven community took over the
             project’s development...
@@ -134,6 +142,7 @@ const Content = () => {
             <Image src={b1} />
           </Aspect>
           <Title>Haven - Zelcore</Title>
+          <Date>Jul 1, 2019 · 2 min read</Date>
           <Description>
             The Haven team is proud to announce we have been selected by
             Zelcore...
@@ -152,6 +161,7 @@ const Content = () => {
             <Image src={b2} />
           </Aspect>
           <Title>Update - April 2019</Title>
+          <Date>Apr 10, 2019 · 8 min read</Date>
           <Description>
             Since January, the Haven Protocol project has undergone many
             changes....
@@ -169,6 +179,7 @@ const Content = () => {
             <Image src={b3} />
           </Aspect>
           <Title>Update - Jan 2019</Title>
+          <Date>Jan 26, 2019 · 4 min read</Date>
           <Description>
             As many of you have noticed, the Haven Protocol team has expanded
             over...

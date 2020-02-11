@@ -96,3 +96,12 @@ export const Description = styled.div`
   letter-spacing: 0;
   line-height: 26px;
 `;
+
+export const Date = styled.div`
+  font-size: 14px;
+  color: #8a8d90;
+  letter-spacing: 0;
+  line-height: 20px;
+  margin-bottom: 12px;
+  margin-top: -4px;
+`;
