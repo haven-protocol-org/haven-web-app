@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="640px" height="360px" viewBox="0 0 640 360" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 59.1 (86144) - https://sketch.com -->
+    <title>b_v7</title>
+    <desc>Created with Sketch.</desc>
+    <g id="b_v7" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="layers">
+            <g id="background" fill="#26292F">
+                <rect id="Rectangle" x="0" y="0" width="640" height="360"></rect>
+            </g>
+            <g id="icon" transform="translate(396.000000, 79.500000)"></g>
+        </g>
+        <g id="Oval_looper" transform="translate(394.000000, -19.000000)" stroke="#61D4FF" stroke-width="1.2">
+            <ellipse id="Oval_16" stroke-opacity="0.2" transform="translate(305.322476, 307.628571) rotate(216.000000) translate(-305.322476, -307.628571) " cx="305.322476" cy="307.628571" rx="56.7132335" ry="56.7014684"></ellipse>
+            <ellipse id="Oval_15" transform="translate(229.687296, 307.628571) rotate(201.600000) translate(-229.687296, -307.628571) " cx="229.687296" cy="307.628571" rx="56.7212264" ry="56.6934727"></ellipse>
+            <ellipse id="Oval_14" stroke-opacity="0.2" transform="translate(154.052117, 307.628571) rotate(187.200000) translate(-154.052117, -307.628571) " cx="154.052117" cy="307.628571" rx="56.7257863" ry="56.6889097"></ellipse>
+            <ellipse id="Oval_13" transform="translate(78.416938, 307.628571) rotate(172.800000) translate(-78.416938, -307.628571) " cx="78.4169381" cy="307.628571" rx="56.7257863" ry="56.6889097"></ellipse>
+            <ellipse id="Oval_12" transform="translate(305.322476, 232.044156) rotate(158.400000) translate(-305.322476, -232.044156) " cx="305.322476" cy="232.044156" rx="56.7212264" ry="56.6934727"></ellipse>
+            <ellipse id="Oval_11" stroke-opacity="0.2" transform="translate(229.687296, 232.044156) rotate(144.000000) translate(-229.687296, -232.044156) " cx="229.687296" cy="232.044156" rx="56.7132335" ry="56.7014684"></ellipse>
+            <ellipse id="Oval_10" transform="translate(154.052117, 232.044156) rotate(129.600000) translate(-154.052117, -232.044156) " cx="154.052117" cy="232.044156" rx="56.7037841" ry="56.7109182"></ellipse>
+            <ellipse id="Oval_9" stroke-opacity="0.2" transform="translate(78.416938, 232.044156) rotate(115.200000) translate(-78.416938, -232.044156) " cx="78.4169381" cy="232.044156" rx="56.6952157" ry="56.7194842"></ellipse>
+            <ellipse id="Oval_8" stroke-opacity="0.2" transform="translate(305.322476, 156.459740) rotate(100.800000) translate(-305.322476, -156.459740) " cx="305.322476" cy="156.45974" rx="56.6896485" ry="56.7250476"></ellipse>
+            <ellipse id="Oval_7" transform="translate(229.687296, 156.459740) rotate(86.400000) translate(-229.687296, -156.459740) " cx="229.687296" cy="156.45974" rx="56.6884618" ry="56.7262343"></ellipse>
+            <ellipse id="Oval_6" stroke-opacity="0.2" transform="translate(154.052117, 156.459740) rotate(72.000000) translate(-154.052117, -156.459740) " cx="154.052117" cy="156.45974" rx="56.6919484" ry="56.7227499"></ellipse>
+            <ellipse id="Oval_5" transform="translate(78.416938, 156.459740) rotate(57.600000) translate(-78.416938, -156.459740) " cx="78.4169381" cy="156.45974" rx="56.6992454" ry="56.715456"></ellipse>
+            <ellipse id="Oval_4" transform="translate(305.322476, 80.875325) rotate(43.200000) translate(-305.322476, -80.875325) " cx="305.322476" cy="80.8753247" rx="56.7085466" ry="56.706156"></ellipse>
+            <ellipse id="Oval_3" stroke-opacity="0.2" transform="translate(229.687296, 80.875325) rotate(28.800000) translate(-229.687296, -80.875325) " cx="229.687296" cy="80.8753247" rx="56.7175505" ry="56.6971502"></ellipse>
+            <ellipse id="Oval_2" transform="translate(154.052117, 80.875325) rotate(14.400000) translate(-154.052117, -80.875325) " cx="154.052117" cy="80.8753247" rx="56.7240297" ry="56.6906664"></ellipse>
+            <circle id="Oval_1" stroke-opacity="0.2" cx="78.5" cy="80.5" r="56.5"></circle>
+        </g>
+    </g>
+</svg>

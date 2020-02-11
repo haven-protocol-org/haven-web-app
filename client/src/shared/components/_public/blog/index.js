@@ -18,11 +18,83 @@ import b2 from "../../../../assets/blog/b_v2.svg";
 import b3 from "../../../../assets/blog/b_v3.svg";
 import b4 from "../../../../assets/blog/b_v4.svg";
 import b5 from "../../../../assets/blog/b_v5.svg";
+import b6 from "../../../../assets/blog/b_v6.svg";
+import b7 from "../../../../assets/blog/b_v7.svg";
+import b8 from "../../../../assets/blog/b_v8.svg";
+import b9 from "../../../../assets/blog/b_v9.svg";
 
 const Content = () => {
   return (
     <Wrapper>
       <Container>
+        <Cell>
+          <Aspect>
+            <Image src={b9} />
+          </Aspect>
+          <Title>What is Haven (XHV)? Updated FAQs</Title>
+          <Description>
+            The base currency for the Haven network is XHV. Haven is a
+            Proof-of-Work...
+          </Description>
+          <Route
+            rel="noopener"
+            target="_blank"
+            href="https://medium.com/@havencurrency/what-is-haven-xhv-updated-faqs-a86bed3148a2"
+          >
+            Read More
+          </Route>
+        </Cell>
+        <Cell>
+          <Aspect>
+            <Image src={b8} />
+          </Aspect>
+          <Title>xUSD Launch Update Part 1</Title>
+          <Description>
+            On the heels of a public test phase, the Haven team has been busy
+            preparing for...
+          </Description>
+          <Route
+            rel="noopener"
+            target="_blank"
+            href="https://medium.com/@havencurrency/xusd-launch-update-part-1-deployment-of-new-haven-daemon-46d614382d4d"
+          >
+            Read More
+          </Route>
+        </Cell>
+        <Cell>
+          <Aspect>
+            <Image src={b7} />
+          </Aspect>
+          <Title>Public Release of the Haven Vault</Title>
+          <Description>
+            Today the Haven team is excited to release the final stage of the
+            xUSD...
+          </Description>
+          <Route
+            rel="noopener"
+            target="_blank"
+            href="https://medium.com/@havencurrency/public-release-of-the-haven-vault-xusd-testnet-c3625a35705"
+          >
+            Read More
+          </Route>
+        </Cell>
+        <Cell>
+          <Aspect>
+            <Image src={b6} />
+          </Aspect>
+          <Title>Preparing for Haven’s Mainnet</Title>
+          <Description>
+            The Haven team and community has made significant progress over the
+            last year building...
+          </Description>
+          <Route
+            rel="noopener"
+            target="_blank"
+            href="https://medium.com/@havencurrency/preparing-for-havens-mainnet-launch-of-xusd-c50e3b556649"
+          >
+            Read More
+          </Route>
+        </Cell>
         <Cell>
           <Aspect>
             <Image src={b5} />
