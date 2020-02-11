@@ -15,11 +15,11 @@ import { Container } from "./styles";
 import { Ticker } from "shared/reducers/types";
 import { AssetOption } from "shared/pages/_wallet/exchange";
 import { OFFSHORE_ENABLED } from "constants/env";
-import {XBalances} from "shared/reducers/xBalance";
-import {convertBalanceForReading} from "utility/utility";
-import {DesktopAppState} from "platforms/desktop/reducers";
-import {connect} from "react-redux";
-import {WebAppState} from "platforms/web/reducers";
+import { XBalances } from "shared/reducers/xBalance";
+import { convertBalanceForReading } from "utility/utility";
+import { DesktopAppState } from "platforms/desktop/reducers";
+import { connect } from "react-redux";
+import { WebAppState } from "platforms/web/reducers";
 
 const options: AssetOption[] = [{ name: "Haven Token", ticker: Ticker.XHV }];
 
@@ -38,10 +38,8 @@ interface TransferOwnProps {
   isProcessing: boolean;
 }
 
-
 interface TransferReduxProps {
   xBalances: XBalances;
-
 }
 
 interface TransferState {
@@ -55,7 +53,6 @@ interface TransferState {
   copyButtonState: string;
   address: string;
 }
-
 
 type TransferProps = TransferOwnProps & TransferReduxProps;
 
@@ -165,14 +162,16 @@ class TransferContainer extends Component<TransferProps, TransferState> {
       send_amount.length > 0 && recipient_address.length > 97;
     const windowWidth = window.innerWidth;
 
-
     let availableBalance = null;
     if (selectedAsset) {
-      availableBalance = convertBalanceForReading(this.props.xBalances[selectedAsset.ticker].unlockedBalance);
+      availableBalance = convertBalanceForReading(
+        this.props.xBalances[selectedAsset.ticker].unlockedBalance
+      );
     }
 
-    const amountLabel: string = availableBalance? `Amount (Avail. ${availableBalance})` :'';
-
+    const amountLabel: string = availableBalance
+      ? `Amount (Avail. ${availableBalance})`
+      : "Amount";
 
     return (
       <Body>
@@ -307,11 +306,14 @@ class TransferContainer extends Component<TransferProps, TransferState> {
   }
 }
 
-
-const mapStateToProps = (state:  any, ownProps: TransferOwnProps): TransferReduxProps => ({
+const mapStateToProps = (
+  state: any,
+  ownProps: TransferOwnProps
+): TransferReduxProps => ({
   xBalances: state.xBalance
 });
 
 export const Transfer = connect<TransferReduxProps, null, TransferOwnProps>(
-    mapStateToProps, null
+  mapStateToProps,
+  null
 )(TransferContainer);
