@@ -62,7 +62,7 @@ class AssetTable extends Component {
         const data = entry[1];
         return data.prices.length > 0;
       }
-    );
+    ).sort( (currencyA, currencyB) => currencyA[0] === 'XHV' ? -1: currencyB[0] === 'XHV' ? 1: 0 );
 
     return (
       <Table>
