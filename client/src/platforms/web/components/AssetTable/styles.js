@@ -60,9 +60,18 @@ export const Title = styled.div`
   font-size: 17px;
   color: white;
   text-align: ${props => (props.right ? "right" : "left")};
-
   letter-spacing: 0;
   line-height: 30px;
+`;
+
+export const TableTitle = styled.div`
+  font-family: Inter-Bold;
+  font-size: 19px;
+  color: white;
+  text-align: ${props => (props.right ? "right" : "left")};
+
+  letter-spacing: 0;
+  line-height: 36px;
 `;
 
 export const Subtitle = styled.div`
