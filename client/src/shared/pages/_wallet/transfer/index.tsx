@@ -222,7 +222,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
                   <Input
                     label="Payment ID (Optional)"
                     placeholder="Enter an optional payment ID"
-                    type="number"
+                    type={"text"}
                     name="payment_id"
                     width={true}
                     value={payment_id}
