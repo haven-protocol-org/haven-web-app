@@ -45,7 +45,7 @@ export const Transaction = ({
   }
 
   const txExplorerLink = `https://explorer${
-    isMainnet() ? "" : "-test"
+    isMainnet() ? "" : ".stagenet"
   }.havenprotocol.org/tx/${tx}`;
 
   return (

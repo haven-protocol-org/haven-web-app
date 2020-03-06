@@ -106,7 +106,7 @@ const daemonConfigTestnet = {
 const daemonConfigStagenet = {
   havend: {
     path: HAVEND_PATH_STAGENET,
-    port:38081,
+    port:37750,
     args: {
       stagenet: "",
       "add-priority-node": "seed01.stagenet.havenprotocol.org"
@@ -119,7 +119,7 @@ const daemonConfigStagenet = {
       stagenet: "",
       "rpc-bind-port": 12345,
       "disable-rpc-login": "",
-      "wallet-dir": WALLET_PATH_TESTNET
+      "wallet-dir": WALLET_PATH_STAGENET
     }
   }
 };

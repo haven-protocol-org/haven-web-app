@@ -27,12 +27,16 @@
   "scripts": {
     "start:desktop:mainnet": "sh -ac '. ./env/.env.mainnet; . ./env/.env.desktop; react-scripts start'",
     "start:desktop:testnet": "sh -ac '. ./env/.env.testnet; . ./env/.env.desktop; react-scripts start'",
+    "start:desktop:stagenet": "sh -ac '. ./env/.env.stagenet; . ./env/.env.desktop; react-scripts start'",
     "start:web:mainnet": "sh -ac '. ./env/.env.mainnet; . ./env/.env.web; react-scripts start'",
     "start:web:testnet": "sh -ac '. ./env/.env.testnet; . ./env/.env.web; react-scripts start'",
+    "start:web:stagenet": "sh -ac '. ./env/.env.stagenet; . ./env/.env.web; react-scripts start'",
     "build:web:testnet": "sh -ac '. ./env/.env.testnet; . ./env/.env.web; npm version patch; react-scripts build'",
     "build:web:mainnet": "sh -ac '. ./env/.env.mainnet; . ./env/.env.web; npm version minor; react-scripts build'",
+    "build:web:stagenet": "sh -ac '. ./env/.env.stagenet; . ./env/.env.web; npm version minor; react-scripts build'",
     "build:desktop:mainnet": "sh -ac '. ./env/.env.mainnet; . ./env/.env.desktop; . ./env/.env.desktop.build;  react-scripts build && npm run copy-build'",
     "build:desktop:testnet": "sh -ac '. ./env/.env.testnet; . ./env/.env.desktop; . ./env/.env.desktop.build;  react-scripts build && npm run copy-build'",
+    "build:desktop:stagenet": "sh -ac '. ./env/.env.stagenet; . ./env/.env.desktop; . ./env/.env.desktop.build;  react-scripts build && npm run copy-build'",
     "copy-build": "rm -rf ../haven-desktop-app/client && rm -rf ./build/libs && cp -rf ./build ../haven-desktop-app/client",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
