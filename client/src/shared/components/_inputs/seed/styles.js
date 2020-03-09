@@ -14,7 +14,7 @@ export const Paste = styled.button`
   align-items: center;
   justify-content: center;
   font-size: 15px;
-  margin-top: -1px;
+  margin-top: -3px;
   border-radius: 0px 0px 4px 4px;
   background: ${props => props.theme.input.input_background};
   border: 1px solid ${props => props.theme.input.input_border};
