@@ -24,6 +24,7 @@ import b7 from "../../../../assets/blog/b_v7.svg";
 import b8 from "../../../../assets/blog/b_v8.svg";
 import b9 from "../../../../assets/blog/b_v9.svg";
 import b10 from "../../../../assets/blog/b_v10.svg";
+import b11 from "../../../../assets/blog/b_v11.svg";
 
 const Content = () => {
   return (
@@ -31,7 +32,7 @@ const Content = () => {
       <Container>
         <Cell>
           <Aspect>
-            <Image src={b10} />
+            <Image src={b11} />
           </Aspect>
           <Title>Haven Integrates Chainlink</Title>
           <Date>March 10, 2020 · 3 min read</Date>
@@ -44,6 +45,25 @@ const Content = () => {
             rel="noopener"
             target="_blank"
             href="https://medium.com/@havencurrency/haven-integrates-chainlink-to-further-its-mission-of-enabling-private-decentralized-finance-28fce90b3797"
+          >
+            Read More
+          </Route>
+        </Cell>
+        <Cell>
+          <Aspect>
+            <Image src={b10} />
+          </Aspect>
+          <Title>Haven Launches xUSD Stagenet</Title>
+          <Date>March 10, 2020 · 3 min read</Date>
+          <Description>
+            Today Haven is launching a stagenet for xUSD, the first private
+            stablecoin...
+          </Description>
+
+          <Route
+            rel="noopener"
+            target="_blank"
+            href="https://medium.com/@havencurrency/haven-launches-xusd-stagenet-utilizing-chainlink-oracle-f77b68691e1c"
           >
             Read More
           </Route>

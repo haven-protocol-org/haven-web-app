@@ -59,7 +59,7 @@ const Content = () => {
       </Wrapper>
       <Wrapper>
         <Heading>Contributing Team</Heading>
-        <Contributors>
+        <Core>
           <Cell>
             <Avatar src={ahawk} />
             <Title>AHawk</Title>
@@ -76,23 +76,13 @@ const Content = () => {
             <Title>Rarecommons</Title>
             <Description>Community Manager</Description>
           </Cell>
-          <Cell>
-            <Avatar src={luge} />
-            <Title>Luge</Title>
-            <Description>Community Manager</Description>
-          </Cell>
 
           <Cell>
             <Avatar src={jriggs} />
             <Title>Jriggs</Title>
             <Description>Community Manager</Description>
           </Cell>
-          <Cell>
-            <Avatar src={goshiz} />
-            <Title>Goshiz</Title>
-            <Description>Core Developer</Description>
-          </Cell>
-        </Contributors>
+        </Core>
       </Wrapper>
     </Container>
   );
