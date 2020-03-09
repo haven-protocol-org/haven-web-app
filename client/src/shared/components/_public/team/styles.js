@@ -7,14 +7,14 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  width: 100%;
-  height: 100%;
+  width: auto;
   background: #36393f;
 `;
 
 export const Wrapper = styled.div`
   height: auto;
   width: 100%;
+  max-width: 1400px;
   background: #36393f;
   display: flex;
   flex-direction: column;
@@ -29,8 +29,8 @@ export const Wrapper = styled.div`
   `}
 
   ${media.mobile`
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
   `}
 `;
 
@@ -41,6 +41,7 @@ export const Core = styled.div`
   grid-gap: 20px;
   padding: 40px 20px;
   background: #36393f;
+
   justify-content: center;
   align-items: center;
 
@@ -54,6 +55,7 @@ export const Core = styled.div`
     padding: 40px 20px;
   `}
 `;
+
 export const Contributors = styled.div`
   display: grid;
   height: auto;
@@ -61,6 +63,7 @@ export const Contributors = styled.div`
   grid-gap: 20px;
   padding: 40px 20px;
   background: #36393f;
+
   justify-content: center;
   align-items: center;
 
@@ -99,6 +102,7 @@ export const Heading = styled.div`
 
 export const Cell = styled.div`
   height: auto;
+  width: auto
   display: flex;
   flex-direction: column;
   align-items: center;

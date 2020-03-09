@@ -61,23 +61,19 @@ const Content = () => {
         <Heading>Contributing Team</Heading>
         <Contributors>
           <Cell>
-            <Avatar src={goshiz} />
-            <Title>Goshiz</Title>
-            <Description>Core Developer</Description>
-          </Cell>
-          <Cell>
             <Avatar src={ahawk} />
             <Title>AHawk</Title>
             <Description>Community Manager</Description>
           </Cell>
-          <Cell>
-            <Avatar src={jriggs} />
-            <Title>Jriggs</Title>
-            <Description>Community Manager</Description>
-          </Cell>
+
           <Cell>
             <Avatar src={mad} />
             <Title>Madlentil</Title>
+            <Description>Community Manager</Description>
+          </Cell>
+          <Cell>
+            <Avatar src={rare} />
+            <Title>Rarecommons</Title>
             <Description>Community Manager</Description>
           </Cell>
           <Cell>
@@ -87,9 +83,14 @@ const Content = () => {
           </Cell>
 
           <Cell>
-            <Avatar src={rare} />
-            <Title>Rarecommons</Title>
+            <Avatar src={jriggs} />
+            <Title>Jriggs</Title>
             <Description>Community Manager</Description>
+          </Cell>
+          <Cell>
+            <Avatar src={goshiz} />
+            <Title>Goshiz</Title>
+            <Description>Core Developer</Description>
           </Cell>
         </Contributors>
       </Wrapper>
