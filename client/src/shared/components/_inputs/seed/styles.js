@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import media from "../../../../assets/styles/media.js";
 
 export const Error = styled.div`
   font-family: Inter-Regular;
@@ -28,6 +29,10 @@ export const Paste = styled.button`
     transition: 500ms;
     border: 1px solid #5c5f63;
   }
+
+  ${media.mobile`
+    display:  none;
+    `}
 `;
 
 export const Container = styled.div`
