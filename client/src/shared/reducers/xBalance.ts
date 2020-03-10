@@ -142,7 +142,6 @@ export const selectTotalBalances = (state: DesktopAppState): XViewBalance => {
   );
 
   return {
-    [Ticker.XHV]: xHVTotalBalance,
     [Ticker.xUSD]: xUSDTotalBalance,
     xBTC: btcTotalBalance
   };

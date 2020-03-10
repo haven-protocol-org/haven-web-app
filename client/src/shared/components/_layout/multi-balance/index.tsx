@@ -14,6 +14,9 @@ import { selectDesktopSyncState } from "platforms/desktop/reducers/chain";
 import { selectTotalBalances, XViewBalances } from "shared/reducers/xBalance";
 import { Ticker } from "shared/reducers/types";
 
+
+const OFFSHORE_TICKERS = [Ticker.xUSD, Ticker.xBTC];
+
 interface BalanceProps {
   syncState: SyncState;
   balances: XViewBalances;
@@ -27,7 +30,7 @@ interface BalanceState {
 class Balances extends Component<BalanceProps, BalanceState> {
   state: BalanceState = {
     currentIndex: 0,
-    currentTicker: Object.keys(Ticker)[0] as Ticker
+    currentTicker: OFFSHORE_ENABLED? OFFSHORE_TICKERS[0] : Ticker.XHV
   };
 
   onClickNext() {
@@ -35,7 +38,7 @@ class Balances extends Component<BalanceProps, BalanceState> {
       return;
     }
 
-    const tickerNum: number = Object.keys(Ticker).length;
+    const tickerNum: number = OFFSHORE_TICKERS.length;
 
     let nextIndex = this.state.currentIndex + 1;
     if (nextIndex === tickerNum) {
@@ -43,7 +46,7 @@ class Balances extends Component<BalanceProps, BalanceState> {
     }
     this.setState({
       currentIndex: nextIndex,
-      currentTicker: Object.keys(Ticker)[nextIndex] as Ticker
+      currentTicker: OFFSHORE_TICKERS[nextIndex] as Ticker
     });
   }
 
