@@ -11,7 +11,7 @@ import { DesktopAppState } from "platforms/desktop/reducers";
 import { SyncState } from "shared/types/types";
 import { isDesktop, OFFSHORE_ENABLED } from "constants/env";
 import { selectDesktopSyncState } from "platforms/desktop/reducers/chain";
-import { selectTotalBalances, XViewBalances } from "shared/reducers/xBalance";
+import {NO_BALANCE, selectTotalBalances, XViewBalances} from "shared/reducers/xBalance";
 import { Ticker } from "shared/reducers/types";
 
 
@@ -71,7 +71,7 @@ class Balances extends Component<BalanceProps, BalanceState> {
     return (
       <Wrapper onClick={() => this.onClickNext()}>
         <Amount isSyncing={isSyncing}>
-          {this.props.balances.xUSD.balance === 0 ? <Spinner /> : xUsdAmount}
+          {this.props.balances.xUSD.balance === -1 ? <Spinner /> : xUsdAmount}
         </Amount>
         <Value>{isSyncing ? `Syncing Vault... ${percentage}%` : ``}</Value>
         {isSyncing && <ProgressBar percentage={percentage} />}

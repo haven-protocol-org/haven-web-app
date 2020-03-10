@@ -39,9 +39,9 @@ const INITIAL_BALANCE: Balance = {
 };
 
 const INITIAL_VIEW_BALANCE: ViewBalance = {
-  balance: 0,
-  unlockedBalance: 0,
-  lockedBalance: 0
+  balance: -1,
+  unlockedBalance: -1,
+  lockedBalance: -1
 };
 
 const INITIAL_STATE: XBalances = {
