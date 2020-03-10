@@ -1,6 +1,6 @@
 {
   "name": "haven_web_wallet",
-  "version": "1.38.0",
+  "version": "1.39.0",
   "private": true,
   "dependencies": {
     "@types/jest": "^24.0.23",
