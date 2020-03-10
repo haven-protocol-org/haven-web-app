@@ -106,6 +106,8 @@ class AssetsPage extends Component<AssetsProps, any> {
   };
 
   render() {
+    console.log("#### BALANCES #####", this.props.balances);
+
     const price =
       this.props.price === NO_PRICE || isNaN(this.props.price)
         ? "--"
@@ -117,12 +119,10 @@ class AssetsPage extends Component<AssetsProps, any> {
     return (
       <Body>
         <Overview />
-
         <Header
           title="Available Assets"
           description="Overview of all available Haven Assets"
         />
-
         <Cell
           fullwidth="fullwidth"
           key={1}
