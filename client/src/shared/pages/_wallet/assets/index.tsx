@@ -17,6 +17,7 @@ import { Ticker } from "shared/reducers/types";
 import { OFFSHORE_ENABLED } from "constants/env";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { XBalances } from "shared/reducers/xBalance";
+import {WebAppState} from "platforms/web/reducers";
 
 interface AssetsProps {
   balances: XBalances;
@@ -142,7 +143,7 @@ class AssetsPage extends Component<AssetsProps, any> {
   }
 }
 
-export const mapStateToProps = (state: DesktopAppState) => ({
+export const mapStateToProps = (state: DesktopAppState | WebAppState) => ({
   ...state.simplePrice,
   ...state.forex,
   balances: state.xBalance

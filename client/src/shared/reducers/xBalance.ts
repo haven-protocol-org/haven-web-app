@@ -39,9 +39,9 @@ const INITIAL_BALANCE: Balance = {
 };
 
 const INITIAL_VIEW_BALANCE: ViewBalance = {
-  balance: 0,
-  unlockedBalance: 0,
-  lockedBalance: 0
+  balance: -1,
+  unlockedBalance: -1,
+  lockedBalance: -1
 };
 
 const INITIAL_STATE: XBalances = {
@@ -77,17 +77,7 @@ export function xBalance(
   }
 }
 
-export function selectReadableBalance(
-  state: DesktopAppState | WebAppState
-): number {
-  if (state.xBalance.XHV.balance === NO_BALANCE) return -1;
 
-  const readableNum = Number(
-    state.xBalance.XHV.balance.divide(bigInt(Math.pow(10, 12)))
-  );
-
-  return Math.round(readableNum / 10000) * 10000;
-}
 
 export const selectTotalBalances = (state: DesktopAppState): XViewBalance => {
   const defaultBalance = {
@@ -152,7 +142,6 @@ export const selectTotalBalances = (state: DesktopAppState): XViewBalance => {
   );
 
   return {
-    [Ticker.XHV]: xHVTotalBalance,
     [Ticker.xUSD]: xUSDTotalBalance,
     xBTC: btcTotalBalance
   };

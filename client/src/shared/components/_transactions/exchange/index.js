@@ -37,14 +37,6 @@ const Transaction = ({ xRate,fromAmount, toAmount,  fromTicker, toTicker, estima
             (toAmount && !isNaN(toAmount) ? toAmount : "--")}
         </Value>
       </Row>
-      <Row>
-        <Key>Estimated Fees</Key>
-        <Value>
-          {estimatedFee !== 0
-            ? `${estimatedFee.toFixed(4)} ${fromTicker}`
-            : "--"}
-        </Value>
-      </Row>
       <Footer>
         <Confirm
           checked={checked}
