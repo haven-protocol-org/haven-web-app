@@ -33,6 +33,8 @@ import {
   selectToTicker
 } from "platforms/desktop/reducers/offshoreProcess";
 import { setFromTicker, setToTicker } from "platforms/desktop/actions/offshore";
+import {NO_BALANCE, xBalance, XBalances} from "shared/reducers/xBalance";
+import {convertBalanceForReading} from "utility/utility";
 
 enum ExchangeTab {
   Basic,
@@ -55,6 +57,7 @@ type ExchangeProps = {
   xRate: number;
   fromTicker: Ticker | null;
   toTicker: Ticker | null;
+  balances: XBalances;
 };
 
 type ExchangeState = {
@@ -274,6 +277,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     const { fromTicker, toTicker } = this.props;
     const { hasLatestXRate } = this.props;
 
+    const availBalance = fromTicker? convertBalanceForReading( this.props.balances[fromTicker].unlockedBalance): NO_BALANCE;
     const fromAsset = assetOptions.find(option => option.ticker === fromTicker);
     const toAsset = assetOptions.find(option => option.ticker === toTicker);
 
@@ -312,7 +316,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
               onClick={this.setFromAsset}
             />
             <Input
-              label={"From Amount " + `(Avail. ${"<value>"})`}
+              label={"From Amount " + ( availBalance !== NO_BALANCE? `(Avail. ${availBalance})`: '')}
               placeholder="Enter amount"
               type="number"
               name="fromAmount"
@@ -331,7 +335,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
               onClick={this.setToAsset}
             />
             <Input
-              label={"To Amount " + `(Avail. ${"<value>"})`}
+              label={"To Amount "}
               placeholder="Enter amount"
               name="toAmount"
               type="number"
@@ -398,7 +402,8 @@ const mapStateToProps = (state: DesktopAppState) => ({
   exchangeSucceed: selectExchangeSucceed(state.offshoreProcess),
   priceDelta: priceDelta(state),
   fromTicker: selectFromTicker(state.offshoreProcess),
-  toTicker: selectToTicker(state.offshoreProcess)
+  toTicker: selectToTicker(state.offshoreProcess),
+  balances: state.xBalance
 });
 
 export const ExchangePage = connect(

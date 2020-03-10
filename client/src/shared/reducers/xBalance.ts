@@ -77,17 +77,7 @@ export function xBalance(
   }
 }
 
-export function selectReadableBalance(
-  state: DesktopAppState | WebAppState
-): number {
-  if (state.xBalance.XHV.balance === NO_BALANCE) return -1;
 
-  const readableNum = Number(
-    state.xBalance.XHV.balance.divide(bigInt(Math.pow(10, 12)))
-  );
-
-  return Math.round(readableNum / 10000) * 10000;
-}
 
 export const selectTotalBalances = (state: DesktopAppState): XViewBalance => {
   const defaultBalance = {
