@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import media from "../../../../assets/styles/media.js";
 
 export const Error = styled.div`
   font-family: Inter-Regular;
@@ -14,7 +15,7 @@ export const Paste = styled.button`
   align-items: center;
   justify-content: center;
   font-size: 15px;
-  margin-top: -1px;
+  margin-top: -3px;
   border-radius: 0px 0px 4px 4px;
   background: ${props => props.theme.input.input_background};
   border: 1px solid ${props => props.theme.input.input_border};
@@ -28,6 +29,10 @@ export const Paste = styled.button`
     transition: 500ms;
     border: 1px solid #5c5f63;
   }
+
+  ${media.mobile`
+    display:  none;
+    `}
 `;
 
 export const Container = styled.div`

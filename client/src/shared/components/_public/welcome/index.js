@@ -14,9 +14,9 @@ import {
   Wrapper
 } from "./styles";
 // import { Header } from "../../../constants/type.js";
-import how from "../../../../assets/how.svg";
-import what from "../../../../assets/what.svg";
-import why from "../../../../assets/why.svg";
+import how from "../../../../assets/illustration/how.svg";
+import what from "../../../../assets/illustration/what.svg";
+import why from "../../../../assets/illustration/why.svg";
 
 const Content = React.forwardRef((props, ref) => {
   return (
@@ -27,10 +27,7 @@ const Content = React.forwardRef((props, ref) => {
             <Image src={what} />
           </Test>
           <Words>
-            <Header>
-              What is <br />
-              Haven Protocol?
-            </Header>
+            <Header>What is Haven Protocol?</Header>
             <Title>BUY. SWAP. STORE.</Title>
             <Description>
               Be your own bank with Haven. Simply buy Haven [XHV] from any
@@ -55,10 +52,7 @@ const Content = React.forwardRef((props, ref) => {
             <Image src={how} />
           </Test>
           <Words reverse>
-            <Header>
-              How does <br />
-              Haven work?
-            </Header>
+            <Header>How does Haven work?</Header>
             <Title>PRIVATE. SECURE. FLEXIBLE.</Title>
             <Description>
               Haven uses an innovative mechanism to swap between all supported
@@ -84,10 +78,7 @@ const Content = React.forwardRef((props, ref) => {
             <Image reverse src={why} />
           </Test>
           <Words>
-            <Header>
-              Why should I <br />
-              use Haven?
-            </Header>
+            <Header>Why should I use Haven?</Header>
             <Title>ANYONE. ANYWHERE. ANYTIME.</Title>
             <Description>
               Use Haven to store or send your money anywhere in the world at any
