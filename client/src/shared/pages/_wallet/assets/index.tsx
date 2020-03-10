@@ -17,7 +17,7 @@ import { Ticker } from "shared/reducers/types";
 import { OFFSHORE_ENABLED } from "constants/env";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { XBalances } from "shared/reducers/xBalance";
-import {WebAppState} from "platforms/web/reducers";
+import { WebAppState } from "platforms/web/reducers";
 
 interface AssetsProps {
   balances: XBalances;
@@ -25,6 +25,7 @@ interface AssetsProps {
   rates: { [key: string]: any };
   getSimplePrice: () => void;
   getForex: () => void;
+  balance: number;
 }
 
 interface AssetsState {}
@@ -53,6 +54,7 @@ class AssetsPage extends Component<AssetsProps, any> {
     const xUSDBalance = convertToMoney(
       this.props.balances.xUSD.unlockedBalance
     );
+
     const value = calcValue(xUSDBalance, 1);
 
     const enabledTokens = token.filter((asset: any) =>
@@ -72,7 +74,8 @@ class AssetsPage extends Component<AssetsProps, any> {
           tokenName={token}
           ticker={"x" + ticker}
           price={price}
-          change={value}
+          value={value}
+          balance={666.66}
         />
       );
     });
@@ -100,15 +103,14 @@ class AssetsPage extends Component<AssetsProps, any> {
           tokenName={token}
           ticker={"x" + ticker}
           price={price}
-          change={change}
+  
+          balance={0.0000}
         />
       );
     });
   };
 
   render() {
-    console.log("#### BALANCES #####", this.props.balances);
-
     const price =
       this.props.price === NO_PRICE || isNaN(this.props.price)
         ? "--"
@@ -130,7 +132,8 @@ class AssetsPage extends Component<AssetsProps, any> {
           tokenName={"Haven"}
           ticker={"XHV"}
           price={"$" + price}
-          change={value}
+          value={value}
+          balance={666.66}
         />
         {this.renderEnabledTokens()}
         <Header

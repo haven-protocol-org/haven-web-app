@@ -30,6 +30,21 @@ export const Container = styled.div`
     transition: 500ms;
 `;
 
+export const Row = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+export const Ticker = styled.div`
+  font-family: Inter-Regular;
+  margin-left: 8px;
+  font-size: 17px;
+  color: ${props => props.theme.type.secondary};
+  letter-spacing: 0;
+  line-height: 30px;
+  text-align: ${props => (props.left ? "left" : "right")};
+`;
+
 export const Inner = styled.div`
   height: auto;
   width: 16px;

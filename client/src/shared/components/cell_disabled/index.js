@@ -9,21 +9,34 @@ import {
   Subtitle,
   Icon,
   Inner,
-  Wrapper
+  Wrapper,
+  Row,
+  Ticker
 } from "./styles";
 import chevron from "../../../assets/icons/chevron.svg";
 
-const CellDisabled = ({ tokenName, ticker, price, change, fullwidth }) => {
+const CellDisabled = ({
+  tokenName,
+  ticker,
+  price,
+
+  balance,
+  fullwidth,
+
+}) => {
   return (
     <Container fullwidth={fullwidth}>
       <Column>
-        <Title>{tokenName}</Title>
-        <Subtitle left>{price}</Subtitle>
+        <Row>
+          <Title>{tokenName}</Title>
+          <Ticker>{ticker}</Ticker>
+        </Row>
+        <Subtitle left>{balance}</Subtitle>
       </Column>
       <Wrapper>
         <Column>
-          <Title>{ticker}</Title>
-          <Subtitle>{change}</Subtitle>
+          <Title>{price}</Title>
+          <Subtitle>{"$"}{0.00}</Subtitle>
         </Column>
         <Inner>
           <Icon src={chevron} />

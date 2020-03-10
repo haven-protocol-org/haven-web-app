@@ -9,22 +9,26 @@ import {
   Subtitle,
   Icon,
   Inner,
-  Wrapper
+  Wrapper,
+  Ticker,
+  Row
 } from "./styles";
 import chevron from "../../../assets/icons/chevron.svg";
 
-const Cell = ({ tokenName, ticker, price, change, fullwidth }) => {
+const Cell = ({ tokenName, ticker, price, value,  fullwidth, balance }) => {
   return (
     <Container fullwidth={fullwidth} to={`/wallet/assets/${ticker}`}>
       <Column>
-        <Title left>{tokenName}</Title>
-        <Subtitle left>{price}</Subtitle>
+        <Row>
+          <Title left>{tokenName}</Title>
+          <Ticker left>({ticker})</Ticker>
+        </Row>
+        <Subtitle left>{balance}</Subtitle>
       </Column>
-
       <Wrapper>
         <Column>
-          <Title>{ticker}</Title>
-          <Subtitle>{change}</Subtitle>
+          <Title>{price}</Title>
+          <Subtitle>{value}</Subtitle>
         </Column>
         <Inner>
           <Icon src={chevron} />

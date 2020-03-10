@@ -43,6 +43,10 @@ export const Column = styled.div`
   display: flex;
   flex-direction: column;
 `;
+export const Row = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
 
 export const Icon = styled.img`
   height: 16px;
@@ -57,6 +61,16 @@ export const Title = styled.div`
   font-family: Inter-Bold;
   font-size: 17px;
   color: ${props => props.theme.type.primary};
+  letter-spacing: 0;
+  line-height: 30px;
+  text-align: ${props => (props.left ? "left" : "right")};
+`;
+
+export const Ticker = styled.div`
+  font-family: Inter-Regular;
+  margin-left: 8px;
+  font-size: 17px;
+  color: ${props => props.theme.type.secondary};
   letter-spacing: 0;
   line-height: 30px;
   text-align: ${props => (props.left ? "left" : "right")};
