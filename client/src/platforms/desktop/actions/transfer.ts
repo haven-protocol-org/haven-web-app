@@ -12,7 +12,7 @@ import {
   addErrorNotification,
   addNotificationByKey
 } from "shared/actions/notification";
-import { TRANSFER_SUCCEED_MESSAGE } from "../../../constants/notificationList";
+import { TRANSFER_SUCCEED_MESSAGE } from "constants/notificationList";
 import { getOffshoreTransfers } from "platforms/desktop/actions/offshoreTransferHistory";
 import { getOffshoreBalance } from "platforms/desktop/actions/offshoreBalance";
 

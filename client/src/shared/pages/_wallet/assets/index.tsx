@@ -12,7 +12,11 @@ import CellDisabled from "../../../components/cell_disabled";
 
 import token from "../../../../constants/assets.js";
 import { NO_PRICE } from "shared/reducers/priceHistory";
-import { calcValue, convertToMoney } from "utility/utility";
+import {
+  calcValue,
+  convertToMoney,
+  convertBalanceForReading
+} from "utility/utility";
 import { Ticker } from "shared/reducers/types";
 import { OFFSHORE_ENABLED } from "constants/env";
 import { DesktopAppState } from "platforms/desktop/reducers";
@@ -63,6 +67,11 @@ class AssetsPage extends Component<AssetsProps, any> {
     return enabledTokens.map(data => {
       const { token, ticker, symbol } = data;
 
+      const xTicker = ("x" + ticker) as Ticker;
+      const unlockedBalance = convertBalanceForReading(
+        this.props.balances[xTicker].unlockedBalance
+      );
+
       const rates = this.props.rates;
       let price = rates[ticker] ? rates[ticker] : 0;
       price = symbol + price.toFixed(2);
@@ -72,10 +81,10 @@ class AssetsPage extends Component<AssetsProps, any> {
           fullwidth="fullwidth"
           key={token}
           tokenName={token}
-          ticker={"x" + ticker}
+          ticker={xTicker}
           price={price}
           value={value}
-          balance={666.66}
+          balance={unlockedBalance}
         />
       );
     });
@@ -103,8 +112,7 @@ class AssetsPage extends Component<AssetsProps, any> {
           tokenName={token}
           ticker={"x" + ticker}
           price={price}
-  
-          balance={0.0000}
+          balance={0.0}
         />
       );
     });
@@ -116,7 +124,9 @@ class AssetsPage extends Component<AssetsProps, any> {
         ? "--"
         : this.props.price.toFixed(4);
 
-    const xhvBalance = convertToMoney(this.props.balances.XHV.unlockedBalance);
+    const xhvBalance = convertBalanceForReading(
+      this.props.balances.XHV.unlockedBalance
+    );
     const value = calcValue(xhvBalance, this.props.price);
 
     return (
@@ -133,7 +143,7 @@ class AssetsPage extends Component<AssetsProps, any> {
           ticker={"XHV"}
           price={"$" + price}
           value={value}
-          balance={666.66}
+          balance={xhvBalance}
         />
         {this.renderEnabledTokens()}
         <Header
@@ -152,7 +162,6 @@ export const mapStateToProps = (state: DesktopAppState | WebAppState) => ({
   balances: state.xBalance
 });
 
-export const Assets = connect(
-  mapStateToProps,
-  { getForex, getSimplePrice }
-)(AssetsPage);
+export const Assets = connect(mapStateToProps, { getForex, getSimplePrice })(
+  AssetsPage
+);

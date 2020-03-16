@@ -7,7 +7,6 @@ import {
 import { AnyAction } from "redux";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { INITAL_FETCHING_STATE, Ticker, XFetching } from "./types";
-import { WebAppState } from "platforms/web/reducers";
 import { selectXRate } from "platforms/desktop/reducers/blockHeaderExchangeRates";
 import bigInt from "big-integer";
 
@@ -76,8 +75,6 @@ export function xBalance(
       return state;
   }
 }
-
-
 
 export const selectTotalBalances = (state: DesktopAppState): XViewBalance => {
   const defaultBalance = {

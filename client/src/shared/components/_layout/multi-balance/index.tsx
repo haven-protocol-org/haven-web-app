@@ -11,11 +11,14 @@ import { DesktopAppState } from "platforms/desktop/reducers";
 import { SyncState } from "shared/types/types";
 import { isDesktop, OFFSHORE_ENABLED } from "constants/env";
 import { selectDesktopSyncState } from "platforms/desktop/reducers/chain";
-import {NO_BALANCE, selectTotalBalances, XViewBalances} from "shared/reducers/xBalance";
+import {
+  NO_BALANCE,
+  selectTotalBalances,
+  XViewBalances
+} from "shared/reducers/xBalance";
 import { Ticker } from "shared/reducers/types";
 
-
-const OFFSHORE_TICKERS = [Ticker.xUSD, Ticker.xBTC];
+const OFFSHORE_TICKERS = [Ticker.xUSD, Ticker.xBTC, null];
 
 interface BalanceProps {
   syncState: SyncState;
@@ -23,14 +26,14 @@ interface BalanceProps {
 }
 
 interface BalanceState {
-  currentTicker: Ticker;
+  currentTicker: Ticker | null;
   currentIndex: number;
 }
 
 class Balances extends Component<BalanceProps, BalanceState> {
   state: BalanceState = {
     currentIndex: 0,
-    currentTicker: OFFSHORE_ENABLED? OFFSHORE_TICKERS[0] : Ticker.XHV
+    currentTicker: OFFSHORE_ENABLED ? OFFSHORE_TICKERS[0] : Ticker.XHV
   };
 
   onClickNext() {
@@ -52,6 +55,9 @@ class Balances extends Component<BalanceProps, BalanceState> {
 
   render() {
     const ticker = this.state.currentTicker;
+
+    if (ticker === null)
+      return <Wrapper onClick={() => this.onClickNext()}></Wrapper>;
     const { prefix, suffix } =
       ticker === Ticker.xUSD
         ? { prefix: "$", suffix: "" }
@@ -73,7 +79,11 @@ class Balances extends Component<BalanceProps, BalanceState> {
         <Amount isSyncing={isSyncing}>
           {this.props.balances.xUSD.balance === -1 ? <Spinner /> : xUsdAmount}
         </Amount>
-        <Value>{isSyncing ? `Syncing Vault... ${percentage}%` : ``}</Value>
+        <Value>
+          {isSyncing
+            ? `Syncing Vault... ${percentage}%`
+            : `Total Value (${ticker.substring(1)}) `}
+        </Value>
         {isSyncing && <ProgressBar percentage={percentage} />}
         {this.props.balances.xUSD.lockedBalance > 0 ? (
           <Pending>
@@ -93,7 +103,4 @@ const mapStateToProps = (state: DesktopAppState) => ({
     ? selectDesktopSyncState(state as DesktopAppState)
     : selectWebSyncState(state)
 });
-export const MultiBalance = connect(
-  mapStateToProps,
-  null
-)(Balances);
+export const MultiBalance = connect(mapStateToProps, null)(Balances);

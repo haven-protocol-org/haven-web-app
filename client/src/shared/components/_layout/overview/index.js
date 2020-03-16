@@ -3,12 +3,12 @@ import React from "react";
 
 // Relative Imports
 import { Container } from "./styles";
-import Balances from "../balances";
+import { MultiBalance } from "../multi-balance";
 
 const Overview = () => {
   return (
     <Container>
-      <Balances />
+      <MultiBalance />
     </Container>
   );
 };
