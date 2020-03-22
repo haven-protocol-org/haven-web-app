@@ -8,6 +8,7 @@ import Body from "shared/components/_layout/body";
 import Header from "shared/components/_layout/header";
 import Form from "shared/components/_inputs/form";
 import Theme from "shared/components/_inputs/theme";
+import BalanceDropdown from "shared/components/_inputs/balances_dropdown";
 import Input from "shared/components/_inputs/input";
 import Footer from "shared/components/_inputs/footer/index.js";
 
@@ -25,10 +26,12 @@ import {
 } from "platforms/desktop/actions/mining";
 
 type ThemeOption = { theme: string; value: string };
+type BalanceOption = { ticker: string; value: string; code: string };
 type NodeOptions = { value: string };
 
 interface SettingsProps {
   theme: any;
+  balance: any;
   mining: MiningStatus;
   selectTheme: (theme: any) => void;
   startMining: () => void;
@@ -41,12 +44,20 @@ const options: ThemeOption[] = [
   { theme: "light", value: "Light Theme" }
 ];
 
+const balances: BalanceOption[] = [
+  { ticker: "USD", value: "United States Dollars", code: "$" },
+  { ticker: "BTC", value: "Bitcoin", code: "₿" },
+  { ticker: "XHV", value: "Haven", code: "Ħ" },
+  { ticker: "--", value: "Hide", code: "-" }
+];
+
 class SettingsDesktopPage extends Component<SettingsProps, any> {
   refreshTimer: number = -1;
 
   state = {
     value: "",
-    node: "remote"
+    node: "remote",
+    balance: "United States Dollars"
   };
 
   componentDidMount() {
@@ -127,8 +138,25 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
     alert("Save Changes");
   };
 
+  setBalance = ({ ticker, value }: BalanceOption) => {
+    alert("set state here");
+    // if (theme === "light") {
+    //   this.props.selectTheme(light);
+    //   this.setState({
+    //     value: value
+    //   });
+    // } else if (theme === "dark") {
+    //   this.props.selectTheme(dark);
+    //   this.setState({
+    //     value: value
+    //   });
+    // } else {
+    //   return null;
+    // }
+  };
+
   render() {
-    const { value } = this.state;
+    const { value, balance } = this.state;
 
     const mining: MiningStatus = this.props.mining;
     let buttonLabel =
@@ -158,10 +186,31 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
           />
         </Form>
         <Header
+          title="Balances "
+          description="Select your desired balances view and reference pair"
+        />
+
+        <BalanceDropdown
+          label="Overview"
+          placeholder="USD Dollars"
+          name="balances"
+          value={balance}
+          options={balances}
+          onClick={this.setBalance}
+        />
+        <BalanceDropdown
+          label="Reference Pair"
+          placeholder="Australian Dollars"
+          name="balances"
+          value={"Canadian Dollars"}
+          options={balances}
+          onClick={this.setBalance}
+        />
+
+        <Header
           title="Accounts"
           description="Create new accounts for different purposes"
         />
-
         <>
           <Input
             width={true}
