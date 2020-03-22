@@ -9,7 +9,7 @@ export const Container = styled.div`
   padding-bottom: 12px;
   grid-column: ${props => (props.width ? "1 / 3" : null)};
 
-  ${media.mobile`
+  ${media.laptop`
     grid-column: 1 / 3;
   `};
 `;
