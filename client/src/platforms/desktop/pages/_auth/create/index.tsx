@@ -229,7 +229,7 @@ class CreateDesktopContainer extends Component<
       case CREATION_STEPS.Verification:
         const labelString = (
           <Fragment>
-            type in the words{" "}
+            Enter seed words{" "}
             <span style={{ color: "#34d8ac" }}>
               {" "}
               {this.state.wordsToVerify

@@ -158,7 +158,7 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
           />
         </Form>
         <Header
-          title="Mining"
+          title="Mining HELLO"
           description="Decentralize the Haven protocol by mining and have the chance to earn XHV as a reward"
         />
 
@@ -166,6 +166,31 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
           <Input
             width={true}
             label="Status"
+            placeholder="Mining Status"
+            type="text"
+            readOnly={true}
+            name="daemon_password"
+            value={
+              mining.active
+                ? `Mining with ${mining.speed} hashes per second`
+                : "Not Mining"
+            }
+          />
+          <Container>
+            <Footer
+              onClick={this.onMiningButtonClicked}
+              loading={false}
+              label={buttonLabel}
+            />
+          </Container>
+        </>
+
+        <Header title="Accounts" description="Create new accounts" />
+
+        <>
+          <Input
+            width={true}
+            label="Accounts"
             placeholder="Mining Status"
             type="text"
             readOnly={true}
