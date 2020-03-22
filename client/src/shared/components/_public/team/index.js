@@ -1,6 +1,5 @@
 // Library Imports
 import React from "react";
-
 // Relative Imports
 import {
   Core,
@@ -32,7 +31,7 @@ const Content = () => {
   return (
     <Container>
       <Wrapper>
-        <Heading>Core Team</Heading>
+        <Heading>Core Developers</Heading>
         <Core>
           <Cell>
             <Avatar src={dweab} />
