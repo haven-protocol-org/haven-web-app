@@ -57,13 +57,18 @@ class Balances extends Component<BalanceProps, BalanceState> {
     const ticker = this.state.currentTicker;
 
     if (ticker === null)
-      return <Wrapper onClick={() => this.onClickNext()}></Wrapper>;
+      return (
+        <Wrapper onClick={() => this.onClickNext()}>
+          <Amount>--</Amount>
+          <Value>Account Value (Hidden)</Value>
+        </Wrapper>
+      );
     const { prefix, suffix } =
       ticker === Ticker.xUSD
         ? { prefix: "$", suffix: "" }
         : ticker === Ticker.xBTC
         ? { prefix: "₿", suffix: "" }
-        : { prefix: "", suffix: " XHV" };
+        : { prefix: "Ħ", suffix: " XHV" };
 
     const xUsdAmount =
       prefix + this.props.balances[ticker].unlockedBalance.toFixed(4) + suffix;
@@ -82,7 +87,7 @@ class Balances extends Component<BalanceProps, BalanceState> {
         <Value>
           {isSyncing
             ? `Syncing Vault... ${percentage}%`
-            : `Total Value (${ticker.substring(1)}) `}
+            : `Account Value (${ticker.substring(1)}) `}
         </Value>
         {isSyncing && <ProgressBar percentage={percentage} />}
         {this.props.balances.xUSD.lockedBalance > 0 ? (
@@ -103,4 +108,7 @@ const mapStateToProps = (state: DesktopAppState) => ({
     ? selectDesktopSyncState(state as DesktopAppState)
     : selectWebSyncState(state)
 });
-export const MultiBalance = connect(mapStateToProps, null)(Balances);
+export const MultiBalance = connect(
+  mapStateToProps,
+  null
+)(Balances);

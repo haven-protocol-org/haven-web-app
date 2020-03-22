@@ -3,7 +3,6 @@ import React from "react";
 // Relative Imports
 import {
   Core,
-  Contributors,
   Cell,
   Description,
   Title,
@@ -23,9 +22,7 @@ import marty from "../../../../assets/team/marty.png";
 import ahawk from "../../../../assets/team/ahawk.png";
 import mad from "../../../../assets/team/mad.png";
 import rare from "../../../../assets/team/rare.png";
-import goshiz from "../../../../assets/team/goshiz.png";
 import jriggs from "../../../../assets/team/jriggs.png";
-import luge from "../../../../assets/team/luge.png";
 
 const Content = () => {
   return (

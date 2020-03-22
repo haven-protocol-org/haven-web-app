@@ -158,10 +158,26 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
           />
         </Form>
         <Header
-          title="Mining HELLO"
-          description="Decentralize the Haven protocol by mining and have the chance to earn XHV as a reward"
+          title="Accounts"
+          description="Create new accounts for different purposes"
         />
 
+        <>
+          <Input
+            width={true}
+            label="Accounts"
+            placeholder="List of addresses"
+            type="text"
+            readOnly={true}
+            name="addresses"
+            value={"xhv...123"}
+          />
+          <Container></Container>
+        </>
+        <Header
+          title="Mining"
+          description="Decentralize the Haven protocol by mining and have the chance to earn XHV as a reward"
+        />
         <>
           <Input
             width={true}
@@ -184,85 +200,6 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
             />
           </Container>
         </>
-
-        <Header title="Accounts" description="Create new accounts" />
-
-        <>
-          <Input
-            width={true}
-            label="Accounts"
-            placeholder="Mining Status"
-            type="text"
-            readOnly={true}
-            name="daemon_password"
-            value={
-              mining.active
-                ? `Mining with ${mining.speed} hashes per second`
-                : "Not Mining"
-            }
-          />
-          <Container>
-            <Footer
-              onClick={this.onMiningButtonClicked}
-              loading={false}
-              label={buttonLabel}
-            />
-          </Container>
-        </>
-
-        {/*<Header
-          title="Nodes"
-          description="Choose between running a local or remote node"
-        />
-        <Form onSubmit={() => {}}>
-          <Nodes
-            label="Select Node"
-            placeholder="Select Node"
-            name="node"
-            value={"Remote"}
-            options={nodes}
-            onClick={this.handleNode}
-          />
-          {localeNode == true && (
-            <>
-              <Input
-                label="Node Address"
-                placeholder="Enter node address"
-                type="text"
-                name="node_address"
-                value={""}
-              />
-              <Input
-                label="Node Port"
-                placeholder="Enter port number"
-                type="text"
-                name="port_number"
-                value={""}
-              />
-              <Input
-                label="Daemon Username (Optional)"
-                placeholder="Enter daemon username"
-                type="text"
-                name="daemon_username"
-                value={""}
-              />
-              <Input
-                label="Daemon Password (Optional)"
-                placeholder="Enter daemon password"
-                type="text"
-                name="daemon_password"
-                value={""}
-              />
-              <Container>
-                <Footer
-                  onClick={this.setNodeType}
-                  loading={false}
-                  label="Save"
-                />
-              </Container>
-            </>
-          )}
-        </Form>*/}
       </Body>
     );
   }
@@ -277,3 +214,59 @@ export const SettingsDesktop = connect(
   mapStateToProps,
   { selectTheme, startMining, stopMining, miningStatus }
 )(SettingsDesktopPage);
+
+{
+  /*<Header
+  title="Nodes"
+  description="Choose between running a local or remote node"
+/>
+<Form onSubmit={() => {}}>
+  <Nodes
+    label="Select Node"
+    placeholder="Select Node"
+    name="node"
+    value={"Remote"}
+    options={nodes}
+    onClick={this.handleNode}
+  />
+  {localeNode == true && (
+    <>
+      <Input
+        label="Node Address"
+        placeholder="Enter node address"
+        type="text"
+        name="node_address"
+        value={""}
+      />
+      <Input
+        label="Node Port"
+        placeholder="Enter port number"
+        type="text"
+        name="port_number"
+        value={""}
+      />
+      <Input
+        label="Daemon Username (Optional)"
+        placeholder="Enter daemon username"
+        type="text"
+        name="daemon_username"
+        value={""}
+      />
+      <Input
+        label="Daemon Password (Optional)"
+        placeholder="Enter daemon password"
+        type="text"
+        name="daemon_password"
+        value={""}
+      />
+      <Container>
+        <Footer
+          onClick={this.setNodeType}
+          loading={false}
+          label="Save"
+        />
+      </Container>
+    </>
+  )}
+</Form>*/
+}

@@ -71,7 +71,7 @@ class Balances extends Component<BalanceProps, BalanceState> {
           {isSyncing ? `Syncing Vault... ${percentage}%` : ticker + " Balance"}
         </Value>
         {isSyncing && <ProgressBar percentage={percentage} />}
-        {lockedBalance.greater( 0) ? (
+        {lockedBalance.greater(0) ? (
           <Pending>
             You have {convertBalanceForReading(lockedBalance) + " " + ticker}{" "}
             pending.
@@ -90,4 +90,7 @@ const mapStateToProps = (state: DesktopAppState | WebAppState) => ({
     ? selectDesktopSyncState(state as DesktopAppState)
     : selectWebSyncState(state)
 });
-export default connect(mapStateToProps, null)(Balances);
+export default connect(
+  mapStateToProps,
+  null
+)(Balances);
