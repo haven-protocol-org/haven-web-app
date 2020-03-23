@@ -6,6 +6,8 @@ import Body from "../../../components/_layout/body";
 import Header from "../../../components/_layout/header";
 import Input from "../../../components/_inputs/input";
 import Form from "../../../components/_inputs/form";
+import Modal from "../../../components/modal/index.js";
+
 import Footer from "../../../components/_inputs/footer";
 import Dropdown from "../../../components/_inputs/dropdown";
 import Transaction from "../../../components/_transactions/exchange";
@@ -33,8 +35,8 @@ import {
   selectToTicker
 } from "platforms/desktop/reducers/offshoreProcess";
 import { setFromTicker, setToTicker } from "platforms/desktop/actions/offshore";
-import {NO_BALANCE, xBalance, XBalances} from "shared/reducers/xBalance";
-import {convertBalanceForReading} from "utility/utility";
+import { NO_BALANCE, xBalance, XBalances } from "shared/reducers/xBalance";
+import { convertBalanceForReading } from "utility/utility";
 
 enum ExchangeTab {
   Basic,
@@ -68,6 +70,7 @@ type ExchangeState = {
   externAddress: string;
   selectedPrio: ExchangePrioOption;
   estimatedFee: number;
+  showModal?: boolean;
 };
 
 export interface AssetOption {
@@ -104,7 +107,8 @@ const INITIAL_STATE: ExchangeState = {
   selectedTab: ExchangeTab.Basic,
   externAddress: "",
   selectedPrio: exchangePrioOptions[exchangePrioOptions.length - 1],
-  estimatedFee: 0
+  estimatedFee: 0,
+  showModal: false
 };
 class Exchange extends Component<ExchangeProps, ExchangeState> {
   state: ExchangeState = INITIAL_STATE;
@@ -264,6 +268,12 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     this.setState({ selectedPrio: selectedOption }, () => this.calculateFees());
   };
 
+  showModal = () => {
+    this.setState({
+      showModal: !this.state.showModal
+    });
+  };
+
   render() {
     const {
       fromAmount,
@@ -277,7 +287,11 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     const { fromTicker, toTicker } = this.props;
     const { hasLatestXRate } = this.props;
 
-    const availBalance = fromTicker? convertBalanceForReading( this.props.balances[fromTicker].unlockedBalance): NO_BALANCE;
+    const availBalance = fromTicker
+      ? convertBalanceForReading(
+          this.props.balances[fromTicker].unlockedBalance
+        )
+      : NO_BALANCE;
     const fromAsset = assetOptions.find(option => option.ticker === fromTicker);
     const toAsset = assetOptions.find(option => option.ticker === toTicker);
 
@@ -286,87 +300,9 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       hasLatestXRate;
 
     return (
-      <Body>
-        <Header
-          title="Exchange "
-          description="Swap to and from various Haven Assets"
-        />
-
-        <Tab
-          firstTabLabel="Basic"
-          secondTabLabel="Advanced"
-          firstTabState={selectedTab === ExchangeTab.Basic}
-          secondTabState={selectedTab === ExchangeTab.Adanvced}
-          firstTabClickEvent={this.toggleBasic}
-          secondTabClickEvent={this.toggleAdvanced}
-          onClick={() => {}}
-        />
-        {!hasLatestXRate && (
-          <Failed>Exchange is disabled when Wallet is not synced</Failed>
-        )}
-        <>
-          <Form onSubmit={this.handleSubmit}>
-            <Dropdown
-              label="From Asset"
-              placeholder="Select Asset"
-              name="from_asset"
-              ticker={fromTicker}
-              value={fromAsset ? fromAsset.name : "Select Asset"}
-              options={assetOptions}
-              onClick={this.setFromAsset}
-            />
-            <Input
-              label={"From Amount " + ( availBalance !== NO_BALANCE? `(Avail. ${availBalance})`: '')}
-              placeholder="Enter amount"
-              type="number"
-              name="fromAmount"
-              value={fromAmount}
-              onChange={this.onEnterFromAmount}
-              error={fromTicker === null ? "Please select an asset first" : ""}
-              readOnly={fromTicker === null}
-            />
-            <Dropdown
-              label="To Asset"
-              placeholder="Select Asset"
-              name="to_asset"
-              value={toAsset ? toAsset.name : "Select Asset"}
-              ticker={toTicker}
-              options={assetOptions}
-              onClick={this.setToAsset}
-            />
-            <Input
-              label={"To Amount "}
-              placeholder="Enter amount"
-              name="toAmount"
-              type="number"
-              value={toAmount}
-              onChange={this.onEnterToAmount}
-              error={toTicker === null ? "Please select an asset first" : ""}
-              readOnly={toTicker === null}
-            />
-            {selectedTab === ExchangeTab.Adanvced && (
-              <>
-                <Dropdown
-                  label="Priority"
-                  placeholder="Select Priority"
-                  name="exchange_priority"
-                  value={selectedPrio.name}
-                  ticker={selectedPrio.ticker}
-                  options={exchangePrioOptions}
-                  onClick={this.setExchangePriority}
-                />
-                <Input
-                  label="Exchange Address (Optional)"
-                  placeholder="Exchange to another address"
-                  name="externAddress"
-                  type="text"
-                  value={externAddress}
-                  onChange={this.onEnterExternAddress}
-                />
-              </>
-            )}
-          </Form>
-          <Container>
+      <>
+        {this.state.showModal ? (
+          <Modal onClick={this.showModal} name="TEST">
             <Transaction
               xRate={this.props.xRate}
               fromAmount={fromAmount}
@@ -377,15 +313,126 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
               checked={reviewed}
               onChange={this.handleReviewSubmit}
             />
-            <Footer
-              onClick={this.handleSubmit}
-              label="Exchange"
-              validated={isValid}
-              loading={this.props.isProcessingExchange}
-            />
-          </Container>
-        </>
-      </Body>
+          </Modal>
+        ) : null}
+        <Body>
+          <Header
+            title="Exchange "
+            description="Swap to and from various Haven Assets"
+          />
+
+          <Tab
+            firstTabLabel="Basic"
+            secondTabLabel="Advanced"
+            firstTabState={selectedTab === ExchangeTab.Basic}
+            secondTabState={selectedTab === ExchangeTab.Adanvced}
+            firstTabClickEvent={this.toggleBasic}
+            secondTabClickEvent={this.toggleAdvanced}
+            onClick={() => {}}
+          />
+          {!hasLatestXRate && (
+            <Failed>
+              Sorry, but the ability to exchange assets is temporarily disabled
+              until the wallet is completely synced
+            </Failed>
+          )}
+          <>
+            <Form onSubmit={this.handleSubmit}>
+              <Dropdown
+                label="From Asset"
+                placeholder="Select Asset"
+                name="from_asset"
+                ticker={fromTicker}
+                value={fromAsset ? fromAsset.name : "Select Asset"}
+                options={assetOptions}
+                onClick={this.setFromAsset}
+              />
+              <Input
+                label={
+                  "From Amount " +
+                  (availBalance !== NO_BALANCE
+                    ? `(Avail. ${availBalance})`
+                    : "")
+                }
+                placeholder="Enter amount"
+                type="number"
+                name="fromAmount"
+                value={fromAmount}
+                onChange={this.onEnterFromAmount}
+                error={
+                  fromTicker === null ? "Please select an asset first" : ""
+                }
+                readOnly={fromTicker === null}
+              />
+              <Dropdown
+                label="To Asset"
+                placeholder="Select Asset"
+                name="to_asset"
+                value={toAsset ? toAsset.name : "Select Asset"}
+                ticker={toTicker}
+                options={assetOptions}
+                onClick={this.setToAsset}
+              />
+              <Input
+                label={"To Amount "}
+                placeholder="Enter amount"
+                name="toAmount"
+                type="number"
+                value={toAmount}
+                onChange={this.onEnterToAmount}
+                error={toTicker === null ? "Please select an asset first" : ""}
+                readOnly={toTicker === null}
+              />
+              {selectedTab === ExchangeTab.Adanvced && (
+                <>
+                  <Dropdown
+                    label="Priority"
+                    placeholder="Select Priority"
+                    name="exchange_priority"
+                    value={selectedPrio.name}
+                    ticker={selectedPrio.ticker}
+                    options={exchangePrioOptions}
+                    onClick={this.setExchangePriority}
+                  />
+                  <Input
+                    label="Exchange Address (Optional)"
+                    placeholder="Exchange to another address"
+                    name="externAddress"
+                    type="text"
+                    value={externAddress}
+                    onChange={this.onEnterExternAddress}
+                  />
+                </>
+              )}
+            </Form>
+            <Container>
+              <Transaction
+                xRate={this.props.xRate}
+                fromAmount={fromAmount}
+                toAmount={toAmount}
+                fromTicker={fromTicker}
+                toTicker={toTicker}
+                estimatedFee={0}
+                checked={reviewed}
+                onChange={this.handleReviewSubmit}
+              />
+              <button
+                onClick={e => {
+                  this.showModal();
+                }}
+              >
+                {this.state.showModal ? "Show Modal" : "Hide Modal"}
+              </button>
+              <Footer
+                onClick={this.handleSubmit}
+                label="Exchange"
+                validated={isValid}
+                loading={this.props.isProcessingExchange}
+              />
+            </Container>
+          </>
+        </Body>
+      </>
     );
   }
 }

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import media from "../../../../assets/styles/media.js";
 
 export const Container = styled.div`
   grid-column: 1 / 3;
@@ -6,14 +7,19 @@ export const Container = styled.div`
 `;
 
 export const Failed = styled.div`
-  color: black;
+  color: ${props => props.theme.type.primary};
   width: auto;
-  font-size: 16px
+  font-size: 13px;
   padding: 6px 12px;
-  background: #F04747;
-  border-radius:3px;
-  text-align:center;
-  grid-column: 1/-1;
+  background: ${props => props.theme.states.error};
+  border-radius: 3px;
+  text-align: center;
+  grid-column: 1 / 3;
+
+  ${media.tablet`
+    text-align: left;
+
+  `}
 `;
 
 export const Footer = styled.div`

@@ -208,8 +208,8 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
         />
 
         <Header
-          title="Accounts"
-          description="Create new accounts for different purposes"
+          title="Account"
+          description="Manage the addresses connected to your account"
         />
         <>
           <Input

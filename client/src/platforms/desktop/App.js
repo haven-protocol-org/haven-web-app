@@ -8,12 +8,14 @@ import { PublicRoutesDesktop } from "./routes/public";
 import { PrivateRoutesDesktop } from "./routes/private";
 import Status from "../../shared/components/_layout/status";
 import { HashRouter } from "react-router-dom";
+import Modal from "../../shared/components/modal/index.js";
 
 class App extends Component {
   render() {
     return (
       <ThemeProvider theme={this.props.theme}>
         <HashRouter history={history}>
+          <Modal />
           <NavigationDesktop />
           <Status />
           <PublicRoutesDesktop />
