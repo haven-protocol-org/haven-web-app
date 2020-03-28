@@ -15,7 +15,6 @@ class App extends Component {
     return (
       <ThemeProvider theme={this.props.theme}>
         <HashRouter history={history}>
-          <Modal />
           <NavigationDesktop />
           <Status />
           <PublicRoutesDesktop />

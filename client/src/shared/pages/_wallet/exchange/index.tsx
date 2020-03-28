@@ -424,8 +424,8 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 {this.state.showModal ? "Show Modal" : "Hide Modal"}
               </button>
               <Footer
-                onClick={this.handleSubmit}
-                label="Exchange"
+                onClick={this.showModal}
+                label="Preview"
                 validated={isValid}
                 loading={this.props.isProcessingExchange}
               />

@@ -20,6 +20,7 @@ import { convertBalanceForReading } from "utility/utility";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { connect } from "react-redux";
 import { WebAppState } from "platforms/web/reducers";
+import Modal from "../../../components/modal/index.js";
 
 const options: AssetOption[] = [{ name: "Haven Token", ticker: Ticker.XHV }];
 
@@ -52,6 +53,7 @@ interface TransferState {
   reviewed: boolean;
   copyButtonState: string;
   address: string;
+  showModal: boolean;
 }
 
 type TransferProps = TransferOwnProps & TransferReduxProps;
@@ -68,7 +70,8 @@ class TransferContainer extends Component<TransferProps, TransferState> {
     secondTabState: false,
     reviewed: false,
     copyButtonState: "Copy Address",
-    address: ""
+    address: "",
+    showModal: false
   };
 
   componentDidMount() {
@@ -147,6 +150,12 @@ class TransferContainer extends Component<TransferProps, TransferState> {
         copyButtonState: "Copy Address"
       });
     }, 1000);
+  };
+
+  showModal = () => {
+    this.setState({
+      showModal: !this.state.showModal
+    });
   };
 
   render() {
@@ -260,7 +269,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
               />
 
               <Footer
-                onClick={this.handleSubmit}
+                onClick={this.showModal}
                 loading={this.props.isProcessing}
                 label="Transfer"
                 validated={reviewed && checkValidation}

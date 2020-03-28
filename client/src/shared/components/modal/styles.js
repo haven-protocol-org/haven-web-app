@@ -2,26 +2,42 @@ import styled from "styled-components";
 import media from "../../../assets/styles/media.js";
 
 export const Container = styled.div`
-  height: 100vh;
-  width: 100vw;
   background: rgba(0, 0, 0, 0.8);
-  position: absolute;
+  position: fixed;
   z-index: 10000;
-  display: flex;
-  align-itiems: center;
-  justify-content: center;
-  padding: 20px;
-  overflow-y: hidden;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+`;
+
+export const Placeholder = styled.div`
+  min-height: 200px;
 `;
 
 export const Window = styled.div`
-  width: 600px;
-  max-height: 600px
-  background: ${props => props.theme.body.foreground};
-  background: green;
+  width: 100%;
+  height: 100%;
   color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
+export const Inner = styled.div`
+  margin-top: -120px;
+  width: 50%;
+  min-width: 580px;
+  background: ${props => props.theme.body.background}
   border-radius: 4px;
+
+  ${media.tablet`
+    min-width: 90%
+  `}
+
+  ${media.mobile`
+    min-width: 90%
+  `}
 `;
 
 export const Header = styled.div`
@@ -37,15 +53,14 @@ export const Body = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background: pink;
+  border-radius: 4px;
 `;
 
 export const Footer = styled.div`
   display: flex;
-
-  padding: 20px;
+  margin-top: 20px;
+  padding: 0px;
   justify-content: space-between;
-  background: red;
 `;
 
 export const Confirm = styled.button`

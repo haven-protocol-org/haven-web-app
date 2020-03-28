@@ -9,7 +9,9 @@ import {
   Footer,
   Confirm,
   Cancel,
-  Header
+  Header,
+  Placeholder,
+  Inner
 } from "./styles";
 import { Title, Description } from "../../../assets/styles/type.js";
 
@@ -17,17 +19,19 @@ const Modal = ({ name, onClick, children }) => {
   return (
     <Container>
       <Window>
-        <Header>
-          <Title>Confirm Exhanges</Title>
-          <Description>Confirm the details of your exchange</Description>
-        </Header>
-        <Body>
-          {children}
-          <Footer>
-            <Cancel onClick={onClick}>Cancel</Cancel>
-            <Confirm>Confirm</Confirm>
-          </Footer>
-        </Body>
+        <Inner>
+          <Header>
+            <Title>Confirm Exhanges</Title>
+            <Description>Confirm the details of your exchange</Description>
+          </Header>
+          <Body>
+            <Placeholder>{children}</Placeholder>
+            <Footer>
+              <Cancel onClick={onClick}>Cancel</Cancel>
+              <Confirm>Confirm</Confirm>
+            </Footer>
+          </Body>
+        </Inner>
       </Window>
     </Container>
   );
