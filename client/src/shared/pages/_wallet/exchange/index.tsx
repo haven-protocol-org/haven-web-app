@@ -318,6 +318,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
               checked={reviewed}
               validated={isValid}
               onChange={this.handleReviewSubmit}
+              externAddress={externAddress}
             />
           </Modal>
         )}
@@ -434,7 +435,8 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
               <Footer
                 onClick={this.showModal}
                 label="Review"
-                validated={isValid}
+                // validated={isValid}
+                validated={!hasLatestXRate ? true : false}
                 loading={this.props.isProcessingExchange}
               />
             </Container>

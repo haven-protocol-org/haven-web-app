@@ -14,7 +14,8 @@ const Transaction = ({
   estimatedFee,
   checked,
   onChange,
-  validated
+  validated,
+  externAddress
 }) => {
   return (
     <>
@@ -43,6 +44,12 @@ const Transaction = ({
               (toAmount && !isNaN(toAmount) ? toAmount : "--")}
           </Value>
         </Row>
+        {externAddress && (
+          <Row>
+            <Key>Exchange To</Key>
+            <Value>{externAddress}</Value>
+          </Row>
+        )}
         <Row>
           <Key>Priority ({"Medium"}) </Key>
           <Value>{"Unlocks ~2 hours"}</Value>
