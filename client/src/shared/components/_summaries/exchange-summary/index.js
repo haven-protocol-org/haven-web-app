@@ -20,12 +20,12 @@ const ExchangeSummary = ({
     <Container>
       <Row>
         <Key>Conversion Rate</Key>
-        <Value>
+        <Value active={hasLatestXRate ? true : false}>
           {hasLatestXRate
             ? xRate && fromTicker && toTicker
               ? `1 ${fromTicker} : ${xRate.toFixed(2)} ${toTicker}`
               : ""
-            : "Still syncing..."}
+            : "Syncing..."}
         </Value>
       </Row>
       <Row>
