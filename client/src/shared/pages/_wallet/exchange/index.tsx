@@ -37,6 +37,7 @@ import {
 import { setFromTicker, setToTicker } from "platforms/desktop/actions/offshore";
 import { NO_BALANCE, xBalance, XBalances } from "shared/reducers/xBalance";
 import { convertBalanceForReading } from "utility/utility";
+import ExchangeSummary from "../../../components/_summaries/exchange-summary/index.js";
 
 enum ExchangeTab {
   Basic,
@@ -406,7 +407,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
               )}
             </Form>
             <Container>
-              <Transaction
+              <ExchangeSummary
                 xRate={this.props.xRate}
                 fromAmount={fromAmount}
                 toAmount={toAmount}
