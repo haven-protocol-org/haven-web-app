@@ -435,8 +435,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
               <Footer
                 onClick={this.showModal}
                 label="Review"
-                // validated={isValid}
-                validated={!hasLatestXRate ? true : false}
+                validated={isValid}
                 loading={this.props.isProcessingExchange}
               />
             </Container>
