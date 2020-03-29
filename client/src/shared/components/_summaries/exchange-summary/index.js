@@ -13,16 +13,19 @@ const ExchangeSummary = ({
   toTicker,
   estimatedFee,
   checked,
-  onChange
+  onChange,
+  hasLatestXRate
 }) => {
   return (
     <Container>
       <Row>
         <Key>Conversion Rate</Key>
         <Value>
-          {xRate && fromTicker && toTicker
-            ? `1 ${fromTicker} =  ${xRate.toFixed(4)} ${toTicker}`
-            : ""}
+          {hasLatestXRate
+            ? xRate && fromTicker && toTicker
+              ? `1 ${fromTicker} : ${xRate.toFixed(2)} ${toTicker}`
+              : ""
+            : "Still syncing..."}
         </Value>
       </Row>
       <Row>
@@ -30,7 +33,7 @@ const ExchangeSummary = ({
         <Value>
           {(fromTicker ? fromTicker : "") +
             " " +
-            (fromAmount && !isNaN(fromAmount) ? fromAmount : "--")}
+            (fromAmount && !isNaN(fromAmount) ? fromAmount : "0")}
         </Value>
       </Row>
       <Row>
@@ -38,7 +41,7 @@ const ExchangeSummary = ({
         <Value>
           {(toTicker ? toTicker : "") +
             " " +
-            (toAmount && !isNaN(toAmount) ? toAmount : "--")}
+            (toAmount && !isNaN(toAmount) ? toAmount : "0")}
         </Value>
       </Row>
     </Container>

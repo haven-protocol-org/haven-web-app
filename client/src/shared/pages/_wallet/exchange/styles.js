@@ -7,7 +7,7 @@ export const Container = styled.div`
 `;
 
 export const Failed = styled.div`
-  color: ${props => props.theme.type.primary};
+  color: #fff;
   width: auto;
   font-size: 13px;
   padding: 6px 12px;

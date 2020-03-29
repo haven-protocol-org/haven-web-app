@@ -17,7 +17,10 @@ export const Header = styled.div`
 export const Footer = styled.div`
   height: auto;
   padding: 16px 12px;
-  border-top: 1px solid ${props => props.theme.body.border};
+  border: 1px solid ${props => props.theme.body.border};
+  background: ${props => props.theme.body.foreground};
+  margin-top: 12px;
+  border-radius: 4px;
 `;
 
 export const Row = styled.div`

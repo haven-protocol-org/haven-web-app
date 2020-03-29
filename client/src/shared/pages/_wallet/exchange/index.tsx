@@ -302,8 +302,12 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
 
     return (
       <>
-        {this.state.showModal ? (
-          <Modal onClick={this.showModal} name="TEST">
+        {this.state.showModal && (
+          <Modal
+            onClick={this.showModal}
+            title="Exchange Confirmation"
+            description="Please confirm and finalize your exchange transaction"
+          >
             <Transaction
               xRate={this.props.xRate}
               fromAmount={fromAmount}
@@ -312,10 +316,11 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
               toTicker={toTicker}
               estimatedFee={0}
               checked={reviewed}
+              validated={isValid}
               onChange={this.handleReviewSubmit}
             />
           </Modal>
-        ) : null}
+        )}
         <Body>
           <Header
             title="Exchange "
@@ -358,6 +363,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 placeholder="Enter amount"
                 type="number"
                 name="fromAmount"
+                disabled={!hasLatestXRate ? true : false}
                 value={fromAmount}
                 onChange={this.onEnterFromAmount}
                 error={
@@ -366,7 +372,12 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 readOnly={fromTicker === null}
               />
               <Dropdown
-                label="To Asset"
+                label={
+                  "To Amount " +
+                  (availBalance !== NO_BALANCE
+                    ? `(Avail. ${availBalance})`
+                    : "")
+                }
                 placeholder="Select Asset"
                 name="to_asset"
                 value={toAsset ? toAsset.name : "Select Asset"}
@@ -377,6 +388,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
               <Input
                 label={"To Amount "}
                 placeholder="Enter amount"
+                disabled={!hasLatestXRate ? true : false}
                 name="toAmount"
                 type="number"
                 value={toAmount}
@@ -401,6 +413,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                     name="externAddress"
                     type="text"
                     value={externAddress}
+                    disabled={!hasLatestXRate ? true : false}
                     onChange={this.onEnterExternAddress}
                   />
                 </>
@@ -409,6 +422,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
             <Container>
               <ExchangeSummary
                 xRate={this.props.xRate}
+                hasLatestXRate={hasLatestXRate}
                 fromAmount={fromAmount}
                 toAmount={toAmount}
                 fromTicker={fromTicker}
@@ -417,16 +431,9 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 checked={reviewed}
                 onChange={this.handleReviewSubmit}
               />
-              <button
-                onClick={e => {
-                  this.showModal();
-                }}
-              >
-                {this.state.showModal ? "Show Modal" : "Hide Modal"}
-              </button>
               <Footer
                 onClick={this.showModal}
-                label="Preview"
+                label="Review"
                 validated={isValid}
                 loading={this.props.isProcessingExchange}
               />

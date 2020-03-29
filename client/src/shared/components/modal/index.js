@@ -15,14 +15,14 @@ import {
 } from "./styles";
 import { Title, Description } from "../../../assets/styles/type.js";
 
-const Modal = ({ name, onClick, children }) => {
+const Modal = ({ title, description, onClick, children }) => {
   return (
     <Container>
       <Window>
         <Inner>
           <Header>
-            <Title>Confirm Exhanges</Title>
-            <Description>Confirm the details of your exchange</Description>
+            <Title>{title}</Title>
+            <Description>{description}</Description>
           </Header>
           <Body>
             <Placeholder>{children}</Placeholder>

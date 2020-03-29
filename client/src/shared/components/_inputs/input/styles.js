@@ -40,6 +40,10 @@ export const Field = styled.input`
     color: ${props => props.theme.input.input_placeholder};
     line-height: 26px;
   }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
 `;
 
 export const Labels = styled.div`

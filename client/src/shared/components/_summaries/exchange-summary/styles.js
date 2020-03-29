@@ -5,7 +5,7 @@ export const Container = styled.div`
   width: 100%;
   border-radius: 4px;
   background: ${props => props.theme.body.foreground};
-  border: 1px solid ${props => props.theme.body.border};
+  border: 1px solid ${props => props.theme.input.input_border};
   margin-top: 12px;
 `;
 
@@ -27,5 +27,8 @@ export const Key = styled.div`
 export const Value = styled.div`
   font-family: Inter-Regular;
   font-size: 14px;
-  color: ${props => props.theme.type.primary};
+  color: ${props =>
+    props.active == true
+      ? props => props.theme.type.primary
+      : props => props.theme.type.secondary};
 `;
