@@ -188,13 +188,21 @@ class TransferContainer extends Component<TransferProps, TransferState> {
         {this.state.showModal && (
           <Modal
             onClick={this.showModal}
-            title="Exchange Confirmation"
-            description="Please confirm and finalize your exchange transaction"
+            title="Transfer Confirmation"
+            description="Please confirm and finalize your transfer transaction"
           >
             <Transaction
               state={this.state}
               checked={reviewed}
               onChange={this.handleCheckboxChange}
+              paymentId={payment_id == "" ? "--" : payment_id}
+              recipientAddress={
+                recipient_address == "" ? "--" : recipient_address
+              }
+              transferAsset={
+                selectedAsset == null ? "--" : selectedAsset.ticker
+              }
+              transferAmount={send_amount == "" ? "--" : send_amount}
             />
           </Modal>
         )}
@@ -278,8 +286,8 @@ class TransferContainer extends Component<TransferProps, TransferState> {
               </Form>
               <Container>
                 <TransferSummary
-                  payment_id={payment_id == "" ? "--" : payment_id}
-                  recipient_address={
+                  paymentId={payment_id == "" ? "--" : payment_id}
+                  recipientAddress={
                     recipient_address == "" ? "--" : recipient_address
                   }
                   transferAsset={
@@ -291,7 +299,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
                 <Footer
                   onClick={this.showModal}
                   loading={this.props.isProcessing}
-                  label="Transfer"
+                  label="Review"
                   // validated={reviewed && checkValidation}
                   validated={true}
                 />

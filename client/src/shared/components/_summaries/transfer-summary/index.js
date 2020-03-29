@@ -8,11 +8,11 @@ import Confirm from "../../confirm/index.js";
 const TransferSummary = ({
   transferAsset,
   transferAmount,
-  payment_id,
-  recipient_address
+  paymentId,
+  recipientAddress
 }) => {
-  const first = recipient_address.substring(0, 4);
-  const last = recipient_address.substring(recipient_address.length - 4);
+  const first = recipientAddress.substring(0, 4);
+  const last = recipientAddress.substring(recipientAddress.length - 4);
   const truncated = first + "...." + last;
   return (
     <Container>
@@ -26,11 +26,11 @@ const TransferSummary = ({
       </Row>
       <Row>
         <Key>Recipient Address</Key>
-        <Value>{truncated}</Value>
+        <Value>{recipientAddress == "--" ? "--" : truncated}</Value>
       </Row>
       <Row>
         <Key>Payment ID</Key>
-        <Value>{payment_id}</Value>
+        <Value>{paymentId}</Value>
       </Row>
     </Container>
   );
