@@ -17,10 +17,6 @@ const ExchangeSummary = ({
 }) => {
   return (
     <Container>
-      <Header>
-        <Value>Exchange Summary</Value>
-        <Value />
-      </Header>
       <Row>
         <Key>Conversion Rate</Key>
         <Value>
