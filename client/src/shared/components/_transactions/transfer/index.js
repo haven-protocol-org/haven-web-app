@@ -16,7 +16,7 @@ export const Transaction = ({
   const first = recipientAddress.substring(0, 4);
   const last = recipientAddress.substring(recipientAddress.length - 4);
   const truncated = first + "...." + last;
-  console.log("paymentId", paymentId);
+
   return (
     <>
       <Container>
@@ -39,7 +39,7 @@ export const Transaction = ({
           </Row>
         )}
         <Row>
-          <Key>Transaction Fee</Key>
+          <Key>Fee (${"0.123"})</Key>
           <Value>{"0.01234 XHV"}</Value>
         </Row>
       </Container>
