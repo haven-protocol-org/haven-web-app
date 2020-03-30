@@ -53,6 +53,29 @@ export const Labels = styled.div`
   margin-bottom: 4px;
 `;
 
+export const Edit = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 8px;
+  width: 52px;
+  background: ${props => props.theme.button.primary};
+  color: white;
+
+  border-radius: 2px;
+  font-size: 12px;
+
+  text-transform: uppercase;
+  transition: 500ms;
+  font-family: Inter-Regular;
+
+  &:hover {
+    background: ${props => props.theme.button.primary_hover};
+    cursor: pointer;
+    transition: 500ms;
+  }
+`;
+
 export const Item = styled.li`
   padding: 16px;
   margin-left: -40px;
@@ -76,6 +99,13 @@ export const Item = styled.li`
 `;
 
 export const Row = styled.div`
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const Block = styled.div`
   display: flex;
   align-items: center;
 `;

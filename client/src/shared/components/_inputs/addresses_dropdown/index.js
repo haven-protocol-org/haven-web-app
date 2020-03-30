@@ -1,5 +1,5 @@
 import React from "react";
-// import "./styles.css";
+
 import {
   Container,
   Select,
@@ -10,7 +10,9 @@ import {
   Name,
   Row,
   Address,
-  Ticker
+  Ticker,
+  Edit,
+  Block
 } from "./styles";
 import { Label, Error } from "../../../../assets/styles/type.js";
 
@@ -36,12 +38,15 @@ class AddressDropdown extends React.Component {
   renderOptions = () => {
     const { onClick, options } = this.props;
     return options.map(option => {
-      const { ticker, value, code } = option;
+      const { address, name } = option;
       return (
-        <Item key={ticker} onClick={() => onClick({ ticker, value })}>
+        <Item key={address} onClick={() => onClick({ address, name })}>
           <Row>
-            <Address>{code}</Address>
-            <Name>{value}</Name>
+            <Block>
+              <Address>{address}</Address>
+              <Name>{name}</Name>
+            </Block>
+            <Edit>Edit</Edit>
           </Row>
         </Item>
       );
@@ -50,7 +55,7 @@ class AddressDropdown extends React.Component {
 
   render() {
     const { displayMenu } = this.state;
-    const { label, error, value, options } = this.props;
+    const { label, error, name, options } = this.props;
 
     return (
       <Container>
