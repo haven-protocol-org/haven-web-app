@@ -5,8 +5,6 @@ import {
 } from "./types";
 
 export const getForex = () => {
-
-
   const forexUrl = `https://api.exchangeratesapi.io/latest?base=USD`;
 
   return dispatch => {
