@@ -8,8 +8,8 @@ import {
   VALIDATE_MNEMONIC_SUCCEED
 } from "../actions/types";
 import { AnyAction } from "redux";
-import {RPCError} from "platforms/desktop/reducers/walletSession";
-import {DesktopAppState} from "platforms/desktop/reducers/index";
+import { RPCError } from "platforms/desktop/reducers/walletSession";
+import { DesktopAppState } from "platforms/desktop/reducers/index";
 
 export interface WalletCreation {
   isCreated: boolean;
@@ -50,13 +50,10 @@ export const walletCreation = (
 };
 
 export const selectErrorMessage = (state: DesktopAppState) => {
-
-
   const error = state.walletCreation.error;
 
   if (error) {
     return error.message;
   }
   return error;
-
 };

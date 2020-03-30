@@ -2,19 +2,16 @@ import { AnyAction } from "redux";
 import { UPDATE_DAEMON_STATES } from "../actions/types";
 
 export enum NodeLocation {
-  Local,Remote
+  Local,
+  Remote
 }
-
 
 export interface NodeState extends RunningState {
-
-  location:NodeLocation;
+  location: NodeLocation;
   uri: string;
-  isMining:boolean;
-  connections:{in:number, out:number};
-
+  isMining: boolean;
+  connections: { in: number; out: number };
 }
-
 
 export interface RunningState {
   isRunning: boolean;
@@ -38,7 +35,7 @@ export const daemonStates = (
 ): DaemonStates => {
   switch (action.type) {
     case UPDATE_DAEMON_STATES:
-      return {...action.payload};
+      return { ...action.payload };
 
     default:
       return state;
