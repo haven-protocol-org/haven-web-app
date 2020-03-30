@@ -9,6 +9,7 @@ import Header from "shared/components/_layout/header";
 import Form from "shared/components/_inputs/form";
 import Theme from "shared/components/_inputs/theme";
 import BalanceDropdown from "shared/components/_inputs/balances_dropdown";
+import AddressDropdown from "shared/components/_inputs/addresses_dropdown";
 import Input from "shared/components/_inputs/input";
 import Footer from "shared/components/_inputs/footer/index.js";
 
@@ -27,6 +28,7 @@ import {
 
 type ThemeOption = { theme: string; value: string };
 type BalanceOption = { ticker: string; value: string; code: string };
+type AddressOption = { name: string; value: string };
 type NodeOptions = { value: string };
 
 interface SettingsProps {
@@ -49,6 +51,17 @@ const balances: BalanceOption[] = [
   { ticker: "BTC", value: "Bitcoin", code: "₿" },
   { ticker: "XHV", value: "Haven", code: "Ħ" },
   { ticker: "--", value: "Hide", code: "-" }
+];
+
+const addresses: AddressOption[] = [
+  { name: "", value: "xhv1238...4567" },
+  { name: "", value: "xhv8411...4910" },
+  { name: "", value: "xhv9810...8301" },
+  { name: "", value: "xhv0912...0183" },
+  { name: "", value: "xhv0182...9401" },
+  { name: "", value: "xhv9301...1930" },
+  { name: "", value: "xhv1201...0391" },
+  { name: "", value: "xhv92910...0381" }
 ];
 
 class SettingsDesktopPage extends Component<SettingsProps, any> {
@@ -208,20 +221,23 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
         />
 
         <Header
-          title="Account"
-          description="Manage the addresses connected to your account"
+          title="Addresses"
+          description="Manage the sub-addresses connected to your account"
         />
         <>
-          <Input
+          <AddressDropdown
             width={true}
-            label="Accounts"
+            label="Select Address"
             placeholder="List of addresses"
             type="text"
             readOnly={true}
             name="addresses"
             value={"xhv...123"}
+            options={addresses}
           />
-          <Container></Container>
+          <Container>
+            <Footer onClick={() => {}} loading={false} label={"Edit Address"} />
+          </Container>
         </>
         <Header
           title="Mining"
