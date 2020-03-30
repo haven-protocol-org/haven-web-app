@@ -1,5 +1,5 @@
 // Library Imports
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 // Relative Imports
 import Body from "../../../components/_layout/body";
@@ -301,7 +301,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       hasLatestXRate;
 
     return (
-      <>
+      <Fragment>
         {this.state.showModal && (
           <Modal
             onClick={this.showModal}
@@ -343,7 +343,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
               until the wallet is completely synced
             </Failed>
           )}
-          <>
+          <Fragment>
             <Form onSubmit={this.handleSubmit}>
               <Dropdown
                 label="From Asset"
@@ -398,7 +398,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 readOnly={toTicker === null}
               />
               {selectedTab === ExchangeTab.Adanvced && (
-                <>
+                <Fragment>
                   <Dropdown
                     label="Priority"
                     placeholder="Select Priority"
@@ -417,7 +417,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                     disabled={!hasLatestXRate ? true : false}
                     onChange={this.onEnterExternAddress}
                   />
-                </>
+                </Fragment>
               )}
             </Form>
             <Container>
@@ -439,9 +439,9 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 loading={this.props.isProcessingExchange}
               />
             </Container>
-          </>
+          </Fragment>
         </Body>
-      </>
+      </Fragment>
     );
   }
 }

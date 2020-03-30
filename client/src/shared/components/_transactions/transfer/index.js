@@ -6,7 +6,6 @@ import { Container, Header, Row, Key, Value, Footer } from "./styles";
 import Confirm from "../../confirm/index.js";
 
 export const Transaction = ({
-  state,
   checked,
   onChange,
   paymentId,
@@ -21,10 +20,6 @@ export const Transaction = ({
   return (
     <>
       <Container>
-        <Header>
-          <Value>Transfer Details</Value>
-          <Value />
-        </Header>
         <Row>
           <Key>Transfer Asset</Key>
           <Value>{transferAsset}</Value>
@@ -43,6 +38,10 @@ export const Transaction = ({
             <Value>{paymentId}</Value>
           </Row>
         )}
+        <Row>
+          <Key>Transaction Fee</Key>
+          <Value>{"0.01234 XHV"}</Value>
+        </Row>
       </Container>
       <Footer>
         <Confirm

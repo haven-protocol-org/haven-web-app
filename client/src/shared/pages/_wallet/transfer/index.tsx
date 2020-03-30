@@ -165,7 +165,8 @@ class TransferContainer extends Component<TransferProps, TransferState> {
       send_amount,
       recipient_address,
       reviewed,
-      payment_id
+      payment_id,
+      showModal
     } = this.state;
 
     const checkValidation =
@@ -182,17 +183,16 @@ class TransferContainer extends Component<TransferProps, TransferState> {
     const amountLabel: string = availableBalance
       ? `Amount (Avail. ${availableBalance})`
       : "Amount";
-    console.log("STATE", this.state);
+
     return (
       <Fragment>
-        {this.state.showModal && (
+        {showModal && (
           <Modal
             onClick={this.showModal}
             title="Transfer Confirmation"
             description="Please confirm and finalize your transfer transaction"
           >
             <Transaction
-              state={this.state}
               checked={reviewed}
               onChange={this.handleCheckboxChange}
               paymentId={payment_id == "" ? "--" : payment_id}
@@ -300,8 +300,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
                   onClick={this.showModal}
                   loading={this.props.isProcessing}
                   label="Review"
-                  // validated={reviewed && checkValidation}
-                  validated={true}
+                  validated={reviewed && checkValidation}
                 />
               </Container>
             </Fragment>
