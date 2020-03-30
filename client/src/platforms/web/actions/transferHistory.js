@@ -9,7 +9,7 @@ import { core } from "../declarations/open_monero.service";
 import { getBalancesSucceed } from "./index";
 import { updateChainData } from "./index";
 import { decrypt } from "../../../utility/utility-encrypt";
-import {Ticker} from "../../../shared/reducers/types";
+import { Ticker } from "../../../shared/reducers/types";
 import bigInt from "big-integer";
 export const getTransfers = () => {
   return (dispatch, getState) => {
@@ -21,7 +21,7 @@ export const getTransfers = () => {
           parsedTxData.serialized_transactions,
           parsedTxData.blockchain_height
         );
-        dispatch(getBalancesSucceed({[Ticker.XHV]:balance}));
+        dispatch(getBalancesSucceed({ [Ticker.XHV]: balance }));
         dispatch(getTransfersSucceed(parsedTxData.serialized_transactions));
         dispatch(updateChainData(parsedTxData));
       })
@@ -55,7 +55,7 @@ const parseTx = async (rawTXs, state) => {
 };
 
 const calcBalanceByTxs = (txList, bHeight) => {
-  let totalSend =  bigInt("0");
+  let totalSend = bigInt("0");
   let totalReceived = bigInt("0");
   let totalReceivedLocked = bigInt("0");
 

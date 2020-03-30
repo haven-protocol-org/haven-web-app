@@ -8,13 +8,13 @@ import { selectCredentials } from "../reducers/account";
 import { core } from "../declarations/open_monero.service";
 import { updateChainData } from "../actions";
 import { decrypt } from "utility/utility-encrypt";
-import {WebAppState} from "platforms/web/reducers";
-import {XBalance} from "shared/reducers/xBalance";
-import {Ticker} from "shared/reducers/types";
+import { WebAppState } from "platforms/web/reducers";
+import { XBalance } from "shared/reducers/xBalance";
+import { Ticker } from "shared/reducers/types";
 import bigInt from "big-integer";
 
 export const getBalances = () => {
-  return (dispatch:any, getState: () => WebAppState) => {
+  return (dispatch: any, getState: () => WebAppState) => {
     dispatch(getBalancesFetching());
 
     const credentials = selectCredentials(getState());
@@ -32,12 +32,13 @@ export const getBalances = () => {
 };
 
 const setBalance = (addressInfo: any) => {
-  const balance = bigInt(addressInfo.total_received_String)
-    .subtract(bigInt(addressInfo.total_sent_String));
+  const balance = bigInt(addressInfo.total_received_String).subtract(
+    bigInt(addressInfo.total_sent_String)
+  );
 
   const lockedBalance = bigInt(addressInfo.locked_balance_String);
   const unlockedBalance = balance.subtract(lockedBalance);
-  return { [Ticker.XHV] : { balance, lockedBalance, unlockedBalance }};
+  return { [Ticker.XHV]: { balance, lockedBalance, unlockedBalance } };
 };
 
 const parseAddressInfo = async (rawAddressInfo: any, state: WebAppState) => {
