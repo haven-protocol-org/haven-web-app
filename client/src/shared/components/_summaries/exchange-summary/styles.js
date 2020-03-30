@@ -28,7 +28,7 @@ export const Value = styled.div`
   font-family: Inter-Regular;
   font-size: 14px;
   color: ${props =>
-    props.active == true
+    props.active === true
       ? props => props.theme.type.primary
       : props => props.theme.type.secondary};
 `;

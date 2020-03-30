@@ -2,8 +2,7 @@
 import React from "react";
 
 // Relative Imports
-import { Container, Header, Row, Key, Value, Footer } from "./styles";
-import Confirm from "../../confirm/index.js";
+import { Container, Row, Key, Value } from "./styles";
 
 const ExchangeSummary = ({
   xRate,

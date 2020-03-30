@@ -2,7 +2,7 @@
 import React from "react";
 
 // Relative Imports
-import { Container, Header, Row, Key, Value, Footer } from "./styles";
+import { Container, Row, Key, Value, Footer } from "./styles";
 import Confirm from "../../confirm/index.js";
 
 export const Transaction = ({
@@ -30,7 +30,7 @@ export const Transaction = ({
         </Row>
         <Row>
           <Key>Recipient Address</Key>
-          <Value>{recipientAddress}</Value>
+          <Value>{truncated}</Value>
         </Row>
         {paymentId === "--" && (
           <Row>

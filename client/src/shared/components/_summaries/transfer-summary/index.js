@@ -2,8 +2,7 @@
 import React from "react";
 
 // Relative Imports
-import { Container, Header, Row, Key, Value, Footer } from "./styles";
-import Confirm from "../../confirm/index.js";
+import { Container, Row, Key, Value } from "./styles";
 
 const TransferSummary = ({
   transferAsset,
@@ -26,7 +25,7 @@ const TransferSummary = ({
       </Row>
       <Row>
         <Key>Recipient Address</Key>
-        <Value>{recipientAddress == "--" ? "--" : truncated}</Value>
+        <Value>{recipientAddress === "--" ? "--" : truncated}</Value>
       </Row>
       <Row>
         <Key>Payment ID</Key>
