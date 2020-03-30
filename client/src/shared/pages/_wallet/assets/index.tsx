@@ -99,7 +99,7 @@ class AssetsPage extends Component<AssetsProps, any> {
       : token;
 
     return disabledTokens.map(data => {
-      const { token, ticker, change, symbol } = data;
+      const { token, ticker, symbol } = data;
 
       const rates = this.props.rates;
       let price = rates[ticker] ? rates[ticker] : 0;
@@ -162,6 +162,7 @@ export const mapStateToProps = (state: DesktopAppState | WebAppState) => ({
   balances: state.xBalance
 });
 
-export const Assets = connect(mapStateToProps, { getForex, getSimplePrice })(
-  AssetsPage
-);
+export const Assets = connect(
+  mapStateToProps,
+  { getForex, getSimplePrice }
+)(AssetsPage);

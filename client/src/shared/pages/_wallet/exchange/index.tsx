@@ -35,7 +35,7 @@ import {
   selectToTicker
 } from "platforms/desktop/reducers/offshoreProcess";
 import { setFromTicker, setToTicker } from "platforms/desktop/actions/offshore";
-import { NO_BALANCE, xBalance, XBalances } from "shared/reducers/xBalance";
+import { NO_BALANCE, XBalances } from "shared/reducers/xBalance";
 import { convertBalanceForReading } from "utility/utility";
 import ExchangeSummary from "../../../components/_summaries/exchange-summary/index.js";
 

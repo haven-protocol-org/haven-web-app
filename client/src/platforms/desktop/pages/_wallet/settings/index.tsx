@@ -264,8 +264,8 @@ export const SettingsDesktop = connect(
   { selectTheme, startMining, stopMining, miningStatus }
 )(SettingsDesktopPage);
 
-{
-  /*<Header
+// {
+/*<Header
   title="Nodes"
   description="Choose between running a local or remote node"
 />
@@ -318,4 +318,4 @@ export const SettingsDesktop = connect(
     </>
   )}
 </Form>*/
-}
+// }

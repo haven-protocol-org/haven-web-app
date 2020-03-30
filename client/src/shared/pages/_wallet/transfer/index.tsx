@@ -17,9 +17,9 @@ import { AssetOption } from "shared/pages/_wallet/exchange";
 import { OFFSHORE_ENABLED } from "constants/env";
 import { XBalances } from "shared/reducers/xBalance";
 import { convertBalanceForReading } from "utility/utility";
-import { DesktopAppState } from "platforms/desktop/reducers";
+
 import { connect } from "react-redux";
-import { WebAppState } from "platforms/web/reducers";
+
 import Modal from "../../../components/modal/index.js";
 import TransferSummary from "../../../components/_summaries/transfer-summary";
 
@@ -195,14 +195,14 @@ class TransferContainer extends Component<TransferProps, TransferState> {
             <Transaction
               checked={reviewed}
               onChange={this.handleCheckboxChange}
-              paymentId={payment_id == "" ? "--" : payment_id}
+              paymentId={payment_id === "" ? "--" : payment_id}
               recipientAddress={
-                recipient_address == "" ? "--" : recipient_address
+                recipient_address === "" ? "--" : recipient_address
               }
               transferAsset={
-                selectedAsset == null ? "--" : selectedAsset.ticker
+                selectedAsset === null ? "--" : selectedAsset.ticker
               }
-              transferAmount={send_amount == "" ? "--" : send_amount}
+              transferAmount={send_amount === "" ? "--" : send_amount}
             />
           </Modal>
         )}
@@ -286,14 +286,14 @@ class TransferContainer extends Component<TransferProps, TransferState> {
               </Form>
               <Container>
                 <TransferSummary
-                  paymentId={payment_id == "" ? "--" : payment_id}
+                  paymentId={payment_id === "" ? "--" : payment_id}
                   recipientAddress={
-                    recipient_address == "" ? "--" : recipient_address
+                    recipient_address === "" ? "--" : recipient_address
                   }
                   transferAsset={
-                    selectedAsset == null ? "--" : selectedAsset.ticker
+                    selectedAsset === null ? "--" : selectedAsset.ticker
                   }
-                  transferAmount={send_amount == "" ? "--" : send_amount}
+                  transferAmount={send_amount === "" ? "--" : send_amount}
                 />
 
                 <Footer

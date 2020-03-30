@@ -11,11 +11,7 @@ import { DesktopAppState } from "platforms/desktop/reducers";
 import { SyncState } from "shared/types/types";
 import { isDesktop, OFFSHORE_ENABLED } from "constants/env";
 import { selectDesktopSyncState } from "platforms/desktop/reducers/chain";
-import {
-  NO_BALANCE,
-  selectTotalBalances,
-  XViewBalances
-} from "shared/reducers/xBalance";
+import { selectTotalBalances, XViewBalances } from "shared/reducers/xBalance";
 import { Ticker } from "shared/reducers/types";
 
 const OFFSHORE_TICKERS = [Ticker.xUSD, Ticker.xBTC, null];
