@@ -18,6 +18,8 @@ import { OFFSHORE_ENABLED } from "constants/env";
 import { XBalances } from "shared/reducers/xBalance";
 import { convertBalanceForReading } from "utility/utility";
 
+import { hasLatestXRate } from "platforms/desktop/reducers/blockHeaderExchangeRates";
+
 import { connect } from "react-redux";
 
 import Modal from "../../../components/modal/index.js";
@@ -38,6 +40,7 @@ interface TransferOwnProps {
   ) => void;
   address: string;
   isProcessing: boolean;
+  hasLatestXRate: boolean;
 }
 
 interface TransferReduxProps {
@@ -46,6 +49,7 @@ interface TransferReduxProps {
 
 interface TransferState {
   selectedAsset: AssetOption | null;
+  hasLatestXRate: boolean;
   send_amount: string;
   recipient_address: string;
   payment_id: string;
@@ -72,12 +76,16 @@ class TransferContainer extends Component<TransferProps, TransferState> {
     reviewed: false,
     copyButtonState: "Copy Address",
     address: "",
-    showModal: false
+    showModal: false,
+    hasLatestXRate: true
   };
 
   componentDidMount() {
     window.scrollTo(0, 0);
-    this.setState({ address: this.props.address });
+    this.setState({
+      address: this.props.address,
+      hasLatestXRate: this.props.hasLatestXRate
+    });
   }
 
   handleChange = (event: any) => {
@@ -169,6 +177,9 @@ class TransferContainer extends Component<TransferProps, TransferState> {
       showModal
     } = this.state;
 
+    const { hasLatestXRate } = this.props;
+    console.log("HAS LATEST", hasLatestXRate);
+
     const checkValidation =
       send_amount.length > 0 && recipient_address.length > 97;
     const windowWidth = window.innerWidth;
@@ -220,6 +231,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
             secondTabClickEvent={this.toggleReceive}
             onClick={() => {}}
           />
+
           {this.state.firstTabState ? (
             <Fragment>
               <Form onSubmit={this.handleSubmit}>
@@ -346,6 +358,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
 
 const mapStateToProps = (
   state: any,
+  // hasLatestXRate: hasLatestXRate(state)
   ownProps: TransferOwnProps
 ): TransferReduxProps => ({
   xBalances: state.xBalance
