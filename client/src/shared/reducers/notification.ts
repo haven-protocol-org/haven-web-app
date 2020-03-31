@@ -1,5 +1,5 @@
 import { ADD_NOTIFICATION, REMOVE_NOTIFICATION } from "../actions/types";
-import {AnyAction} from "redux";
+import { AnyAction } from "redux";
 
 interface HavenNotification {
   id: string;
@@ -7,14 +7,20 @@ interface HavenNotification {
   message: string;
 }
 
-const INITIAL_STATE: {notifications: HavenNotification[]} = { notifications:[] };
+const INITIAL_STATE: { notifications: HavenNotification[] } = {
+  notifications: []
+};
 
 export default function(state = INITIAL_STATE, action: AnyAction) {
   switch (action.type) {
     case ADD_NOTIFICATION:
       return { notifications: [...state.notifications, action.payload] };
     case REMOVE_NOTIFICATION:
-      return { notifications: state.notifications.filter((not: HavenNotification) => not.id !== action.payload)};
+      return {
+        notifications: state.notifications.filter(
+          (not: HavenNotification) => not.id !== action.payload
+        )
+      };
     default:
       return state;
   }

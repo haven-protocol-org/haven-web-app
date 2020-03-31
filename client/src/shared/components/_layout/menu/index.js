@@ -4,7 +4,6 @@ import React, { Component } from "react";
 // Relative Imports
 import { Container, Overview, Item } from "./styles";
 
-import Balances from "../balances";
 import { OFFSHORE_ENABLED } from "../../../../constants/env";
 import { MultiBalance } from "../multi-balance";
 

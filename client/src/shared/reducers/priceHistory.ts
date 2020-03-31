@@ -3,7 +3,7 @@ import {
   GET_PRICE_HISTORY_FETCHING,
   GET_PRICE_HISTORY_SUCCEED
 } from "../actions/types";
-import {AnyAction} from "redux";
+import { AnyAction } from "redux";
 
 export const NO_PRICE = -1;
 
@@ -12,14 +12,11 @@ export const PRICE_RANGE_MONTH = 30;
 export const PRICE_RANGE_YEAR = 365;
 export const PRICE_RANGE_MAX = "max";
 
-
 interface PriceHistory {
-
-    prices:any[];
-    error: string;
-    isFetching: boolean;
+  prices: any[];
+  error: string;
+  isFetching: boolean;
 }
-
 
 const INITIAL_STATE: PriceHistory = {
   prices: [
@@ -29,7 +26,7 @@ const INITIAL_STATE: PriceHistory = {
     PRICE_RANGE_MAX
   ].map(rangeInDays => ({ prices: [], rangeInDays })),
   error: "",
-  isFetching: false,
+  isFetching: false
 };
 
 export function priceHistory(state = INITIAL_STATE, action: AnyAction) {

@@ -7,7 +7,7 @@ import {
 } from "../actions/types";
 import { AnyAction } from "redux";
 import { SyncState } from "shared/types/types";
-import {DesktopAppState} from "platforms/desktop/reducers/index";
+import { DesktopAppState } from "platforms/desktop/reducers/index";
 
 interface Chain {
   walletHeight: number;
@@ -16,7 +16,12 @@ interface Chain {
   isRefreshing: boolean;
 }
 
-const INITIAL_STATE: Chain = { walletHeight: 0, chainHeight: 0, nodeHeight: 0, isRefreshing: false };
+const INITIAL_STATE: Chain = {
+  walletHeight: 0,
+  chainHeight: 0,
+  nodeHeight: 0,
+  isRefreshing: false
+};
 
 export const chain = (state = INITIAL_STATE, action: AnyAction): Chain => {
   switch (action.type) {
@@ -24,10 +29,10 @@ export const chain = (state = INITIAL_STATE, action: AnyAction): Chain => {
     case GET_BLOCK_HEIGHT_SUCCEED:
       return { ...state, ...action.payload };
     case START_REFRESH:
-    return {...state, isRefreshing:true};
+      return { ...state, isRefreshing: true };
     case REFRESH_FAILED:
     case REFRESH_SUCCEED:
-    return {...state, isRefreshing: false};
+      return { ...state, isRefreshing: false };
     default:
       return state;
   }
@@ -57,14 +62,11 @@ export const isRefreshing = (state: DesktopAppState) => {
   return state.chain.isRefreshing;
 };
 
-
 export const isWalletSynced = (state: DesktopAppState): boolean => {
-
   if (state.chain.walletHeight === 0) {
     return false;
   }
 
   // give it a little tolerance, if we are almost synced we just ignore that
-  return state.chain.walletHeight >= state.chain.nodeHeight -5;
-
+  return state.chain.walletHeight >= state.chain.nodeHeight - 5;
 };

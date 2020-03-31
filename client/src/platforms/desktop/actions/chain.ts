@@ -5,10 +5,10 @@ import {
   GET_BLOCK_INFO_FAILED,
   GET_BLOCK_INFO_SUCEED
 } from "./types";
-import {getInfoRPC, getWalletHeightRPC} from "../ipc/rpc/rpc";
-import {DesktopAppState} from "platforms/desktop/reducers";
-import {getLastBlockHeader} from "platforms/desktop/actions/blockHeaderExchangeRate";
-import {OFFSHORE_ENABLED} from "constants/env";
+import { getInfoRPC, getWalletHeightRPC } from "../ipc/rpc/rpc";
+import { DesktopAppState } from "platforms/desktop/reducers";
+import { getLastBlockHeader } from "platforms/desktop/actions/blockHeaderExchangeRate";
+import { OFFSHORE_ENABLED } from "constants/env";
 
 interface NodeInfoHeights {
   nodeHeight: number;
@@ -16,46 +16,38 @@ interface NodeInfoHeights {
 }
 
 export const getNodeInfo = () => {
-
-  return (dispatch: any, getState:() => DesktopAppState) => {
+  return (dispatch: any, getState: () => DesktopAppState) => {
     getInfoRPC()
       .then((res: any) => parseHeight(res))
       .then((nodeInfoHeights: NodeInfoHeights) => {
-
-        if (getState().chain.nodeHeight !== nodeInfoHeights.nodeHeight && OFFSHORE_ENABLED){
-          dispatch(getLastBlockHeader())
+        if (
+          getState().chain.nodeHeight !== nodeInfoHeights.nodeHeight &&
+          OFFSHORE_ENABLED
+        ) {
+          dispatch(getLastBlockHeader());
         }
-        dispatch(getNodeInfoSucceed(nodeInfoHeights))
-          })
+        dispatch(getNodeInfoSucceed(nodeInfoHeights));
+      })
       .catch((err: any) => dispatch(getNodeInfoFailed(err)));
   };
 };
 
-
 export const getWalletHeight = () => {
-
   return (dispatch: any) => {
-
-
-    dispatch({type:GET_BLOCK_HEIGHT_FETCHING});
+    dispatch({ type: GET_BLOCK_HEIGHT_FETCHING });
 
     getWalletHeightRPC()
-        .then(res => dispatch(getWalletHeightSucceed(res.height)))
-        .catch(err => dispatch(getWalletHeightFailed(err)))
-
-  }
+      .then(res => dispatch(getWalletHeightSucceed(res.height)))
+      .catch(err => dispatch(getWalletHeightFailed(err)));
+  };
 };
 
 export const getWalletHeightSucceed = (walletHeight: number) => {
-
-  return {type: GET_BLOCK_HEIGHT_SUCCEED, payload:{walletHeight}};
-
+  return { type: GET_BLOCK_HEIGHT_SUCCEED, payload: { walletHeight } };
 };
 
-export const getWalletHeightFailed = (err:any) => {
-
-  return {type: GET_BLOCK_HEIGHT_FAILED, payload:err};
-
+export const getWalletHeightFailed = (err: any) => {
+  return { type: GET_BLOCK_HEIGHT_FAILED, payload: err };
 };
 
 const getNodeInfoSucceed = (nodeInfo: NodeInfoHeights) => ({

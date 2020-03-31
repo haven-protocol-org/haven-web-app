@@ -5,18 +5,34 @@ import React from "react";
 import { Container, Field, Labels } from "./styles";
 import { Label, Error } from "assets/styles/type.js";
 
-
 type Ref = HTMLInputElement;
 type Props = {
-    type: string, placeholder: string, label: string, error?: string, onChange?:Function , name: string, value: any, width?: boolean, readOnly?: boolean
-}
-
-
-
+  type: string;
+  placeholder: string;
+  label: string;
+  error?: string;
+  onChange?: Function;
+  name: string;
+  value: any;
+  width?: boolean;
+  readOnly?: boolean;
+  disabled?: boolean;
+};
 
 const Input = React.forwardRef<Ref, Props>(
   (
-   { type, placeholder, label, error, onChange, name, value, width, readOnly = false},
+    {
+      type,
+      placeholder,
+      label,
+      error,
+      onChange,
+      name,
+      value,
+      width,
+      disabled,
+      readOnly = false
+    },
     ref
   ) => {
     return (
@@ -26,6 +42,7 @@ const Input = React.forwardRef<Ref, Props>(
           <Error>{error}</Error>
         </Labels>
         <Field
+          disabled={disabled}
           ref={ref}
           type={type}
           value={value}

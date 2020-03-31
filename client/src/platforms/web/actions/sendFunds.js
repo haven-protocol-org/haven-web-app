@@ -21,7 +21,9 @@ import { TRANSFER_SUCCEED_MESSAGE } from "../../../constants/notificationList";
 export const sendFunds = (toAddress, amount, paymentId = "", ticker) => {
   console.log(core.monero_amount_format_utils.parseMoney);
 
-  const parsedAmount = core.monero_amount_format_utils.parseMoney(amount.toString());
+  const parsedAmount = core.monero_amount_format_utils.parseMoney(
+    amount.toString()
+  );
 
   return async (dispatch, getState) => {
     dispatch({ type: SEND_FUNDS_STARTED });

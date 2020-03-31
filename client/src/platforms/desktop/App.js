@@ -9,6 +9,9 @@ import { PrivateRoutesDesktop } from "./routes/private";
 import Status from "../../shared/components/_layout/status";
 import { HashRouter } from "react-router-dom";
 
+// TOGGLE ON THIS MODAL
+// import Modal from "../../shared/components/modal/index.js";
+
 class App extends Component {
   render() {
     return (

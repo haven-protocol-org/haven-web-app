@@ -8,7 +8,6 @@ import { BlockHeaderRate } from "../reducers/blockHeaderExchangeRates";
 import bigInt from "big-integer";
 
 export const getLastBlockHeader = () => {
-
   return (dispatch: any) => {
     dispatch({ type: GET_BLOCK_HEADER_EXCHANGE_RATE_FETCH });
 
@@ -17,19 +16,18 @@ export const getLastBlockHeader = () => {
       .then((priceEntry: BlockHeaderRate) =>
         dispatch(getLastBlockerHeaderSucceed(priceEntry))
       )
-      .catch((err) => console.log(err));
+      .catch(err => console.log(err));
   };
 };
 
 const createRecordEntry = (rawBlockHeaderData: any): BlockHeaderRate => {
   const blockHeader = rawBlockHeaderData.block_header;
-  const blockHeight: number = blockHeader.height +1;
-  Object.entries(blockHeader.pricing_record)
-      .forEach(([key, value]) => {
-        if (key !== 'signature') {
-          blockHeader.pricing_record[key] = bigInt(value as number)
-        }
-      });
+  const blockHeight: number = blockHeader.height + 1;
+  Object.entries(blockHeader.pricing_record).forEach(([key, value]) => {
+    if (key !== "signature") {
+      blockHeader.pricing_record[key] = bigInt(value as number);
+    }
+  });
   const priceRecord = blockHeader.pricing_record;
   priceRecord.height = blockHeight;
   priceRecord.timestamp = blockHeader.timestamp;
