@@ -30,16 +30,10 @@ const Content = React.forwardRef((props, ref) => {
             <Header>What is Haven Protocol?</Header>
             <Title>BUY. SWAP. STORE.</Title>
             <Description>
-              Be your own bank with Haven. Simply buy Haven [XHV] from any
-              exchange it’s listed on, send it to your own private digital vault
-              where you can swap between all supported Haven currencies and
-              securely store them without giving up control to anyone else.
-              <br />
-              <br />
-              Complete privacy so that YOUR money is 100% yours. No bank needed.
-              All Haven asset exchanges occur within the Haven vault, without a
-              third party. All Haven transactions are private, anonymous and
-              completely untraceable.
+              Haven is a way to store, exchange and transfer your money with
+              complete privacy and anonymity. It's an ecosystem of digital
+              currencies and assets built on top of Monero and is secured by
+              Proof of Work (PoW).
             </Description>
             <LearnMore to="/faq">Read F.A.Q's</LearnMore>
           </Words>
@@ -55,17 +49,11 @@ const Content = React.forwardRef((props, ref) => {
             <Header>How does Haven work?</Header>
             <Title>PRIVATE. SECURE. FLEXIBLE.</Title>
             <Description>
-              Haven uses an innovative mechanism to swap between all supported
-              currencies. For example, when you swap from Haven [XHV] to xUSD
-              the system destroys the XHV and creates xUSD equivalent to the USD
-              value. If you want to go back to XHV you will always receive the
-              same USD worth of XHV.
-              <br />
-              <br />
-              There are many different stablecoin projects but very few that can
-              offer the privacy, security and the flexibility of Haven with all
-              currency swaps completed in your own Haven vault. No 3rd party
-              needed.
+              Buy XHV, Haven's base currency, and exchange it instantly for any
+              of the supported assets in your own simple to use, secure and
+              private vault. The Haven network will include major fiat
+              currencies such as USD & EURO, precious metals (Gold & Silver) as
+              well as bitcoin.
             </Description>
             <LearnMore to="/faq">Read F.A.Q's</LearnMore>
           </Words>
@@ -78,17 +66,13 @@ const Content = React.forwardRef((props, ref) => {
             <Image reverse src={why} />
           </Test>
           <Words>
-            <Header>Why should I use Haven?</Header>
+            <Header>Why choose Haven?</Header>
             <Title>ANYONE. ANYWHERE. ANYTIME.</Title>
             <Description>
-              Use Haven to store or send your money anywhere in the world at any
-              time with little cost and complete privacy.
-              <br />
-              <br />
-              Haven is based on Monero, a well regarded cryptocurrency, and as
-              such inherits all of its privacy features giving you complete
-              financial control. No permission needed to store or transfer your
-              wealth.
+              Haven lets you take control of your money with complete privacy.
+              All account details, including transactions and balances, remain
+              hidden. You can send money anywhere in the world, with no one
+              else’s knowledge or needing anyone's permission.
             </Description>
             <LearnMore to="/faq">Read F.A.Q's</LearnMore>
           </Words>
