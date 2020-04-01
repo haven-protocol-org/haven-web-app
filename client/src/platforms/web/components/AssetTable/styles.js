@@ -36,7 +36,7 @@ export const Cell = styled.div`
   transition: 500ms;
 
   &:hover {
-    background: #343a41;
+    background: #313339;
     cursor: pointer;
     transition: 500ms;
   }
@@ -86,7 +86,7 @@ export const Subtitle = styled.div`
 export const Table = styled.div`
   height: auto;
   width: 90%;
-  background: #3a4048;
+  background: #36393f;
   max-width: 1200px;
   margin-top: 80px;
   border-radius: 4px;
