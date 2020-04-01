@@ -297,7 +297,8 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     const toAsset = assetOptions.find(option => option.ticker === toTicker);
 
     const isValid: boolean =
-      !!(fromTicker && toTicker && fromAmount && toAmount) && hasLatestXRate;
+      !!(fromTicker && toTicker && fromAmount && toAmount && reviewed) &&
+      hasLatestXRate;
 
     return (
       <Fragment>
