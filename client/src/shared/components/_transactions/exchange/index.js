@@ -61,13 +61,12 @@ const Transaction = ({
           </Value>
         </Row>
       </Container>
-      <Footer>
-        <Confirm
-          onChange={onChange}
-          validated={checked}
-          label="Confirm and Exchange"
-        />
-      </Footer>
+
+      <Confirm
+        onChange={onChange}
+        validated={checked}
+        label="Confirm and Exchange"
+      />
     </Fragment>
   );
 };

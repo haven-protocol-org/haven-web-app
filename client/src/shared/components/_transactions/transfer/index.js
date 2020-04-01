@@ -43,13 +43,11 @@ export const Transaction = ({
           <Value>{"0.01234 XHV"}</Value>
         </Row>
       </Container>
-      <Footer>
-        <Confirm
-          checked={checked}
-          onChange={onChange}
-          label="Confirm and Transfer"
-        />
-      </Footer>
+      <Confirm
+        checked={checked}
+        onChange={onChange}
+        label="Confirm and Transfer"
+      />
     </Fragment>
   );
 };

@@ -14,6 +14,9 @@ import AddressDropdown from "shared/components/_inputs/addresses_dropdown";
 import Input from "shared/components/_inputs/input";
 import Footer from "shared/components/_inputs/footer/index.js";
 import Modal from "../../../../../shared/components/modal/index.js";
+import ManageAddresses from "../../../../../shared/components/modal_children/manage_addresses/index.js";
+import { Information } from "../../../../../assets/styles/type.js";
+import Confirm from "../../../../../shared/components/confirm/index.js";
 
 import { dark, light } from "assets/styles/themes.js";
 import { DesktopAppState } from "platforms/desktop/reducers";
@@ -45,6 +48,7 @@ interface SettingsProps {
   title: string;
   description: string;
   selected_address: string;
+  checked: boolean;
 }
 
 const options: ThemeOption[] = [
@@ -77,8 +81,11 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
     value: "",
     node: "remote",
     balance: "United States Dollars",
-    showModal: true,
-    selected_address: ""
+    showModal: false,
+    selected_address: "",
+    manage_address: "",
+    manage_name: "",
+    checked: false
   };
 
   componentDidMount() {
@@ -139,7 +146,6 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
 
   onMiningButtonClicked = () => {
     const mining: MiningStatus = this.props.mining;
-
     if (mining.miningRequest !== MiningRequestTypes.None) {
       return;
     }
@@ -153,6 +159,11 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
 
   handleNode = ({ value }: ThemeOption) => {
     alert("Select Node type");
+  };
+  handleCheck = () => {
+    this.setState({
+      checked: true
+    });
   };
 
   setNodeType = ({ value }: ThemeOption) => {
@@ -176,27 +187,18 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
 
   setBalance = ({ ticker, value }: BalanceOption) => {
     alert("set state here");
-    // if (theme === "light") {
-    //   this.props.selectTheme(light);
-    //   this.setState({
-    //     value: value
-    //   });
-    // } else if (theme === "dark") {
-    //   this.props.selectTheme(dark);
-    //   this.setState({
-    //     value: value
-    //   });
-    // } else {
-    //   return null;
-    // }
   };
 
   manageAddress = ({ name, address }: AddressOption) => {
-    alert("set state right here");
+    this.setState({
+      showModal: true,
+      manage_address: address,
+      manage_name: name
+    });
   };
 
   render() {
-    const { value, balance } = this.state;
+    const { value, balance, manage_name, manage_address, checked } = this.state;
 
     const mining: MiningStatus = this.props.mining;
     let buttonLabel =
@@ -210,24 +212,24 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
       );
 
     return (
-      <>
+      <Fragment>
         {this.state.showModal && (
           <Modal
             title="Manage Address"
             description="Name your vault addresses for easier recognition"
             onClick={this.showModal}
             leftButton="Cancel"
-            rightButton="Confirm"
-            disabled={true}
+            rightButton="Save"
+            disabled={checked ? false : true}
           >
-            <Fragment>
+            <ManageAddresses>
               <Input
                 width={true}
                 label="Address Name"
                 placeholder="Name of address"
                 type="text"
-                name="selected_address"
-                value={this.state.selected_address}
+                name="manage_name"
+                value={manage_name}
                 onChange={this.handleChange}
               />
               <Description
@@ -237,11 +239,16 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
                 type="text"
                 readOnly={true}
                 name="selected_address"
-                value={
-                  "hvsaeLHCPYC7DMbNk2ZafTP8Z7PZ73GSS8SEeaSQnmgVb9Gtr6QMwEfeerT7H9HvpVS4oEzJ6XnTsGgKDUcpjaY4U5vg9EeHerZ"
-                }
+                value={manage_address}
               />
-            </Fragment>
+
+              <Confirm
+                checked={this.state.checked}
+                onChange={this.handleCheck}
+                label="I accept and agree"
+                description={`I understand that I cannot recieve funds to my Address Name only the Full Address and any funds recieved to the Address Name will be lost.`}
+              />
+            </ManageAddresses>
           </Modal>
         )}
         <Body>
@@ -288,7 +295,7 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
           <>
             <AddressDropdown
               width={true}
-              label="Select Address"
+              label="Vault Addresses"
               placeholder="List of addresses"
               type="text"
               readOnly={true}
@@ -325,7 +332,7 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
             </Container>
           </>
         </Body>
-      </>
+      </Fragment>
     );
   }
 }
