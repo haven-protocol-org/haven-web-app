@@ -216,6 +216,9 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
             title="Manage Address"
             description="Name your vault addresses for easier recognition"
             onClick={this.showModal}
+            leftButton="Cancel"
+            rightButton="Confirm"
+            disabled={true}
           >
             <Fragment>
               <Input

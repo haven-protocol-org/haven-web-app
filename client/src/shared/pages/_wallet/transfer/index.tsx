@@ -202,6 +202,9 @@ class TransferContainer extends Component<TransferProps, TransferState> {
             onClick={this.showModal}
             title="Transfer Confirmation"
             description="Please confirm and finalize your transfer transaction"
+            leftButton="Cancel"
+            rightButton="Confirm"
+            disabled={reviewed ? false : true}
           >
             <Transaction
               checked={reviewed}
@@ -312,7 +315,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
                   onClick={this.showModal}
                   loading={this.props.isProcessing}
                   label="Review"
-                  validated={reviewed && checkValidation}
+                  validated={checkValidation}
                 />
               </Container>
             </Fragment>

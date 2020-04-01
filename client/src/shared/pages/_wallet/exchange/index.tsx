@@ -307,6 +307,9 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
             onClick={this.showModal}
             title="Exchange Confirmation"
             description="Please confirm and finalize your exchange transaction"
+            leftButton="Cancel"
+            rightButton="Confirm"
+            disabled={true}
           >
             <Transaction
               xRate={this.props.xRate}

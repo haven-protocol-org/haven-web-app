@@ -15,7 +15,15 @@ import {
 } from "./styles";
 import { Title, Description } from "../../../assets/styles/type.js";
 
-const Modal = ({ title, description, onClick, children }) => {
+const Modal = ({
+  title,
+  description,
+  rightButton,
+  leftButton,
+  disabled,
+  onClick,
+  children
+}) => {
   return (
     <Container>
       <Window>
@@ -27,8 +35,8 @@ const Modal = ({ title, description, onClick, children }) => {
           <Body>
             <Placeholder>{children}</Placeholder>
             <Footer>
-              <Cancel onClick={onClick}>Cancel</Cancel>
-              <Confirm>Confirm</Confirm>
+              <Cancel onClick={onClick}>{leftButton}</Cancel>
+              <Confirm disabled={disabled}>{rightButton}</Confirm>
             </Footer>
           </Body>
         </Inner>
