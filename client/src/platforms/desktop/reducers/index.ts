@@ -14,7 +14,7 @@ import forex from "../../../shared/reducers/forex";
 import { blockHeaderExchangeRate } from "./blockHeaderExchangeRates";
 import { xBalance } from "shared/reducers/xBalance";
 import { xTransferList } from "shared/reducers/xTransferList";
-import { offshoreProcess } from "./offshoreProcess";
+import { exchangeProcess } from "./exchangeProcess";
 import { daemonStates } from "./daemonStates";
 import { mining } from "./mining";
 
@@ -27,7 +27,7 @@ const appReducer = combineReducers({
   forex,
   blockHeaderExchangeRate,
   walletCreation,
-  offshoreProcess,
+  offshoreProcess: exchangeProcess,
   notification,
   walletSession,
   daemonStates,

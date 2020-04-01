@@ -11,7 +11,7 @@ import { Container } from "./styles";
 import { decrypt } from "../../../utility";
 import PropTypes from "prop-types";
 
-export class Create extends Component {
+class Create extends Component {
   state = {
     step: 1,
     error: "",

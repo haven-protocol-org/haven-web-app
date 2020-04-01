@@ -42,6 +42,19 @@ export const TRANSFER_FAILED = "transfer_failed";
 export const TRANSFER_SUCCEED = "transfer_succeed";
 export const TRANSFER_RESET = "transfer_reset";
 
+export const TRANSFER_CREATION_FETCHING = "transfer_creation_fetching";
+export const TRANSFER_CREATION_FAILED = "transfer_creation_failed";
+export const TRANSFER_CREATION_SUCCEED = "transfer_creation_succeed";
+
+export const EXCHANGE_FETCHING = "exchange_fetching";
+export const EXCHANGE_FAILED = "exchange_failed";
+export const EXCHANGE_SUCCEED = "exchange_succeed";
+
+export const EXCHANGE_CREATION_FETCHING = "exchange_creation_fetching";
+export const EXCHANGE_CREATION_FAILED = "exchange_creation_failed";
+export const EXCHANGE_CREATION_SUCCEED = "exchange_creation_succeed";
+
+
 export const GET_TRANSFERS_FETCHING = "get_transfers_fetching";
 export const GET_TRANSFERS_SUCCEED = "get_transfers_succeed";
 export const GET_TRANSFERS_FAILED = "get_transfers_failed";
@@ -57,14 +70,6 @@ export const GET_BLOCK_HEIGHT_FAILED = "get_block_height_failed";
 export const START_REFRESH = "start_refresh";
 export const REFRESH_SUCCEED = "refresh_succeed";
 export const REFRESH_FAILED = "refresh_failed";
-
-export const OFFSHORE_FETCHING = "offshore_fetching";
-export const OFFSHORE_FAILED = "offshore_failed";
-export const OFFSHORE_SUCCEED = "offshore_succeed";
-
-export const ONSHORE_FETCHING = "onshore_fetching";
-export const ONSHORE_FAILED = "onshore_failed";
-export const ONSHORE_SUCCEED = "onshore_succeed";
 
 export const OFFSHORE_TRANSFER_FETCHING = "offshore_transfer_fetching";
 export const OFFSHORE_TRANSFER_FAILED = "offshore_transfer_failed";

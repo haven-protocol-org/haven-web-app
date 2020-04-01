@@ -1,4 +1,4 @@
-import { logM } from "../../../../utility/utility";
+import { logM } from "utility/utility";
 import { ipcRenderer } from "electron";
 import { CommunicationChannels } from "../ipc-types";
 
@@ -23,6 +23,10 @@ export function getBalanceRPC(params: object) {
 
 export function queryMnemonicKeyRPC() {
   return callRpc("query_key", { key_type: "mnemonic" });
+}
+
+export function relayTXRPC(params: object) {
+  return callRpc('relay_tx', params)
 }
 
 export function transferRPC(params: object) {

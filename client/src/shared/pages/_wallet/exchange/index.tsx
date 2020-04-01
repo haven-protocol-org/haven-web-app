@@ -23,8 +23,7 @@ import { DesktopAppState } from "platforms/desktop/reducers";
 import { selectNodeHeight } from "platforms/desktop/reducers/chain";
 import { getLastBlockHeader } from "platforms/desktop/actions/blockHeaderExchangeRate";
 import {
-  offshore,
-  onshore,
+  createExchange,
   resetExchangeProcess
 } from "platforms/desktop/actions";
 import { Ticker } from "shared/reducers/types";
@@ -33,8 +32,8 @@ import {
   selectIsProcessingExchange,
   selectFromTicker,
   selectToTicker
-} from "platforms/desktop/reducers/offshoreProcess";
-import { setFromTicker, setToTicker } from "platforms/desktop/actions/offshore";
+} from "platforms/desktop/reducers/exchangeProcess";
+import { setFromTicker, setToTicker } from "platforms/desktop/actions/exchange";
 import { NO_BALANCE, XBalances } from "shared/reducers/xBalance";
 import { convertBalanceForReading } from "utility/utility";
 import ExchangeSummary from "../../../components/_summaries/exchange-summary/index.js";
@@ -48,8 +47,7 @@ type ExchangeProps = {
   conversionRates: XRates | null;
   nodeHeight: number;
   getLastBlockHeader: () => void;
-  onshore: typeof onshore;
-  offshore: typeof offshore;
+  createExchange: typeof createExchange;
   resetExchangeProcess: typeof resetExchangeProcess;
   isProcessingExchange: boolean;
   hasLatestXRate: boolean;
@@ -237,22 +235,13 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     const toAmount = parseFloat(this.state.toAmount);
 
     if (isOffShore) {
-      this.props.offshore(
+      this.props.createExchange(
         fromTicker,
         toTicker,
         fromAmount,
         toAmount,
         this.state.selectedPrio.prio,
-        this.state.externAddress
-      );
-    } else {
-      this.props.onshore(
-        fromTicker,
-        toTicker,
-        fromAmount,
-        toAmount,
-        this.state.selectedPrio.prio,
-        this.state.externAddress
+        this.state.externAddress, isOffShore
       );
     }
   };
@@ -466,8 +455,7 @@ export const ExchangePage = connect(
   mapStateToProps,
   {
     getLastBlockHeader,
-    onshore,
-    offshore,
+    createExchange,
     resetExchangeProcess,
     setToTicker,
     setFromTicker

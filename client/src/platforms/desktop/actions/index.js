@@ -6,6 +6,6 @@ export * from "./walletSession";
 export * from "./walletRestoring";
 export * from "./walletCreation";
 export * from "./refresh";
-export * from "./offshore";
+export * from "./exchange";
 export * from "./offshoreBalance";
 export * from "./offshoreTransferHistory";

@@ -1,8 +1,7 @@
 import { connect } from "react-redux";
 import {
-  offshoreTransfer,
   resetTransferProcess,
-  transfer
+  createTransfer
 } from "../../../actions";
 import  {Transfer}  from "shared/pages/_wallet/transfer";
 import React, { Component } from "react";
@@ -38,12 +37,8 @@ class TransferDesktopContainer extends Component<any, any> {
     ticker: Ticker = Ticker.XHV
   ) => {
     this.sendTicker = ticker;
-    if (ticker === Ticker.XHV) {
-      this.props.transfer(address, amount, paymentId);
-    }
-    if (ticker === Ticker.xUSD) {
-      this.props.offshoreTransfer(address, amount, paymentId);
-    }
+      this.props.createTransfer(address, amount, paymentId, ticker);
+
   };
 
   render() {
@@ -66,5 +61,5 @@ export const mapStateToProps = (state: DesktopAppState) => ({
 
 export const TransferDesktop = connect(
   mapStateToProps,
-  { transfer, resetTransferProcess, offshoreTransfer, getOwnAddress }
+  { createTransfer, resetTransferProcess, getOwnAddress }
 )(TransferDesktopContainer);

@@ -18,6 +18,8 @@ export interface TxProcessInfo {
   info: string;
   error: string;
   succeed: boolean;
+  created: boolean;
+  metaData:string;
 }
 
 const INITIAL_STATE: TxProcessInfo = {
@@ -27,7 +29,9 @@ const INITIAL_STATE: TxProcessInfo = {
   isFetching: false,
   info: "",
   error: "",
-  succeed: false
+  succeed: false,
+  created: false,
+  metaData:""
 };
 
 export const transferProcess = (

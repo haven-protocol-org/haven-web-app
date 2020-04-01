@@ -1,10 +1,8 @@
 import {
-  OFFSHORE_FETCHING,
-  OFFSHORE_SUCCEED,
-  OFFSHORE_FAILED,
-  ONSHORE_FETCHING,
-  ONSHORE_SUCCEED,
-  ONSHORE_FAILED,
+  EXCHANGE_CREATION_SUCCEED,
+  EXCHANGE_FAILED,
+  EXCHANGE_FETCHING,
+
   EXCHANGE_RESET,
   SELECT_FROM_TICKER,
   SELECT_TO_TICKER
@@ -31,13 +29,15 @@ const INITIAL_STATE: ExchangeProcessInfo = {
   isFetching: false,
   info: "",
   error: "",
+  created: false,
   succeed: false,
   offshoreType: null,
   toTicker: Ticker.xUSD,
-  fromTicker: Ticker.XHV
+  fromTicker: Ticker.XHV,
+  metaData:""
 };
 
-export const offshoreProcess = (
+export const exchangeProcess = (
   state = INITIAL_STATE,
   action: AnyAction
 ): ExchangeProcessInfo => {
@@ -46,11 +46,9 @@ export const offshoreProcess = (
       return { ...state, fromTicker: action.payload };
     case SELECT_TO_TICKER:
       return { ...state, toTicker: action.payload };
-    case ONSHORE_FETCHING:
-    case OFFSHORE_FETCHING:
+    case EXCHANGE_FETCHING:
       return { ...state, ...action.payload, isFetching: true };
-    case ONSHORE_SUCCEED:
-    case OFFSHORE_SUCCEED:
+    case EXCHANGE_CREATION_SUCCEED:
       return {
         ...state,
         isFetching: false,
@@ -58,8 +56,7 @@ export const offshoreProcess = (
         succeed: true,
         fee: action.payload.fee
       };
-    case ONSHORE_FAILED:
-    case OFFSHORE_FAILED:
+    case EXCHANGE_FAILED:
       return {
         ...state,
         isFetching: false,

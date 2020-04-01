@@ -137,7 +137,7 @@ class TxHistoryContainer extends Component<TxHistoryProps, any> {
   }
 }
 
-export const mapStateToProps = (state: DesktopAppState, props: any) => ({
+const mapStateToProps = (state: DesktopAppState, props: any) => ({
   transferList: getTransferListByTicker(state, props.match.params.id),
   height: selectBlockHeight(state),
   price: state.simplePrice.price

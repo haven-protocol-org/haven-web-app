@@ -1,10 +1,11 @@
-import { offshoreTransferRPC, transferRPC } from "../ipc/rpc/rpc";
+import {offshoreTransferRPC, relayTXRPC, transferRPC} from "../ipc/rpc/rpc";
 import { getTransfers } from "./";
 import {
-  TRANSFER_FAILED,
-  TRANSFER_FETCHING,
-  TRANSFER_RESET,
-  TRANSFER_SUCCEED
+    TRANSFER_CREATION_FAILED, TRANSFER_CREATION_FETCHING, TRANSFER_CREATION_SUCCEED,
+    TRANSFER_FAILED,
+    TRANSFER_FETCHING,
+    TRANSFER_RESET,
+    TRANSFER_SUCCEED
 } from "./types";
 
 import { getBalance } from "./";
@@ -15,64 +16,89 @@ import {
 import { TRANSFER_SUCCEED_MESSAGE } from "constants/notificationList";
 import { getOffshoreTransfers } from "platforms/desktop/actions/offshoreTransferHistory";
 import { getOffshoreBalance } from "platforms/desktop/actions/offshoreBalance";
+import {Ticker} from "shared/reducers/types";
 
-export const transfer = (
+export const createTransfer = (
   address: string,
   amount: number,
-  paymentId: string
+  paymentId: string,
+  ticker: Ticker
 ) => {
   amount = amount * 1e12;
   return (dispatch: any) => {
-    dispatch(transferFetch({ address, amount }));
-    const params: any = { destinations: [{ address, amount }], ring_size: 11 };
+    dispatch(transferCreationFetch({ address, amount }));
+    const params: any = createTXInputs(address, amount, paymentId);
 
-    if (paymentId !== "") {
-      params["payment_id"] = paymentId;
-    }
+    const transferFN = ticker === Ticker.XHV? transferRPC: offshoreTransferRPC;
 
-    transferRPC(params)
+      transferFN(params)
       .then(result => {
-        dispatch(transferSucceed(result));
-        dispatch(addNotificationByKey(TRANSFER_SUCCEED_MESSAGE));
-        dispatch(getTransfers());
-        dispatch(getBalance());
+        dispatch(transferCreationSucceed(result));
       })
-      .catch(error => dispatch(manageTransferFailed(error)));
+      .catch(error => dispatch(transferCreationFailed(error)));
   };
 };
 
-export function offshoreTransfer(
-  address: string,
-  amount: number,
-  paymentId: string
-) {
-  amount = amount * 1e12;
+export const confirmTransfer = (hex: string) => {
+
+
   return (dispatch: any) => {
-    dispatch(transferFetch({ address, amount }));
-    const params: any = { destinations: [{ address, amount }], ring_size: 11 };
 
-    if (paymentId !== "") {
-      params["payment_id"] = paymentId;
-    }
+      dispatch(transferFetch());
 
-    offshoreTransferRPC(params)
-      .then(result => {
-        dispatch(transferSucceed(result));
-        dispatch(addNotificationByKey(TRANSFER_SUCCEED_MESSAGE));
-        dispatch(getOffshoreTransfers());
-        dispatch(getOffshoreBalance());
-      })
-      .catch(error => dispatch(manageTransferFailed(error)));
-  };
-}
+    const params = {hex};
 
-const transferFetch = (params: object) => ({
+    relayTXRPC(params)
+        .then(result => {
+          dispatch(transferSucceed(result));
+          dispatch(addNotificationByKey(TRANSFER_SUCCEED_MESSAGE));
+          dispatch(getOffshoreTransfers());
+          dispatch(getOffshoreBalance());
+        })
+        .catch(error => dispatch(manageTransferFailed(error)));
+  }
+
+};
+
+
+export const createTXInputs = (address: string, amount: number, paymentId: string) => {
+
+  const params: any = { destinations: [{ address, amount }], ring_size: 11, do_not_relay:true, get_tx_metadata: true };
+
+  if (paymentId !== "") {
+    params["payment_id"] = paymentId;
+  }
+
+  return params;
+
+};
+
+const transferFetch = () => ({
   type: TRANSFER_FETCHING,
-  payload: { ...params, isFetching: true }
+  payload: { isFetching: true }
 });
 const transferSucceed = (result: object) => ({
   type: TRANSFER_SUCCEED,
   payload: { ...result, isFetching: false }
+});
+
+const transferFailed = (error: any) => ({
+    type: TRANSFER_FAILED,
+    payload: { ...error, isFetching: false }
+});
+
+const transferCreationFetch = (params: object) => ({
+    type: TRANSFER_CREATION_FETCHING,
+    payload: { ...params, isFetching: true }
+});
+const transferCreationSucceed = (result: object) => ({
+    type: TRANSFER_CREATION_SUCCEED,
+    payload: { ...result, isFetching: false }
+});
+
+const transferCreationFailed = (error: any) => ({
+    type: TRANSFER_CREATION_FAILED,
+    payload: { ...error, isFetching: false }
 });
 
 const manageTransferFailed = (error: any) => {
@@ -82,10 +108,7 @@ const manageTransferFailed = (error: any) => {
   };
 };
 
-const transferFailed = (error: any) => ({
-  type: TRANSFER_FAILED,
-  payload: { ...error, isFetching: false }
-});
+
 
 export const resetTransferProcess = () => {
   return { type: TRANSFER_RESET };
