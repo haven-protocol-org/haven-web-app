@@ -22,7 +22,7 @@ const ExchangeSummary = ({
         <Value active={hasLatestXRate ? true : false}>
           {hasLatestXRate
             ? xRate && fromTicker && toTicker
-              ? `1 ${fromTicker} : ${xRate.toFixed(2)} ${toTicker}`
+              ? `1 ${fromTicker} : ${xRate.toFixed(4)} ${toTicker}`
               : ""
             : "Syncing..."}
         </Value>

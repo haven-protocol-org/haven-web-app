@@ -1,5 +1,5 @@
 // Library Imports
-import React from "react";
+import React, { Fragment } from "react";
 
 // Relative Imports
 import { Container, Row, Key, Value, Footer } from "./styles";
@@ -18,7 +18,7 @@ export const Transaction = ({
   const truncated = first + "...." + last;
 
   return (
-    <>
+    <Fragment>
       <Container>
         <Row>
           <Key>Transfer Asset</Key>
@@ -50,6 +50,6 @@ export const Transaction = ({
           label="Confirm and Transfer"
         />
       </Footer>
-    </>
+    </Fragment>
   );
 };

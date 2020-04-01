@@ -296,6 +296,9 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
             onClick={this.showModal}
             title="Exchange Confirmation"
             description="Please confirm and finalize your exchange transaction"
+            leftButton="Cancel"
+            rightButton="Confirm"
+            disabled={reviewed ? false : true}
           >
             <Transaction
               xRate={this.props.xRate}
@@ -304,7 +307,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
               fromTicker={fromTicker}
               toTicker={toTicker}
               estimatedFee={0}
-              checked={reviewed}
+              checked={reviewed ? true : false}
               validated={isValid}
               onChange={this.handleReviewSubmit}
               externAddress={externAddress}
