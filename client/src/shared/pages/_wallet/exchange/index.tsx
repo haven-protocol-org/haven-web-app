@@ -297,8 +297,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     const toAsset = assetOptions.find(option => option.ticker === toTicker);
 
     const isValid: boolean =
-      !!(fromTicker && toTicker && fromAmount && toAmount && reviewed) &&
-      hasLatestXRate;
+      !!(fromTicker && toTicker && fromAmount && toAmount) && hasLatestXRate;
 
     return (
       <Fragment>
@@ -309,7 +308,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
             description="Please confirm and finalize your exchange transaction"
             leftButton="Cancel"
             rightButton="Confirm"
-            disabled={true}
+            disabled={reviewed ? false : true}
           >
             <Transaction
               xRate={this.props.xRate}
@@ -318,7 +317,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
               fromTicker={fromTicker}
               toTicker={toTicker}
               estimatedFee={0}
-              checked={reviewed}
+              checked={reviewed ? true : false}
               validated={isValid}
               onChange={this.handleReviewSubmit}
               externAddress={externAddress}

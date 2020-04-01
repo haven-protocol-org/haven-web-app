@@ -1,5 +1,5 @@
 // Library Imports
-import React from "react";
+import React, { Fragment } from "react";
 
 // Relative Imports
 import { Container, Row, Key, Value, Footer } from "./styles";
@@ -18,7 +18,7 @@ const Transaction = ({
   externAddress
 }) => {
   return (
-    <>
+    <Fragment>
       <Container>
         <Row>
           <Key>Conversion Rate</Key>
@@ -63,13 +63,12 @@ const Transaction = ({
       </Container>
       <Footer>
         <Confirm
-          checked={checked}
           onChange={onChange}
-          validated={validated}
+          validated={checked}
           label="Confirm and Exchange"
         />
       </Footer>
-    </>
+    </Fragment>
   );
 };
 
