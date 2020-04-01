@@ -44,7 +44,7 @@ export const Header = styled.div`
   color: #ffffff;
   letter-spacing: 0;
   line-height: 80px;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 `;
 
 export const Image = styled.img`
