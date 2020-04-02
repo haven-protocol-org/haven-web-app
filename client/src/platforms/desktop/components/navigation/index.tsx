@@ -37,8 +37,15 @@ interface NavigationProps {
 
 class Navigation extends Component<NavigationProps, any> {
   state = {
-    show_networks: false
+    show_networks: false,
+    current_network: "Stagenet"
   };
+
+  onComponentDidMount() {
+    this.setState({
+      current_network: NET_TYPE_NAME
+    });
+  }
 
   handleLogout = () => {
     this.props.logout();
@@ -50,10 +57,18 @@ class Navigation extends Component<NavigationProps, any> {
     });
   };
 
+  currentNetwork = (network: any) => {
+    this.setState({
+      current_network: network
+    });
+    alert("LOGOUT AND CHANGE NETWORK");
+  };
+
   render() {
     const auth = this.props.isLoggedIn;
     const { node, wallet } = this.props.daemonStates;
-    const { show_networks } = this.state;
+    const { show_networks, current_network } = this.state;
+    console.log("daemonStates", this.props.daemonStates);
 
     return (
       <Container>
@@ -64,16 +79,22 @@ class Navigation extends Component<NavigationProps, any> {
           <NetworkStatus>
             <Wrapper onClick={this.showNetworks} show_networks={show_networks}>
               <Row>
-                <Tag>{NET_TYPE_NAME}</Tag>
+                <Tag>{current_network}</Tag>
                 <Dropdown show_networks={show_networks ? true : false}>
                   <Arrow color="#000" />
                 </Dropdown>
               </Row>
               {show_networks && (
                 <Network>
-                  <Tag>Mainnet</Tag>
-                  <Tag>Stagenet</Tag>
-                  <Tag>Testnet</Tag>
+                  <Tag onClick={() => this.currentNetwork("Mainnet")}>
+                    Mainnet
+                  </Tag>
+                  <Tag onClick={() => this.currentNetwork("Stagenet")}>
+                    Stagenet
+                  </Tag>
+                  <Tag onClick={() => this.currentNetwork("Testnet")}>
+                    Testnet
+                  </Tag>
                 </Network>
               )}
             </Wrapper>
