@@ -71,9 +71,6 @@ export const START_REFRESH = "start_refresh";
 export const REFRESH_SUCCEED = "refresh_succeed";
 export const REFRESH_FAILED = "refresh_failed";
 
-export const OFFSHORE_TRANSFER_FETCHING = "offshore_transfer_fetching";
-export const OFFSHORE_TRANSFER_FAILED = "offshore_transfer_failed";
-export const OFFSHORE_TRANSFER_SUCCEED = "offshore_transfer_succeed";
 
 export const EXCHANGE_RESET = "exchange_reset";
 

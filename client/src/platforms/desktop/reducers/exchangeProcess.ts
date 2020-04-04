@@ -1,9 +1,11 @@
 import {
+  EXCHANGE_CREATION_FAILED,
+  EXCHANGE_CREATION_FETCHING,
   EXCHANGE_CREATION_SUCCEED,
   EXCHANGE_FAILED,
   EXCHANGE_FETCHING,
 
-  EXCHANGE_RESET,
+  EXCHANGE_RESET, EXCHANGE_SUCCEED,
   SELECT_FROM_TICKER,
   SELECT_TO_TICKER
 } from "../actions/types";
@@ -19,12 +21,13 @@ export enum EXCHANGE_TYPE {
 export interface ExchangeProcessInfo extends TxProcessInfo {
   offshoreType: EXCHANGE_TYPE | null;
   toTicker: Ticker | null;
-  fromTicker: Ticker | null;
+  toAmount: number | null;
 }
 
 const INITIAL_STATE: ExchangeProcessInfo = {
   address: "",
-  amount: null,
+  fromAmount: null,
+  toAmount: null,
   fee: null,
   isFetching: false,
   info: "",
@@ -46,17 +49,20 @@ export const exchangeProcess = (
       return { ...state, fromTicker: action.payload };
     case SELECT_TO_TICKER:
       return { ...state, toTicker: action.payload };
-    case EXCHANGE_FETCHING:
+    case EXCHANGE_CREATION_FETCHING:
       return { ...state, ...action.payload, isFetching: true };
     case EXCHANGE_CREATION_SUCCEED:
       return {
-        ...state,
+        ...state, ...action.payload,
+        created: true,
         isFetching: false,
-        amount: action.payload.amount,
-        succeed: true,
-        fee: action.payload.fee
       };
+    case EXCHANGE_FETCHING:
+      return {...state, isFetching: true};
+    case EXCHANGE_SUCCEED:
+      return {...state, isFetching: false, succeed: true};
     case EXCHANGE_FAILED:
+    case EXCHANGE_CREATION_FAILED:
       return {
         ...state,
         isFetching: false,

@@ -17,6 +17,7 @@ import { xTransferList } from "shared/reducers/xTransferList";
 import { exchangeProcess } from "./exchangeProcess";
 import { daemonStates } from "./daemonStates";
 import { mining } from "./mining";
+import modal from "shared/reducers/modal";
 
 const appReducer = combineReducers({
   theme,
@@ -27,14 +28,15 @@ const appReducer = combineReducers({
   forex,
   blockHeaderExchangeRate,
   walletCreation,
-  offshoreProcess: exchangeProcess,
+  exchangeProcess,
   notification,
   walletSession,
   daemonStates,
   priceHistory,
   chain,
   simplePrice,
-  mining
+  mining,
+  modal
 });
 
 const rootReducer = (state: any, action: AnyAction) => {
