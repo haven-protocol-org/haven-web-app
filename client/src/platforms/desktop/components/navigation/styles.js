@@ -18,17 +18,85 @@ export const Logo = styled.img`
   width: auto;
 `;
 
-export const Tag = styled.div`
-  padding: 4px 8px;
-  background: #34d8ac;
-  font-size: 10px;
+export const Row = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const Wrapper = styled.div`
+  height: auto;
+  overflow: hidden;
+
+  display: flex;
+
+  flex-direction: column;
   border-radius: 3px;
+  background: #34d8ac;
+
+  z-index: 10000;
+  width: 100px;
+
+  &:hover {
+    background: #2fc29b;
+    cursor: pointer;
+  }
+`;
+
+export const Network = styled.div`
+  position: fixed;
+  background: #34d8ac;
+  border-radius: 3px;
+
+  top: 50px;
+  z-index: 10000;
+  width: 100px;
+  overflow: hidden;
+`;
+
+export const NetworkStatus = styled.div`
+  display: flex;
   margin-left: 12px;
+  width: auto;
+`;
+
+export const Tag = styled.div`
+  height: 22px;
+
+  font-size: 10px;
   color: #26282c;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  padding-left: 12px;
+  padding-right: 12px;
+  overflow: hidden;
 
   ${media.mobile`
      font-size: 8px
    `};
+
+  &:hover {
+    background: #2fc29b;
+    cursor: pointer;
+    overflow: hidden;
+  }
+`;
+
+export const Dropdown = styled.div`
+  height: 22px;
+  width: 22px;
+  /* border-left: 1px solid #249778; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(${props => (props.show_networks ? `0deg` : `180deg`)});
+  transition: 200ms;
+`;
+
+export const Chevron = styled.div`
+  height: 12px;
+  width: 12px;
+  transform: rotate(180deg);
 `;
 
 export const Stripe = styled.div`
@@ -40,7 +108,11 @@ export const Stripe = styled.div`
 `;
 
 export const State = styled.div`
-  padding: 4px 8px;
+  padding-left: 8px;
+  padding-right: 8px;
+  display: flex;
+  align-items: center;
+  height: 22px;
   background: #34d8ac;
   font-size: 10px;
   border-radius: 3px;
