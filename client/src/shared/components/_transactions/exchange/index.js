@@ -11,10 +11,7 @@ const Transaction = ({
   toAmount,
   fromTicker,
   toTicker,
-  estimatedFee,
-  checked,
-  onChange,
-  validated,
+  fee,
   externAddress
 }) => {
   return (
@@ -61,12 +58,6 @@ const Transaction = ({
           </Value>
         </Row>
       </Container>
-
-      <Confirm
-        onChange={onChange}
-        validated={checked}
-        label="Confirm and Exchange"
-      />
     </Fragment>
   );
 };

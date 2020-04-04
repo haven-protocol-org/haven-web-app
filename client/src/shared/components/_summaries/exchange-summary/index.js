@@ -4,27 +4,21 @@ import React from "react";
 // Relative Imports
 import { Container, Row, Key, Value } from "./styles";
 
-const ExchangeSummary = ({
+export const ExchangeSummary = ({
   xRate,
   fromAmount,
   toAmount,
   fromTicker,
   toTicker,
-  estimatedFee,
-  checked,
-  onChange,
-  hasLatestXRate
+  fee,
+    hasLatestXRate
 }) => {
   return (
     <Container>
       <Row>
         <Key>Conversion Rate</Key>
-        <Value active={hasLatestXRate ? true : false}>
-          {hasLatestXRate
-            ? xRate && fromTicker && toTicker
-              ? `1 ${fromTicker} : ${xRate.toFixed(4)} ${toTicker}`
-              : ""
-            : "Syncing..."}
+        <Value active={true}>
+            { `1 ${fromTicker} : ${xRate.toFixed(4)} ${toTicker}`}
         </Value>
       </Row>
       <Row>
@@ -43,8 +37,12 @@ const ExchangeSummary = ({
             (toAmount && !isNaN(toAmount) ? toAmount : "0")}
         </Value>
       </Row>
+        <Row>
+            <Key>Fee</Key>
+            <Value>
+                {fee}
+            </Value>
+        </Row>
     </Container>
   );
 };
-
-export default ExchangeSummary;

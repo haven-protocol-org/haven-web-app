@@ -15,13 +15,14 @@ import {
 } from "./styles";
 import { Title, Description } from "../../../assets/styles/type.js";
 
-const Modal = ({
+export const Modal = ({
   title,
   description,
   rightButton,
   leftButton,
   disabled,
-  onClick,
+  onCancel,
+    onConfirm,
   children
 }) => {
   return (
@@ -35,8 +36,8 @@ const Modal = ({
           <Body>
             <Placeholder>{children}</Placeholder>
             <Footer>
-              <Cancel onClick={onClick}>{leftButton}</Cancel>
-              <Confirm disabled={disabled}>{rightButton}</Confirm>
+              <Cancel onClick={onCancel}>{leftButton}</Cancel>
+              <Confirm onClick={onConfirm} disabled={disabled}>{rightButton}</Confirm>
             </Footer>
           </Body>
         </Inner>
@@ -44,5 +45,3 @@ const Modal = ({
     </Container>
   );
 };
-
-export default Modal;

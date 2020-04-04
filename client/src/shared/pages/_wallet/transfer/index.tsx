@@ -18,11 +18,9 @@ import { OFFSHORE_ENABLED } from "constants/env";
 import { XBalances } from "shared/reducers/xBalance";
 import { convertBalanceForReading } from "utility/utility";
 
-import { hasLatestXRate } from "platforms/desktop/reducers/blockHeaderExchangeRates";
 
 import { connect } from "react-redux";
 
-import Modal from "../../../components/modal/index.js";
 import TransferSummary from "../../../components/_summaries/transfer-summary";
 
 const options: AssetOption[] = [{ name: "Haven Token", ticker: Ticker.XHV }];
@@ -40,7 +38,6 @@ interface TransferOwnProps {
   ) => void;
   address: string;
   isProcessing: boolean;
-  hasLatestXRate: boolean;
 }
 
 interface TransferReduxProps {
@@ -49,16 +46,13 @@ interface TransferReduxProps {
 
 interface TransferState {
   selectedAsset: AssetOption | null;
-  hasLatestXRate: boolean;
   send_amount: string;
   recipient_address: string;
   payment_id: string;
   firstTabState: boolean;
   secondTabState: boolean;
-  reviewed: boolean;
   copyButtonState: string;
   address: string;
-  showModal: boolean;
 }
 
 type TransferProps = TransferOwnProps & TransferReduxProps;
@@ -73,18 +67,14 @@ class TransferContainer extends Component<TransferProps, TransferState> {
     payment_id: "",
     firstTabState: true,
     secondTabState: false,
-    reviewed: false,
     copyButtonState: "Copy Address",
     address: "",
-    showModal: false,
-    hasLatestXRate: true
   };
 
   componentDidMount() {
     window.scrollTo(0, 0);
     this.setState({
       address: this.props.address,
-      hasLatestXRate: this.props.hasLatestXRate
     });
   }
 
@@ -140,10 +130,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
     });
   };
 
-  handleCheckboxChange = (event: any) => {
-    const { checked } = event.target;
-    this.setState({ reviewed: checked });
-  };
+
 
   clipboardAddress = () => {
     const { address } = this.state;
@@ -161,24 +148,15 @@ class TransferContainer extends Component<TransferProps, TransferState> {
     }, 1000);
   };
 
-  showModal = () => {
-    this.setState({
-      showModal: !this.state.showModal
-    });
-  };
 
   render() {
     const {
       selectedAsset,
       send_amount,
       recipient_address,
-      reviewed,
       payment_id,
-      showModal
     } = this.state;
 
-    const { hasLatestXRate } = this.props;
-    console.log("HAS LATEST", hasLatestXRate);
 
     const checkValidation =
       send_amount.length > 0 && recipient_address.length > 97;
@@ -197,29 +175,6 @@ class TransferContainer extends Component<TransferProps, TransferState> {
 
     return (
       <Fragment>
-        {showModal && (
-          <Modal
-            onClick={this.showModal}
-            title="Transfer Confirmation"
-            description="Please confirm and finalize your transfer transaction"
-            leftButton="Cancel"
-            rightButton="Confirm"
-            disabled={reviewed ? false : true}
-          >
-            <Transaction
-              checked={reviewed}
-              onChange={this.handleCheckboxChange}
-              paymentId={payment_id === "" ? "--" : payment_id}
-              recipientAddress={
-                recipient_address === "" ? "--" : recipient_address
-              }
-              transferAsset={
-                selectedAsset === null ? "--" : selectedAsset.ticker
-              }
-              transferAmount={send_amount === "" ? "--" : send_amount}
-            />
-          </Modal>
-        )}
         <Body>
           <Header
             title="Transfer"
@@ -312,7 +267,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
                 />
 
                 <Footer
-                  onClick={this.showModal}
+                  onClick={() => this.handleSubmit()}
                   loading={this.props.isProcessing}
                   label="Review"
                   validated={checkValidation}
@@ -361,7 +316,6 @@ class TransferContainer extends Component<TransferProps, TransferState> {
 
 const mapStateToProps = (
   state: any,
-  // hasLatestXRate: hasLatestXRate(state)
   ownProps: TransferOwnProps
 ): TransferReduxProps => ({
   xBalances: state.xBalance

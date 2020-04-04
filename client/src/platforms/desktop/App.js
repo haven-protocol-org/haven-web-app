@@ -8,9 +8,9 @@ import { PublicRoutesDesktop } from "./routes/public";
 import { PrivateRoutesDesktop } from "./routes/private";
 import Status from "../../shared/components/_layout/status";
 import { HashRouter } from "react-router-dom";
+import {ModalContainerDesktop} from "./components/modalContainer";
 
 // TOGGLE ON THIS MODAL
-import Modal from "../../shared/components/modal/index.js";
 
 class App extends Component {
   render() {
@@ -18,7 +18,7 @@ class App extends Component {
       <ThemeProvider theme={this.props.theme}>
         <HashRouter history={history}>
           <NavigationDesktop />
-          <Modal/>
+          <ModalContainerDesktop/>
           <Status />
           <PublicRoutesDesktop />
           <Route path="/wallet" component={PrivateRoutesDesktop} />

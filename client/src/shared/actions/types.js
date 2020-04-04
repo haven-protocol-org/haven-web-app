@@ -61,3 +61,8 @@ export const GET_BITCOIN_SUCEED = "get_bitcoin_succeed";
 // Chain Data
 
 export const UPDATE_CHAIN_DATA = "update_chain_data";
+
+// Modal Service
+
+export const SHOW_MODAL = "show_modal";
+export const HIDE_MODAL = "hide_modal";

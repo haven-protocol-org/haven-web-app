@@ -6,11 +6,9 @@ import Body from "../../../components/_layout/body";
 import Header from "../../../components/_layout/header";
 import Input from "../../../components/_inputs/input";
 import Form from "../../../components/_inputs/form";
-import Modal from "../../../components/modal/index.js";
 
 import Footer from "../../../components/_inputs/footer";
 import Dropdown from "../../../components/_inputs/dropdown";
-import Transaction from "../../../components/_transactions/exchange";
 import Tab from "../../../components/tab";
 import { Container, Failed } from "./styles";
 import {
@@ -23,9 +21,7 @@ import { DesktopAppState } from "platforms/desktop/reducers";
 import { selectNodeHeight } from "platforms/desktop/reducers/chain";
 import { getLastBlockHeader } from "platforms/desktop/actions/blockHeaderExchangeRate";
 import {
-  createExchange,
-  resetExchangeProcess
-} from "platforms/desktop/actions";
+  createExchange} from "platforms/desktop/actions";
 import { Ticker } from "shared/reducers/types";
 import {
   selectExchangeSucceed,
@@ -36,7 +32,9 @@ import {
 import { setFromTicker, setToTicker } from "platforms/desktop/actions/exchange";
 import { NO_BALANCE, XBalances } from "shared/reducers/xBalance";
 import { convertBalanceForReading } from "utility/utility";
-import ExchangeSummary from "../../../components/_summaries/exchange-summary/index.js";
+import {ExchangeSummary} from "shared/components/_summaries/exchange-summary/index.js";
+import {showModal} from "shared/actions/modal";
+import {MODAL_TYPE} from "shared/reducers/modal";
 
 enum ExchangeTab {
   Basic,
@@ -47,8 +45,8 @@ type ExchangeProps = {
   conversionRates: XRates | null;
   nodeHeight: number;
   getLastBlockHeader: () => void;
+  showModal:(modalTyoe: MODAL_TYPE) => void;
   createExchange: typeof createExchange;
-  resetExchangeProcess: typeof resetExchangeProcess;
   isProcessingExchange: boolean;
   hasLatestXRate: boolean;
   exchangeSucceed: boolean;
@@ -64,12 +62,9 @@ type ExchangeProps = {
 type ExchangeState = {
   fromAmount?: string;
   toAmount?: string;
-  reviewed?: boolean;
   selectedTab: ExchangeTab;
   externAddress: string;
   selectedPrio: ExchangePrioOption;
-  estimatedFee: number;
-  showModal?: boolean;
 };
 
 export interface AssetOption {
@@ -102,12 +97,9 @@ const exchangePrioOptions: ExchangePrioOption[] = [
 const INITIAL_STATE: ExchangeState = {
   fromAmount: "",
   toAmount: "",
-  reviewed: false,
   selectedTab: ExchangeTab.Basic,
   externAddress: "",
   selectedPrio: exchangePrioOptions[exchangePrioOptions.length - 1],
-  estimatedFee: 0,
-  showModal: false
 };
 class Exchange extends Component<ExchangeProps, ExchangeState> {
   state: ExchangeState = INITIAL_STATE;
@@ -122,13 +114,10 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     nextContext: any
   ): void {
     if (!this.props.exchangeSucceed && nextProps.exchangeSucceed) {
-      this.props.resetExchangeProcess();
       this.setState({
         fromAmount: "",
         toAmount: "",
-        reviewed: false,
         externAddress: "",
-        estimatedFee: 0
       });
     }
   }
@@ -175,28 +164,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     }
   };
 
-  handleReviewSubmit = (event: any) => {
-    const { checked } = event.target;
-    this.setState({ reviewed: checked });
-  };
-
-  calculateFees = (): void => {
-    const priceDelta = this.props.priceDelta;
-
-    const { fromAmount, selectedPrio } = this.state;
-
-    if (!fromAmount || !priceDelta) {
-      return;
-    }
-
-    // Estimate the fee
-    const unLockTime: number = 60 * Math.pow(3, 4 - selectedPrio.prio);
-    const estimatedFee =
-      (priceDelta *
-        Math.exp((Math.PI / -1000.0) * (unLockTime - 60)) *
-        Number(fromAmount)) /
-      1000000000000;
-  };
 
   calcConversion(setToAmount: boolean = true) {
     const { toAmount, fromAmount } = this.state;
@@ -225,8 +192,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       !this.state.fromAmount ||
       !fromTicker ||
       !toTicker ||
-      !this.state.toAmount ||
-      !this.state.reviewed
+      !this.state.toAmount
     )
       return;
 
@@ -255,20 +221,14 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
   };
 
   setExchangePriority = (selectedOption: ExchangePrioOption) => {
-    this.setState({ selectedPrio: selectedOption }, () => this.calculateFees());
+    this.setState({ selectedPrio: selectedOption });
   };
 
-  showModal = () => {
-    this.setState({
-      showModal: !this.state.showModal
-    });
-  };
 
   render() {
     const {
       fromAmount,
       toAmount,
-      reviewed,
       selectedTab,
       selectedPrio,
       externAddress
@@ -286,34 +246,11 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     const toAsset = assetOptions.find(option => option.ticker === toTicker);
 
     const isValid: boolean =
-      !!(fromTicker && toTicker && fromAmount && toAmount && reviewed) &&
+      !!(fromTicker && toTicker && fromAmount && toAmount) &&
       hasLatestXRate;
 
     return (
       <Fragment>
-        {this.state.showModal && (
-          <Modal
-            onClick={this.showModal}
-            title="Exchange Confirmation"
-            description="Please confirm and finalize your exchange transaction"
-            leftButton="Cancel"
-            rightButton="Confirm"
-            disabled={reviewed ? false : true}
-          >
-            <Transaction
-              xRate={this.props.xRate}
-              fromAmount={fromAmount}
-              toAmount={toAmount}
-              fromTicker={fromTicker}
-              toTicker={toTicker}
-              estimatedFee={0}
-              checked={reviewed ? true : false}
-              validated={isValid}
-              onChange={this.handleReviewSubmit}
-              externAddress={externAddress}
-            />
-          </Modal>
-        )}
         <Body>
           <Header
             title="Exchange "
@@ -356,7 +293,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 placeholder="Enter amount"
                 type="number"
                 name="fromAmount"
-                disabled={!hasLatestXRate ? true : false}
+                disabled={!hasLatestXRate}
                 value={fromAmount}
                 onChange={this.onEnterFromAmount}
                 error={
@@ -381,7 +318,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
               <Input
                 label={"To Amount "}
                 placeholder="Enter amount"
-                disabled={!hasLatestXRate ? true : false}
+                disabled={!hasLatestXRate}
                 name="toAmount"
                 type="number"
                 value={toAmount}
@@ -406,26 +343,15 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                     name="externAddress"
                     type="text"
                     value={externAddress}
-                    disabled={!hasLatestXRate ? true : false}
+                    disabled={!hasLatestXRate}
                     onChange={this.onEnterExternAddress}
                   />
                 </Fragment>
               )}
             </Form>
             <Container>
-              <ExchangeSummary
-                xRate={this.props.xRate}
-                hasLatestXRate={hasLatestXRate}
-                fromAmount={fromAmount}
-                toAmount={toAmount}
-                fromTicker={fromTicker}
-                toTicker={toTicker}
-                estimatedFee={0}
-                checked={reviewed}
-                onChange={this.handleReviewSubmit}
-              />
               <Footer
-                onClick={this.showModal}
+                onClick={() => this.handleSubmit()}
                 label="Review"
                 validated={isValid}
                 loading={this.props.isProcessingExchange}
@@ -441,16 +367,16 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
 const mapStateToProps = (state: DesktopAppState) => ({
   xRate: selectXRate(
     state.blockHeaderExchangeRate,
-    state.offshoreProcess.fromTicker,
-    state.offshoreProcess.toTicker
+    state.exchangeProcess.fromTicker,
+    state.exchangeProcess.toTicker
   ),
   nodeHeight: selectNodeHeight(state),
-  isProcessingExchange: selectIsProcessingExchange(state.offshoreProcess),
+  isProcessingExchange: selectIsProcessingExchange(state.exchangeProcess),
   hasLatestXRate: hasLatestXRate(state),
-  exchangeSucceed: selectExchangeSucceed(state.offshoreProcess),
+  exchangeSucceed: selectExchangeSucceed(state.exchangeProcess),
   priceDelta: priceDelta(state),
-  fromTicker: selectFromTicker(state.offshoreProcess),
-  toTicker: selectToTicker(state.offshoreProcess),
+  fromTicker: selectFromTicker(state.exchangeProcess),
+  toTicker: selectToTicker(state.exchangeProcess),
   balances: state.xBalance
 });
 
@@ -459,8 +385,8 @@ export const ExchangePage = connect(
   {
     getLastBlockHeader,
     createExchange,
-    resetExchangeProcess,
     setToTicker,
-    setFromTicker
+    setFromTicker,
+    showModal
   }
 )(Exchange);

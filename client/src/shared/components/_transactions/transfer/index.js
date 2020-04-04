@@ -10,8 +10,9 @@ export const Transaction = ({
   onChange,
   paymentId,
   recipientAddress,
-  transferAsset,
-  transferAmount
+  ticker,
+  transferAmount,
+    fee
 }) => {
   const first = recipientAddress.substring(0, 4);
   const last = recipientAddress.substring(recipientAddress.length - 4);
@@ -22,7 +23,7 @@ export const Transaction = ({
       <Container>
         <Row>
           <Key>Transfer Asset</Key>
-          <Value>{transferAsset}</Value>
+          <Value>{ticker}</Value>
         </Row>
         <Row>
           <Key>Transfer Amount</Key>
@@ -39,15 +40,10 @@ export const Transaction = ({
           </Row>
         )}
         <Row>
-          <Key>Fee (${"0.123"})</Key>
-          <Value>{"0.01234 XHV"}</Value>
+          <Key>Fee </Key>
+          <Value>{fee}</Value>
         </Row>
       </Container>
-      <Confirm
-        checked={checked}
-        onChange={onChange}
-        label="Confirm and Transfer"
-      />
     </Fragment>
   );
 };
