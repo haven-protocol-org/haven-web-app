@@ -9,6 +9,7 @@ import { DesktopAppState } from "platforms/desktop/reducers";
 import { INITAL_FETCHING_STATE, Ticker, XFetching } from "./types";
 import { selectXRate } from "platforms/desktop/reducers/blockHeaderExchangeRates";
 import bigInt from "big-integer";
+import {convertBalanceForReading} from "utility/utility";
 
 export const NO_BALANCE = bigInt.zero;
 
@@ -74,6 +75,22 @@ export function xBalance(
     default:
       return state;
   }
+}
+
+
+export const selectBalances = (state: DesktopAppState): XViewBalance => {
+
+
+  return {
+    [Ticker.XHV] : {
+      balance: convertBalanceForReading(state.xBalance[Ticker.XHV].balance),
+      unlockedBalance: convertBalanceForReading(state.xBalance[Ticker.XHV].unlockedBalance),
+      lockedBalance: convertBalanceForReading(state.xBalance[Ticker.XHV].lockedBalance)
+    }
+  }
+
+
+
 }
 
 export const selectTotalBalances = (state: DesktopAppState): XViewBalance => {
