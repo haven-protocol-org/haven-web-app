@@ -17,18 +17,28 @@ import { AssetOption } from "shared/pages/_wallet/exchange";
 import { OFFSHORE_ENABLED } from "constants/env";
 import { XBalances } from "shared/reducers/xBalance";
 import { convertBalanceForReading } from "utility/utility";
-
+import AddressDropdown from "../../../components/_inputs/addresses_dropdown/index.js";
 
 import { connect } from "react-redux";
-
 import TransferSummary from "../../../components/_summaries/transfer-summary";
 
 const options: AssetOption[] = [{ name: "Haven Token", ticker: Ticker.XHV }];
 
+const addresses: AddressOption[] = [
+  { name: "Work", address: "xhv1238...4567" },
+  { name: "", address: "xhv8411...4910" },
+  { name: "Hustle", address: "xhv9810...8301" },
+  { name: "", address: "xhv0912...0183" },
+  { name: "", address: "xhv0182...9401" },
+  { name: "", address: "xhv9301...1930" },
+  { name: "", address: "xhv1201...0391" },
+  { name: "", address: "xhv92910...0381" }
+];
+
 if (OFFSHORE_ENABLED) {
   options.push({ name: "United States Dollar", ticker: Ticker.xUSD });
 }
-
+type AddressOption = { name: string; address: string };
 interface TransferOwnProps {
   sendFunds: (
     address: string,
@@ -53,6 +63,8 @@ interface TransferState {
   secondTabState: boolean;
   copyButtonState: string;
   address: string;
+  transfer_name: string;
+  transfer_address: string;
 }
 
 type TransferProps = TransferOwnProps & TransferReduxProps;
@@ -69,12 +81,15 @@ class TransferContainer extends Component<TransferProps, TransferState> {
     secondTabState: false,
     copyButtonState: "Copy Address",
     address: "",
+    transfer_name: "",
+    transfer_address: ""
   };
 
   componentDidMount() {
     window.scrollTo(0, 0);
     this.setState({
-      address: this.props.address,
+      transfer_name: addresses[0].name,
+      transfer_address: addresses[0].address
     });
   }
 
@@ -88,7 +103,6 @@ class TransferContainer extends Component<TransferProps, TransferState> {
   };
 
   setSendAsset = (asset: AssetOption) => {
-    // Call back function from Dropdown
     this.setState({
       selectedAsset: asset
     });
@@ -116,6 +130,13 @@ class TransferContainer extends Component<TransferProps, TransferState> {
     }
   };
 
+  selectAddress = ({ name, address }: any) => {
+    this.setState({
+      transfer_name: name,
+      transfer_address: address
+    });
+  };
+
   toggleSend = () => {
     this.setState({
       firstTabState: true,
@@ -129,8 +150,6 @@ class TransferContainer extends Component<TransferProps, TransferState> {
       secondTabState: true
     });
   };
-
-
 
   clipboardAddress = () => {
     const { address } = this.state;
@@ -148,15 +167,13 @@ class TransferContainer extends Component<TransferProps, TransferState> {
     }, 1000);
   };
 
-
   render() {
     const {
       selectedAsset,
       send_amount,
       recipient_address,
-      payment_id,
+      payment_id
     } = this.state;
-
 
     const checkValidation =
       send_amount.length > 0 && recipient_address.length > 97;
@@ -277,13 +294,22 @@ class TransferContainer extends Component<TransferProps, TransferState> {
           ) : (
             <Fragment>
               <Form onSubmit={this.handleSubmit}>
+                <AddressDropdown
+                  width={true}
+                  label="Vault Address"
+                  placeholder="Select an Address"
+                  readOnly={true}
+                  value={this.state.transfer_name}
+                  options={addresses}
+                  onClick={this.selectAddress}
+                  editable={false}
+                />
                 {windowWidth < 1380 ? (
                   <Description
                     label="Haven Address"
-                    placeholder="...load address"
+                    placeholder="Select an address"
                     width={true}
-                    name="address"
-                    value={this.props.address}
+                    value={this.state.transfer_address}
                     readOnly={true}
                     rows={windowWidth < 600 ? "3" : "2"}
                   />
@@ -291,11 +317,11 @@ class TransferContainer extends Component<TransferProps, TransferState> {
                   <Input
                     ref={textarea => (this.addressValue = textarea)}
                     label="Haven Address"
-                    placeholder="...load address"
+                    placeholder="Select an address"
                     width={true}
                     type={"text"}
                     name="address"
-                    value={this.props.address}
+                    value={this.state.transfer_address}
                     readOnly={true}
                   />
                 )}
