@@ -10,7 +10,6 @@ import Form from "../../../components/_inputs/form";
 import Dropdown from "../../../components/_inputs/dropdown";
 import Footer from "../../../components/_inputs/footer";
 import Tab from "../../../components/tab";
-import { Transaction } from "../../../components/_transactions/transfer";
 import { Container } from "./styles";
 import { Ticker } from "shared/reducers/types";
 import { AssetOption } from "shared/pages/_wallet/exchange";

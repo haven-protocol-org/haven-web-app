@@ -2,8 +2,7 @@
 import React, { Fragment } from "react";
 
 // Relative Imports
-import { Container, Row, Key, Value, Footer } from "./styles";
-import Confirm from "../../confirm/index.js";
+import { Container, Row, Key, Value } from "./styles";
 
 export const Transaction = ({
   checked,
@@ -12,7 +11,7 @@ export const Transaction = ({
   recipientAddress,
   ticker,
   transferAmount,
-    fee
+  fee
 }) => {
   const first = recipientAddress.substring(0, 4);
   const last = recipientAddress.substring(recipientAddress.length - 4);

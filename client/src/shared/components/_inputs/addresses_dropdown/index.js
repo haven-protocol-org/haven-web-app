@@ -10,7 +10,6 @@ import {
   Name,
   Row,
   Address,
-  Ticker,
   Edit,
   Block
 } from "./styles";
@@ -56,7 +55,7 @@ class AddressDropdown extends React.Component {
 
   render() {
     const { displayMenu } = this.state;
-    const { label, error, name, options, value, placeholder } = this.props;
+    const { label, error, value, placeholder } = this.props;
 
     return (
       <Container>

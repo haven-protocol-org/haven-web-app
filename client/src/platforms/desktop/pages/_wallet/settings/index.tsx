@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 // Library Imports
 import { selectTheme } from "shared/actions";
@@ -8,14 +8,10 @@ import Body from "shared/components/_layout/body";
 import Header from "shared/components/_layout/header";
 import Form from "shared/components/_inputs/form";
 import Theme from "shared/components/_inputs/theme";
-import Description from "shared/components/_inputs/description";
 import BalanceDropdown from "shared/components/_inputs/balances_dropdown";
 import AddressDropdown from "shared/components/_inputs/addresses_dropdown";
 import Input from "shared/components/_inputs/input";
 import Footer from "shared/components/_inputs/footer/index.js";
-import {Modal} from "../../../../../shared/components/modal/index.js";
-import ManageAddresses from "../../../../../shared/components/modal_children/manage_addresses/index.js";
-import Confirm from "../../../../../shared/components/confirm/index.js";
 
 import { dark, light } from "assets/styles/themes.js";
 import { DesktopAppState } from "platforms/desktop/reducers";
@@ -197,7 +193,7 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
   };
 
   render() {
-    const { value, balance, manage_name, manage_address, checked } = this.state;
+    const { value, balance } = this.state;
 
     const mining: MiningStatus = this.props.mining;
     let buttonLabel =
@@ -211,87 +207,87 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
       );
 
     return (
-        <Body>
-          <Header
-            title="Theme "
-            description="Choose between light and dark themes"
+      <Body>
+        <Header
+          title="Theme "
+          description="Choose between light and dark themes"
+        />
+        <Form onSubmit={() => {}}>
+          <Theme
+            label="Select Theme"
+            placeholder="Dark Theme"
+            name="value"
+            value={value}
+            options={options}
+            onClick={this.handleClick}
           />
-          <Form onSubmit={() => {}}>
-            <Theme
-              label="Select Theme"
-              placeholder="Dark Theme"
-              name="value"
-              value={value}
-              options={options}
-              onClick={this.handleClick}
-            />
-          </Form>
-          <Header
-            title="Balances "
-            description="Select your desired balances view and reference pair"
-          />
+        </Form>
+        <Header
+          title="Balances "
+          description="Select your desired balances view and reference pair"
+        />
 
-          <BalanceDropdown
-            label="Overview"
-            placeholder="USD Dollars"
-            name="balances"
-            value={balance}
-            options={balances}
-            onClick={this.setBalance}
-          />
-          <BalanceDropdown
-            label="Reference Pair"
-            placeholder="Australian Dollars"
-            name="balances"
-            value={"Canadian Dollars"}
-            options={balances}
-            onClick={this.setBalance}
-          />
+        <BalanceDropdown
+          label="Overview"
+          placeholder="USD Dollars"
+          name="balances"
+          value={balance}
+          options={balances}
+          onClick={this.setBalance}
+        />
+        <BalanceDropdown
+          label="Reference Pair"
+          placeholder="Australian Dollars"
+          name="balances"
+          value={"Canadian Dollars"}
+          options={balances}
+          onClick={this.setBalance}
+        />
 
-          <Header
-            title="Addresses"
-            description="Manage the sub-addresses connected to your account"
+        <Header
+          title="Addresses"
+          description="Manage the sub-addresses connected to your account"
+        />
+        <>
+          <AddressDropdown
+            width={true}
+            label="Vault Addresses"
+            placeholder="List of addresses"
+            type="text"
+            readOnly={true}
+            name="addresses"
+            value={"xhv...123"}
+            options={addresses}
+            onClick={this.manageAddress}
           />
-          <>
-            <AddressDropdown
-              width={true}
-              label="Vault Addresses"
-              placeholder="List of addresses"
-              type="text"
-              readOnly={true}
-              name="addresses"
-              value={"xhv...123"}
-              options={addresses}
-              onClick={this.manageAddress}
-            />
-          </>
-          <Header
-            title="Mining"
-            description="Decentralize the Haven protocol by mining and have the chance to earn XHV as a reward"
+        </>
+        <Header
+          title="Mining"
+          description="Decentralize the Haven protocol by mining and have the chance to earn XHV as a reward"
+        />
+        <>
+          <Input
+            width={true}
+            label="Status"
+            placeholder="Mining Status"
+            type="text"
+            readOnly={true}
+            name="daemon_password"
+            value={
+              mining.active
+                ? `Mining with ${mining.speed} hashes per second`
+                : "Not Mining"
+            }
           />
-          <>
-            <Input
-              width={true}
-              label="Status"
-              placeholder="Mining Status"
-              type="text"
-              readOnly={true}
-              name="daemon_password"
-              value={
-                mining.active
-                  ? `Mining with ${mining.speed} hashes per second`
-                  : "Not Mining"
-              }
+          <Container>
+            <Footer
+              onClick={this.onMiningButtonClicked}
+              loading={false}
+              label={buttonLabel}
             />
-            <Container>
-              <Footer
-                onClick={this.onMiningButtonClicked}
-                loading={false}
-                label={buttonLabel}
-              />
-            </Container>
-          </>
-        </Body>
+          </Container>
+        </>
+      </Body>
     );
   }
 }
@@ -305,59 +301,3 @@ export const SettingsDesktop = connect(
   mapStateToProps,
   { selectTheme, startMining, stopMining, miningStatus }
 )(SettingsDesktopPage);
-
-// {
-/*<Header
-  title="Nodes"
-  description="Choose between running a local or remote node"
-/>
-<Form onSubmit={() => {}}>
-  <Nodes
-    label="Select Node"
-    placeholder="Select Node"
-    name="node"
-    value={"Remote"}
-    options={nodes}
-    onClick={this.handleNode}
-  />
-  {localeNode == true && (
-    <>
-      <Input
-        label="Node Address"
-        placeholder="Enter node address"
-        type="text"
-        name="node_address"
-        value={""}
-      />
-      <Input
-        label="Node Port"
-        placeholder="Enter port number"
-        type="text"
-        name="port_number"
-        value={""}
-      />
-      <Input
-        label="Daemon Username (Optional)"
-        placeholder="Enter daemon username"
-        type="text"
-        name="daemon_username"
-        value={""}
-      />
-      <Input
-        label="Daemon Password (Optional)"
-        placeholder="Enter daemon password"
-        type="text"
-        name="daemon_password"
-        value={""}
-      />
-      <Container>
-        <Footer
-          onClick={this.setNodeType}
-          loading={false}
-          label="Save"
-        />
-      </Container>
-    </>
-  )}
-</Form>*/
-// }

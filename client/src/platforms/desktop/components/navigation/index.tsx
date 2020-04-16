@@ -13,7 +13,6 @@ import {
   Tag,
   Dropdown,
   State,
-  Chevron,
   Wrapper,
   Network,
   Row,
@@ -25,7 +24,6 @@ import { selectIsLoggedIn } from "../../reducers/walletSession";
 import { NET_TYPE_NAME } from "constants/env";
 import { DesktopAppState } from "../../reducers";
 import { DaemonStates } from "../../reducers/daemonStates";
-import dropdown from "../../../../assets/icons/dropdown.svg";
 import Arrow from "../../../../assets/icons/chevron.js";
 
 interface NavigationProps {
