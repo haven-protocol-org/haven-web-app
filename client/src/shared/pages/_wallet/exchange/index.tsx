@@ -20,8 +20,7 @@ import {
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { selectNodeHeight } from "platforms/desktop/reducers/chain";
 import { getLastBlockHeader } from "platforms/desktop/actions/blockHeaderExchangeRate";
-import {
-  createExchange} from "platforms/desktop/actions";
+import { createExchange } from "platforms/desktop/actions";
 import { Ticker } from "shared/reducers/types";
 import {
   selectExchangeSucceed,
@@ -32,9 +31,8 @@ import {
 import { setFromTicker, setToTicker } from "platforms/desktop/actions/exchange";
 import { NO_BALANCE, XBalances } from "shared/reducers/xBalance";
 import { convertBalanceForReading } from "utility/utility";
-import {ExchangeSummary} from "shared/components/_summaries/exchange-summary/index.js";
-import {showModal} from "shared/actions/modal";
-import {MODAL_TYPE} from "shared/reducers/modal";
+import { showModal } from "shared/actions/modal";
+import { MODAL_TYPE } from "shared/reducers/modal";
 
 enum ExchangeTab {
   Basic,
@@ -45,7 +43,7 @@ type ExchangeProps = {
   conversionRates: XRates | null;
   nodeHeight: number;
   getLastBlockHeader: () => void;
-  showModal:(modalTyoe: MODAL_TYPE) => void;
+  showModal: (modalTyoe: MODAL_TYPE) => void;
   createExchange: typeof createExchange;
   isProcessingExchange: boolean;
   hasLatestXRate: boolean;
@@ -99,7 +97,7 @@ const INITIAL_STATE: ExchangeState = {
   toAmount: "",
   selectedTab: ExchangeTab.Basic,
   externAddress: "",
-  selectedPrio: exchangePrioOptions[exchangePrioOptions.length - 1],
+  selectedPrio: exchangePrioOptions[exchangePrioOptions.length - 1]
 };
 class Exchange extends Component<ExchangeProps, ExchangeState> {
   state: ExchangeState = INITIAL_STATE;
@@ -117,7 +115,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       this.setState({
         fromAmount: "",
         toAmount: "",
-        externAddress: "",
+        externAddress: ""
       });
     }
   }
@@ -164,7 +162,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     }
   };
 
-
   calcConversion(setToAmount: boolean = true) {
     const { toAmount, fromAmount } = this.state;
     const { xRate } = this.props;
@@ -207,7 +204,8 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
         fromAmount,
         toAmount,
         this.state.selectedPrio.prio,
-        this.state.externAddress, isOffShore
+        this.state.externAddress,
+        isOffShore
       );
     }
   };
@@ -223,7 +221,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
   setExchangePriority = (selectedOption: ExchangePrioOption) => {
     this.setState({ selectedPrio: selectedOption });
   };
-
 
   render() {
     const {
@@ -246,8 +243,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     const toAsset = assetOptions.find(option => option.ticker === toTicker);
 
     const isValid: boolean =
-      !!(fromTicker && toTicker && fromAmount && toAmount) &&
-      hasLatestXRate;
+      !!(fromTicker && toTicker && fromAmount && toAmount) && hasLatestXRate;
 
     return (
       <Fragment>

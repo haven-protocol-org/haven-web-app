@@ -1,12 +1,11 @@
 import styled from "styled-components";
-import media from "../../../../assets/styles/media.js";
 
 export const Container = styled.div`
   width: auto;
   height: auto;
   display: flex;
   flex-direction: column;
-  padding-bottom: 12px;
+
   grid-column: 1 / 3;
 `;
 

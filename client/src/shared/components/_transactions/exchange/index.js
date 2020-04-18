@@ -2,8 +2,7 @@
 import React, { Fragment } from "react";
 
 // Relative Imports
-import { Container, Row, Key, Value, Footer } from "./styles";
-import Confirm from "../../confirm/index.js";
+import { Container, Row, Key, Value } from "./styles";
 
 const Transaction = ({
   xRate,

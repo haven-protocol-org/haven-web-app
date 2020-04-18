@@ -11,7 +11,11 @@ import { DesktopAppState } from "platforms/desktop/reducers";
 import { SyncState } from "shared/types/types";
 import { isDesktop, OFFSHORE_ENABLED } from "constants/env";
 import { selectDesktopSyncState } from "platforms/desktop/reducers/chain";
-import {selectBalances, selectTotalBalances, XViewBalances} from "shared/reducers/xBalance";
+import {
+  selectBalances,
+  selectTotalBalances,
+  XViewBalances
+} from "shared/reducers/xBalance";
 import { Ticker } from "shared/reducers/types";
 
 const OFFSHORE_TICKERS = [Ticker.xUSD, Ticker.xBTC, null];
@@ -64,15 +68,14 @@ class Balances extends Component<BalanceProps, BalanceState> {
         ? { prefix: "$", suffix: "" }
         : ticker === Ticker.xBTC
         ? { prefix: "₿", suffix: "" }
-        : { prefix: "Ħ", suffix: " XHV" };
+        : { prefix: "Ħ", suffix: "" };
 
+    const { unlockedBalance, lockedBalance, balance } = this.props.balances[
+      ticker
+    ];
 
-    const { unlockedBalance, lockedBalance, balance } = this.props.balances[ticker];
-
-    const amount =
-      prefix + unlockedBalance.toFixed(4) + suffix;
-    const amountLocked =
-      prefix + lockedBalance.toFixed(2) + suffix;
+    const amount = prefix + unlockedBalance.toFixed(4) + suffix;
+    const amountLocked = prefix + lockedBalance.toFixed(2) + suffix;
     const { isSyncing, blockHeight, scannedHeight } = this.props.syncState;
 
     const percentage = ((scannedHeight / blockHeight) * 100).toFixed(2);
@@ -85,7 +88,9 @@ class Balances extends Component<BalanceProps, BalanceState> {
         <Value>
           {isSyncing
             ? `Syncing Vault... ${percentage}%`
-            : `Account Value (${ticker.substring(1)}) `}
+            : `Account Value (${
+                ticker === "XHV" ? ticker : ticker.substring(1)
+              }) `}
         </Value>
         {isSyncing && <ProgressBar percentage={percentage} />}
         {lockedBalance > 0 ? (
@@ -101,7 +106,9 @@ class Balances extends Component<BalanceProps, BalanceState> {
 }
 
 const mapStateToProps = (state: DesktopAppState) => ({
-  balances: OFFSHORE_ENABLED? selectTotalBalances(state): selectBalances(state),
+  balances: OFFSHORE_ENABLED
+    ? selectTotalBalances(state)
+    : selectBalances(state),
   syncState: isDesktop()
     ? selectDesktopSyncState(state as DesktopAppState)
     : selectWebSyncState(state)
