@@ -1,27 +1,28 @@
 /**
  * responsible to wire everything together
  */
-import {IDaemonManager} from "./daemons/IDaemonManager";
-import {BasicDaemonManager, UPDATE_DAEMON_STATUS_EVENT} from "./daemons/BasicDaemonManager";
-import {checkAndCreateWalletDir, daemonConfig} from "./daemonConfig";
+
 import {IPCHandler} from "./ipc/IPCHandler";
-import {CommunicationChannels, DAEMON_STATUS_MESSAGE} from "./ipc/types";
+import {CommunicationChannels, DaemonsState} from "./ipc/types";
 import {ipcMain} from 'electron';
-import {EventEmitter} from "events";
+import {getNetType, NET, setNetType} from "./env";
+import {DaemonHandler} from "./daemons/DaemonHandler";
+import {checkAndCreateWalletDir} from "./daemons/daemonPaths";
+import {appEventBus} from "./EventBus";
 
 
-export const QUIT_EVENT: string = 'quietEvent';
+export const DAEMONS_STOPPED_EVENT: string = 'daemons_stopped_event';
 
 
 export class HavenWallet {
 
     private _isRunning:boolean = false;
-    private havend:IDaemonManager = new BasicDaemonManager();
-    private rpcWallet:IDaemonManager = new BasicDaemonManager();
+
     private ipcHandler: IPCHandler = new IPCHandler();
+    private daemonHandler: DaemonHandler = new DaemonHandler();
 
-    private appStatusEmitter:EventEmitter = new EventEmitter();
 
+    private isSwitchingNet: boolean = false;
     private requestShutDown: boolean  = false;
 
 
@@ -32,41 +33,55 @@ export class HavenWallet {
             return;
         }
 
+        this._isRunning = true;
+
         checkAndCreateWalletDir();
 
-        this.havend.setConfig(daemonConfig.havend);
-        this.rpcWallet.setConfig(daemonConfig.wallet);
-        this.havend.startDaemon();
-        this.rpcWallet.startDaemon();
+
+        this.daemonHandler.startDaemons();
         this.ipcHandler.start();
-        this._isRunning = true;
+
         this.addDaemonStateHandling();
 
+
     }
+
+
+
+    private onSwitchNetwork(netType: NET) {
+
+
+        if (!(netType in NET)) {
+            return;
+        }
+
+        //for the case clients is doing dumb stuff
+        if (this.isSwitchingNet) {
+            return
+        }
+
+        // no need to switch
+        if (netType === getNetType()) {
+            return;
+        }
+
+        this.isSwitchingNet = true;
+        setNetType(netType);
+        appEventBus.once(DAEMONS_STOPPED_EVENT, () => this.start());
+        this.quit();
+
+
+    }
+
 
 
     public quit() {
 
         this.requestShutDown = true;
-        if (this.havend.getDaemonState().isRunning) {
-
-            this.havend.getDaemonStatusEventEmitter().on(UPDATE_DAEMON_STATUS_EVENT, (status) => this.checkIfAppQuit())
-
-            this.havend.killDaemon();
-        }
-
-        if (this.rpcWallet.getDaemonState().isRunning){
-
-            this.rpcWallet.getDaemonStatusEventEmitter().on(UPDATE_DAEMON_STATUS_EVENT, (status) => this.checkIfAppQuit())
-            this.rpcWallet.killDaemon();
-        }
-
-
+        this.daemonHandler.stopDaemons();
         this.ipcHandler.quit();
         this.removeDaemonStateHandling();
         this._isRunning = false;
-
-        this.checkIfAppQuit();
 
     }
 
@@ -77,32 +92,23 @@ export class HavenWallet {
 
     }
 
+    private addNetworkSwitchHandling() {
+
+        ipcMain.handle(CommunicationChannels.SWITCH_NET, (event, args) => this.onSwitchNetwork(args));
+
+    }
+
     private removeDaemonStateHandling() {
-
         ipcMain.removeHandler(CommunicationChannels.DAEMON);
+    }
+
+    private onDaemonStateRequest():DaemonsState  {
+
+        return this.daemonHandler.getDaemonsState()
 
     }
 
-    private onDaemonStateRequest():DAEMON_STATUS_MESSAGE  {
 
-        const nodeState = this.havend.getDaemonState();
-        const walletState = this.rpcWallet.getDaemonState();
-        return {node: nodeState, wallet: walletState};
-
-    }
-
-    public getAppStatus(): EventEmitter {
-        return this.appStatusEmitter;
-    }
-
-
-    private checkIfAppQuit(): void {
-
-        if (this.rpcWallet.getDaemonState().isRunning === false && this.havend.getDaemonState().isRunning === false) {
-            this.appStatusEmitter.emit(QUIT_EVENT);
-        }
-
-    }
 
 
 

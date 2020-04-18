@@ -1,6 +1,6 @@
 import {ChildProcess, execFile} from "child_process";
 import {IDaemonManager} from "./IDaemonManager";
-import {IDaemonConfig} from "../daemonConfig";
+import {IDaemonConfig} from "./config";
 import {DaemonState} from "../ipc/types";
 import {EventEmitter} from "events";
 

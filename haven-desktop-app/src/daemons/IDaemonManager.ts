@@ -1,4 +1,4 @@
-import {IDaemonConfig} from "../daemonConfig";
+import {IDaemonConfig} from "./config";
 import {DaemonState} from "../ipc/types";
 import {EventEmitter} from "events";
 

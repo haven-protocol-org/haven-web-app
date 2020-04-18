@@ -3,11 +3,12 @@ export enum CommunicationChannels {
 
     RPC="rpc",
     DAEMON="daemon",
-    WALLETS="wallets"
+    WALLETS="wallets",
+    SWITCH_NET="switch_net"
 }
 
 
-export interface DAEMON_STATUS_MESSAGE {
+export interface DaemonsState {
     wallet: DaemonState,
     node:DaemonState
 }

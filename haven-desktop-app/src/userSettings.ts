@@ -1,11 +1,11 @@
 
 import * as fs from "fs";
-import {daemonConfig} from "./daemonConfig";
+import {config} from "./daemons/config";
 
 export const getAvailableWallets = ():string [] => {
 
 
-    const walletPath: string = daemonConfig.wallet.args['wallet-dir'] as string;
+    const walletPath: string = config().wallet.args['wallet-dir'] as string;
     let availableWallets: string[];
 
     const files =  fs.readdirSync(walletPath);

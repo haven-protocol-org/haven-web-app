@@ -8,7 +8,7 @@
 // modified 2017 for some CN functions by luigi1111
 
 import {RPCHRequestHandler} from "./rpc/RPCHRequestHandler";
-import {daemonConfig} from "./daemonConfig";
+import {config} from "./daemons/config";
 import {dialog} from "electron";
 import {decode_address} from "./xmr-core/addressUtils";
 
@@ -27,7 +27,7 @@ const PUBLIC_SPEND_KEY = 'public_spend_key';
 
 
 const rpcKeyHandler = new RPCHRequestHandler();
-rpcKeyHandler.port = daemonConfig.wallet.port;
+rpcKeyHandler.port = config().wallet.port;
 
 
 export const showKey = (key: KeyType) => {

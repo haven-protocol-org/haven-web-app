@@ -1,10 +1,11 @@
 import {app, BrowserWindow, Menu} from "electron";
 import * as path from "path";
 import { devServerStarted } from "./dev";
-import { HavenWallet, QUIT_EVENT } from "./HavenWallet";
+import { HavenWallet, DAEMONS_STOPPED_EVENT } from "./HavenWallet";
 import { BrowserWindowConstructorOptions } from "electron";
 import {isDevMode} from "./env";
 import {havenMenu} from "./menu";
+import {appEventBus} from "./EventBus";
 
 const wallet = new HavenWallet();
 
@@ -101,7 +102,7 @@ app.on("window-all-closed", () => {
 const onAppQuit = () => {
   console.log("on App quit called");
 
-  wallet.getAppStatus().once(QUIT_EVENT, () => {
+  appEventBus.once(DAEMONS_STOPPED_EVENT, () => {
     app.quit();
   });
 

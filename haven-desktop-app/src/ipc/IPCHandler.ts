@@ -1,7 +1,7 @@
 import {ipcMain} from 'electron';
 import IpcMainInvokeEvent = Electron.IpcMainInvokeEvent;
 import {RPCHRequestHandler, RPCRequestObject} from "../rpc/RPCHRequestHandler";
-import {daemonConfig} from "../daemonConfig";
+import {config} from "../daemons/config";
 import {CommunicationChannels} from "./types";
 import {getAvailableWallets} from "../userSettings";
 
@@ -26,8 +26,8 @@ export class IPCHandler {
 
     constructor() {
 
-        this.havendRpcHandler.port = daemonConfig.havend.port;
-        this.walletRpcHandler.port = daemonConfig.wallet.port;
+        this.havendRpcHandler.port = config().havend.port;
+        this.walletRpcHandler.port = config().wallet.port;
 
     }
 
@@ -44,7 +44,6 @@ export class IPCHandler {
 
         ipcMain.handle(CommunicationChannels.RPC,(event, args) => this.handleRPCRequests(event, args) );
         ipcMain.handle(CommunicationChannels.WALLETS, (event,args) => this.handleWalletRequest())
-       // ipcMain.handle(CommunicationChannels.DAEMON,(event, args) => this.handleRPCRequests(event, args) );
     }
 
     private removeHandlers() {
