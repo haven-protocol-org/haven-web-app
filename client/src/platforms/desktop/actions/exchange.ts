@@ -29,6 +29,49 @@ export const setFromTicker = (fromTicker: Ticker | null) => {
   return { type: SELECT_FROM_TICKER, payload: fromTicker };
 };
 
+
+
+export function exchange(
+    fromTicker: Ticker,
+    toTicker: Ticker,
+    fromAmount: number,
+    toAmount: number,
+    priority: number,
+    externAddress: string,
+    isOffshore: boolean
+): any {
+  return (dispatch: any, getState: () => DesktopAppState) => {
+    const address =
+        externAddress.trim() !== "" ? externAddress : getState().address.main;
+
+    const params = createExchangeInputs(fromAmount, priority, address);
+
+    dispatch(onExchangeFetch());
+
+
+    const exchangeRPCFN = isOffshore ? offshoreRPC : onshoreRPC;
+    exchangeRPCFN(params)
+        .then((result: any) => {
+          dispatch(onExchangeSucceed(result));
+          dispatch(
+              addExchangeSucceedMessage(
+                  fromTicker!,
+                  toTicker!,
+                  fromAmount!,
+                  toAmount!
+              )
+          );
+          dispatch(updateApp());
+        })
+        .catch((error: any) => {
+          dispatch(addErrorNotification(error));
+          dispatch(onExchangeFailed(error));
+        })
+        .finally(() => dispatch(resetExchangeProcess()));
+
+  };
+}
+
 export function createExchange(
   fromTicker: Ticker,
   toTicker: Ticker,
@@ -108,7 +151,7 @@ const createExchangeInputs = (
     destinations: [{ address, amount: amount.toString() }],
     priority,
     ring_size: 11,
-     do_not_relay: true,
+   // do_not_relay: true,
     get_tx_metadata: true,
   };
 };
