@@ -185,11 +185,9 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
   };
 
   manageAddress = ({ name, address }: AddressOption) => {
-    this.setState({
-      showModal: true,
-      manage_address: address,
-      manage_name: name
-    });
+
+
+
   };
 
   render() {
