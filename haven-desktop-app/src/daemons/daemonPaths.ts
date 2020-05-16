@@ -1,5 +1,5 @@
 import * as path from "path";
-import {APP_DATA_PATH, isMainnet} from "../env";
+import {APP_DATA_PATH, isMainnet, isStagenet, isTestnet} from "../env";
 import * as fs from "fs";
 
 
@@ -53,9 +53,15 @@ export const checkAndCreateWalletDir = () => {
         if (!fs.existsSync(WALLET_PATH_MAINNET)) {
             fs.mkdirSync(WALLET_PATH_MAINNET, { recursive: true });
         }
-    } else {
+    }
+    if (isTestnet())  {
         if (!fs.existsSync(WALLET_PATH_TESTNET)) {
             fs.mkdirSync(WALLET_PATH_TESTNET, { recursive: true });
+        }
+    }
+    if (isStagenet())  {
+        if (!fs.existsSync(WALLET_PATH_STAGENET)) {
+            fs.mkdirSync(WALLET_PATH_STAGENET, { recursive: true });
         }
     }
 };

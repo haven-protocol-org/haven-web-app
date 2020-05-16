@@ -10,7 +10,7 @@ export NODE_INSTALLER=npm
 
 # start rpc client
 # npm run start:desktop:testnet --prefix client &
-npm run start --prefix haven-desktop-app & npm run watch --prefix haven-desktop-app
+npm run start --prefix haven-desktop-app
 
 
 

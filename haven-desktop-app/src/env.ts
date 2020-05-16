@@ -16,7 +16,7 @@ let NET_TYPE_ID: NET = parseInt(process.env.NET_TYPE_ID);
 
 export const isMainnet = () => NET_TYPE_ID === NET.Mainnet;
 export const isStagenet = () => NET_TYPE_ID === NET.Stagenet;
-
+export const isTestnet = () => NET_TYPE_ID === NET.Testnet;
 
 export const getNetType = () => {
 

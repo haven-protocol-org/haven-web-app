@@ -3,7 +3,7 @@ import {getNetType, NET} from "../env";
 import {
   HAVEND_PATH_MAINNET, HAVEND_PATH_STAGENET,
   HAVEND_PATH_TESTNET,
-  WALLET_PATH_MAINNET, WALLET_PATH_STAGENET,
+  WALLET_PATH_MAINNET, WALLET_PATH_STAGENET, WALLET_PATH_TESTNET,
   WALLET_RPC_PATH_MAINNET, WALLET_RPC_PATH_STAGENET, WALLET_RPC_PATH_TESTNET
 } from "../daemons/daemonPaths";
 
@@ -43,7 +43,7 @@ const daemonConfigTestnet = {
       testnet: "",
       "rpc-bind-port": 12345,
       "disable-rpc-login": "",
-      "wallet-dir": WALLET_PATH_STAGENET
+      "wallet-dir": WALLET_PATH_TESTNET
     }
   }
 };
