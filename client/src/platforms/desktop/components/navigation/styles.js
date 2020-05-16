@@ -20,6 +20,7 @@ export const Logo = styled.img`
 
 export const Row = styled.div`
   display: flex;
+
   justify-content: space-between;
 `;
 
@@ -34,7 +35,6 @@ export const Wrapper = styled.div`
   background: #34d8ac;
 
   z-index: 10000;
-  width: 100px;
 
   &:hover {
     background: #2fc29b;
@@ -61,7 +61,7 @@ export const NetworkStatus = styled.div`
 
 export const Tag = styled.div`
   height: 22px;
-
+  width: auto;
   font-size: 10px;
   color: #26282c;
   display: flex;
@@ -89,7 +89,7 @@ export const Dropdown = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  transform: rotate(${props => (props.show_networks ? `0deg` : `180deg`)});
+  transform: rotate(${(props) => (props.show_networks ? `0deg` : `180deg`)});
   transition: 200ms;
 `;
 
@@ -104,7 +104,7 @@ export const Stripe = styled.div`
     min-width: 5px;
     margin-right:0px;
     margin-left:6px;
-    background:${props => (props.isActive ? "#2D8872" : "#F04747")}
+    background:${(props) => (props.isActive ? "#2D8872" : "#F04747")}
 `;
 
 export const State = styled.div`
@@ -118,7 +118,7 @@ export const State = styled.div`
   border-radius: 3px;
   margin-left: 12px;
   color: #26282c;
-  background: ${props => (props.isActive ? "#2D8872" : "#F04747")}
+  background: ${(props) => (props.isActive ? "#2D8872" : "#F04747")}
     ${media.mobile`
      font-size: 8px
    `};

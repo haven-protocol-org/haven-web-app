@@ -16,7 +16,7 @@ import {
   Wrapper,
   Network,
   Row,
-  NetworkStatus
+  NetworkStatus,
 } from "./styles";
 import Icon from "assets/haven.svg";
 import { closeWallet } from "../../actions";
@@ -36,12 +36,12 @@ interface NavigationProps {
 class Navigation extends Component<NavigationProps, any> {
   state = {
     show_networks: false,
-    current_network: "Stagenet"
+    current_network: "Stagenet",
   };
 
   onComponentDidMount() {
     this.setState({
-      current_network: NET_TYPE_NAME
+      current_network: NET_TYPE_NAME,
     });
   }
 
@@ -51,13 +51,13 @@ class Navigation extends Component<NavigationProps, any> {
 
   showNetworks = () => {
     this.setState({
-      show_networks: !this.state.show_networks
+      show_networks: !this.state.show_networks,
     });
   };
 
   currentNetwork = (network: any) => {
     this.setState({
-      current_network: network
+      current_network: network,
     });
     alert("LOGOUT AND CHANGE NETWORK");
   };
@@ -78,23 +78,7 @@ class Navigation extends Component<NavigationProps, any> {
             <Wrapper onClick={this.showNetworks} show_networks={show_networks}>
               <Row>
                 <Tag>{current_network}</Tag>
-                <Dropdown show_networks={show_networks ? true : false}>
-                  <Arrow color="#000" />
-                </Dropdown>
               </Row>
-              {show_networks && (
-                <Network>
-                  <Tag onClick={() => this.currentNetwork("Mainnet")}>
-                    Mainnet
-                  </Tag>
-                  <Tag onClick={() => this.currentNetwork("Stagenet")}>
-                    Stagenet
-                  </Tag>
-                  <Tag onClick={() => this.currentNetwork("Testnet")}>
-                    Testnet
-                  </Tag>
-                </Network>
-              )}
             </Wrapper>
             {!wallet.isRunning && (
               <State isActive={wallet.isRunning}>Wallet Offline</State>
@@ -116,10 +100,31 @@ class Navigation extends Component<NavigationProps, any> {
 
 const mapStateToProps = (state: DesktopAppState) => ({
   isLoggedIn: selectIsLoggedIn(state),
-  daemonStates: state.daemonStates
+  daemonStates: state.daemonStates,
 });
 
-export const NavigationDesktop = connect(
-  mapStateToProps,
-  { logout: closeWallet }
-)(Navigation);
+export const NavigationDesktop = connect(mapStateToProps, {
+  logout: closeWallet,
+})(Navigation);
+
+// <Wrapper onClick={this.showNetworks} show_networks={show_networks}>
+//   <Row>
+//     <Tag>{current_network}</Tag>
+//     <Dropdown show_networks={show_networks ? true : false}>
+//       <Arrow color="#000" />
+//     </Dropdown>
+//   </Row>
+//   {show_networks && (
+//     <Network>
+//       <Tag onClick={() => this.currentNetwork("Mainnet")}>
+//         Mainnet
+//       </Tag>
+//       <Tag onClick={() => this.currentNetwork("Stagenet")}>
+//         Stagenet
+//       </Tag>
+//       <Tag onClick={() => this.currentNetwork("Testnet")}>
+//         Testnet
+//       </Tag>
+//     </Network>
+//   )}
+// </Wrapper>

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+
 // Library Imports
 import { selectTheme } from "shared/actions";
 // Relative Imports
@@ -12,18 +13,19 @@ import BalanceDropdown from "shared/components/_inputs/balances_dropdown";
 import AddressDropdown from "shared/components/_inputs/addresses_dropdown";
 import Input from "shared/components/_inputs/input";
 import Footer from "shared/components/_inputs/footer/index.js";
+import Mining from "../../../components/animation/index.js";
 
 import { dark, light } from "assets/styles/themes.js";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import {
   MiningRequestTypes,
-  MiningStatus
+  MiningStatus,
 } from "platforms/desktop/reducers/mining";
 import { Spinner } from "shared/components/spinner";
 import {
   miningStatus,
   startMining,
-  stopMining
+  stopMining,
 } from "platforms/desktop/actions/mining";
 
 type ThemeOption = { theme: string; value: string };
@@ -48,14 +50,14 @@ interface SettingsProps {
 
 const options: ThemeOption[] = [
   { theme: "dark", value: "Dark Theme" },
-  { theme: "light", value: "Light Theme" }
+  { theme: "light", value: "Light Theme" },
 ];
 
 const balances: BalanceOption[] = [
   { ticker: "USD", value: "United States Dollars", code: "$" },
   { ticker: "BTC", value: "Bitcoin", code: "₿" },
   { ticker: "XHV", value: "Haven", code: "Ħ" },
-  { ticker: "--", value: "Hide", code: "-" }
+  { ticker: "--", value: "Hide", code: "-" },
 ];
 
 const addresses: AddressOption[] = [
@@ -66,7 +68,7 @@ const addresses: AddressOption[] = [
   { name: "", address: "xhv0182...9401" },
   { name: "", address: "xhv9301...1930" },
   { name: "", address: "xhv1201...0391" },
-  { name: "", address: "xhv92910...0381" }
+  { name: "", address: "xhv92910...0381" },
 ];
 
 class SettingsDesktopPage extends Component<SettingsProps, any> {
@@ -80,7 +82,7 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
     selected_address: "",
     manage_address: "",
     manage_name: "",
-    checked: false
+    checked: false,
   };
 
   componentDidMount() {
@@ -90,7 +92,7 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
     }
     window.scrollTo(0, 0);
     this.setState({
-      value: this.props.theme.value
+      value: this.props.theme.value,
     });
   }
 
@@ -127,12 +129,12 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
     if (theme === "light") {
       this.props.selectTheme(light);
       this.setState({
-        value: value
+        value: value,
       });
     } else if (theme === "dark") {
       this.props.selectTheme(dark);
       this.setState({
-        value: value
+        value: value,
       });
     } else {
       return null;
@@ -155,9 +157,10 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
   handleNode = ({ value }: ThemeOption) => {
     alert("Select Node type");
   };
+
   handleCheck = () => {
     this.setState({
-      checked: true
+      checked: true,
     });
   };
 
@@ -170,13 +173,13 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
     const value = event.target.value;
 
     this.setState({
-      [name]: value
+      [name]: value,
     });
   };
 
   showModal = () => {
     this.setState({
-      showModal: false
+      showModal: false,
     });
   };
 
@@ -260,31 +263,19 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
           />
         </>
         <Header
-          title="Mining"
-          description="Decentralize the Haven protocol by mining and have the chance to earn XHV as a reward"
+          title="Mining "
+          description="Mine from your computer and earn Haven"
         />
-        <>
-          <Input
-            width={true}
-            label="Status"
-            placeholder="Mining Status"
-            type="text"
-            readOnly={true}
-            name="daemon_password"
-            value={
+        <Container>
+          <Mining
+            mining={true}
+            status={
               mining.active
                 ? `Mining with ${mining.speed} hashes per second`
-                : "Not Mining"
+                : `${13} hps`
             }
           />
-          <Container>
-            <Footer
-              onClick={this.onMiningButtonClicked}
-              loading={false}
-              label={buttonLabel}
-            />
-          </Container>
-        </>
+        </Container>
       </Body>
     );
   }
@@ -292,10 +283,12 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
 
 const mapStateToProps = (state: DesktopAppState) => ({
   theme: state.theme,
-  mining: state.mining
+  mining: state.mining,
 });
 
-export const SettingsDesktop = connect(
-  mapStateToProps,
-  { selectTheme, startMining, stopMining, miningStatus }
-)(SettingsDesktopPage);
+export const SettingsDesktop = connect(mapStateToProps, {
+  selectTheme,
+  startMining,
+  stopMining,
+  miningStatus,
+})(SettingsDesktopPage);

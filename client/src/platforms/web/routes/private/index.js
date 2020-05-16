@@ -4,14 +4,14 @@ import { Redirect, Route } from "react-router-dom";
 
 // Relative Imports
 
-import {AssetsWeb} from "../../pages/_wallet/assets";
-import {DetailsWeb} from "../../pages/_wallet/details";
-import {TransferWeb} from "../../pages/_wallet/transfer";
+import { AssetsWeb } from "../../pages/_wallet/assets";
+import { DetailsWeb } from "../../pages/_wallet/details";
+import { TransferWeb } from "../../pages/_wallet/transfer";
 import { connect } from "react-redux";
-import {selectIsLoggedIn} from "../../reducers/account";
+import { selectIsLoggedIn } from "../../reducers/account";
 import Idle from "../../../../shared/components/idle";
-import {SettingsWeb} from "../../pages/_wallet/settings";
-import {keepAlive, getTransfers} from "../../actions";
+import { SettingsWeb } from "../../pages/_wallet/settings";
+import { keepAlive, getTransfers } from "../../actions";
 import Menu from "../../../../shared/components/_layout/menu";
 import Page from "../../../../shared/components/_layout/page";
 /**
@@ -22,30 +22,25 @@ import Page from "../../../../shared/components/_layout/page";
  */
 class PrivateRoutes extends Component {
   componentDidMount() {
-
     this.props.getTransfers();
     this.props.keepAlive();
     this.addTimer();
   }
 
-
   addTimer() {
-
-      this.getTxTimer = setInterval(this.props.getTransfers, 30000);
-      this.keepAliveTimer = setInterval(this.props.keepAlive, 15000);
+    this.getTxTimer = setInterval(this.props.getTransfers, 30000);
+    this.keepAliveTimer = setInterval(this.props.keepAlive, 15000);
   }
 
   removeTimer() {
-
-      clearInterval(this.getTxTimer);
-      clearInterval(this.keepAliveTimer);
-      this.getTxTimer = null;
-      this.keepAliveTimer = null;
-
+    clearInterval(this.getTxTimer);
+    clearInterval(this.keepAliveTimer);
+    this.getTxTimer = null;
+    this.keepAliveTimer = null;
   }
 
   componentWillUnmount() {
-   this.removeTimer();
+    this.removeTimer();
   }
 
   render() {
@@ -57,14 +52,18 @@ class PrivateRoutes extends Component {
 
     return (
       <div>
-          <Idle/>
-          <Page>
+        <Idle />
+        <Page>
           <Menu />
-        <Route path={`${match.url}/assets`} exact component={AssetsWeb} />
-        <Route path={`${match.url}/assets/:id`} exact component={DetailsWeb} />
-        <Route path={`${match.url}/transfer`} exact component={TransferWeb} />
-        <Route path={`${match.url}/settings`} exact component={SettingsWeb} />
-          </Page>
+          <Route path={`${match.url}/assets`} exact component={AssetsWeb} />
+          <Route
+            path={`${match.url}/assets/:id`}
+            exact
+            component={DetailsWeb}
+          />
+          <Route path={`${match.url}/transfer`} exact component={TransferWeb} />
+          <Route path={`${match.url}/settings`} exact component={SettingsWeb} />
+        </Page>
       </div>
     );
   }
