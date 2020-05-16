@@ -39,5 +39,4 @@ if (isWeb()) {
 
 export const API_URL = apiUrl;
 
-
-export const OFFSHORE_ENABLED = isDesktop() && (isMainnet() === false);
+export const OFFSHORE_ENABLED = isDesktop() && isMainnet() === false;

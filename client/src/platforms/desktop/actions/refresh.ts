@@ -1,36 +1,36 @@
+import { OFFSHORE_ENABLED } from "constants/env";
+import {
+  REFRESH_FAILED,
+  REFRESH_SUCCEED,
+  START_REFRESH,
+} from "platforms/desktop/actions/types";
+import { DesktopAppState } from "platforms/desktop/reducers";
+import { getWalletHeightRPC } from "../ipc/rpc/rpc";
 import { getBalance } from "./balance";
 import {
   getNodeInfo,
   getWalletHeight,
   getWalletHeightFailed,
-  getWalletHeightSucceed
+  getWalletHeightSucceed,
 } from "./chain";
-import { getTransfers } from "./transferHistory";
-import { getWalletHeightRPC } from "../ipc/rpc/rpc";
-import { getOffshoreBalance } from "./offshoreBalance";
 import { getDaemonStates } from "./daemonState";
-import { OFFSHORE_ENABLED } from "constants/env";
-import { DesktopAppState } from "platforms/desktop/reducers";
-import {
-  REFRESH_FAILED,
-  REFRESH_SUCCEED,
-  START_REFRESH
-} from "platforms/desktop/actions/types";
-import { getOwnAddress } from "platforms/desktop/actions/walletSession";
+import { getOffshoreBalance } from "./offshoreBalance";
+import { getAddress } from "./subadresses";
+import { getTransfers } from "./transferHistory";
 
 export const refresh = () => {
   return (dispatch: any) => {
     dispatch(startRefresh());
 
     getWalletHeightRPC()
-      .then(res => dispatch(getWalletHeightSucceed(res.height)))
-      .catch(err => {
+      .then((res) => dispatch(getWalletHeightSucceed(res.height)))
+      .catch((err) => {
         dispatch(getWalletHeightFailed(err));
         dispatch(refreshFailed());
       })
       //. then(() =>  refreshRPC())
       .then(() => dispatch(refreshSucceed()))
-      .then(() => dispatch(getOwnAddress()))
+      .then(() => dispatch(getAddress()))
       //.catch(() => dispatch(refreshFailed()))
       .then(() => dispatch(updateApp()));
   };

@@ -1,11 +1,11 @@
-import { Details } from "shared/pages/_wallet/details";
 import React, { Component } from "react";
-import { TxHistoryDesktop } from "../../../components/TxHistory";
 import { connect } from "react-redux";
-import { DesktopAppState } from "../../../reducers";
+import { Details } from "shared/pages/_wallet/details";
 import { selectSimplePrice } from "shared/reducers/simplePrice";
 import { Ticker } from "shared/reducers/types";
 import { convertToMoney } from "utility/utility";
+import { TxHistoryDesktop } from "../../../components/TxHistory";
+import { DesktopAppState } from "../../../reducers";
 
 class DetailsDesktopContainer extends Component<any, any> {
   componentDidMount() {
@@ -35,9 +35,9 @@ class DetailsDesktopContainer extends Component<any, any> {
   }
 }
 
-export const mapStateToProps = (state: DesktopAppState) => ({
+const mapStateToProps = (state: DesktopAppState) => ({
   balances: state.xBalance,
-  lastPrice: selectSimplePrice(state)
+  lastPrice: selectSimplePrice(state),
 });
 
 export const DetailsDesktop = connect(

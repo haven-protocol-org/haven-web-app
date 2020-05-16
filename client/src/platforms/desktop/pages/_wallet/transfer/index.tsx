@@ -1,14 +1,11 @@
-import { connect } from "react-redux";
-import {
-  resetTransferProcess,
-  createTransfer
-} from "../../../actions";
-import  {Transfer}  from "shared/pages/_wallet/transfer";
-import React, { Component } from "react";
-import { transferSucceed } from "../../../reducers/transferProcess";
-import { Ticker } from "shared/reducers/types";
+import { getAddress } from "platforms/desktop/actions/subadresses";
 import { DesktopAppState } from "platforms/desktop/reducers";
-import { getOwnAddress } from "platforms/desktop/actions/walletSession";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Transfer } from "shared/pages/_wallet/transfer";
+import { Ticker } from "shared/reducers/types";
+import { createTransfer, resetTransferProcess } from "../../../actions";
+import { transferSucceed } from "../../../reducers/transferProcess";
 
 class TransferDesktopContainer extends Component<any, any> {
   private sendTicker: Ticker = Ticker.XHV;
@@ -37,16 +34,15 @@ class TransferDesktopContainer extends Component<any, any> {
     ticker: Ticker = Ticker.XHV
   ) => {
     this.sendTicker = ticker;
-      this.props.createTransfer(address, amount, paymentId, ticker);
-
+    this.props.createTransfer(address, amount, paymentId, ticker);
   };
 
   render() {
     return (
-        //@ts-ignore
+      //@ts-ignore
       <Transfer
         isProcessing={this.props.tx.isFetching}
-        address={this.props.address}
+        // address={this.props.address}
         sendFunds={this.onSendFunds}
       />
     );
@@ -56,10 +52,11 @@ class TransferDesktopContainer extends Component<any, any> {
 export const mapStateToProps = (state: DesktopAppState) => ({
   address: state.address.main,
   transferSucceed: transferSucceed(state),
-  tx: state.transferProcess
+  tx: state.transferProcess,
 });
 
-export const TransferDesktop = connect(
-  mapStateToProps,
-  { createTransfer, resetTransferProcess, getOwnAddress }
-)(TransferDesktopContainer);
+export const TransferDesktop = connect(mapStateToProps, {
+  createTransfer,
+  resetTransferProcess,
+  getOwnAddress: getAddress,
+})(TransferDesktopContainer);

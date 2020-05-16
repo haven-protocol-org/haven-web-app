@@ -126,7 +126,7 @@ class AssetAllocationComponent extends Component<AssetAllocationProps, any> {
                 cy={center}
                 strokeWidth={strokeWidth}
                 fill="none"
-              ></circle>
+              />
             );
           })}
         </svg>

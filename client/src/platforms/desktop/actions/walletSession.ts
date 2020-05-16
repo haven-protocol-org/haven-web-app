@@ -58,8 +58,4 @@ const openWalletFetching = () => {
   return { type: OPEN_WALLET_FETCHING };
 };
 
-export const getOwnAddress = () => {
-  return (dispatch: any) => {
-    getAddressRPC().then(res => dispatch(addPubAddress(res.address)));
-  };
-};
+
