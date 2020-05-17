@@ -16,7 +16,6 @@ interface ManageAdressProps {
 
 
 export class ManageAddressModal extends React.Component<any, any> {
-  showModal: any;
   handleChange: any;
   handleCheck: any;
   render() {
@@ -29,7 +28,7 @@ export class ManageAddressModal extends React.Component<any, any> {
           onCancel={() => this.onCancel()}
           leftButton="Cancel"
           rightButton="Save"
-          disabled={checked ? false : true}
+          disabled={!this.state.checked}
         >
           <ManageAddresses>
             <Input
@@ -38,7 +37,7 @@ export class ManageAddressModal extends React.Component<any, any> {
               placeholder="Name of address"
               type="text"
               name="manage_name"
-              value={manage_name}
+              value={'test'}
               onChange={this.handleChange}
             />
             <Description
@@ -48,7 +47,7 @@ export class ManageAddressModal extends React.Component<any, any> {
               type="text"
               readOnly={true}
               name="selected_address"
-              value={manage_address}
+              value={'test'}
             />
 
             <Confirm
@@ -66,12 +65,12 @@ export class ManageAddressModal extends React.Component<any, any> {
 
 
   onCancel() {
-    this.props.resetTransferProcess();
+    // this.props.resetTransferProcess();
   }
 
 
 onConfirm() {
-    this.props.confirmTransfer(metaData);
+  // this.props.confirmTransfer(metaData);
 }
 
 

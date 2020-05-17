@@ -44,8 +44,6 @@ interface SettingsProps {
   miningStatus: () => void;
   title: string;
   description: string;
-  selected_address: string;
-  checked: boolean;
 }
 
 const options: ThemeOption[] = [
@@ -78,11 +76,6 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
     value: "",
     node: "remote",
     balance: "United States Dollars",
-    showModal: false,
-    selected_address: "",
-    manage_address: "",
-    manage_name: "",
-    checked: false,
   };
 
   componentDidMount() {
@@ -223,7 +216,7 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
             onClick={this.handleClick}
           />
         </Form>
-        <Header
+       {/*  <Header
           title="Balances "
           description="Select your desired balances view and reference pair"
         />
@@ -243,7 +236,7 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
           value={"Canadian Dollars"}
           options={balances}
           onClick={this.setBalance}
-        />
+        /> */}
 
         <Header
           title="Addresses"
@@ -266,16 +259,28 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
           title="Mining "
           description="Mine from your computer and earn Haven"
         />
-        <Container>
-          <Mining
-            mining={true}
-            status={
-              mining.active
-                ? `Mining with ${mining.speed} hashes per second`
-                : `${13} hps`
-            }
-          />
-        </Container>
+            <>
+            <Input
+              width={true}
+              label="Status"
+              placeholder="Mining Status"
+              type="text"
+              readOnly={true}
+              name="daemon_password"
+              value={
+                mining.active
+                  ? `Mining with ${mining.speed} hashes per second`
+                  : "Not Mining"
+              }
+            />
+            <Container>
+              <Footer
+                onClick={this.onMiningButtonClicked}
+                loading={false}
+                label={buttonLabel}
+              />
+            </Container>
+          </>
       </Body>
     );
   }

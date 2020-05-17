@@ -17,6 +17,18 @@ export function getAddressRPC(params = { account_index: 0 }) {
   return callRpc("get_address", params);
 }
 
+export function createAddressRPC(label: string = "") {
+  const params = {account_index:0, label};
+    return callRpc('create_address', params);
+}
+
+export function labelAdress(label: string, minor: number) {
+  const major = 0;
+  const params = {index:{major, minor}, label};
+  return callRpc('label_address', params);
+
+}
+
 export function getBalanceRPC(params: object) {
   return callRpc("get_balance", params);
 }
