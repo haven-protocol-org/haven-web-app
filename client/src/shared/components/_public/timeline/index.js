@@ -38,29 +38,48 @@ const Content = () => {
             </Description>
           </Data>
         </Cell>
-        <TimelineSeparator progress="incomplete" />
-      </Container>
-      {/*
-        // Section
-        */}
-      <Container>
-        <Heading>Q1 2020</Heading>
+        <TimelineSeparator progress="complete" />
         <Cell>
-          <Complete>
-            <Label>Complete</Label>
-          </Complete>
+          <Progress>
+            <Label>Progress</Label>
+          </Progress>
           <Data>
-            <Title>Implement Haven Daemon 2.0 Testnet</Title>
+            <Title incomplete>Release Additional xAssets</Title>
             <Description>
-              This updated version allows transaction prices to be confirmed at
-              the initiation of the transaction rather than the time a block is
-              mined. This provides a more accurate mechanism for users’ exchange
-              between XHV and xUSD. The new daemon also enables xUSD supply
-              transparency and the addition of future xAssets.
+              After xUSD has been released and the network is proven to be
+              stable and secure, we will look at releasing additional xAssets
+              (xBTC, xEUR etc) over time.
             </Description>
           </Data>
         </Cell>
-        <TimelineSeparator progress="complete" />
+        <TimelineSeparator progress="incomplete" />
+        <Cell>
+          <Progress>
+            <Label>Progress</Label>
+          </Progress>
+          <Data>
+            <Title incomplete>Deploy Additional Pricing Oracles</Title>
+            <Description>
+              As part of the ongoing development of the Haven network, we intend
+              to work with several carefully chosen third-party providers to
+              integrate multiple decentralized pricing oracles. These oracles
+              will provide the necessary price feeds for xAsset exchange
+              functions in the Haven Vault.
+              <br />
+              <br />
+              We have now integrated Chainlink, the first of our independent
+              oracle price feeds on the network. They are considered one the
+              most respected oracle providers in the space and will bring a
+              robust solution as a step towards our goal of having multiple
+              providers.
+            </Description>
+          </Data>
+        </Cell>
+      </Container>
+
+      <Container>
+        <Heading>Q1 2020</Heading>
+
         <Cell>
           <Progress>
             <Label>Progress</Label>
@@ -93,26 +112,17 @@ const Content = () => {
           </Data>
         </Cell>
         <TimelineSeparator progress="incomplete" />
-
         <Cell>
           <Progress>
             <Label>Progress</Label>
           </Progress>
           <Data>
-            <Title incomplete>Deploy Additional Pricing Oracles</Title>
+            <Title incomplete>Additional Vault Functionality</Title>
             <Description>
-              As part of the ongoing development of the Haven network, we intend
-              to work with several carefully chosen third-party providers to
-              integrate multiple decentralized pricing oracles. These oracles
-              will provide the necessary price feeds for xAsset exchange
-              functions in the Haven Vault.
-              <br />
-              <br />
-              We have now integrated Chainlink, the first of our independent
-              oracle price feeds on the network. They are considered one the
-              most respected oracle providers in the space and will bring a
-              robust solution as a step towards our goal of having multiple
-              providers.
+              This will be a continuous process as we receive feedback from
+              users. It will add to our existing list of potential features
+              already proposed by the team and community during development and
+              testnet.
             </Description>
           </Data>
         </Cell>
@@ -142,34 +152,6 @@ const Content = () => {
           </Data>
         </Cell>
         <TimelineSeparator progress="incomplete" />
-        <Cell>
-          <Progress>
-            <Label>Progress</Label>
-          </Progress>
-          <Data>
-            <Title incomplete>Release Additional xAssets</Title>
-            <Description>
-              After xUSD has been released and the network is proven to be
-              stable and secure, we will look at releasing additional xAssets
-              (xBTC, xEUR etc) over time.
-            </Description>
-          </Data>
-        </Cell>
-        <TimelineSeparator progress="incomplete" />
-        <Cell>
-          <Progress>
-            <Label>Progress</Label>
-          </Progress>
-          <Data>
-            <Title incomplete>Additional Vault Functionality</Title>
-            <Description>
-              This will be a continuous process as we receive feedback from
-              users. It will add to our existing list of potential features
-              already proposed by the team and community during development and
-              testnet.
-            </Description>
-          </Data>
-        </Cell>
       </Container>
 
       <Container>
