@@ -13,7 +13,7 @@ import {
   Data,
   Progress,
   Wrapper,
-  List
+  List,
 } from "./styles";
 
 import TimelineSeparator from "../timeline-separator/index.js";
@@ -22,29 +22,65 @@ const Content = () => {
   return (
     <Wrapper>
       <Container>
-        <Heading>Q1 2020</Heading>
+        <Heading>Q2 2020</Heading>
         <Cell>
           <Complete>
             <Label>Progress</Label>
           </Complete>
           <Data>
-            <Title incomplete>Implement Haven Daemon 2.0 Testnet</Title>
+            <Title complete>Implement Haven Daemon 2.0 Testnet</Title>
             <Description>
-              The final phase of the xUSD testnet before launch is the testing
-              of a new Haven daemon. This updated version allows transaction
-              prices to be confirmed at the initiation of the transaction rather
-              than the time a block is mined. This provides a more accurate
-              mechanism for users’ exchange between XHV and xUSD. The new daemon
-              also enables xUSD supply transparency and the addition of future
-              xAssets.
+              This updated version allows transaction prices to be confirmed at
+              the initiation of the transaction rather than the time a block is
+              mined. This provides a more accurate mechanism for users’ exchange
+              between XHV and xUSD. The new daemon also enables xUSD supply
+              transparency and the addition of future xAssets.
             </Description>
           </Data>
         </Cell>
         <TimelineSeparator progress="incomplete" />
+      </Container>
+      {/*
+        // Section
+        */}
+      <Container>
+        <Heading>Q1 2020</Heading>
         <Cell>
           <Complete>
-            <Label>Progress</Label>
+            <Label>Complete</Label>
           </Complete>
+          <Data>
+            <Title>Implement Haven Daemon 2.0 Testnet</Title>
+            <Description>
+              This updated version allows transaction prices to be confirmed at
+              the initiation of the transaction rather than the time a block is
+              mined. This provides a more accurate mechanism for users’ exchange
+              between XHV and xUSD. The new daemon also enables xUSD supply
+              transparency and the addition of future xAssets.
+            </Description>
+          </Data>
+        </Cell>
+        <TimelineSeparator progress="complete" />
+        <Cell>
+          <Progress>
+            <Label>Progress</Label>
+          </Progress>
+          <Data>
+            <Title incomplete>Release Haven Codebase</Title>
+            <Description>
+              Upon launch of xUSD to mainnet, we will open-source the entire
+              Haven codebase, including xUSD and xAsset functionality, to allow
+              anyone who wishes to start building further Haven infrastructure
+              or additional utilities.
+            </Description>
+          </Data>
+        </Cell>
+        <TimelineSeparator progress="incomplete" />
+
+        <Cell>
+          <Progress>
+            <Label>Progress</Label>
+          </Progress>
           <Data>
             <Title incomplete>Launch of xUSD to Mainnet</Title>
             <Description>
@@ -57,54 +93,34 @@ const Content = () => {
           </Data>
         </Cell>
         <TimelineSeparator progress="incomplete" />
+
         <Cell>
-          <Complete>
+          <Progress>
             <Label>Progress</Label>
-          </Complete>
-          <Data>
-            <Title incomplete>Release Haven Codebase</Title>
-            <Description>
-              Upon launch of xUSD to mainnet, we will open-source the entire
-              Haven codebase, including xUSD and xAsset functionality, to allow
-              anyone who wishes to start building further Haven infrastructure
-              or additional utilities.
-            </Description>
-          </Data>
-        </Cell>
-        <TimelineSeparator progress="incomplete" />
-        <Cell>
-          <Complete>
-            <Label>Progress</Label>
-          </Complete>
+          </Progress>
           <Data>
             <Title incomplete>Deploy Additional Pricing Oracles</Title>
             <Description>
               As part of the ongoing development of the Haven network, we intend
               to work with several carefully chosen third-party providers to
               integrate multiple decentralized pricing oracles. These oracles
-              will provide the necessary price feeds for xUSD exchange functions
-              in the Haven Vault.
+              will provide the necessary price feeds for xAsset exchange
+              functions in the Haven Vault.
               <br />
               <br />
-              We will likely launch xUSD with the Haven oracle currently being
-              used in the testnet, and then proceed to decentralize this part of
-              the network. Deploying multiple oracles will give users greater
-              confidence in the network and the accuracy of pricing information.
-              <br />
-              <br />
-              While we continue to plan with the Zel team, this work has been
-              put on hold due to the resources required to develop a Zel oracle
-              solution. This will not impact the timing of xUSD mainnet launch
-              and we are actively working with other data providers to develop
-              additional oracle solutions.
+              We have now integrated Chainlink, the first of our independent
+              oracle price feeds on the network. They are considered one the
+              most respected oracle providers in the space and will bring a
+              robust solution as a step towards our goal of having multiple
+              providers.
             </Description>
           </Data>
         </Cell>
         <TimelineSeparator progress="incomplete" />
         <Cell>
-          <Complete>
+          <Progress>
             <Label>Progress</Label>
-          </Complete>
+          </Progress>
           <Data>
             <Title incomplete>Continue DeFi Planning</Title>
             <Description>
@@ -127,24 +143,23 @@ const Content = () => {
         </Cell>
         <TimelineSeparator progress="incomplete" />
         <Cell>
-          <Complete>
+          <Progress>
             <Label>Progress</Label>
-          </Complete>
+          </Progress>
           <Data>
             <Title incomplete>Release Additional xAssets</Title>
             <Description>
               After xUSD has been released and the network is proven to be
               stable and secure, we will look at releasing additional xAssets
-              (xBTC, xEUR etc) over time. NOTE: This will not necessarily be
-              carried out in Q1.
+              (xBTC, xEUR etc) over time.
             </Description>
           </Data>
         </Cell>
         <TimelineSeparator progress="incomplete" />
         <Cell>
-          <Complete>
+          <Progress>
             <Label>Progress</Label>
-          </Complete>
+          </Progress>
           <Data>
             <Title incomplete>Additional Vault Functionality</Title>
             <Description>
