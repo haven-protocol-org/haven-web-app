@@ -9,7 +9,7 @@ import {
   Title,
   Heading,
   Important,
-  Wrapper
+  Wrapper,
 } from "./styles";
 
 const English = () => {
@@ -126,7 +126,7 @@ const English = () => {
             This is the simplest method for those using computers who do not
             wish to run their own node.
           </Description>
-          <Title>GUI Vault (Graphical User Interface)</Title>
+          <Title>Haven Desktop Vault (GUI)</Title>
           <Description>
             This is downloaded as an app on your computer and provides a simple
             to use vault for storing XHV and all Haven xAssets.
