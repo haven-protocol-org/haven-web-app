@@ -9,11 +9,13 @@ import Body from "shared/components/_layout/body";
 import Header from "shared/components/_layout/header";
 import Form from "shared/components/_inputs/form";
 import Theme from "shared/components/_inputs/theme";
-import BalanceDropdown from "shared/components/_inputs/balances_dropdown";
 import AddressDropdown from "shared/components/_inputs/addresses_dropdown";
 import Input from "shared/components/_inputs/input";
 import Footer from "shared/components/_inputs/footer/index.js";
 import Mining from "../../../components/animation/index.js";
+
+// Implement later
+// import BalanceDropdown from "shared/components/_inputs/balances_dropdown";
 
 import { dark, light } from "assets/styles/themes.js";
 import { DesktopAppState } from "platforms/desktop/reducers";
@@ -180,11 +182,7 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
     alert("set state here");
   };
 
-  manageAddress = ({ name, address }: AddressOption) => {
-
-
-
-  };
+  manageAddress = ({ name, address }: AddressOption) => {};
 
   render() {
     const { value, balance } = this.state;
@@ -216,7 +214,7 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
             onClick={this.handleClick}
           />
         </Form>
-       {/*  <Header
+        {/*  <Header
           title="Balances "
           description="Select your desired balances view and reference pair"
         />
@@ -259,28 +257,28 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
           title="Mining "
           description="Mine from your computer and earn Haven"
         />
-            <>
-            <Input
-              width={true}
-              label="Status"
-              placeholder="Mining Status"
-              type="text"
-              readOnly={true}
-              name="daemon_password"
-              value={
-                mining.active
-                  ? `Mining with ${mining.speed} hashes per second`
-                  : "Not Mining"
-              }
+        <>
+          <Input
+            width={true}
+            label="Status"
+            placeholder="Mining Status"
+            type="text"
+            readOnly={true}
+            name="daemon_password"
+            value={
+              mining.active
+                ? `Mining with ${mining.speed} hashes per second`
+                : "Not Mining"
+            }
+          />
+          <Container>
+            <Footer
+              onClick={this.onMiningButtonClicked}
+              loading={false}
+              label={buttonLabel}
             />
-            <Container>
-              <Footer
-                onClick={this.onMiningButtonClicked}
-                loading={false}
-                label={buttonLabel}
-              />
-            </Container>
-          </>
+          </Container>
+        </>
       </Body>
     );
   }
