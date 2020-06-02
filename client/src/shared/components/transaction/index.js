@@ -10,7 +10,7 @@ import {
   Value,
   Column,
   Row,
-  Data
+  Data,
 } from "./styles";
 import { isMainnet } from "../../../constants/env";
 // import { isDevMode } from "../../constants/env";
@@ -25,7 +25,7 @@ export const Transaction = ({
   status,
   mempool,
   timeTillUnlocked,
-  fee = 0
+  fee = 0,
 }) => {
   const first = tx.substring(0, 4);
   const last = tx.substring(tx.length - 4);
@@ -66,7 +66,7 @@ export const Transaction = ({
           </Data>
 
           <Data>
-            <Value alignment="right">${inUsd.toFixed(2)}</Value>
+            <Value alignment="right">${inUsd.toFixed(4)}</Value>
             <Label alignment="right">Current Value</Label>
           </Data>
         </Row>
