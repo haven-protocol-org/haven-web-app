@@ -8,13 +8,14 @@ import Footer from "../../../components/_inputs/footer";
 import Form from "../../../components/_inputs/form";
 import Input from "../../../components/_inputs/input";
 import { Container } from "./styles";
-import {DesktopAppState} from "platforms/desktop/reducers";
+import { DesktopAppState } from "platforms/desktop/reducers";
 
 type AddressOption = { label: string; address: string };
 
 interface OwnAddressState {
   selected: AddressOption;
   copyButtonState: string;
+  secondTabLabel: string;
 }
 
 interface OwnAddressProps {
@@ -27,6 +28,7 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
   state: OwnAddressState = {
     selected: this.props.addressOptions[0],
     copyButtonState: "",
+    secondTabLabel: "",
   };
 
   componentDidMount() {
@@ -57,16 +59,15 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
 
   render() {
     const windowWidth = window.innerWidth;
-    // const hasMultipleAddresses
     return (
       <Fragment>
         <Form>
-            <AddressDropdown
+          <AddressDropdown
             width={true}
             label="Vault Address"
             placeholder="Select an Address"
             readOnly={true}
-            value={this.state.selected.label}
+            value={this.state.secondTabLabel}
             options={this.props.addressOptions}
             onClick={this.selectAddress}
             editable={false}
@@ -104,9 +105,6 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
   }
 }
 
-const mapStateToProps = (state: DesktopAppState
-) => ({
-
-});
+const mapStateToProps = (state: DesktopAppState) => ({});
 
 export const OwnAddress = connect(mapStateToProps, null)(OwnAddressContainer);

@@ -12,14 +12,6 @@ class Faq extends Component {
     window.scrollTo(0, 0);
   }
 
-  handleTranslate(language) {
-    return () => {
-      this.setState({
-        language: language
-      });
-    };
-  }
-
   render() {
     return (
       <Page>

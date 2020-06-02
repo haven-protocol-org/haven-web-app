@@ -11,7 +11,7 @@ import {
   Image,
   Route,
   Aspect,
-  Date
+  Date,
 } from "./styles";
 
 import b1 from "../../../../assets/blog/b_v1.svg";
@@ -25,11 +25,51 @@ import b8 from "../../../../assets/blog/b_v8.svg";
 import b9 from "../../../../assets/blog/b_v9.svg";
 import b10 from "../../../../assets/blog/b_v10.svg";
 import b11 from "../../../../assets/blog/b_v11.svg";
+import b12 from "../../../../assets/blog/b_v12.svg";
+import b13 from "../../../../assets/blog/b_v13.svg";
 
 const Content = () => {
   return (
     <Wrapper>
       <Container>
+        <Cell>
+          <Aspect>
+            <Image src={b13} />
+          </Aspect>
+          <Title>Haven Deep Dive: Cracking the xUSD Code</Title>
+          <Date>May 15, 2020 ·6 min read</Date>
+          <Description>
+            Neac (Haven’s Protocol Lead) and I have spent the last several
+            months..
+          </Description>
+
+          <Route
+            rel="noopener"
+            target="_blank"
+            href="https://medium.com/@havencurrency/haven-xusd-stagenet-testing-update-and-market-volatility-analysis-ad81b211d238"
+          >
+            Read More
+          </Route>
+        </Cell>
+        <Cell>
+          <Aspect>
+            <Image src={b12} />
+          </Aspect>
+          <Title>Haven xUSD Stagenet: Testing Update</Title>
+          <Date>March 16, 2020 ·3 min read</Date>
+          <Description>
+            In spite of global uncertainty and volatility, it has been a very
+            productive...
+          </Description>
+
+          <Route
+            rel="noopener"
+            target="_blank"
+            href="https://medium.com/@havencurrency/haven-xusd-stagenet-testing-update-and-market-volatility-analysis-ad81b211d238"
+          >
+            Read More
+          </Route>
+        </Cell>
         <Cell>
           <Aspect>
             <Image src={b11} />
