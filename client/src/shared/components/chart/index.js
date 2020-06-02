@@ -14,13 +14,13 @@ import {
   Title,
   PriceHistory,
   Value,
-  Label
+  Label,
 } from "./styles";
 import {
   PRICE_RANGE_DAY,
   PRICE_RANGE_MAX,
   PRICE_RANGE_MONTH,
-  PRICE_RANGE_YEAR
+  PRICE_RANGE_YEAR,
 } from "../../reducers/priceHistory";
 
 class Chart extends Component {
@@ -31,19 +31,20 @@ class Chart extends Component {
   state = {
     activeDay: "1M",
     hoveredValue: "",
-    hoveredLabel: ""
+    hoveredLabel: "",
+    currentlyHovering: "",
   };
 
   componentDidMount() {
     this.setState({
       hoveredValue: this.props.price,
-      hoveredLabel: "Last Price"
+      hoveredLabel: "Last Price",
     });
   }
 
-  toggleDay = time => {
+  toggleDay = (time) => {
     this.setState({
-      activeDay: time
+      activeDay: time,
     });
   };
 
@@ -54,12 +55,20 @@ class Chart extends Component {
     const label = dataPoint.xLabel;
     const value = dataPoint.yLabel;
 
-    this.setState(prev => ({
+    this.setState((prev) => ({
       ...prev,
       hoveredLabel: label,
-      hoveredValue: "$" + value.toFixed(4)
+      hoveredValue: "$" + value.toFixed(4),
+      currentlyHovering: true,
     }));
   }
+
+  onMouseLeave = () => {
+    this.setState({
+      hoveredValue: this.props.price,
+      hoveredLabel: "Last Price",
+    });
+  };
 
   render() {
     const { activeDay } = this.state;
@@ -128,48 +137,48 @@ class Chart extends Component {
           <Value>{this.state.hoveredValue}</Value>
           <Label>{this.state.hoveredLabel}</Label>
         </PriceHistory>
-        <Container>
+        <Container onMouseLeave={this.onMouseLeave}>
           <Line
-            ref={ref => (this.chartJs = ref)}
+            ref={(ref) => (this.chartJs = ref)}
             options={{
               hover: {
-                mode: "index"
+                mode: "index",
               },
+
               responsive: true,
               maintainAspectRatio: false,
               legend: {
-                display: false
+                display: false,
               },
               scales: {
                 yAxes: [
                   {
                     display: false,
                     gridLines: {
-                      display: false
+                      display: false,
                     },
-                    ticks: { callback: (value, index, values) => "$" + value }
-                  }
+                    ticks: { callback: (value, index, values) => "$" + value },
+                  },
                 ],
-                xAxes: [{ display: false }]
+                xAxes: [{ display: false }],
               },
               tooltips: {
                 enabled: false,
                 mode: "index",
                 intersect: false,
-                custom: data => this.onHoverChart(data)
-              }
+                custom: (data) => this.onHoverChart(data),
+              },
             }}
             data={{
               labels: this.props.labels,
-
               datasets: [
                 {
                   backgroundColor: "rgba(114, 137, 218, 0.20)",
                   borderColor: "rgba(114, 137, 218, 1)",
                   pointBackgroundColor: "rgba(114, 137, 218, 1)",
-                  data: this.props.prices
-                }
-              ]
+                  data: this.props.prices,
+                },
+              ],
             }}
           />
         </Container>

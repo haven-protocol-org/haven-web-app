@@ -41,7 +41,7 @@ export const Transaction = ({
     statusDetails = "Not confirmed yet";
   } else if (timeTillUnlocked) {
     statusDetails = "~ " + timeTillUnlocked;
-    statusLabel = "Unlocked in";
+    statusLabel = "Unlocks in";
   }
 
   const txExplorerLink = `https://explorer${
