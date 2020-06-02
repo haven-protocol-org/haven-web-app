@@ -15,7 +15,7 @@ import { NO_PRICE } from "shared/reducers/priceHistory";
 import {
   calcValue,
   convertToMoney,
-  convertBalanceForReading
+  convertBalanceForReading,
 } from "utility/utility";
 import { Ticker } from "shared/reducers/types";
 import { OFFSHORE_ENABLED } from "constants/env";
@@ -38,7 +38,7 @@ const Enabled_TICKER = [Ticker.xUSD, Ticker.XHV];
 
 class AssetsPage extends Component<AssetsProps, any> {
   state = {
-    forexPriceFetched: false
+    forexPriceFetched: false,
   };
 
   componentDidMount() {
@@ -64,10 +64,11 @@ class AssetsPage extends Component<AssetsProps, any> {
     const enabledTokens = token.filter((asset: any) =>
       Enabled_TICKER.includes(("x" + asset.ticker) as Ticker)
     );
-    return enabledTokens.map(data => {
+    return enabledTokens.map((data) => {
       const { token, ticker, symbol } = data;
 
       const xTicker = ("x" + ticker) as Ticker;
+
       const unlockedBalance = convertBalanceForReading(
         this.props.balances[xTicker].unlockedBalance
       );
@@ -75,6 +76,8 @@ class AssetsPage extends Component<AssetsProps, any> {
       const rates = this.props.rates;
       let price = rates[ticker] ? rates[ticker] : 0;
       price = symbol + price.toFixed(2);
+      console.log(token);
+      console.log("&&&&&&&&&&&&&&&&&&");
 
       return (
         <Cell
@@ -98,7 +101,7 @@ class AssetsPage extends Component<AssetsProps, any> {
         )
       : token;
 
-    return disabledTokens.map(data => {
+    return disabledTokens.map((data) => {
       const { token, ticker, symbol } = data;
 
       const rates = this.props.rates;
@@ -159,10 +162,9 @@ class AssetsPage extends Component<AssetsProps, any> {
 export const mapStateToProps = (state: DesktopAppState | WebAppState) => ({
   ...state.simplePrice,
   ...state.forex,
-  balances: state.xBalance
+  balances: state.xBalance,
 });
 
-export const Assets = connect(
-  mapStateToProps,
-  { getForex, getSimplePrice }
-)(AssetsPage);
+export const Assets = connect(mapStateToProps, { getForex, getSimplePrice })(
+  AssetsPage
+);
