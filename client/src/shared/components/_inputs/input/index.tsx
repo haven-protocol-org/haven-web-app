@@ -31,7 +31,7 @@ const Input = React.forwardRef<Ref, Props>(
       value,
       width,
       disabled,
-      readOnly = false
+      readOnly = false,
     },
     ref
   ) => {

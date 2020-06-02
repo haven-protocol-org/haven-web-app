@@ -63,7 +63,6 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
       <Fragment>
         <Form>
           <AddressDropdown
-            width={true}
             label="Vault Address"
             placeholder="Select an Address"
             readOnly={true}
