@@ -1,6 +1,6 @@
 import { THEME } from "./types";
 
-export const selectTheme = theme => ({
+export const selectTheme = (theme) => ({
   type: THEME,
-  payload: theme
+  payload: theme,
 });

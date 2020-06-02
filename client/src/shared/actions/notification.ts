@@ -1,7 +1,7 @@
 import {
   notificationList,
   ERROR,
-  SUCCESS
+  SUCCESS,
 } from "../../constants/notificationList";
 import { uuidv4 } from "../../utility/utility";
 import { ADD_NOTIFICATION, REMOVE_NOTIFICATION } from "./types";
@@ -9,7 +9,7 @@ import { Ticker } from "../reducers/types";
 
 export const addNotificationByKey = (key: any) => {
   const statusObj: any = notificationList.find(
-    notification => notification.key === key
+    (notification) => notification.key === key
   );
   statusObj.id = uuidv4();
   return { type: ADD_NOTIFICATION, payload: statusObj };
@@ -17,7 +17,7 @@ export const addNotificationByKey = (key: any) => {
 
 export const addNotificationByCode = (code: any) => {
   const statusObj: any = notificationList.find(
-    notification => notification.code === code
+    (notification) => notification.code === code
   );
   statusObj.id = uuidv4();
   return { type: ADD_NOTIFICATION, payload: statusObj };
@@ -44,13 +44,13 @@ export const removeNotification = (id: string) => {
 
 export const addErrorNotification = (error: any) => {
   const errorNotification = notificationList.find(
-    notification => notification.code === error.code
+    (notification) => notification.code === error.code
   );
 
   if (errorNotification)
     return {
       type: ADD_NOTIFICATION,
-      payload: { ...errorNotification, id: uuidv4() }
+      payload: { ...errorNotification, id: uuidv4() },
     };
 
   const message = error.message || error.err_msg;

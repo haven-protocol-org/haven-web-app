@@ -10,7 +10,7 @@ export const createKey = async () => {
     encKey = await window.crypto.subtle.generateKey(
       {
         name: "AES-GCM",
-        length: 256
+        length: 256,
       },
       true,
       ["encrypt", "decrypt"]
@@ -20,7 +20,7 @@ export const createKey = async () => {
   }
 };
 
-export const encrypt = async message => {
+export const encrypt = async (message) => {
   if (isDevMode()) {
     return message;
   }
@@ -31,14 +31,14 @@ export const encrypt = async message => {
   return await window.crypto.subtle.encrypt(
     {
       name: "AES-GCM",
-      iv: iv
+      iv: iv,
     },
     encKey,
     encMessage
   );
 };
 
-export const decrypt = async cipher => {
+export const decrypt = async (cipher) => {
   if (isDevMode()) {
     return cipher;
   }
@@ -46,7 +46,7 @@ export const decrypt = async cipher => {
   const decrypted = await window.crypto.subtle.decrypt(
     {
       name: "AES-GCM",
-      iv: iv
+      iv: iv,
     },
     encKey,
     cipher

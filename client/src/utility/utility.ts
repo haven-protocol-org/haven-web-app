@@ -87,7 +87,7 @@ export const uuidv4 = () => {
 
 export const getMessageOfError = (error: any) => {
   const errorNotification = notificationList.find(
-    notification => notification.code === error.code
+    (notification) => notification.code === error.code
   );
   return errorNotification ? errorNotification.message : error.message;
 };
@@ -103,7 +103,7 @@ export const calcValue = (amount: any, price: any) => {
   } else {
     return (amount * price).toLocaleString("en-US", {
       style: "currency",
-      currency: "USD"
+      currency: "USD",
     });
   }
 };

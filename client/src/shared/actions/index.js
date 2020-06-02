@@ -4,9 +4,9 @@ export * from "./prices";
 export * from "./theme";
 export * from "./forex";
 
-export const addPubAddress = address => ({
+export const addPubAddress = (address) => ({
   type: ADD_PUB_ADDRESS,
-  payload: address
+  payload: address,
 });
 
 export const closeWallet = () => {
