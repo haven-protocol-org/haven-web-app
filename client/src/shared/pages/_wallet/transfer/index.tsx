@@ -8,7 +8,6 @@ import Tab from "../../../components/tab";
 import Body from "../../../components/_layout/body";
 import Header from "../../../components/_layout/header";
 import { SendFunds } from "./send";
-// Relative Imports
 
 interface TransferOwnProps {
   sendFunds: (
