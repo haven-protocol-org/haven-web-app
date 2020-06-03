@@ -2,16 +2,16 @@ import {
   OPEN_WALLET_FAILED,
   OPEN_WALLET_FETCHING,
   OPEN_WALLET_SUCCEED,
-  UPDATE_SAVED_WALLETS
+  UPDATE_SAVED_WALLETS,
 } from "./types";
-import { getAddressRPC, openWalletRPC, storeWalletRPC } from "../ipc/rpc/rpc";
+import { openWalletRPC, storeWalletRPC } from "../ipc/rpc/rpc";
 import { CLOSE_WALLET } from "shared/actions/types";
 import { requestSavedWalletsIPC } from "../ipc/misc";
 
 export const closeWallet = () => {
   return (dispatch: any) => {
     storeWalletRPC()
-      .catch(err => console.log(err))
+      .catch((err) => console.log(err))
       // .then(() => closeWalletRPC())
       .then(() => dispatch(closeWalletSucceed()));
   };
@@ -25,7 +25,7 @@ export const getSavedWallets = () => {
   return (dispatch: any) => {
     requestSavedWalletsIPC()
       .then((wallets: string[]) => dispatch(updateSavedWallets(wallets)))
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   };
 };
 
@@ -56,5 +56,3 @@ const openWalletFailed = (error: object) => {
 const openWalletFetching = () => {
   return { type: OPEN_WALLET_FETCHING };
 };
-
-

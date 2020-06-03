@@ -11,19 +11,11 @@ import {
   Inner,
   Wrapper,
   Row,
-  Ticker
+  Ticker,
 } from "./styles";
 import chevron from "../../../assets/icons/chevron.svg";
 
-const CellDisabled = ({
-  tokenName,
-  ticker,
-  price,
-
-  balance,
-  fullwidth,
-
-}) => {
+const CellDisabled = ({ tokenName, ticker, price, balance, fullwidth }) => {
   return (
     <Container fullwidth={fullwidth}>
       <Column>
@@ -36,7 +28,10 @@ const CellDisabled = ({
       <Wrapper>
         <Column>
           <Title>{price}</Title>
-          <Subtitle>{"$"}{0.00}</Subtitle>
+          <Subtitle>
+            {"$"}
+            {0.0}
+          </Subtitle>
         </Column>
         <Inner>
           <Icon src={chevron} />

@@ -58,6 +58,8 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
   };
 
   render() {
+    console.log("RECIEVE PROPS", this.props);
+
     const windowWidth = window.innerWidth;
 
     if (this.props.addresses.length === 0) {
@@ -68,7 +70,6 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
       <Fragment>
         <Form>
           <AddressDropdown
-            width={true}
             label="Vault Address"
             placeholder="Select an Address"
             readOnly={true}

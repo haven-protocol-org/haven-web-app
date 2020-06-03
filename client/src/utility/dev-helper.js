@@ -10,11 +10,11 @@ export const loadState = () => {
   }
 };
 
-export const saveState = state => {
+export const saveState = (state) => {
   try {
     const serializedState = JSON.stringify({
       walletSession: state.walletSession,
-      address: state.address
+      address: state.address,
     });
     localStorage.setItem("state", serializedState);
   } catch (e) {
@@ -22,7 +22,7 @@ export const saveState = state => {
   }
 };
 
-export const logger = store => next => action => {
+export const logger = (store) => (next) => (action) => {
   console.group(action.type);
   console.info("dispatching", action);
   let result = next(action);

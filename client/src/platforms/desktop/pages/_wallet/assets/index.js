@@ -3,7 +3,6 @@ import { Assets } from "../../../../../shared/pages/_wallet/assets";
 
 export class AssetsDesktop extends Component {
   render() {
-    return <Assets/>;
+    return <Assets />;
   }
 }
-

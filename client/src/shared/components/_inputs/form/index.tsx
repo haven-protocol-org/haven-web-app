@@ -1,5 +1,5 @@
 // Library Imports
-import React, {FormEvent, FunctionComponent} from "react";
+import React, { FormEvent, FunctionComponent } from "react";
 // Relative Imports
 import { Container } from "./styles";
 // Relative Imports
@@ -9,11 +9,9 @@ type FormProps = {
 };
 
 const Form: FunctionComponent<FormProps> = ({ children, onSubmit }) => {
-
   if (onSubmit) {
-    return <Container onSubmit={onSubmit} >{children}</Container>;
-  }
-  else {
+    return <Container onSubmit={onSubmit}>{children}</Container>;
+  } else {
     return <Container>{children}</Container>;
   }
 };

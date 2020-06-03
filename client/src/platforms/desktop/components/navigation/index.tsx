@@ -8,15 +8,13 @@ import {
   Haven,
   Logo,
   Brand,
-  Button,
-  Logout,
   Tag,
-  Dropdown,
   State,
   Wrapper,
-  Network,
   Row,
   NetworkStatus,
+  Button,
+  Logout,
 } from "./styles";
 import Icon from "assets/haven.svg";
 import { closeWallet } from "../../actions";
@@ -24,7 +22,6 @@ import { selectIsLoggedIn } from "../../reducers/walletSession";
 import { NET_TYPE_NAME } from "constants/env";
 import { DesktopAppState } from "../../reducers";
 import { DaemonStates } from "../../reducers/daemonStates";
-import Arrow from "../../../../assets/icons/chevron.js";
 
 interface NavigationProps {
   daemonStates: DaemonStates;

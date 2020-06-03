@@ -9,11 +9,44 @@ import Body from "shared/components/_layout/body";
 import Header from "shared/components/_layout/header";
 import Form from "shared/components/_inputs/form";
 import Theme from "shared/components/_inputs/theme";
-import BalanceDropdown from "shared/components/_inputs/balances_dropdown";
 import AddressDropdown from "shared/components/_inputs/addresses_dropdown";
 import Input from "shared/components/_inputs/input";
 import Footer from "shared/components/_inputs/footer/index.js";
-import Mining from "../../../components/animation/index.js";
+
+// Implement later
+// import BalanceDropdown from "shared/components/_inputs/balances_dropdown";
+// import Mining from "../../../components/animation/index.js";
+
+// » This is the option to enable a user to choose a default balance view
+// const balances: BalanceOption[] = [
+//   { ticker: "USD", value: "United States Dollars", code: "$" },
+//   { ticker: "BTC", value: "Bitcoin", code: "₿" },
+//   { ticker: "XHV", value: "Haven", code: "Ħ" },
+//   { ticker: "--", value: "Hide", code: "-" },
+// ];
+
+// » This is the option to enable the balance dropdown
+/*  <Header
+  title="Balances "
+  description="Select your desired balances view and reference pair"
+/>
+
+<BalanceDropdown
+  label="Overview"
+  placeholder="USD Dollars"
+  name="balances"
+  value={balance}
+  options={balances}
+  onClick={this.setBalance}
+/>
+<BalanceDropdown
+  label="Reference Pair"
+  placeholder="Australian Dollars"
+  name="balances"
+  value={"Canadian Dollars"}
+  options={balances}
+  onClick={this.setBalance}
+/> */
 
 import { dark, light } from "assets/styles/themes.js";
 import { DesktopAppState } from "platforms/desktop/reducers";
@@ -49,13 +82,6 @@ interface SettingsProps {
 const options: ThemeOption[] = [
   { theme: "dark", value: "Dark Theme" },
   { theme: "light", value: "Light Theme" },
-];
-
-const balances: BalanceOption[] = [
-  { ticker: "USD", value: "United States Dollars", code: "$" },
-  { ticker: "BTC", value: "Bitcoin", code: "₿" },
-  { ticker: "XHV", value: "Haven", code: "Ħ" },
-  { ticker: "--", value: "Hide", code: "-" },
 ];
 
 const addresses: AddressOption[] = [
@@ -180,14 +206,10 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
     alert("set state here");
   };
 
-  manageAddress = ({ name, address }: AddressOption) => {
-
-
-
-  };
+  manageAddress = ({ name, address }: AddressOption) => {};
 
   render() {
-    const { value, balance } = this.state;
+    const { value } = this.state;
 
     const mining: MiningStatus = this.props.mining;
     let buttonLabel =
@@ -216,28 +238,6 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
             onClick={this.handleClick}
           />
         </Form>
-       {/*  <Header
-          title="Balances "
-          description="Select your desired balances view and reference pair"
-        />
-
-        <BalanceDropdown
-          label="Overview"
-          placeholder="USD Dollars"
-          name="balances"
-          value={balance}
-          options={balances}
-          onClick={this.setBalance}
-        />
-        <BalanceDropdown
-          label="Reference Pair"
-          placeholder="Australian Dollars"
-          name="balances"
-          value={"Canadian Dollars"}
-          options={balances}
-          onClick={this.setBalance}
-        /> */}
-
         <Header
           title="Addresses"
           description="Manage the sub-addresses connected to your account"
@@ -259,28 +259,28 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
           title="Mining "
           description="Mine from your computer and earn Haven"
         />
-            <>
-            <Input
-              width={true}
-              label="Status"
-              placeholder="Mining Status"
-              type="text"
-              readOnly={true}
-              name="daemon_password"
-              value={
-                mining.active
-                  ? `Mining with ${mining.speed} hashes per second`
-                  : "Not Mining"
-              }
+        <>
+          <Input
+            width={true}
+            label="Status"
+            placeholder="Mining Status"
+            type="text"
+            readOnly={true}
+            name="daemon_password"
+            value={
+              mining.active
+                ? `Mining with ${mining.speed} hashes per second`
+                : "Not Mining"
+            }
+          />
+          <Container>
+            <Footer
+              onClick={this.onMiningButtonClicked}
+              loading={false}
+              label={buttonLabel}
             />
-            <Container>
-              <Footer
-                onClick={this.onMiningButtonClicked}
-                loading={false}
-                label={buttonLabel}
-              />
-            </Container>
-          </>
+          </Container>
+        </>
       </Body>
     );
   }
