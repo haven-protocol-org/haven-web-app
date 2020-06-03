@@ -8,8 +8,6 @@ export const RESTORE_WALLET_BY_SEED_FETCHING =
 export const RESTORE_WALLET_BY_SEED_SUCCEED = "restore_wallet_by_seed_succeed";
 export const RESTORE_WALLET_BY_SEED_FAILED = "restore_wallet_by_seed_failed";
 
-export const ADD_PUB_ADDRESS = "get_address_failed";
-
 /*
 GET BALANCES
  */
@@ -106,3 +104,5 @@ export const MINING_STATUS_RESPONSE_FAILED = "mining_status_response";
 
 export const SELECT_FROM_TICKER = "select_from_ticker";
 export const SELECT_TO_TICKER = "select_to_ticker";
+
+

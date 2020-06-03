@@ -6,8 +6,8 @@ import {
 import { getAddressTxs } from "../api/api";
 import { selectCredentials } from "../reducers/account";
 import { core } from "../declarations/open_monero.service";
-import { getBalancesSucceed } from "./index";
-import { updateChainData } from "./index";
+import { getBalancesSucceed } from ".";
+import { updateChainData } from ".";
 import { decrypt } from "../../../utility/utility-encrypt";
 import { Ticker } from "../../../shared/reducers/types";
 import bigInt from "big-integer";

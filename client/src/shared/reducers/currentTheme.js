@@ -1,4 +1,4 @@
-import { THEME } from "../actions/types.js";
+import { THEME } from "../actions/types.ts";
 import { dark } from "../../assets/styles/themes.js";
 
 export default function(state = dark, action) {

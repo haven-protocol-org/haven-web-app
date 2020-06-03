@@ -5,7 +5,7 @@ import {
   REQUEST_MINING_START,
   REQUEST_MINING_STATUS,
   REQUEST_MINING_STOP
-} from "../actions/types";
+} from "./types";
 
 export const startMining = () => {
   const threads_count = 1;

@@ -20,6 +20,7 @@ import { DesktopAppState } from "../reducers";
 import { Ticker } from "shared/reducers/types";
 import { showModal } from "shared/actions/modal";
 import { MODAL_TYPE } from "shared/reducers/modal";
+import {selectPrimaryAddress} from "shared/reducers/address";
 
 export const setToTicker = (toTicker: Ticker | null) => {
   return { type: SELECT_TO_TICKER, payload: toTicker };
@@ -42,7 +43,7 @@ export function exchange(
 ): any {
   return (dispatch: any, getState: () => DesktopAppState) => {
     const address =
-        externAddress.trim() !== "" ? externAddress : getState().address.main;
+        externAddress.trim() !== "" ? externAddress : selectPrimaryAddress(getState().address);
 
     const params = createExchangeInputs(fromAmount, priority, address);
 
@@ -83,7 +84,7 @@ export function createExchange(
 ): any {
   return (dispatch: any, getState: () => DesktopAppState) => {
     const address =
-      externAddress.trim() !== "" ? externAddress : getState().address.main;
+      externAddress.trim() !== "" ? externAddress : selectPrimaryAddress(getState().address);
 
     const params = createExchangeInputs(fromAmount, priority, address);
 

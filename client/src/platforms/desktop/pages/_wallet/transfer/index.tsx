@@ -42,7 +42,7 @@ class TransferDesktopContainer extends Component<any, any> {
       //@ts-ignore
       <Transfer
         isProcessing={this.props.tx.isFetching}
-        // address={this.props.address}
+        addresses={this.props.address}
         sendFunds={this.onSendFunds}
       />
     );
@@ -50,7 +50,7 @@ class TransferDesktopContainer extends Component<any, any> {
 }
 
 export const mapStateToProps = (state: DesktopAppState) => ({
-  address: state.address.main,
+  address: state.address,
   transferSucceed: transferSucceed(state),
   tx: state.transferProcess,
 });

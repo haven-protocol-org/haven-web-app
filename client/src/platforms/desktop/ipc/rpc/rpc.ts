@@ -22,7 +22,7 @@ export function createAddressRPC(label: string = "") {
     return callRpc('create_address', params);
 }
 
-export function labelAdress(label: string, minor: number) {
+export function labelAdressRPC(label: string, minor: number) {
   const major = 0;
   const params = {index:{major, minor}, label};
   return callRpc('label_address', params);

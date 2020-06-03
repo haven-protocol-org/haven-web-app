@@ -4,7 +4,7 @@ import {
   RESTORE_WALLET_BY_SEED_SUCCEED
 } from "./types";
 import { restoreWalletRPC } from "../ipc/rpc/rpc";
-import { addPubAddress } from "../../../shared/actions";
+import {createAddressEntry} from "../../web/actions";
 
 export const restoreWallet = (seed, filename, password) => {
   return dispatch => {
@@ -19,7 +19,7 @@ export const restoreWallet = (seed, filename, password) => {
     restoreWalletRPC(params)
       .then(result => {
         dispatch(restoreWalletSucceed(filename));
-        dispatch(addPubAddress(result.address));
+        dispatch(createAddressEntry(result.address));
       })
       .catch(error => {
         console.log(error);

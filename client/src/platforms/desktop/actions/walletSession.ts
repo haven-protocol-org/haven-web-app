@@ -7,7 +7,6 @@ import {
 import { getAddressRPC, openWalletRPC, storeWalletRPC } from "../ipc/rpc/rpc";
 import { CLOSE_WALLET } from "shared/actions/types";
 import { requestSavedWalletsIPC } from "../ipc/misc";
-import { addPubAddress } from "shared/actions";
 
 export const closeWallet = () => {
   return (dispatch: any) => {

@@ -1,7 +1,7 @@
 import { AnyAction, combineReducers } from "redux";
 // Reducers
 import theme from "shared/reducers/currentTheme.js";
-import address from "./address";
+import address from "../../../shared/reducers/address";
 import { transferProcess } from "./transferProcess";
 import { priceHistory } from "shared/reducers/priceHistory";
 import notification from "shared/reducers/notification";

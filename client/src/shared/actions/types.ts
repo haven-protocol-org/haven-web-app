@@ -66,3 +66,6 @@ export const UPDATE_CHAIN_DATA = "update_chain_data";
 
 export const SHOW_MODAL = "show_modal";
 export const HIDE_MODAL = "hide_modal";
+
+
+export const GET_ADDRESS_SUCCEED = "get_address_succeed";

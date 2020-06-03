@@ -9,24 +9,24 @@ import Form from "../../../components/_inputs/form";
 import Input from "../../../components/_inputs/input";
 import { Container } from "./styles";
 import { DesktopAppState } from "platforms/desktop/reducers";
+import {AddressEntry} from "shared/reducers/address";
 
-type AddressOption = { label: string; address: string };
 
 interface OwnAddressState {
-  selected: AddressOption;
+  selected: AddressEntry;
   copyButtonState: string;
   secondTabLabel: string;
 }
 
 interface OwnAddressProps {
-  addressOptions: AddressOption[];
+  addresses: AddressEntry[];
 }
 
 class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
   private addressValue: any = React.createRef();
 
   state: OwnAddressState = {
-    selected: this.props.addressOptions[0],
+    selected: this.props.addresses[0],
     copyButtonState: "",
     secondTabLabel: "",
   };
@@ -35,7 +35,7 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
     window.scrollTo(0, 0);
   }
 
-  selectAddress = (selected: AddressOption) => {
+  selectAddress = (selected: AddressEntry) => {
     this.setState({
       selected,
     });
@@ -59,6 +59,11 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
 
   render() {
     const windowWidth = window.innerWidth;
+
+    if (this.props.addresses.length === 0) {
+      return null;
+    }
+
     return (
       <Fragment>
         <Form>
@@ -68,7 +73,7 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
             placeholder="Select an Address"
             readOnly={true}
             value={this.state.secondTabLabel}
-            options={this.props.addressOptions}
+            options={this.props.addresses}
             onClick={this.selectAddress}
             editable={false}
           />
