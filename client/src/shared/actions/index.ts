@@ -6,7 +6,7 @@ export * from "./theme";
 export * from "./forex";
 
 
-export const getAddressSucceed = (payload: AddressEntry[]) => ({action: GET_ADDRESS_SUCCEED, payload});
+export const getAddressSucceed = (payload: AddressEntry[]) => ({type: GET_ADDRESS_SUCCEED, payload});
 
 
 export const closeWallet = () => {

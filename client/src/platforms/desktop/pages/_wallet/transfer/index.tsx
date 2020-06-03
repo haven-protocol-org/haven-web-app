@@ -11,7 +11,7 @@ class TransferDesktopContainer extends Component<any, any> {
   private sendTicker: Ticker = Ticker.XHV;
 
   componentDidMount(): void {
-    if (!this.props.address) {
+    if (this.props.address.length === 0) {
       this.props.getOwnAddress();
     }
   }
