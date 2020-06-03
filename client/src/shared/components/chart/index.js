@@ -37,7 +37,7 @@ class Chart extends Component {
 
   componentDidMount() {
     this.setState({
-      hoveredValue: this.props.price,
+      hoveredValue: "$" + this.props.price,
       hoveredLabel: "Last Price",
     });
   }
@@ -65,7 +65,7 @@ class Chart extends Component {
 
   onMouseLeave = () => {
     this.setState({
-      hoveredValue: this.props.price,
+      hoveredValue: "$" + this.props.price,
       hoveredLabel: "Last Price",
     });
   };
