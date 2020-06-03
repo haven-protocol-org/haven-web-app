@@ -4,7 +4,7 @@ import {
   labelAdressRPC,
 } from "platforms/desktop/ipc/rpc/rpc";
 import { addErrorNotification } from "shared/actions/notification";
-import { getAddressSucceed } from "shared/actions";
+import { getAddressSucceed } from "../../../shared/actions";
 
 export const getAddress = () => {
   return (dispatch: any) => {
