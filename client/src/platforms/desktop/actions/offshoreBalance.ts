@@ -3,7 +3,7 @@ import { Balance, XBalance } from "../../../shared/reducers/xBalance";
 import {
   GET_OFFSHORE_BALANCE_FAILED,
   GET_OFFSHORE_BALANCE_FETCHING,
-  GET_OFFSHORE_BALANCE_SUCCEED
+  GET_OFFSHORE_BALANCE_SUCCEED,
 } from "./types";
 import bigInt from "big-integer";
 
@@ -21,7 +21,7 @@ const getOffshoreBalanceSucceed = (res: any) => {
   const balance: Balance = {
     unlockedBalance: bigInt(res.unlocked_balance),
     lockedBalance: bigInt(res.balance).subtract(res.unlocked_balance),
-    balance: bigInt(res.balance)
+    balance: bigInt(res.balance),
   };
 
   const xBalance: XBalance = { xUSD: balance };

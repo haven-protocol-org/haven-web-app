@@ -1,7 +1,7 @@
 import { AnyAction } from "redux";
 import {
   GET_BLOCK_HEADER_EXCHANGE_RATE_FETCH,
-  GET_BLOCK_HEADER_EXCHANGE_RATE_SUCCEED
+  GET_BLOCK_HEADER_EXCHANGE_RATE_SUCCEED,
 } from "./types";
 import { getLastBlockHeaderRPC } from "../ipc/rpc/rpc";
 import { BlockHeaderRate } from "../reducers/blockHeaderExchangeRates";
@@ -16,7 +16,7 @@ export const getLastBlockHeader = () => {
       .then((priceEntry: BlockHeaderRate) =>
         dispatch(getLastBlockerHeaderSucceed(priceEntry))
       )
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   };
 };
 

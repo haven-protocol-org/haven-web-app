@@ -4,7 +4,7 @@ import {
   MINING_STATUS_RESPONSE_FAILED,
   REQUEST_MINING_START,
   REQUEST_MINING_STATUS,
-  REQUEST_MINING_STOP
+  REQUEST_MINING_STOP,
 } from "./types";
 
 export const startMining = () => {
@@ -37,8 +37,8 @@ export const miningStatus = () => {
     dispatch({ type: REQUEST_MINING_STATUS });
 
     miningStatusRPC()
-      .then(res => dispatch(getMiningStatusSucceed(res)))
-      .catch(err => dispatch(getMiningStatusFailed(err)));
+      .then((res) => dispatch(getMiningStatusSucceed(res)))
+      .catch((err) => dispatch(getMiningStatusFailed(err)));
   };
 };
 

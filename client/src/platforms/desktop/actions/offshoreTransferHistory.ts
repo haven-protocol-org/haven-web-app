@@ -2,7 +2,7 @@ import { getOffshoreTransfersRPC } from "../ipc/rpc/rpc";
 import {
   GET_OFFSHORE_TRANSFERS_FAILED,
   GET_OFFSHORE_TRANSFERS_FETCHING,
-  GET_OFFSHORE_TRANSFERS_SUCCEED
+  GET_OFFSHORE_TRANSFERS_SUCCEED,
 } from "./types";
 import { mergeAndSort } from "./transferHistory";
 import { XTransferListAsset } from "../../../shared/reducers/xTransferList";
