@@ -44,14 +44,14 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
     const { address } = this.state.selected;
 
     this.setState({
-      copyButtonState: "Copied Address",
+      copyButtonState: "Copied...",
     });
 
     clipboard.writeText(address);
 
     setTimeout(() => {
       this.setState({
-        copyButtonState: "Copy Address",
+        copyButtonState: "Copy",
       });
     }, 1000);
   };
