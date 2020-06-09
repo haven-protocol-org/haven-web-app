@@ -184,7 +184,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
         </Form>
         <Container>
           <TransferSummary
-            paymentId={payment_id === "" ? "--" : payment_id}
+            paymentId={payment_id === "" ? "none" : payment_id}
             recipientAddress={
               recipient_address === "" ? "--" : recipient_address
             }
