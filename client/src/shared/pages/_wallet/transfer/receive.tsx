@@ -63,11 +63,6 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
       return null;
     }
 
-    const { address, label } = this.props.addresses[0];
-    const first = address.substring(0, 4);
-    const last = address.substring(address.length - 4);
-    const truncated = first + "...." + last;
-
     return (
       <Fragment>
         <Form>
@@ -75,7 +70,7 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
             label="Vault Address"
             placeholder="Select an Address"
             readOnly={true}
-            value={label}
+            value={this.props.addresses[0].label}
             options={this.props.addresses}
             onClick={this.selectAddress}
             editable={false}
