@@ -41,6 +41,7 @@ interface TransferState {
   send_amount: string;
   recipient_address: string;
   payment_id: string;
+  amountError: string;
 }
 
 type TransferProps = TransferOwnProps & TransferReduxProps;
@@ -53,10 +54,14 @@ class TransferContainer extends Component<TransferProps, TransferState> {
     send_amount: "",
     recipient_address: "",
     payment_id: "",
+    amountError: "",
   };
 
   componentDidMount() {
     window.scrollTo(0, 0);
+    this.setState({
+      selectedAsset: options[0],
+    });
   }
 
   handleChange = (event: any) => {
@@ -96,6 +101,27 @@ class TransferContainer extends Component<TransferProps, TransferState> {
     }
   };
 
+  setMaxAmount = () => {
+    const { selectedAsset, send_amount } = this.state;
+
+    let availableBalance = null;
+    if (selectedAsset) {
+      availableBalance = convertBalanceForReading(
+        this.props.xBalances[selectedAsset.ticker].unlockedBalance
+      );
+    }
+
+    if (availableBalance != null) {
+      this.setState({
+        send_amount: availableBalance,
+      });
+    } else {
+      this.setState({
+        amountError: "Select an asset",
+      });
+    }
+  };
+
   render() {
     const {
       selectedAsset,
@@ -131,7 +157,8 @@ class TransferContainer extends Component<TransferProps, TransferState> {
             options={options}
             onClick={this.setSendAsset}
           />
-          <Input
+          <InputButton
+            // @ts-ignore
             label={
               availableBalance
                 ? `Amount (Avail. ${availableBalance})`
@@ -139,9 +166,12 @@ class TransferContainer extends Component<TransferProps, TransferState> {
             }
             placeholder="Enter amount"
             type="number"
+            error={this.state.amountError}
             name="send_amount"
             value={send_amount}
             onChange={this.handleChange}
+            button="Max"
+            onClick={this.setMaxAmount}
           />
           {windowWidth < 1380 ? (
             <Fragment>
