@@ -15,9 +15,9 @@ const Placeholder = ({ platform }) => {
       <Information>
         {platform === "desktop" ? (
           <div>
-            Upon clicking <strong>"Continue"</strong> your Haven Vault Seed
-            Phrase will be revealed. Have a Password Manager ready and ensure
-            you're not on public or unsecured wifi.
+            Before clicking <strong>"Continue"</strong> please have a Pen or
+            Password Manager ready and ensure you're not using public or
+            unsecured wifi.
           </div>
         ) : (
           <div>
