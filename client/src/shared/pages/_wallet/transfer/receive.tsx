@@ -58,7 +58,6 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
   };
 
   render() {
-    console.log("RECIEVE PROPS", this.props);
 
     const windowWidth = window.innerWidth;
 

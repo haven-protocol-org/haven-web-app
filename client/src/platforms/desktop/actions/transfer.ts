@@ -21,6 +21,36 @@ import { Ticker } from "shared/reducers/types";
 import { hideModal, showModal } from "shared/actions/modal";
 import { MODAL_TYPE } from "shared/reducers/modal";
 import { convertBalanceForReading } from "utility/utility";
+import {getTransfers} from "platforms/desktop/actions/transferHistory";
+import {getBalance} from "platforms/desktop/actions/balance";
+
+
+export const transfer = (
+    address: string,
+    amount: number,
+    paymentId: string
+) => {
+  amount = amount * 1e12;
+  return (dispatch: any) => {
+    dispatch(transferFetch());
+    const params: any = { destinations: [{ address, amount }], ring_size: 11 };
+
+    if (paymentId !== "") {
+      params["payment_id"] = paymentId;
+    }
+
+    transferRPC(params)
+        .then(result => {
+          dispatch(transferSucceed(result));
+          dispatch(addNotificationByKey(TRANSFER_SUCCEED_MESSAGE));
+          dispatch(getTransfers());
+          dispatch(getBalance());
+          dispatch(getOffshoreTransfers());
+          dispatch(getOffshoreBalance());
+        })
+        .catch(error => dispatch(manageTransferFailed(error)));
+  };
+};
 
 export const createTransfer = (
   address: string,
@@ -67,6 +97,8 @@ export const confirmTransfer = (hex: string) => {
         dispatch(addNotificationByKey(TRANSFER_SUCCEED_MESSAGE));
         dispatch(getOffshoreTransfers());
         dispatch(getOffshoreBalance());
+        dispatch(getTransfers());
+        dispatch(getBalance());
       })
       .catch(error => dispatch(manageTransferFailed(error)))
       .finally(() => dispatch(hideModal()));
@@ -81,8 +113,8 @@ export const createTXInputs = (
   const params: any = {
     destinations: [{ address, amount }],
     ring_size: 11,
-    do_not_relay: true,
-    get_tx_metadata: true
+   //  do_not_relay: true,
+   // get_tx_metadata: true
   };
 
   if (paymentId !== "") {

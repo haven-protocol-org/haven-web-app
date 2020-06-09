@@ -33,7 +33,6 @@ rpcKeyHandler.port = config().wallet.port;
 export const showKey = (key: KeyType) => {
 
 
-    console.log('show key called');
 
     switch(key) {
 
@@ -100,7 +99,6 @@ const fetchKey = async(title: string, keyType: string) => {
     objRequest.params.key_type = keyType;
     const response = await rpcKeyHandler.sendRequest(objRequest);
 
-    console.log(response);
     if (response.data.result) {
 
         const key = response.data.result.key;
