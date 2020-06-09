@@ -183,16 +183,6 @@ class TransferContainer extends Component<TransferProps, TransferState> {
           )}
         </Form>
         <Container>
-          /*
-          <TransferSummary
-            paymentId={payment_id === "" ? "none" : payment_id}
-            recipientAddress={
-              recipient_address === "" ? "--" : recipient_address
-            }
-            transferAsset={selectedAsset === null ? "--" : selectedAsset.ticker}
-            transferAmount={send_amount === "" ? "--" : send_amount}
-          />
-          */
           <Footer
             onClick={() => this.handleSubmit()}
             loading={this.props.isProcessing}
@@ -216,3 +206,14 @@ export const SendFunds = connect<TransferReduxProps, {}, TransferOwnProps>(
   mapStateToProps,
   {}
 )(TransferContainer);
+
+/**
+<TransferSummary
+  paymentId={payment_id === "" ? "none" : payment_id}
+  recipientAddress={
+    recipient_address === "" ? "--" : recipient_address
+  }
+  transferAsset={selectedAsset === null ? "--" : selectedAsset.ticker}
+  transferAmount={send_amount === "" ? "--" : send_amount}
+/>
+**/
