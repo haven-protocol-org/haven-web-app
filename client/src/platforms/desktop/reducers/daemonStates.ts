@@ -3,7 +3,7 @@ import { UPDATE_DAEMON_STATES } from "../actions/types";
 
 export enum NodeLocation {
   Local,
-  Remote
+  Remote,
 }
 
 export interface NodeState extends RunningState {
@@ -26,7 +26,7 @@ export interface DaemonStates {
 
 const INITAL_STATE: DaemonStates = {
   node: { isRunning: false },
-  wallet: { isRunning: false }
+  wallet: { isRunning: false },
 };
 
 export const daemonStates = (

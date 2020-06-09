@@ -4,10 +4,10 @@ import {
   EXCHANGE_CREATION_SUCCEED,
   EXCHANGE_FAILED,
   EXCHANGE_FETCHING,
-
-  EXCHANGE_RESET, EXCHANGE_SUCCEED,
+  EXCHANGE_RESET,
+  EXCHANGE_SUCCEED,
   SELECT_FROM_TICKER,
-  SELECT_TO_TICKER
+  SELECT_TO_TICKER,
 } from "../actions/types";
 import { AnyAction } from "redux";
 import { TxProcessInfo } from "./transferProcess";
@@ -15,7 +15,7 @@ import { Ticker } from "shared/reducers/types";
 
 export enum EXCHANGE_TYPE {
   Onshore,
-  Offshore
+  Offshore,
 }
 
 export interface ExchangeProcessInfo extends TxProcessInfo {
@@ -37,7 +37,7 @@ const INITIAL_STATE: ExchangeProcessInfo = {
   offshoreType: null,
   toTicker: Ticker.xUSD,
   fromTicker: Ticker.XHV,
-  metaData:""
+  metaData: "",
 };
 
 export const exchangeProcess = (
@@ -53,21 +53,22 @@ export const exchangeProcess = (
       return { ...state, ...action.payload, isFetching: true };
     case EXCHANGE_CREATION_SUCCEED:
       return {
-        ...state, ...action.payload,
+        ...state,
+        ...action.payload,
         created: true,
         isFetching: false,
       };
     case EXCHANGE_FETCHING:
-      return {...state, isFetching: true};
+      return { ...state, isFetching: true };
     case EXCHANGE_SUCCEED:
-      return {...state, isFetching: false, succeed: true};
+      return { ...state, isFetching: false, succeed: true };
     case EXCHANGE_FAILED:
     case EXCHANGE_CREATION_FAILED:
       return {
         ...state,
         isFetching: false,
         succeed: false,
-        error: action.payload
+        error: action.payload,
       };
     case EXCHANGE_RESET:
       return INITIAL_STATE;

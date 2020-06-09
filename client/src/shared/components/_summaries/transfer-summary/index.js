@@ -8,7 +8,7 @@ const TransferSummary = ({
   transferAsset,
   transferAmount,
   paymentId,
-  recipientAddress
+  recipientAddress,
 }) => {
   const first = recipientAddress.substring(0, 4);
   const last = recipientAddress.substring(recipientAddress.length - 4);
@@ -27,10 +27,12 @@ const TransferSummary = ({
         <Key>Recipient Address</Key>
         <Value>{recipientAddress === "--" ? "--" : truncated}</Value>
       </Row>
-      <Row>
-        <Key>Payment ID</Key>
-        <Value>{paymentId}</Value>
-      </Row>
+      {paymentId !== "none" && (
+        <Row>
+          <Key>Payment ID</Key>
+          <Value>{paymentId}</Value>
+        </Row>
+      )}
     </Container>
   );
 };

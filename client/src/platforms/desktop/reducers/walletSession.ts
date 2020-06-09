@@ -6,7 +6,7 @@ import {
   RESTORE_WALLET_BY_SEED_FETCHING,
   RESTORE_WALLET_BY_SEED_SUCCEED,
   UPDATE_SAVED_WALLETS,
-  VALIDATE_MNEMONIC_SUCCEED
+  VALIDATE_MNEMONIC_SUCCEED,
 } from "../actions/types";
 import { AnyAction } from "redux";
 import { DesktopAppState } from "./index";
@@ -29,10 +29,10 @@ const INITIAL_STATE: WalletSession = {
   savedWallets: null,
   isFetching: false,
   isWalletOpen: false,
-  error: null
+  error: null,
 };
 
-export const walletSession = function(
+export const walletSession = function (
   state = INITIAL_STATE,
   action: AnyAction
 ): WalletSession {
@@ -44,7 +44,7 @@ export const walletSession = function(
         error: action.payload,
         activeWallet: null,
         isFetching: false,
-        isWalletOpen: false
+        isWalletOpen: false,
       };
     case OPEN_WALLET_SUCCEED:
       return {
@@ -52,7 +52,7 @@ export const walletSession = function(
         error: null,
         isFetching: false,
         activeWallet: action.payload,
-        isWalletOpen: true
+        isWalletOpen: true,
       };
     case RESTORE_WALLET_BY_SEED_SUCCEED:
     case VALIDATE_MNEMONIC_SUCCEED:
@@ -63,7 +63,7 @@ export const walletSession = function(
         isWalletOpen: true,
         savedWallets: state.savedWallets
           ? [...state.savedWallets, action.payload]
-          : [action.payload]
+          : [action.payload],
       };
     case OPEN_WALLET_FETCHING:
     case RESTORE_WALLET_BY_SEED_FETCHING:

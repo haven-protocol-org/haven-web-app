@@ -9,8 +9,7 @@ import Form from "../../../components/_inputs/form";
 import Input from "../../../components/_inputs/input";
 import { Container } from "./styles";
 import { DesktopAppState } from "platforms/desktop/reducers";
-import {AddressEntry} from "shared/reducers/address";
-
+import { AddressEntry } from "shared/reducers/address";
 
 interface OwnAddressState {
   selected: AddressEntry;
@@ -27,7 +26,7 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
 
   state: OwnAddressState = {
     selected: this.props.addresses[0],
-    copyButtonState: "",
+    copyButtonState: "Copy",
     secondTabLabel: "",
   };
 
@@ -45,14 +44,14 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
     const { address } = this.state.selected;
 
     this.setState({
-      copyButtonState: "Copied Address",
+      copyButtonState: "Copied...",
     });
 
     clipboard.writeText(address);
 
     setTimeout(() => {
       this.setState({
-        copyButtonState: "Copy Address",
+        copyButtonState: "Copy",
       });
     }, 1000);
   };
@@ -69,18 +68,16 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
       <Fragment>
         <Form>
           <AddressDropdown
-            label="Vault Address"
-            placeholder="Select an Address"
+            label="Select Vault"
             readOnly={true}
-            value={this.state.secondTabLabel}
+            value={this.props.addresses[0].label}
             options={this.props.addresses}
             onClick={this.selectAddress}
             editable={false}
           />
           {windowWidth < 1380 ? (
             <Description
-              label="Haven Address"
-              placeholder="Select an address"
+              label="Selected Vault Address"
               width={true}
               value={this.state.selected.address}
               readOnly={true}
@@ -89,7 +86,7 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
           ) : (
             <Input
               ref={(textarea) => (this.addressValue = textarea)}
-              label="Haven Address"
+              label="Selected Vault Address"
               placeholder="Select an address"
               width={true}
               type={"text"}

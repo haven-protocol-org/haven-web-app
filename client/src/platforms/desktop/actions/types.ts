@@ -52,7 +52,6 @@ export const EXCHANGE_CREATION_FETCHING = "exchange_creation_fetching";
 export const EXCHANGE_CREATION_FAILED = "exchange_creation_failed";
 export const EXCHANGE_CREATION_SUCCEED = "exchange_creation_succeed";
 
-
 export const GET_TRANSFERS_FETCHING = "get_transfers_fetching";
 export const GET_TRANSFERS_SUCCEED = "get_transfers_succeed";
 export const GET_TRANSFERS_FAILED = "get_transfers_failed";
@@ -68,7 +67,6 @@ export const GET_BLOCK_HEIGHT_FAILED = "get_block_height_failed";
 export const START_REFRESH = "start_refresh";
 export const REFRESH_SUCCEED = "refresh_succeed";
 export const REFRESH_FAILED = "refresh_failed";
-
 
 export const EXCHANGE_RESET = "exchange_reset";
 
@@ -104,5 +102,3 @@ export const MINING_STATUS_RESPONSE_FAILED = "mining_status_response";
 
 export const SELECT_FROM_TICKER = "select_from_ticker";
 export const SELECT_TO_TICKER = "select_to_ticker";
-
-

@@ -2,7 +2,7 @@ import { getTransferRPC } from "../ipc/rpc/rpc";
 import {
   GET_TRANSFERS_FAILED,
   GET_TRANSFERS_FETCHING,
-  GET_TRANSFERS_SUCCEED
+  GET_TRANSFERS_SUCCEED,
 } from "./types";
 import { TransferType, XTransferList } from "shared/reducers/xTransferList";
 import { Ticker } from "shared/reducers/types";
@@ -25,17 +25,17 @@ export const getTransfers = () => {
 
 const getTransfersFetching = () => ({
   type: GET_TRANSFERS_FETCHING,
-  payload: { isFetching: true }
+  payload: { isFetching: true },
 });
 
 const getTransfersSucceed = (txListEntry: XTransferList) => ({
   type: GET_TRANSFERS_SUCCEED,
-  payload: txListEntry
+  payload: txListEntry,
 });
 
 const getTransfersFailed = (error: any) => ({
   type: GET_TRANSFERS_FAILED,
-  payload: error
+  payload: error,
 });
 
 const filterForDoubleEntries = (entries: any[] | undefined) => {
@@ -47,7 +47,7 @@ const filterForDoubleEntries = (entries: any[] | undefined) => {
     return (
       index ===
       entries.findIndex(
-        tempEntry =>
+        (tempEntry) =>
           tempEntry.txid === entry.txid && tempEntry.type === entry.type
       )
     );
@@ -71,7 +71,7 @@ const createTxListByCurrency = (txList: any) => {
 
   return {
     [Ticker.XHV]: xhvList,
-    [Ticker.xUSD]: xUSDList
+    [Ticker.xUSD]: xUSDList,
   };
 };
 

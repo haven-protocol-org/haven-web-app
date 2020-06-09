@@ -3,7 +3,7 @@ import {
   GET_BLOCK_INFO_SUCEED,
   REFRESH_FAILED,
   REFRESH_SUCCEED,
-  START_REFRESH
+  START_REFRESH,
 } from "../actions/types";
 import { AnyAction } from "redux";
 import { SyncState } from "shared/types/types";
@@ -20,7 +20,7 @@ const INITIAL_STATE: Chain = {
   walletHeight: 0,
   chainHeight: 0,
   nodeHeight: 0,
-  isRefreshing: false
+  isRefreshing: false,
 };
 
 export const chain = (state = INITIAL_STATE, action: AnyAction): Chain => {

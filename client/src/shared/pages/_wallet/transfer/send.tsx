@@ -11,6 +11,7 @@ import Dropdown from "../../../components/_inputs/dropdown";
 import Footer from "../../../components/_inputs/footer";
 import Form from "../../../components/_inputs/form";
 import Input from "../../../components/_inputs/input";
+import InputButton from "../../../components/_inputs/input_button";
 import TransferSummary from "../../../components/_summaries/transfer-summary";
 import { Container } from "./styles";
 // Relative Imports
@@ -40,6 +41,7 @@ interface TransferState {
   send_amount: string;
   recipient_address: string;
   payment_id: string;
+  amountError: string;
 }
 
 type TransferProps = TransferOwnProps & TransferReduxProps;
@@ -52,10 +54,14 @@ class TransferContainer extends Component<TransferProps, TransferState> {
     send_amount: "",
     recipient_address: "",
     payment_id: "",
+    amountError: "",
   };
 
   componentDidMount() {
     window.scrollTo(0, 0);
+    this.setState({
+      selectedAsset: options[0],
+    });
   }
 
   handleChange = (event: any) => {
@@ -95,6 +101,27 @@ class TransferContainer extends Component<TransferProps, TransferState> {
     }
   };
 
+  setMaxAmount = () => {
+    const { selectedAsset, send_amount } = this.state;
+
+    let availableBalance = null;
+    if (selectedAsset) {
+      availableBalance = convertBalanceForReading(
+        this.props.xBalances[selectedAsset.ticker].unlockedBalance
+      );
+    }
+
+    if (availableBalance != null) {
+      this.setState({
+        send_amount: availableBalance,
+      });
+    } else {
+      this.setState({
+        amountError: "Select an asset",
+      });
+    }
+  };
+
   render() {
     const {
       selectedAsset,
@@ -114,9 +141,9 @@ class TransferContainer extends Component<TransferProps, TransferState> {
       );
     }
 
-    const amountLabel: string = availableBalance
-      ? `Amount (Avail. ${availableBalance})`
-      : "Amount";
+    // const amountLabel: string = availableBalance
+    //   ? `Amount (Avail. ${availableBalance})`
+    //   : "Amount";
 
     return (
       <Fragment>
@@ -130,13 +157,21 @@ class TransferContainer extends Component<TransferProps, TransferState> {
             options={options}
             onClick={this.setSendAsset}
           />
-          <Input
-            label={amountLabel}
+          <InputButton
+            // @ts-ignore
+            label={
+              availableBalance
+                ? `Amount (Avail. ${availableBalance})`
+                : "Amount"
+            }
             placeholder="Enter amount"
             type="number"
+            error={this.state.amountError}
             name="send_amount"
             value={send_amount}
             onChange={this.handleChange}
+            button="Max"
+            onClick={this.setMaxAmount}
           />
           {windowWidth < 1380 ? (
             <Fragment>
@@ -183,15 +218,6 @@ class TransferContainer extends Component<TransferProps, TransferState> {
           )}
         </Form>
         <Container>
-          <TransferSummary
-            paymentId={payment_id === "" ? "--" : payment_id}
-            recipientAddress={
-              recipient_address === "" ? "--" : recipient_address
-            }
-            transferAsset={selectedAsset === null ? "--" : selectedAsset.ticker}
-            transferAmount={send_amount === "" ? "--" : send_amount}
-          />
-
           <Footer
             onClick={() => this.handleSubmit()}
             loading={this.props.isProcessing}
@@ -215,3 +241,14 @@ export const SendFunds = connect<TransferReduxProps, {}, TransferOwnProps>(
   mapStateToProps,
   {}
 )(TransferContainer);
+
+/**
+<TransferSummary
+  paymentId={payment_id === "" ? "none" : payment_id}
+  recipientAddress={
+    recipient_address === "" ? "--" : recipient_address
+  }
+  transferAsset={selectedAsset === null ? "--" : selectedAsset.ticker}
+  transferAmount={send_amount === "" ? "--" : send_amount}
+/>
+**/

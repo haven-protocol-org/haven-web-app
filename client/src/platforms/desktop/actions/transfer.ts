@@ -7,12 +7,12 @@ import {
   TRANSFER_FAILED,
   TRANSFER_FETCHING,
   TRANSFER_RESET,
-  TRANSFER_SUCCEED
+  TRANSFER_SUCCEED,
 } from "./types";
 
 import {
   addErrorNotification,
-  addNotificationByKey
+  addNotificationByKey,
 } from "shared/actions/notification";
 import { TRANSFER_SUCCEED_MESSAGE } from "constants/notificationList";
 import { getOffshoreTransfers } from "platforms/desktop/actions/offshoreTransferHistory";
@@ -69,19 +69,19 @@ export const createTransfer = (
       fromTicker === Ticker.XHV ? transferRPC : offshoreTransferRPC;
 
     transferFN(params)
-      .then(result => {
+      .then((result) => {
         const { amount, fee, tx_metadata } = result;
 
         const reduxParams = {
           fee: convertBalanceForReading(fee),
           fromAmount: convertBalanceForReading(amount),
-          metaData: tx_metadata
+          metaData: tx_metadata,
         };
 
         dispatch(transferCreationSucceed(reduxParams));
         dispatch(showModal(MODAL_TYPE.ConfirmTx));
       })
-      .catch(error => dispatch(transferCreationFailed(error)));
+      .catch((error) => dispatch(transferCreationFailed(error)));
   };
 };
 
@@ -92,7 +92,7 @@ export const confirmTransfer = (hex: string) => {
     const params = { hex };
 
     relayTXRPC(params)
-      .then(result => {
+      .then((result) => {
         dispatch(transferSucceed(result));
         dispatch(addNotificationByKey(TRANSFER_SUCCEED_MESSAGE));
         dispatch(getOffshoreTransfers());
@@ -100,7 +100,7 @@ export const confirmTransfer = (hex: string) => {
         dispatch(getTransfers());
         dispatch(getBalance());
       })
-      .catch(error => dispatch(manageTransferFailed(error)))
+      .catch((error) => dispatch(manageTransferFailed(error)))
       .finally(() => dispatch(hideModal()));
   };
 };
@@ -126,30 +126,30 @@ export const createTXInputs = (
 
 const transferFetch = () => ({
   type: TRANSFER_FETCHING,
-  payload: { isFetching: true }
+  payload: { isFetching: true },
 });
 const transferSucceed = (result: object) => ({
   type: TRANSFER_SUCCEED,
-  payload: { ...result, isFetching: false }
+  payload: { ...result, isFetching: false },
 });
 
 const transferFailed = (error: any) => ({
   type: TRANSFER_FAILED,
-  payload: { ...error, isFetching: false }
+  payload: { ...error, isFetching: false },
 });
 
 const transferCreationFetch = (params: object) => ({
   type: TRANSFER_CREATION_FETCHING,
-  payload: { ...params, isFetching: true }
+  payload: { ...params, isFetching: true },
 });
 const transferCreationSucceed = (result: object) => ({
   type: TRANSFER_CREATION_SUCCEED,
-  payload: { ...result }
+  payload: { ...result },
 });
 
 const transferCreationFailed = (error: any) => ({
   type: TRANSFER_CREATION_FAILED,
-  payload: { ...error, isFetching: false }
+  payload: { ...error, isFetching: false },
 });
 
 const manageTransferFailed = (error: any) => {

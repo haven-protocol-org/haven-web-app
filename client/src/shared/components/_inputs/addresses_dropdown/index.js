@@ -11,17 +11,17 @@ import {
   Row,
   Address,
   Edit,
-  Block
+  Block,
 } from "./styles";
 import { Label, Error } from "../../../../assets/styles/type.js";
 
 class AddressDropdown extends React.Component {
   state = {
     displayMenu: false,
-    selected: this.props.placeholder
+    selected: this.props.placeholder,
   };
 
-  showDropdownMenu = event => {
+  showDropdownMenu = (event) => {
     event.preventDefault();
     this.setState({ displayMenu: true }, () => {
       document.addEventListener("click", this.hideDropdownMenu);
@@ -36,15 +36,19 @@ class AddressDropdown extends React.Component {
 
   renderOptions = () => {
     const { onClick, options } = this.props;
-    return options.map(option => {
-      const { address, name } = option;
-      console.log("props", this.props.editable);
+    return options.map((option) => {
+      const { address, label } = option;
+
+      const first = address.substring(0, 4);
+      const last = address.substring(address.length - 4);
+      const truncated = first + "...." + last;
+
       return (
-        <Item key={address} onClick={() => onClick({ address, name })}>
+        <Item key={address} onClick={() => onClick({ address, label })}>
           <Row>
             <Block>
-              <Address>{address}</Address>
-              <Name>{name}</Name>
+              <Name>{label}</Name>
+              <Address>{truncated}</Address>
             </Block>
             {this.props.editable ? <Edit>Edit</Edit> : null}
           </Row>

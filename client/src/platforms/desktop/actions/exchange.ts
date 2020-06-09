@@ -20,7 +20,7 @@ import { DesktopAppState } from "../reducers";
 import { Ticker } from "shared/reducers/types";
 import { showModal } from "shared/actions/modal";
 import { MODAL_TYPE } from "shared/reducers/modal";
-import {selectPrimaryAddress} from "shared/reducers/address";
+import { selectPrimaryAddress } from "shared/reducers/address";
 
 export const setToTicker = (toTicker: Ticker | null) => {
   return { type: SELECT_TO_TICKER, payload: toTicker };
@@ -30,47 +30,45 @@ export const setFromTicker = (fromTicker: Ticker | null) => {
   return { type: SELECT_FROM_TICKER, payload: fromTicker };
 };
 
-
-
 export function exchange(
-    fromTicker: Ticker,
-    toTicker: Ticker,
-    fromAmount: number,
-    toAmount: number,
-    priority: number,
-    externAddress: string,
-    isOffshore: boolean
+  fromTicker: Ticker,
+  toTicker: Ticker,
+  fromAmount: number,
+  toAmount: number,
+  priority: number,
+  externAddress: string,
+  isOffshore: boolean
 ): any {
   return (dispatch: any, getState: () => DesktopAppState) => {
     const address =
-        externAddress.trim() !== "" ? externAddress : selectPrimaryAddress(getState().address);
+      externAddress.trim() !== ""
+        ? externAddress
+        : selectPrimaryAddress(getState().address);
 
     const xhvAnmount = isOffshore? fromAmount : toAmount;
     const params = createExchangeInputs(xhvAnmount, priority, address);
 
     dispatch(onExchangeFetch());
 
-
     const exchangeRPCFN = isOffshore ? offshoreRPC : onshoreRPC;
     exchangeRPCFN(params)
-        .then((result: any) => {
-          dispatch(onExchangeSucceed(result));
-          dispatch(
-              addExchangeSucceedMessage(
-                  fromTicker!,
-                  toTicker!,
-                  fromAmount!,
-                  toAmount!
-              )
-          );
-          dispatch(updateApp());
-        })
-        .catch((error: any) => {
-          dispatch(addErrorNotification(error));
-          dispatch(onExchangeFailed(error));
-        })
-        .finally(() => dispatch(resetExchangeProcess()));
-
+      .then((result: any) => {
+        dispatch(onExchangeSucceed(result));
+        dispatch(
+          addExchangeSucceedMessage(
+            fromTicker!,
+            toTicker!,
+            fromAmount!,
+            toAmount!
+          )
+        );
+        dispatch(updateApp());
+      })
+      .catch((error: any) => {
+        dispatch(addErrorNotification(error));
+        dispatch(onExchangeFailed(error));
+      })
+      .finally(() => dispatch(resetExchangeProcess()));
   };
 }
 
@@ -85,7 +83,9 @@ export function createExchange(
 ): any {
   return (dispatch: any, getState: () => DesktopAppState) => {
     const address =
-      externAddress.trim() !== "" ? externAddress : selectPrimaryAddress(getState().address);
+      externAddress.trim() !== ""
+        ? externAddress
+        : selectPrimaryAddress(getState().address);
 
     const params = createExchangeInputs(fromAmount, priority, address);
 

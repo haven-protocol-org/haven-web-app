@@ -1,7 +1,7 @@
 import {
   GET_PRICE_HISTORY_FAILED,
   GET_PRICE_HISTORY_FETCHING,
-  GET_PRICE_HISTORY_SUCCEED
+  GET_PRICE_HISTORY_SUCCEED,
 } from "../actions/types";
 
 const INITIAL_STATE = { price: -1, isFetching: false, error: "" };

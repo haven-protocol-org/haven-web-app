@@ -76,8 +76,6 @@ class AssetsPage extends Component<AssetsProps, any> {
       const rates = this.props.rates;
       let price = rates[ticker] ? rates[ticker] : 0;
       price = symbol + price.toFixed(2);
-      console.log(token);
-      console.log("&&&&&&&&&&&&&&&&&&");
 
       return (
         <Cell

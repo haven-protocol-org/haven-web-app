@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import Body from "../../../components/_layout/body";
 import Header from "../../../components/_layout/header";
 import Input from "../../../components/_inputs/input";
+import InputButton from "../../../components/_inputs/input_button";
 import Form from "../../../components/_inputs/form";
 
 import Footer from "../../../components/_inputs/footer";
@@ -15,7 +16,7 @@ import {
   selectXRate,
   hasLatestXRate,
   XRates,
-  priceDelta
+  priceDelta,
 } from "platforms/desktop/reducers/blockHeaderExchangeRates";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { selectNodeHeight } from "platforms/desktop/reducers/chain";
@@ -26,7 +27,7 @@ import {
   selectExchangeSucceed,
   selectIsProcessingExchange,
   selectFromTicker,
-  selectToTicker
+  selectToTicker,
 } from "platforms/desktop/reducers/exchangeProcess";
 import { setFromTicker, setToTicker } from "platforms/desktop/actions/exchange";
 import { NO_BALANCE, XBalances } from "shared/reducers/xBalance";
@@ -36,7 +37,7 @@ import { MODAL_TYPE } from "shared/reducers/modal";
 
 enum ExchangeTab {
   Basic,
-  Adanvced
+  Adanvced,
 }
 
 type ExchangeProps = {
@@ -78,18 +79,18 @@ export interface ExchangePrioOption {
 
 const assetOptions: AssetOption[] = [
   { name: "Haven Token", ticker: Ticker.XHV },
-  { name: "United States Dollar", ticker: Ticker.xUSD }
+  { name: "United States Dollar", ticker: Ticker.xUSD },
 ];
 
 const exchangePrioOptions: ExchangePrioOption[] = [
   {
     name: "Low:",
     ticker: "Unlocks in ~2 days",
-    prio: 1
+    prio: 1,
   },
   { name: "Medium:", ticker: "Unlocks ~18 hours", prio: 2 },
   { name: "High:", ticker: "Unlocks ~6 hours", prio: 3 },
-  { name: "Very High:", ticker: "Unlocks ~2 hours", prio: 4 }
+  { name: "Very High:", ticker: "Unlocks ~2 hours", prio: 4 },
 ];
 
 const INITIAL_STATE: ExchangeState = {
@@ -97,7 +98,7 @@ const INITIAL_STATE: ExchangeState = {
   toAmount: "",
   selectedTab: ExchangeTab.Basic,
   externAddress: "",
-  selectedPrio: exchangePrioOptions[exchangePrioOptions.length - 1]
+  selectedPrio: exchangePrioOptions[exchangePrioOptions.length - 1],
 };
 class Exchange extends Component<ExchangeProps, ExchangeState> {
   state: ExchangeState = INITIAL_STATE;
@@ -115,7 +116,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       this.setState({
         fromAmount: "",
         toAmount: "",
-        externAddress: ""
+        externAddress: "",
       });
     }
   }
@@ -177,7 +178,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
 
     if (toAmount !== undefined && !setToAmount) {
       this.setState({
-        fromAmount: (parseFloat(toAmount) * (1 / xRate)).toFixed(4)
+        fromAmount: (parseFloat(toAmount) * (1 / xRate)).toFixed(4),
       });
     }
   }
@@ -222,13 +223,41 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     this.setState({ selectedPrio: selectedOption });
   };
 
+  setMaxFromAmount = () => {
+    const { fromTicker } = this.props;
+    const { hasLatestXRate } = this.props;
+
+    const availBalance = fromTicker
+      ? convertBalanceForReading(
+          this.props.balances[fromTicker].unlockedBalance
+        )
+      : NO_BALANCE;
+
+    this.setState({ ...this.state, fromAmount: availBalance }, () => {
+      this.calcConversion(true);
+    });
+  };
+
+  setMaxToAmount = () => {
+    const { toTicker } = this.props;
+    const { hasLatestXRate } = this.props;
+
+    const availBalance = toTicker
+      ? convertBalanceForReading(this.props.balances[toTicker].unlockedBalance)
+      : NO_BALANCE;
+
+    this.setState({ ...this.state, toAmount: availBalance }, () => {
+      this.calcConversion(false);
+    });
+  };
+
   render() {
     const {
       fromAmount,
       toAmount,
       selectedTab,
       selectedPrio,
-      externAddress
+      externAddress,
     } = this.state;
 
     const { fromTicker, toTicker } = this.props;
@@ -239,8 +268,16 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
           this.props.balances[fromTicker].unlockedBalance
         )
       : NO_BALANCE;
-    const fromAsset = assetOptions.find(option => option.ticker === fromTicker);
-    const toAsset = assetOptions.find(option => option.ticker === toTicker);
+
+    const fromAsset = assetOptions.find(
+      (option) => option.ticker === fromTicker
+    );
+
+    const toAsset = assetOptions.find((option) => option.ticker === toTicker);
+
+    const toBalance = toTicker
+      ? convertBalanceForReading(this.props.balances[toTicker].unlockedBalance)
+      : NO_BALANCE;
 
     const isValid: boolean =
       !!(fromTicker && toTicker && fromAmount && toAmount) && hasLatestXRate;
@@ -252,7 +289,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
             title="Exchange "
             description="Swap to and from various Haven Assets"
           />
-
           <Tab
             firstTabLabel="Basic"
             secondTabLabel="Advanced"
@@ -262,12 +298,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
             secondTabClickEvent={this.toggleAdvanced}
             onClick={() => {}}
           />
-          {!hasLatestXRate && (
-            <Failed>
-              Sorry, but the ability to exchange assets is temporarily disabled
-              until the wallet is completely synced
-            </Failed>
-          )}
           <Fragment>
             <Form onSubmit={this.handleSubmit}>
               <Dropdown
@@ -279,11 +309,12 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 options={assetOptions}
                 onClick={this.setFromAsset}
               />
-              <Input
+              <InputButton
+                // @ts-ignore
                 label={
                   "From Amount " +
                   (availBalance !== NO_BALANCE
-                    ? `(Avail. ${availBalance})`
+                    ? `(Balance: ${availBalance})`
                     : "")
                 }
                 placeholder="Enter amount"
@@ -292,18 +323,15 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 disabled={!hasLatestXRate}
                 value={fromAmount}
                 onChange={this.onEnterFromAmount}
+                button="Max"
+                onClick={this.setMaxFromAmount}
                 error={
                   fromTicker === null ? "Please select an asset first" : ""
                 }
                 readOnly={fromTicker === null}
               />
               <Dropdown
-                label={
-                  "To Amount " +
-                  (availBalance !== NO_BALANCE
-                    ? `(Avail. ${availBalance})`
-                    : "")
-                }
+                label={"To Amount "}
                 placeholder="Select Asset"
                 name="to_asset"
                 value={toAsset ? toAsset.name : "Select Asset"}
@@ -311,8 +339,12 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 options={assetOptions}
                 onClick={this.setToAsset}
               />
-              <Input
-                label={"To Amount "}
+              <InputButton
+                // @ts-ignore
+                label={
+                  "To Amount " +
+                  (toBalance !== NO_BALANCE ? `(Balance: ${toBalance})` : "")
+                }
                 placeholder="Enter amount"
                 disabled={!hasLatestXRate}
                 name="toAmount"
@@ -321,6 +353,8 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 onChange={this.onEnterToAmount}
                 error={toTicker === null ? "Please select an asset first" : ""}
                 readOnly={toTicker === null}
+                button="Max"
+                onClick={this.setMaxToAmount}
               />
               {selectedTab === ExchangeTab.Adanvced && (
                 <Fragment>
@@ -344,7 +378,14 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                   />
                 </Fragment>
               )}
+              {!hasLatestXRate && (
+                <Failed>
+                  The ability to Exchange assets is temporarily disabled until
+                  the wallet is completely synced...
+                </Failed>
+              )}
             </Form>
+
             <Container>
               <Footer
                 onClick={() => this.handleSubmit()}
@@ -373,7 +414,7 @@ const mapStateToProps = (state: DesktopAppState) => ({
   priceDelta: priceDelta(state),
   fromTicker: selectFromTicker(state.exchangeProcess),
   toTicker: selectToTicker(state.exchangeProcess),
-  balances: state.xBalance
+  balances: state.xBalance,
 });
 
 export const ExchangePage = connect(

@@ -36,7 +36,7 @@ const appReducer = combineReducers({
   chain,
   simplePrice,
   mining,
-  modal
+  modal,
 });
 
 const rootReducer = (state: any, action: AnyAction) => {
