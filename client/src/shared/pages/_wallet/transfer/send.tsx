@@ -11,6 +11,7 @@ import Dropdown from "../../../components/_inputs/dropdown";
 import Footer from "../../../components/_inputs/footer";
 import Form from "../../../components/_inputs/form";
 import Input from "../../../components/_inputs/input";
+import InputButton from "../../../components/_inputs/input_button";
 import TransferSummary from "../../../components/_summaries/transfer-summary";
 import { Container } from "./styles";
 // Relative Imports
@@ -114,9 +115,9 @@ class TransferContainer extends Component<TransferProps, TransferState> {
       );
     }
 
-    const amountLabel: string = availableBalance
-      ? `Amount (Avail. ${availableBalance})`
-      : "Amount";
+    // const amountLabel: string = availableBalance
+    //   ? `Amount (Avail. ${availableBalance})`
+    //   : "Amount";
 
     return (
       <Fragment>
@@ -131,7 +132,11 @@ class TransferContainer extends Component<TransferProps, TransferState> {
             onClick={this.setSendAsset}
           />
           <Input
-            label={amountLabel}
+            label={
+              availableBalance
+                ? `Amount (Avail. ${availableBalance})`
+                : "Amount"
+            }
             placeholder="Enter amount"
             type="number"
             name="send_amount"

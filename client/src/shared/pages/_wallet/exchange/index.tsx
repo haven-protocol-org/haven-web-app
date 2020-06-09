@@ -239,10 +239,16 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
           this.props.balances[fromTicker].unlockedBalance
         )
       : NO_BALANCE;
+
     const fromAsset = assetOptions.find(
       (option) => option.ticker === fromTicker
     );
+
     const toAsset = assetOptions.find((option) => option.ticker === toTicker);
+
+    const toBalance = toTicker
+      ? convertBalanceForReading(this.props.balances[toTicker].unlockedBalance)
+      : NO_BALANCE;
 
     const isValid: boolean =
       !!(fromTicker && toTicker && fromAmount && toAmount) && hasLatestXRate;
@@ -278,7 +284,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 label={
                   "From Amount " +
                   (availBalance !== NO_BALANCE
-                    ? `(Avail. ${availBalance})`
+                    ? `(Balance: ${availBalance})`
                     : "")
                 }
                 placeholder="Enter amount"
@@ -293,12 +299,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 readOnly={fromTicker === null}
               />
               <Dropdown
-                label={
-                  "To Amount " +
-                  (availBalance !== NO_BALANCE
-                    ? `(Avail. ${availBalance})`
-                    : "")
-                }
+                label={"To Amount "}
                 placeholder="Select Asset"
                 name="to_asset"
                 value={toAsset ? toAsset.name : "Select Asset"}
@@ -307,7 +308,10 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 onClick={this.setToAsset}
               />
               <Input
-                label={"To Amount "}
+                label={
+                  "To Amount " +
+                  (toBalance !== NO_BALANCE ? `(Balance: ${toBalance})` : "")
+                }
                 placeholder="Enter amount"
                 disabled={!hasLatestXRate}
                 name="toAmount"
