@@ -63,7 +63,10 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
       return null;
     }
 
-    const { label } = this.props.addresses[0];
+    const { address, label } = this.props.addresses[0];
+    const first = address.substring(0, 4);
+    const last = address.substring(address.length - 4);
+    const truncated = first + "...." + last;
 
     return (
       <Fragment>
