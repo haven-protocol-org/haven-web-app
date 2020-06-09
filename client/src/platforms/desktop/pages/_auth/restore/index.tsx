@@ -1,7 +1,7 @@
 import {
   selectErrorMessageForLogin,
   selectIsLoggedIn,
-  selectIsRequestingLogin
+  selectIsRequestingLogin,
 } from "../../../reducers/walletSession";
 import { connect } from "react-redux";
 import { restoreWallet } from "../../../actions";
@@ -25,7 +25,7 @@ interface RestoreProps {
 
 enum RESTORE_STEP {
   SEED_STEP,
-  NAME_STEP
+  NAME_STEP,
 }
 
 interface RestoreState {
@@ -44,14 +44,15 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
     seed: "",
     pw: "",
     name: "",
-    showPassword: false
+    showPassword: false,
   };
 
-
-
-  componentWillReceiveProps(nextProps:RestoreProps , nextContext: any) {
+  componentWillReceiveProps(nextProps: RestoreProps, nextContext: any) {
     if (nextProps.errorMessage) {
-      this.setState({ error: nextProps.errorMessage, step: RESTORE_STEP.SEED_STEP });
+      this.setState({
+        error: nextProps.errorMessage,
+        step: RESTORE_STEP.SEED_STEP,
+      });
       setTimeout(() => this.setState({ error: "" }), 2000);
     }
   }
@@ -90,7 +91,7 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
 
   togglePassword = () => {
     this.setState({
-      showPassword: !this.state.showPassword
+      showPassword: !this.state.showPassword,
     });
   };
 
@@ -138,8 +139,8 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
           <Wrapper>
             <Body>
               <Input
-                label="Wallet Name"
-                placeholder="Create a wallet name"
+                label="Vault Name"
+                placeholder="Create a vault name"
                 name="name"
                 type={"text"}
                 value={name}
@@ -147,8 +148,8 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
               />
               <InputButton
                 // @ts-ignore
-                label="Wallet Password"
-                placeholder="Enter your wallet password"
+                label="Vault Password"
+                placeholder="Enter your vault password"
                 name="pw"
                 type={this.state.showPassword === true ? "text" : "password"}
                 button={this.state.showPassword === true ? "hide" : "show"}
@@ -157,7 +158,7 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
                 onClick={this.togglePassword}
               />
               <Information>
-                Restoring a wallet with a name and password means you’ll be able
+                Restoring a vault with a name and password means you’ll be able
                 to log in without entering your seed phrase. This makes your
                 experience more secure, safe and efficient.
               </Information>
@@ -185,11 +186,10 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
 const mapStateToProps = (state: DesktopAppState) => ({
   isRequestingLogin: selectIsRequestingLogin(state),
   isLoggedIn: selectIsLoggedIn(state),
-  errorMessage: selectErrorMessageForLogin(state)
+  errorMessage: selectErrorMessageForLogin(state),
 });
 
 // @ts-ignore
-export const RestoreDesktop = connect(
-  mapStateToProps,
-  { restoreWallet }
-)(RestoreDesktopContainer);
+export const RestoreDesktop = connect(mapStateToProps, { restoreWallet })(
+  RestoreDesktopContainer
+);
