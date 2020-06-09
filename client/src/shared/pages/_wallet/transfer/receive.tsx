@@ -67,8 +67,7 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
       <Fragment>
         <Form>
           <AddressDropdown
-            label="Vault Address"
-            placeholder="Select an Address"
+            label="Select Vault"
             readOnly={true}
             value={this.props.addresses[0].label}
             options={this.props.addresses}
@@ -77,8 +76,7 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
           />
           {windowWidth < 1380 ? (
             <Description
-              label="Haven Address"
-              placeholder="Select an address"
+              label="Selected Vault Address"
               width={true}
               value={this.state.selected.address}
               readOnly={true}
@@ -87,7 +85,7 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
           ) : (
             <Input
               ref={(textarea) => (this.addressValue = textarea)}
-              label="Haven Address"
+              label="Selected Vault Address"
               placeholder="Select an address"
               width={true}
               type={"text"}
