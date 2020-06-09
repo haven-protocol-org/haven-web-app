@@ -225,7 +225,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
 
   setMaxFromAmount = () => {
     const { fromTicker } = this.props;
-    const { hasLatestXRate } = this.props;
 
     const availBalance = fromTicker
       ? convertBalanceForReading(
@@ -240,7 +239,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
 
   setMaxToAmount = () => {
     const { toTicker } = this.props;
-    const { hasLatestXRate } = this.props;
 
     const availBalance = toTicker
       ? convertBalanceForReading(this.props.balances[toTicker].unlockedBalance)
@@ -417,13 +415,10 @@ const mapStateToProps = (state: DesktopAppState) => ({
   balances: state.xBalance,
 });
 
-export const ExchangePage = connect(
-  mapStateToProps,
-  {
-    getLastBlockHeader,
-    createExchange: exchange,
-    setToTicker,
-    setFromTicker,
-    showModal
-  }
-)(Exchange);
+export const ExchangePage = connect(mapStateToProps, {
+  getLastBlockHeader,
+  createExchange: exchange,
+  setToTicker,
+  setFromTicker,
+  showModal,
+})(Exchange);

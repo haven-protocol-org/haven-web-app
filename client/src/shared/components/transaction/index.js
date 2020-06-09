@@ -48,6 +48,8 @@ export const Transaction = ({
     isMainnet() ? "" : ".stagenet"
   }.havenprotocol.org/tx/${tx}`;
 
+  console.log("TYPE", type);
+
   return (
     <Container href={txExplorerLink} target="_blank">
       <State status={type}>

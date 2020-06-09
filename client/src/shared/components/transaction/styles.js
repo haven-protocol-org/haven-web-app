@@ -8,8 +8,8 @@ export const Container = styled.a`
   margin-bottom: 20px;
   text-decoration: none;
   border-radius: 4px;
-  background: ${props => props.theme.body.foreground};
-  border: 1px solid ${props => props.theme.body.border};
+  background: ${(props) => props.theme.body.foreground};
+  border: 1px solid ${(props) => props.theme.body.border};
 
   &:hover {
     cursor: pointer;
@@ -26,7 +26,7 @@ export const Row = styled.div`
   width: auto;
   padding-left: 20px;
   padding-right: 20px;
-  margin-top: ${props => (props.margin ? "-16px" : "0px")};
+  margin-top: ${(props) => (props.margin ? "-16px" : "0px")};
 `;
 
 export const Cell = styled.div`
@@ -36,8 +36,8 @@ export const Cell = styled.div`
   justify-content: space-between;
   flex-direction: row;
   align-items: center;
-  background: ${props => props.theme.body.background};
-  border: 1px solid ${props => props.theme.body.border};
+  background: ${(props) => props.theme.body.background};
+  border: 1px solid ${(props) => props.theme.body.border};
   border-radius: 0px 4px 4px 0x;
   padding: 16px;
   border-right: none;
@@ -50,19 +50,21 @@ export const State = styled.div`
   align-items: center;
   color: #fff;
   justify-content: center;
-  border-right: 1px solid ${props => props.theme.body.border};
+  border-right: 1px solid ${(props) => props.theme.body.border};
   border-radius: 4px 0px 0px 4px;
   border-right: none;
-  background: ${props => {
+  background: ${(props) => {
     switch (props.status) {
       case "Mined":
-        return "#F26522";
+        return "#F15050";
       case "Received":
-        return "#34d8ac";
+        return "#2fc29b";
       case "Sent":
         return "#6A7FC8";
       case "Exchange":
         return "#E935A8";
+      case "pending":
+        return "#EDBD5C";
       default:
     }
   }};
@@ -81,19 +83,19 @@ export const Status = styled.div`
 export const Value = styled.div`
   font-family: Inter-SemiBold;
   font-size: 14px;
-  color: ${props => props.theme.type.primary};
+  color: ${(props) => props.theme.type.primary};
   letter-spacing: 0;
   line-height: 24px;
-  text-align: ${props => props.alignment};
+  text-align: ${(props) => props.alignment};
   text-transform: capitalize;
 `;
 
 export const Label = styled.div`
   font-family: Inter-Regular;
   font-size: 12px;
-  color: ${props => props.theme.type.secondary};
+  color: ${(props) => props.theme.type.secondary};
   line-height: 12px;
-  text-align: ${props => props.alignment};
+  text-align: ${(props) => props.alignment};
   text-transform: capitalize;
 `;
 
