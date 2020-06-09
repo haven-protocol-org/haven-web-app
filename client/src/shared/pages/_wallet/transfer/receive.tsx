@@ -9,8 +9,7 @@ import Form from "../../../components/_inputs/form";
 import Input from "../../../components/_inputs/input";
 import { Container } from "./styles";
 import { DesktopAppState } from "platforms/desktop/reducers";
-import {AddressEntry} from "shared/reducers/address";
-
+import { AddressEntry } from "shared/reducers/address";
 
 interface OwnAddressState {
   selected: AddressEntry;
@@ -27,7 +26,7 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
 
   state: OwnAddressState = {
     selected: this.props.addresses[0],
-    copyButtonState: "",
+    copyButtonState: "Copy",
     secondTabLabel: "",
   };
 
