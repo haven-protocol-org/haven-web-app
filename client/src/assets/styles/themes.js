@@ -5,15 +5,15 @@ export const dark = {
     background: "#36393F",
     foreground: "#2B2E32",
     border: "#3A4048",
-    active_menu: "#8ea1e1"
+    active_menu: "#8ea1e1",
   },
   button: {
     primary: "#7289da",
-    primary_hover: "#677bc4"
+    primary_hover: "#677bc4",
   },
   type: {
     primary: "#ffffff",
-    secondary: "#8A8D90"
+    secondary: "#8A8D90",
   },
   input: {
     input_border: "#4a4d52",
@@ -23,13 +23,13 @@ export const dark = {
     input_value: "#ffffff",
     input_select: "#ffffff",
     input_foreground: "#27292d",
-    input_error: "#f04747"
+    input_error: "#f04747",
   },
   states: {
-    success: "#2D8872",
+    success: "#2fc29b",
     error: "#F04747",
-    warning: "#FFC246"
-  }
+    warning: "#e6af3f",
+  },
 };
 
 export const light = {
@@ -39,15 +39,15 @@ export const light = {
     background: "#F7F7FB",
     foreground: "#F4F5F9",
     border: "#D9E2ED",
-    active_menu: "#7289da"
+    active_menu: "#7289da",
   },
   button: {
     primary: "#7289da",
-    primary_hover: "#677bc4"
+    primary_hover: "#677bc4",
   },
   type: {
     primary: "#384451",
-    secondary: "#697786"
+    secondary: "#697786",
   },
   input: {
     input_border: "#c6c7cf",
@@ -57,11 +57,11 @@ export const light = {
     input_value: "#384451",
     input_select: "#5c5f63",
     input_foreground: "#d9dadf",
-    input_error: "#f04747"
+    input_error: "#f04747",
   },
   states: {
-    success: "#34d8ac",
+    success: "#2fc29b",
     error: "#F04747",
-    warning: "#FFC246"
-  }
+    warning: "#e6af3f",
+  },
 };
