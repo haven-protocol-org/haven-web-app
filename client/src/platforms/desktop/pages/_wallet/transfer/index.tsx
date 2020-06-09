@@ -4,8 +4,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Transfer } from "shared/pages/_wallet/transfer";
 import { Ticker } from "shared/reducers/types";
-import { createTransfer, resetTransferProcess } from "../../../actions";
+import { resetTransferProcess } from "../../../actions";
 import { transferSucceed } from "../../../reducers/transferProcess";
+import {transfer} from "platforms/desktop/actions";
 
 class TransferDesktopContainer extends Component<any, any> {
   private sendTicker: Ticker = Ticker.XHV;
@@ -56,7 +57,7 @@ export const mapStateToProps = (state: DesktopAppState) => ({
 });
 
 export const TransferDesktop = connect(mapStateToProps, {
-  createTransfer,
+  createTransfer: transfer,
   resetTransferProcess,
   getOwnAddress: getAddress,
 })(TransferDesktopContainer);

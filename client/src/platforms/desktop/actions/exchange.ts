@@ -45,7 +45,8 @@ export function exchange(
         ? externAddress
         : selectPrimaryAddress(getState().address);
 
-    const params = createExchangeInputs(fromAmount, priority, address);
+    const xhvAnmount = isOffshore? fromAmount : toAmount;
+    const params = createExchangeInputs(xhvAnmount, priority, address);
 
     dispatch(onExchangeFetch());
 
@@ -152,8 +153,8 @@ const createExchangeInputs = (
     destinations: [{ address, amount: amount.toString() }],
     priority,
     ring_size: 11,
-    // do_not_relay: true,
-    get_tx_metadata: true,
+  //  do_not_relay: true,
+   // get_tx_metadata: true,
   };
 };
 
