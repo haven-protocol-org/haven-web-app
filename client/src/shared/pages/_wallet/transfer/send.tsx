@@ -183,6 +183,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
           )}
         </Form>
         <Container>
+          /*
           <TransferSummary
             paymentId={payment_id === "" ? "none" : payment_id}
             recipientAddress={
@@ -191,7 +192,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
             transferAsset={selectedAsset === null ? "--" : selectedAsset.ticker}
             transferAmount={send_amount === "" ? "--" : send_amount}
           />
-
+          */
           <Footer
             onClick={() => this.handleSubmit()}
             loading={this.props.isProcessing}
