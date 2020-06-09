@@ -63,6 +63,8 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
       return null;
     }
 
+    const { label } = this.props.addresses[0];
+
     return (
       <Fragment>
         <Form>
@@ -70,7 +72,7 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
             label="Vault Address"
             placeholder="Select an Address"
             readOnly={true}
-            value={this.state.secondTabLabel}
+            value={label}
             options={this.props.addresses}
             onClick={this.selectAddress}
             editable={false}
