@@ -5,7 +5,7 @@ import {
   QUERY_MNEMONIC_FOR_WALLET_GENERATION_SUCCEED,
   RESTORE_WALLET_BY_SEED_SUCCEED,
   VALIDATE_MNEMONIC_FAILED,
-  VALIDATE_MNEMONIC_SUCCEED
+  VALIDATE_MNEMONIC_SUCCEED,
 } from "../actions/types";
 import { AnyAction } from "redux";
 import { RPCError } from "platforms/desktop/reducers/walletSession";
@@ -24,7 +24,7 @@ const INITIAL_STATE: WalletCreation = {
   mnemonicKey: "",
   isVerified: false,
   error: null,
-  isFetching: false
+  isFetching: false,
 };
 
 export const walletCreation = (

@@ -1,7 +1,7 @@
 import {
   GET_TRANSFERS_FAILED,
   GET_TRANSFERS_FETCHING,
-  GET_TRANSFERS_SUCCEED
+  GET_TRANSFERS_SUCCEED,
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -13,7 +13,7 @@ const INITIAL_STATE = {
   error: {},
   isEmpty: true,
   maxHeight: -1,
-  minHeight: -1
+  minHeight: -1,
 };
 
 export function transferList(state = INITIAL_STATE, action) {
@@ -26,7 +26,7 @@ export function transferList(state = INITIAL_STATE, action) {
         ...action.payload,
         isFetching: false,
         error: "",
-        isEmpty: false
+        isEmpty: false,
       };
     case GET_TRANSFERS_FAILED:
       return { ...state, error: action.payload, isFetching: false };

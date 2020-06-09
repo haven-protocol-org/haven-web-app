@@ -4,14 +4,14 @@ import {
   MINING_STATUS_RESPONSE_FAILED,
   REQUEST_MINING_START,
   REQUEST_MINING_STATUS,
-  REQUEST_MINING_STOP
+  REQUEST_MINING_STOP,
 } from "../actions/types";
 
 export enum MiningRequestTypes {
   Start,
   Stop,
   Status,
-  None
+  None,
 }
 
 export interface MiningStatus {
@@ -29,7 +29,7 @@ const INITIAL_STATE: MiningStatus = {
   speed: 0,
   threads_count: 0,
   smartMining: false,
-  miningRequest: MiningRequestTypes.None
+  miningRequest: MiningRequestTypes.None,
 };
 
 export const mining = (
