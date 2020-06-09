@@ -12,7 +12,7 @@ import Footer from "../../../components/_inputs/footer";
 import Form from "../../../components/_inputs/form";
 import Input from "../../../components/_inputs/input";
 import InputButton from "../../../components/_inputs/input_button";
-import TransferSummary from "../../../components/_summaries/transfer-summary";
+// import TransferSummary from "../../../components/_summaries/transfer-summary";
 import { Container } from "./styles";
 // Relative Imports
 
@@ -102,7 +102,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
   };
 
   setMaxAmount = () => {
-    const { selectedAsset, send_amount } = this.state;
+    const { selectedAsset } = this.state;
 
     let availableBalance = null;
     if (selectedAsset) {
