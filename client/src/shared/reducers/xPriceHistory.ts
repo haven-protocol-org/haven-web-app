@@ -21,11 +21,11 @@ const emptyPriceHistory = [
   PRICE_RANGE_DAY,
   PRICE_RANGE_MONTH,
   PRICE_RANGE_YEAR,
-  PRICE_RANGE_MAX
-].map(rangeInDays => ({ prices: [], rangeInDays }));
+  PRICE_RANGE_MAX,
+].map((rangeInDays) => ({ prices: [], rangeInDays }));
 
 const INITIAL_STATE: XPriceRangeHistory = {
   xUSD: emptyPriceHistory,
   XHV: emptyPriceHistory,
-  xBTC: emptyPriceHistory
+  xBTC: emptyPriceHistory,
 };

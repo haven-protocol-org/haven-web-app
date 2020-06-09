@@ -3,7 +3,7 @@ import { AnyAction, combineReducers } from "redux";
 import {
   GET_TRANSFERS_FAILED,
   GET_TRANSFERS_FETCHING,
-  GET_TRANSFERS_SUCCEED
+  GET_TRANSFERS_SUCCEED,
 } from "../actions/types";
 import { INITAL_FETCHING_STATE, XFetching } from "./types";
 import { DesktopAppState } from "../../platforms/desktop/reducers";
@@ -15,7 +15,7 @@ export enum TransferType {
   XHVIn = "in",
   XHVOut = "out",
   Mining = "block",
-  XHVPending = "pending"
+  XHVPending = "pending",
 }
 
 export type XTransferListAsset = Partial<{ [key in Ticker]: any[] }>;
@@ -23,7 +23,7 @@ export type XTransferList = { [key in Ticker]?: any[] | null };
 
 const INITAL_STATE: { [key in Ticker]?: any[] | null } = {
   xUSD: null,
-  XHV: null
+  XHV: null,
 };
 
 const fetching = (
@@ -51,7 +51,7 @@ const list = (state = INITAL_STATE, action: AnyAction): XTransferList => {
 
 export const xTransferList = combineReducers({
   list,
-  fetching
+  fetching,
 });
 
 export const getTransferListByTicker = (

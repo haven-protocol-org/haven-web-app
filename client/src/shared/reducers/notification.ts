@@ -8,10 +8,10 @@ interface HavenNotification {
 }
 
 const INITIAL_STATE: { notifications: HavenNotification[] } = {
-  notifications: []
+  notifications: [],
 };
 
-export default function(state = INITIAL_STATE, action: AnyAction) {
+export default function (state = INITIAL_STATE, action: AnyAction) {
   switch (action.type) {
     case ADD_NOTIFICATION:
       return { notifications: [...state.notifications, action.payload] };
@@ -19,7 +19,7 @@ export default function(state = INITIAL_STATE, action: AnyAction) {
       return {
         notifications: state.notifications.filter(
           (not: HavenNotification) => not.id !== action.payload
-        )
+        ),
       };
     default:
       return state;

@@ -1,7 +1,7 @@
 import {
   GET_BALANCES_FAILED,
   GET_BALANCES_FETCHING,
-  GET_BALANCES_SUCCEED
+  GET_BALANCES_SUCCEED,
 } from "../actions/types";
 import { convertBalanceForReading } from "../../utility/utility";
 
@@ -11,7 +11,7 @@ const INITIAL_STATE = {
   balance: NO_BALANCE,
   unlockedBalance: NO_BALANCE,
   lockedBalance: NO_BALANCE,
-  isFetching: false
+  isFetching: false,
 };
 
 function balance(state = INITIAL_STATE, action) {
@@ -19,7 +19,7 @@ function balance(state = INITIAL_STATE, action) {
     case GET_BALANCES_SUCCEED:
       return {
         ...action.payload,
-        isFetching: false
+        isFetching: false,
       };
     case GET_BALANCES_FETCHING:
       return { ...state, isFetching: true };

@@ -1,7 +1,7 @@
 import {
   GET_PRICE_HISTORY_FAILED,
   GET_PRICE_HISTORY_FETCHING,
-  GET_PRICE_HISTORY_SUCCEED
+  GET_PRICE_HISTORY_SUCCEED,
 } from "../actions/types";
 import { AnyAction } from "redux";
 
@@ -23,23 +23,23 @@ const INITIAL_STATE: PriceHistory = {
     PRICE_RANGE_DAY,
     PRICE_RANGE_MONTH,
     PRICE_RANGE_YEAR,
-    PRICE_RANGE_MAX
-  ].map(rangeInDays => ({ prices: [], rangeInDays })),
+    PRICE_RANGE_MAX,
+  ].map((rangeInDays) => ({ prices: [], rangeInDays })),
   error: "",
-  isFetching: false
+  isFetching: false,
 };
 
 export function priceHistory(state = INITIAL_STATE, action: AnyAction) {
   switch (action.type) {
     case GET_PRICE_HISTORY_SUCCEED:
       return {
-        prices: state.prices.map(priceRangeEntry =>
+        prices: state.prices.map((priceRangeEntry) =>
           priceRangeEntry.rangeInDays === action.payload.rangeInDays
             ? action.payload
             : priceRangeEntry
         ),
         isFetching: false,
-        error: ""
+        error: "",
       };
     case GET_PRICE_HISTORY_FETCHING:
       return { ...state, isFetching: true };

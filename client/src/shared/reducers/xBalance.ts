@@ -2,14 +2,14 @@ import {
   GET_BALANCES_FAILED,
   GET_BALANCES_FETCHING,
   GET_BALANCES_SUCCEED,
-  GET_OFFSHORE_BALANCE_SUCCEED
+  GET_OFFSHORE_BALANCE_SUCCEED,
 } from "platforms/desktop/actions/types";
 import { AnyAction } from "redux";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { INITAL_FETCHING_STATE, Ticker, XFetching } from "./types";
 import { selectXRate } from "platforms/desktop/reducers/blockHeaderExchangeRates";
 import bigInt from "big-integer";
-import {convertBalanceForReading} from "utility/utility";
+import { convertBalanceForReading } from "utility/utility";
 
 export const NO_BALANCE = bigInt.zero;
 
@@ -35,19 +35,19 @@ export type XViewBalances = { [key in Ticker]: ViewBalance };
 const INITIAL_BALANCE: Balance = {
   balance: NO_BALANCE,
   unlockedBalance: NO_BALANCE,
-  lockedBalance: NO_BALANCE
+  lockedBalance: NO_BALANCE,
 };
 
 const INITIAL_VIEW_BALANCE: ViewBalance = {
   balance: -1,
   unlockedBalance: -1,
-  lockedBalance: -1
+  lockedBalance: -1,
 };
 
 const INITIAL_STATE: XBalances = {
   xUSD: { ...INITIAL_BALANCE },
   XHV: { ...INITIAL_BALANCE },
-  xBTC: { ...INITIAL_BALANCE }
+  xBTC: { ...INITIAL_BALANCE },
 };
 
 export function fetching(
@@ -77,27 +77,25 @@ export function xBalance(
   }
 }
 
-
 export const selectBalances = (state: DesktopAppState): XViewBalance => {
-
-
   return {
-    [Ticker.XHV] : {
+    [Ticker.XHV]: {
       balance: convertBalanceForReading(state.xBalance[Ticker.XHV].balance),
-      unlockedBalance: convertBalanceForReading(state.xBalance[Ticker.XHV].unlockedBalance),
-      lockedBalance: convertBalanceForReading(state.xBalance[Ticker.XHV].lockedBalance)
-    }
-  }
-
-
-
-}
+      unlockedBalance: convertBalanceForReading(
+        state.xBalance[Ticker.XHV].unlockedBalance
+      ),
+      lockedBalance: convertBalanceForReading(
+        state.xBalance[Ticker.XHV].lockedBalance
+      ),
+    },
+  };
+};
 
 export const selectTotalBalances = (state: DesktopAppState): XViewBalance => {
   const defaultBalance = {
     [Ticker.XHV]: { ...INITIAL_VIEW_BALANCE },
     [Ticker.xUSD]: { ...INITIAL_VIEW_BALANCE },
-    xBTC: { ...INITIAL_VIEW_BALANCE }
+    xBTC: { ...INITIAL_VIEW_BALANCE },
   };
 
   const xBalance = state.xBalance;
@@ -157,7 +155,7 @@ export const selectTotalBalances = (state: DesktopAppState): XViewBalance => {
 
   return {
     [Ticker.xUSD]: xUSDTotalBalance,
-    xBTC: btcTotalBalance
+    xBTC: btcTotalBalance,
   };
 };
 
@@ -190,6 +188,6 @@ export const selectValueOfAssetsInUSD = (
 
   return {
     [Ticker.XHV]: xhvBalanceInUSD,
-    [Ticker.xUSD]: xUSDBalance
+    [Ticker.xUSD]: xUSDBalance,
   };
 };
