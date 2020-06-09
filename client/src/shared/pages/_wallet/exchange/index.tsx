@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import Body from "../../../components/_layout/body";
 import Header from "../../../components/_layout/header";
 import Input from "../../../components/_inputs/input";
+import InputButton from "../../../components/_inputs/input_button";
 import Form from "../../../components/_inputs/form";
 
 import Footer from "../../../components/_inputs/footer";
@@ -222,6 +223,34 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     this.setState({ selectedPrio: selectedOption });
   };
 
+  setMaxFromAmount = () => {
+    const { fromTicker } = this.props;
+    const { hasLatestXRate } = this.props;
+
+    const availBalance = fromTicker
+      ? convertBalanceForReading(
+          this.props.balances[fromTicker].unlockedBalance
+        )
+      : NO_BALANCE;
+
+    this.setState({ ...this.state, fromAmount: availBalance }, () => {
+      this.calcConversion(true);
+    });
+  };
+
+  setMaxToAmount = () => {
+    const { toTicker } = this.props;
+    const { hasLatestXRate } = this.props;
+
+    const availBalance = toTicker
+      ? convertBalanceForReading(this.props.balances[toTicker].unlockedBalance)
+      : NO_BALANCE;
+
+    this.setState({ ...this.state, toAmount: availBalance }, () => {
+      this.calcConversion(false);
+    });
+  };
+
   render() {
     const {
       fromAmount,
@@ -280,7 +309,8 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 options={assetOptions}
                 onClick={this.setFromAsset}
               />
-              <Input
+              <InputButton
+                // @ts-ignore
                 label={
                   "From Amount " +
                   (availBalance !== NO_BALANCE
@@ -293,6 +323,8 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 disabled={!hasLatestXRate}
                 value={fromAmount}
                 onChange={this.onEnterFromAmount}
+                button="Max"
+                onClick={this.setMaxFromAmount}
                 error={
                   fromTicker === null ? "Please select an asset first" : ""
                 }
@@ -307,7 +339,8 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 options={assetOptions}
                 onClick={this.setToAsset}
               />
-              <Input
+              <InputButton
+                // @ts-ignore
                 label={
                   "To Amount " +
                   (toBalance !== NO_BALANCE ? `(Balance: ${toBalance})` : "")
@@ -320,6 +353,8 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 onChange={this.onEnterToAmount}
                 error={toTicker === null ? "Please select an asset first" : ""}
                 readOnly={toTicker === null}
+                button="Max"
+                onClick={this.setMaxToAmount}
               />
               {selectedTab === ExchangeTab.Adanvced && (
                 <Fragment>
