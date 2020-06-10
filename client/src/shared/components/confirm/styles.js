@@ -3,17 +3,20 @@ import styled from "styled-components";
 export const Container = styled.div`
   height: auto;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   padding: 8px 12px;
-  background: ${props => props.theme.body.foreground};
-  border-radius: 4px;
-  border: 1px solid ${props => props.theme.body.border};
+  border-top: 1px solid ${(props) => props.theme.body.border};
 `;
 
 export const Message = styled.div`
   font-size: 14px;
-  color: ${props => props.theme.type.primary};
+  height: 20px;
+  background: blue;
+  align-self: center;
+  color: ${(props) => props.theme.type.primary};
+  margin-top: 4px;
 `;
 
 export const Checkbox = styled.div`
@@ -21,8 +24,6 @@ export const Checkbox = styled.div`
   width: 20px;
   display: flex;
   justify-content: space-between;
-
-  width: 100%;
 `;
 
 export const Check = styled.input`
@@ -30,6 +31,4 @@ export const Check = styled.input`
   width: 20px;
 `;
 
-export const Description = styled.div`
-  margin-bottom: 12px;
-`;
+export const Description = styled.div``;
