@@ -4,7 +4,7 @@ import React, { Component } from "react";
 // Relative Imports
 import {
   Title,
-  Description as Subtitle
+  Description as Subtitle,
 } from "../../../../../assets/styles/type.js";
 import { Container, Main, Header, Footer, Route, Label } from "./styles";
 import { DesktopAppState } from "../../../reducers";
@@ -27,17 +27,16 @@ interface MultiLoginProps {
 enum LOGIN_TYPE {
   Open,
   Create,
-  Restore
+  Restore,
 }
 
 class MultiLoginPage extends Component<MultiLoginProps, MultiloginState> {
   state: MultiloginState = {
-    loginType: LOGIN_TYPE.Open
+    loginType: LOGIN_TYPE.Open,
   };
 
   componentDidMount(): void {
-      this.props.getSavedWallets();
-
+    this.props.getSavedWallets();
   }
 
   render() {
@@ -50,7 +49,7 @@ class MultiLoginPage extends Component<MultiLoginProps, MultiloginState> {
         <Header>
           <Title>Vault Login</Title>
           <Subtitle>
-            To access your Vault please select a wallet and enter a password
+            To access your Vault please select it and enter your password
           </Subtitle>
         </Header>
         <Main>
@@ -67,10 +66,9 @@ class MultiLoginPage extends Component<MultiLoginProps, MultiloginState> {
 
 const mapStateToProps = (state: DesktopAppState) => ({
   wallets: state.walletSession.savedWallets,
-  isLoggedIn: selectIsLoggedIn(state)
+  isLoggedIn: selectIsLoggedIn(state),
 });
 
-export const MultiLoginDesktop = connect(
-  mapStateToProps,
-  { getSavedWallets }
-)(MultiLoginPage);
+export const MultiLoginDesktop = connect(mapStateToProps, { getSavedWallets })(
+  MultiLoginPage
+);

@@ -86,11 +86,9 @@ class OpenWalletDesktopContainer extends Component<
 
     const { wallets } = this.props;
 
-    console.log(this.props.loading);
-
     const noWallets = [
       {
-        name: "No Vault detected. Please Create a Vault",
+        name: "Create a Vault",
       },
     ];
 
@@ -99,23 +97,23 @@ class OpenWalletDesktopContainer extends Component<
         <Dropdown
           onClick={this.handleNoWallet}
           options={noWallets}
-          placeholder="Choose a vault"
+          placeholder="Choose a Vault"
           label={"Select Vault"}
           error={""}
-          value={"Choose a vault"}
+          value={"Choose a Vault"}
         >
           {noWallets}
         </Dropdown>
         <Input
           label="Vault Password"
-          placeholder="Enter your vault password"
+          placeholder="Enter your Vault password"
           name="pw"
           type={"text"}
           value={this.state.pw}
           onChange={this.onChangeHandler}
         />
         <Information>
-          Select a vault and enter the password. If you don't see a vault, or
+          Select a Vault and enter the password. If you don't see a Vault, or
           forgot your password, then please click the{" "}
           <strong>Create a Vault</strong> link below.
         </Information>
@@ -126,7 +124,7 @@ class OpenWalletDesktopContainer extends Component<
           <WalletSelection
             onClick={(wallet) => this.onSelectWallet(wallet)}
             options={this.props.wallets}
-            placeholder={"Choose a vault"}
+            placeholder={"Choose a Vault"}
             label={"Select Vault"}
             error={this.state.error}
             value={selectedWallet}
@@ -134,7 +132,7 @@ class OpenWalletDesktopContainer extends Component<
           <InputButton
             // @ts-ignore
             label="Vault Password"
-            placeholder="Enter your vault password"
+            placeholder="Enter your Vault password"
             name="pw"
             type={this.state.showPassword === true ? "text" : "password"}
             button={this.state.showPassword === true ? "hide" : "show"}
@@ -144,7 +142,7 @@ class OpenWalletDesktopContainer extends Component<
           />
 
           <Information>
-            Select a vault and enter the password. If you don't see a vault, or
+            Select a Vault and enter the password. If you don't see a Vault, or
             forgot your password, then please click the{" "}
             <strong>Create a Vault</strong> link below.
           </Information>

@@ -193,7 +193,7 @@ class CreateDesktopContainer extends Component<
             <Input
               error={this.state.error}
               label="Vault Name"
-              placeholder="Create a vault name"
+              placeholder="Create a Vault name"
               name="fileName"
               type={"text"}
               value={fileName}
@@ -203,7 +203,7 @@ class CreateDesktopContainer extends Component<
             <InputButton
               // @ts-ignore
               label="Vault Password"
-              placeholder="Enter your vault password"
+              placeholder="Enter your Vault password"
               name="pw"
               type={this.state.showPassword === true ? "text" : "password"}
               button={this.state.showPassword === true ? "hide" : "show"}
@@ -213,7 +213,7 @@ class CreateDesktopContainer extends Component<
             />
 
             <Information>
-              Creating a new vault with a name and password means you’ll be able
+              Creating a new Vault with a name and password means you’ll be able
               to log in without entering your seed phrase. This makes your
               experience more secure, safe and efficient.
             </Information>

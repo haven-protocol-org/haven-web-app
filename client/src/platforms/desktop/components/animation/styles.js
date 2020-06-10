@@ -8,7 +8,6 @@ export const Container = styled.div`
   grid-column: 1 / 3;
   border-radius: 4px;
   border: 1px solid ${(props) => props.theme.body.border};
-  margin-top: 20px;
   background: ${(props) => props.theme.body.foreground};
 `;
 
@@ -40,7 +39,7 @@ export const Image = styled.div`
 export const Grid = styled.div`
   display: grid;
   height: auto;
-  padding: 16px;
+  padding: 16px 16px 0px 16px;
   grid-gap: 20px;
   grid-template-columns: 1fr 1fr 1fr;
 
@@ -124,6 +123,7 @@ export const Active = styled(Fan)`
     transform-origin: center;
   }
 `;
+
 export const Inactive = styled(Fan)`
   flex: 1;
   height: 256px;
@@ -144,69 +144,20 @@ export const Footer = styled.div`
   width: auto;
   display: flex;
   justify-content: space-between;
-  margin: 0px 16px 16px 16px;
+  padding: 0px 16px;
 `;
 
-export const Button = styled.button`
-  background: ${(props) => props.theme.button.primary};
-  border: none;
-  width: auto;
-  min-width: 128px;
-  height: 48px;
-  color: white;
-  font-size: 16px;
-  text-align: center;
-  border-radius: 4px;
-  padding-left: 16px;
-  padding-right: 16px;
-  text-decoration: none;
-  transition: 500ms;
-  outline: none;
-  font-size: 15px;
-
-  &:disabled {
-    color: rgba(255, 255, 255, 0.5);
-
-    &:hover {
-      background: #677bc4;
-      cursor: not-allowed;
-    }
-  }
-
-  &:hover {
-    cursor: pointer;
-    background: #5b6eae;
-    transition: 500ms;
-  }
+export const Indicator = styled.div`
+  height: 6px;
+  width: 6px;
+  border-radius: 12px;
+  background:${(props) => (props.mining === "Mining" ? "#34d8ac" : "#F04747")}
+  margin-right: 4px;
 `;
-export const Outline = styled.button`
-  border: 1px solid ${(props) => props.theme.body.border};
-  width: auto;
-  min-width: 128px;
-  height: 48px;
-  color: ${(props) => props.theme.type.secondary};
-  font-size: 16px;
-  text-align: center;
-  border-radius: 4px;
-  padding-left: 16px;
-  padding-right: 16px;
-  text-decoration: none;
-  transition: 500ms;
-  outline: none;
-  font-size: 15px;
-  background: none;
 
-  &:disabled {
-    color: rgba(255, 255, 255, 0.5);
-
-    &:hover {
-      cursor: not-allowed;
-    }
-  }
-
-  &:hover {
-    cursor: pointer;
-    transition: 500ms;
-    color: ${(props) => props.theme.type.primary};
-  }
+export const Row = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
 `;

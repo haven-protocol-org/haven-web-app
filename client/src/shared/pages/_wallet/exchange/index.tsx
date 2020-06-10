@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import Body from "../../../components/_layout/body";
 import Header from "../../../components/_layout/header";
 import Input from "../../../components/_inputs/input";
-import InputButton from "../../../components/_inputs/input_button";
+// import InputButton from "../../../components/_inputs/input_button";
 import Form from "../../../components/_inputs/form";
 
 import Footer from "../../../components/_inputs/footer";
@@ -34,7 +34,7 @@ import { NO_BALANCE, XBalances } from "shared/reducers/xBalance";
 import { convertBalanceForReading } from "utility/utility";
 import { showModal } from "shared/actions/modal";
 import { MODAL_TYPE } from "shared/reducers/modal";
-import {ExchangeSummary} from "shared/components/_summaries/exchange-summary";
+import { ExchangeSummary } from "shared/components/_summaries/exchange-summary";
 
 enum ExchangeTab {
   Basic,
@@ -79,7 +79,7 @@ export interface ExchangePrioOption {
 }
 
 const assetOptions: AssetOption[] = [
-  { name: "Haven Token", ticker: Ticker.XHV },
+  { name: "Haven", ticker: Ticker.XHV },
   { name: "United States Dollar", ticker: Ticker.xUSD },
 ];
 
@@ -199,16 +199,15 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     const fromAmount = parseFloat(this.state.fromAmount);
     const toAmount = parseFloat(this.state.toAmount);
 
-      this.props.createExchange(
-        fromTicker,
-        toTicker,
-        fromAmount,
-        toAmount,
-        this.state.selectedPrio.prio,
-        this.state.externAddress,
-        isOffShore
-      );
-
+    this.props.createExchange(
+      fromTicker,
+      toTicker,
+      fromAmount,
+      toAmount,
+      this.state.selectedPrio.prio,
+      this.state.externAddress,
+      isOffShore
+    );
   };
 
   toggleBasic = () => {
@@ -380,15 +379,15 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
               )}
             </Form>
             <Container>
-
-            <ExchangeSummary
+              <ExchangeSummary
                 xRate={this.props.xRate}
                 fromAmount={fromAmount}
                 toAmount={toAmount}
                 toTicker={toTicker}
                 hasLatestXRate={hasLatestXRate}
-                fee={'-'}
-                fromTicker={fromTicker}/>
+                fee={"-"}
+                fromTicker={fromTicker}
+              />
 
               <Footer
                 onClick={() => this.handleSubmit()}

@@ -3,6 +3,7 @@ import React from "react";
 
 // Relative Imports
 import { Container, Row, Key, Value } from "./styles";
+import Confirm from "../../confirm/index.js";
 
 const TransferSummary = ({
   transferAsset,
@@ -33,6 +34,7 @@ const TransferSummary = ({
           <Value>{paymentId}</Value>
         </Row>
       )}
+      <Confirm description="I accept the transfer rates and fees" />
     </Container>
   );
 };

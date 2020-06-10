@@ -63,7 +63,6 @@ class Navigation extends Component<NavigationProps, any> {
     const auth = this.props.isLoggedIn;
     const { node, wallet } = this.props.daemonStates;
     const { show_networks, current_network } = this.state;
-    console.log("daemonStates", this.props.daemonStates);
 
     return (
       <Container>

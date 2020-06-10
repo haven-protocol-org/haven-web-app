@@ -1,5 +1,5 @@
-import {EventEmitter} from "events";
+import { EventEmitter } from "events";
 
 const appEventBus = new EventEmitter();
 
-export {appEventBus};
+export { appEventBus };

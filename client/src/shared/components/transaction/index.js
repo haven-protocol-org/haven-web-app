@@ -48,8 +48,6 @@ export const Transaction = ({
     isMainnet() ? "" : ".stagenet"
   }.havenprotocol.org/tx/${tx}`;
 
-  console.log("TYPE", type);
-
   return (
     <Container href={txExplorerLink} target="_blank">
       <State status={type}>
@@ -91,7 +89,7 @@ export const Transaction = ({
           </Data>
           <Data>
             <Value alignment="right">{truncated}</Value>
-            <Label alignment="right">Reciept</Label>
+            <Label alignment="right">Receipt</Label>
           </Data>
         </Row>
       </Column>

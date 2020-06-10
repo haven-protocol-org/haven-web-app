@@ -2,124 +2,86 @@
  * responsible to wire everything together
  */
 
-import {IPCHandler} from "./ipc/IPCHandler";
-import {CommunicationChannels, DaemonsState} from "./ipc/types";
-import {ipcMain} from 'electron';
-import {getNetType, NET, setNetType} from "./env";
-import {DaemonHandler} from "./daemons/DaemonHandler";
-import {checkAndCreateWalletDir} from "./daemons/daemonPaths";
-import {appEventBus} from "./EventBus";
+import { IPCHandler } from "./ipc/IPCHandler";
+import { CommunicationChannels, DaemonsState } from "./ipc/types";
+import { ipcMain } from "electron";
+import { getNetType, NET, setNetType } from "./env";
+import { DaemonHandler } from "./daemons/DaemonHandler";
+import { checkAndCreateWalletDir } from "./daemons/daemonPaths";
+import { appEventBus } from "./EventBus";
 
-
-export const DAEMONS_STOPPED_EVENT: string = 'daemons_stopped_event';
-
+export const DAEMONS_STOPPED_EVENT: string = "daemons_stopped_event";
 
 export class HavenWallet {
+  private _isRunning: boolean = false;
 
-    private _isRunning:boolean = false;
+  private ipcHandler: IPCHandler = new IPCHandler();
+  private daemonHandler: DaemonHandler = new DaemonHandler();
 
-    private ipcHandler: IPCHandler = new IPCHandler();
-    private daemonHandler: DaemonHandler = new DaemonHandler();
+  private isSwitchingNet: boolean = false;
+  private requestShutDown: boolean = false;
 
-
-    private isSwitchingNet: boolean = false;
-    private requestShutDown: boolean  = false;
-
-
-
-    public start() {
-
-        if (this._isRunning) {
-            return;
-        }
-
-        this._isRunning = true;
-
-        checkAndCreateWalletDir();
-
-
-        this.daemonHandler.startDaemons();
-        this.ipcHandler.start();
-
-        this.addDaemonStateHandling();
-
-
+  public start() {
+    if (this._isRunning) {
+      return;
     }
 
+    this._isRunning = true;
 
+    checkAndCreateWalletDir();
 
-    private onSwitchNetwork(netType: NET) {
+    this.daemonHandler.startDaemons();
+    this.ipcHandler.start();
 
+    this.addDaemonStateHandling();
+  }
 
-        if (!(netType in NET)) {
-            return;
-        }
-
-        //for the case clients is doing dumb stuff
-        if (this.isSwitchingNet) {
-            return
-        }
-
-        // no need to switch
-        if (netType === getNetType()) {
-            return;
-        }
-
-        this.isSwitchingNet = true;
-        setNetType(netType);
-        appEventBus.once(DAEMONS_STOPPED_EVENT, () => this.start());
-        this.quit();
-
-
+  private onSwitchNetwork(netType: NET) {
+    if (!(netType in NET)) {
+      return;
     }
 
-
-
-    public quit() {
-
-        this.requestShutDown = true;
-        this.daemonHandler.stopDaemons();
-        this.ipcHandler.quit();
-        this.removeDaemonStateHandling();
-        this._isRunning = false;
-
+    //for the case clients is doing dumb stuff
+    if (this.isSwitchingNet) {
+      return;
     }
 
-
-    private addDaemonStateHandling() {
-
-        ipcMain.handle(CommunicationChannels.DAEMON, (event, args) => this.onDaemonStateRequest());
-
+    // no need to switch
+    if (netType === getNetType()) {
+      return;
     }
 
-    private addNetworkSwitchHandling() {
+    this.isSwitchingNet = true;
+    setNetType(netType);
+    appEventBus.once(DAEMONS_STOPPED_EVENT, () => this.start());
+    this.quit();
+  }
 
-        ipcMain.handle(CommunicationChannels.SWITCH_NET, (event, args) => this.onSwitchNetwork(args));
+  public quit() {
+    this.requestShutDown = true;
+    this.daemonHandler.stopDaemons();
+    this.ipcHandler.quit();
+    this.removeDaemonStateHandling();
+    this._isRunning = false;
+  }
 
-    }
+  private addDaemonStateHandling() {
+    ipcMain.handle(CommunicationChannels.DAEMON, (event, args) =>
+      this.onDaemonStateRequest()
+    );
+  }
 
-    private removeDaemonStateHandling() {
-        ipcMain.removeHandler(CommunicationChannels.DAEMON);
-    }
+  private addNetworkSwitchHandling() {
+    ipcMain.handle(CommunicationChannels.SWITCH_NET, (event, args) =>
+      this.onSwitchNetwork(args)
+    );
+  }
 
-    private onDaemonStateRequest():DaemonsState  {
+  private removeDaemonStateHandling() {
+    ipcMain.removeHandler(CommunicationChannels.DAEMON);
+  }
 
-        return this.daemonHandler.getDaemonsState()
-
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  private onDaemonStateRequest(): DaemonsState {
+    return this.daemonHandler.getDaemonsState();
+  }
 }
