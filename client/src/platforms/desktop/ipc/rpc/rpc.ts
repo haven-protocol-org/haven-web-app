@@ -18,15 +18,14 @@ export function getAddressRPC(params = { account_index: 0 }) {
 }
 
 export function createAddressRPC(label: string = "") {
-  const params = {account_index:0, label};
-    return callRpc('create_address', params);
+  const params = { account_index: 0, label };
+  return callRpc("create_address", params);
 }
 
 export function labelAdressRPC(label: string, minor: number) {
   const major = 0;
-  const params = {index:{major, minor}, label};
-  return callRpc('label_address', params);
-
+  const params = { index: { major, minor }, label };
+  return callRpc("label_address", params);
 }
 
 export function getBalanceRPC(params: object) {
@@ -38,7 +37,7 @@ export function queryMnemonicKeyRPC() {
 }
 
 export function relayTXRPC(params: object) {
-  return callRpc('relay_tx', params)
+  return callRpc("relay_tx", params);
 }
 
 export function transferRPC(params: object) {
@@ -122,18 +121,18 @@ function callRpc(method: string, params: object | undefined = undefined) {
     id: 0,
     jsonrpc: "2.0",
     method: method,
-    params: params
+    params: params,
   };
 
   logM(objRequest);
 
   return ipcRender
     .invoke(CommunicationChannels.RPC, objRequest)
-    .then(response => handleError(response));
+    .then((response) => handleError(response));
 }
 
 export const handleError = async (response: any) => {
-  console.log(response);
+  // console.log(response);
   // intercept error on protocol level
 
   if (response.data.error) return Promise.reject(response.data.error);
