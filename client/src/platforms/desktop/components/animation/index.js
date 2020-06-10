@@ -1,5 +1,5 @@
 // Library Imports
-import React, { useState } from "react";
+import React from "react";
 
 import {
   Active,
@@ -13,14 +13,13 @@ import {
   Status,
   Column,
   Hashes,
-  Button,
   Footer,
-  Outline,
+  Indicator,
+  Row,
 } from "./styles.js";
 import icon from "../../../../assets/haven.svg";
 
-const Mining = ({ status, mining }) => {
-  const [go, startMining] = useState(false);
+const Mining = ({ status, mining, hash, children }) => {
   return (
     <Container>
       <Header>
@@ -28,39 +27,39 @@ const Mining = ({ status, mining }) => {
           <Logo src={icon} />
         </Brand>
         <Column>
-          <Status>{go === true ? "Mining" : "Not Mining"}</Status>
-          <Hashes>{go === true ? "13 hps" : "0 hps"}</Hashes>
+          <Row>
+            <Indicator mining={mining} />
+            <Status>{mining}</Status>
+          </Row>
+          <Hashes>{hash}</Hashes>
         </Column>
       </Header>
-      {go === false ? (
+      {mining === "Not Mining" ? (
         <Grid>
           <Image>
-            <Inactive status></Inactive>
+            <Inactive status />
           </Image>
           <Image>
-            <Inactive status></Inactive>
+            <Inactive status />
           </Image>
           <Image>
-            <Inactive status></Inactive>
+            <Inactive status />
           </Image>
         </Grid>
       ) : (
         <Grid>
           <Image>
-            <Active status></Active>
+            <Active status />
           </Image>
           <Image>
-            <Active status></Active>
+            <Active status />
           </Image>
           <Image>
-            <Active status></Active>
+            <Active status />
           </Image>
         </Grid>
       )}
-      <Footer>
-        <Outline onClick={() => startMining(false)}>Stop</Outline>
-        <Button onClick={() => startMining(true)}>Start</Button>
-      </Footer>
+      <Footer>{children}</Footer>
     </Container>
   );
 };

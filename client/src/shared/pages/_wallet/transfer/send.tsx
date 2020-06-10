@@ -17,7 +17,7 @@ import { Container } from "./styles";
 import TransferSummary from "shared/components/_summaries/transfer-summary";
 // Relative Imports
 
-const options: AssetOption[] = [{ name: "Haven Token", ticker: Ticker.XHV }];
+const options: AssetOption[] = [{ name: "Haven", ticker: Ticker.XHV }];
 
 if (OFFSHORE_ENABLED) {
   options.push({ name: "United States Dollar", ticker: Ticker.xUSD });

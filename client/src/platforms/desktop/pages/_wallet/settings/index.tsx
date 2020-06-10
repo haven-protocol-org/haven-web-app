@@ -15,7 +15,7 @@ import Footer from "shared/components/_inputs/footer/index.js";
 
 // Implement later
 // import BalanceDropdown from "shared/components/_inputs/balances_dropdown";
-// import Mining from "../../../components/animation/index.js";
+import Mining from "../../../components/animation/index.js";
 
 // » This is the option to enable a user to choose a default balance view
 // const balances: BalanceOption[] = [
@@ -83,17 +83,6 @@ const options: ThemeOption[] = [
   { theme: "dark", value: "Dark Theme" },
   { theme: "light", value: "Light Theme" },
 ];
-
-// const addresses: AddressOption[] = [
-//   { name: "Work", address: "xhv1238...4567" },
-//   { name: "", address: "xhv8411...4910" },
-//   { name: "Hustle", address: "xhv9810...8301" },
-//   { name: "", address: "xhv0912...0183" },
-//   { name: "", address: "xhv0182...9401" },
-//   { name: "", address: "xhv9301...1930" },
-//   { name: "", address: "xhv1201...0391" },
-//   { name: "", address: "xhv92910...0381" },
-// ];
 
 class SettingsDesktopPage extends Component<SettingsProps, any> {
   refreshTimer: number = -1;
@@ -260,26 +249,18 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
           description="Mine from your computer and earn Haven"
         />
         <>
-          <Input
-            width={true}
-            label="Status"
-            placeholder="Mining Status"
-            type="text"
-            readOnly={true}
-            name="daemon_password"
-            value={
-              mining.active
-                ? `Mining with ${mining.speed} hashes per second`
-                : "Not Mining"
-            }
-          />
-          <Container>
+          <Mining
+            //@ts-ignore
+            status={true}
+            mining={mining.active === true ? "Mining" : "Not Mining"}
+            hash={mining.active === true ? `${mining.speed} hps` : "0 Hashes"}
+          >
             <Footer
               onClick={this.onMiningButtonClicked}
               loading={false}
               label={buttonLabel}
             />
-          </Container>
+          </Mining>
         </>
       </Body>
     );
