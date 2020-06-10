@@ -34,6 +34,7 @@ import { NO_BALANCE, XBalances } from "shared/reducers/xBalance";
 import { convertBalanceForReading } from "utility/utility";
 import { showModal } from "shared/actions/modal";
 import { MODAL_TYPE } from "shared/reducers/modal";
+import {ExchangeSummary} from "shared/components/_summaries/exchange-summary";
 
 enum ExchangeTab {
   Basic,
@@ -334,7 +335,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 options={assetOptions}
                 onClick={this.setToAsset}
               />
-              <InputButton
+              <Input
                 // @ts-ignore
                 label={
                   "To Amount " +
@@ -348,8 +349,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 onChange={this.onEnterToAmount}
                 error={toTicker === null ? "Please select an asset first" : ""}
                 readOnly={toTicker === null}
-                button="Max"
-                onClick={this.setMaxToAmount}
               />
               {selectedTab === ExchangeTab.Adanvced && (
                 <Fragment>
@@ -380,11 +379,20 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 </Failed>
               )}
             </Form>
-
             <Container>
+
+            <ExchangeSummary
+                xRate={this.props.xRate}
+                fromAmount={fromAmount}
+                toAmount={toAmount}
+                toTicker={toTicker}
+                hasLatestXRate={hasLatestXRate}
+                fee={'-'}
+                fromTicker={fromTicker}/>
+
               <Footer
                 onClick={() => this.handleSubmit()}
-                label="Review"
+                label="Exchange"
                 validated={isValid}
                 loading={this.props.isProcessingExchange}
               />

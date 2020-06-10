@@ -14,6 +14,7 @@ import Input from "../../../components/_inputs/input";
 import InputButton from "../../../components/_inputs/input_button";
 // import TransferSummary from "../../../components/_summaries/transfer-summary";
 import { Container } from "./styles";
+import TransferSummary from "shared/components/_summaries/transfer-summary";
 // Relative Imports
 
 const options: AssetOption[] = [{ name: "Haven Token", ticker: Ticker.XHV }];
@@ -214,6 +215,14 @@ class TransferContainer extends Component<TransferProps, TransferState> {
           )}
         </Form>
         <Container>
+          <TransferSummary
+              paymentId={payment_id === "" ? "none" : payment_id}
+              recipientAddress={
+                recipient_address === "" ? "--" : recipient_address
+              }
+              transferAsset={selectedAsset === null ? "--" : selectedAsset.ticker}
+              transferAmount={send_amount === "" ? "--" : send_amount}
+          />
           <Footer
             onClick={() => this.handleSubmit()}
             loading={this.props.isProcessing}
