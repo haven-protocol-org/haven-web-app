@@ -47,7 +47,6 @@ interface TransferState {
 type TransferProps = TransferOwnProps & TransferReduxProps;
 
 class TransferContainer extends Component<TransferProps, TransferState> {
-  private addressValue: any = React.createRef();
 
   state: TransferState = {
     selectedAsset: options.length === 1 ? options[0] : null,
@@ -157,7 +156,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
             options={options}
             onClick={this.setSendAsset}
           />
-          <InputButton
+          <Input
             // @ts-ignore
             label={
               availableBalance
@@ -170,8 +169,6 @@ class TransferContainer extends Component<TransferProps, TransferState> {
             name="send_amount"
             value={send_amount}
             onChange={this.handleChange}
-            button="Max"
-            onClick={this.setMaxAmount}
           />
           {windowWidth < 1380 ? (
             <Fragment>
