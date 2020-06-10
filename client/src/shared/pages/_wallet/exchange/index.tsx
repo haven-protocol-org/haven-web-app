@@ -65,6 +65,7 @@ type ExchangeState = {
   selectedTab: ExchangeTab;
   externAddress: string;
   selectedPrio: ExchangePrioOption;
+  reviewed: boolean;
 };
 
 export interface AssetOption {
@@ -100,6 +101,7 @@ const INITIAL_STATE: ExchangeState = {
   selectedTab: ExchangeTab.Basic,
   externAddress: "",
   selectedPrio: exchangePrioOptions[exchangePrioOptions.length - 1],
+  reviewed: false
 };
 class Exchange extends Component<ExchangeProps, ExchangeState> {
   state: ExchangeState = INITIAL_STATE;
@@ -210,6 +212,11 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     );
   };
 
+  handleReviewSubmit = (event: any) => {
+    const { checked } = event.target;
+    this.setState({ reviewed: checked });
+  };
+
   toggleBasic = () => {
     this.setState({ selectedTab: ExchangeTab.Basic });
   };
@@ -277,7 +284,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       : NO_BALANCE;
 
     const isValid: boolean =
-      !!(fromTicker && toTicker && fromAmount && toAmount) && hasLatestXRate;
+      !!(fromTicker && toTicker && fromAmount && toAmount) && hasLatestXRate && this.state.reviewed;
 
     return (
       <Fragment>
@@ -387,6 +394,8 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 hasLatestXRate={hasLatestXRate}
                 fee={"-"}
                 fromTicker={fromTicker}
+                checked={this.state.reviewed}
+                onChange={this.handleReviewSubmit}
               />
 
               <Footer

@@ -43,6 +43,7 @@ interface TransferState {
   recipient_address: string;
   payment_id: string;
   amountError: string;
+  reviewed:boolean;
 }
 
 type TransferProps = TransferOwnProps & TransferReduxProps;
@@ -54,6 +55,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
     recipient_address: "",
     payment_id: "",
     amountError: "",
+    reviewed: false
   };
 
   componentDidMount() {
@@ -62,6 +64,11 @@ class TransferContainer extends Component<TransferProps, TransferState> {
       selectedAsset: options[0],
     });
   }
+
+  handleReviewSubmit = (event: any) => {
+    const { checked } = event.target;
+    this.setState({ reviewed: checked });
+  };
 
   handleChange = (event: any) => {
     const name = event.target.name;
@@ -130,7 +137,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
     } = this.state;
 
     const checkValidation =
-      send_amount.length > 0 && recipient_address.length > 97;
+      send_amount.length > 0 && recipient_address.length > 97 && this.state.reviewed;
     const windowWidth = window.innerWidth;
 
     let availableBalance = null;
@@ -222,6 +229,9 @@ class TransferContainer extends Component<TransferProps, TransferState> {
             }
             transferAsset={selectedAsset === null ? "--" : selectedAsset.ticker}
             transferAmount={send_amount === "" ? "--" : send_amount}
+            checked={this.state.reviewed}
+            onChange={this.handleReviewSubmit}
+
           />
           <Footer
             onClick={() => this.handleSubmit()}

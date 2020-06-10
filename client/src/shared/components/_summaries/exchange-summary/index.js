@@ -13,6 +13,7 @@ export const ExchangeSummary = ({
   toTicker,
   fee,
   hasLatestXRate,
+    checked, onChange
 }) => {
   return (
     <>
@@ -43,7 +44,7 @@ export const ExchangeSummary = ({
           <Key>Fee</Key>
           <Value>{fee}</Value>
         </Row>
-        <Confirm description="I accept the exchange rates and fees" />
+        <Confirm description="I accept the exchange rates and fees" checked={checked} onChange={onChange} />
       </Container>
     </>
   );
