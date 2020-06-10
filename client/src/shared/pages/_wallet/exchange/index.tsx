@@ -198,7 +198,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     const fromAmount = parseFloat(this.state.fromAmount);
     const toAmount = parseFloat(this.state.toAmount);
 
-    if (isOffShore) {
       this.props.createExchange(
         fromTicker,
         toTicker,
@@ -208,7 +207,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
         this.state.externAddress,
         isOffShore
       );
-    }
+
   };
 
   toggleBasic = () => {
@@ -307,7 +306,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 options={assetOptions}
                 onClick={this.setFromAsset}
               />
-              <InputButton
+              <Input
                 // @ts-ignore
                 label={
                   "From Amount " +
@@ -321,8 +320,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 disabled={!hasLatestXRate}
                 value={fromAmount}
                 onChange={this.onEnterFromAmount}
-                button="Max"
-                onClick={this.setMaxFromAmount}
                 error={
                   fromTicker === null ? "Please select an asset first" : ""
                 }
