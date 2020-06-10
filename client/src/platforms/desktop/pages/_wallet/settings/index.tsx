@@ -238,7 +238,7 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
             onClick={this.handleClick}
           />
         </Form>
-        <Header
+       {/* <Header
           title="Addresses"
           description="Manage the sub-addresses connected to your account"
         />
@@ -254,7 +254,7 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
             options={addresses}
             onClick={this.manageAddress}
           />
-        </>
+        </>*/}
         <Header
           title="Mining "
           description="Mine from your computer and earn Haven"
