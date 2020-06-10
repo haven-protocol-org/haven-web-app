@@ -15,9 +15,9 @@ const Placeholder = ({ platform }) => {
       <Information>
         {platform === "desktop" ? (
           <div>
-            Before clicking <strong>"Continue"</strong> please have a Pen or
-            Password Manager ready and ensure you're not using public or
-            unsecured wifi.
+            Before clicking <strong>"Continue"</strong> please have a pen and
+            pad, or trusted password manager ready. Also ensure you're not using
+            a public or unsecured wifi.
           </div>
         ) : (
           <div>

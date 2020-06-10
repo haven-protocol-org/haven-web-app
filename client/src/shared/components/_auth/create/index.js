@@ -17,7 +17,7 @@ import {
   Step,
   Back,
   Title,
-  Description
+  Description,
 } from "./styles";
 import { Spinner } from "../../spinner";
 
@@ -36,7 +36,7 @@ const Create = ({
   nextStep,
   prevStep,
   children,
-  loading
+  loading,
 }) => {
   return (
     <Container>

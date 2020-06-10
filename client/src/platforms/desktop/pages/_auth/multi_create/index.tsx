@@ -4,7 +4,7 @@ import React, { Component } from "react";
 // Relative Imports
 import {
   Title,
-  Description as Subtitle
+  Description as Subtitle,
 } from "../../../../../assets/styles/type.js";
 import {
   Container,
@@ -14,7 +14,7 @@ import {
   Route,
   Label,
   Tabs,
-  Tab
+  Tab,
 } from "./styles";
 import { RestoreDesktop } from "../restore";
 import { DesktopAppState } from "../../../reducers";
@@ -37,12 +37,12 @@ interface MultiLoginProps {
 enum LOGIN_TYPE {
   Open,
   Create,
-  Restore
+  Restore,
 }
 
 class MultiLoginPage extends Component<MultiLoginProps, MultiloginState> {
   state: MultiloginState = {
-    loginType: LOGIN_TYPE.Create
+    loginType: LOGIN_TYPE.Create,
   };
 
   componentDidMount(): void {
@@ -53,13 +53,13 @@ class MultiLoginPage extends Component<MultiLoginProps, MultiloginState> {
 
   selectRestore = () => {
     this.setState({
-      loginType: LOGIN_TYPE.Restore
+      loginType: LOGIN_TYPE.Restore,
     });
   };
 
   selectCreate = () => {
     this.setState({
-      loginType: LOGIN_TYPE.Create
+      loginType: LOGIN_TYPE.Create,
     });
   };
 
@@ -73,8 +73,8 @@ class MultiLoginPage extends Component<MultiLoginProps, MultiloginState> {
         <Header>
           <Title>Create a Vault</Title>
           <Subtitle>
-            To create a vault please generate a new vault or restore and
-            existing one.
+            To create a Vault please generate a new Vault or restore an existing
+            one.
           </Subtitle>
         </Header>
         <Tabs>
@@ -106,10 +106,9 @@ class MultiLoginPage extends Component<MultiLoginProps, MultiloginState> {
 
 const mapStateToProps = (state: DesktopAppState) => ({
   wallets: state.walletSession.savedWallets,
-  isLoggedIn: selectIsLoggedIn(state)
+  isLoggedIn: selectIsLoggedIn(state),
 });
 
-export const MultiCreateDesktop = connect(
-  mapStateToProps,
-  { getSavedWallets }
-)(MultiLoginPage);
+export const MultiCreateDesktop = connect(mapStateToProps, { getSavedWallets })(
+  MultiLoginPage
+);

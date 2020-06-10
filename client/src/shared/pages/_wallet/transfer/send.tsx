@@ -47,7 +47,6 @@ interface TransferState {
 type TransferProps = TransferOwnProps & TransferReduxProps;
 
 class TransferContainer extends Component<TransferProps, TransferState> {
-
   state: TransferState = {
     selectedAsset: options.length === 1 ? options[0] : null,
     send_amount: "",
@@ -174,7 +173,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
             <Fragment>
               <Description
                 label="Recipient"
-                placeholder="Enter recipients address"
+                placeholder="Enter recipient's address"
                 name="recipient_address"
                 value={recipient_address}
                 width={true}

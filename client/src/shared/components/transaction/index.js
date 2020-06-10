@@ -91,7 +91,7 @@ export const Transaction = ({
           </Data>
           <Data>
             <Value alignment="right">{truncated}</Value>
-            <Label alignment="right">Reciept</Label>
+            <Label alignment="right">Receipt</Label>
           </Data>
         </Row>
       </Column>

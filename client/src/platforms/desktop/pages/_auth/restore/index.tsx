@@ -140,7 +140,7 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
             <Body>
               <Input
                 label="Vault Name"
-                placeholder="Create a vault name"
+                placeholder="Create a Vault name"
                 name="name"
                 type={"text"}
                 value={name}
@@ -149,7 +149,7 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
               <InputButton
                 // @ts-ignore
                 label="Vault Password"
-                placeholder="Enter your vault password"
+                placeholder="Enter your Vault password"
                 name="pw"
                 type={this.state.showPassword === true ? "text" : "password"}
                 button={this.state.showPassword === true ? "hide" : "show"}
@@ -158,7 +158,7 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
                 onClick={this.togglePassword}
               />
               <Information>
-                Restoring a vault with a name and password means you’ll be able
+                Restoring a Vault with a name and password means you’ll be able
                 to log in without entering your seed phrase. This makes your
                 experience more secure, safe and efficient.
               </Information>
