@@ -54,6 +54,7 @@ export const convertBalanceForReading = (balance: any) => {
   return readableBalance;
 };
 
+
 export const convertToMoney = (atomicMoney: any) => {
   if (atomicMoney === NO_BALANCE) return 0;
 
@@ -64,10 +65,10 @@ export const convertToMoney = (atomicMoney: any) => {
     return readableBalance / 10000;
   }
 
-  readableBalance = atomicMoney / Math.pow(10, 12);
+  readableBalance = (atomicMoney / Math.pow(10, 12));
 
   if (readableBalance % 1 === 0) return Math.round(readableBalance);
-  return readableBalance;
+  return Number(readableBalance.toFixed(4));
 };
 
 export const uuidv4 = () => {

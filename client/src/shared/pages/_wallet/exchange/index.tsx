@@ -17,7 +17,7 @@ import {
   hasLatestXRate,
   XRates,
   priceDelta,
-} from "platforms/desktop/reducers/blockHeaderExchangeRates";
+} from "shared/reducers/blockHeaderExchangeRates";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { selectNodeHeight } from "platforms/desktop/reducers/chain";
 import { getLastBlockHeader } from "platforms/desktop/actions/blockHeaderExchangeRate";

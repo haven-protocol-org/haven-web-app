@@ -7,9 +7,11 @@ import {
 import { AnyAction } from "redux";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { INITAL_FETCHING_STATE, Ticker, XFetching } from "./types";
-import { selectXRate } from "platforms/desktop/reducers/blockHeaderExchangeRates";
+import { selectXRate } from "shared/reducers/blockHeaderExchangeRates";
 import bigInt from "big-integer";
-import { convertBalanceForReading } from "utility/utility";
+import {convertBalanceForReading, convertToMoney} from "utility/utility";
+import {WebAppState} from "platforms/web/reducers";
+import {toASCII} from "punycode";
 
 export const NO_BALANCE = bigInt.zero;
 
@@ -127,7 +129,7 @@ export const selectTotalBalances = (state: DesktopAppState): XViewBalance => {
       const total =
         xBalance.XHV[balanceType].toJSNumber() * xhvToUSdRate +
         balance.toJSNumber();
-      result[balanceType] = total / Math.pow(10, 12);
+      result[balanceType] = convertToMoney(total);
       return result;
     },
     {}
@@ -138,7 +140,7 @@ export const selectTotalBalances = (state: DesktopAppState): XViewBalance => {
       const total =
         xBalance.xUSD[balanceType].toJSNumber() * usdToXhvRate +
         balance.toJSNumber();
-      result[balanceType] = total / Math.pow(10, 12);
+      result[balanceType] = convertToMoney(total );
       return result;
     },
     {}
@@ -160,13 +162,8 @@ export const selectTotalBalances = (state: DesktopAppState): XViewBalance => {
 };
 
 export const selectValueOfAssetsInUSD = (
-  state: DesktopAppState
+  state: DesktopAppState | WebAppState
 ): XViewBalance => {
-  // const defaultBalance = {
-  //   [Ticker.XHV] : {...INITIAL_VIEW_BALANCE},
-  //   [Ticker.xUSD] : {...INITIAL_VIEW_BALANCE}
-  // };
-
   const xhvToUSDRate: number = selectXRate(
     state.blockHeaderExchangeRate,
     Ticker.XHV,
@@ -176,14 +173,14 @@ export const selectValueOfAssetsInUSD = (
   let xUSDBalance: ViewBalance = { ...INITIAL_VIEW_BALANCE };
   Object.entries(state.xBalance.xUSD).forEach(
     ([balanceType, balance]) =>
-      (xUSDBalance[balanceType] = balance.toJSNumber() / Math.pow(10, 12))
+      (xUSDBalance[balanceType] = convertToMoney(balance.toJSNumber()))
   );
 
   let xhvBalanceInUSD: ViewBalance = { ...INITIAL_VIEW_BALANCE };
   Object.entries(state.xBalance.XHV).forEach(
     ([balanceType, balance]) =>
       (xhvBalanceInUSD[balanceType] =
-        (balance.toJSNumber() / Math.pow(10, 12)) * xhvToUSDRate)
+        convertToMoney(balance.toJSNumber() * xhvToUSDRate))
   );
 
   return {

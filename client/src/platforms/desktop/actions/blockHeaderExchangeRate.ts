@@ -4,7 +4,7 @@ import {
   GET_BLOCK_HEADER_EXCHANGE_RATE_SUCCEED,
 } from "./types";
 import { getLastBlockHeaderRPC } from "../ipc/rpc/rpc";
-import { BlockHeaderRate } from "../reducers/blockHeaderExchangeRates";
+import { BlockHeaderRate } from "shared/reducers/blockHeaderExchangeRates";
 import bigInt from "big-integer";
 
 export const getLastBlockHeader = () => {

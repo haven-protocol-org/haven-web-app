@@ -15,6 +15,7 @@ import { transferProcess } from "./transferProcess";
 import forex from "shared/reducers/forex";
 import { xBalance } from "shared/reducers/xBalance";
 import { xhvVsCurrencies } from "platforms/web/reducers/xhvVsCurrencies";
+import {blockHeaderExchangeRate} from "shared/reducers/blockHeaderExchangeRates";
 
 const appReducer = combineReducers({
   theme,
@@ -29,7 +30,8 @@ const appReducer = combineReducers({
   simplePrice,
   transferProcess,
   forex,
-  xhvVsCurrencies
+  xhvVsCurrencies,
+  blockHeaderExchangeRate
 });
 
 const rootReducer = (state: any, action: AnyAction) => {
