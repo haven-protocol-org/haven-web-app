@@ -253,7 +253,9 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
             //@ts-ignore
             status={true}
             mining={mining.active === true ? "Mining" : "Not Mining"}
-            hash={mining.active === true ? `${mining.speed} hps` : "0 Hashes"}
+            hash={
+              mining.active === true ? `${mining.speed} Hashes` : "0 Hashes"
+            }
           >
             <Footer
               onClick={this.onMiningButtonClicked}
