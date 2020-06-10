@@ -119,7 +119,7 @@ export const getPriceValues = (prices: any) => {
 };
 
 export const logM = (message: any) => {
-  console.log(message);
+  // console.log(message);
 };
 
 export const createRemainingTimeString = (remainingTimeInMinutes: number) => {

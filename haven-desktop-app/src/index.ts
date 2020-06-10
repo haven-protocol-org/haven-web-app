@@ -1,11 +1,11 @@
-import {app, BrowserWindow, Menu} from "electron";
+import { app, BrowserWindow, Menu } from "electron";
 import * as path from "path";
 import { devServerStarted } from "./dev";
 import { HavenWallet, DAEMONS_STOPPED_EVENT } from "./HavenWallet";
 import { BrowserWindowConstructorOptions } from "electron";
-import {isDevMode} from "./env";
-import {havenMenu} from "./menu";
-import {appEventBus} from "./EventBus";
+import { isDevMode } from "./env";
+import { havenMenu } from "./menu";
+import { appEventBus } from "./EventBus";
 
 const wallet = new HavenWallet();
 
@@ -20,7 +20,6 @@ if (require("electron-squirrel-startup")) {
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow: Electron.BrowserWindow;
 
-
 const menu = Menu.buildFromTemplate(havenMenu);
 Menu.setApplicationMenu(menu);
 
@@ -29,12 +28,12 @@ const startApp = () => {
     width: 992,
     minWidth: 470,
     minHeight: 720,
-    height: 600
+    height: 600,
   };
 
   browserOptions.webPreferences = {
     nodeIntegration: false,
-    preload: path.join(__dirname, "../preload.js")
+    preload: path.join(__dirname, "../preload.js"),
   };
   // Create the browser window.
   mainWindow = new BrowserWindow(browserOptions);
@@ -43,7 +42,7 @@ const startApp = () => {
     // Open the DevTools.
     mainWindow.webContents.openDevTools();
 
-    devServerStarted.subscribe(hasStarted => {
+    devServerStarted.subscribe((hasStarted) => {
       console.log("hasStarted : ", hasStarted);
       if (hasStarted) {
         mainWindow.loadURL("http://localhost:3000");
@@ -58,8 +57,6 @@ const startApp = () => {
     );
 
     mainWindow.maximize();
-
-
   }
 
   // start the app
@@ -75,8 +72,6 @@ const startApp = () => {
   mainWindow.on("ready-to-show", () => {
     mainWindow.show();
   });
-
-
 };
 
 // This method will be called when Electron has finished
@@ -86,7 +81,7 @@ app.on("ready", startApp);
 
 let willQuit = false;
 
-app.on("will-quit", event => {
+app.on("will-quit", (event) => {
   if (!willQuit) {
     willQuit = true;
     event.preventDefault();
