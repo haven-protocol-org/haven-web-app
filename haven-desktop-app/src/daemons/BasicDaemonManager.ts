@@ -3,6 +3,7 @@ import {IDaemonManager} from "./IDaemonManager";
 import {IDaemonConfig} from "./config";
 import {DaemonState} from "../ipc/types";
 import {EventEmitter} from "events";
+import {isDevMode} from "../env";
 
 
 
@@ -34,7 +35,11 @@ export class BasicDaemonManager implements IDaemonManager {
             if (error) {
 
             }
-            console.log(stdout);
+
+
+            if (isDevMode) {
+                console.log(stdout);
+            }
         } );
         this.daemonProcess.on('exit', (code: number | null, signal: string | null) => this.onDaemonStopped(code, signal));
         this.daemonProcess.on('error', (error: Error) => this.onDaemonError(error));
@@ -64,7 +69,9 @@ export class BasicDaemonManager implements IDaemonManager {
 
     private onDaemonError(error: Error) {
 
-        console.log(error.message);
+        if (isDevMode) {
+            console.log(error.message);
+        }
 
     }
 
