@@ -120,6 +120,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
         fromAmount: "",
         toAmount: "",
         externAddress: "",
+        reviewed: false
       });
     }
   }
@@ -333,7 +334,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 readOnly={fromTicker === null}
               />
               <Dropdown
-                label={"To Amount "}
+                label={"To Asset "}
                 placeholder="Select Asset"
                 name="to_asset"
                 value={toAsset ? toAsset.name : "Select Asset"}
