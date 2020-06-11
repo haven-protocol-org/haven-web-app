@@ -66,6 +66,11 @@ export const selectXRate = (
     return 0;
   }
 
+
+  if (fromTicker === toTicker) {
+    return 1;
+  }
+
   if (fromTicker === null || toTicker === null) {
     return 0;
   }

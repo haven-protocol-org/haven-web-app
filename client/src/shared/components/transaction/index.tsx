@@ -12,8 +12,23 @@ import {
   Row,
   Data,
 } from "./styles";
-import { isMainnet } from "../../../constants/env";
-// import { isDevMode } from "../../constants/env";
+import { isMainnet } from "constants/env";
+
+
+export interface TransactionProps  {
+
+  type: any,
+  date: any,
+  tx: any,
+  amount: any,
+  block: any,
+  currentValueInUSD: any,
+  status:any,
+  mempool:any,
+  timeTillUnlocked:any,
+  fee:any
+
+}
 
 export const Transaction = ({
   type,
@@ -26,7 +41,7 @@ export const Transaction = ({
   mempool,
   timeTillUnlocked,
   fee = 0,
-}) => {
+}: TransactionProps) => {
   const first = tx.substring(0, 4);
   const last = tx.substring(tx.length - 4);
   const truncated = first + "...." + last;
