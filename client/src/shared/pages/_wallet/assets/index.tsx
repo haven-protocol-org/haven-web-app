@@ -97,7 +97,7 @@ class AssetsPage extends Component<AssetsProps, any> {
           tokenName={token}
           ticker={"x" + ticker}
           price={xRateString}
-          balance={0.0}
+          balance={'0.00'}
         />
       );
     });
