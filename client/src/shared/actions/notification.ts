@@ -1,9 +1,7 @@
 import {
-  notificationList,
-  ERROR,
-  SUCCESS,
-} from "../../constants/notificationList";
-import { uuidv4 } from "../../utility/utility";
+  notificationList, NotificationType
+} from "constants/notificationList";
+import { uuidv4 } from "utility/utility";
 import { ADD_NOTIFICATION, REMOVE_NOTIFICATION } from "./types";
 import { Ticker } from "../reducers/types";
 
@@ -35,7 +33,7 @@ export const addExchangeSucceedMessage = (
   toAmount: number
 ) => {
   const message = `You exchanged ${fromAmount} ${fromTicker} to ${toAmount} ${toTicker} `;
-  return addNotificationByMessage(SUCCESS, message);
+  return addNotificationByMessage(NotificationType.SUCCESS, message);
 };
 
 export const removeNotification = (id: string) => {
@@ -54,7 +52,7 @@ export const addErrorNotification = (error: any) => {
     };
 
   const message = error.message || error.err_msg;
-  return buildNotification(message, ERROR);
+  return buildNotification(message, NotificationType.ERROR);
 };
 
 const buildNotification = (message: string, type: string) => {

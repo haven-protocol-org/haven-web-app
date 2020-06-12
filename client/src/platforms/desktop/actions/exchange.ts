@@ -1,7 +1,7 @@
 import { offshoreRPC, onshoreRPC, relayTXRPC } from "../ipc/rpc/rpc";
 import {
   addErrorNotification,
-  addExchangeSucceedMessage,
+  addExchangeSucceedMessage, addNotificationByMessage,
 } from "shared/actions/notification";
 
 import {
@@ -21,6 +21,7 @@ import { Ticker } from "shared/reducers/types";
 import { showModal } from "shared/actions/modal";
 import { MODAL_TYPE } from "shared/reducers/modal";
 import { selectPrimaryAddress } from "shared/reducers/address";
+import {NotificationType} from "constants/notificationList";
 
 export const setToTicker = (toTicker: Ticker | null) => {
   return { type: SELECT_TO_TICKER, payload: toTicker };
@@ -40,12 +41,20 @@ export function exchange(
   isOffshore: boolean
 ): any {
   return (dispatch: any, getState: () => DesktopAppState) => {
+
     const address =
       externAddress.trim() !== ""
         ? externAddress
         : selectPrimaryAddress(getState().address);
 
     const xhvAnmount = isOffshore? fromAmount : toAmount;
+
+    if (!sanityCheck(xhvAnmount)) {
+      dispatch(addNotificationByMessage(NotificationType.ERROR, 'Exchanges cannot exceed 4 decimals'));
+      return;
+    }
+
+
     const params = createExchangeInputs(xhvAnmount, priority, address);
 
     dispatch(onExchangeFetch());
@@ -72,6 +81,13 @@ export function exchange(
   };
 }
 
+const sanityCheck = (amount:number): boolean => {
+
+  // check that our value has not more than 4 decimals
+  return (amount * 1000) % 1 === 0;
+
+};
+
 export function createExchange(
   fromTicker: Ticker,
   toTicker: Ticker,
@@ -86,6 +102,13 @@ export function createExchange(
       externAddress.trim() !== ""
         ? externAddress
         : selectPrimaryAddress(getState().address);
+
+    const xhvAnmount = isOffshore? fromAmount : toAmount;
+
+    if (!sanityCheck(xhvAnmount)) {
+      addNotificationByMessage(NotificationType.ERROR, 'Exchanges cannot exceed 4 decimals');
+      return;
+    }
 
     const params = createExchangeInputs(fromAmount, priority, address);
 
