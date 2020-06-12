@@ -84,7 +84,7 @@ export function exchange(
 const sanityCheck = (amount:number): boolean => {
 
   // check that our value has not more than 4 decimals
-  return (amount * 1000) % 1 === 0;
+  return (amount * 10000) % 1 === 0;
 
 };
 
