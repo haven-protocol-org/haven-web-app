@@ -1,4 +1,4 @@
-import { offshoreTransferRPC, relayTXRPC, transferRPC } from "../ipc/rpc/rpc";
+import { offshoreTransferRPC, relayTXRPC, transfer_splitRPC } from "../ipc/rpc/rpc";
 
 import {
   TRANSFER_CREATION_FAILED,
@@ -40,7 +40,7 @@ export const transfer = (
     }
 
       const transferFN =
-          fromTicker === Ticker.XHV ? transferRPC : offshoreTransferRPC;
+          fromTicker === Ticker.XHV ? transfer_splitRPC : offshoreTransferRPC;
 
       transferFN(params)
         .then(result => {
@@ -69,7 +69,7 @@ export const createTransfer = (
     const params: any = createTXInputs(address, amount, paymentId);
 
     const transferFN =
-      fromTicker === Ticker.XHV ? transferRPC : offshoreTransferRPC;
+      fromTicker === Ticker.XHV ? transfer_splitRPC : offshoreTransferRPC;
 
     transferFN(params)
       .then((result) => {

@@ -40,8 +40,8 @@ export function relayTXRPC(params: object) {
   return callRpc("relay_tx", params);
 }
 
-export function transferRPC(params: object) {
-  return callRpc("transfer", params);
+export function transfer_splitRPC(params: object) {
+  return callRpc("transfer_split", params);
 }
 
 export function getTransferRPC(params: object) {

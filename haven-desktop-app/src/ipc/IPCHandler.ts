@@ -27,7 +27,7 @@ export class IPCHandler {
     "relay_tx",
     "get_height",
     "query_key",
-    "transfer",
+    "transfer_split",
     "get_transfers",
     "create_wallet",
     "offshore_transfer",
