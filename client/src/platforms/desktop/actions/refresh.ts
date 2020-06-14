@@ -5,7 +5,7 @@ import {
   START_REFRESH,
 } from "platforms/desktop/actions/types";
 import { DesktopAppState } from "platforms/desktop/reducers";
-import { getWalletHeightRPC } from "../ipc/rpc/rpc";
+import {getWalletHeightRPC, refreshRPC} from "../ipc/rpc/rpc";
 import { getBalance } from "./balance";
 import {
   getNodeInfo,
@@ -28,7 +28,7 @@ export const refresh = () => {
         dispatch(getWalletHeightFailed(err));
         dispatch(refreshFailed());
       })
-      //. then(() =>  refreshRPC())
+      .then(() =>  refreshRPC())
       .then(() => dispatch(refreshSucceed()))
       .then(() => dispatch(getAddress()))
       //.catch(() => dispatch(refreshFailed()))
