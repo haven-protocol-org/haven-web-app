@@ -10,10 +10,11 @@ import { requestSavedWalletsIPC } from "../ipc/misc";
 
 export const closeWallet = () => {
   return (dispatch: any) => {
-    closeWalletRPC()
-      .catch((err) => console.log(err))
-      // .then(() => closeWalletRPC())
-      .then(() => dispatch(closeWalletSucceed()));
+    storeWalletRPC()
+        .then(() => closeWalletRPC())
+        .then(() => dispatch(closeWalletSucceed()))
+        .catch((err) => console.log(err))
+
   };
 };
 
