@@ -22,6 +22,7 @@ import { selectIsLoggedIn } from "../../reducers/walletSession";
 import { NET_TYPE_NAME } from "constants/env";
 import { DesktopAppState } from "../../reducers";
 import { DaemonStates } from "../../reducers/daemonStates";
+import {Refresh} from "platforms/desktop/components/rescan";
 
 interface NavigationProps {
   daemonStates: DaemonStates;
@@ -84,6 +85,8 @@ class Navigation extends Component<NavigationProps, any> {
             )}
           </NetworkStatus>
         </Brand>
+        <Refresh/>
+
         {auth === false ? (
           <Button to="/">Login</Button>
         ) : (
