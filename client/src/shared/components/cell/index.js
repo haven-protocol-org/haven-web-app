@@ -7,12 +7,14 @@ import {
   Column,
   Title,
   Subtitle,
+  Ticker,
   Icon,
   Locked,
   Unlocked,
   Row,
   Pending,
   Route,
+  Asset,
   Balances,
   PendingWrapper,
   PendingSpacer,
@@ -42,10 +44,10 @@ const Cell = ({
             <Column>
               <Row>
                 <Title>{tokenName}</Title>
-                <Title>{price}</Title>
+                <Title>${price}</Title>
               </Row>
               <Row>
-                <Subtitle>${totalBalance}</Subtitle>
+                <Subtitle>${balance}</Subtitle>
                 <Subtitle>{totalBalance}</Subtitle>
               </Row>
             </Column>
@@ -59,10 +61,10 @@ const Cell = ({
           <Locked to={`/wallet/assets/${ticker}`}>
             <Column>
               <Row>
-                <Title>
-                  {tokenName} {ticker}
-                </Title>
-                <Title>{price}</Title>
+                <Asset>
+                  <Title>{tokenName} </Title> <Ticker>{ticker}</Ticker>
+                </Asset>
+                <Title>${price}</Title>
               </Row>
               <Row>
                 <Subtitle>${balance.toFixed(4)}</Subtitle>

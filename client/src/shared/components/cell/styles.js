@@ -103,13 +103,9 @@ export const Balances = styled.div`
   }
 `;
 
-export const Subtitle = styled.div`
-  font-family: Inter-Regular;
-  font-size: 14px;
-  color: ${(props) => props.theme.type.secondary};
-  letter-spacing: 0;
-  line-height: 24px;
-  text-align: ${(props) => (props.left ? "left" : "right")};
+export const Asset = styled.div`
+  display: flex;
+  flex-direction: row;
 `;
 
 export const Title = styled.div`
@@ -118,5 +114,21 @@ export const Title = styled.div`
   color: ${(props) => props.theme.type.primary};
   letter-spacing: 0;
   line-height: 30px;
-  text-align: ${(props) => (props.left ? "left" : "right")};
+`;
+
+export const Ticker = styled.div`
+  font-family: Inter-Regular;
+  font-size: 17px;
+  color: ${(props) => props.theme.type.secondary};
+  letter-spacing: 0;
+  line-height: 30px;
+  padding-left: 12px;
+`;
+
+export const Subtitle = styled.div`
+  font-family: Inter-Regular;
+  font-size: 14px;
+  color: ${(props) => props.theme.type.secondary};
+  letter-spacing: 0;
+  line-height: 24px;
 `;
