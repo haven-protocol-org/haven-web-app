@@ -30,7 +30,7 @@ const CellDisabled = ({ tokenName, ticker, price, balance, fullwidth }) => {
           <Title>{price}</Title>
           <Subtitle>
             {"$"}
-            {'0.00'}
+            {"0.00"}
           </Subtitle>
         </Column>
         <Inner>

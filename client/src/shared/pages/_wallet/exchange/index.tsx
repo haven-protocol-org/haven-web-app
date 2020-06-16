@@ -101,7 +101,7 @@ const INITIAL_STATE: ExchangeState = {
   selectedTab: ExchangeTab.Basic,
   externAddress: "",
   selectedPrio: exchangePrioOptions[exchangePrioOptions.length - 1],
-  reviewed: false
+  reviewed: false,
 };
 class Exchange extends Component<ExchangeProps, ExchangeState> {
   state: ExchangeState = INITIAL_STATE;
@@ -120,7 +120,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
         fromAmount: "",
         toAmount: "",
         externAddress: "",
-        reviewed: false
+        reviewed: false,
       });
     }
   }
@@ -285,7 +285,9 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       : NO_BALANCE;
 
     const isValid: boolean =
-      !!(fromTicker && toTicker && fromAmount && toAmount) && hasLatestXRate && this.state.reviewed;
+      !!(fromTicker && toTicker && fromAmount && toAmount) &&
+      hasLatestXRate &&
+      this.state.reviewed;
 
     return (
       <Fragment>
@@ -319,7 +321,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 label={
                   "From Amount " +
                   (availBalance !== NO_BALANCE
-                    ? `(Balance: ${availBalance})`
+                    ? `(Avail. Balance: ${availBalance})`
                     : "")
                 }
                 placeholder="Enter amount"
@@ -346,7 +348,9 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 // @ts-ignore
                 label={
                   "To Amount " +
-                  (toBalance !== NO_BALANCE ? `(Balance: ${toBalance})` : "")
+                  (toBalance !== NO_BALANCE
+                    ? `(Avail. Balance: ${toBalance})`
+                    : "")
                 }
                 placeholder="Enter amount"
                 disabled={!hasLatestXRate}

@@ -22,7 +22,7 @@ import { selectIsLoggedIn } from "../../reducers/walletSession";
 import { NET_TYPE_NAME } from "constants/env";
 import { DesktopAppState } from "../../reducers";
 import { DaemonStates } from "../../reducers/daemonStates";
-import {Refresh} from "platforms/desktop/components/rescan";
+import { Refresh } from "platforms/desktop/components/rescan";
 
 interface NavigationProps {
   daemonStates: DaemonStates;
@@ -47,12 +47,6 @@ class Navigation extends Component<NavigationProps, any> {
     this.props.logout();
   };
 
-  showNetworks = () => {
-    this.setState({
-      show_networks: !this.state.show_networks,
-    });
-  };
-
   currentNetwork = (network: any) => {
     this.setState({
       current_network: network,
@@ -72,9 +66,11 @@ class Navigation extends Component<NavigationProps, any> {
           <Haven>HAVEN</Haven>
 
           <NetworkStatus>
-            <Wrapper onClick={this.showNetworks} show_networks={show_networks}>
+            <Wrapper show_networks={show_networks}>
               <Row>
-                <Tag>{current_network}</Tag>
+                <Tag>
+                  {current_network} <Refresh />
+                </Tag>
               </Row>
             </Wrapper>
             {!wallet.isRunning && (
@@ -85,7 +81,6 @@ class Navigation extends Component<NavigationProps, any> {
             )}
           </NetworkStatus>
         </Brand>
-        <Refresh/>
 
         {auth === false ? (
           <Button to="/">Login</Button>
