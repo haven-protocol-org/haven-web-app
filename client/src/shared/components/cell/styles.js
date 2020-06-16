@@ -15,29 +15,28 @@ export const Container = styled.div`
   }
 `;
 
-export const Wrapper = styled(Link)`
+export const Locked = styled(Link)`
   background: ${(props) => props.theme.body.foreground};
   border: 1px solid ${(props) => props.theme.body.border};
-  border-bottom: ${(props) =>
-    props.lockedBalance > 0
-      ? `1px solid ${(props) => props.theme.body.border}`
-      : "none"};
-  border-radius: ${(props) =>
-    props.lockedBalance > 0 ? "4px 4px 4px 4px" : "4px 4px 0px 0px"};
+  border-bottom: none;
+  border-radius: 4px 4px 0px 0px;
   text-decoration: none;
   flex-direction: row;
 
   height: auto;
   display: flex;
   justify-content: space-between;
+`;
 
-  ${media.laptop`
-    grid-column: 1 / 3;
-  `}
-
-  ${media.mobile`
-    grid-column: 1 / 3;
-  `}
+export const Unlocked = styled(Link)`
+  background: ${(props) => props.theme.body.foreground};
+  border: 1px solid ${(props) => props.theme.body.border};
+  border-radius: 4px;
+  text-decoration: none;
+  flex-direction: row;
+  height: auto;
+  display: flex;
+  justify-content: space-between;
 `;
 
 export const Route = styled.div`

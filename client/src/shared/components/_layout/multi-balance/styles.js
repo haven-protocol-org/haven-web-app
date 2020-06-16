@@ -8,7 +8,7 @@ export const Overview = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border-bottom: 1px solid ${props => props.theme.body.border};
+  border-bottom: 1px solid ${(props) => props.theme.body.border};
 
   margin-top: 68px;
 
@@ -26,6 +26,7 @@ export const Wrapper = styled.div`
   justify-content: center;
   cursor: pointer;
   user-select: none;
+  padding: 20px;
 `;
 
 export const Value = styled.div`
@@ -35,7 +36,7 @@ export const Value = styled.div`
   align-items: center;
   justify-content: center;
   font-size: 14px;
-  color: ${props => props.theme.type.secondary};
+  color: ${(props) => props.theme.type.secondary};
   font-family: Inter-Regular;
   margin-top: 12px;
 `;
@@ -47,7 +48,7 @@ export const Pending = styled.div`
   align-items: center;
   justify-content: center;
   font-size: 12px;
-  color: ${props => props.theme.type.secondary};
+  color: ${(props) => props.theme.type.secondary};
   font-family: Inter-Regular;
   margin-top: 12px;
   text-align: center;
@@ -57,7 +58,7 @@ export const Pending = styled.div`
 export const Amount = styled.div`
   font-size: 32px;
   font-family: Inter-Bold;
-  color: ${props =>
+  color: ${(props) =>
     props.isSyncing ? props.theme.type.secondary : props.theme.type.primary};
   letter-spacing: 0;
   line-height: 30px;

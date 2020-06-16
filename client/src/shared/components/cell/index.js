@@ -8,14 +8,10 @@ import {
   Title,
   Subtitle,
   Icon,
-  Inner,
-  Wrapper,
-  Ticker,
+  Locked,
+  Unlocked,
   Row,
-  Status,
   Pending,
-  Card,
-  Space,
   Route,
   Balances,
   PendingWrapper,
@@ -34,11 +30,12 @@ const Cell = ({
   unlockedBalance,
 }) => {
   const [open, openBalance] = useState(false);
+  const balance = totalBalance * price;
   return (
     <>
       {lockedBalance === 0 ? (
         <Container>
-          <Wrapper
+          <Unlocked
             lockedBalance={lockedBalance}
             to={`/wallet/assets/${ticker}`}
           >
@@ -48,18 +45,18 @@ const Cell = ({
                 <Title>{price}</Title>
               </Row>
               <Row>
-                <Subtitle>{value}</Subtitle>
+                <Subtitle>${totalBalance}</Subtitle>
                 <Subtitle>{totalBalance}</Subtitle>
               </Row>
             </Column>
             <Route>
               <Icon src={chevron} />
             </Route>
-          </Wrapper>
+          </Unlocked>
         </Container>
       ) : (
         <Container>
-          <Wrapper to={`/wallet/assets/${ticker}`}>
+          <Locked to={`/wallet/assets/${ticker}`}>
             <Column>
               <Row>
                 <Title>
@@ -68,14 +65,14 @@ const Cell = ({
                 <Title>{price}</Title>
               </Row>
               <Row>
-                <Subtitle>${value}</Subtitle>
+                <Subtitle>${balance.toFixed(4)}</Subtitle>
                 <Subtitle>{totalBalance}</Subtitle>
               </Row>
             </Column>
             <Route>
               <Icon src={chevron} />
             </Route>
-          </Wrapper>
+          </Locked>
           {open && (
             <PendingWrapper to={`/wallet/assets/${ticker}`}>
               <PendingSpacer />
