@@ -68,8 +68,9 @@ export const Row = styled.div`
   justify-content: space-between;
 `;
 
-export const PendingWrapper = styled.div`
+export const PendingWrapper = styled(Link)`
   border-top: 1px solid ${(props) => props.theme.body.border};
+  text-decoration: none;
 `;
 
 export const PendingSpacer = styled.div`

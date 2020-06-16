@@ -77,7 +77,7 @@ const Cell = ({
             </Route>
           </Wrapper>
           {open && (
-            <PendingWrapper>
+            <PendingWrapper to={`/wallet/assets/${ticker}`}>
               <PendingSpacer />
               <Pending>
                 <Subtitle>Total Balance</Subtitle>
