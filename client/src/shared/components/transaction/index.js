@@ -30,6 +30,7 @@ export const Transaction = ({
   const first = tx.substring(0, 4);
   const last = tx.substring(tx.length - 4);
   const truncated = first + "...." + last;
+
   const inUsd = isNaN(parseFloat(currentValueInUSD))
     ? 0
     : parseFloat(currentValueInUSD);
