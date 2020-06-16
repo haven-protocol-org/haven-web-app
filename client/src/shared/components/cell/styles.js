@@ -2,17 +2,34 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import media from "../../../assets/styles/media.js";
 
-export const Container = styled(Link)`
-  background: ${props => props.theme.body.foreground};
-  border: 1px solid ${props => props.theme.body.border};
-  padding: 20px;
-  border-radius: 4px;
-  text-decoration: none;
+export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  grid-column: 1 / 3;
   transition: 500ms;
-  grid-column: ${props => (props.fullwidth ? "1 / 3" : null)}
+
+  &:hover {
+    cursor: pointer;
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.15);
+    transition: 500ms;
+  }
+`;
+
+export const Wrapper = styled(Link)`
+  background: ${(props) => props.theme.body.foreground};
+  border: 1px solid ${(props) => props.theme.body.border};
+  border-bottom: ${(props) =>
+    props.lockedBalance > 0
+      ? `1px solid ${(props) => props.theme.body.border}`
+      : "none"};
+  border-radius: ${(props) =>
+    props.lockedBalance > 0 ? "4px 4px 4px 4px" : "4px 4px 0px 0px"};
+  text-decoration: none;
+  flex-direction: row;
+
+  height: auto;
   display: flex;
   justify-content: space-between;
-
 
   ${media.laptop`
     grid-column: 1 / 3;
@@ -21,31 +38,14 @@ export const Container = styled(Link)`
   ${media.mobile`
     grid-column: 1 / 3;
   `}
-
-  &:hover {
-    cursor: pointer;
-    background: ${props => props.theme.body.foreground};
-    border: 1px solid ${props => props.theme.body.border};
-    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.15);
-    border-radius: 4px;
-    transition: 500ms;
 `;
 
-export const Inner = styled.div`
+export const Route = styled.div`
+  width: 20px;
   height: auto;
-  width: 16px;
   display: flex;
   align-items: center;
-  margin-left: 16px;
-`;
-
-export const Column = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-export const Row = styled.div`
-  display: flex;
-  flex-direction: row;
+  padding-right: 12px;
 `;
 
 export const Icon = styled.img`
@@ -53,34 +53,70 @@ export const Icon = styled.img`
   width: 16px;
 `;
 
-export const Wrapper = styled.div`
+export const Column = styled.div`
+  height: auto;
   display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  width: 100%;
 `;
 
-export const Title = styled.div`
-  font-family: Inter-Bold;
-  font-size: 17px;
-  color: ${props => props.theme.type.primary};
-  letter-spacing: 0;
-  line-height: 30px;
-  text-align: ${props => (props.left ? "left" : "right")};
+export const Row = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 `;
 
-export const Ticker = styled.div`
-  font-family: Inter-Regular;
-  margin-left: 8px;
-  font-size: 17px;
-  color: ${props => props.theme.type.secondary};
-  letter-spacing: 0;
-  line-height: 30px;
-  text-align: ${props => (props.left ? "left" : "right")};
+export const PendingWrapper = styled.div`
+  border-top: 1px solid ${(props) => props.theme.body.border};
+`;
+
+export const PendingSpacer = styled.div`
+  height: 4px;
+  background: ${(props) => props.theme.body.foreground};
+  border-right: 1px solid ${(props) => props.theme.body.border};
+  border-left: 1px solid ${(props) => props.theme.body.border};
+`;
+
+export const Pending = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0px 50px 0px 20px;
+  background: ${(props) => props.theme.body.foreground};
+  border-right: 1px solid ${(props) => props.theme.body.border};
+  border-left: 1px solid ${(props) => props.theme.body.border};
+`;
+
+export const Balances = styled.div`
+  display: flex;
+  padding: 4px;
+  flex-direction: row;
+  justify-content: center;
+  background: ${(props) => props.theme.body.foreground};
+  border: 1px solid ${(props) => props.theme.body.border};
+  border-radius: 0px 0px 4px 4px;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export const Subtitle = styled.div`
   font-family: Inter-Regular;
   font-size: 14px;
-  color: ${props => props.theme.type.secondary};
+  color: ${(props) => props.theme.type.secondary};
   letter-spacing: 0;
   line-height: 24px;
-  text-align: ${props => (props.left ? "left" : "right")};
+  text-align: ${(props) => (props.left ? "left" : "right")};
+`;
+
+export const Title = styled.div`
+  font-family: Inter-Bold;
+  font-size: 17px;
+  color: ${(props) => props.theme.type.primary};
+  letter-spacing: 0;
+  line-height: 30px;
+  text-align: ${(props) => (props.left ? "left" : "right")};
 `;
