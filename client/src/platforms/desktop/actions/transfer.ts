@@ -1,4 +1,4 @@
-import { offshoreTransferRPC, relayTXRPC, transferRPC } from "../ipc/rpc/rpc";
+import { offshoreTransferRPC, relayTXRPC, transfer_splitRPC } from "../ipc/rpc/rpc";
 
 import {
   TRANSFER_CREATION_FAILED,
@@ -15,7 +15,6 @@ import {
   addNotificationByKey,
 } from "shared/actions/notification";
 import { TRANSFER_SUCCEED_MESSAGE } from "constants/notificationList";
-import { getOffshoreTransfers } from "platforms/desktop/actions/offshoreTransferHistory";
 import { getOffshoreBalance } from "platforms/desktop/actions/offshoreBalance";
 import { Ticker } from "shared/reducers/types";
 import { hideModal, showModal } from "shared/actions/modal";
@@ -28,7 +27,8 @@ import {getBalance} from "platforms/desktop/actions/balance";
 export const transfer = (
     address: string,
     amount: number,
-    paymentId: string
+    paymentId: string,
+    fromTicker: Ticker
 ) => {
   amount = amount * 1e12;
   return (dispatch: any) => {
@@ -39,13 +39,16 @@ export const transfer = (
       params["payment_id"] = paymentId;
     }
 
-    transferRPC(params)
+      const transferFN =
+          fromTicker === Ticker.XHV ? transfer_splitRPC : offshoreTransferRPC;
+
+      transferFN(params)
         .then(result => {
           dispatch(transferSucceed(result));
           dispatch(addNotificationByKey(TRANSFER_SUCCEED_MESSAGE));
+
           dispatch(getTransfers());
           dispatch(getBalance());
-          dispatch(getOffshoreTransfers());
           dispatch(getOffshoreBalance());
         })
         .catch(error => dispatch(manageTransferFailed(error)));
@@ -66,7 +69,7 @@ export const createTransfer = (
     const params: any = createTXInputs(address, amount, paymentId);
 
     const transferFN =
-      fromTicker === Ticker.XHV ? transferRPC : offshoreTransferRPC;
+      fromTicker === Ticker.XHV ? transfer_splitRPC : offshoreTransferRPC;
 
     transferFN(params)
       .then((result) => {
@@ -95,7 +98,6 @@ export const confirmTransfer = (hex: string) => {
       .then((result) => {
         dispatch(transferSucceed(result));
         dispatch(addNotificationByKey(TRANSFER_SUCCEED_MESSAGE));
-        dispatch(getOffshoreTransfers());
         dispatch(getOffshoreBalance());
         dispatch(getTransfers());
         dispatch(getBalance());

@@ -4,16 +4,17 @@ import {
   OPEN_WALLET_SUCCEED,
   UPDATE_SAVED_WALLETS,
 } from "./types";
-import { openWalletRPC, storeWalletRPC } from "../ipc/rpc/rpc";
+import {closeWalletRPC, openWalletRPC, storeWalletRPC} from "../ipc/rpc/rpc";
 import { CLOSE_WALLET } from "shared/actions/types";
 import { requestSavedWalletsIPC } from "../ipc/misc";
 
 export const closeWallet = () => {
   return (dispatch: any) => {
     storeWalletRPC()
-      .catch((err) => console.log(err))
-      // .then(() => closeWalletRPC())
-      .then(() => dispatch(closeWalletSucceed()));
+        .then(() => closeWalletRPC())
+        .then(() => dispatch(closeWalletSucceed()))
+        .catch((err) => console.log(err))
+
   };
 };
 

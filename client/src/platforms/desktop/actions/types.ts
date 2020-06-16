@@ -64,9 +64,9 @@ export const GET_BLOCK_HEIGHT_FETCHING = "get_block_height_fetching";
 export const GET_BLOCK_HEIGHT_SUCCEED = "get_block_height_succeed";
 export const GET_BLOCK_HEIGHT_FAILED = "get_block_height_failed";
 
-export const START_REFRESH = "start_refresh";
-export const REFRESH_SUCCEED = "refresh_succeed";
-export const REFRESH_FAILED = "refresh_failed";
+export const START_RESCAN = "start_rescan";
+export const RESCAN_SUCCEED = "rescan_succeed";
+export const RESCAN_FAILED = "rescan_failed";
 
 export const EXCHANGE_RESET = "exchange_reset";
 

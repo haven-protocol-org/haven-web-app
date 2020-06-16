@@ -11,7 +11,7 @@ import { chain } from "./chain";
 import { simplePrice } from "shared/reducers/simplePrice";
 import { walletSession } from "./walletSession";
 import forex from "../../../shared/reducers/forex";
-import { blockHeaderExchangeRate } from "./blockHeaderExchangeRates";
+import { blockHeaderExchangeRate } from "../../../shared/reducers/blockHeaderExchangeRates";
 import { xBalance } from "shared/reducers/xBalance";
 import { xTransferList } from "shared/reducers/xTransferList";
 import { exchangeProcess } from "./exchangeProcess";

@@ -10,6 +10,8 @@ const TransferSummary = ({
   transferAmount,
   paymentId,
   recipientAddress,
+    checked,
+    onChange
 }) => {
   const first = recipientAddress.substring(0, 4);
   const last = recipientAddress.substring(recipientAddress.length - 4);
@@ -34,7 +36,7 @@ const TransferSummary = ({
           <Value>{paymentId}</Value>
         </Row>
       )}
-      <Confirm description="I accept the transfer rates and fees" />
+      <Confirm description="I accept the transfer rates and fees" checked={checked} onChange={onChange} />
     </Container>
   );
 };

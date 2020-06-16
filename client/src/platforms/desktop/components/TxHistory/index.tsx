@@ -13,18 +13,19 @@ import empty from "assets/illustration/no_transactions.svg";
 import React, { Component } from "react";
 import { getTransfers } from "../../actions";
 import { connect } from "react-redux";
-import { Transaction } from "shared/components/transaction";
+import {Transaction, TransactionProps} from "shared/components/transaction";
 import Header from "shared/components/_layout/header/index.js";
 import { selectBlockHeight } from "../../reducers/chain";
 import {getTransferListByTicker} from "shared/reducers/xTransferList";
 import { withRouter } from "react-router";
 import { Ticker } from "shared/reducers/types";
 import { DesktopAppState } from "platforms/desktop/reducers";
+import {BlockHeaderRate, selectXRate} from "shared/reducers/blockHeaderExchangeRates";
 
 interface TxHistoryProps {
   transferList: any [] | null | undefined;
   height: number;
-  price: number;
+  rates: BlockHeaderRate[];
   assetId: Ticker;
   getTransfers: () => void;
 }
@@ -64,60 +65,15 @@ class TxHistoryContainer extends Component<TxHistoryProps, any> {
           <History>
             {all && all.length > 0 ? (
               all.map((transaction: any, index: number) => {
-                const currentValueInUSD = getCurrentValueInUSD(
-                  transaction.amount,
-                  this.props.assetId, this.props.price
-                );
-                const transactionDate = new Date(
-                  transaction.timestamp * 1000
-                ).toLocaleDateString();
-                const isMempool =
-                  transaction.direction === "pending" ||
-                  transaction.direction === "pool";
-                const readableAmount = convertBalanceForReading(
-                  transaction.amount
-                );
-                const txType = TxHistoryContainer.getTransactionType(
-                  transaction.direction,
-                  transaction.type
-                );
 
-                let blocksTillUnlocked: number = 0;
-
-                // when unlock_time is 0 we have a regular tx which is unlocked after 10 confirmations
-                if (transaction.unlock_time === 0) {
-                  blocksTillUnlocked = Math.max(
-                    10 - transaction.confirmations,
-                    0
-                  );
-                }
-                // if unlock_time is higher than transaction height then we expect a mining
-                // income where unlock_time is the index of the block where it is unlocked
-                else if (transaction.unlock_time > transaction.height) {
-                  if (transaction.unlock_time > currentHeight) {
-                    blocksTillUnlocked =
-                      transaction.unlock_time - currentHeight;
-                  }
-                }
-                const minutesTillUnlocked = blocksTillUnlocked * 2;
-                const timeTillUnlocked =
-                  minutesTillUnlocked > 0
-                    ? createRemainingTimeString(minutesTillUnlocked)
-                    : null;
+                const computedProps: Partial<TransactionProps> = prepareTxInfo(transaction, currentHeight, this.props.assetId, this.props.rates);
+                const txProps: TransactionProps = {...computedProps, status:transaction.direction, block:transaction.height,
+                  tx: transaction.txid, fee: convertBalanceForReading(transaction.fee)} as TransactionProps;
 
                 return (
                   <Transaction
+                      {...txProps}
                     key={index}
-                    type={txType}
-                    status={transaction.direction}
-                    currentValueInUSD={currentValueInUSD}
-                    block={transaction.height}
-                    date={transactionDate}
-                    tx={transaction.txid}
-                    fee={convertBalanceForReading(transaction.fee)}
-                    mempool={isMempool}
-                    amount={readableAmount}
-                    timeTillUnlocked={timeTillUnlocked}
                   />
                 );
               })
@@ -140,9 +96,60 @@ class TxHistoryContainer extends Component<TxHistoryProps, any> {
 const mapStateToProps = (state: DesktopAppState, props: any) => ({
   transferList: getTransferListByTicker(state, props.match.params.id),
   height: selectBlockHeight(state),
-  price: state.simplePrice.price
+  rates: state.blockHeaderExchangeRate
 });
 
 export const TxHistoryDesktop = withRouter(
   connect(mapStateToProps, { getTransfers })(TxHistoryContainer)
 );
+
+
+const prepareTxInfo = (transaction: any, currentHeight: number, ticker: Ticker, rates: BlockHeaderRate[]): Partial<TransactionProps> => {
+
+  const xRate = selectXRate(rates, ticker, Ticker.xUSD);
+
+  const transactionDate = new Date(
+      transaction.timestamp * 1000
+  ).toLocaleDateString();
+  const mempool =
+      transaction.direction === "pending" ||
+      transaction.direction === "pool";
+  const readableAmount = convertBalanceForReading(
+      transaction.amount
+  );
+  const currentValueInUSD = readableAmount *  xRate;
+
+  const txType = TxHistoryContainer.getTransactionType(
+      transaction.direction,
+      transaction.type
+  );
+
+  let blocksTillUnlocked: number = 0;
+
+  // when unlock_time is 0 we have a regular tx which is unlocked after 10 confirmations
+  if (transaction.unlock_time === 0) {
+    blocksTillUnlocked = Math.max(
+        10 - transaction.confirmations,
+        0
+    );
+  }
+  // if unlock_time is higher than transaction height then we expect a mining
+  // income where unlock_time is the index of the block where it is unlocked
+  else if (transaction.unlock_time > transaction.height) {
+    if (transaction.unlock_time > currentHeight) {
+      blocksTillUnlocked =
+          transaction.unlock_time - currentHeight;
+    }
+  }
+  const minutesTillUnlocked = blocksTillUnlocked * 2;
+  const timeTillUnlocked =
+      minutesTillUnlocked > 0
+          ? createRemainingTimeString(minutesTillUnlocked)
+          : null;
+
+
+  return {
+    timeTillUnlocked,type:txType,currentValueInUSD, mempool, date: transactionDate, amount: readableAmount
+  }
+
+};

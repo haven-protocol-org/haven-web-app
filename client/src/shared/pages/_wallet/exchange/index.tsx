@@ -17,7 +17,7 @@ import {
   hasLatestXRate,
   XRates,
   priceDelta,
-} from "platforms/desktop/reducers/blockHeaderExchangeRates";
+} from "shared/reducers/blockHeaderExchangeRates";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { selectNodeHeight } from "platforms/desktop/reducers/chain";
 import { getLastBlockHeader } from "platforms/desktop/actions/blockHeaderExchangeRate";
@@ -65,6 +65,7 @@ type ExchangeState = {
   selectedTab: ExchangeTab;
   externAddress: string;
   selectedPrio: ExchangePrioOption;
+  reviewed: boolean;
 };
 
 export interface AssetOption {
@@ -100,6 +101,7 @@ const INITIAL_STATE: ExchangeState = {
   selectedTab: ExchangeTab.Basic,
   externAddress: "",
   selectedPrio: exchangePrioOptions[exchangePrioOptions.length - 1],
+  reviewed: false
 };
 class Exchange extends Component<ExchangeProps, ExchangeState> {
   state: ExchangeState = INITIAL_STATE;
@@ -118,6 +120,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
         fromAmount: "",
         toAmount: "",
         externAddress: "",
+        reviewed: false
       });
     }
   }
@@ -210,6 +213,11 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     );
   };
 
+  handleReviewSubmit = (event: any) => {
+    const { checked } = event.target;
+    this.setState({ reviewed: checked });
+  };
+
   toggleBasic = () => {
     this.setState({ selectedTab: ExchangeTab.Basic });
   };
@@ -277,7 +285,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       : NO_BALANCE;
 
     const isValid: boolean =
-      !!(fromTicker && toTicker && fromAmount && toAmount) && hasLatestXRate;
+      !!(fromTicker && toTicker && fromAmount && toAmount) && hasLatestXRate && this.state.reviewed;
 
     return (
       <Fragment>
@@ -326,7 +334,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 readOnly={fromTicker === null}
               />
               <Dropdown
-                label={"To Amount "}
+                label={"To Asset "}
                 placeholder="Select Asset"
                 name="to_asset"
                 value={toAsset ? toAsset.name : "Select Asset"}
@@ -387,6 +395,8 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 hasLatestXRate={hasLatestXRate}
                 fee={"-"}
                 fromTicker={fromTicker}
+                checked={this.state.reviewed}
+                onChange={this.handleReviewSubmit}
               />
 
               <Footer

@@ -11,6 +11,8 @@ import { updateChainData } from ".";
 import { decrypt } from "../../../utility/utility-encrypt";
 import { Ticker } from "../../../shared/reducers/types";
 import bigInt from "big-integer";
+
+
 export const getTransfers = () => {
   return (dispatch, getState) => {
     dispatch(getTransfersFetching());

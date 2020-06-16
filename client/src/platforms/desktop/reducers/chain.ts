@@ -1,9 +1,6 @@
 import {
   GET_BLOCK_HEIGHT_SUCCEED,
-  GET_BLOCK_INFO_SUCEED,
-  REFRESH_FAILED,
-  REFRESH_SUCCEED,
-  START_REFRESH,
+  GET_BLOCK_INFO_SUCEED, RESCAN_FAILED, RESCAN_SUCCEED, START_RESCAN,
 } from "../actions/types";
 import { AnyAction } from "redux";
 import { SyncState } from "shared/types/types";
@@ -28,10 +25,10 @@ export const chain = (state = INITIAL_STATE, action: AnyAction): Chain => {
     case GET_BLOCK_INFO_SUCEED:
     case GET_BLOCK_HEIGHT_SUCCEED:
       return { ...state, ...action.payload };
-    case START_REFRESH:
+    case START_RESCAN:
       return { ...state, isRefreshing: true };
-    case REFRESH_FAILED:
-    case REFRESH_SUCCEED:
+    case RESCAN_FAILED:
+    case RESCAN_SUCCEED:
       return { ...state, isRefreshing: false };
     default:
       return state;
@@ -58,7 +55,7 @@ export const selectWalletHeight = (state: DesktopAppState) => {
   return state.chain.walletHeight;
 };
 
-export const isRefreshing = (state: DesktopAppState) => {
+export const selectRefreshing = (state: DesktopAppState) => {
   return state.chain.isRefreshing;
 };
 
