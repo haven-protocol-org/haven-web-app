@@ -94,7 +94,8 @@ class Balances extends Component<BalanceProps, BalanceState> {
                 ticker === "XHV" ? ticker : ticker.substring(1)
               }) `}
         </Value>
-        {/*{isSyncing && <ProgressBar percentage={percentage} />}
+        {isSyncing && <ProgressBar percentage={percentage} />}
+        {/*}
         {lockedBalance > 0 && (
           <Pending>
             You have {amountLocked} in pending transactions. <br />
