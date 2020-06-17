@@ -22,16 +22,13 @@ interface TransferOwnProps {
   isProcessing: boolean;
 }
 
-interface TransferReduxProps {
-  xBalances: XBalances;
-}
 
 interface TransferState {
   firstTabState: boolean;
   secondTabState: boolean;
 }
 
-type TransferProps = TransferOwnProps & TransferReduxProps;
+type TransferProps = TransferOwnProps;
 
 export class Transfer extends Component<TransferProps, TransferState> {
   state: TransferState = {

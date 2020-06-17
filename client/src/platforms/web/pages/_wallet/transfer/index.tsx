@@ -1,13 +1,20 @@
 import { connect } from "react-redux";
 import { sendFunds, resetTransferProcess } from "../../../actions";
-import { Transfer } from "../../../../../shared/pages/_wallet/transfer";
+import { Transfer } from "shared/pages/_wallet/transfer";
 import React, { Component } from "react";
 import { transferSucceed } from "../../../reducers/transferProcess";
-import { history } from "../../../../../utility/history";
+import { history } from "utility/history";
+import {WebAppState} from "platforms/web/reducers";
 
-class TransferWebContainer extends Component {
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (this.props.transferSucceed) {
+
+
+class TransferWebContainer extends Component<any, any> {
+
+
+  componentDidUpdate(prevProps: Readonly<any>, prevState: Readonly<any>, snapshot?: any): void {
+
+
+  if (this.props.transferSucceed) {
       this.props.resetTransferProcess();
       history.push("/wallet/assets/XHV");
     }
@@ -16,16 +23,16 @@ class TransferWebContainer extends Component {
   render() {
     return (
       <Transfer
+          addresses={this.props.address}
         isProcessing={this.props.tx.isProcessing}
-        address={this.props.address}
         sendFunds={this.props.sendFunds}
       />
     );
   }
 }
 
-export const mapStateToProps = state => ({
-  address: state.address.main,
+export const mapStateToProps = (state: WebAppState) => ({
+  address: state.address,
   tx: state.transferProcess,
   transferSucceed: transferSucceed(state)
 });
