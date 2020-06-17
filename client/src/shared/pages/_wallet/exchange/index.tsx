@@ -294,7 +294,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
         <Body>
           <Header
             title="Exchange "
-            description="Swap to and from various Haven Assets"
+            description="Swap between all available Haven assets'"
           />
           <Tab
             firstTabLabel="Basic"

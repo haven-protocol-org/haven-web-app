@@ -39,10 +39,10 @@ const Mining = ({ status, mining, hash, children }) => {
           <Image>
             <Inactive status />
           </Image>
-          <Image>
+          <Image hide="true">
             <Inactive status />
           </Image>
-          <Image>
+          <Image hide="true">
             <Inactive status />
           </Image>
         </Grid>
@@ -51,10 +51,10 @@ const Mining = ({ status, mining, hash, children }) => {
           <Image>
             <Active status />
           </Image>
-          <Image>
+          <Image hide="true">
             <Active status />
           </Image>
-          <Image>
+          <Image hide="true">
             <Active status />
           </Image>
         </Grid>

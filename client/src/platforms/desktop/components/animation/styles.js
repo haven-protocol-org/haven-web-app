@@ -9,6 +9,7 @@ export const Container = styled.div`
   border-radius: 4px;
   border: 1px solid ${(props) => props.theme.body.border};
   background: ${(props) => props.theme.body.foreground};
+  margin-bottom: 40px;
 `;
 
 export const Brand = styled.div`
@@ -34,6 +35,10 @@ export const Image = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
+
+  ${media.tablet`
+    display: ${(props) => props.hide === "true" && "none"}
+ `};
 `;
 
 export const Grid = styled.div`
