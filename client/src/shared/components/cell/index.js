@@ -43,12 +43,14 @@ const Cell = ({
           >
             <Column>
               <Row>
-                <Title>{tokenName}</Title>
-                <Title>${price}</Title>
+                <Asset>
+                  <Title>{tokenName} </Title> <Ticker>{ticker}</Ticker>
+                </Asset>
+                <Title>${balance.toFixed(4)}</Title>
               </Row>
               <Row>
-                <Subtitle>${balance}</Subtitle>
-                <Subtitle>Amount: {totalBalance}</Subtitle>
+                <Subtitle>${price}</Subtitle>
+                <Subtitle>{totalBalance}</Subtitle>
               </Row>
             </Column>
             <Route>
@@ -67,8 +69,8 @@ const Cell = ({
                 <Title>${balance.toFixed(4)}</Title>
               </Row>
               <Row>
-                <Subtitle>Price: ${price}</Subtitle>
-                <Subtitle>Amount: {totalBalance}</Subtitle>
+                <Subtitle>${price}</Subtitle>
+                <Subtitle>{totalBalance}</Subtitle>
               </Row>
             </Column>
             <Route>
