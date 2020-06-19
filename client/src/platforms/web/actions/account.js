@@ -25,28 +25,36 @@ export const restoreWallet = seed => {
   let keys = null;
 
   return async dispatch => {
+
     dispatch(accountCreationRequested());
     const lWallet = await core.monero_utils_promise;
     // check if user submitted privKey
 
-    try {
-      if (seed.length === 64) {
-        keys = lWallet.address_and_keys_from_seed(seed, NET_TYPE_ID);
-        keys.mnemonic_string = lWallet.mnemonic_from_seed(seed, "English");
-      } else {
-        keys = lWallet.seed_and_keys_from_mnemonic(seed, NET_TYPE_ID);
-        keys.mnemonic_string = seed;
-      }
 
-      seed = null;
-      dispatch(keysGeneratedSucceed(keys));
-      dispatch(createAddressEntry(keys.address_string));
-    } catch (e) {
-      dispatch(keysGeneratedFailed(e));
-      dispatch(accountCreationFailed(e));
-      return;
-    }
-    dispatch(loginBE(keys.address_string, keys.sec_viewKey_string, false));
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+
+        try {
+          if (seed.length === 64) {
+            keys = lWallet.address_and_keys_from_seed(seed, NET_TYPE_ID);
+            keys.mnemonic_string = lWallet.mnemonic_from_seed(seed, "English");
+          } else {
+            keys = lWallet.seed_and_keys_from_mnemonic(seed, NET_TYPE_ID);
+            keys.mnemonic_string = seed;
+          }
+
+          seed = null;
+          dispatch(keysGeneratedSucceed(keys));
+          dispatch(createAddressEntry(keys.address_string));
+        } catch (e) {
+          dispatch(keysGeneratedFailed(e));
+          dispatch(accountCreationFailed(e));
+          return;
+        }
+        dispatch(loginBE(keys.address_string, keys.sec_viewKey_string, false));
+      }, 0);
+    });
+
   };
 };
 
