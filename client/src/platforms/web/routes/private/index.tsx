@@ -11,16 +11,25 @@ import { connect } from "react-redux";
 import { selectIsLoggedIn } from "../../reducers/account";
 import Idle from "../../../../shared/components/idle";
 import { SettingsWeb } from "../../pages/_wallet/settings";
-import { keepAlive, getTransfers } from "../../actions";
+import { keepAlive, getTransfers, getExchangeRates } from "../../actions";
 import Menu from "../../../../shared/components/_layout/menu";
 import Page from "../../../../shared/components/_layout/page";
+import {DesktopAppState} from "platforms/desktop/reducers";
 /**
  *root component for private web wallet
  * by updating blockheight in given interval
  * it is responsible for updating blockheight related data ( balances, transfers )
  * which is done in the action getHeight which might not be the best place -> c'est la vie
  */
-class PrivateRoutes extends Component {
+class PrivateRoutes extends Component<any, any> {
+
+
+  private txTimerId: number;
+  private keepAliveTimerId: number;
+  private exchangeRatesTimerId:number;
+
+
+
   componentDidMount() {
     this.props.getTransfers();
     this.props.keepAlive();
@@ -28,15 +37,16 @@ class PrivateRoutes extends Component {
   }
 
   addTimer() {
-    this.getTxTimer = setInterval(this.props.getTransfers, 30000);
-    this.keepAliveTimer = setInterval(this.props.keepAlive, 15000);
+    this.txTimerId = window.setInterval(this.props.getTransfers, 30000);
+    this.keepAliveTimerId = window.setInterval(this.props.keepAlive, 15000);
+    this.exchangeRatesTimerId = window.setInterval(this.props.keepAlive, 60000);
   }
 
   removeTimer() {
-    clearInterval(this.getTxTimer);
-    clearInterval(this.keepAliveTimer);
-    this.getTxTimer = null;
-    this.keepAliveTimer = null;
+    clearInterval(this.txTimerId);
+    clearInterval(this.keepAliveTimerId);
+    clearInterval(this.exchangeRatesTimerId);
+
   }
 
   componentWillUnmount() {
@@ -69,11 +79,11 @@ class PrivateRoutes extends Component {
   }
 }
 
-export const mapStateToProps = state => ({
+export const mapStateToProps = (state: DesktopAppState) => ({
   isLoggedIn: selectIsLoggedIn(state)
 });
 
 export default connect(
   mapStateToProps,
-  { keepAlive, getTransfers }
+  { keepAlive, getTransfers, getExchangeRates }
 )(PrivateRoutes);
