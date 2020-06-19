@@ -1,9 +1,9 @@
 // Library Imports
 import React, { Component, lazy, Suspense } from "react";
+//@ts-ignore
 import { Route } from "react-router-dom";
 
 // Relative Imports
-
 import Welcome from "../../../../shared/pages/_public/welcome";
 import Loader from "../../../../shared/components/loader";
 import { CreateWeb } from "../../pages/_auth/create";

@@ -11,10 +11,13 @@ import { connect } from "react-redux";
 import { selectIsLoggedIn } from "../../reducers/account";
 import Idle from "../../../../shared/components/idle";
 import { SettingsWeb } from "../../pages/_wallet/settings";
-import { keepAlive, getTransfers, getExchangeRates } from "../../actions";
+import { getExchangeRates } from "../../actions/exchangeRates.ts";
+import { getTransfers } from "../../actions/transferHistory.js";
+import { keepAlive } from "../../actions/account.js";
+
 import Menu from "../../../../shared/components/_layout/menu";
 import Page from "../../../../shared/components/_layout/page";
-import {DesktopAppState} from "platforms/desktop/reducers";
+import { DesktopAppState } from "platforms/desktop/reducers";
 /**
  *root component for private web wallet
  * by updating blockheight in given interval
@@ -22,13 +25,9 @@ import {DesktopAppState} from "platforms/desktop/reducers";
  * which is done in the action getHeight which might not be the best place -> c'est la vie
  */
 class PrivateRoutes extends Component<any, any> {
-
-
   private txTimerId: number;
   private keepAliveTimerId: number;
-  private exchangeRatesTimerId:number;
-
-
+  private exchangeRatesTimerId: number;
 
   componentDidMount() {
     this.props.getTransfers();
@@ -46,7 +45,6 @@ class PrivateRoutes extends Component<any, any> {
     clearInterval(this.txTimerId);
     clearInterval(this.keepAliveTimerId);
     clearInterval(this.exchangeRatesTimerId);
-
   }
 
   componentWillUnmount() {
@@ -80,10 +78,11 @@ class PrivateRoutes extends Component<any, any> {
 }
 
 export const mapStateToProps = (state: DesktopAppState) => ({
-  isLoggedIn: selectIsLoggedIn(state)
+  isLoggedIn: selectIsLoggedIn(state),
 });
 
-export default connect(
-  mapStateToProps,
-  { keepAlive, getTransfers, getExchangeRates }
-)(PrivateRoutes);
+export default connect(mapStateToProps, {
+  keepAlive,
+  getTransfers,
+  getExchangeRates,
+})(PrivateRoutes);
