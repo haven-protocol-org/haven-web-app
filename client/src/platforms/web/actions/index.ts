@@ -8,6 +8,7 @@ export * from "./key";
 export * from "./transferHistory";
 export * from "./sendFunds";
 export * from "./xhvVsCurrencies";
+export * from "./exchangeRates";
 
 export const createAddressEntry = (address: string) => {
 
