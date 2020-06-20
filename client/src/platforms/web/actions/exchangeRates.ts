@@ -25,21 +25,20 @@ export const getExchangeRates = () => {
 
 
 const createRecordEntry = (oracleResponse: any): BlockHeaderRate => {
-
-    const priceRecord: Partial<BlockHeaderRate> = {};
-    Object.entries(oracleResponse).forEach(([key, value]) => {
-        if (key !== "signature") {
-            priceRecord[key] = bigInt(value as number);
-        }
-    });
-    // our oracle price data is not mapped to a height
-    priceRecord.height = -1;
-    priceRecord.timestamp = oracleResponse.timestamp;
-    return priceRecord as BlockHeaderRate;
+  const priceRecord: Partial<BlockHeaderRate> = {};
+  Object.entries(oracleResponse).forEach(([key, value]) => {
+    if (key !== "signature") {
+      priceRecord[key] = bigInt(value as number);
+    }
+  });
+  // our oracle price data is not mapped to a height
+  priceRecord.height = -1;
+  priceRecord.timestamp = oracleResponse.timestamp;
+  return priceRecord as BlockHeaderRate;
 };
 
 export const getLastBlockerHeaderSucceed = (
-    priceRecord: BlockHeaderRate
+  priceRecord: BlockHeaderRate
 ): AnyAction => {
-    return { type: GET_BLOCK_HEADER_EXCHANGE_RATE_SUCCEED, payload: priceRecord };
+  return { type: GET_BLOCK_HEADER_EXCHANGE_RATE_SUCCEED, payload: priceRecord };
 };
