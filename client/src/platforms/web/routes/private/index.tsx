@@ -11,7 +11,7 @@ import { connect } from "react-redux";
 import { selectIsLoggedIn } from "../../reducers/account";
 import Idle from "../../../../shared/components/idle";
 import { SettingsWeb } from "../../pages/_wallet/settings";
-import { getExchangeRates } from "../../actions/exchangeRates.ts";
+import { getExchangeRates } from "../../actions/exchangeRates";
 import { getTransfers } from "../../actions/transferHistory.js";
 import { keepAlive } from "../../actions/account.js";
 
