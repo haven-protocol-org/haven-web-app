@@ -11,7 +11,7 @@ import { connect } from "react-redux";
 import { selectIsLoggedIn } from "../../reducers/account";
 import Idle from "../../../../shared/components/idle";
 import { SettingsWeb } from "../../pages/_wallet/settings";
-import { getExchangeRates } from "../../actions/exchangeRates.ts";
+import { getExchangeRates } from "../../actions/exchangeRates";
 import { getTransfers } from "../../actions/transferHistory.js";
 import { keepAlive } from "../../actions/account.js";
 
@@ -32,13 +32,14 @@ class PrivateRoutes extends Component<any, any> {
   componentDidMount() {
     this.props.getTransfers();
     this.props.keepAlive();
+    this.props.getExchangeRates();
     this.addTimer();
   }
 
   addTimer() {
     this.txTimerId = window.setInterval(this.props.getTransfers, 30000);
     this.keepAliveTimerId = window.setInterval(this.props.keepAlive, 15000);
-    this.exchangeRatesTimerId = window.setInterval(this.props.keepAlive, 60000);
+    this.exchangeRatesTimerId = window.setInterval(this.props.getExchangeRates, 60000);
   }
 
   removeTimer() {
