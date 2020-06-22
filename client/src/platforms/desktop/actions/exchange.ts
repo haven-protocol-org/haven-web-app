@@ -113,7 +113,7 @@ export function createExchange(
     const params = createExchangeInputs(fromAmount, priority, address);
 
     dispatch(
-      onExchangeCreationFetch({ fromAmount, toAmount, priority, address })
+      onExchangeCreationFetch({...params, toAmount: toAmount  * 1e12 })
     );
 
     const exchangeRPCFN = isOffshore ? offshoreRPC : onshoreRPC;
@@ -176,8 +176,8 @@ const createExchangeInputs = (
     destinations: [{ address, amount: amount.toString() }],
     priority,
     ring_size: 11,
-  //  do_not_relay: true,
-   // get_tx_metadata: true,
+    do_not_relay: true,
+    get_tx_metadata: true,
   };
 };
 

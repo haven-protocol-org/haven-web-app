@@ -6,6 +6,7 @@ import {connect} from "react-redux";
 import {hideModal} from "shared/actions/modal";
 import {confirmTransfer, resetTransferProcess} from "platforms/desktop/actions/transfer";
 import {TxProcessInfo} from "platforms/desktop/reducers/transferProcess";
+import {convertToMoney} from "utility/utility";
 
 
 
@@ -27,6 +28,10 @@ class ConfirmTxModal extends React.Component<ConfirmTxModalProps, any> {
 
         const {paymentId, fromTicker, fromAmount, address, fee} = this.props.transfer;
 
+
+        const readableFee = convertToMoney(fee);
+        const readableAmount = convertToMoney(fromAmount);
+
         return (
 
             <Modal
@@ -42,14 +47,10 @@ class ConfirmTxModal extends React.Component<ConfirmTxModalProps, any> {
                     onChange={() => {}}
                     checked={true}
                     paymentId={paymentId === "" ? "--" : paymentId}
-                    recipientAddress={
-                        address === "" ? "--" : address
-                    }
-                    ticker={
-                        fromTicker === null ? "--" : fromTicker
-                    }
-                    transferAmount={fromAmount === null ? "--" : fromAmount}
-                    fee={fee}
+                    recipientAddress={address}
+                    ticker={fromTicker}
+                    transferAmount={readableAmount}
+                    fee={readableFee}
                 />
             </Modal>
 
