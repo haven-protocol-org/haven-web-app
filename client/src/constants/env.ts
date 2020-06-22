@@ -1,4 +1,4 @@
-export const NET_TYPE_ID = parseInt(process.env.REACT_APP_NET_TYPE_ID);
+export const NET_TYPE_ID = parseInt(process.env.REACT_APP_NET_TYPE_ID!);
 export const APP_VERSION = process.env.REACT_APP_VERSION;
 export const NET_TYPE_NAME = process.env.REACT_APP_NET_TYPE_NAME;
 export const MODE = process.env.NODE_ENV;
@@ -7,8 +7,13 @@ export const PLATFORM = process.env.REACT_APP_PLATFORM;
 export const DEV_MODE = "development";
 export const PRODUCTION_MODE = "production";
 
+export enum NetworkType {
+    Mainnet,Testnet,Stagenet
+}
+
+
 export const isMainnet = () => {
-  return NET_TYPE_ID === 0;
+  return NET_TYPE_ID === NetworkType.Mainnet;
 };
 
 export const isDevMode = () => {
@@ -40,3 +45,5 @@ if (isWeb()) {
 export const API_URL = apiUrl;
 
 export const OFFSHORE_ENABLED = isDesktop() && isMainnet() === false;
+
+
