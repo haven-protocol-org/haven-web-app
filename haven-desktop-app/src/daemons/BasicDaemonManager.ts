@@ -32,13 +32,15 @@ export class BasicDaemonManager implements IDaemonManager {
             } );
         console.log(args);
         this.daemonProcess = execFile(this.filePath, args,(error, stdout, stderr) => {
-            if (error) {
 
-            }
-
-
+            console.log('callback');
+            console.log(stdout);
+            console.log(stderr);
             if (isDevMode) {
-                console.log(stdout);
+                if (error) {
+                    console.log(error);
+                }
+
             }
         } );
         this.daemonProcess.on('exit', (code: number | null, signal: string | null) => this.onDaemonStopped(code, signal));
@@ -60,6 +62,10 @@ export class BasicDaemonManager implements IDaemonManager {
 
 
     private onDaemonStopped(code: number | null, signal: string | null) {
+
+        if (isDevMode) {
+            console.log(code);
+        }
 
         this.currentDaemonState = {isRunning: false, code, signal}
         this.daemonStatusEmmitter.emit(UPDATE_DAEMON_STATUS_EVENT, this.currentDaemonState);
