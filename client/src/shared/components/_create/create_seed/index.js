@@ -4,7 +4,7 @@ import React, { Component } from "react";
 // Relative Imports
 import { Information } from "../../../../assets/styles/type.js";
 import Seed from "../../_inputs/seed";
-import * as clipboard from "clipboard-polyfill";
+import {writeText} from "../../../../utility/clipboard-polyfill";
 
 class CreateSeed extends Component {
   state = {
@@ -16,7 +16,7 @@ class CreateSeed extends Component {
     this.setState({
       action: "Seed Copied"
     });
-    clipboard.writeText(seed);
+    writeText(seed);
 
     setTimeout(() => {
       this.setState({

@@ -1,5 +1,3 @@
-// Library Imports
-import * as clipboard from "clipboard-polyfill";
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import AddressDropdown from "../../../components/_inputs/addresses_dropdown/index.js";
@@ -10,6 +8,7 @@ import Input from "../../../components/_inputs/input";
 import { Container } from "./styles";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { AddressEntry } from "shared/reducers/address";
+import {writeText} from "utility/clipboard-polyfill";
 
 interface OwnAddressState {
   selected: AddressEntry;
@@ -47,7 +46,7 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
       copyButtonState: "Copied...",
     });
 
-    clipboard.writeText(address);
+    writeText(address);
 
     setTimeout(() => {
       this.setState({
