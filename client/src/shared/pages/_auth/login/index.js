@@ -1,12 +1,12 @@
 // Library Imports
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import * as clipboard from "clipboard-polyfill";
 // Relative Imports
 import { Container } from "./styles";
 import Auth from "../../../components/_auth/login";
 import Seed from "../../../components/_inputs/seed";
 import { Information } from "../../../../assets/styles/type.js";
+import {readText} from "../../../../utility/clipboard-polyfill";
 
 export default class Login extends Component {
   state = {
@@ -42,8 +42,8 @@ export default class Login extends Component {
   };
 
   handlePaste = () => {
-    clipboard
-      .readText()
+
+      readText()
       .then(response => {
         this.setState({
           seed_phrase: response,

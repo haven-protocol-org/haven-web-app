@@ -1,4 +1,4 @@
-module.exports = [
+export const AssetList = [
   {
     token: "United States Dollar",
     ticker: "USD",

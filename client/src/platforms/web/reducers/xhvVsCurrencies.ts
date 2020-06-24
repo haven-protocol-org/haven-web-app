@@ -1,7 +1,7 @@
-import currencies from "../../../constants/assets";
+import { AssetList } from "constants/assets";
 import { XHV_VS_CURRENCIES_SUCCEED } from "../actions/types";
 
-const INITIAL_STATE = currencies.reduce((initialState: any, currency: any) => {
+const INITIAL_STATE = AssetList.reduce((initialState: any, currency: any) => {
   initialState[currency.ticker] = {
     token: currency.token,
     lastPrice: 0,

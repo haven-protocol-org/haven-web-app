@@ -1,6 +1,5 @@
 // Library Imports
 import React, { Component } from "react";
-import * as clipboard from "clipboard-polyfill";
 
 // Relative Imports
 import Auth from "../../../components/_auth/create/index.js";
@@ -10,6 +9,7 @@ import VerifySeed from "../../../components/_create/verify_seed";
 import { Container } from "./styles";
 import { decrypt } from "../../../../utility/utility-encrypt";
 import PropTypes from "prop-types";
+import {readText} from "../../../../utility/clipboard-polyfill";
 
 export class CreateWebComponent extends Component {
   state = {
@@ -72,8 +72,8 @@ export class CreateWebComponent extends Component {
   };
 
   handlePaste = () => {
-    clipboard
-      .readText()
+
+      readText()
       .then(response => {
         this.setState({
           verify_seed: response,

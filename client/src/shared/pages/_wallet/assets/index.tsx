@@ -1,7 +1,7 @@
 // Library Imports
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getForex, getSimplePrice } from "../../../actions";
+import { getForex, getSimplePrice } from "shared/actions";
 // Relative Imports
 import Body from "../../../components/_layout/body";
 import Header from "../../../components/_layout/header";
@@ -9,8 +9,8 @@ import Overview from "../../../components/_layout/overview";
 import Cell from "../../../components/cell";
 import CellDisabled from "../../../components/cell_disabled";
 
-import token from "../../../../constants/assets.js";
-import { convertBalanceForReading, convertToMoney } from "utility/utility";
+import {AssetList} from "constants/assets";
+import { convertToMoney } from "utility/utility";
 import { Ticker } from "shared/reducers/types";
 import { OFFSHORE_ENABLED } from "constants/env";
 import { DesktopAppState } from "platforms/desktop/reducers";
@@ -49,7 +49,7 @@ class AssetsPage extends Component<AssetsProps, any> {
       return null;
     }
 
-    const enabledTokens = token.filter((asset: any) =>
+    const enabledTokens = AssetList.filter((asset: any) =>
       Enabled_TICKER.includes(("x" + asset.ticker) as Ticker)
     );
     return enabledTokens.map((data) => {
@@ -89,11 +89,11 @@ class AssetsPage extends Component<AssetsProps, any> {
 
   renderDisabledTokens = () => {
     const disabledTokens = OFFSHORE_ENABLED
-      ? token.filter(
+      ? AssetList.filter(
           (asset: any) =>
             !Enabled_TICKER.includes(("x" + asset.ticker) as Ticker)
         )
-      : token;
+      : AssetList;
 
     return disabledTokens.map((data) => {
       const { token, ticker, symbol } = data;
