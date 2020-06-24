@@ -11,12 +11,12 @@ import { connect } from "react-redux";
 import { selectIsLoggedIn } from "../../reducers/account";
 import Idle from "../../../../shared/components/idle";
 import { SettingsWeb } from "../../pages/_wallet/settings";
-import { getExchangeRates } from "../../actions/exchangeRates";
-import { getTransfers } from "../../actions/transferHistory.js";
-import { keepAlive } from "../../actions/account.js";
+import { mockGetExchangeRates } from "platforms/web/actions/exchangeRates";
+import { getTransfers } from "platforms/web/actions/transferHistory.js";
+import { keepAlive } from "platforms/web/actions/account.js";
 
-import Menu from "../../../../shared/components/_layout/menu";
-import Page from "../../../../shared/components/_layout/page";
+import Menu from "shared/components/_layout/menu";
+import Page from "shared/components/_layout/page";
 import { DesktopAppState } from "platforms/desktop/reducers";
 /**
  *root component for private web wallet
@@ -85,5 +85,5 @@ export const mapStateToProps = (state: DesktopAppState) => ({
 export default connect(mapStateToProps, {
   keepAlive,
   getTransfers,
-  getExchangeRates,
+  getExchangeRates: mockGetExchangeRates,
 })(PrivateRoutes);
