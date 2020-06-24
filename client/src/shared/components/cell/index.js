@@ -38,7 +38,6 @@ const Cell = ({
       {lockedBalance === 0 ? (
         <Container>
           <Unlocked
-            lockedBalance={lockedBalance}
             to={`/wallet/assets/${ticker}`}
           >
             <Column>
