@@ -10,7 +10,6 @@ import Status from "../../shared/components/_layout/status";
 import { HashRouter } from "react-router-dom";
 import {ModalContainerDesktop} from "./components/modalContainer";
 
-// TOGGLE ON THIS MODAL
 
 class App extends Component {
   render() {

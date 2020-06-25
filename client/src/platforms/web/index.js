@@ -3,7 +3,7 @@ import { Provider } from "react-redux";
 import { GlobalStyle } from "../../globalStyle";
 import { AppWeb } from "./App";
 import React from "react";
-import { loadState, saveState } from "../../utility/dev-helper";
+import {loadState, saveWebState} from "../../utility/dev-helper";
 import { applyMiddleware, createStore } from "redux";
 import reduxThunk from "redux-thunk";
 import reducers from "./reducers";
@@ -24,7 +24,7 @@ export const startWebAppInDevMode = () => {
   );
   store = createStoreWithMiddleware(reducers, persistedState);
   store.subscribe(() => {
-    saveState(store.getState());
+    saveWebState(store.getState());
   });
 
   render();

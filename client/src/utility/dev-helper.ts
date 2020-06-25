@@ -1,3 +1,6 @@
+import {DesktopAppState} from "platforms/desktop/reducers";
+import {WebAppState} from "platforms/web/reducers";
+
 export const loadState = () => {
   try {
     const serializedState = localStorage.getItem("state");
@@ -10,7 +13,7 @@ export const loadState = () => {
   }
 };
 
-export const saveState = (state) => {
+export const saveDesktopState = (state: DesktopAppState ) => {
   try {
     const serializedState = JSON.stringify({
       walletSession: state.walletSession,
@@ -22,7 +25,19 @@ export const saveState = (state) => {
   }
 };
 
-export const logger = (store) => (next) => (action) => {
+export const saveWebState = (state:  WebAppState) => {
+  try {
+    const serializedState = JSON.stringify({
+      address: state.address,
+      account: state.account
+    });
+    localStorage.setItem("state", serializedState);
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const logger = (store:any) => (next:any) => (action: any) => {
   console.group(action.type);
   console.info("dispatching", action);
   let result = next(action);
