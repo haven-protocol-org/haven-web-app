@@ -11,7 +11,7 @@ import { connect } from "react-redux";
 import { selectIsLoggedIn } from "../../reducers/account";
 import Idle from "../../../../shared/components/idle";
 import { SettingsWeb } from "../../pages/_wallet/settings";
-import { mockGetExchangeRates } from "platforms/web/actions/exchangeRates";
+import { getExchangeRates } from "platforms/web/actions/exchangeRates";
 import { getTransfers } from "platforms/web/actions/transferHistory.js";
 import { keepAlive } from "platforms/web/actions/account.js";
 
@@ -85,5 +85,5 @@ export const mapStateToProps = (state: DesktopAppState) => ({
 export default connect(mapStateToProps, {
   keepAlive,
   getTransfers,
-  getExchangeRates: mockGetExchangeRates,
+  getExchangeRates,
 })(PrivateRoutes);

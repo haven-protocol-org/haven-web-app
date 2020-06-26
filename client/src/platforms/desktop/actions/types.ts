@@ -8,13 +8,6 @@ export const RESTORE_WALLET_BY_SEED_FETCHING =
 export const RESTORE_WALLET_BY_SEED_SUCCEED = "restore_wallet_by_seed_succeed";
 export const RESTORE_WALLET_BY_SEED_FAILED = "restore_wallet_by_seed_failed";
 
-/*
-GET BALANCES
- */
-export const GET_BALANCES_FETCHING = "get_balances_fetching";
-export const GET_BALANCES_SUCCEED = "get_balances_succeed";
-export const GET_BALANCES_FAILED = "get_balances_failed";
-
 //
 export const CREATE_WALLET_FETCHING = "create_wallet_fetching";
 export const CREATE_WALLET_SUCCEED = "create_wallet_succeed";
@@ -52,9 +45,6 @@ export const EXCHANGE_CREATION_FETCHING = "exchange_creation_fetching";
 export const EXCHANGE_CREATION_FAILED = "exchange_creation_failed";
 export const EXCHANGE_CREATION_SUCCEED = "exchange_creation_succeed";
 
-export const GET_TRANSFERS_FETCHING = "get_transfers_fetching";
-export const GET_TRANSFERS_SUCCEED = "get_transfers_succeed";
-export const GET_TRANSFERS_FAILED = "get_transfers_failed";
 
 export const GET_BLOCK_INFO_FETCHING = "get_block_info_fetching";
 export const GET_BLOCK_INFO_SUCEED = "get_block_info_suceed";

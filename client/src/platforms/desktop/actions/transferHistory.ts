@@ -1,11 +1,8 @@
 import { getTransferRPC } from "../ipc/rpc/rpc";
-import {
-  GET_TRANSFERS_FAILED,
-  GET_TRANSFERS_FETCHING,
-  GET_TRANSFERS_SUCCEED,
-} from "./types";
+
 import { TransferType, XTransferList } from "shared/reducers/xTransferList";
 import { Ticker } from "shared/reducers/types";
+import {GET_TRANSFERS_FAILED, GET_TRANSFERS_FETCHING, GET_TRANSFERS_SUCCEED} from "shared/actions/types";
 
 export const getTransfers = () => {
   return (dispatch: any) => {

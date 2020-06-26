@@ -29,7 +29,8 @@ export const saveWebState = (state:  WebAppState) => {
   try {
     const serializedState = JSON.stringify({
       address: state.address,
-      account: state.account
+      account: state.account,
+      keys:state.keys
     });
     localStorage.setItem("state", serializedState);
   } catch (e) {
