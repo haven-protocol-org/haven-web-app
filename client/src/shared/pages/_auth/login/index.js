@@ -6,7 +6,7 @@ import { Container } from "./styles";
 import Auth from "../../../components/_auth/login";
 import Seed from "../../../components/_inputs/seed";
 import { Information } from "../../../../assets/styles/type.js";
-import {readText} from "../../../../utility/clipboard-polyfill";
+import {readText} from "../../../../vendor/clipboard/clipboard-polyfill";
 
 export default class Login extends Component {
   state = {

@@ -8,7 +8,7 @@ import Input from "../../../components/_inputs/input";
 import { Container } from "./styles";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { AddressEntry } from "shared/reducers/address";
-import {writeText} from "utility/clipboard-polyfill";
+import {writeText} from "vendor/clipboard/clipboard-polyfill";
 
 interface OwnAddressState {
   selected: AddressEntry;

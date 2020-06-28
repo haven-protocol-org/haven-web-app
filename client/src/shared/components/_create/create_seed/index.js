@@ -4,7 +4,7 @@ import React, { Component } from "react";
 // Relative Imports
 import { Information } from "../../../../assets/styles/type.js";
 import Seed from "../../_inputs/seed";
-import {writeText} from "../../../../utility/clipboard-polyfill";
+import {writeText} from "../../../../vendor/clipboard/clipboard-polyfill";
 
 class CreateSeed extends Component {
   state = {

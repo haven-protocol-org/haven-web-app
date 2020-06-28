@@ -17,7 +17,7 @@ export const getExchangeRates = () => {
             .then((priceEntry: BlockHeaderRate) =>
                 dispatch(getLastBlockerHeaderSucceed(priceEntry))
             )
-            .catch((err) => console.log(err));
+            .catch((err: any) => console.log(err));
     };
 };
 

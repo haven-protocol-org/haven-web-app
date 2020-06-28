@@ -9,7 +9,7 @@ import VerifySeed from "../../../components/_create/verify_seed";
 import { Container } from "./styles";
 import { decrypt } from "../../../../utility/utility-encrypt";
 import PropTypes from "prop-types";
-import {readText} from "../../../../utility/clipboard-polyfill";
+import {readText} from "../../../../vendor/clipboard/clipboard-polyfill";
 
 export class CreateWebComponent extends Component {
   state = {
