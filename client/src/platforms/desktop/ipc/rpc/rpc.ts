@@ -64,6 +64,12 @@ export function rescanBlockchainRPC() {
   return callRpc("rescan_blockchain");
 }
 
+export function setDaemonRPC(params: object) {
+
+  return callRpc("set_daemon", params);
+
+}
+
 export function onshoreRPC(params: object) {
   return callRpc("onshore", params);
 }

@@ -21,7 +21,7 @@ export const addNotificationByCode = (code: any) => {
   return { type: ADD_NOTIFICATION, payload: statusObj };
 };
 
-export const addNotificationByMessage = (type: string, message: string) => {
+export const addNotificationByMessage = (type: NotificationType, message: string) => {
   const statusObj = { type, message, id: uuidv4() };
   return { type: ADD_NOTIFICATION, payload: statusObj };
 };

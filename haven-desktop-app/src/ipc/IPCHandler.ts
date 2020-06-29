@@ -34,6 +34,7 @@ export class IPCHandler {
     "refresh",
     "onshore",
     "offshore",
+    "set_daemon"
   ];
 
   private readonly DAEMON_METHODS: string[] = [

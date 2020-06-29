@@ -11,11 +11,12 @@ import { chain } from "./chain";
 import { simplePrice } from "shared/reducers/simplePrice";
 import { walletSession } from "./walletSession";
 import forex from "../../../shared/reducers/forex";
-import { blockHeaderExchangeRate } from "../../../shared/reducers/blockHeaderExchangeRates";
+import { blockHeaderExchangeRate } from "shared/reducers/blockHeaderExchangeRates";
 import { xBalance } from "shared/reducers/xBalance";
 import { xTransferList } from "shared/reducers/xTransferList";
 import { exchangeProcess } from "./exchangeProcess";
-import { daemonStates } from "./daemonStates";
+import { havenNode } from "./havenNode";
+import { walletRPC } from "./walletRPC";
 import { mining } from "./mining";
 import modal from "shared/reducers/modal";
 
@@ -31,7 +32,8 @@ const appReducer = combineReducers({
   exchangeProcess,
   notification,
   walletSession,
-  daemonStates,
+  havenNode,
+  walletRPC,
   priceHistory,
   chain,
   simplePrice,

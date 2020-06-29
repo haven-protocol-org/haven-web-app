@@ -19,13 +19,14 @@ import {
 import Icon from "assets/haven.svg";
 import { closeWallet } from "../../actions";
 import { selectIsLoggedIn } from "../../reducers/walletSession";
-import { NET_TYPE_NAME } from "constants/env";
+import {getNetworkByName, NET_TYPE_NAME} from "constants/env";
 import { DesktopAppState } from "../../reducers";
-import { DaemonStates } from "../../reducers/daemonStates";
 import { Refresh } from "platforms/desktop/components/rescan";
+import {NodeState, RunningState} from "platforms/desktop/types";
 
 interface NavigationProps {
-  daemonStates: DaemonStates;
+  wallet: RunningState;
+  node: NodeState;
   isLoggedIn: boolean;
   show_networks: boolean;
   logout: () => void;
@@ -34,7 +35,7 @@ interface NavigationProps {
 class Navigation extends Component<NavigationProps, any> {
   state = {
     show_networks: false,
-    current_network: "Stagenet",
+    current_network: getNetworkByName(),
   };
 
   onComponentDidMount() {
@@ -56,9 +57,8 @@ class Navigation extends Component<NavigationProps, any> {
 
   render() {
     const auth = this.props.isLoggedIn;
-    const { node, wallet } = this.props.daemonStates;
     const { show_networks, current_network } = this.state;
-
+    const {wallet, node} = this.props;
     return (
       <Container>
         <Brand to={auth === true ? "/wallet/assets" : "/"}>
@@ -94,7 +94,8 @@ class Navigation extends Component<NavigationProps, any> {
 
 const mapStateToProps = (state: DesktopAppState) => ({
   isLoggedIn: selectIsLoggedIn(state),
-  daemonStates: state.daemonStates,
+  wallet: state.walletRPC,
+  node: state.havenNode
 });
 
 export const NavigationDesktop = connect(mapStateToProps, {

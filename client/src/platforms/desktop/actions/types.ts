@@ -77,8 +77,10 @@ export const GET_BLOCK_HEADER_EXCHANGE_RATE_SUCCEED =
 export const GET_BLOCK_HEADER_EXCHANGE_RATE_FAILED =
   "get_block_header_exchange_rate_failed";
 
-export const UPDATE_DAEMON_STATES = "update_daemon_states";
-export const UPDATE_DAEMON_STATES_FAILED = "update_daemon_states_failed";
+export const GET_WALLET_RPC_STATE_SUCCEED = "update_daemon_states";
+
+export const GET_LOCAL_HAVEN_NODE_STATE_SUCCEED = "GET_LOCAL_HAVEN_NODE_STATE_SUCCEED";
+export const GET_LOCAL_HAVEN_NODE_FAILED = "GET_LOCAL_HAVEN_NODE_FAILED";
 
 export const UPDATE_SAVED_WALLETS = "update_saved_wallets";
 
@@ -92,3 +94,8 @@ export const MINING_STATUS_RESPONSE_FAILED = "mining_status_response";
 
 export const SELECT_FROM_TICKER = "select_from_ticker";
 export const SELECT_TO_TICKER = "select_to_ticker";
+
+
+export const SET_HAVEN_NODE_FETCH = "set_haven_node_fetch";
+export const SET_HAVEN_NODE_SUCCESS = "set_haven_node_success";
+export const SET_HAVEN_NODE_FAILED = "set_haven_node_failed";

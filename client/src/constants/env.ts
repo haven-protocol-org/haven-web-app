@@ -42,6 +42,10 @@ if (isWeb()) {
   }
 }
 
+export const getNetworkByName = () => {
+  return ['Mainnet', 'Testnet', 'Stagenet'][NET_TYPE_ID]
+};
+
 export const API_URL = apiUrl;
 
 export const OFFSHORE_ENABLED = isDesktop() && isMainnet() === false;

@@ -8,7 +8,7 @@ import {
   getWalletHeightFailed,
   getWalletHeightSucceed,
 } from "./chain";
-import { getDaemonStates } from "./daemonState";
+import { gethavenNodeState } from "./havenNode";
 import { getOffshoreBalance } from "./offshoreBalance";
 import { getAddress } from "./subadresses";
 import { getTransfers } from "./transferHistory";
@@ -30,14 +30,16 @@ export const refresh = () => {
 
 export const updateApp = () => {
   return (dispatch: any, getState: () => DesktopAppState) => {
-    dispatch(getDaemonStates());
-    dispatch(getNodeInfo());
+
+
+    dispatch(gethavenNodeState());
 
     dispatch(getWalletHeight());
     dispatch(getBalance());
     dispatch(getTransfers());
 
     if (OFFSHORE_ENABLED) {
+      dispatch(getNodeInfo());
       dispatch(getOffshoreBalance());
     }
   };

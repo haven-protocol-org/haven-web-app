@@ -9,7 +9,7 @@ import { LoginDesktop } from "../../pages/public/login";
 import { CreateDesktop } from "../../pages/public/create";
 import { withRouter } from "react-router";
 import { connect } from "react-redux";
-import { getDaemonStates } from "../../actions/daemonState";
+import { gethavenNodeState } from "../../actions/havenNode";
 
 class PublicRoutes extends Component {
   componentDidMount() {
@@ -30,6 +30,6 @@ class PublicRoutes extends Component {
 export const PublicRoutesDesktop = withRouter(
   connect(
     null,
-    { getDaemonStates }
+    { getDaemonStates: gethavenNodeState }
   )(PublicRoutes)
 );

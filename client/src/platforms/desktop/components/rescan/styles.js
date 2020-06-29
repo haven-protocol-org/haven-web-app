@@ -9,5 +9,4 @@ export const Icon = styled(RefreshSVG)`
   margin-left: 8px;
   cursor: pointer;
   color: "#26282c";
-  src: ${(props) => props.src};
 `;

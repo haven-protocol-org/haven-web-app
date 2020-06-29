@@ -11,7 +11,6 @@ import { selectRefreshing } from "platforms/desktop/reducers/chain";
 const RefreshIconComponent = (props: any) => {
   return (
     <Icon
-      active={props.isRefreshing}
       onClick={(e: any) => props.isRefreshing || props.rescanBlockChain()}
     />
   );
