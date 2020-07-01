@@ -37,9 +37,9 @@ export const updateApp = () => {
     dispatch(getWalletHeight());
     dispatch(getBalance());
     dispatch(getTransfers());
+    dispatch(getNodeInfo());
 
     if (OFFSHORE_ENABLED) {
-      dispatch(getNodeInfo());
       dispatch(getOffshoreBalance());
     }
   };

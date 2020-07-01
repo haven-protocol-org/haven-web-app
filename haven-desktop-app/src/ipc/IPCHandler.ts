@@ -1,49 +1,16 @@
-import { ipcMain } from "electron";
 import IpcMainInvokeEvent = Electron.IpcMainInvokeEvent;
-import {
-  RPCHRequestHandler,
-  RPCRequestObject,
-} from "../rpc/RPCHRequestHandler";
+import {RPCHRequestHandler, RPCRequestObject } from "../rpc/RPCHRequestHandler";
 import { config } from "../daemons/config";
-import { CommunicationChannels } from "./types";
+import { CommunicationChannel } from "./types";
 import { getAvailableWallets } from "../userSettings";
 
 /**
  * this class establishes the communication between client app and daemons
  */
 export class IPCHandler {
-  private readonly WALLET_METHODS: string[] = [
-    "stop_mining",
-    "start_mining",
-    "rescan_blockchain",
-    "get_address",
-    "refresh",
-    "open_wallet",
-    "close_wallet",
-    "restore_deterministic_wallet",
-    "get_balance",
-    "get_offshore_balance",
-    "store",
-    "relay_tx",
-    "get_height",
-    "query_key",
-    "transfer_split",
-    "get_transfers",
-    "create_wallet",
-    "offshore_transfer",
-    "refresh",
-    "onshore",
-    "offshore",
-    "set_daemon"
-  ];
 
-  private readonly DAEMON_METHODS: string[] = [
-    "mining_status",
-    "get_info",
-    "get_last_block_header",
-    "get_block_count",
-    "get_block_header_by_height",
-  ];
+
+
 
   private havendRpcHandler: RPCHRequestHandler = new RPCHRequestHandler();
   private walletRpcHandler: RPCHRequestHandler = new RPCHRequestHandler();
@@ -62,17 +29,17 @@ export class IPCHandler {
   }
 
   private addHandlers() {
-    ipcMain.handle(CommunicationChannels.RPC, (event, args) =>
+    ipcMain.handle(CommunicationChannel.RPC, (event, args) =>
       this.handleRPCRequests(event, args)
     );
-    ipcMain.handle(CommunicationChannels.WALLETS, (event, args) =>
+    ipcMain.handle(CommunicationChannel.STORED_WALLETS, (event, args) =>
       this.handleWalletRequest()
     );
   }
 
   private removeHandlers() {
-    ipcMain.removeHandler(CommunicationChannels.RPC);
-    ipcMain.removeHandler(CommunicationChannels.WALLETS);
+    ipcMain.removeHandler(CommunicationChannel.RPC);
+    ipcMain.removeHandler(CommunicationChannel.STORED_WALLETS);
   }
 
   private handleRPCRequests(

@@ -22,7 +22,8 @@ const daemonConfigMainnet = {
     args: {
       "rpc-bind-port": 12345,
       "disable-rpc-login": "",
-      "wallet-dir": WALLET_PATH_MAINNET
+      "wallet-dir": WALLET_PATH_MAINNET,
+     // "log-level":"2"
     }
   }
 };

@@ -3,7 +3,7 @@
  */
 
 import { IPCHandler } from "./ipc/IPCHandler";
-import { CommunicationChannels, DaemonsState } from "./ipc/types";
+import { CommunicationChannel, DaemonsState } from "./ipc/types";
 import { ipcMain } from "electron";
 import { getNetType, NET, setNetType } from "./env";
 import { DaemonHandler } from "./daemons/DaemonHandler";
@@ -66,19 +66,19 @@ export class HavenWallet {
   }
 
   private addDaemonStateHandling() {
-    ipcMain.handle(CommunicationChannels.DAEMON, (event, args) =>
+    ipcMain.handle(CommunicationChannel.DAEMON, (event, args) =>
       this.onDaemonStateRequest()
     );
   }
 
   private addNetworkSwitchHandling() {
-    ipcMain.handle(CommunicationChannels.SWITCH_NET, (event, args) =>
+    ipcMain.handle(CommunicationChannel.SWITCH_NET, (event, args) =>
       this.onSwitchNetwork(args)
     );
   }
 
   private removeDaemonStateHandling() {
-    ipcMain.removeHandler(CommunicationChannels.DAEMON);
+    ipcMain.removeHandler(CommunicationChannel.DAEMON);
   }
 
   private onDaemonStateRequest(): DaemonsState {

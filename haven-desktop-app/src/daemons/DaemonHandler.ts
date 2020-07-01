@@ -1,16 +1,18 @@
-import {BasicDaemonManager, UPDATE_DAEMON_STATUS_EVENT} from "./BasicDaemonManager";
+import {DaemonProcess, UPDATE_DAEMON_STATUS_EVENT} from "./DaemonProcess";
 import {IDaemonManager} from "./IDaemonManager";
 import {config} from "./config";
-import {DAEMONS_STOPPED_EVENT} from "../HavenWallet";
+import {DAEMONS_STOPPED_EVENT, HavenWallet} from "../HavenWallet";
 import {appEventBus} from "../EventBus";
+import {HavendProcess} from "../daemons/HavendProcess";
+import {WalletRPCProcess} from "../daemons/WalletRPCProcess";
 
 
 
 export class DaemonHandler {
 
 
-    private havend:IDaemonManager = new BasicDaemonManager();
-    private rpcWallet:IDaemonManager = new BasicDaemonManager();
+    private havend:IDaemonManager = new HavendProcess();
+    private rpcWallet:IDaemonManager = new WalletRPCProcess();
 
 
 
@@ -20,7 +22,7 @@ export class DaemonHandler {
         this.havend.setConfig(config().havend);
         this.rpcWallet.setConfig(config().wallet);
 
-        this.havend.startDaemon();
+     //   this.havend.startDaemon();
         this.rpcWallet.startDaemon();
 
     }

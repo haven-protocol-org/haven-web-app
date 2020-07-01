@@ -9,6 +9,7 @@ import {NodeLocation, RunningState} from "platforms/desktop/types";
 import {setDaemonRPC} from "platforms/desktop/ipc/rpc/rpc";
 import {addErrorNotification, addNotificationByMessage} from "shared/actions/notification";
 import {NotificationType} from "constants/notificationList";
+import {DesktopAppState} from "platforms/desktop/reducers";
 
 export const gethavenNodeState = () => {
   return (dispatch: any) => {
@@ -32,9 +33,22 @@ export const setHavenNode = (address: string, port: string, location: NodeLocati
 
   // check if current uri is not the one
 
-  const params = {address, trusted:true};
 
-  return (dispatch: any) => {
+
+
+
+  return (dispatch: any, getState:() => DesktopAppState) => {
+
+    let newAdress = '';
+    let newPort = '';
+    if (location !== NodeLocation.Local) {
+
+      newPort = port;
+      newAdress = address;
+
+    }
+
+    const params = {address: newAdress + newPort, trusted:true};
 
     setDaemonRPC(params)
         .then(dispatch(sethavenNodeSucceed(address, port, location)))
