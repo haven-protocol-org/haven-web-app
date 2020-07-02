@@ -1,3 +1,4 @@
+import {HavendState} from "platforms/desktop/ipc/ipc-types";
 
 declare global {
   interface Window {
@@ -16,14 +17,8 @@ export enum NodeLocation {
 }
 
 
-
-export interface RunningState {
+export interface NodeState {
   isRunning: boolean;
-  code?: number;
-  signal?: string;
-}
-
-export interface NodeState extends RunningState {
   location: NodeLocation;
   address: string;
   port: string;

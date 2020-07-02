@@ -12,11 +12,30 @@ export interface DAEMON_STATUS {
   signal?: string;
 }
 
-export interface DAEMON_STATUS_MESSAGE {
-  wallet: DAEMON_STATUS;
-  node: DAEMON_STATUS;
-}
 
 export interface AVAILABLE_WALLETS {
   wallets: { name: string; address: string }[];
 }
+
+export interface WalletState extends ProcessState  {
+
+  isConnectedToDaemon: boolean;
+  isSyncing: boolean;
+  syncHeight: number;
+
+}
+
+export interface HavendState extends ProcessState {
+
+  address: string;
+  isReachable: boolean;
+  isRemote: boolean;
+
+}
+
+
+export interface ProcessState  {
+  isRunning: boolean;
+  code?: number;
+  signal?: string;
+};

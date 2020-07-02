@@ -1,40 +1,36 @@
-import {getDaemonStatesIPC} from "../ipc/misc";
+import {getHavendStateIPC} from "../ipc/misc";
 import {
-  GET_LOCAL_HAVEN_NODE_FAILED,
-  GET_LOCAL_HAVEN_NODE_STATE_SUCCEED,
+  GET_HAVEND_STATE_FAILED,
+  GET_HAVEND_STATE_SUCCEED,
   SET_HAVEN_NODE_FAILED,
   SET_HAVEN_NODE_SUCCESS
 } from "./types";
-import {NodeLocation, RunningState} from "platforms/desktop/types";
+import {NodeLocation} from "platforms/desktop/types";
 import {setDaemonRPC} from "platforms/desktop/ipc/rpc/rpc";
 import {addErrorNotification, addNotificationByMessage} from "shared/actions/notification";
 import {NotificationType} from "constants/notificationList";
 import {DesktopAppState} from "platforms/desktop/reducers";
+import {HavendState} from "platforms/desktop/ipc/ipc-types";
 
 export const gethavenNodeState = () => {
   return (dispatch: any) => {
-    getDaemonStatesIPC()
-      .then((res) => {
+    getHavendStateIPC()
+      .then((res: HavendState) => {
         dispatch(updatehavenNodeState(res));
       })
       .catch((err) => dispatch(updatehavenNodeStateFailed(err)));
   };
 };
 
-const updatehavenNodeState = (states: RunningState) => {
-  return { type: GET_LOCAL_HAVEN_NODE_STATE_SUCCEED, payload: states };
+const updatehavenNodeState = (state: HavendState) => {
+  return { type: GET_HAVEND_STATE_SUCCEED, payload: state };
 };
 
 const updatehavenNodeStateFailed = (err: any) => {
-  return { type: GET_LOCAL_HAVEN_NODE_FAILED, payload: err };
+  return { type: GET_HAVEND_STATE_FAILED, payload: err };
 };
 
 export const setHavenNode = (address: string, port: string, location: NodeLocation) => {
-
-  // check if current uri is not the one
-
-
-
 
 
   return (dispatch: any, getState:() => DesktopAppState) => {

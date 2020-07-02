@@ -1,10 +1,9 @@
-import {DaemonProcess, UPDATE_DAEMON_STATUS_EVENT} from "./DaemonProcess";
 import {IDaemonManager} from "./IDaemonManager";
-import {config} from "./config/config";
-import {HavenWallet} from "../HavenWallet";
 import {appEventBus, DAEMONS_STOPPED_EVENT} from "../EventBus";
 import {HavendProcess} from "./havend/HavendProcess";
 import {WalletRPCProcess} from "./wallet-rpc/WalletRPCProcess";
+import ipcMain = Electron.ipcMain;
+import {CommunicationChannel} from "../types";
 
 
 
@@ -19,6 +18,9 @@ export class DaemonHandler {
 
         this.havend = new HavendProcess();
         this.rpcWallet = new WalletRPCProcess();
+
+        ipcMain.handle( CommunicationChannel.HAVEND, (event, args) => this.havend.getState());
+        ipcMain.handle( CommunicationChannel.WALLET_RPC, (event, args) => this.rpcWallet.getState());
     }
 
 

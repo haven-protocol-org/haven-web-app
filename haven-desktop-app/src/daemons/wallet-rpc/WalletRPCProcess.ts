@@ -1,8 +1,9 @@
 import {DaemonProcess} from "../DaemonProcess";
-import {CommunicationChannel, IDaemonConfig} from "../../types";
+import {CommunicationChannel, IDaemonConfig, WalletState} from "../../types";
 import {RPCRequestObject} from "../../rpc/RPCHRequestHandler";
 import IpcMainInvokeEvent = Electron.IpcMainInvokeEvent;
 import {config} from "../config/config";
+import {appEventBus, HAVEND_LOCATION_CHANGED} from "../../EventBus";
 
 
 const  WALLET_METHODS: ReadonlyArray<string> = [
@@ -31,10 +32,22 @@ const  WALLET_METHODS: ReadonlyArray<string> = [
 ];
 
 
+const SYNC_HEIGHT_REGEX = /.*D.*height (.*),/gm;
+const NO_CONNECTION_MESSAGE = "error::no_connection_to_daemon";
+const REFRESH_DONE_MESSAGE = "Refresh done";
+
+
 export class WalletRPCProcess extends DaemonProcess {
+
+    private isConnectedToDaemon: boolean;
+    private isSyncing: boolean;
+    private syncHeight: number;
 
 
     init(): void {
+        super.init();
+        this.onHavendLocationChanged(this.getConfig().daemonUrl);
+        this.startLocalProcess();
     }
 
     setRPCHandler(): void {
@@ -48,23 +61,41 @@ export class WalletRPCProcess extends DaemonProcess {
 
     onDaemonError(error: Error): void {
 
-        //TODO check for that output to detect non detection;
-        const checkConnection = "error::no_connection_to_daemon";
 
 
     }
-    
+
 
     onstderrData(chunk: any): void {
 
-
-        //TODO check for that output to detect non detection;
-        const checkConnection = "error::no_connection_to_daemon";
+        if ((chunk as string).includes(NO_CONNECTION_MESSAGE)) {
+            this.isConnectedToDaemon = false;
+        }
 
 
     }
 
     onstdoutData(chunk: any): void {
+
+        let m;
+        while ((m = SYNC_HEIGHT_REGEX.exec(chunk)) !== null) {
+            // This is necessary to avoid infinite loops with zero-width matches
+            if (m.index === SYNC_HEIGHT_REGEX.lastIndex) {
+                SYNC_HEIGHT_REGEX.lastIndex++;
+            }
+
+            // The result can be accessed through the 'm'-variable.
+            m.forEach((match, groupIndex) => {
+                console.log('Found match, group ${groupIndex}: ${match}');
+                this.isConnectedToDaemon = true;
+                this.isSyncing = true;
+            });
+        }
+
+
+        if ((chunk as string).includes(REFRESH_DONE_MESSAGE)){
+            this.isSyncing = false;
+        }
     }
 
 
@@ -73,6 +104,11 @@ export class WalletRPCProcess extends DaemonProcess {
     }
 
     requestHandler(event: IpcMainInvokeEvent, requestObject: RPCRequestObject): Promise<any> {
+
+
+        if (requestObject.method === "set_daemon") {
+            appEventBus.emit(HAVEND_LOCATION_CHANGED, (requestObject.params as any)['address'])
+        }
 
        const isLegitMethod =  WALLET_METHODS.some(
             (walletMethod) => walletMethod === requestObject.method);
@@ -87,6 +123,18 @@ export class WalletRPCProcess extends DaemonProcess {
 
     getConfig(): IDaemonConfig {
         return config().wallet;
+    }
+
+
+    getState() : WalletState {
+
+        return {
+            isRunning:this._isRunning,
+            isConnectedToDaemon: this.isConnectedToDaemon,
+            isSyncing: this.isSyncing,
+            syncHeight: this.syncHeight
+        }
+
     }
 
 

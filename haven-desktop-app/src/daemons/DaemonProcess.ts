@@ -1,11 +1,12 @@
 import {ChildProcess, spawn} from "child_process";
 import {IDaemonManager} from "./IDaemonManager";
-import {CommunicationChannel, IDaemonConfig} from "../types";
+import {CommunicationChannel, DaemonType, IDaemonConfig} from "../types";
 import ipcMain = Electron.ipcMain;
 import {RPCHRequestHandler, RPCRequestObject} from "../rpc/RPCHRequestHandler";
 import IpcMainInvokeEvent = Electron.IpcMainInvokeEvent;
 import {appEventBus, HAVEND_LOCATION_CHANGED} from "../EventBus";
-import {LOCAL_HOST} from "../daemons/config/config";
+import {LOCAL_HOST, updateDaemonConfig} from "../daemons/config/config";
+import {getNetType} from "../env";
 
 
 
@@ -14,12 +15,14 @@ export const UPDATE_DAEMON_STATUS_EVENT = 'updateDaemonEvent';
 
 export abstract class DaemonProcess implements IDaemonManager {
 
-    constructor() {
+    constructor(type: DaemonType) {
 
-        this.init();
+        this.type = type;
         appEventBus.on(HAVEND_LOCATION_CHANGED, (havendLocation: string) => this.onHavendLocationChanged(havendLocation))
+        this.init();
     }
 
+    protected type: DaemonType;
     protected filePath: string;
     protected startArgs: Object;
     protected port: number;
@@ -29,10 +32,8 @@ export abstract class DaemonProcess implements IDaemonManager {
     protected _isHavendLocal: boolean;
 
 
-    abstract init(): void;
 
     abstract getConfig(): IDaemonConfig;
-
 
     abstract onDaemonError(error: Error): void;
 
@@ -47,6 +48,10 @@ export abstract class DaemonProcess implements IDaemonManager {
     abstract setRPCHandler(): void;
 
 
+    protected init() {
+        this.setRPCHandler();
+        this.addIPCHandler();
+    }
 
     public addIPCHandler () {
         ipcMain.handle(this.getCommunicationChannel(), (event, args) =>
@@ -87,6 +92,11 @@ export abstract class DaemonProcess implements IDaemonManager {
     protected  onHavendLocationChanged(address: string): void {
 
         this._isHavendLocal = (address === LOCAL_HOST);
+        const config = this.getConfig();
+
+        config.daemonUrl = address;
+
+        updateDaemonConfig(config, getNetType(), this.type);
 
     }
 
@@ -94,7 +104,8 @@ export abstract class DaemonProcess implements IDaemonManager {
         this._isRunning = false;
     }
 
-
+    getState(): any {
+    }
 
 
 }

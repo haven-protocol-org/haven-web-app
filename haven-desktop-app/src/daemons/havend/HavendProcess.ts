@@ -1,5 +1,5 @@
 import {DaemonProcess} from "../DaemonProcess";
-import {CommunicationChannel, IDaemonConfig} from "../../types";
+import {CommunicationChannel, HavendState, IDaemonConfig} from "../../types";
 import {config} from "../config/config";
 import {RPCRequestObject} from "../../rpc/RPCHRequestHandler";
 import IpcMainInvokeEvent = Electron.IpcMainInvokeEvent;
@@ -17,13 +17,15 @@ const  DAEMON_METHODS: ReadonlyArray<string>= [
 export class HavendProcess extends DaemonProcess {
 
 
+    private isReachable: boolean;
+
 
     init(): void {
 
-        // check if we have
+        super.init();
+        this.onHavendLocationChanged(this.getConfig().daemonUrl);
 
     }
-
 
     setRPCHandler(): void {
         const config = this.getConfig();
@@ -31,17 +33,6 @@ export class HavendProcess extends DaemonProcess {
         this.rpcHandler.setURL(config.daemonUrl);
         this.rpcHandler.port = config.port;
 
-    }
-
-    onDaemonError(error: Error): void {
-    }
-
-
-
-    onstderrData(chunk: any): void {
-    }
-
-    onstdoutData(chunk: any): void {
     }
 
     getConfig(): IDaemonConfig {
@@ -80,6 +71,24 @@ export class HavendProcess extends DaemonProcess {
         }
 
     }
+
+    getState() : HavendState {
+        return {
+            isRunning: this._isRunning,
+            isRemote: !this._isHavendLocal,
+            isReachable: this.isReachable
+        }
+    }
+
+    onDaemonError(error: Error): void {
+    }
+
+    onstderrData(chunk: any): void {
+    }
+
+    onstdoutData(chunk: any): void {
+    }
+
 
 
 }
