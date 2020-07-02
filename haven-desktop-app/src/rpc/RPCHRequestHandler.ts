@@ -8,7 +8,7 @@ export type RPCRequestObject = {
 };
 
 export class RPCHRequestHandler {
-  private baseUrl: string = "http://localhost";
+  private _url: string = "http://localhost";
   private _port: number;
   private _ssl: boolean;
 
@@ -20,13 +20,17 @@ export class RPCHRequestHandler {
     this._ssl = sslMode;
   }
 
+  public setURL(url: string) {
+    this._url = url;
+  }
+
   public sendRequest(requestObject: RPCRequestObject): Promise<any> {
     if (requestObject.method === "mining_status") {
       return axios.post(
-        `${this.baseUrl}:${this._port}/${requestObject.method}`,
+        `${this._url}:${this._port}/${requestObject.method}`,
         requestObject.params
       );
     }
-    return axios.post(`${this.baseUrl}:${this._port}/json_rpc`, requestObject);
+    return axios.post(`${this._url}:${this._port}/json_rpc`, requestObject);
   }
 }

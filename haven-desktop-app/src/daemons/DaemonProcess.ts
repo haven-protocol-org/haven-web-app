@@ -1,7 +1,10 @@
 import {ChildProcess, spawn} from "child_process";
 import {IDaemonManager} from "./IDaemonManager";
-import {CommunicationChannel} from "../ipc/types";
-import {IDaemonConfig} from "../daemons/config";
+import {CommunicationChannel} from "../types";
+import {IDaemonConfig} from "./config/config";
+import ipcMain = Electron.ipcMain;
+import {RPCHRequestHandler, RPCRequestObject} from "../rpc/RPCHRequestHandler";
+import IpcMainInvokeEvent = Electron.IpcMainInvokeEvent;
 
 
 
@@ -10,10 +13,18 @@ export const UPDATE_DAEMON_STATUS_EVENT = 'updateDaemonEvent';
 
 export abstract class DaemonProcess implements IDaemonManager {
 
+    constructor() {
+        this.addIPCHandler();
+        this.setRPCHandler()
+    }
+
     protected filePath: string;
     protected startArgs: Object;
     protected port: number;
     protected daemonProcess: ChildProcess;
+    protected rpcHandler: RPCHRequestHandler = new RPCHRequestHandler();
+    protected _isRunning: boolean = false;;
+
 
     abstract getConfig(): IDaemonConfig;
 
@@ -25,12 +36,22 @@ export abstract class DaemonProcess implements IDaemonManager {
 
     abstract onstderrData(chunk: any): void;
 
-    abstract requestHandler(): void;
+    abstract requestHandler(event: IpcMainInvokeEvent, requestObject: RPCRequestObject): Promise<any>
 
     abstract getCommunicationChannel(): CommunicationChannel;
 
+    abstract setRPCHandler(): void;
 
-    public startDaemon(): void {
+
+    public addIPCHandler () {
+        ipcMain.handle(this.getCommunicationChannel(), (event, args) =>
+            this.requestHandler(event, args)
+        );
+    }
+
+
+    protected startLocalProcess(): void {
+
 
        const config = this.getConfig();
        this.filePath = config.path;
@@ -54,6 +75,9 @@ export abstract class DaemonProcess implements IDaemonManager {
         this.daemonProcess.kill();
     }
 
+    public isRunning(): boolean {
+        return this._isRunning;
+    }
 
 
 }

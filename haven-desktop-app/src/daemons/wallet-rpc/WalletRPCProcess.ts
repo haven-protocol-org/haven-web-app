@@ -1,5 +1,8 @@
-import {DaemonProcess} from "./DaemonProcess";
-import {CommunicationChannel} from "../ipc/types";
+import {DaemonProcess} from "../DaemonProcess";
+import {CommunicationChannel} from "../../types";
+import {RPCRequestObject} from "../../rpc/RPCHRequestHandler";
+import IpcMainInvokeEvent = Electron.IpcMainInvokeEvent;
+import {config, IDaemonConfig} from "../config/config";
 
 
 const  WALLET_METHODS: ReadonlyArray<string> = [
@@ -30,6 +33,8 @@ const  WALLET_METHODS: ReadonlyArray<string> = [
 
 export class WalletRPCProcess extends DaemonProcess {
 
+    setRPCHandler(): void {
+    }
 
     onDaemonError(error: Error): void {
     }
@@ -43,15 +48,26 @@ export class WalletRPCProcess extends DaemonProcess {
     onstdoutData(chunk: any): void {
     }
 
-    getConfig(): void {
-
-    }
 
     getCommunicationChannel(): CommunicationChannel {
         return CommunicationChannel.WALLET_RPC;
     }
 
-    requestHandler(): void {
+    requestHandler(event: IpcMainInvokeEvent, requestObject: RPCRequestObject): Promise<any> {
+
+       const isLegitMethod =  WALLET_METHODS.some(
+            (walletMethod) => walletMethod === requestObject.method);
+
+       if (isLegitMethod) {
+           return this.rpcHandler.sendRequest(requestObject);
+       }
+
+       return null;
+
+    }
+
+    getConfig(): IDaemonConfig {
+        return config().wallet;
     }
 
 

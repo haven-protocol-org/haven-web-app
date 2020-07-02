@@ -7,7 +7,7 @@
 // modified 2017 for some CN functions by luigi1111
 
 import { RPCHRequestHandler } from "./rpc/RPCHRequestHandler";
-import { config } from "./daemons/config";
+import { config } from "./daemons/config/config";
 import { dialog } from "electron";
 import { decode_address } from "./xmr-core/addressUtils";
 

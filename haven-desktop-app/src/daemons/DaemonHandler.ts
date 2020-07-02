@@ -1,10 +1,10 @@
 import {DaemonProcess, UPDATE_DAEMON_STATUS_EVENT} from "./DaemonProcess";
 import {IDaemonManager} from "./IDaemonManager";
-import {config} from "./config";
+import {config} from "./config/config";
 import {DAEMONS_STOPPED_EVENT, HavenWallet} from "../HavenWallet";
 import {appEventBus} from "../EventBus";
-import {HavendProcess} from "../daemons/HavendProcess";
-import {WalletRPCProcess} from "../daemons/WalletRPCProcess";
+import {HavendProcess} from "./havend/HavendProcess";
+import {WalletRPCProcess} from "./wallet-rpc/WalletRPCProcess";
 
 
 
@@ -15,31 +15,22 @@ export class DaemonHandler {
     private rpcWallet:IDaemonManager = new WalletRPCProcess();
 
 
-
-
     public startDaemons() {
 
-        this.havend.setConfig(config().havend);
-        this.rpcWallet.setConfig(config().wallet);
-
-     //   this.havend.startDaemon();
-        this.rpcWallet.startDaemon();
-
+        this.havend = new HavendProcess();
+        this.rpcWallet = new WalletRPCProcess();
     }
-
 
 
     public stopDaemons() {
 
 
-        if (this.havend.getDaemonState().isRunning) {
-            this.havend.getDaemonStatusEventEmitter().on(UPDATE_DAEMON_STATUS_EVENT, (status) => this.checkIfDaemonsQuit());
+        if (this.havend.isRunning()) {
             this.havend.killDaemon();
         }
 
-        if (this.rpcWallet.getDaemonState().isRunning){
+        if (this.rpcWallet.isRunning()){
 
-            this.rpcWallet.getDaemonStatusEventEmitter().on(UPDATE_DAEMON_STATUS_EVENT, (status) => this.checkIfDaemonsQuit());
             this.rpcWallet.killDaemon();
         }
 
@@ -48,19 +39,9 @@ export class DaemonHandler {
     }
 
 
-    public getDaemonsState() {
-
-        const nodeState = this.havend.getDaemonState();
-        const walletState = this.rpcWallet.getDaemonState();
-        return {node: nodeState, wallet: walletState};
-
-    }
-
-
-
     public checkIfDaemonsQuit(): void {
 
-        if (this.rpcWallet.getDaemonState().isRunning === false && this.havend.getDaemonState().isRunning === false) {
+        if (this.rpcWallet.isRunning() === false && this.havend.isRunning() === false) {
             appEventBus.emit(DAEMONS_STOPPED_EVENT);
         }
 

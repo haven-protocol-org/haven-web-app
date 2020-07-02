@@ -1,11 +1,11 @@
-import {getNetType, NET} from "../env";
+import {getNetType, NET} from "../../env";
 
 import {
   HAVEND_PATH_MAINNET, HAVEND_PATH_STAGENET,
   HAVEND_PATH_TESTNET,
-  WALLET_PATH_MAINNET, WALLET_PATH_STAGENET, WALLET_PATH_TESTNET,
   WALLET_RPC_PATH_MAINNET, WALLET_RPC_PATH_STAGENET, WALLET_RPC_PATH_TESTNET
-} from "../daemons/daemonPaths";
+} from "./daemonPaths";
+import {WALLET_PATH_MAINNET, WALLET_PATH_STAGENET, WALLET_PATH_TESTNET} from "../../wallets/walletPaths";
 
 
 

@@ -2,12 +2,12 @@
  * responsible to wire everything together
  */
 
-import { IPCHandler } from "./ipc/IPCHandler";
-import { CommunicationChannel, DaemonsState } from "./ipc/types";
+import { WalletHandler } from "./wallets/WalletHandler";
+import { CommunicationChannel } from "./types";
 import { ipcMain } from "electron";
 import { getNetType, NET, setNetType } from "./env";
 import { DaemonHandler } from "./daemons/DaemonHandler";
-import { checkAndCreateWalletDir } from "./daemons/daemonPaths";
+import { checkAndCreateWalletDir } from "./wallets/walletPaths";
 import { appEventBus } from "./EventBus";
 
 export const DAEMONS_STOPPED_EVENT: string = "daemons_stopped_event";
@@ -15,7 +15,7 @@ export const DAEMONS_STOPPED_EVENT: string = "daemons_stopped_event";
 export class HavenWallet {
   private _isRunning: boolean = false;
 
-  private ipcHandler: IPCHandler = new IPCHandler();
+  private walletHandler: WalletHandler = new WalletHandler();
   private daemonHandler: DaemonHandler = new DaemonHandler();
 
   private isSwitchingNet: boolean = false;
@@ -31,9 +31,8 @@ export class HavenWallet {
     checkAndCreateWalletDir();
 
     this.daemonHandler.startDaemons();
-    this.ipcHandler.start();
+    this.walletHandler.start();
 
-    this.addDaemonStateHandling();
   }
 
   private onSwitchNetwork(netType: NET) {
@@ -60,16 +59,11 @@ export class HavenWallet {
   public quit() {
     this.requestShutDown = true;
     this.daemonHandler.stopDaemons();
-    this.ipcHandler.quit();
-    this.removeDaemonStateHandling();
+    this.walletHandler.quit();
     this._isRunning = false;
   }
 
-  private addDaemonStateHandling() {
-    ipcMain.handle(CommunicationChannel.DAEMON, (event, args) =>
-      this.onDaemonStateRequest()
-    );
-  }
+
 
   private addNetworkSwitchHandling() {
     ipcMain.handle(CommunicationChannel.SWITCH_NET, (event, args) =>
@@ -77,11 +71,5 @@ export class HavenWallet {
     );
   }
 
-  private removeDaemonStateHandling() {
-    ipcMain.removeHandler(CommunicationChannel.DAEMON);
-  }
 
-  private onDaemonStateRequest(): DaemonsState {
-    return this.daemonHandler.getDaemonsState();
-  }
 }

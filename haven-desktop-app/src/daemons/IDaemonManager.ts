@@ -1,11 +1,11 @@
-import {IDaemonConfig} from "./config";
+import {IDaemonConfig} from "./config/config";
 
 
 
 export interface IDaemonManager {
 
-    startDaemon():void
     killDaemon():void
+    isRunning(): boolean
 
 }
 
