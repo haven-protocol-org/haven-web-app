@@ -1,3 +1,5 @@
+import {NET} from "./env";
+
 export enum CommunicationChannel {
   HAVEND = "havend",
   WALLET_RPC = "wallet-rpc",
@@ -11,3 +13,29 @@ export type DaemonState = {
   code?: number;
   signal?: string;
 };
+
+
+export interface IDaemonConfig {
+  path: string;
+  port: number;
+  args: { [key: string]: string | number };
+  daemonUrl: string;
+}
+
+export type DaemonType = 'havend' | 'wallet';
+
+export type IConfig = {
+
+  [NET.Mainnet] : {
+    havend:IDaemonConfig;
+    wallet: IDaemonConfig;
+  }
+  [NET.Testnet] : {
+    havend:IDaemonConfig;
+    wallet: IDaemonConfig;
+  }
+  [NET.Stagenet] : {
+    havend:IDaemonConfig;
+    wallet: IDaemonConfig;
+  }
+}

@@ -37,12 +37,24 @@ export class WalletRPCProcess extends DaemonProcess {
     }
 
     onDaemonError(error: Error): void {
+
+        //TODO check for that output to detect non detection;
+        const checkConnection = "error::no_connection_to_daemon";
+
+
     }
 
     onDaemonExit(code: number | null, signal: string | null): void {
+        this._isRunning = false;
     }
 
     onstderrData(chunk: any): void {
+
+
+        //TODO check for that output to detect non detection;
+        const checkConnection = "error::no_connection_to_daemon";
+
+
     }
 
     onstdoutData(chunk: any): void {

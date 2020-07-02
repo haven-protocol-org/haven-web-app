@@ -1,77 +1,22 @@
-import {getNetType, NET} from "../../env";
-
-import {
-  HAVEND_PATH_MAINNET, HAVEND_PATH_STAGENET,
-  HAVEND_PATH_TESTNET,
-  WALLET_RPC_PATH_MAINNET, WALLET_RPC_PATH_STAGENET, WALLET_RPC_PATH_TESTNET
-} from "./daemonPaths";
-import {WALLET_PATH_MAINNET, WALLET_PATH_STAGENET, WALLET_PATH_TESTNET} from "../../wallets/walletPaths";
+import {APP_DATA_PATH, getNetType, NET} from "../../env";
+import {daemonConfigMainnet, daemonConfigStagenet, daemonConfigTestnet} from "../../daemons/config/default";
+import * as path from "path";
+import * as fs from "fs";
+import {DaemonType, IConfig, IDaemonConfig} from "../../types";
 
 
 
-const daemonConfigMainnet = {
 
-  havend: {
-    path: HAVEND_PATH_MAINNET,
-    port: 17750,
-    args: {}
-  },
-  wallet: {
-    path: WALLET_RPC_PATH_MAINNET,
-    port: 12345,
-    args: {
-      "rpc-bind-port": 12345,
-      "disable-rpc-login": "",
-      "wallet-dir": WALLET_PATH_MAINNET,
-     // "log-level":"2"
-    }
-  }
-};
+export const LOCAL_HOST: string = "http://localhost";
+const configFileName = 'daemon_config.json';
 
-const daemonConfigTestnet = {
-  havend: {
-    path: HAVEND_PATH_TESTNET,
-    port: 27750,
-    args: {
-      testnet: "",
-      "add-priority-node": "seed01.testnet.havenprotocol.org"
-    }
-  },
-  wallet: {
-    path: WALLET_RPC_PATH_TESTNET,
-    port: 12345,
-    args: {
-      testnet: "",
-      "rpc-bind-port": 12345,
-      "disable-rpc-login": "",
-      "wallet-dir": WALLET_PATH_TESTNET
-    }
-  }
-};
+const configFilePath = path.join(
+    APP_DATA_PATH,
+    configFileName
+);
 
 
-const daemonConfigStagenet = {
-  havend: {
-    path: HAVEND_PATH_STAGENET,
-    port:37750,
-    args: {
-      stagenet: "",
-      "add-priority-node": "seed01.stagenet.havenprotocol.org"
-    }
-  },
-  wallet: {
-    path: WALLET_RPC_PATH_STAGENET,
-    port: 12345,
-    args: {
-      stagenet: "",
-      "rpc-bind-port": 12345,
-      "disable-rpc-login": "",
-      "wallet-dir": WALLET_PATH_STAGENET
-    }
-  }
-};
-
-const NET_CONFIG_MAP =  {
+const DEFAULT_CONFIG: IConfig =  {
 
   [NET.Stagenet]:daemonConfigStagenet,
   [NET.Testnet]: daemonConfigTestnet,
@@ -79,13 +24,46 @@ const NET_CONFIG_MAP =  {
 };
 
 
-export interface IDaemonConfig {
-  path: string;
-  port: number;
-  args: { [key: string]: string | number };
-}
+export const checkAndCreateDaemonConfig = () => {
 
-export const config = (): {
-  havend: IDaemonConfig;
-  wallet: IDaemonConfig;
-} => NET_CONFIG_MAP[getNetType()];
+
+
+  if (!fs.existsSync(configFilePath)) {
+
+    const configJson = JSON.stringify(DEFAULT_CONFIG);
+
+    fs.writeFileSync(configFilePath, configJson, 'utf8');
+  }
+
+
+};
+
+
+
+export const updateDaemonConfig = (updatedDaemonConfig: IDaemonConfig, nettype: NET, daemonType: DaemonType) => {
+
+  const config = getDaemonConfig();
+
+  config[nettype][daemonType] = updatedDaemonConfig;
+
+  const configJson = JSON.stringify(config);
+
+  fs.writeFileSync(configFilePath, configJson, 'utf8');
+
+
+
+};
+
+
+export const getDaemonConfig = (): IConfig => {
+
+    const fileBuffer = fs.readFileSync(configFilePath);
+
+    return JSON.parse(fileBuffer.toString())
+
+
+};
+
+
+
+export const config = () => getDaemonConfig()[getNetType()];
