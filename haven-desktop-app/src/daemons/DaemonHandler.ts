@@ -1,8 +1,8 @@
 import {DaemonProcess, UPDATE_DAEMON_STATUS_EVENT} from "./DaemonProcess";
 import {IDaemonManager} from "./IDaemonManager";
 import {config} from "./config/config";
-import {DAEMONS_STOPPED_EVENT, HavenWallet} from "../HavenWallet";
-import {appEventBus} from "../EventBus";
+import {HavenWallet} from "../HavenWallet";
+import {appEventBus, DAEMONS_STOPPED_EVENT} from "../EventBus";
 import {HavendProcess} from "./havend/HavendProcess";
 import {WalletRPCProcess} from "./wallet-rpc/WalletRPCProcess";
 

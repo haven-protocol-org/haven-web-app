@@ -1,7 +1,9 @@
-export enum CommunicationChannels {
-  RPC = "rpc",
-  DAEMON = "daemon",
-  WALLETS = "wallets"
+export enum CommunicationChannel {
+  HAVEND = "havend",
+  WALLET_RPC = "wallet-rpc",
+  RPC="rpc",
+  STORED_WALLETS = "wallets",
+  SWITCH_NET = "switch_net"
 }
 
 export interface DAEMON_STATUS {

@@ -2,15 +2,14 @@
  * responsible to wire everything together
  */
 
-import { WalletHandler } from "./wallets/WalletHandler";
-import { CommunicationChannel } from "./types";
-import { ipcMain } from "electron";
-import { getNetType, NET, setNetType } from "./env";
-import { DaemonHandler } from "./daemons/DaemonHandler";
-import { checkAndCreateWalletDir } from "./wallets/walletPaths";
-import { appEventBus } from "./EventBus";
-
-export const DAEMONS_STOPPED_EVENT: string = "daemons_stopped_event";
+import {WalletHandler} from "./wallets/WalletHandler";
+import {CommunicationChannel} from "./types";
+import {ipcMain} from "electron";
+import {getNetType, NET, setNetType} from "./env";
+import {DaemonHandler} from "./daemons/DaemonHandler";
+import {checkAndCreateWalletDir} from "./wallets/walletPaths";
+import {appEventBus, DAEMONS_STOPPED_EVENT} from "./EventBus";
+import {checkAndCreateDaemonConfig} from "./daemons/config/config";
 
 export class HavenWallet {
   private _isRunning: boolean = false;
@@ -29,6 +28,7 @@ export class HavenWallet {
     this._isRunning = true;
 
     checkAndCreateWalletDir();
+    checkAndCreateDaemonConfig();
 
     this.daemonHandler.startDaemons();
     this.walletHandler.start();

@@ -1,4 +1,3 @@
-import {IDaemonConfig} from "./config/config";
 
 
 

@@ -1,10 +1,11 @@
 import {ChildProcess, spawn} from "child_process";
 import {IDaemonManager} from "./IDaemonManager";
-import {CommunicationChannel} from "../types";
-import {IDaemonConfig} from "./config/config";
+import {CommunicationChannel, IDaemonConfig} from "../types";
 import ipcMain = Electron.ipcMain;
 import {RPCHRequestHandler, RPCRequestObject} from "../rpc/RPCHRequestHandler";
 import IpcMainInvokeEvent = Electron.IpcMainInvokeEvent;
+import {appEventBus, HAVEND_LOCATION_CHANGED} from "../EventBus";
+import {LOCAL_HOST} from "../daemons/config/config";
 
 
 
@@ -14,8 +15,9 @@ export const UPDATE_DAEMON_STATUS_EVENT = 'updateDaemonEvent';
 export abstract class DaemonProcess implements IDaemonManager {
 
     constructor() {
-        this.addIPCHandler();
-        this.setRPCHandler()
+
+        this.init();
+        appEventBus.on(HAVEND_LOCATION_CHANGED, (havendLocation: string) => this.onHavendLocationChanged(havendLocation))
     }
 
     protected filePath: string;
@@ -23,12 +25,14 @@ export abstract class DaemonProcess implements IDaemonManager {
     protected port: number;
     protected daemonProcess: ChildProcess;
     protected rpcHandler: RPCHRequestHandler = new RPCHRequestHandler();
-    protected _isRunning: boolean = false;;
+    protected _isRunning: boolean = false;
+    protected _isHavendLocal: boolean;
 
+
+    abstract init(): void;
 
     abstract getConfig(): IDaemonConfig;
 
-    abstract onDaemonExit(code: number | null, signal: string | null): void;
 
     abstract onDaemonError(error: Error): void;
 
@@ -41,6 +45,7 @@ export abstract class DaemonProcess implements IDaemonManager {
     abstract getCommunicationChannel(): CommunicationChannel;
 
     abstract setRPCHandler(): void;
+
 
 
     public addIPCHandler () {
@@ -78,6 +83,18 @@ export abstract class DaemonProcess implements IDaemonManager {
     public isRunning(): boolean {
         return this._isRunning;
     }
+
+    protected  onHavendLocationChanged(address: string): void {
+
+        this._isHavendLocal = (address === LOCAL_HOST);
+
+    }
+
+    protected onDaemonExit(code: number | null, signal: string | null): void {
+        this._isRunning = false;
+    }
+
+
 
 
 }

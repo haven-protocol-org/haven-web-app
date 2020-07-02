@@ -1,4 +1,5 @@
 import axios from "axios";
+import {LOCAL_HOST, LOCAL_HOST_URL} from "../daemons/config/config";
 
 export type RPCRequestObject = {
   id: number;
@@ -8,7 +9,7 @@ export type RPCRequestObject = {
 };
 
 export class RPCHRequestHandler {
-  private _url: string = "http://localhost";
+  private _url: string = LOCAL_HOST_URL;
   private _port: number;
   private _ssl: boolean;
 
@@ -21,7 +22,13 @@ export class RPCHRequestHandler {
   }
 
   public setURL(url: string) {
-    this._url = url;
+
+
+    if (url === LOCAL_HOST) {
+      this._url = LOCAL_HOST_URL;
+    } else {
+      this._url = url;
+    }
   }
 
   public sendRequest(requestObject: RPCRequestObject): Promise<any> {

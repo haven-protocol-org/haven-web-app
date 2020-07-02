@@ -6,8 +6,8 @@ import {DaemonType, IConfig, IDaemonConfig} from "../../types";
 
 
 
-
-export const LOCAL_HOST: string = "http://localhost";
+export const LOCAL_HOST: string = "";
+export const LOCAL_HOST_URL: string = "http://localhost";
 const configFileName = 'daemon_config.json';
 
 const configFilePath = path.join(
@@ -24,6 +24,7 @@ const DEFAULT_CONFIG: IConfig =  {
 };
 
 
+// if daemon config not exists yet, create and store the default one
 export const checkAndCreateDaemonConfig = () => {
 
 

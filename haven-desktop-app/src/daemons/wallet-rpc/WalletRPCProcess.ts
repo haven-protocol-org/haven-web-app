@@ -1,8 +1,8 @@
 import {DaemonProcess} from "../DaemonProcess";
-import {CommunicationChannel} from "../../types";
+import {CommunicationChannel, IDaemonConfig} from "../../types";
 import {RPCRequestObject} from "../../rpc/RPCHRequestHandler";
 import IpcMainInvokeEvent = Electron.IpcMainInvokeEvent;
-import {config, IDaemonConfig} from "../config/config";
+import {config} from "../config/config";
 
 
 const  WALLET_METHODS: ReadonlyArray<string> = [
@@ -33,7 +33,17 @@ const  WALLET_METHODS: ReadonlyArray<string> = [
 
 export class WalletRPCProcess extends DaemonProcess {
 
+
+    init(): void {
+    }
+
     setRPCHandler(): void {
+
+        const config = this.getConfig();
+
+        // wallet-rpc is always local - never remote
+        this.rpcHandler.port = config.port;
+
     }
 
     onDaemonError(error: Error): void {
@@ -43,10 +53,7 @@ export class WalletRPCProcess extends DaemonProcess {
 
 
     }
-
-    onDaemonExit(code: number | null, signal: string | null): void {
-        this._isRunning = false;
-    }
+    
 
     onstderrData(chunk: any): void {
 

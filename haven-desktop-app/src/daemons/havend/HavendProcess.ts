@@ -1,6 +1,6 @@
 import {DaemonProcess} from "../DaemonProcess";
-import {CommunicationChannel} from "../../types";
-import {config, IDaemonConfig} from "../config/config";
+import {CommunicationChannel, IDaemonConfig} from "../../types";
+import {config} from "../config/config";
 import {RPCRequestObject} from "../../rpc/RPCHRequestHandler";
 import IpcMainInvokeEvent = Electron.IpcMainInvokeEvent;
 
@@ -17,18 +17,26 @@ const  DAEMON_METHODS: ReadonlyArray<string>= [
 export class HavendProcess extends DaemonProcess {
 
 
+
+    init(): void {
+
+        // check if we have
+
+    }
+
+
     setRPCHandler(): void {
         const config = this.getConfig();
 
-        // daemon can be remote
-        this.rpcHandler
+        this.rpcHandler.setURL(config.daemonUrl);
+        this.rpcHandler.port = config.port;
+
     }
 
     onDaemonError(error: Error): void {
     }
 
-    onDaemonExit(code: number | null, signal: string | null): void {
-    }
+
 
     onstderrData(chunk: any): void {
     }
@@ -38,7 +46,7 @@ export class HavendProcess extends DaemonProcess {
 
     getConfig(): IDaemonConfig {
 
-        return config().wallet;
+        return config().havend;
     }
 
     getCommunicationChannel(): CommunicationChannel {
@@ -58,10 +66,20 @@ export class HavendProcess extends DaemonProcess {
     }
 
 
+    protected onHavendLocationChanged(address: string): void {
+        super.onHavendLocationChanged(address);
 
+        // in havend we must set the rpc handler again
+        this.setRPCHandler();
 
+        if ((!this._isHavendLocal) && this._isRunning) {
+            this.killDaemon();
+        }
+        else if (this._isHavendLocal && (!this._isRunning)) {
+            this.startLocalProcess();
+        }
 
-
+    }
 
 
 }
