@@ -3,6 +3,7 @@ import {CommunicationChannel, HavendState, IDaemonConfig} from "../../types";
 import {config} from "../config/config";
 import {RPCRequestObject} from "../../rpc/RPCHRequestHandler";
 import IpcMainInvokeEvent = Electron.IpcMainInvokeEvent;
+import {isDevMode} from "../../env";
 
 
 const  DAEMON_METHODS: ReadonlyArray<string>= [
@@ -23,15 +24,13 @@ export class HavendProcess extends DaemonProcess {
     init(): void {
 
         super.init();
-        this.onHavendLocationChanged(this.getConfig().daemonUrl);
+        this.checkHavendLocationToggle();
 
     }
 
     setRPCHandler(): void {
         const config = this.getConfig();
-
-        this.rpcHandler.setURL(config.daemonUrl);
-        this.rpcHandler.port = config.port;
+        this.rpcHandler.setFullUrl(config.daemonUrl);
 
     }
 
@@ -50,7 +49,18 @@ export class HavendProcess extends DaemonProcess {
             (walletMethod) => walletMethod === requestObject.method);
 
         if (isLegitMethod) {
-            return this.rpcHandler.sendRequest(requestObject);
+            return this.rpcHandler.sendRequest(requestObject)
+                .then(res => {
+                    this.isReachable = true;
+                    return res;
+                })
+                .catch(err => {
+                    this.isReachable = false;
+                    if (isDevMode) {
+                        console.log(err);
+                    }
+                    throw new Error(err);
+                })
         }
 
         return null;
@@ -58,10 +68,17 @@ export class HavendProcess extends DaemonProcess {
 
 
     protected onHavendLocationChanged(address: string): void {
-        super.onHavendLocationChanged(address);
 
+        super.onHavendLocationChanged(address);
         // in havend we must set the rpc handler again
         this.setRPCHandler();
+
+        // and start or stop the local process
+        this.checkHavendLocationToggle();
+
+    }
+
+    checkHavendLocationToggle() {
 
         if ((!this._isHavendLocal) && this._isRunning) {
             this.killDaemon();
@@ -69,13 +86,11 @@ export class HavendProcess extends DaemonProcess {
         else if (this._isHavendLocal && (!this._isRunning)) {
             this.startLocalProcess();
         }
-
     }
 
     getState() : HavendState {
         return {
             isRunning: this._isRunning,
-            isRemote: !this._isHavendLocal,
             isReachable: this.isReachable
         }
     }

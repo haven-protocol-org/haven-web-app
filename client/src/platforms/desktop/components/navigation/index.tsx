@@ -22,10 +22,11 @@ import { selectIsLoggedIn } from "../../reducers/walletSession";
 import {getNetworkByName, NET_TYPE_NAME} from "constants/env";
 import { DesktopAppState } from "../../reducers";
 import { Refresh } from "platforms/desktop/components/rescan";
-import {NodeState, RunningState} from "platforms/desktop/types";
+import {NodeState, } from "platforms/desktop/types";
+import {WalletState} from "platforms/desktop/ipc/ipc-types";
 
 interface NavigationProps {
-  wallet: RunningState;
+  wallet: WalletState;
   node: NodeState;
   isLoggedIn: boolean;
   show_networks: boolean;

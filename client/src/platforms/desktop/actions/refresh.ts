@@ -21,14 +21,25 @@ export const getDaemonsState = () => {
 
   return (dispatch: any, getState: () => DesktopAppState) => {
     dispatch(gethavenNodeState());
-    dispatch(getWalletRPCState())
+    dispatch(getWalletRPCState());
   }
 
 
 };
 
 export const refresh = () => {
-  return (dispatch: any) => {
+  return (dispatch: any, getState:() => DesktopAppState) => {
+
+
+    if (selectIsWalletSyncingRemote(getState())) {
+
+
+      dispatch(getDaemonsState());
+      dispatch(getNodeInfo());
+      return;
+
+    }
+
 
     getWalletHeightRPC()
       .then((res) => dispatch(getWalletHeightSucceed(res.height)))

@@ -2,7 +2,7 @@ import {DaemonProcess} from "../DaemonProcess";
 import {CommunicationChannel, IDaemonConfig, WalletState} from "../../types";
 import {RPCRequestObject} from "../../rpc/RPCHRequestHandler";
 import IpcMainInvokeEvent = Electron.IpcMainInvokeEvent;
-import {config} from "../config/config";
+import {config, getLocalDaemon} from "../config/config";
 import {appEventBus, HAVEND_LOCATION_CHANGED} from "../../EventBus";
 
 
@@ -46,7 +46,6 @@ export class WalletRPCProcess extends DaemonProcess {
 
     init(): void {
         super.init();
-        this.onHavendLocationChanged(this.getConfig().daemonUrl);
         this.startLocalProcess();
     }
 
@@ -107,7 +106,15 @@ export class WalletRPCProcess extends DaemonProcess {
 
 
         if (requestObject.method === "set_daemon") {
-            appEventBus.emit(HAVEND_LOCATION_CHANGED, (requestObject.params as any)['address'])
+
+            const {address} = requestObject.params;
+            // if address is empty we use the local daemon
+            if (address === "") {
+                appEventBus.emit(HAVEND_LOCATION_CHANGED, getLocalDaemon());
+            } else {
+                appEventBus.emit(HAVEND_LOCATION_CHANGED, address);
+            }
+
         }
 
        const isLegitMethod =  WALLET_METHODS.some(
@@ -134,6 +141,12 @@ export class WalletRPCProcess extends DaemonProcess {
             isSyncing: this.isSyncing,
             syncHeight: this.syncHeight
         }
+
+    }
+
+    onHavendLocationChanged(address: string): void {
+
+        super.onHavendLocationChanged(address);
 
     }
 

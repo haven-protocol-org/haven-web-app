@@ -19,7 +19,6 @@ export interface WalletState extends ProcessState  {
 export interface HavendState extends ProcessState {
 
   isReachable: boolean;
-  isRemote: boolean;
 
 }
 

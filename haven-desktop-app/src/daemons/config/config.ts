@@ -3,11 +3,9 @@ import {daemonConfigMainnet, daemonConfigStagenet, daemonConfigTestnet} from "..
 import * as path from "path";
 import * as fs from "fs";
 import {DaemonType, IConfig, IDaemonConfig} from "../../types";
+import {LOCAL_DAEMON_MAP} from "../../daemons/config/enum";
 
 
-
-export const LOCAL_HOST: string = "";
-export const LOCAL_HOST_URL: string = "http://localhost";
 const configFileName = 'daemon_config.json';
 
 const configFilePath = path.join(
@@ -40,6 +38,12 @@ export const checkAndCreateDaemonConfig = () => {
 };
 
 
+export const setDaemonUrl = (daemonUrl: string) => {
+
+
+};
+
+
 
 export const updateDaemonConfig = (updatedDaemonConfig: IDaemonConfig, nettype: NET, daemonType: DaemonType) => {
 
@@ -51,8 +55,6 @@ export const updateDaemonConfig = (updatedDaemonConfig: IDaemonConfig, nettype: 
 
   fs.writeFileSync(configFilePath, configJson, 'utf8');
 
-
-
 };
 
 
@@ -62,8 +64,20 @@ export const getDaemonConfig = (): IConfig => {
 
     return JSON.parse(fileBuffer.toString())
 
+};
+
+export const isLocalDaemon = (url: string) => {
+
+  return url === getLocalDaemon();
 
 };
+
+export const getLocalDaemon = (): string => {
+
+  return LOCAL_DAEMON_MAP.get(getNetType());
+
+};
+
 
 
 
