@@ -10,14 +10,14 @@ import {CommunicationChannel} from "../types";
 export class DaemonHandler {
 
 
-    private havend:IDaemonManager = new HavendProcess();
-    private rpcWallet:IDaemonManager = new WalletRPCProcess();
+    private havend:IDaemonManager;
+    private rpcWallet:IDaemonManager;
 
 
     public startDaemons() {
 
-        this.havend = new HavendProcess();
-        this.rpcWallet = new WalletRPCProcess();
+        this.havend = new HavendProcess('havend');
+        this.rpcWallet = new WalletRPCProcess('wallet');
 
         ipcMain.handle( CommunicationChannel.HAVEND, (event, args) => this.havend.getState());
         ipcMain.handle( CommunicationChannel.WALLET_RPC, (event, args) => this.rpcWallet.getState());

@@ -37,14 +37,16 @@ export const setHavenNode = (address: string, port: string, location: NodeLocati
 
     let newAdress = '';
     let newPort = '';
+    let trusted = false;
     if (location !== NodeLocation.Local) {
 
+      trusted = true;
       newPort = port;
       newAdress = address;
 
     }
 
-    const params = {address: newAdress + newPort, trusted:true};
+    const params = {address: newAdress + newPort, trusted};
 
     setDaemonRPC(params)
         .then(dispatch(sethavenNodeSucceed(address, port, location)))

@@ -1,19 +1,22 @@
 import { AnyAction } from "redux";
-import {RunningState} from "platforms/desktop/types";
 import {GET_WALLET_RPC_STATE_SUCCEED} from "platforms/desktop/actions/types";
+import {WalletState} from "platforms/desktop/ipc/ipc-types";
 
 
 
 
-const INITAL_STATE: RunningState = {
+const INITAL_STATE: WalletState = {
 
-    isRunning:false
+    isConnectedToDaemon: true,
+    isSyncing: false,
+    syncHeight: 0,
+    isRunning: true
 };
 
 export const walletRPC = (
     state = INITAL_STATE,
     action: AnyAction
-): RunningState => {
+): WalletState => {
     switch (action.type) {
         case GET_WALLET_RPC_STATE_SUCCEED:
             return { ...action.payload };

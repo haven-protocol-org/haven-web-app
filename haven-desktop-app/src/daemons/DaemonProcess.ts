@@ -73,12 +73,14 @@ export abstract class DaemonProcess implements IDaemonManager {
                 return '--' + key + (value !== '' ? '=' + value : '');
             });
         console.log(args);
+        this._isRunning = true;
         this.daemonProcess = spawn(this.filePath, args);
 
         this.daemonProcess.stdout.on('data', (chunk) => this.onstdoutData(chunk));
         this.daemonProcess.stderr.on('data', (chunk) => this.onstderrData(chunk));
         this.daemonProcess.on('exit', (code: number | null, signal: string | null) => this.onDaemonExit(code, signal));
         this.daemonProcess.on('error', (error: Error) => this.onDaemonError(error));
+
     }
 
     public killDaemon(): void {
