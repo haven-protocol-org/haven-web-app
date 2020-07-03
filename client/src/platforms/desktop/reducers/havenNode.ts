@@ -1,11 +1,12 @@
 import {AnyAction} from "redux";
 import {LocalNodeAddress, NodeLocation, NodeState} from "platforms/desktop/types";
+import {DesktopAppState} from "platforms/desktop/reducers/index";
 
 
 const INITAL_STATE: NodeState = {
   isRunning: false, isMining: false,
   connections: {in:0, out:0}, address:'',
-  location: NodeLocation.Local, port:''
+  location: NodeLocation.None, port:''
 };
 
 export const havenNode = (
@@ -19,6 +20,11 @@ export const havenNode = (
     default:
       return state;
   }
+};
+
+
+export const selectIsDaemonSet = (state: DesktopAppState): boolean => {
+  return state.havenNode.location !== NodeLocation.None
 };
 
 

@@ -19,6 +19,8 @@ export interface WalletState extends ProcessState  {
 export interface HavendState extends ProcessState {
 
   isReachable: boolean;
+  location: NodeLocation;
+  address: string;
 
 }
 
@@ -36,6 +38,14 @@ export interface IDaemonConfig {
   args: { [key: string]: string | number };
   daemonUrl: string;
 }
+
+export enum NodeLocation {
+  Local="Local",
+  Remote="Remote",
+  None="None"
+}
+
+
 
 export type DaemonType = 'havend' | 'wallet';
 

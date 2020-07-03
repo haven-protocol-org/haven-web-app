@@ -1,9 +1,9 @@
 import {DaemonProcess} from "../DaemonProcess";
-import {CommunicationChannel, HavendState, IDaemonConfig} from "../../types";
+import {CommunicationChannel, HavendState, IDaemonConfig, NodeLocation} from "../../types";
 import {config} from "../config/config";
 import {RPCRequestObject} from "../../rpc/RPCHRequestHandler";
-import IpcMainInvokeEvent = Electron.IpcMainInvokeEvent;
 import {isDevMode} from "../../env";
+import IpcMainInvokeEvent = Electron.IpcMainInvokeEvent;
 
 
 const  DAEMON_METHODS: ReadonlyArray<string>= [
@@ -91,7 +91,10 @@ export class HavendProcess extends DaemonProcess {
     getState() : HavendState {
         return {
             isRunning: this._isRunning,
-            isReachable: this.isReachable
+            isReachable: this.isReachable,
+            location: (this._isHavendLocal)?  NodeLocation.Local : NodeLocation.Remote,
+            address : this.getConfig().daemonUrl
+
         }
     }
 

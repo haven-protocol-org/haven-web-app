@@ -9,14 +9,11 @@ import {isLocalDaemon, updateDaemonUrlInConfig} from "../daemons/config/config";
 
 
 
-
-export const UPDATE_DAEMON_STATUS_EVENT = 'updateDaemonEvent';
-
-
 export abstract class DaemonProcess implements IDaemonManager {
 
     constructor(type: DaemonType) {
 
+        this._isHavendLocal = isLocalDaemon(this.getConfig().daemonUrl);
         this.type = type;
         appEventBus.on(HAVEND_LOCATION_CHANGED, (havendLocation: string) => this.onHavendLocationChanged(havendLocation));
         this.init();

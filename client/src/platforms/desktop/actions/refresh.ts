@@ -19,7 +19,7 @@ import {selectIsWalletSyncingRemote} from "platforms/desktop/reducers/walletRPC"
 
 export const getDaemonsState = () => {
 
-  return (dispatch: any, getState: () => DesktopAppState) => {
+  return (dispatch: any) => {
     dispatch(gethavenNodeState());
     dispatch(getWalletRPCState());
   }
@@ -61,12 +61,12 @@ export const updateApp = () => {
     //if we sync via remote node, wallet-rpc will be blocked
     if (selectIsWalletSyncingRemote(getState())) {
 
-
       dispatch(getDaemonsState());
       dispatch(getNodeInfo());
 
     } else {
 
+      dispatch(getDaemonsState());
       dispatch(getWalletHeight());
       dispatch(getBalance());
       dispatch(getTransfers());

@@ -1,3 +1,5 @@
+import {NodeLocation} from "platforms/desktop/types";
+
 export enum CommunicationChannel {
   HAVEND = "havend",
   WALLET_RPC = "wallet-rpc",
@@ -27,8 +29,9 @@ export interface WalletState extends ProcessState  {
 
 export interface HavendState extends ProcessState {
 
+  isReachable: boolean;
+  location: NodeLocation;
   address: string;
-  port:number;
 
 }
 

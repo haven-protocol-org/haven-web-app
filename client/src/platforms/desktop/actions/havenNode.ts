@@ -23,8 +23,11 @@ export const gethavenNodeState = () => {
   };
 };
 
-const updatehavenNodeState = (state: HavendState) => {
-  return { type: GET_HAVEND_STATE_SUCCEED, payload: state };
+const updatehavenNodeState = (havendState: HavendState) => {
+
+  const url = new URL(havendState.address);
+  const {host, port} = url;
+  return { type: GET_HAVEND_STATE_SUCCEED, payload: {...havendState, address: host, port} };
 };
 
 const updatehavenNodeStateFailed = (err: any) => {

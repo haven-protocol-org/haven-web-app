@@ -1,6 +1,6 @@
 import axios from "axios";
 import {LOCAL_HOST_URL} from "../daemons/config/enum";
-import {LOCAL_HOST} from "src/daemons/config/enum";
+import {LOCAL_HOST} from "../daemons/config/enum";
 
 export type RPCRequestObject = {
   id: number;
