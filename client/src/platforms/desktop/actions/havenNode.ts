@@ -11,6 +11,7 @@ import {addErrorNotification, addNotificationByMessage} from "shared/actions/not
 import {NotificationType} from "constants/notificationList";
 import {DesktopAppState} from "platforms/desktop/reducers";
 import {HavendState} from "platforms/desktop/ipc/ipc-types";
+import {getDaemonsState} from "platforms/desktop/actions/refresh";
 
 export const gethavenNodeState = () => {
   return (dispatch: any) => {
@@ -50,6 +51,7 @@ export const setHavenNode = (address: string, port: string, location: NodeLocati
 
     setDaemonRPC(params)
         .then(dispatch(sethavenNodeSucceed(address, port, location)))
+        .then(dispatch(getDaemonsState()))
         .catch((error) => dispatch(sethavenNodeFailed(error)));
   }
 

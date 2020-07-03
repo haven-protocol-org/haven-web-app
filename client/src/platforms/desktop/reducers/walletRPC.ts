@@ -1,6 +1,8 @@
 import { AnyAction } from "redux";
 import {GET_WALLET_RPC_STATE_SUCCEED} from "platforms/desktop/actions/types";
 import {WalletState} from "platforms/desktop/ipc/ipc-types";
+import {DesktopAppState} from "platforms/desktop/reducers/index";
+import {selectisLocalNode} from "platforms/desktop/reducers/havenNode";
 
 
 
@@ -23,4 +25,14 @@ export const walletRPC = (
         default:
             return state;
     }
+};
+
+
+
+export const selectIsWalletSyncingRemote = (state: DesktopAppState) => {
+
+    const isRemote = selectisLocalNode(state.havenNode);
+    const isSyncing = state.walletRPC.isSyncing;
+    return isRemote && isSyncing;
+
 };

@@ -12,6 +12,20 @@ import { gethavenNodeState } from "./havenNode";
 import { getOffshoreBalance } from "./offshoreBalance";
 import { getAddress } from "./subadresses";
 import { getTransfers } from "./transferHistory";
+import {getWalletRPCState} from "platforms/desktop/actions/walletRPC";
+import {selectIsWalletSyncingRemote} from "platforms/desktop/reducers/walletRPC";
+
+
+
+export const getDaemonsState = () => {
+
+  return (dispatch: any, getState: () => DesktopAppState) => {
+    dispatch(gethavenNodeState());
+    dispatch(getWalletRPCState())
+  }
+
+
+};
 
 export const refresh = () => {
   return (dispatch: any) => {
@@ -32,15 +46,28 @@ export const updateApp = () => {
   return (dispatch: any, getState: () => DesktopAppState) => {
 
 
-    dispatch(gethavenNodeState());
 
-    dispatch(getWalletHeight());
-    dispatch(getBalance());
-    dispatch(getTransfers());
-    dispatch(getNodeInfo());
+    //if we sync via remote node, wallet-rpc will be blocked
+    if (selectIsWalletSyncingRemote(getState())) {
 
-    if (OFFSHORE_ENABLED) {
-      dispatch(getOffshoreBalance());
+
+      dispatch(getDaemonsState());
+      dispatch(getNodeInfo());
+
+    } else {
+
+      dispatch(getWalletHeight());
+      dispatch(getBalance());
+      dispatch(getTransfers());
+      dispatch(getNodeInfo());
+
+      if (OFFSHORE_ENABLED) {
+        dispatch(getOffshoreBalance());
+      }
+
     }
+
+
+
   };
 };
