@@ -2,7 +2,7 @@ import {APP_DATA_PATH, getNetType, NET} from "../../env";
 import {daemonConfigMainnet, daemonConfigStagenet, daemonConfigTestnet} from "../../daemons/config/default";
 import * as path from "path";
 import * as fs from "fs";
-import {DaemonType, IConfig, IDaemonConfig} from "../../types";
+import { IConfig} from "../../types";
 import {LOCAL_DAEMON_MAP} from "../../daemons/config/enum";
 
 
@@ -38,22 +38,27 @@ export const checkAndCreateDaemonConfig = () => {
 };
 
 
-export const setDaemonUrl = (daemonUrl: string) => {
+export const updateDaemonUrlInConfig = (daemonUrl: string) => {
 
-
-};
-
-
-
-export const updateDaemonConfig = (updatedDaemonConfig: IDaemonConfig, nettype: NET, daemonType: DaemonType) => {
+  const isLocal = isLocalDaemon(daemonUrl);
 
   const config = getDaemonConfig();
 
-  config[nettype][daemonType] = updatedDaemonConfig;
+  const daemonConfigNet = config[getNetType()];
+
+  daemonConfigNet.havend.daemonUrl = daemonUrl;
+  daemonConfigNet.wallet.daemonUrl = daemonUrl;
+
+  if (isLocal) {
+    delete daemonConfigNet.wallet.args['daemon-address']
+  } else {
+    daemonConfigNet.wallet.args['daemon-address'] = daemonUrl;
+  }
 
   const configJson = JSON.stringify(config);
 
   fs.writeFileSync(configFilePath, configJson, 'utf8');
+
 
 };
 

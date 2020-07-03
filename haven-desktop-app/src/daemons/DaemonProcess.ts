@@ -5,7 +5,7 @@ import ipcMain = Electron.ipcMain;
 import {RPCHRequestHandler, RPCRequestObject} from "../rpc/RPCHRequestHandler";
 import IpcMainInvokeEvent = Electron.IpcMainInvokeEvent;
 import {appEventBus, HAVEND_LOCATION_CHANGED} from "../EventBus";
-import {isLocalDaemon} from "../daemons/config/config";
+import {isLocalDaemon, updateDaemonUrlInConfig} from "../daemons/config/config";
 
 
 
@@ -91,9 +91,10 @@ export abstract class DaemonProcess implements IDaemonManager {
         return this._isRunning;
     }
 
-    protected  onHavendLocationChanged(address: string): void {
+    protected onHavendLocationChanged(address: string): void {
 
         this._isHavendLocal = isLocalDaemon(address);
+        updateDaemonUrlInConfig(address);
 
     }
 
