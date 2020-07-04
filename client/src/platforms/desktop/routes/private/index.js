@@ -14,7 +14,6 @@ import { selectIsLoggedIn } from "../../reducers/walletSession";
 import { refresh, updateApp, getDaemonsState } from "../../actions";
 import Page from "../../../../shared/components/_layout/page";
 import Menu from "../../../../shared/components/_layout/menu";
-import {selectIsDaemonSet} from "../../reducers/havenNode";
 
 /**
  *root component for private wallet
@@ -22,12 +21,9 @@ import {selectIsDaemonSet} from "../../reducers/havenNode";
 class PrivateRoutes extends Component {
   componentDidMount() {
     this.props.getDaemonsState();
-    if (this.props.isDaemonSet ) {
-
       this.props.refreshApp();
       this.addTimer();
 
-    }
   }
 
   addTimer() {
@@ -41,15 +37,6 @@ class PrivateRoutes extends Component {
 
   componentWillUnmount() {
     this.removeTimer();
-  }
-  componentDidUpdate(prevProps, prevState, snapshot) {
-
-    if (this.props.isDaemonSet && prevProps.isDaemonSet === false) {
-
-      this.props.refreshApp();
-      this.addTimer();
-    }
-
   }
 
   render() {
@@ -92,7 +79,6 @@ class PrivateRoutes extends Component {
 
 export const mapStateToProps = state => ({
   isLoggedIn: selectIsLoggedIn(state),
-  isDaemonSet: selectIsDaemonSet(state)
 });
 
 export const PrivateRoutesDesktop = connect(

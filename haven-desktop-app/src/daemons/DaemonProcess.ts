@@ -1,23 +1,14 @@
 import {ChildProcess, spawn} from "child_process";
 import {IDaemonManager} from "./IDaemonManager";
-import {CommunicationChannel, DaemonType, IDaemonConfig} from "../types";
-import ipcMain = Electron.ipcMain;
+import {DaemonType, IDaemonConfig} from "../types";
 import {RPCHRequestHandler, RPCRequestObject} from "../rpc/RPCHRequestHandler";
-import IpcMainInvokeEvent = Electron.IpcMainInvokeEvent;
 import {appEventBus, HAVEND_LOCATION_CHANGED} from "../EventBus";
 import {isLocalDaemon, updateDaemonUrlInConfig} from "../daemons/config/config";
+import {isDevMode} from "../env";
 
 
 
 export abstract class DaemonProcess implements IDaemonManager {
-
-    constructor(type: DaemonType) {
-
-        this._isHavendLocal = isLocalDaemon(this.getConfig().daemonUrl);
-        this.type = type;
-        appEventBus.on(HAVEND_LOCATION_CHANGED, (havendLocation: string) => this.onHavendLocationChanged(havendLocation));
-        this.init();
-    }
 
     protected type: DaemonType;
     protected filePath: string;
@@ -28,34 +19,22 @@ export abstract class DaemonProcess implements IDaemonManager {
     protected _isRunning: boolean = false;
     protected _isHavendLocal: boolean;
 
+    constructor(type: DaemonType) {
 
+        this._isHavendLocal = isLocalDaemon(this.getConfig().daemonUrl);
+        this.type = type;
+        appEventBus.on(HAVEND_LOCATION_CHANGED, (havendLocation: string) => this.onHavendLocationChanged(havendLocation));
+        this.init();
+    }
 
     abstract getConfig(): IDaemonConfig;
-
-    abstract onDaemonError(error: Error): void;
-
-    abstract onstdoutData(chunk: any): void;
-
-    abstract onstderrData(chunk: any): void;
-
-    abstract requestHandler(event: IpcMainInvokeEvent, requestObject: RPCRequestObject): Promise<any>
-
-    abstract getCommunicationChannel(): CommunicationChannel;
-
+    abstract requestHandler(requestObject: RPCRequestObject): Promise<any>
     abstract setRPCHandler(): void;
 
 
     protected init() {
         this.setRPCHandler();
-        this.addIPCHandler();
     }
-
-    public addIPCHandler () {
-        ipcMain.handle(this.getCommunicationChannel(), (event, args) =>
-            this.requestHandler(event, args)
-        );
-    }
-
 
     protected startLocalProcess(): void {
 
@@ -69,7 +48,10 @@ export abstract class DaemonProcess implements IDaemonManager {
             .map(([key, value]) => {
                 return '--' + key + (value !== '' ? '=' + value : '');
             });
-        console.log(args);
+        if (isDevMode) {
+            console.log(args);
+            console.log(this.filePath);
+        }
         this._isRunning = true;
         this.daemonProcess = spawn(this.filePath, args);
 
@@ -88,6 +70,22 @@ export abstract class DaemonProcess implements IDaemonManager {
         return this._isRunning;
     }
 
+    protected onDaemonError(error: Error): void {
+
+        if (isDevMode) {
+            console.error('daemon error : ' + error );
+        }
+
+    }
+
+    protected onstdoutData(chunk: any): void {
+        if (isDevMode) {
+            console.error('daemon onstdoutData : ' + chunk.toString().substr(0,15));
+        }
+    }
+
+
+
     protected onHavendLocationChanged(address: string): void {
 
         this._isHavendLocal = isLocalDaemon(address);
@@ -95,8 +93,19 @@ export abstract class DaemonProcess implements IDaemonManager {
 
     }
 
+    protected onstderrData(chunk: any): void {
+        if (isDevMode) {
+            console.error('daemon onstderrData : ' + chunk.toString());
+        }
+    }
+
+
     protected onDaemonExit(code: number | null, signal: string | null): void {
         this._isRunning = false;
+
+        if (isDevMode) {
+            console.log('daemon exit : ' + code);
+        }
     }
 
     getState(): any {

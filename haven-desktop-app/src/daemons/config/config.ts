@@ -1,4 +1,4 @@
-import {APP_DATA_PATH, getNetType, NET} from "../../env";
+import {APP_DATA_PATH, getNetType, isDevMode, NET} from "../../env";
 import {daemonConfigMainnet, daemonConfigStagenet, daemonConfigTestnet} from "../../daemons/config/default";
 import * as path from "path";
 import * as fs from "fs";
@@ -64,6 +64,10 @@ export const updateDaemonUrlInConfig = (daemonUrl: string) => {
 
 
 export const getDaemonConfig = (): IConfig => {
+
+  if (isDevMode) {
+    console.log(configFilePath)
+  }
 
     const fileBuffer = fs.readFileSync(configFilePath);
 

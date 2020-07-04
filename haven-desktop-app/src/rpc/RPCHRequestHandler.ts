@@ -1,6 +1,7 @@
 import axios from "axios";
 import {LOCAL_HOST_URL} from "../daemons/config/enum";
 import {LOCAL_HOST} from "../daemons/config/enum";
+import {logInDevMode} from "../dev";
 
 export type RPCRequestObject = {
   id: number;
@@ -40,6 +41,10 @@ export class RPCHRequestHandler {
   }
 
   public sendRequest(requestObject: RPCRequestObject): Promise<any> {
+
+    logInDevMode('send request to : ' + this._fullUrl);
+
+
     if (requestObject.method === "mining_status") {
       return axios.post(
         `${this._host}:${this._port}/${requestObject.method}`,

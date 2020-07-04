@@ -1,35 +1,11 @@
 import {DaemonProcess} from "../DaemonProcess";
 import {CommunicationChannel, IDaemonConfig, WalletState} from "../../types";
 import {RPCRequestObject} from "../../rpc/RPCHRequestHandler";
-import IpcMainInvokeEvent = Electron.IpcMainInvokeEvent;
 import {config, getLocalDaemon} from "../config/config";
 import {appEventBus, HAVEND_LOCATION_CHANGED} from "../../EventBus";
+import {isDevMode} from "../../env";
 
 
-const  WALLET_METHODS: ReadonlyArray<string> = [
-    "stop_mining",
-    "start_mining",
-    "rescan_blockchain",
-    "get_address",
-    "refresh",
-    "open_wallet",
-    "close_wallet",
-    "restore_deterministic_wallet",
-    "get_balance",
-    "get_offshore_balance",
-    "store",
-    "relay_tx",
-    "get_height",
-    "query_key",
-    "transfer_split",
-    "get_transfers",
-    "create_wallet",
-    "offshore_transfer",
-    "refresh",
-    "onshore",
-    "offshore",
-    "set_daemon"
-];
 
 
 const SYNC_HEIGHT_REGEX = /.*D.*height (.*),/gm;
@@ -39,7 +15,7 @@ const REFRESH_DONE_MESSAGE = "Refresh done";
 
 export class WalletRPCProcess extends DaemonProcess {
 
-    private isConnectedToDaemon: boolean;
+    private isConnectedToDaemon: boolean = true;
     private isSyncing: boolean;
     private syncHeight: number;
 
@@ -59,15 +35,15 @@ export class WalletRPCProcess extends DaemonProcess {
     }
 
     onDaemonError(error: Error): void {
-
-
-
+        super.onDaemonError(error);
     }
 
 
     onstderrData(chunk: any): void {
 
-        if ((chunk as string).includes(NO_CONNECTION_MESSAGE)) {
+        super.onstderrData(chunk);
+
+        if ((chunk.toString()).includes(NO_CONNECTION_MESSAGE)) {
             this.isConnectedToDaemon = false;
         }
 
@@ -76,8 +52,9 @@ export class WalletRPCProcess extends DaemonProcess {
 
     onstdoutData(chunk: any): void {
 
+        super.onstdoutData(chunk);
         let m;
-        while ((m = SYNC_HEIGHT_REGEX.exec(chunk)) !== null) {
+        while ((m = SYNC_HEIGHT_REGEX.exec(chunk.toString())) !== null) {
             // This is necessary to avoid infinite loops with zero-width matches
             if (m.index === SYNC_HEIGHT_REGEX.lastIndex) {
                 SYNC_HEIGHT_REGEX.lastIndex++;
@@ -99,10 +76,10 @@ export class WalletRPCProcess extends DaemonProcess {
 
 
     getCommunicationChannel(): CommunicationChannel {
-        return CommunicationChannel.WALLET_RPC;
+        return CommunicationChannel.RPC;
     }
 
-    requestHandler(event: IpcMainInvokeEvent, requestObject: RPCRequestObject): Promise<any> {
+    async requestHandler(requestObject: RPCRequestObject): Promise<any> {
 
 
         if (requestObject.method === "set_daemon") {
@@ -115,16 +92,22 @@ export class WalletRPCProcess extends DaemonProcess {
                 appEventBus.emit(HAVEND_LOCATION_CHANGED, address);
             }
 
-        }
+            }
 
-       const isLegitMethod =  WALLET_METHODS.some(
-            (walletMethod) => walletMethod === requestObject.method);
+            try {
+                const response = await this.rpcHandler.sendRequest(requestObject);
+                return response;
 
-       if (isLegitMethod) {
-           return this.rpcHandler.sendRequest(requestObject);
-       }
+            }
+            catch(e) {
 
-       return null;
+                if (isDevMode) {
+                    console.log('daemon seems not reachable');
+                }
+                return {'data': {'error': 'daemon refused connection'}} as any
+            }
+
+
 
     }
 

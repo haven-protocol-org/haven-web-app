@@ -2,8 +2,10 @@ import {IDaemonManager} from "./IDaemonManager";
 import {appEventBus, DAEMONS_STOPPED_EVENT} from "../EventBus";
 import {HavendProcess} from "./havend/HavendProcess";
 import {WalletRPCProcess} from "./wallet-rpc/WalletRPCProcess";
-import ipcMain = Electron.ipcMain;
+import {ipcMain} from "electron";
 import {CommunicationChannel} from "../types";
+import {RPCRequestObject} from "../rpc/RPCHRequestHandler";
+import {DAEMON_METHODS, WALLET_METHODS} from "../daemons/enum";
 
 
 
@@ -21,7 +23,11 @@ export class DaemonHandler {
 
         ipcMain.handle( CommunicationChannel.HAVEND, (event, args) => this.havend.getState());
         ipcMain.handle( CommunicationChannel.WALLET_RPC, (event, args) => this.rpcWallet.getState());
+        ipcMain.handle(CommunicationChannel.RPC, (event, args) => this.requestHandler( args));
+
     }
+
+
 
 
     public stopDaemons() {
@@ -37,6 +43,35 @@ export class DaemonHandler {
         }
 
          this.checkIfDaemonsQuit();
+
+        ipcMain.removeHandler( CommunicationChannel.HAVEND );
+        ipcMain.removeHandler( CommunicationChannel.WALLET_RPC );
+        ipcMain.removeHandler( CommunicationChannel.RPC );
+
+    }
+
+
+    private requestHandler(requestObject: RPCRequestObject): Promise<any> {
+
+
+
+        const isWalletMethod =  WALLET_METHODS.some(
+            (walletMethod: string) => walletMethod === requestObject.method);
+
+        if (isWalletMethod) {
+            return this.rpcWallet.requestHandler(requestObject);
+        }
+
+
+        const isHavendMethod =  DAEMON_METHODS.some(
+            (havendMethod: string) => havendMethod === requestObject.method);
+
+        if (isHavendMethod) {
+            return this.havend.requestHandler(requestObject);
+        }
+
+        return {data:{error: 'method not found'}} as any;
+
 
     }
 

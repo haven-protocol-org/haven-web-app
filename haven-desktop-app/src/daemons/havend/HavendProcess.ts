@@ -1,25 +1,15 @@
 import {DaemonProcess} from "../DaemonProcess";
-import {CommunicationChannel, HavendState, IDaemonConfig, NodeLocation} from "../../types";
+import { HavendState, IDaemonConfig, NodeLocation} from "../../types";
 import {config} from "../config/config";
 import {RPCRequestObject} from "../../rpc/RPCHRequestHandler";
 import {isDevMode} from "../../env";
-import IpcMainInvokeEvent = Electron.IpcMainInvokeEvent;
 
 
-const  DAEMON_METHODS: ReadonlyArray<string>= [
-    "mining_status",
-    "get_info",
-    "get_last_block_header",
-    "get_block_count",
-    "get_block_header_by_height",
-];
 
 
 export class HavendProcess extends DaemonProcess {
 
-
-    private isReachable: boolean;
-
+    private isReachable: boolean = true;
 
     init(): void {
 
@@ -39,31 +29,24 @@ export class HavendProcess extends DaemonProcess {
         return config().havend;
     }
 
-    getCommunicationChannel(): CommunicationChannel {
-        return CommunicationChannel.HAVEND;
-    }
+    async requestHandler(requestObject: RPCRequestObject): Promise<any> {
 
-    requestHandler(event: IpcMainInvokeEvent, requestObject: RPCRequestObject): Promise<any> {
+        let connectionRefused = false;
 
-        const isLegitMethod =  DAEMON_METHODS.some(
-            (walletMethod) => walletMethod === requestObject.method);
-
-        if (isLegitMethod) {
-            return this.rpcHandler.sendRequest(requestObject)
-                .then(res => {
-                    this.isReachable = true;
-                    return res;
-                })
-                .catch(err => {
-                    this.isReachable = false;
-                    if (isDevMode) {
-                        console.log(err);
-                    }
-                    throw new Error(err);
-                })
+        try {
+            const response = await this.rpcHandler.sendRequest(requestObject);
+            return response;
         }
-
-        return null;
+        catch(e) {
+            connectionRefused = true;
+            if (isDevMode) {
+                console.log('daemon seems not reachable');
+            }
+            return {'data': {'error': 'daemon refused connection'}} as any
+        }
+        finally {
+            this.isReachable = !connectionRefused;
+        }
     }
 
 
@@ -99,12 +82,15 @@ export class HavendProcess extends DaemonProcess {
     }
 
     onDaemonError(error: Error): void {
+        super.onDaemonError(error);
     }
 
     onstderrData(chunk: any): void {
+        super.onstderrData(chunk);
     }
 
     onstdoutData(chunk: any): void {
+        super.onstdoutData(chunk);
     }
 
 

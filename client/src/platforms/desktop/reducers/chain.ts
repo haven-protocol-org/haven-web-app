@@ -44,6 +44,17 @@ export const selectNodeHeight = (state: DesktopAppState) => {
 };
 
 export const selectDesktopSyncState = (state: DesktopAppState): SyncState => {
+
+
+  // differ between some cases
+
+  //1. syncing from remote node
+
+
+
+
+
+
   const isSyncing = state.chain.chainHeight > state.chain.walletHeight + 1;
   const blockHeight = state.chain.chainHeight;
   const scannedHeight = state.chain.walletHeight;

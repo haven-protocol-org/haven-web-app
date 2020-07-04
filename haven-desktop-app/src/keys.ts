@@ -25,8 +25,7 @@ const PRIVATE_SPEND_KEY = "spend_key";
 const PUBLIC_VIEW_KEY = "public_view_key";
 const PUBLIC_SPEND_KEY = "public_spend_key";
 
-const rpcKeyHandler = new RPCHRequestHandler();
-rpcKeyHandler.port = config().wallet.port;
+
 
 export const showKey = (key: KeyType) => {
   switch (key) {
@@ -61,6 +60,9 @@ const fetchAdress = async (keyType: string) => {
     params: { account_index: 0 },
   };
 
+  const rpcKeyHandler = new RPCHRequestHandler();
+  rpcKeyHandler.port = config().wallet.port;
+
   const response = await rpcKeyHandler.sendRequest(objRequest);
 
   if (response.data.result) {
@@ -83,6 +85,8 @@ const fetchKey = async (title: string, keyType: string) => {
   };
 
   objRequest.params.key_type = keyType;
+  const rpcKeyHandler = new RPCHRequestHandler();
+  rpcKeyHandler.port = config().wallet.port;
   const response = await rpcKeyHandler.sendRequest(objRequest);
 
   if (response.data.result) {

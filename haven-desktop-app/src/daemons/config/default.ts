@@ -5,7 +5,7 @@ import {
     WALLET_RPC_PATH_MAINNET,
     WALLET_RPC_PATH_STAGENET,
     WALLET_RPC_PATH_TESTNET
-} from "../../daemons/config/daemonPaths";
+} from "../../daemonPaths";
 import {WALLET_PATH_MAINNET, WALLET_PATH_STAGENET, WALLET_PATH_TESTNET} from "../../wallets/walletPaths";
 import {
     HAVEND_STANDARD_PORT,

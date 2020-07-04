@@ -1,7 +1,7 @@
 
 import { CommunicationChannel } from "../types";
 import { getAvailableWallets } from "../userSettings";
-import ipcMain = Electron.ipcMain;
+import {ipcMain} from "electron";
 
 /**
  * this class establishes the communication between client app and daemons
