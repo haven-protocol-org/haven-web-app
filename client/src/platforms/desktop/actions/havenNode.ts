@@ -25,35 +25,39 @@ export const gethavenNodeState = () => {
 
 const updatehavenNodeState = (havendState: HavendState) => {
 
-  const url = new URL(havendState.address);
-  const {host, port} = url;
-  return { type: GET_HAVEND_STATE_SUCCEED, payload: {...havendState, address: host, port} };
+
+  let address,port;
+  try {
+    const url = new URL(havendState.address);
+    address = url.host;
+    port = url.port;
+  }
+  catch (e) {
+    address = havendState.address;
+    port = "";
+  }
+
+  return { type: GET_HAVEND_STATE_SUCCEED, payload: {...havendState, address, port} };
 };
 
 const updatehavenNodeStateFailed = (err: any) => {
   return { type: GET_HAVEND_STATE_FAILED, payload: err };
 };
 
-export const setHavenNode = (address: string, port: string, location: NodeLocation) => {
+export const setHavenNode = (newAddress: string, newPort: string, location: NodeLocation) => {
 
 
   return (dispatch: any, getState:() => DesktopAppState) => {
 
-    let newAdress = '';
-    let newPort = '';
-    let trusted = false;
-    if (location !== NodeLocation.Local) {
 
-      trusted = true;
-      newPort = port;
-      newAdress = address;
+    let trusted = location === NodeLocation.Local;
+    let address =  (location === NodeLocation.Local)? "" : newAddress + ':' + newPort;
 
-    }
 
-    const params = {address: newAdress + newPort, trusted};
+    const params = {address: address, trusted};
 
     setDaemonRPC(params)
-        .then(dispatch(sethavenNodeSucceed(address, port, location)))
+        .then(dispatch(sethavenNodeSucceed(newAddress, newPort, location)))
         .then(dispatch(getDaemonsState()))
         .catch((error) => dispatch(sethavenNodeFailed(error)));
   }

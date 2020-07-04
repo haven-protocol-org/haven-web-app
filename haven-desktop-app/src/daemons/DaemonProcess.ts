@@ -79,9 +79,7 @@ export abstract class DaemonProcess implements IDaemonManager {
     }
 
     protected onstdoutData(chunk: any): void {
-        if (isDevMode) {
-            console.error('daemon onstdoutData : ' + chunk.toString().substr(0,15));
-        }
+
     }
 
 
@@ -94,9 +92,7 @@ export abstract class DaemonProcess implements IDaemonManager {
     }
 
     protected onstderrData(chunk: any): void {
-        if (isDevMode) {
-            console.error('daemon onstderrData : ' + chunk.toString());
-        }
+
     }
 
 

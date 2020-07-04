@@ -40,9 +40,10 @@ export class HavendProcess extends DaemonProcess {
         catch(e) {
             connectionRefused = true;
             if (isDevMode) {
-                console.log('daemon seems not reachable');
+                console.log('havend seems not reachable');
+                console.log(e.code)
             }
-            return {'data': {'error': 'daemon refused connection'}} as any
+            return {'error': 'daemon refused connection'} as any
         }
         finally {
             this.isReachable = !connectionRefused;
@@ -86,11 +87,15 @@ export class HavendProcess extends DaemonProcess {
     }
 
     onstderrData(chunk: any): void {
-        super.onstderrData(chunk);
+        if (isDevMode) {
+            console.error('havend stderr : ' + chunk.toString());
+        }
     }
 
     onstdoutData(chunk: any): void {
-        super.onstdoutData(chunk);
+        if (isDevMode) {
+            console.error('havend stdout : ' + chunk.toString());
+        }
     }
 
 

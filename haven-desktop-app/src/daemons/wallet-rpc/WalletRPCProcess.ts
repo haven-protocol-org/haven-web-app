@@ -1,9 +1,10 @@
 import {DaemonProcess} from "../DaemonProcess";
-import {CommunicationChannel, IDaemonConfig, WalletState} from "../../types";
+import {IDaemonConfig, WalletState} from "../../types";
 import {RPCRequestObject} from "../../rpc/RPCHRequestHandler";
 import {config, getLocalDaemon} from "../config/config";
 import {appEventBus, HAVEND_LOCATION_CHANGED} from "../../EventBus";
 import {isDevMode} from "../../env";
+import {logInDevMode} from "../../dev";
 
 
 
@@ -11,7 +12,7 @@ import {isDevMode} from "../../env";
 const SYNC_HEIGHT_REGEX = /.*D.*height (.*),/gm;
 const NO_CONNECTION_MESSAGE = "error::no_connection_to_daemon";
 const REFRESH_DONE_MESSAGE = "Refresh done";
-
+const CONNECTION_TO_DAEMON_SUCCESS = "SSL handshake success";
 
 export class WalletRPCProcess extends DaemonProcess {
 
@@ -41,18 +42,20 @@ export class WalletRPCProcess extends DaemonProcess {
 
     onstderrData(chunk: any): void {
 
-        super.onstderrData(chunk);
-
-        if ((chunk.toString()).includes(NO_CONNECTION_MESSAGE)) {
-            this.isConnectedToDaemon = false;
+        if (isDevMode) {
+            console.error('wallet stderr : ' + chunk.toString());
         }
+
 
 
     }
 
     onstdoutData(chunk: any): void {
 
-        super.onstdoutData(chunk);
+        if (isDevMode) {
+            console.error('wallet stdout : ' + chunk.toString());
+        }
+
         let m;
         while ((m = SYNC_HEIGHT_REGEX.exec(chunk.toString())) !== null) {
             // This is necessary to avoid infinite loops with zero-width matches
@@ -62,22 +65,26 @@ export class WalletRPCProcess extends DaemonProcess {
 
             // The result can be accessed through the 'm'-variable.
             m.forEach((match, groupIndex) => {
-                console.log('Found match, group ${groupIndex}: ${match}');
+                logInDevMode("Found match, group" + groupIndex + " : "+ match);
                 this.isConnectedToDaemon = true;
                 this.isSyncing = true;
+                this.syncHeight = Number(match);
             });
         }
 
+        if ((chunk.toString()).includes(CONNECTION_TO_DAEMON_SUCCESS)) {
+            this.isConnectedToDaemon = true;
+        }
 
+
+        if ((chunk.toString()).includes(NO_CONNECTION_MESSAGE)) {
+            this.isConnectedToDaemon = false;
+        }
         if ((chunk as string).includes(REFRESH_DONE_MESSAGE)){
             this.isSyncing = false;
         }
     }
 
-
-    getCommunicationChannel(): CommunicationChannel {
-        return CommunicationChannel.RPC;
-    }
 
     async requestHandler(requestObject: RPCRequestObject): Promise<any> {
 
@@ -87,6 +94,7 @@ export class WalletRPCProcess extends DaemonProcess {
             const {address} = requestObject.params;
             // if address is empty we use the local daemon
             if (address === "") {
+                requestObject.params.address = getLocalDaemon();
                 appEventBus.emit(HAVEND_LOCATION_CHANGED, getLocalDaemon());
             } else {
                 appEventBus.emit(HAVEND_LOCATION_CHANGED, address);
@@ -102,9 +110,9 @@ export class WalletRPCProcess extends DaemonProcess {
             catch(e) {
 
                 if (isDevMode) {
-                    console.log('daemon seems not reachable');
+                    console.log('wallet seems not reachable');
                 }
-                return {'data': {'error': 'daemon refused connection'}} as any
+                return {'error': 'wallet refused connection'} as any
             }
 
 

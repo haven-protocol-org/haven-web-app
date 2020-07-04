@@ -2,6 +2,7 @@ import axios from "axios";
 import {LOCAL_HOST_URL} from "../daemons/config/enum";
 import {LOCAL_HOST} from "../daemons/config/enum";
 import {logInDevMode} from "../dev";
+import {URL} from "url";
 
 export type RPCRequestObject = {
   id: number;
@@ -11,6 +12,7 @@ export type RPCRequestObject = {
 };
 
 export class RPCHRequestHandler {
+
   private _host: string = LOCAL_HOST_URL;
   private _port: number;
   private _ssl: boolean;
@@ -38,6 +40,15 @@ export class RPCHRequestHandler {
 
   public setFullUrl(url: string) {
     this._fullUrl = url;
+
+    const urlObject = new URL(this._fullUrl);
+
+    console.log("urlObject.protocol");
+    console.log(urlObject.protocol);
+    if (!urlObject.protocol) {
+      urlObject.protocol = "http:";
+      this._fullUrl = urlObject.href
+    }
   }
 
   public sendRequest(requestObject: RPCRequestObject): Promise<any> {

@@ -1,6 +1,7 @@
 import {AnyAction} from "redux";
-import {LocalNodeAddress, NodeLocation, NodeState} from "platforms/desktop/types";
+import {NodeLocation, NodeState} from "platforms/desktop/types";
 import {DesktopAppState} from "platforms/desktop/reducers/index";
+import {GET_HAVEND_STATE_SUCCEED} from "platforms/desktop/actions/types";
 
 
 const INITAL_STATE: NodeState = {
@@ -14,9 +15,8 @@ export const havenNode = (
   action: AnyAction
 ): NodeState => {
   switch (action.type) {
-    case 'GET_LOCAL_HAVEN_NODE_FAILED':
+    case  GET_HAVEND_STATE_SUCCEED:
       return { ...action.payload };
-
     default:
       return state;
   }
@@ -31,7 +31,7 @@ export const selectIsDaemonSet = (state: DesktopAppState): boolean => {
 
 export const selectisLocalNode = (node: NodeState) => {
 
-  return node.address === LocalNodeAddress;
+  return node.location === NodeLocation.Local;
 
 };
 
