@@ -1,4 +1,4 @@
-import {HavendState} from "platforms/desktop/ipc/ipc-types";
+import { HavendState } from "platforms/desktop/ipc/ipc-types";
 
 declare global {
   interface Window {
@@ -6,16 +6,14 @@ declare global {
   }
 }
 
-
 export const LocalNodeAddress = "";
 
-
 export enum NodeLocation {
-  Local="Local",
-  Remote="Remote",
-  None="None"
+  Local = "Local Node",
+  Remote = "Remote Node (default)",
+  Custom = "Remote Node (Custom)",
+  None = "No Node",
 }
-
 
 export interface NodeState {
   isRunning: boolean;
@@ -25,4 +23,3 @@ export interface NodeState {
   isMining: boolean;
   connections: { in: number; out: number };
 }
-
