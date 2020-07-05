@@ -58,8 +58,17 @@ export const OptionsList = styled.div`
   right: 12px;
   top: 74px;
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
-
+  z-index: 1000;
   animation: ${appear} 0.5s alternate;
+`;
+
+export const Arrow = styled.img`
+  height: auto;
+  width: 20px;
+  margin-top: -8px;
+  right: 8px;
+  position: absolute;
+  z-index: 999;
 `;
 
 export const OptionsIcon = styled.img`

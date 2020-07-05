@@ -17,6 +17,7 @@ import {
   Logout,
   Menu,
   Options,
+  Arrow,
   OptionsList,
   OptionsSingleRow,
   OptionsDoubleRow,
@@ -24,6 +25,7 @@ import {
 } from "./styles";
 import Icon from "assets/haven.svg";
 import OptionsSVG from "../../../../assets/icons/options.svg";
+import dropdown_chevron from "../../../../assets/icons/dropdown-chevron.svg";
 import { Body, Label } from "../../../../assets/styles/type.js";
 
 import { closeWallet } from "../../actions";
@@ -128,23 +130,26 @@ class Navigation extends Component<NavigationProps, any> {
           </Options>
         </Menu>
         {this.state.showOptions && (
-          <OptionsList>
-            <OptionsDoubleRow>
-              <Body>Network</Body>
-              <Label>{current_network}</Label>
-            </OptionsDoubleRow>
-            <OptionsDoubleRow>
-              <Body>Node</Body>
-              <Label>{node.location}</Label>
-            </OptionsDoubleRow>
-            <OptionsDoubleRow>
-              <Body>Application</Body>
-              <Label>v{APP_VERSION}</Label>
-            </OptionsDoubleRow>
-            <OptionsSingleRow onClick={this.refreshNetwork}>
-              <Body>{this.state.refreshNetwork}</Body>
-            </OptionsSingleRow>
-          </OptionsList>
+          <>
+            <OptionsList>
+              <Arrow src={dropdown_chevron} />
+              <OptionsDoubleRow>
+                <Body>Network</Body>
+                <Label>{current_network}</Label>
+              </OptionsDoubleRow>
+              <OptionsDoubleRow>
+                <Body>Node</Body>
+                <Label>{node.location}</Label>
+              </OptionsDoubleRow>
+              <OptionsDoubleRow>
+                <Body>Application</Body>
+                <Label>v{APP_VERSION}</Label>
+              </OptionsDoubleRow>
+              <OptionsSingleRow onClick={this.refreshNetwork}>
+                <Body>{this.state.refreshNetwork}</Body>
+              </OptionsSingleRow>
+            </OptionsList>
+          </>
         )}
       </Container>
     );
