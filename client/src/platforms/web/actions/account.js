@@ -13,6 +13,7 @@ import { login, ping } from "../api/api";
 import { NET_TYPE_ID } from "../../../constants/env";
 import { selectCredentials } from "../reducers/account";
 import { createAddressEntry } from ".";
+import {selectPrimaryAddress} from "../../../shared/reducers/address";
 
 export const keepAlive = () => {
   return (dispatch, getState) => {
@@ -86,7 +87,7 @@ export const createWallet = () => {
 export const mnenomicVerificationSucceed = () => {
   return (dispatch, getState) => {
     const viewKey = getState().keys.sec_viewKey_string;
-    const address = getState().address.main;
+    const address = selectPrimaryAddress(getState().address);
 
     dispatch(accountCreationRequested());
     dispatch(loginBE(address, viewKey, true));

@@ -60,11 +60,11 @@ import {
   startMining,
   stopMining,
 } from "platforms/desktop/actions/mining";
+import {HavenNodeSetting} from "platforms/desktop/pages/_wallet/settings/nodeSetting";
 
 type ThemeOption = { theme: string; value: string };
 type BalanceOption = { ticker: string; value: string; code: string };
 type AddressOption = { name: string; address: string };
-type NodeOptions = { value: string };
 
 interface SettingsProps {
   theme: any;
@@ -162,19 +162,6 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
     }
   };
 
-  handleNode = ({ value }: ThemeOption) => {
-    alert("Select Node type");
-  };
-
-  handleCheck = () => {
-    this.setState({
-      checked: true,
-    });
-  };
-
-  setNodeType = ({ value }: ThemeOption) => {
-    alert("Save Changes");
-  };
 
   handleChange = (event: any) => {
     const name = event.target.name;
@@ -185,11 +172,7 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
     });
   };
 
-  showModal = () => {
-    this.setState({
-      showModal: false,
-    });
-  };
+
 
   setBalance = ({ ticker, value }: BalanceOption) => {
     alert("set state here");
@@ -244,12 +227,18 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
             onClick={this.manageAddress}
           />
         </>*/}
+
+
+
+        <HavenNodeSetting/>
+
+
         <Header
-          title="Mining "
-          description="Mine from your computer and earn Haven"
+            title="Mining "
+            description="Mine from your computer and earn Haven"
         />
-        <>
-          <Mining
+
+        <Mining
             //@ts-ignore
             status={true}
             mining={mining.active === true ? "Mining" : "Not Mining"}
@@ -263,7 +252,7 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
               label={buttonLabel}
             />
           </Mining>
-        </>
+
       </Body>
     );
   }

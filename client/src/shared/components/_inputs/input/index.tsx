@@ -36,7 +36,7 @@ const Input = React.forwardRef<Ref, Props>(
     ref
   ) => {
     return (
-      <Container width={width}>
+      <Container grid={width}>
         <Labels>
           <Label>{label}</Label>
           <Error>{error}</Error>

@@ -34,11 +34,10 @@ class Nodes extends React.Component {
   renderOptions = () => {
     const { onClick, options } = this.props;
     return options.map(option => {
-      const { theme, value } = option;
       return (
-        <Item key={value} onClick={() => onClick({ theme, value })}>
+        <Item key={option} onClick={() => onClick(option)}>
           <Row>
-            <Name>{value}</Name>
+            <Name>{option}</Name>
           </Row>
         </Item>
       );

@@ -21,7 +21,7 @@ import {
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { selectNodeHeight } from "platforms/desktop/reducers/chain";
 import { getLastBlockHeader } from "platforms/desktop/actions/blockHeaderExchangeRate";
-import { exchange } from "platforms/desktop/actions";
+import {createExchange} from "platforms/desktop/actions";
 import { Ticker } from "shared/reducers/types";
 import {
   selectExchangeSucceed,
@@ -46,7 +46,7 @@ type ExchangeProps = {
   nodeHeight: number;
   getLastBlockHeader: () => void;
   showModal: (modalTyoe: MODAL_TYPE) => void;
-  createExchange: typeof exchange;
+  createExchange: typeof createExchange;
   isProcessingExchange: boolean;
   hasLatestXRate: boolean;
   exchangeSucceed: boolean;
@@ -435,7 +435,7 @@ const mapStateToProps = (state: DesktopAppState) => ({
 
 export const ExchangePage = connect(mapStateToProps, {
   getLastBlockHeader,
-  createExchange: exchange,
+  createExchange,
   setToTicker,
   setFromTicker,
   showModal,

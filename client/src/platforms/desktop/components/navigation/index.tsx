@@ -19,14 +19,18 @@ import {
 import Icon from "assets/haven.svg";
 import { closeWallet } from "../../actions";
 import { selectIsLoggedIn } from "../../reducers/walletSession";
-import { NET_TYPE_NAME } from "constants/env";
+import {getNetworkByName, isDevMode, NET_TYPE_NAME} from "constants/env";
 import { DesktopAppState } from "../../reducers";
-import { DaemonStates } from "../../reducers/daemonStates";
 import { Refresh } from "platforms/desktop/components/rescan";
+import {NodeState, } from "platforms/desktop/types";
+import {WalletState} from "platforms/desktop/ipc/ipc-types";
+import {selectisLocalNode} from "platforms/desktop/reducers/havenNode";
 
 interface NavigationProps {
-  daemonStates: DaemonStates;
+  wallet: WalletState;
+  node: NodeState;
   isLoggedIn: boolean;
+  isLocalNode: boolean;
   show_networks: boolean;
   logout: () => void;
 }
@@ -34,7 +38,7 @@ interface NavigationProps {
 class Navigation extends Component<NavigationProps, any> {
   state = {
     show_networks: false,
-    current_network: "Stagenet",
+    current_network: getNetworkByName(),
   };
 
   onComponentDidMount() {
@@ -55,10 +59,14 @@ class Navigation extends Component<NavigationProps, any> {
   };
 
   render() {
-    const auth = this.props.isLoggedIn;
-    const { node, wallet } = this.props.daemonStates;
-    const { show_networks, current_network } = this.state;
 
+
+    //const isWalletConnected =
+
+
+    const auth = this.props.isLoggedIn;
+    const { show_networks, current_network } = this.state;
+    const {wallet, node, isLocalNode} = this.props;
     return (
       <Container>
         <Brand to={auth === true ? "/wallet/assets" : "/"}>
@@ -73,10 +81,16 @@ class Navigation extends Component<NavigationProps, any> {
                 </Tag>
               </Row>
             </Wrapper>
+            {isDevMode && wallet.isRunning && !wallet.isConnectedToDaemon && (
+                <State isActive={false}>Wallet not connected to a daemon</State>
+            )}
+            {isDevMode && wallet.isRunning && wallet.isConnectedToDaemon && (
+                <State isActive={true}>Wallet connected to a {isLocalNode ? 'local' : 'remote'} daemon</State>
+            )}
             {!wallet.isRunning && (
               <State isActive={wallet.isRunning}>Wallet Offline</State>
             )}
-            {!node.isRunning && (
+            {!node.isRunning && isLocalNode && (
               <State isActive={node.isRunning}>Node Offline</State>
             )}
           </NetworkStatus>
@@ -94,7 +108,10 @@ class Navigation extends Component<NavigationProps, any> {
 
 const mapStateToProps = (state: DesktopAppState) => ({
   isLoggedIn: selectIsLoggedIn(state),
-  daemonStates: state.daemonStates,
+  wallet: state.walletRPC,
+  node: state.havenNode,
+  isLocalNode: selectisLocalNode(state.havenNode)
+
 });
 
 export const NavigationDesktop = connect(mapStateToProps, {

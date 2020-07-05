@@ -1,7 +1,11 @@
-export enum CommunicationChannels {
-  RPC = "rpc",
-  DAEMON = "daemon",
-  WALLETS = "wallets"
+import {NodeLocation} from "platforms/desktop/types";
+
+export enum CommunicationChannel {
+  HAVEND = "havend",
+  WALLET_RPC = "wallet-rpc",
+  RPC="rpc",
+  STORED_WALLETS = "wallets",
+  SWITCH_NET = "switch_net"
 }
 
 export interface DAEMON_STATUS {
@@ -10,11 +14,30 @@ export interface DAEMON_STATUS {
   signal?: string;
 }
 
-export interface DAEMON_STATUS_MESSAGE {
-  wallet: DAEMON_STATUS;
-  node: DAEMON_STATUS;
-}
 
 export interface AVAILABLE_WALLETS {
   wallets: { name: string; address: string }[];
 }
+
+export interface WalletState extends ProcessState  {
+
+  isConnectedToDaemon: boolean;
+  isSyncing: boolean;
+  syncHeight: number;
+
+}
+
+export interface HavendState extends ProcessState {
+
+  isReachable: boolean;
+  location: NodeLocation;
+  address: string;
+
+}
+
+
+export interface ProcessState  {
+  isRunning: boolean;
+  code?: number;
+  signal?: string;
+};

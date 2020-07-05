@@ -1,9 +1,4 @@
-import {
-  GET_BALANCES_FAILED,
-  GET_BALANCES_FETCHING,
-  GET_BALANCES_SUCCEED,
-  GET_OFFSHORE_BALANCE_SUCCEED,
-} from "platforms/desktop/actions/types";
+
 import { AnyAction } from "redux";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { INITAL_FETCHING_STATE, Ticker, XFetching } from "./types";
@@ -12,6 +7,8 @@ import bigInt from "big-integer";
 import {convertBalanceForReading, convertToMoney} from "utility/utility";
 import {WebAppState} from "platforms/web/reducers";
 import {toASCII} from "punycode";
+import {GET_BALANCES_FAILED, GET_BALANCES_FETCHING, GET_BALANCES_SUCCEED} from "shared/actions/types";
+import {GET_OFFSHORE_BALANCE_SUCCEED} from "platforms/desktop/actions/types";
 
 export const NO_BALANCE = bigInt.zero;
 

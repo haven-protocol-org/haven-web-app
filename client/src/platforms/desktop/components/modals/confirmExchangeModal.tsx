@@ -27,7 +27,7 @@ class ConfirmExchangeModal extends React.Component<
       fromAmount,
       toAmount,
       fromTicker,
-      toTicker
+      toTicker, fee
     } = this.props.exchange;
 
     return (
@@ -46,7 +46,7 @@ class ConfirmExchangeModal extends React.Component<
           toAmount={toAmount}
           fromTicker={fromTicker}
           toTicker={toTicker}
-          fee={0}
+          fee={fee}
           externAddress={address}
         />
       </Modal>

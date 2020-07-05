@@ -1,10 +1,5 @@
 export const THEME = "theme";
-export const AUTH = "auth";
-export const USER = "user";
 
-// WALLET RELATED
-
-export const ADD_PUB_ADDRESS = "add_pub_address";
 
 /*
 GET BALANCES
@@ -13,24 +8,14 @@ export const GET_BALANCES_FETCHING = "get_balances_fetching";
 export const GET_BALANCES_SUCCEED = "get_balances_succeed";
 export const GET_BALANCES_FAILED = "get_balances_failed";
 
-export const TOTAL_ASSETS_CALCULATED = "total_assets_calculated";
-export const TOTAL_ASSETS_CALCULATION_REQUESTED =
-  "total_assets_calculation_requested";
-
-export const VALIDATE_MNEMONIC_SUCCEED = "validate_mnemonic_succeed";
 export const VALIDATE_MNEMONIC_FAILED = "validate_mnemonic_failed";
 
 export const CLOSE_WALLET = "close_wallet";
 
-// GENERATE KEYS
-export const KEYS_GENERATED_SUCCEED = "keys_generated_succeed";
-export const KEYS_GENERATED_FAILED = "keys_generated_failed";
 
 /*
 TRANSFER
  */
-
-export const KEEP_ALIVE = "keep_alive";
 
 export const GET_TRANSFERS_FETCHING = "get_transfers_fetching";
 export const GET_TRANSFERS_SUCCEED = "get_transfers_succeed";
@@ -58,9 +43,7 @@ export const GET_FOREX_FAILED = "get_forex_failed";
 
 export const GET_BITCOIN_SUCEED = "get_bitcoin_succeed";
 
-// Chain Data
 
-export const UPDATE_CHAIN_DATA = "update_chain_data";
 
 // Modal Service
 

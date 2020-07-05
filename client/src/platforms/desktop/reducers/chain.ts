@@ -5,6 +5,7 @@ import {
 import { AnyAction } from "redux";
 import { SyncState } from "shared/types/types";
 import { DesktopAppState } from "platforms/desktop/reducers/index";
+import {selectisLocalNode} from "platforms/desktop/reducers/havenNode";
 
 interface Chain {
   walletHeight: number;
@@ -44,9 +45,13 @@ export const selectNodeHeight = (state: DesktopAppState) => {
 };
 
 export const selectDesktopSyncState = (state: DesktopAppState): SyncState => {
+
+
+  const isLocalNode = selectisLocalNode(state.havenNode);
+
   const isSyncing = state.chain.chainHeight > state.chain.walletHeight + 1;
   const blockHeight = state.chain.chainHeight;
-  const scannedHeight = state.chain.walletHeight;
+  const scannedHeight = isLocalNode ? state.chain.nodeHeight :  state.chain.walletHeight;
 
   return { isSyncing, blockHeight, scannedHeight };
 };

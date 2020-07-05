@@ -27,14 +27,14 @@ class Navigation extends Component {
 
     return (
       <Container>
-        <Brand to={auth === true ? "/wallet/assets" : "/"}>
+        <Brand to={auth? "/wallet/assets" : "/"}>
           <Logo src={Icon} />
           <Haven>HAVEN </Haven>
           <Tag>
             v{APP_VERSION} {NET_TYPE_NAME}
           </Tag>
         </Brand>
-        {auth === false ? (
+        { !auth ? (
           <Button to="/login">Login</Button>
         ) : (
           <Logout onClick={this.handleLogout}>Logout</Logout>

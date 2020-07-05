@@ -1,4 +1,4 @@
-import currencies from "../../../constants/assets";
+import {AssetList} from "../../../constants/assets";
 import {
   XHV_VS_CURRENCIES_FAILED,
   XHV_VS_CURRENCIES_SUCCEED
@@ -32,7 +32,7 @@ const xhvVsUsdHistory = () => {
 };
 
 const btcVsUsdHistory = () => {
-  const BTC = currencies.find(currency => currency.ticker === "BTC");
+  const BTC = AssetList.find(currency => currency.ticker === "BTC");
 
   if (!BTC) return;
   const URL = `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=14`;
@@ -67,7 +67,7 @@ const fetchFromForexHistoricPricesSucceed = res => {
   const dates = Object.keys(rates);
   dates.sort((a, b) => Date.parse(a) - Date.parse(b));
   return dispatch => {
-    currencies.forEach(currency => {
+    AssetList.forEach(currency => {
       const ticker = currency.ticker;
 
       let prices = dates.filter(date => rates[date][ticker]);

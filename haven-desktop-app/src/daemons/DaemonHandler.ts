@@ -1,64 +1,84 @@
-import {BasicDaemonManager, UPDATE_DAEMON_STATUS_EVENT} from "./BasicDaemonManager";
 import {IDaemonManager} from "./IDaemonManager";
-import {config} from "./config";
-import {DAEMONS_STOPPED_EVENT} from "../HavenWallet";
-import {appEventBus} from "../EventBus";
+import {appEventBus, DAEMONS_STOPPED_EVENT} from "../EventBus";
+import {HavendProcess} from "./havend/HavendProcess";
+import {WalletRPCProcess} from "./wallet-rpc/WalletRPCProcess";
+import {ipcMain} from "electron";
+import {CommunicationChannel} from "../types";
+import {RPCRequestObject} from "../rpc/RPCHRequestHandler";
+import {DAEMON_METHODS, WALLET_METHODS} from "../daemons/enum";
 
 
 
 export class DaemonHandler {
 
 
-    private havend:IDaemonManager = new BasicDaemonManager();
-    private rpcWallet:IDaemonManager = new BasicDaemonManager();
-
-
+    private havend:IDaemonManager;
+    private rpcWallet:IDaemonManager;
 
 
     public startDaemons() {
 
-        this.havend.setConfig(config().havend);
-        this.rpcWallet.setConfig(config().wallet);
+        this.havend = new HavendProcess('havend');
+        this.rpcWallet = new WalletRPCProcess('wallet');
 
-        this.havend.startDaemon();
-        this.rpcWallet.startDaemon();
+        ipcMain.handle( CommunicationChannel.HAVEND, (event, args) => this.havend.getState());
+        ipcMain.handle( CommunicationChannel.WALLET_RPC, (event, args) => this.rpcWallet.getState());
+        ipcMain.handle(CommunicationChannel.RPC, (event, args) => this.requestHandler( args));
 
     }
+
 
 
 
     public stopDaemons() {
 
 
-        if (this.havend.getDaemonState().isRunning) {
-            this.havend.getDaemonStatusEventEmitter().on(UPDATE_DAEMON_STATUS_EVENT, (status) => this.checkIfDaemonsQuit());
+        if (this.havend.isRunning()) {
             this.havend.killDaemon();
         }
 
-        if (this.rpcWallet.getDaemonState().isRunning){
+        if (this.rpcWallet.isRunning()){
 
-            this.rpcWallet.getDaemonStatusEventEmitter().on(UPDATE_DAEMON_STATUS_EVENT, (status) => this.checkIfDaemonsQuit());
             this.rpcWallet.killDaemon();
         }
 
          this.checkIfDaemonsQuit();
 
-    }
-
-
-    public getDaemonsState() {
-
-        const nodeState = this.havend.getDaemonState();
-        const walletState = this.rpcWallet.getDaemonState();
-        return {node: nodeState, wallet: walletState};
+        ipcMain.removeHandler( CommunicationChannel.HAVEND );
+        ipcMain.removeHandler( CommunicationChannel.WALLET_RPC );
+        ipcMain.removeHandler( CommunicationChannel.RPC );
 
     }
 
+
+    private requestHandler(requestObject: RPCRequestObject): Promise<any> {
+
+
+
+        const isWalletMethod =  WALLET_METHODS.some(
+            (walletMethod: string) => walletMethod === requestObject.method);
+
+        if (isWalletMethod) {
+            return this.rpcWallet.requestHandler(requestObject);
+        }
+
+
+        const isHavendMethod =  DAEMON_METHODS.some(
+            (havendMethod: string) => havendMethod === requestObject.method);
+
+        if (isHavendMethod) {
+            return this.havend.requestHandler(requestObject);
+        }
+
+        return {data:{error: 'method not found'}} as any;
+
+
+    }
 
 
     public checkIfDaemonsQuit(): void {
 
-        if (this.rpcWallet.getDaemonState().isRunning === false && this.havend.getDaemonState().isRunning === false) {
+        if (this.rpcWallet.isRunning() === false && this.havend.isRunning() === false) {
             appEventBus.emit(DAEMONS_STOPPED_EVENT);
         }
 

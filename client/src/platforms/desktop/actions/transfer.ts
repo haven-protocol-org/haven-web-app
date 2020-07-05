@@ -73,12 +73,12 @@ export const createTransfer = (
 
     transferFN(params)
       .then((result) => {
-        const { amount, fee, tx_metadata } = result;
+        const { amount_list, fee_list, tx_metadata_list } = result;
 
         const reduxParams = {
-          fee: convertBalanceForReading(fee),
-          fromAmount: convertBalanceForReading(amount),
-          metaData: tx_metadata,
+          fee: fee_list[0],
+          fromAmount: amount_list[0],
+          metaData: tx_metadata_list[0],
         };
 
         dispatch(transferCreationSucceed(reduxParams));
@@ -107,7 +107,7 @@ export const confirmTransfer = (hex: string) => {
   };
 };
 
-export const createTXInputs = (
+const createTXInputs = (
   address: string,
   amount: number,
   paymentId: string
@@ -115,8 +115,8 @@ export const createTXInputs = (
   const params: any = {
     destinations: [{ address, amount }],
     ring_size: 11,
-   //  do_not_relay: true,
-   // get_tx_metadata: true
+     do_not_relay: true,
+    get_tx_metadata: true
   };
 
   if (paymentId !== "") {

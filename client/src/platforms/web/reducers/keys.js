@@ -1,7 +1,5 @@
-import {
-  KEYS_GENERATED_FAILED,
-  KEYS_GENERATED_SUCCEED
-} from "../../../shared/actions/types";
+import {KEYS_GENERATED_FAILED, KEYS_GENERATED_SUCCEED} from "../actions/types";
+
 
 export const NO_KEY = -1;
 

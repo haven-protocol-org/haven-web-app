@@ -20,3 +20,8 @@ export const KEEP_ALIVE = "keep_alive";
 export const XHV_VS_CURRENCIES_FETCHING = "xhv_vs_currencies_fetching";
 export const XHV_VS_CURRENCIES_SUCCEED = "xhv_vs_currencies_succeed";
 export const XHV_VS_CURRENCIES_FAILED = "xhv_vs_currencies_failed";
+
+// Chain Data
+
+export const UPDATE_CHAIN_DATA = "update_chain_data";
+
