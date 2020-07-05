@@ -1,5 +1,16 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import media from "../../../../assets/styles/media.js";
+
+const load = keyframes`
+0% {
+  opacity: 0;
+  transform: translateY(15px);
+}
+100% {
+  opacity: 1;
+  transform: translateY(0);
+}
+`;
 
 export const Container = styled.div`
   height: auto;
@@ -10,6 +21,7 @@ export const Container = styled.div`
   z-index: 1000;
   bottom: 0;
   position: absolute;
+  animation: ${load} 0.5s forwards;
 
   ${media.laptop`
     order: 2;
