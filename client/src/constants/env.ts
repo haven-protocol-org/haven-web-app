@@ -8,9 +8,10 @@ export const DEV_MODE = "development";
 export const PRODUCTION_MODE = "production";
 
 export enum NetworkType {
-    Mainnet,Testnet,Stagenet
+  Mainnet,
+  Testnet,
+  Stagenet,
 }
-
 
 export const isMainnet = () => {
   return NET_TYPE_ID === NetworkType.Mainnet;
@@ -43,11 +44,9 @@ if (isWeb()) {
 }
 
 export const getNetworkByName = () => {
-  return ['Mainnet', 'Testnet', 'Stagenet'][NET_TYPE_ID]
+  return ["Mainnet", "Testnet", "Stagenet"][NET_TYPE_ID];
 };
 
 export const API_URL = apiUrl;
 
 export const OFFSHORE_ENABLED = isDesktop() && isMainnet() === false;
-
-

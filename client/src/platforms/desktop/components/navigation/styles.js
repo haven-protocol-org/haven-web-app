@@ -25,10 +25,64 @@ export const Logo = styled.img`
   width: auto;
 `;
 
-export const Options = styled.div`
+export const Options = styled.button`
   height: 64px;
   width: 64px;
+  background: none;
+  border: none;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-left: 1px solid ${(props) => props.theme.body.border};
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+export const OptionsList = styled.div`
+  height: auto;
+  min-height: 140px;
+  width: 280px;
+  background: ${(props) => props.theme.body.foreground};
+  border: 1px solid ${(props) => props.theme.body.border};
+  border-radius: 4px;
+  position: fixed;
+  right: 12px;
+  top: 74px;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+`;
+
+export const OptionsIcon = styled.img`
+  height: 24px;
+  width: 24px;
+`;
+
+export const OptionsSingleRow = styled.div`
+  height: auto;
+  color: white;
+  padding-left: 20px;
+  padding: 16px;
+  font-size: 14px;
+  text-align: center;
+
+  &:hover {
+    background: ${(props) => props.theme.body.background};
+    cursor: pointer;
+  }
+`;
+
+export const OptionsDoubleRow = styled.div`
+  height: auto;
+  color: white;
+  padding-left: 20px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  border-bottom: 1px solid ${(props) => props.theme.body.border};
 `;
 
 export const Brand = styled.div`
@@ -56,16 +110,6 @@ export const Tag = styled.div`
   padding-left: 12px;
   padding-right: 12px;
   overflow: hidden;
-
-  ${media.mobile`
-     font-size: 8px
-   `};
-
-  &:hover {
-    background: #2fc29b;
-    cursor: pointer;
-    overflow: hidden;
-  }
 `;
 
 export const State = styled.div`
@@ -79,10 +123,7 @@ export const State = styled.div`
   border-radius: 3px;
   margin-left: 12px;
   color: #26282c;
-  background: ${(props) => (props.isActive ? "#2D8872" : "#F04747")}
-    ${media.mobile`
-     font-size: 8px
-   `};
+  background: ${(props) => (props.isActive ? "#2D8872" : "#F04747")};
 `;
 
 export const Wrapper = styled.div`

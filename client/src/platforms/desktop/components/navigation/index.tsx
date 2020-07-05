@@ -15,13 +15,25 @@ import {
   NetworkStatus,
   Button,
   Logout,
-  Options,
   Menu,
+  Options,
+  OptionsList,
+  OptionsSingleRow,
+  OptionsDoubleRow,
+  OptionsIcon,
 } from "./styles";
 import Icon from "assets/haven.svg";
+import OptionsSVG from "../../../../assets/icons/options.svg";
+import { Body, Label } from "../../../../assets/styles/type.js";
+
 import { closeWallet } from "../../actions";
 import { selectIsLoggedIn } from "../../reducers/walletSession";
-import { getNetworkByName, isDevMode, NET_TYPE_NAME } from "constants/env";
+import {
+  getNetworkByName,
+  isDevMode,
+  NET_TYPE_NAME,
+  APP_VERSION,
+} from "constants/env";
 import { DesktopAppState } from "../../reducers";
 import { Refresh } from "platforms/desktop/components/rescan";
 import { NodeState } from "platforms/desktop/types";
@@ -39,8 +51,9 @@ interface NavigationProps {
 
 class Navigation extends Component<NavigationProps, any> {
   state = {
-    show_networks: false,
     current_network: getNetworkByName(),
+    showOptions: false,
+    refreshNetwork: "Refresh Network",
   };
 
   onComponentDidMount() {
@@ -53,22 +66,37 @@ class Navigation extends Component<NavigationProps, any> {
     this.props.logout();
   };
 
+  showOptions = () => {
+    this.setState({
+      showOptions: !this.state.showOptions,
+    });
+  };
+
+  refreshNetwork = () => {
+    this.setState({
+      refreshNetwork: "Refreshing Network...",
+    });
+    setTimeout(() => {
+      this.setState({
+        refreshNetwork: "Refresh Network",
+      });
+    }, 3000);
+  };
+
   render() {
     const auth = this.props.isLoggedIn;
-    const { show_networks, current_network } = this.state;
+    const { current_network } = this.state;
     const { wallet, node, isLocalNode } = this.props;
+
     return (
       <Container>
         <Brand>
           <Logo src={Icon} />
           <Haven>HAVEN</Haven>
-
           <NetworkStatus>
-            <Wrapper show_networks={show_networks}>
+            <Wrapper>
               <Row>
-                <Tag>
-                  {current_network} <Refresh />
-                </Tag>
+                <Tag>{current_network}</Tag>
               </Row>
             </Wrapper>
             {isDevMode && wallet.isRunning && !wallet.isConnectedToDaemon && (
@@ -94,8 +122,31 @@ class Navigation extends Component<NavigationProps, any> {
           ) : (
             <Logout onClick={this.handleLogout}>Logout</Logout>
           )}
-          <Options />
+
+          <Options onClick={this.showOptions}>
+            <OptionsIcon src={OptionsSVG} />
+          </Options>
         </Menu>
+        {this.state.showOptions && (
+          <OptionsList>
+            <OptionsDoubleRow>
+              <Body>Network</Body>
+              <Label>{current_network}</Label>
+            </OptionsDoubleRow>
+            <OptionsDoubleRow>
+              <Body>Node</Body>
+              <Label>{node.location}</Label>
+            </OptionsDoubleRow>
+            <OptionsDoubleRow>
+              <Body>App Version</Body>
+              <Label>{APP_VERSION}</Label>
+            </OptionsDoubleRow>
+
+            <OptionsSingleRow onClick={this.refreshNetwork}>
+              <Body>{this.state.refreshNetwork}</Body>
+            </OptionsSingleRow>
+          </OptionsList>
+        )}
       </Container>
     );
   }
