@@ -25,13 +25,24 @@ export const Logo = styled.img`
   width: auto;
 `;
 
-export const Brand = styled(Link)`
+export const Options = styled.div`
+  height: 64px;
+  width: 64px;
+  border-left: 1px solid ${(props) => props.theme.body.border};
+`;
+
+export const Brand = styled.div`
   width: auto;
   height: 40px;
   display: flex;
   align-items: center;
   margin-left: 16px;
   text-decoration: none;
+`;
+
+export const Menu = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 export const Tag = styled.div`

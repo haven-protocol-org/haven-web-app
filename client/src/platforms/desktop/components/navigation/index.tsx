@@ -15,6 +15,8 @@ import {
   NetworkStatus,
   Button,
   Logout,
+  Options,
+  Menu,
 } from "./styles";
 import Icon from "assets/haven.svg";
 import { closeWallet } from "../../actions";
@@ -57,7 +59,7 @@ class Navigation extends Component<NavigationProps, any> {
     const { wallet, node, isLocalNode } = this.props;
     return (
       <Container>
-        <Brand to={auth === true ? "/wallet/assets" : "/"}>
+        <Brand>
           <Logo src={Icon} />
           <Haven>HAVEN</Haven>
 
@@ -86,11 +88,14 @@ class Navigation extends Component<NavigationProps, any> {
           </NetworkStatus>
         </Brand>
 
-        {auth === false ? (
-          <Button to="/">Login</Button>
-        ) : (
-          <Logout onClick={this.handleLogout}>Logout</Logout>
-        )}
+        <Menu>
+          {auth === false ? (
+            <Button to="/">Login</Button>
+          ) : (
+            <Logout onClick={this.handleLogout}>Logout</Logout>
+          )}
+          <Options />
+        </Menu>
       </Container>
     );
   }
