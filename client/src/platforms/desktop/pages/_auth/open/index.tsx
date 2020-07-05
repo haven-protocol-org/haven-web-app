@@ -88,7 +88,7 @@ class OpenWalletDesktopContainer extends Component<
 
     const noWallets = [
       {
-        name: "Create a Vault",
+        name: "Please create a Haven Vault",
       },
     ];
 
