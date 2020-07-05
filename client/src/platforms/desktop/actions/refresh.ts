@@ -33,8 +33,6 @@ export const refresh = () => {
 
     if (selectIsWalletSyncingRemote(getState())) {
 
-
-      dispatch(getDaemonsState());
       dispatch(getNodeInfo());
       return;
 
@@ -61,10 +59,10 @@ export const updateApp = () => {
     //if we sync via remote node, wallet-rpc will be blocked
     if (selectIsWalletSyncingRemote(getState())) {
 
-      dispatch(getDaemonsState());
       dispatch(getNodeInfo());
+      return;
 
-    } else {
+    }
 
       dispatch(getDaemonsState());
       dispatch(getWalletHeight());
@@ -76,7 +74,7 @@ export const updateApp = () => {
         dispatch(getOffshoreBalance());
       }
 
-    }
+
 
 
 

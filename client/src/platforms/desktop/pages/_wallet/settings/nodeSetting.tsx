@@ -117,7 +117,7 @@ class NodeSettingComponent extends React.Component<NodeSettingProps, NodeSetting
                         <Footer
                             onClick={this.onConnect}
                             loading={false}
-                            label="Connect"
+                            label="Save"
                         />
                     </Container>
                 </Form>

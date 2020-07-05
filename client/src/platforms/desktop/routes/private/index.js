@@ -27,12 +27,15 @@ class PrivateRoutes extends Component {
   }
 
   addTimer() {
+    this.updateDaemonsTimer = setInterval(this.props.getDaemonsState, 2000);
     this.updateTimer = setInterval(this.props.updateApp, 15000);
   }
 
   removeTimer() {
     clearInterval(this.updateTimer);
+    clearInterval(this.updateDaemonsTimer);
     this.updateTimer = null;
+    this.updateDaemonsTimer = null;
   }
 
   componentWillUnmount() {

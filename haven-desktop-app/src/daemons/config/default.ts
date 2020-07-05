@@ -28,6 +28,7 @@ export const daemonConfigMainnet = {
         daemonUrl: LOCAL_DAEMON_MAP.get(NET.Mainnet) ,
         port: 12345,
         args: {
+            "max-log-file-size":0,
             "rpc-bind-port": 12345,
             "disable-rpc-login": "",
             "wallet-dir": WALLET_PATH_MAINNET,
@@ -52,6 +53,7 @@ export const daemonConfigTestnet = {
         port: 12345,
         args: {
             testnet: "",
+            "max-log-file-size":0,
             "rpc-bind-port": 12345,
             "disable-rpc-login": "",
             "wallet-dir": WALLET_PATH_TESTNET,
@@ -77,6 +79,7 @@ export const daemonConfigStagenet = {
         port: 12345,
         args: {
             stagenet: "",
+            "max-log-file-size":0,
             "rpc-bind-port": 12345,
             "disable-rpc-login": "",
             "wallet-dir": WALLET_PATH_STAGENET,
