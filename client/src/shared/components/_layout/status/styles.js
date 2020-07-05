@@ -21,7 +21,7 @@ export const Container = styled.div`
   z-index: 1000;
   bottom: 0;
   position: absolute;
-  animation: ${load} 0.5s forwards;
+  animation: ${load} 0.5s alternate;
 
   ${media.laptop`
     order: 2;
