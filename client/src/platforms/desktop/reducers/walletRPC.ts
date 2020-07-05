@@ -31,7 +31,7 @@ export const walletRPC = (
 
 export const selectIsWalletSyncingRemote = (state: DesktopAppState) => {
 
-    const isRemote = selectisLocalNode(state.havenNode);
+    const isRemote = !selectisLocalNode(state.havenNode);
     const isSyncing = state.walletRPC.isSyncing;
     return isRemote && isSyncing;
 
