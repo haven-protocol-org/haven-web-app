@@ -6,7 +6,7 @@ import { Transfer } from "shared/pages/_wallet/transfer";
 import { Ticker } from "shared/reducers/types";
 import { resetTransferProcess } from "../../../actions";
 import { transferSucceed } from "../../../reducers/transferProcess";
-import {createTransfer} from "platforms/desktop/actions";
+import { createTransfer } from "platforms/desktop/actions";
 
 class TransferDesktopContainer extends Component<any, any> {
   private sendTicker: Ticker = Ticker.XHV;

@@ -43,7 +43,7 @@ interface TransferState {
   recipient_address: string;
   payment_id: string;
   amountError: string;
-  reviewed:boolean;
+  reviewed: boolean;
 }
 
 type TransferProps = TransferOwnProps & TransferReduxProps;
@@ -55,7 +55,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
     recipient_address: "",
     payment_id: "",
     amountError: "",
-    reviewed: false
+    reviewed: false,
   };
 
   componentDidMount() {
@@ -137,7 +137,9 @@ class TransferContainer extends Component<TransferProps, TransferState> {
     } = this.state;
 
     const checkValidation =
-      send_amount.length > 0 && recipient_address.length > 97 && this.state.reviewed;
+      send_amount.length > 0 &&
+      recipient_address.length > 97 &&
+      this.state.reviewed;
     const windowWidth = window.innerWidth;
 
     let availableBalance = null;
@@ -146,10 +148,6 @@ class TransferContainer extends Component<TransferProps, TransferState> {
         this.props.xBalances[selectedAsset.ticker].unlockedBalance
       );
     }
-
-    // const amountLabel: string = availableBalance
-    //   ? `Amount (Avail. ${availableBalance})`
-    //   : "Amount";
 
     return (
       <Fragment>
@@ -231,7 +229,6 @@ class TransferContainer extends Component<TransferProps, TransferState> {
             transferAmount={send_amount === "" ? "--" : send_amount}
             checked={this.state.reviewed}
             onChange={this.handleReviewSubmit}
-
           />
           <Footer
             onClick={() => this.handleSubmit()}

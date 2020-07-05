@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 
 // Relative Imports
-import { Container } from "./styles";
+import { Container, Content } from "./styles";
 import { connect } from "react-redux";
 import { getNotification } from "../../../reducers/notification";
 import { removeNotification } from "../../../actions/notification";
@@ -22,18 +22,17 @@ class Status extends Component {
   render() {
     if (!this.props.notification) return null;
     return (
-      <Container type={this.props.notification.type}>
-        {this.props.notification.message}
+      <Container>
+        <Content type={this.props.notification.type}>
+          {this.props.notification.message}
+        </Content>
       </Container>
     );
   }
 }
 
-export const mapStateToProps = state => ({
-  notification: getNotification(state)
+export const mapStateToProps = (state) => ({
+  notification: getNotification(state),
 });
 
-export default connect(
-  mapStateToProps,
-  { removeNotification }
-)(Status);
+export default connect(mapStateToProps, { removeNotification })(Status);
