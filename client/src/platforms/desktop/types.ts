@@ -10,7 +10,7 @@ export const LocalNodeAddress = "";
 
 export enum NodeLocation {
   Local = "Local Node",
-  Remote = "Remote Node (default)",
+  Remote = "Remote Node (Default)",
   Custom = "Remote Node (Custom)",
   None = "No Node",
 }
