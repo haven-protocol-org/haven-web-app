@@ -87,6 +87,10 @@ class NodeSettingComponent extends React.Component<
 
   render() {
     const selectedNodeOption = this.state.selectedNodeOption;
+    console.log("###############################");
+    console.log("selectedNodeOption", selectedNodeOption);
+
+    const { isRunning } = this.props.node;
 
     return (
       <>
@@ -96,7 +100,7 @@ class NodeSettingComponent extends React.Component<
         />
         <Form onSubmit={this.onConnect}>
           <Nodes
-            label="Select Node"
+            label={`Is running ${isRunning}`}
             placeholder="Select Node"
             name="node"
             value={this.state.selectedNodeOption.name}
@@ -124,7 +128,12 @@ class NodeSettingComponent extends React.Component<
             </>
           )}
           <Container>
-            <Footer onClick={this.onConnect} loading={false} label="Connect" />
+            <Footer
+              onClick={this.onConnect}
+              loading={false}
+              validated={isRunning === true ? true : false}
+              label={isRunning === true ? "Syncing..." : "Connect"}
+            />
           </Container>
         </Form>
       </>
@@ -168,9 +177,9 @@ const createNodeOptions = (havendState: NodeState): NodeOption[] => {
         address: havendState.address,
         port: havendState.port,
         name: createCustomNodeName(havendState),
-        selectionType: NodeSelectionType.custom
-      }:
-      {
+        selectionType: NodeSelectionType.custom,
+      }
+    : {
         location: NodeLocation.Remote,
         address: "",
         port: "",
@@ -181,17 +190,13 @@ const createNodeOptions = (havendState: NodeState): NodeOption[] => {
   return [localNode, ...remoteNodes, customNode];
 };
 
-
 const createCustomNodeName = (havendState: NodeState) => {
-
   try {
-    return `Custom Node ( ${new URL(havendState.address).host} )`
-  } catch(e) {
-    return 'Custom Node'
+    return `Custom Node ( ${new URL(havendState.address).host} )`;
+  } catch (e) {
+    return "Custom Node";
   }
-
 };
-
 
 const isCustomNode = (havendState: NodeState): boolean => {
   return (
