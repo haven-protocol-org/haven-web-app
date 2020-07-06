@@ -12,6 +12,7 @@ import { selectisLocalNode } from "platforms/desktop/reducers/havenNode";
 import { setHavenNode } from "platforms/desktop/actions/havenNode";
 import { NodeLocation, NodeState } from "platforms/desktop/types";
 import { REMOTE_NODES } from "platforms/desktop/nodes";
+import {selectIsWalletSyncingRemote} from "platforms/desktop/reducers/walletRPC";
 
 enum NodeSelectionType {
   local,
@@ -28,6 +29,7 @@ export interface NodeOption {
 }
 
 export interface NodeSettingProps {
+  isRemoteSyncing: boolean;
   localNode: boolean;
   node: NodeState;
   nodeOptions: NodeOption[];
@@ -143,6 +145,7 @@ class NodeSettingComponent extends React.Component<
 
 const mapStateToProps = (state: DesktopAppState) => ({
   node: state.havenNode,
+  isRemoteSyncing: selectIsWalletSyncingRemote(state),
   localNode: selectisLocalNode(state.havenNode),
   nodeOptions: createNodeOptions(state.havenNode),
 });
