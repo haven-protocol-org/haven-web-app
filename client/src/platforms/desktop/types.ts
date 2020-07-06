@@ -9,13 +9,10 @@ declare global {
 export const LocalNodeAddress = "";
 
 export enum NodeLocation {
-  Local="Local",
-  Remote="Remote",
-  None="None"
+  Local = "Local",
+  Remote = "Remote",
+  None = "None",
 }
-
-
-
 
 export interface NodeState {
   isRunning: boolean;
