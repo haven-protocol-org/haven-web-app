@@ -41,14 +41,6 @@ export class RPCHRequestHandler {
   public setFullUrl(url: string) {
     this._fullUrl = url;
 
-    const urlObject = new URL(this._fullUrl);
-
-    console.log("urlObject.protocol");
-    console.log(urlObject.protocol);
-    if (!urlObject.protocol) {
-      urlObject.protocol = "http:";
-      this._fullUrl = urlObject.href
-    }
   }
 
   public sendRequest(requestObject: RPCRequestObject): Promise<any> {

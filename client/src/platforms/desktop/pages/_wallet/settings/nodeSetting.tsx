@@ -2,25 +2,37 @@ import Nodes from "shared/components/_inputs/nodes";
 import Header from "shared/components/_layout/header";
 import Form from "shared/components/_inputs/form";
 import Input from "shared/components/_inputs/input";
-import { Container } from "./styles";
+import {Container} from "./styles";
 
 import Footer from "shared/components/_inputs/footer/index.js";
-import React, { SyntheticEvent } from "react";
-import { DesktopAppState } from "platforms/desktop/reducers";
-import { connect } from "react-redux";
-import { selectisLocalNode } from "platforms/desktop/reducers/havenNode";
-import { setHavenNode } from "platforms/desktop/actions/havenNode";
-import { NodeLocation, NodeState } from "platforms/desktop/types";
+import React, {SyntheticEvent} from "react";
+import {DesktopAppState} from "platforms/desktop/reducers";
+import {connect} from "react-redux";
+import {selectisLocalNode} from "platforms/desktop/reducers/havenNode";
+import {setHavenNode} from "platforms/desktop/actions/havenNode";
+import {NodeLocation, NodeState} from "platforms/desktop/types";
+import {REMOTE_NODES} from "platforms/desktop/nodes";
 
 const nodes: NodeLocation[] = [NodeLocation.Remote, NodeLocation.Local];
+
+
+interface NodeOption {
+  name:string,
+  location: NodeLocation,
+  address: string;
+  port:number | undefined;
+
+
+}
 
 export interface NodeSettingProps {
   localNode: boolean;
   node: NodeState;
+  nodeOptions: NodeOption [];
   setHavenNode: (
     address: string,
     port: string,
-    selectedLocation: NodeLocation
+    selectedLocation: NodeOption
   ) => void;
 }
 
@@ -112,8 +124,58 @@ class NodeSettingComponent extends React.Component<
 const mapStateToProps = (state: DesktopAppState) => ({
   node: state.havenNode,
   localNode: selectisLocalNode(state.havenNode),
+  nodeOptions: createNodeOptions(state.havenNode)
 });
 
 export const HavenNodeSetting = connect(mapStateToProps, {
   setHavenNode,
 })(NodeSettingComponent);
+
+
+
+const createNodeOptions = (havendState: NodeState):NodeOption[] => {
+
+  const remoteNodes: NodeOption[] = REMOTE_NODES.map( node => {
+    const host = new URL(node.address).host;
+    return {
+      location: NodeLocation.Remote,
+      address: node.address,
+      port: node.port,
+      name: `Remote Node ( ${host} )`
+    }
+  } );
+
+  const localNode: NodeOption = {
+    location: NodeLocation.Local,
+    address:'',
+    port:undefined,
+    name: 'Local Node'
+  };
+
+  const customNode: NodeOption = isCustomNode(havendState)?
+      {
+        location: NodeLocation.Remote,
+        address: havendState.address,
+        port: Number(havendState.port),
+        name: `Custom Node ( ${new URL(havendState.address).host} )`
+      }:
+      {
+        location: NodeLocation.Remote,
+        address:'',
+        port: undefined,
+        name: 'Custom Node'
+      };
+
+      return [localNode, ...remoteNodes, customNode];
+};
+
+
+const isCustomNode = (havendState: NodeState): boolean => {
+
+  return havendState.location === NodeLocation.Remote &&
+      !REMOTE_NODES.some( remoteNode => remoteNode.address === havendState.address );
+
+
+
+
+};
