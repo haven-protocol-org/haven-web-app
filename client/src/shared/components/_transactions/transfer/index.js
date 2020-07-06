@@ -37,7 +37,7 @@ export const Transaction = ({
           <Key>Recipient Address</Key>
           <Value>{truncated}</Value>
         </Row>
-        {paymentId.length > 3 ? (
+        {paymentId.length > 63 ? (
           <Row>
             <Key>Payment ID</Key>
             <Value>{paymentIdTruncated}</Value>

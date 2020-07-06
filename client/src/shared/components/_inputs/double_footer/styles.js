@@ -43,7 +43,7 @@ export const Fill = styled.button`
 `;
 
 export const Outline = styled.button`
-  background: ${(props) => props.theme.body.background};
+  background: ${(props) => props.theme.body.foreground};
   border: 1px solid ${(props) => props.theme.body.border};
   width: auto;
   min-width: 128px;
@@ -61,7 +61,6 @@ export const Outline = styled.button`
 
   &:hover {
     cursor: pointer;
-    background: ${(props) => props.theme.body.foreground};
     color: ${(props) => props.theme.type.primary};
     transition: 500ms;
   }
