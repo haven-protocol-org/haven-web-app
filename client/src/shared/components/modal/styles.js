@@ -131,6 +131,5 @@ export const Cancel = styled.button`
     cursor: pointer;
     transition: 500ms;
     color: ${(props) => props.theme.type.primary};
-    background: ${(props) => props.theme.body.background};
   }
 `;

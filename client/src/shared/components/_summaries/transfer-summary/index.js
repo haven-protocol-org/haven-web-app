@@ -10,7 +10,7 @@ const TransferSummary = ({
   transferAmount,
   paymentId,
   recipientAddress,
-  checked,
+
   onChange,
 }) => {
   const first = recipientAddress.substring(0, 4);

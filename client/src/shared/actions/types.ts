@@ -1,6 +1,5 @@
 export const THEME = "theme";
 
-
 /*
 GET BALANCES
  */
@@ -11,7 +10,6 @@ export const GET_BALANCES_FAILED = "get_balances_failed";
 export const VALIDATE_MNEMONIC_FAILED = "validate_mnemonic_failed";
 
 export const CLOSE_WALLET = "close_wallet";
-
 
 /*
 TRANSFER
@@ -42,8 +40,6 @@ export const GET_FOREX_SUCCEED = "get_forex_succeed";
 export const GET_FOREX_FAILED = "get_forex_failed";
 
 export const GET_BITCOIN_SUCEED = "get_bitcoin_succeed";
-
-
 
 // Modal Service
 

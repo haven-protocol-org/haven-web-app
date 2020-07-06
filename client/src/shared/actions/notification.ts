@@ -1,10 +1,14 @@
-import {notificationList, NotificationType} from "constants/notificationList";
-import {uuidv4} from "utility/utility";
-import {ADD_NOTIFICATION, REMOVE_NOTIFICATION} from "./types";
-import {Ticker} from "../reducers/types";
-import {NotificationDuration} from "shared/reducers/notification";
+import { notificationList, NotificationType } from "constants/notificationList";
+import { uuidv4 } from "utility/utility";
+import { ADD_NOTIFICATION, REMOVE_NOTIFICATION } from "./types";
+import { Ticker } from "../reducers/types";
+import { NotificationDuration } from "shared/reducers/notification";
 
-export const addNotificationByKey = (key: any, duration = NotificationDuration.DEFAULT, id = uuidv4()) => {
+export const addNotificationByKey = (
+  key: any,
+  duration = NotificationDuration.DEFAULT,
+  id = uuidv4()
+) => {
   const statusObj: any = notificationList.find(
     (notification) => notification.key === key
   );
@@ -12,7 +16,11 @@ export const addNotificationByKey = (key: any, duration = NotificationDuration.D
   return { type: ADD_NOTIFICATION, payload: statusObj };
 };
 
-export const addNotificationByMessage = (type: NotificationType, message: string, duration = NotificationDuration.DEFAULT) => {
+export const addNotificationByMessage = (
+  type: NotificationType,
+  message: string,
+  duration = NotificationDuration.DEFAULT
+) => {
   const statusObj = { type, message, id: uuidv4(), duration };
   return { type: ADD_NOTIFICATION, payload: statusObj };
 };
@@ -31,7 +39,10 @@ export const removeNotification = (id: string) => {
   return { type: REMOVE_NOTIFICATION, payload: id };
 };
 
-export const addErrorNotification = (error: any, duration: NotificationDuration = NotificationDuration.DEFAULT) => {
+export const addErrorNotification = (
+  error: any,
+  duration: NotificationDuration = NotificationDuration.DEFAULT
+) => {
   const errorNotification = notificationList.find(
     (notification) => notification.code === error.code
   );
@@ -46,6 +57,13 @@ export const addErrorNotification = (error: any, duration: NotificationDuration 
   return buildNotification(message, NotificationType.ERROR, duration);
 };
 
-const buildNotification = (message: string, type: string, duration: NotificationDuration) => {
-  return { type: ADD_NOTIFICATION, payload: { type, message, id: uuidv4(), duration } };
+const buildNotification = (
+  message: string,
+  type: string,
+  duration: NotificationDuration
+) => {
+  return {
+    type: ADD_NOTIFICATION,
+    payload: { type, message, id: uuidv4(), duration },
+  };
 };

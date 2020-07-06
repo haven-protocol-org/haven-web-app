@@ -1,4 +1,8 @@
-import { offshoreTransferRPC, relayTXRPC, transfer_splitRPC } from "../ipc/rpc/rpc";
+import {
+  offshoreTransferRPC,
+  relayTXRPC,
+  transfer_splitRPC,
+} from "../ipc/rpc/rpc";
 
 import {
   TRANSFER_CREATION_FAILED,
@@ -19,15 +23,14 @@ import { getOffshoreBalance } from "platforms/desktop/actions/offshoreBalance";
 import { Ticker } from "shared/reducers/types";
 import { hideModal, showModal } from "shared/actions/modal";
 import { MODAL_TYPE } from "shared/reducers/modal";
-import {getTransfers} from "platforms/desktop/actions/transferHistory";
-import {getBalance} from "platforms/desktop/actions/balance";
-
+import { getTransfers } from "platforms/desktop/actions/transferHistory";
+import { getBalance } from "platforms/desktop/actions/balance";
 
 export const transfer = (
-    address: string,
-    amount: number,
-    paymentId: string,
-    fromTicker: Ticker
+  address: string,
+  amount: number,
+  paymentId: string,
+  fromTicker: Ticker
 ) => {
   amount = amount * 1e12;
   return (dispatch: any) => {
@@ -38,19 +41,19 @@ export const transfer = (
       params["payment_id"] = paymentId;
     }
 
-      const transferFN =
-          fromTicker === Ticker.XHV ? transfer_splitRPC : offshoreTransferRPC;
+    const transferFN =
+      fromTicker === Ticker.XHV ? transfer_splitRPC : offshoreTransferRPC;
 
-      transferFN(params)
-        .then(result => {
-          dispatch(transferSucceed(result));
-          dispatch(addNotificationByKey(TRANSFER_SUCCEED_MESSAGE));
+    transferFN(params)
+      .then((result) => {
+        dispatch(transferSucceed(result));
+        dispatch(addNotificationByKey(TRANSFER_SUCCEED_MESSAGE));
 
-          dispatch(getTransfers());
-          dispatch(getBalance());
-          dispatch(getOffshoreBalance());
-        })
-        .catch(error => dispatch(manageTransferFailed(error)));
+        dispatch(getTransfers());
+        dispatch(getBalance());
+        dispatch(getOffshoreBalance());
+      })
+      .catch((error) => dispatch(manageTransferFailed(error)));
   };
 };
 
@@ -106,16 +109,12 @@ export const confirmTransfer = (hex: string) => {
   };
 };
 
-const createTXInputs = (
-  address: string,
-  amount: number,
-  paymentId: string
-) => {
+const createTXInputs = (address: string, amount: number, paymentId: string) => {
   const params: any = {
     destinations: [{ address, amount }],
     ring_size: 11,
-     do_not_relay: true,
-    get_tx_metadata: true
+    do_not_relay: true,
+    get_tx_metadata: true,
   };
 
   if (paymentId !== "") {
