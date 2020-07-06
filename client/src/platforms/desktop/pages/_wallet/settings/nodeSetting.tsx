@@ -23,7 +23,7 @@ export interface NodeOption {
   name:string,
   location: NodeLocation,
   address: string;
-  port:number | undefined;
+  port: string;
   selectionType: NodeSelectionType
 
 }
@@ -33,14 +33,14 @@ export interface NodeSettingProps {
   node: NodeState;
   nodeOptions: NodeOption [];
   setHavenNode: (
-    selectedNodeOption: NodeOption, address: string, port: number | undefined
+    selectedNodeOption: NodeOption, address: string, port: string
   ) => void;
 }
 
 export interface NodeSettingState {
   selectedNodeOption: NodeOption;
   address: string;
-  port: number | undefined;
+  port: string;
 }
 
 class NodeSettingComponent extends React.Component<
@@ -50,7 +50,7 @@ class NodeSettingComponent extends React.Component<
   state = {
     address: this.props.node.address,
     selectedNodeOption: this.props.nodeOptions.find( (nodeOption) => nodeOption.address === this.props.node.address )!,
-    port: Number(this.props.node.port),
+    port: this.props.node.port,
   };
 
   onConnect = (e: SyntheticEvent) => {
@@ -158,7 +158,7 @@ const createNodeOptions = (havendState: NodeState):NodeOption[] => {
   const localNode: NodeOption = {
     location: NodeLocation.Local,
     address:'',
-    port:undefined,
+    port:'',
     name: 'Local Node',
     selectionType: NodeSelectionType.local
   };
@@ -167,14 +167,14 @@ const createNodeOptions = (havendState: NodeState):NodeOption[] => {
       {
         location: NodeLocation.Remote,
         address: havendState.address,
-        port: Number(havendState.port),
+        port: havendState.port,
         name: `Custom Node ( ${new URL(havendState.address).host} )`,
         selectionType: NodeSelectionType.custom
       }:
       {
         location: NodeLocation.Remote,
         address:'',
-        port: undefined,
+        port: '',
         name: 'Custom Node',
         selectionType: NodeSelectionType.custom
       };

@@ -37,7 +37,7 @@ const updatehavenNodeState = (havendState: HavendState) => {
 
   try {
     const url = new URL(havendState.address);
-    address = url.origin;
+    address = url.protocol + '//' + url.hostname;
     port = url.port;
   }
   catch (e) {
@@ -52,13 +52,12 @@ const updatehavenNodeStateFailed = (err: any) => {
   return { type: GET_HAVEND_STATE_FAILED, payload: err };
 };
 
-export const setHavenNode = (selectedNodeOption:NodeOption, nodeAddress:string, nodePort:number | undefined) => {
+export const setHavenNode = (selectedNodeOption:NodeOption, nodeAddress:string, nodePort: string) => {
 
 
   return (dispatch: any, getState:() => DesktopAppState) => {
 
 
-    const newPort = nodePort === undefined? '' : nodePort.toString();
     let trusted: boolean; let address: string;
 
     // if using local node, keep address empty
@@ -67,17 +66,17 @@ export const setHavenNode = (selectedNodeOption:NodeOption, nodeAddress:string, 
        address = "";
     } else {
      trusted = false;
-     address = nodeAddress + ':' + newPort;
+     address = nodeAddress + ':' + nodePort;
       const protocolPattern =  /^((http|https):\/\/)/;
       if (!protocolPattern.test(address)) {
         address = 'http://' + nodeAddress;
       }
     }
-    
+
     const params = {address: address, trusted};
 
     setDaemonRPC(params)
-        .then(dispatch(sethavenNodeSucceed(nodeAddress, newPort, selectedNodeOption.location)))
+        .then(dispatch(sethavenNodeSucceed(nodeAddress, nodePort, selectedNodeOption.location)))
         .then(dispatch(getDaemonsState()))
         .catch((error) => dispatch(sethavenNodeFailed(error)));
   }
