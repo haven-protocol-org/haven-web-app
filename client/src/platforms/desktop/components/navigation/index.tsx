@@ -25,7 +25,7 @@ import {
 } from "./styles";
 import Icon from "assets/haven.svg";
 import OptionsSVG from "../../../../assets/icons/options.svg";
-import dropdown_chevron from "../../../../assets/icons/dropdown-chevron.svg";
+import arrow_up from "../../../../assets/icons/arrow-up.svg";
 import { Body, Label } from "../../../../assets/styles/type.js";
 
 import { closeWallet } from "../../actions";
@@ -77,10 +77,12 @@ class Navigation extends Component<NavigationProps, any> {
   refreshNetwork = () => {
     this.setState({
       refreshNetwork: "Refreshing Network...",
+      showOptions: true,
     });
     setTimeout(() => {
       this.setState({
         refreshNetwork: "Refresh Network",
+        showOptions: true,
       });
     }, 3000);
   };
@@ -132,7 +134,7 @@ class Navigation extends Component<NavigationProps, any> {
         {this.state.showOptions && (
           <>
             <OptionsList>
-              <Arrow src={dropdown_chevron} />
+              <Arrow src={arrow_up} />
               <OptionsDoubleRow>
                 <Body>Network</Body>
                 <Label>{current_network}</Label>

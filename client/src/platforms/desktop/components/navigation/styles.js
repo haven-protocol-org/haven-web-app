@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 import media from "../../../../assets/styles/media.js";
 
 const appear = keyframes`
-0% { transform: translateY(-15px); opacity: 0.1 }
-30% { transform: translateY(25px); opacity: 0.5 }
-40% { transform: translateY(-10px); opacity: 1; }
-100% {transform: translateY(0px);  opacity: 1; }
+  0% { transform: translateY(-20px);  }
+  50% { transform: translateY(10px);  }
+  100% {transform: translateY(0px);   }
 `;
+
 export const Container = styled.header`
   height: 64px;
   z-index: 1000;
@@ -59,7 +59,7 @@ export const OptionsList = styled.div`
   top: 74px;
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
   z-index: 1000;
-  animation: ${appear} 0.5s alternate;
+  animation: ${appear} 0.5s forwards;
 `;
 
 export const Arrow = styled.img`
@@ -72,8 +72,8 @@ export const Arrow = styled.img`
 `;
 
 export const OptionsIcon = styled.img`
-  height: 24px;
-  width: 24px;
+  height: 20px;
+  width: 20px;
 `;
 
 export const OptionsSingleRow = styled.div`
