@@ -60,7 +60,7 @@ import {
   startMining,
   stopMining,
 } from "platforms/desktop/actions/mining";
-import {HavenNodeSetting} from "platforms/desktop/pages/_wallet/settings/nodeSetting";
+import { HavenNodeSetting } from "platforms/desktop/pages/_wallet/settings/nodeSetting";
 
 type ThemeOption = { theme: string; value: string };
 type BalanceOption = { ticker: string; value: string; code: string };
@@ -162,7 +162,6 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
     }
   };
 
-
   handleChange = (event: any) => {
     const name = event.target.name;
     const value = event.target.value;
@@ -171,8 +170,6 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
       [name]: value,
     });
   };
-
-
 
   setBalance = ({ ticker, value }: BalanceOption) => {
     alert("set state here");
@@ -228,31 +225,25 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
           />
         </>*/}
 
-
-
-        <HavenNodeSetting/>
-
+        <HavenNodeSetting />
 
         <Header
-            title="Mining "
-            description="Mine from your computer and earn Haven"
+          title="Mining "
+          description="Mine from your computer and earn Haven"
         />
 
         <Mining
-            //@ts-ignore
-            status={true}
-            mining={mining.active === true ? "Mining" : "Not Mining"}
-            hash={
-              mining.active === true ? `${mining.speed} Hashes` : "0 Hashes"
-            }
-          >
-            <Footer
-              onClick={this.onMiningButtonClicked}
-              loading={false}
-              label={buttonLabel}
-            />
-          </Mining>
-
+          //@ts-ignore
+          status={true}
+          mining={mining.active === true ? "Mining" : "Not Mining"}
+          hash={mining.active === true ? `${mining.speed} Hashes` : "0 Hashes"}
+        >
+          <Footer
+            onClick={this.onMiningButtonClicked}
+            loading={false}
+            label={buttonLabel}
+          />
+        </Mining>
       </Body>
     );
   }
