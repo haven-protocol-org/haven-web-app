@@ -89,6 +89,7 @@ class NodeSettingComponent extends React.Component<
 
   render() {
     const selectedNodeOption = this.state.selectedNodeOption;
+    console.log("setHavenNode", selectedNodeOption);
 
     const { isRemoteSyncing } = this.props;
 
