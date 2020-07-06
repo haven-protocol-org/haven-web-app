@@ -12,7 +12,7 @@ import { selectisLocalNode } from "platforms/desktop/reducers/havenNode";
 import { setHavenNode } from "platforms/desktop/actions/havenNode";
 import { NodeLocation, NodeState } from "platforms/desktop/types";
 import { REMOTE_NODES } from "platforms/desktop/nodes";
-import {selectIsWalletSyncingRemote} from "platforms/desktop/reducers/walletRPC";
+import { selectIsWalletSyncingRemote } from "platforms/desktop/reducers/walletRPC";
 
 enum NodeSelectionType {
   local,
@@ -89,10 +89,8 @@ class NodeSettingComponent extends React.Component<
 
   render() {
     const selectedNodeOption = this.state.selectedNodeOption;
-    console.log("###############################");
-    console.log("selectedNodeOption", selectedNodeOption);
 
-    const { isRunning } = this.props.node;
+    const { isRemoteSyncing } = this.props;
 
     return (
       <>
@@ -102,7 +100,7 @@ class NodeSettingComponent extends React.Component<
         />
         <Form onSubmit={this.onConnect}>
           <Nodes
-            label={`Is running ${isRunning}`}
+            label={"Select Node"}
             placeholder="Select Node"
             name="node"
             value={this.state.selectedNodeOption.name}
@@ -133,8 +131,8 @@ class NodeSettingComponent extends React.Component<
             <Footer
               onClick={this.onConnect}
               loading={false}
-              validated={isRunning === true ? true : false}
-              label={isRunning === true ? "Syncing..." : "Connect"}
+              validated={isRemoteSyncing === true ? false : true}
+              label={isRemoteSyncing === true ? "Syncing..." : "Connect"}
             />
           </Container>
         </Form>
