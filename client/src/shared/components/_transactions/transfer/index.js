@@ -3,6 +3,7 @@ import React, { Fragment } from "react";
 
 // Relative Imports
 import { Container, Row, Key, Value } from "./styles";
+import Confirm from "../../confirm/index.js";
 
 export const Transaction = ({
   checked,
@@ -11,11 +12,15 @@ export const Transaction = ({
   recipientAddress,
   ticker,
   transferAmount,
-  fee
+  fee,
 }) => {
   const first = recipientAddress.substring(0, 4);
   const last = recipientAddress.substring(recipientAddress.length - 4);
   const truncated = first + "...." + last;
+
+  const paymentIdFirstFour = paymentId.substring(0, 4);
+  const paymentIdLastFour = paymentId.substring(paymentId.length - 4);
+  const paymentIdTruncated = paymentIdFirstFour + "...." + paymentIdLastFour;
 
   return (
     <Fragment>
@@ -32,16 +37,23 @@ export const Transaction = ({
           <Key>Recipient Address</Key>
           <Value>{truncated}</Value>
         </Row>
-        {paymentId === "--" && (
+        {paymentId.length > 3 ? (
           <Row>
             <Key>Payment ID</Key>
-            <Value>{paymentId}</Value>
+            <Value>{paymentIdTruncated}</Value>
           </Row>
-        )}
+        ) : null}
         <Row>
-          <Key>Fee </Key>
-          <Value>{fee}</Value>
+          <Key>Transaction Fee </Key>
+          <Value>
+            {fee} {ticker}
+          </Value>
         </Row>
+        <Confirm
+          description="I have reviewed my transfer and accept the transaction fee"
+          checked={checked}
+          onChange={onChange}
+        />
       </Container>
     </Fragment>
   );

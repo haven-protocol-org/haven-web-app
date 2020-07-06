@@ -137,9 +137,9 @@ class TransferContainer extends Component<TransferProps, TransferState> {
     } = this.state;
 
     const checkValidation =
-      send_amount.length > 0 &&
-      recipient_address.length > 97 &&
-      this.state.reviewed;
+      send_amount.length > 0 && recipient_address.length > 97;
+    // && this.state.reviewed;
+
     const windowWidth = window.innerWidth;
 
     let availableBalance = null;
@@ -208,7 +208,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
                 onChange={this.handleChange}
               />
               <Input
-                label="Payment ID (Optional)"
+                label="Payment ID (Optional) "
                 placeholder="Enter an optional payment ID"
                 type={"text"}
                 width={true}
@@ -221,7 +221,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
         </Form>
         <Container>
           <TransferSummary
-            paymentId={payment_id === "" ? "none" : payment_id}
+            paymentId={payment_id === "" ? "--" : payment_id}
             recipientAddress={
               recipient_address === "" ? "--" : recipient_address
             }
@@ -253,14 +253,3 @@ export const SendFunds = connect<TransferReduxProps, {}, TransferOwnProps>(
   mapStateToProps,
   {}
 )(TransferContainer);
-
-/**
-<TransferSummary
-  paymentId={payment_id === "" ? "none" : payment_id}
-  recipientAddress={
-    recipient_address === "" ? "--" : recipient_address
-  }
-  transferAsset={selectedAsset === null ? "--" : selectedAsset.ticker}
-  transferAmount={send_amount === "" ? "--" : send_amount}
-/>
-**/
