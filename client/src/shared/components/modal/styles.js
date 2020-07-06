@@ -24,11 +24,17 @@ export const Window = styled.div`
   justify-content: center;
 `;
 
+export const Details = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+`;
+
 export const Inner = styled.div`
   margin-top: -120px;
   width: 50%;
   min-width: 580px;
-  background: ${props => props.theme.body.background}
+  background: ${(props) => props.theme.body.background}
   border-radius: 4px;
 
   ${media.tablet`
@@ -42,7 +48,7 @@ export const Inner = styled.div`
 
 export const Header = styled.div`
   height: auto;
-  border-bottom: 1px solid ${props => props.theme.body.border};
+  border-bottom: 1px solid ${(props) => props.theme.body.border};
   padding: 20px;
 `;
 
@@ -64,7 +70,7 @@ export const Footer = styled.div`
 `;
 
 export const Confirm = styled.button`
-  background: ${props => props.theme.button.primary};
+  background: ${(props) => props.theme.button.primary};
   border: none;
   width: auto;
   min-width: 128px;
@@ -96,12 +102,12 @@ export const Confirm = styled.button`
   }
 `;
 export const Cancel = styled.button`
-  background: ${props => props.theme.body.foreground};
-  border: 1px solid ${props => props.theme.body.border};
+  background: ${(props) => props.theme.body.foreground};
+  border: 1px solid ${(props) => props.theme.body.border};
   width: auto;
   min-width: 128px;
   height: 48px;
-  color: ${props => props.theme.type.secondary};
+  color: ${(props) => props.theme.type.secondary};
   font-size: 16px;
   text-align: center;
   border-radius: 4px;
@@ -124,7 +130,7 @@ export const Cancel = styled.button`
   &:hover {
     cursor: pointer;
     transition: 500ms;
-    color: ${props => props.theme.type.primary};
-    background: ${props => props.theme.body.background};
+    color: ${(props) => props.theme.type.primary};
+    background: ${(props) => props.theme.body.background};
   }
 `;

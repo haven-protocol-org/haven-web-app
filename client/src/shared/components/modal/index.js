@@ -11,9 +11,14 @@ import {
   Cancel,
   Header,
   Placeholder,
-  Inner
+  Details,
+  Inner,
 } from "./styles";
-import { Title, Description } from "../../../assets/styles/type.js";
+import {
+  Title,
+  Description,
+  Information,
+} from "../../../assets/styles/type.js";
 
 export const Modal = ({
   title,
@@ -22,8 +27,8 @@ export const Modal = ({
   leftButton,
   disabled,
   onCancel,
-    onConfirm,
-  children
+  onConfirm,
+  children,
 }) => {
   return (
     <Container>
@@ -34,10 +39,24 @@ export const Modal = ({
             <Description>{description}</Description>
           </Header>
           <Body>
-            <Placeholder>{children}</Placeholder>
+            <Details>
+              <Placeholder>
+                {children}
+                <Information>
+                  <strong>Note:</strong> Once you click <strong>Confirm</strong>{" "}
+                  a portion of your balance may be locked for ~20 mins until it
+                  is finalized. Your Vault will also indicate the pending
+                  balances which can be seen by clicking the{" "}
+                  <strong>Show Pending Balances</strong> button in the Assets
+                  page.
+                </Information>
+              </Placeholder>
+            </Details>
             <Footer>
               <Cancel onClick={onCancel}>{leftButton}</Cancel>
-              <Confirm onClick={onConfirm} disabled={disabled}>{rightButton}</Confirm>
+              <Confirm onClick={onConfirm} disabled={disabled}>
+                {rightButton}
+              </Confirm>
             </Footer>
           </Body>
         </Inner>
