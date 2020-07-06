@@ -4,15 +4,14 @@ import {
 import {BlockHeaderRate} from "shared/reducers/blockHeaderExchangeRates";
 import {AnyAction} from "redux";
 import bigInt from "big-integer";
-import {getExchangeRatesFromNode} from "platforms/web/api/api";
 
 
-const REMOTE_NODE_URL = 'http://213.136.85.14:37750/json_rpc';
+const HAVEN_STATS_URL = 'https://network-api.havenprotocol.org/api-stagenet/info';
 
 // fetch prices from oracle for web to be consistent with desktop app -> will be replaced later by 'real' blockheader entries
 export const getExchangeRates = () => {
     return (dispatch: any) => {
-        getExchangeRatesFromNode(REMOTE_NODE_URL)
+        fetch(HAVEN_STATS_URL)
             .then((res: any) => createRecordEntry(res))
             .then((priceEntry: BlockHeaderRate) =>
                 dispatch(getLastBlockerHeaderSucceed(priceEntry))
