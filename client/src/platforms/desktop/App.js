@@ -6,7 +6,7 @@ import { history } from "../../utility/history";
 import { NavigationDesktop } from "./components/navigation";
 import { PublicRoutesDesktop } from "./routes/public";
 import { PrivateRoutesDesktop } from "./routes/private";
-import Status from "../../shared/components/_layout/status";
+import {StatusComponent} from "../../shared/components/_layout/status";
 import { HashRouter } from "react-router-dom";
 import {ModalContainerDesktop} from "./components/modalContainer";
 
@@ -18,7 +18,7 @@ class App extends Component {
         <HashRouter history={history}>
           <NavigationDesktop />
           <ModalContainerDesktop/>
-          <Status />
+          <StatusComponent />
           <PublicRoutesDesktop />
           <Route path="/wallet" component={PrivateRoutesDesktop} />
         </HashRouter>

@@ -19,7 +19,6 @@ import { getOffshoreBalance } from "platforms/desktop/actions/offshoreBalance";
 import { Ticker } from "shared/reducers/types";
 import { hideModal, showModal } from "shared/actions/modal";
 import { MODAL_TYPE } from "shared/reducers/modal";
-import { convertBalanceForReading } from "utility/utility";
 import {getTransfers} from "platforms/desktop/actions/transferHistory";
 import {getBalance} from "platforms/desktop/actions/balance";
 

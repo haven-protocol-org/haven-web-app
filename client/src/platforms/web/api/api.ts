@@ -96,18 +96,3 @@ export const handleError = async (response: any) => {
   }
 };
 
-
-export const getExchangeRatesFromNode = (remoteNodeUrl: string) => {
-
-
-  const params = {"id":0,"jsonrpc":"2.0","method":"get_last_block_header"};
-  //@ts-ignore
-  const client = new window.DigestClient('user', 'user');
-
-  return client.fetch(`${remoteNodeUrl}`, {
-    ...INIT_REQUEST,
-    body: JSON.stringify(params)});
-
-
-
-};
