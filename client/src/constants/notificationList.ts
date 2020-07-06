@@ -4,7 +4,7 @@ export enum NotificationType {
 }
 
 export const TRANSFER_SUCCEED_MESSAGE = "transfer_succeed_message";
-
+export const REMOTE_SYNCING = "remote_syncing";
 export const INCOMING_TRANSFER_MESSAGE = "incoming_transfer_message";
 
 export const notificationList = [
@@ -327,9 +327,9 @@ export const notificationList = [
   },
   {
     key: "",
-    code: -45,
+    code: 0,
     message: "Your vault is syncing and will be fully functional soon.",
     type: NotificationType.SUCCESS,
-    description: "GET_LOCAL_HAVEN_NODE_STATE_SUCCEED",
+    description: REMOTE_SYNCING,
   },
 ];

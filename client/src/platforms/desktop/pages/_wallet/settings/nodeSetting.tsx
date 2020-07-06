@@ -132,7 +132,7 @@ class NodeSettingComponent extends React.Component<
             <Footer
               onClick={this.onConnect}
               loading={false}
-              validated={isRemoteSyncing === true ? false : true}
+              validated={!isRemoteSyncing}
               label={isRemoteSyncing === true ? "Syncing..." : "Connect"}
             />
           </Container>
