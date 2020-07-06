@@ -46,12 +46,24 @@ export const selectNodeHeight = (state: DesktopAppState) => {
 
 export const selectDesktopSyncState = (state: DesktopAppState): SyncState => {
 
-
   const isLocalNode = selectisLocalNode(state.havenNode);
-
-  const isSyncing = state.chain.chainHeight > state.chain.walletHeight + 1;
   const blockHeight = state.chain.chainHeight;
-  const scannedHeight = isLocalNode ? state.chain.nodeHeight :  state.chain.walletHeight;
+  let scannedHeight: number;
+  let isSyncing: boolean;
+
+  //we must distinguish between multiple cases
+  // 1. local syncing node -> show progress of node
+  //when we use a local node syncing of wallet itself is super fast, so just show the sync state of the node
+  if (isLocalNode) {
+    isSyncing = state.chain.chainHeight > state.chain.nodeHeight + 1;
+    scannedHeight = state.chain.nodeHeight;
+  } else
+    // when we use a remote node take the sync height from wallet
+    {
+      isSyncing = state.chain.chainHeight > state.chain.walletHeight + 1;
+      scannedHeight = state.chain.walletHeight;
+  }
+
 
   return { isSyncing, blockHeight, scannedHeight };
 };

@@ -12,6 +12,7 @@ import {selectisLocalNode} from "platforms/desktop/reducers/havenNode";
 import {setHavenNode} from "platforms/desktop/actions/havenNode";
 import {NodeLocation, NodeState} from "platforms/desktop/types";
 import {REMOTE_NODES} from "platforms/desktop/nodes";
+import {HavendState} from "platforms/desktop/ipc/ipc-types";
 
 
 enum NodeSelectionType  {
@@ -168,7 +169,7 @@ const createNodeOptions = (havendState: NodeState):NodeOption[] => {
         location: NodeLocation.Remote,
         address: havendState.address,
         port: havendState.port,
-        name: `Custom Node ( ${new URL(havendState.address).host} )`,
+        name: createCustomNodeName(havendState),
         selectionType: NodeSelectionType.custom
       }:
       {
@@ -180,6 +181,17 @@ const createNodeOptions = (havendState: NodeState):NodeOption[] => {
       };
 
       return [localNode, ...remoteNodes, customNode];
+};
+
+
+const createCustomNodeName = (havendState: NodeState) => {
+
+  try {
+    return `Custom Node ( ${new URL(havendState.address).host} )`
+  } catch(e) {
+    return 'Custom Node'
+  }
+  
 };
 
 
