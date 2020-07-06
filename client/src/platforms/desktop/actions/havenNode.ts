@@ -12,6 +12,7 @@ import {NotificationType} from "constants/notificationList";
 import {DesktopAppState} from "platforms/desktop/reducers";
 import {HavendState} from "platforms/desktop/ipc/ipc-types";
 import {getDaemonsState} from "platforms/desktop/actions/refresh";
+import {NodeOption} from "platforms/desktop/pages/_wallet/settings/nodeSetting";
 
 export const gethavenNodeState = () => {
   return (dispatch: any) => {
@@ -26,10 +27,17 @@ export const gethavenNodeState = () => {
 const updatehavenNodeState = (havendState: HavendState) => {
 
 
-  let address,port;
+  let address = "";
+  let port = "";
+
+  if (havendState.location === NodeLocation.Local) {
+    return { type: GET_HAVEND_STATE_SUCCEED, payload: {...havendState, address, port} };
+
+  }
+
   try {
     const url = new URL(havendState.address);
-    address = url.host;
+    address = url.origin;
     port = url.port;
   }
   catch (e) {
@@ -44,20 +52,32 @@ const updatehavenNodeStateFailed = (err: any) => {
   return { type: GET_HAVEND_STATE_FAILED, payload: err };
 };
 
-export const setHavenNode = (newAddress: string, newPort: string, location: NodeLocation) => {
+export const setHavenNode = (selectedNodeOption:NodeOption, nodeAddress:string, nodePort:number | undefined) => {
 
 
   return (dispatch: any, getState:() => DesktopAppState) => {
 
 
-    let trusted = location === NodeLocation.Local;
-    let address =  (location === NodeLocation.Local)? "" : newAddress + ':' + newPort;
+    const newPort = nodePort === undefined? '' : nodePort.toString();
+    let trusted: boolean; let address: string;
 
-
+    // if using local node, keep address empty
+    if (selectedNodeOption.location === NodeLocation.Local) {
+       trusted = true;
+       address = "";
+    } else {
+     trusted = false;
+     address = nodeAddress + ':' + newPort;
+      const protocolPattern =  /^((http|https):\/\/)/;
+      if (!protocolPattern.test(address)) {
+        address = 'http://' + nodeAddress;
+      }
+    }
+    
     const params = {address: address, trusted};
 
     setDaemonRPC(params)
-        .then(dispatch(sethavenNodeSucceed(newAddress, newPort, location)))
+        .then(dispatch(sethavenNodeSucceed(nodeAddress, newPort, selectedNodeOption.location)))
         .then(dispatch(getDaemonsState()))
         .catch((error) => dispatch(sethavenNodeFailed(error)));
   }

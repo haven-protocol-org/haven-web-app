@@ -37,7 +37,7 @@ class Nodes extends React.Component {
       return (
         <Item key={option} onClick={() => onClick(option)}>
           <Row>
-            <Name>{option}</Name>
+            <Name>{option.name}</Name>
           </Row>
         </Item>
       );

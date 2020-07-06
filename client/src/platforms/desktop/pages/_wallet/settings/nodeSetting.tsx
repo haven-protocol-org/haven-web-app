@@ -13,15 +13,18 @@ import {setHavenNode} from "platforms/desktop/actions/havenNode";
 import {NodeLocation, NodeState} from "platforms/desktop/types";
 import {REMOTE_NODES} from "platforms/desktop/nodes";
 
-const nodes: NodeLocation[] = [NodeLocation.Remote, NodeLocation.Local];
+
+enum NodeSelectionType  {
+  local,remote,custom
+}
 
 
-interface NodeOption {
+export interface NodeOption {
   name:string,
   location: NodeLocation,
   address: string;
   port:number | undefined;
-
+  selectionType: NodeSelectionType
 
 }
 
@@ -30,16 +33,14 @@ export interface NodeSettingProps {
   node: NodeState;
   nodeOptions: NodeOption [];
   setHavenNode: (
-    address: string,
-    port: string,
-    selectedLocation: NodeOption
+    selectedNodeOption: NodeOption, address: string, port: number | undefined
   ) => void;
 }
 
 export interface NodeSettingState {
+  selectedNodeOption: NodeOption;
   address: string;
-  selectedLocation: NodeLocation;
-  port: string;
+  port: number | undefined;
 }
 
 class NodeSettingComponent extends React.Component<
@@ -48,20 +49,28 @@ class NodeSettingComponent extends React.Component<
 > {
   state = {
     address: this.props.node.address,
-    selectedLocation: this.props.node.location,
-    port: this.props.node.port,
+    selectedNodeOption: this.props.nodeOptions.find( (nodeOption) => nodeOption.address === this.props.node.address )!,
+    port: Number(this.props.node.port),
   };
 
   onConnect = (e: SyntheticEvent) => {
     e.preventDefault();
 
-    const { address, selectedLocation, port } = this.state;
-    this.props.setHavenNode(address, port, selectedLocation);
+
+    const { address, selectedNodeOption, port } = this.state;
+
+    if (address === this.props.node.address && port === this.props.node.port) {
+      return;
+    }
+
+    this.props.setHavenNode(selectedNodeOption, address, port);
   };
 
-  selectLocation = (option: NodeLocation) => {
+  selectLocation = (option: NodeOption) => {
     this.setState({
-      selectedLocation: option,
+      selectedNodeOption: option,
+      address: option.address,
+      port: option.port
     });
   };
 
@@ -75,7 +84,7 @@ class NodeSettingComponent extends React.Component<
   };
 
   render() {
-    const localNode = this.state.selectedLocation === NodeLocation.Local;
+    const selectedNodeOption = this.state.selectedNodeOption;
 
     return (
       <>
@@ -88,18 +97,18 @@ class NodeSettingComponent extends React.Component<
             label="Select Node"
             placeholder="Select Node"
             name="node"
-            value={this.state.selectedLocation}
-            options={nodes}
+            value={this.state.selectedNodeOption.name}
+            options={this.props.nodeOptions}
             onClick={this.selectLocation}
           />
-          {!localNode && (
+          {selectedNodeOption.selectionType === NodeSelectionType.custom && (
             <>
               <Input
                 label="Node Address"
                 placeholder="Enter node address"
                 type="text"
                 name="address"
-                value={"http://remote.haven.miner.rocks"}
+                value={this.state.address}
                 onChange={this.handleChange}
               />
               <Input
@@ -107,7 +116,7 @@ class NodeSettingComponent extends React.Component<
                 placeholder="Enter port number"
                 type="text"
                 name="port"
-                value={"17750"}
+                value={this.state.port}
                 onChange={this.handleChange}
               />
             </>
@@ -141,7 +150,8 @@ const createNodeOptions = (havendState: NodeState):NodeOption[] => {
       location: NodeLocation.Remote,
       address: node.address,
       port: node.port,
-      name: `Remote Node ( ${host} )`
+      name: `Remote Node ( ${host} )`,
+      selectionType: NodeSelectionType.local
     }
   } );
 
@@ -149,7 +159,8 @@ const createNodeOptions = (havendState: NodeState):NodeOption[] => {
     location: NodeLocation.Local,
     address:'',
     port:undefined,
-    name: 'Local Node'
+    name: 'Local Node',
+    selectionType: NodeSelectionType.local
   };
 
   const customNode: NodeOption = isCustomNode(havendState)?
@@ -157,13 +168,15 @@ const createNodeOptions = (havendState: NodeState):NodeOption[] => {
         location: NodeLocation.Remote,
         address: havendState.address,
         port: Number(havendState.port),
-        name: `Custom Node ( ${new URL(havendState.address).host} )`
+        name: `Custom Node ( ${new URL(havendState.address).host} )`,
+        selectionType: NodeSelectionType.custom
       }:
       {
         location: NodeLocation.Remote,
         address:'',
         port: undefined,
-        name: 'Custom Node'
+        name: 'Custom Node',
+        selectionType: NodeSelectionType.custom
       };
 
       return [localNode, ...remoteNodes, customNode];
