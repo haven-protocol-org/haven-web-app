@@ -3,13 +3,23 @@ import React from "react";
 
 // Relative Imports
 import { Container, Fill, Outline } from "./styles";
+import { Spinner } from "../../spinner/index.js";
 
-const DoubleFooter = ({ leftLabel, rightLabel, onClick, disabled }) => {
+const DoubleFooter = ({
+  leftOnClick,
+  leftLabel,
+  leftDisabled,
+  leftLoading,
+  rightLabel,
+  rightDisabled,
+  rightLoading,
+  rightOnClick,
+}) => {
   return (
     <Container>
-      <Outline disabled={disabled}>{rightLabel}</Outline>
-      <Fill disabled={disabled} onClick={onClick}>
-        {leftLabel}
+      <Outline leftDisabled={leftDisabled}>{leftLabel}</Outline>
+      <Fill rightDisabled={rightDisabled} rightOnClick={rightOnClick}>
+        {rightLoading ? <Spinner /> : rightLabel}
       </Fill>
     </Container>
   );

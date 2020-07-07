@@ -132,10 +132,14 @@ class NodeSettingComponent extends React.Component<
           )}
           <Container>
             <DoubleFooter
-              onClick={this.onConnect}
-              disabled={!isRemoteSyncing}
-              leftLabel={isRemoteSyncing === true ? "Syncing..." : "Connect"}
-              rightLabel={"Disconnect"}
+              rightOnClick={this.onConnect}
+              rightDisabled={!isRemoteSyncing}
+              rightLoading={false}
+              rightLabel={isRemoteSyncing === true ? "Syncing..." : "Connect"}
+              leftLabel={"Disconnect"}
+              leftDisabled={false}
+              leftOnClick={() => {}}
+              leftLoading={false}
             />
           </Container>
         </Form>
