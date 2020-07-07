@@ -114,6 +114,10 @@ export const OptionsDoubleRow = styled.div`
   font-size: 14px;
   align-items: center;
   border-bottom: 1px solid ${(props) => props.theme.body.border};
+
+  &:nth-last-child(1) {
+    border-bottom: none;
+  }
 `;
 
 export const Brand = styled.div`

@@ -148,9 +148,6 @@ class Navigation extends Component<NavigationProps, any> {
                 <Body>Application</Body>
                 <Label>v{APP_VERSION}</Label>
               </OptionsDoubleRow>
-              <OptionsSingleRow onClick={this.refreshNetwork}>
-                <Body>{this.state.refreshNetwork}</Body>
-              </OptionsSingleRow>
             </OptionsList>
           </>
         )}
