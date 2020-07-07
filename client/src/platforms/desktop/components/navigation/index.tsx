@@ -20,7 +20,6 @@ import {
   Arrow,
   Arr,
   OptionsList,
-  OptionsSingleRow,
   OptionsDoubleRow,
   OptionsIcon,
 } from "./styles";
