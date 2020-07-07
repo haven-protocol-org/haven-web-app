@@ -7,13 +7,19 @@ import { NotificationDuration } from "shared/reducers/notification";
 export const addNotificationByKey = (
   key: any,
   duration = NotificationDuration.DEFAULT,
-  id = uuidv4()
+  id = uuidv4(), templateVars: Array<string> | null = null
 ) => {
-  const statusObj: any = notificationList.find(
+  const messageObject: any = notificationList.find(
     (notification) => notification.key === key
   );
-  statusObj.id = id;
-  return { type: ADD_NOTIFICATION, payload: statusObj };
+  messageObject.id = id;
+
+
+  if (typeof messageObject.message === "function") {
+    messageObject.message = templateVars? messageObject.message(...templateVars): messageObject.message();
+  }
+
+  return { type: ADD_NOTIFICATION, payload: messageObject };
 };
 
 export const addNotificationByMessage = (
@@ -58,12 +64,22 @@ export const addErrorNotification = (
 };
 
 const buildNotification = (
-  message: string,
+  message: string | Function,
   type: string,
-  duration: NotificationDuration
+  duration: NotificationDuration, templateVars: Array<string> | null = null
 ) => {
+
+  let notificationMessage: string;
+  if (typeof message === "function") {
+    notificationMessage = templateVars? message(...templateVars): message();
+  } else{
+    notificationMessage = message;
+  }
+
+
+
   return {
     type: ADD_NOTIFICATION,
-    payload: { type, message, id: uuidv4(), duration },
+    payload: { type, message :notificationMessage, id: uuidv4(), duration },
   };
 };

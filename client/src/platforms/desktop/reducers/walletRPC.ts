@@ -36,3 +36,8 @@ export const selectIsWalletSyncingRemote = (state: DesktopAppState) => {
     return isRemote && isSyncing;
 
 };
+
+
+export const isWalletConnectedToDaemoon = (state: WalletState) => {
+    return state.isConnectedToDaemon && state.isRunning;
+};
