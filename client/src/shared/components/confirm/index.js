@@ -4,6 +4,7 @@ import React from "react";
 // Relative Imports
 import { Container, Message, Checkbox, Check, Description } from "./styles";
 import { Information } from "../../../assets/styles/type.js";
+import Radio from "../_inputs/radio/index.js";
 
 const Confirm = ({ checked, onChange, label, description }) => {
   return (
@@ -15,7 +16,7 @@ const Confirm = ({ checked, onChange, label, description }) => {
       )}
       <Checkbox>
         <Message>{label}</Message>
-        <Check type="checkbox" checked={checked} onChange={onChange} />
+        <Radio type="checkbox" checked={checked} onChange={onChange} />
       </Checkbox>
     </Container>
   );
