@@ -26,9 +26,4 @@ export const Checkbox = styled.div`
   justify-content: space-between;
 `;
 
-export const Check = styled.input`
-  height: 20px;
-  width: 20px;
-`;
-
 export const Description = styled.div``;

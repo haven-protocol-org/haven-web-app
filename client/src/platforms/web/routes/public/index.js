@@ -1,12 +1,11 @@
 // Library Imports
-import React, { Component, lazy, Suspense } from "react";
+import React, { Component, Suspense } from "react";
 //@ts-ignore
 import { Route } from "react-router-dom";
 
 import Loader from "../../../../shared/components/loader";
 import { CreateWeb } from "../../pages/_auth/create";
 import { LoginWeb } from "../../pages/_auth/login";
-
 
 class PublicRoutesWeb extends Component {
   render() {

@@ -10,7 +10,6 @@ import {
 } from "platforms/desktop/actions/transfer";
 import { TxProcessInfo } from "platforms/desktop/reducers/transferProcess";
 import { convertToMoney } from "utility/utility";
-import Confirm from "../../../../shared/components/confirm/index.js";
 
 interface ConfirmTxModalProps {
   transfer: TxProcessInfo;

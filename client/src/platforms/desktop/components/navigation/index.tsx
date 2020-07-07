@@ -26,7 +26,6 @@ import {
 } from "./styles";
 import Icon from "assets/haven.svg";
 import OptionsSVG from "../../../../assets/icons/options.svg";
-import arrow_up from "../../../../assets/icons/arrow-up.svg";
 import { Body, Label } from "../../../../assets/styles/type.js";
 
 import { closeWallet } from "../../actions";
@@ -38,7 +37,6 @@ import {
   APP_VERSION,
 } from "constants/env";
 import { DesktopAppState } from "../../reducers";
-import { Refresh } from "platforms/desktop/components/rescan";
 import { NodeState } from "platforms/desktop/types";
 import { WalletState } from "platforms/desktop/ipc/ipc-types";
 import { selectisLocalNode } from "platforms/desktop/reducers/havenNode";

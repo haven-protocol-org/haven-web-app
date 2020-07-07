@@ -60,7 +60,6 @@ class TransferContainer extends Component<TransferProps, TransferState> {
 
   componentDidMount() {
     window.scrollTo(0, 0);
-    let availableBalance = null;
 
     this.setState({
       selectedAsset: options[0],

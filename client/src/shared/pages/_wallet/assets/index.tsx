@@ -9,7 +9,7 @@ import Overview from "../../../components/_layout/overview";
 import Cell from "../../../components/cell";
 import CellDisabled from "../../../components/cell_disabled";
 
-import {AssetList} from "constants/assets";
+import { AssetList } from "constants/assets";
 import { convertToMoney } from "utility/utility";
 import { Ticker } from "shared/reducers/types";
 import { OFFSHORE_ENABLED } from "constants/env";
@@ -53,7 +53,7 @@ class AssetsPage extends Component<AssetsProps, any> {
       Enabled_TICKER.includes(("x" + asset.ticker) as Ticker)
     );
     return enabledTokens.map((data) => {
-      const { token, ticker, symbol } = data;
+      const { token, ticker } = data;
 
       const xTicker = ("x" + ticker) as Ticker;
 
@@ -69,7 +69,6 @@ class AssetsPage extends Component<AssetsProps, any> {
 
       const value = this.props.assetsInUSD[xTicker]!.unlockedBalance;
       const xRate = 1;
-      const xRateString = symbol + xRate.toFixed(2);
 
       return (
         <Cell

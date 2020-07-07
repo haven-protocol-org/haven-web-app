@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 
 // Relative Imports
-import { Pending, Value, Wrapper, Amount } from "./styles";
+import { Value, Wrapper, Amount } from "./styles";
 import { connect } from "react-redux";
 import { selectWebSyncState } from "platforms/web/reducers/chain";
 import { Spinner } from "../../spinner";
@@ -70,14 +70,10 @@ class Balances extends Component<BalanceProps, BalanceState> {
         ? { prefix: "₿", suffix: "" }
         : { prefix: "Ħ", suffix: "" };
 
-    const { unlockedBalance, lockedBalance, balance } = this.props.balances[
-      ticker
-    ];
+    const { balance } = this.props.balances[ticker];
 
     const totalBalance = prefix + balance.toFixed(4) + suffix;
 
-    const amount = prefix + unlockedBalance.toFixed(4) + suffix;
-    const amountLocked = prefix + lockedBalance.toFixed(4) + suffix;
     const { isSyncing, blockHeight, scannedHeight } = this.props.syncState;
 
     const percentage = ((scannedHeight / blockHeight) * 100).toFixed(2);

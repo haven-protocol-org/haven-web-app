@@ -2,7 +2,7 @@
 import React from "react";
 
 // Relative Imports
-import { Container, Message, Checkbox, Check, Description } from "./styles";
+import { Container, Message, Checkbox, Description } from "./styles";
 import { Information } from "../../../assets/styles/type.js";
 import Radio from "../_inputs/radio/index.js";
 

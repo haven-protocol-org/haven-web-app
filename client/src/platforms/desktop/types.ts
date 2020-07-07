@@ -1,5 +1,3 @@
-import { HavendState } from "platforms/desktop/ipc/ipc-types";
-
 declare global {
   interface Window {
     ipcRenderer: any;

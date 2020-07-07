@@ -4,18 +4,16 @@ import { connect } from "react-redux";
 // Library Imports
 import { selectTheme } from "shared/actions";
 // Relative Imports
-import { Container } from "./styles";
 import Body from "shared/components/_layout/body";
 import Header from "shared/components/_layout/header";
 import Form from "shared/components/_inputs/form";
 import Theme from "shared/components/_inputs/theme";
-// import AddressDropdown from "shared/components/_inputs/addresses_dropdown";
-import Input from "shared/components/_inputs/input";
 import Footer from "shared/components/_inputs/footer/index.js";
+import Mining from "../../../components/animation/index.js";
+// import AddressDropdown from "shared/components/_inputs/addresses_dropdown";
 
 // Implement later
 // import BalanceDropdown from "shared/components/_inputs/balances_dropdown";
-import Mining from "../../../components/animation/index.js";
 
 // » This is the option to enable a user to choose a default balance view
 // const balances: BalanceOption[] = [
