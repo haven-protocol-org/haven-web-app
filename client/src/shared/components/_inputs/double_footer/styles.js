@@ -59,6 +59,15 @@ export const Outline = styled.button`
   outline: none;
   font-size: 15px;
 
+  &:disabled {
+    color: ${(props) => props.theme.type.secondary};
+
+    &:hover {
+      cursor: not-allowed;
+      color: ${(props) => props.theme.type.secondary};
+    }
+  }
+
   &:hover {
     cursor: pointer;
     color: ${(props) => props.theme.type.primary};

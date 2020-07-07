@@ -14,11 +14,14 @@ const DoubleFooter = ({
   rightDisabled,
   rightLoading,
   rightOnClick,
+  onClick,
 }) => {
   return (
     <Container>
-      <Outline leftDisabled={leftDisabled}>{leftLabel}</Outline>
-      <Fill rightDisabled={rightDisabled} rightOnClick={rightOnClick}>
+      <Outline onClick={leftOnClick} disabled={leftDisabled}>
+        {leftLabel}
+      </Outline>
+      <Fill disabled={rightDisabled} onClick={rightOnClick}>
         {rightLoading ? <Spinner /> : rightLabel}
       </Fill>
     </Container>
