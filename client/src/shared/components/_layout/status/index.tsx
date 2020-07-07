@@ -19,7 +19,7 @@ interface StatusProps {
 
 class Status extends React.Component<StatusProps, any> {
   componentDidUpdate(
-    prevProps: Readonly<any>,
+    prevProps: Readonly<StatusProps>,
     prevState: Readonly<any>,
     snapshot?: any
   ): void {
@@ -51,8 +51,6 @@ const mapStateToProps = (state: DesktopAppState | WebAppState) => ({
   notification: getNotification(state),
 });
 
-//@ts-ignore
 export const StatusComponent = connect(mapStateToProps, { removeNotification })(
-  //@ts-ignore
   Status
 );
