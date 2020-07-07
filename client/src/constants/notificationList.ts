@@ -4,8 +4,12 @@ export enum NotificationType {
 }
 
 export const TRANSFER_SUCCEED_MESSAGE = "transfer_succeed_message";
-export const REMOTE_SYNCING = "remote_syncing";
+export const IS_SYNCING_MESSAGE = "syncing_message";
+export const SYNCING_SUCCEED_MESSAGE = "syncing_succeed_message";
 export const INCOMING_TRANSFER_MESSAGE = "incoming_transfer_message";
+
+export const WALLET_IS_CONNECTING = "wallet_is_connecting";
+export const WALLET_CONNECT_SUCCEED = "wallet_connect_succeed";
 
 export const notificationList = [
   {
@@ -330,6 +334,27 @@ export const notificationList = [
     code: 0,
     message: "Your vault is syncing and will be fully functional soon.",
     type: NotificationType.SUCCESS,
-    description: REMOTE_SYNCING,
+    description: IS_SYNCING_MESSAGE,
+  },
+  {
+    key: "",
+    code: 0,
+    message: "Your vault synced and is fully functional.",
+    type: NotificationType.SUCCESS,
+    description: SYNCING_SUCCEED_MESSAGE,
+  },
+  {
+    key: "",
+    code: 0,
+    message: (host: string) => `Your wallet trys to connect to ${host}`,
+    type: NotificationType.SUCCESS,
+    description: WALLET_IS_CONNECTING,
+  },
+  {
+    key: "",
+    code: 0,
+    message: (host: string) => `Your wallet is now connected to ${host}` ,
+    type: NotificationType.SUCCESS,
+    description: WALLET_CONNECT_SUCCEED,
   },
 ];
