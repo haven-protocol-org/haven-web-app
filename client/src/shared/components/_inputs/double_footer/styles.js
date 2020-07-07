@@ -47,7 +47,7 @@ export const Outline = styled.button`
   border: 1px solid ${(props) => props.theme.body.border};
   width: auto;
   min-width: 128px;
-  height: 48px;
+  height: 50px;
   color: ${(props) => props.theme.type.secondary};
   font-size: 16px;
   text-align: center;

@@ -10,41 +10,6 @@ import Form from "shared/components/_inputs/form";
 import Theme from "shared/components/_inputs/theme";
 import Footer from "shared/components/_inputs/footer/index.js";
 import Mining from "../../../components/animation/index.js";
-// import AddressDropdown from "shared/components/_inputs/addresses_dropdown";
-
-// Implement later
-// import BalanceDropdown from "shared/components/_inputs/balances_dropdown";
-
-// » This is the option to enable a user to choose a default balance view
-// const balances: BalanceOption[] = [
-//   { ticker: "USD", value: "United States Dollars", code: "$" },
-//   { ticker: "BTC", value: "Bitcoin", code: "₿" },
-//   { ticker: "XHV", value: "Haven", code: "Ħ" },
-//   { ticker: "--", value: "Hide", code: "-" },
-// ];
-
-// » This is the option to enable the balance dropdown
-/*  <Header
-  title="Balances "
-  description="Select your desired balances view and reference pair"
-/>
-
-<BalanceDropdown
-  label="Overview"
-  placeholder="USD Dollars"
-  name="balances"
-  value={balance}
-  options={balances}
-  onClick={this.setBalance}
-/>
-<BalanceDropdown
-  label="Reference Pair"
-  placeholder="Australian Dollars"
-  name="balances"
-  value={"Canadian Dollars"}
-  options={balances}
-  onClick={this.setBalance}
-/> */
 
 import { dark, light } from "assets/styles/themes.js";
 import { DesktopAppState } from "platforms/desktop/reducers";
@@ -205,23 +170,6 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
             onClick={this.handleClick}
           />
         </Form>
-        {/* <Header
-          title="Addresses"
-          description="Manage the sub-addresses connected to your account"
-        />
-        <>
-          <AddressDropdown
-            width={true}
-            label="Vault Addresses"
-            placeholder="List of addresses"
-            type="text"
-            readOnly={true}
-            name="addresses"
-            value={"xhv...123"}
-            options={addresses}
-            onClick={this.manageAddress}
-          />
-        </>*/}
 
         <HavenNodeSetting />
 
@@ -258,3 +206,23 @@ export const SettingsDesktop = connect(mapStateToProps, {
   stopMining,
   miningStatus,
 })(SettingsDesktopPage);
+
+{
+  /* <Header
+  title="Addresses"
+  description="Manage the sub-addresses connected to your account"
+/>
+<>
+  <AddressDropdown
+    width={true}
+    label="Vault Addresses"
+    placeholder="List of addresses"
+    type="text"
+    readOnly={true}
+    name="addresses"
+    value={"xhv...123"}
+    options={addresses}
+    onClick={this.manageAddress}
+  />
+</>*/
+}

@@ -101,6 +101,7 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
           {qrEnabled ? (
             <DoubleFooter
               leftLabel={"Show QR"}
+              disabled={false}
               rightLabel={this.state.copyButtonState}
               onClick={this.clipboardAddress}
             />

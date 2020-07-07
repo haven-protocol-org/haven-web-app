@@ -5,6 +5,7 @@ import Input from "shared/components/_inputs/input";
 import { Container } from "./styles";
 
 import Footer from "shared/components/_inputs/footer/index.js";
+import DoubleFooter from "shared/components/_inputs/double_footer/index.js";
 import React, { SyntheticEvent } from "react";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { connect } from "react-redux";
@@ -60,6 +61,7 @@ class NodeSettingComponent extends React.Component<
 
   onConnect = (e: SyntheticEvent) => {
     e.preventDefault();
+    console.log("here");
 
     const { address, selectedNodeOption, port } = this.state;
 
@@ -129,11 +131,11 @@ class NodeSettingComponent extends React.Component<
             </>
           )}
           <Container>
-            <Footer
+            <DoubleFooter
               onClick={this.onConnect}
-              loading={false}
-              validated={!isRemoteSyncing}
-              label={isRemoteSyncing === true ? "Syncing..." : "Connect"}
+              disabled={!isRemoteSyncing}
+              leftLabel={isRemoteSyncing === true ? "Syncing..." : "Connect"}
+              rightLabel={"Disconnect"}
             />
           </Container>
         </Form>
