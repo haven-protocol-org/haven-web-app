@@ -39,9 +39,7 @@ export default function (state = INITIAL_STATE, action: AnyAction) {
   }
 }
 
-export const getNotification = (state: DesktopAppState | WebAppState) : HavenNotification | undefined => {
-  if (state.notification.notifications.length > 0) {
-    return state.notification.notifications[0];
-  }
-  return undefined;
+export const getNotification = (state: DesktopAppState | WebAppState) : HavenNotification[] => {
+
+  return state.notification.notifications
 };

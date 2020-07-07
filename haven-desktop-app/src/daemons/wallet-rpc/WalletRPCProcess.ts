@@ -92,10 +92,15 @@ export class WalletRPCProcess extends DaemonProcess {
 
     async requestHandler(requestObject: RPCRequestObject): Promise<any> {
 
+        const setsDaemon = requestObject.method === "set_daemon";
 
-        if (requestObject.method === "set_daemon") {
+        if (setsDaemon) {
+
+
 
             const {address} = requestObject.params;
+            logInDevMode('set daemon to ' + address);
+
             // if address is empty we use the local daemon
             if (address === "") {
                 requestObject.params.address = getLocalDaemon();
@@ -104,10 +109,16 @@ export class WalletRPCProcess extends DaemonProcess {
                 appEventBus.emit(HAVEND_LOCATION_CHANGED, address);
             }
 
-            }
+        }
 
             try {
                 const response = await this.rpcHandler.sendRequest(requestObject);
+
+                // if that was a successfull daemon change we are disconnected to a daemon right away
+                if(setsDaemon) {
+                    this.isConnectedToDaemon = false;
+                }
+
                 return response;
 
             }

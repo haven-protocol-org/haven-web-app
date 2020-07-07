@@ -4,7 +4,6 @@ import Form from "shared/components/_inputs/form";
 import Input from "shared/components/_inputs/input";
 import { Container } from "./styles";
 
-import Footer from "shared/components/_inputs/footer/index.js";
 import DoubleFooter from "shared/components/_inputs/double_footer/index.js";
 import React, { SyntheticEvent } from "react";
 import { DesktopAppState } from "platforms/desktop/reducers";
@@ -33,6 +32,7 @@ export interface NodeSettingProps {
   isRemoteSyncing: boolean;
   localNode: boolean;
   node: NodeState;
+  isConnected: boolean;
   nodeOptions: NodeOption[];
   setHavenNode: (
     selectedNodeOption: NodeOption,
@@ -46,6 +46,7 @@ export interface NodeSettingState {
   address: string;
   port: string;
   connected: boolean;
+  locked: boolean;
 }
 
 class NodeSettingComponent extends React.Component<
@@ -54,25 +55,17 @@ class NodeSettingComponent extends React.Component<
 > {
   state = {
     address: this.props.node.address,
-    connected: false,
+    connected: this.props.isConnected,
+    locked: this.props.isConnected,
     selectedNodeOption: this.props.nodeOptions.find(
       (nodeOption) => nodeOption.address === this.props.node.address
     )!,
     port: this.props.node.port,
   };
 
-  componentDidMount() {
-    this.setState({
-      connected: true,
-    });
-  }
 
   onConnect = (e: SyntheticEvent) => {
     e.preventDefault();
-
-    this.setState({
-      connected: true,
-    });
 
     const { address, selectedNodeOption, port } = this.state;
 
@@ -102,28 +95,46 @@ class NodeSettingComponent extends React.Component<
 
   onDisconnect = () => {
     this.setState({
-      connected: false,
+      locked: false,
     });
   };
+
+  static getDerivedStateFromProps(nextProps: Readonly<NodeSettingProps>, prevState: Readonly<NodeSettingState>) {
+
+    let newState = {};
+
+    // when we are connected to a daemon again lock
+    if (nextProps.isConnected && !prevState.connected) {
+      newState = {...newState, locked: true};
+
+
+      if (nextProps.node.address !== prevState.address){
+        const changes =  {
+          address:nextProps.node.address,
+          selectedNodeOption: nextProps.nodeOptions.find(
+              (nodeOption) => nodeOption.address === nextProps.node.address
+          )!,
+        };
+        newState = {...newState, ...changes}
+      }
+
+    }
+
+    if (nextProps.isConnected !== prevState.connected) {
+      newState = {...newState, connected: nextProps.isConnected}
+    }
+
+
+
+    return newState;
+  }
 
   render() {
     const selectedNodeOption = this.state.selectedNodeOption;
 
     const { isRemoteSyncing } = this.props;
-    const { connected } = this.state;
+    const { locked } = this.state;
 
-    // @marty
-    // Currenty, the componentDidMount sets connected to 'true'
-    // This assumes the node connects by default
-    // When the user clicks "Connect" or "Change" the state is reset
-    // If the state connected=true
-    // The "Connect" button is disabled
-    // The Change button is enabled
-    // The form is disabled
-    // This is to ensure that the use has to manually change nodes
-    // I need you to pass the logic in for the connected state so its not hardcoded
-    // The navigation has most of the logic we need in the button
-    // Lastly the "Connect" button should spin while connecting to a node
 
     return (
       <>
@@ -139,7 +150,7 @@ class NodeSettingComponent extends React.Component<
             value={this.state.selectedNodeOption.name}
             options={this.props.nodeOptions}
             onClick={this.selectLocation}
-            disabled={this.state.connected}
+            disabled={this.state.locked}
           />
           {selectedNodeOption.selectionType === NodeSelectionType.custom && (
             <>
@@ -166,12 +177,12 @@ class NodeSettingComponent extends React.Component<
               // Left section
               onClick={() => {}}
               leftLabel={"Change"}
-              leftDisabled={!connected}
+              leftDisabled={!locked}
               leftOnClick={this.onDisconnect}
               leftLoading={false}
               // Right section
               rightOnClick={this.onConnect}
-              rightDisabled={connected}
+              rightDisabled={locked}
               rightLoading={isRemoteSyncing}
               rightLabel={isRemoteSyncing === true ? "Syncing..." : "Connect"}
             />
@@ -185,6 +196,7 @@ class NodeSettingComponent extends React.Component<
 const mapStateToProps = (state: DesktopAppState) => ({
   node: state.havenNode,
   isRemoteSyncing: selectIsWalletSyncingRemote(state),
+  isConnected: state.walletRPC.isConnectedToDaemon,
   localNode: selectisLocalNode(state.havenNode),
   nodeOptions: createNodeOptions(state.havenNode),
 });

@@ -89,7 +89,6 @@ const sethavenNodeSucceed = (address: string, port: string, location: NodeLocati
   return (dispatch: any) => {
 
     dispatch({type: SET_HAVEN_NODE_SUCCESS, payload:{address, port, location}});
-    dispatch(addNotificationByMessage( NotificationType.SUCCESS, "Good job, you switched you daemon"));
 
   }
 };

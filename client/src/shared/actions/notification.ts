@@ -1,8 +1,8 @@
-import { notificationList, NotificationType } from "constants/notificationList";
-import { uuidv4 } from "utility/utility";
-import { ADD_NOTIFICATION, REMOVE_NOTIFICATION } from "./types";
-import { Ticker } from "../reducers/types";
-import { NotificationDuration } from "shared/reducers/notification";
+import {notificationList, NotificationType} from "constants/notificationList";
+import {uuidv4} from "utility/utility";
+import {ADD_NOTIFICATION, REMOVE_NOTIFICATION} from "./types";
+import {Ticker} from "../reducers/types";
+import {NotificationDuration} from "shared/reducers/notification";
 
 export const addNotificationByKey = (
   key: any,
@@ -20,7 +20,20 @@ export const addNotificationByKey = (
     messageObject.message = templateVars? messageObject.message(...templateVars): messageObject.message();
   }
 
-  return { type: ADD_NOTIFICATION, payload: messageObject };
+
+
+
+  return (dispatch: any) =>  {
+
+    dispatch(  { type: ADD_NOTIFICATION, payload: messageObject });
+
+    if ( duration !== NotificationDuration.STICKY ) {
+      dispatch(removeNotification(messageObject.id))
+    }
+
+    }
+
+
 };
 
 export const addNotificationByMessage = (
@@ -29,7 +42,16 @@ export const addNotificationByMessage = (
   duration = NotificationDuration.DEFAULT
 ) => {
   const statusObj = { type, message, id: uuidv4(), duration };
-  return { type: ADD_NOTIFICATION, payload: statusObj };
+
+  return (dispatch: any) =>  {
+
+    dispatch(  { type: ADD_NOTIFICATION, payload: statusObj });
+
+    if ( duration !== NotificationDuration.STICKY ) {
+      dispatch(removeNotification(statusObj.id))
+    }
+  }
+
 };
 
 export const addExchangeSucceedMessage = (
@@ -54,12 +76,18 @@ export const addErrorNotification = (
     (notification) => notification.code === error.code
   );
 
-  if (errorNotification)
-    return {
-      type: ADD_NOTIFICATION,
-      payload: { ...errorNotification, id: uuidv4() },
-    };
+  if (errorNotification) {
+    const id = uuidv4();
+    return (dispatch: any) =>  {
 
+      dispatch(  { type: ADD_NOTIFICATION, payload: {...errorNotification, id} });
+
+      if ( duration !== NotificationDuration.STICKY ) {
+        dispatch(removeNotification(id))
+      }
+    }
+
+  }
   const message = error.message || error.err_msg;
   return buildNotification(message, NotificationType.ERROR, duration);
 };
@@ -76,11 +104,15 @@ const buildNotification = (
   } else{
     notificationMessage = message;
   }
+  const id = uuidv4();
+  return (dispatch: any) =>  {
 
+    dispatch(  { type: ADD_NOTIFICATION, payload: { type, message :notificationMessage, id, duration }, });
 
+    if ( duration !== NotificationDuration.STICKY ) {
+      dispatch(removeNotification(id))
+    }
+  }
 
-  return {
-    type: ADD_NOTIFICATION,
-    payload: { type, message :notificationMessage, id: uuidv4(), duration },
-  };
 };
+

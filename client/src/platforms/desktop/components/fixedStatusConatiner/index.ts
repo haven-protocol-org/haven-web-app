@@ -16,10 +16,13 @@ import {NotificationDuration} from "shared/reducers/notification";
 
 
 interface FixedStatusProps {
+    daemonUrl: string;
     isSyncing: boolean;
     isWalletConnected: boolean;
-    addNotificationByKey:typeof addNotificationByKey;
-    removeNotification: typeof removeNotification;
+    addNotificationByKey:(  key: any,
+                            duration?: NotificationDuration,
+                            id?: string, templateVars?: Array<string> | null) => void,
+    removeNotification: (id: string) => void;
 }
 
 
@@ -65,7 +68,7 @@ class FixedStatusContainer extends Component<FixedStatusProps,any> {
         // show a trying to connect message
         if (!isWalletConnectedNow && didWalletConnectBefore && !this.tryingConnectMessageID) {
             const id  = uuidv4();
-            this.props.addNotificationByKey(WALLET_IS_CONNECTING, NotificationDuration.STICKY, id);
+            this.props.addNotificationByKey(WALLET_IS_CONNECTING, NotificationDuration.STICKY, id, [this.props.daemonUrl]);
             this.tryingConnectMessageID = id;
         }
 
@@ -92,7 +95,8 @@ class FixedStatusContainer extends Component<FixedStatusProps,any> {
 
 const mapStateToProps = (state: DesktopAppState) => ({
     isSyncing: selectDesktopSyncState(state).isSyncing,
-    isWalletConnected: isWalletConnectedToDaemoon(state.walletRPC)
+    isWalletConnected: isWalletConnectedToDaemoon(state.walletRPC),
+    daemonUrl: state.havenNode.address
 });
 
 
