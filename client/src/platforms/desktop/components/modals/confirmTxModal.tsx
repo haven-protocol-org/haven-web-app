@@ -20,6 +20,16 @@ interface ConfirmTxModalProps {
 }
 
 class ConfirmTxModal extends React.Component<ConfirmTxModalProps, any> {
+  state = {
+    checked: false,
+  };
+
+  approveTransfer = () => {
+    this.setState({
+      checked: !this.state.checked,
+    });
+  };
+
   render() {
     const {
       paymentId,
@@ -28,9 +38,12 @@ class ConfirmTxModal extends React.Component<ConfirmTxModalProps, any> {
       address,
       fee,
     } = this.props.transfer;
+    const { checked } = this.state;
 
     const readableFee = convertToMoney(fee);
     const readableAmount = convertToMoney(fromAmount);
+    console.log("########################");
+    console.log("CHECKED", this.state.checked);
 
     return (
       <Modal
@@ -38,13 +51,13 @@ class ConfirmTxModal extends React.Component<ConfirmTxModalProps, any> {
         description="Please review and confirm your transaction"
         leftButton="Cancel"
         rightButton="Confirm"
-        disabled={false}
+        disabled={!checked}
         onConfirm={() => this.onConfirm()}
         onCancel={() => this.onCancel()}
       >
         <Transaction
-          onChange={() => {}}
-          checked={true}
+          onChange={this.approveTransfer}
+          checked={this.state.checked}
           paymentId={paymentId === "" ? "--" : paymentId}
           recipientAddress={address}
           ticker={fromTicker}
