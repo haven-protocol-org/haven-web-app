@@ -63,6 +63,11 @@ export abstract class DaemonProcess implements IDaemonManager {
     }
 
     public killDaemon(): void {
+
+        if (isDevMode) {
+            console.log(`try to kil ${this.type}`);
+        }
+
         this.daemonProcess.kill();
     }
 
@@ -100,7 +105,7 @@ export abstract class DaemonProcess implements IDaemonManager {
         this._isRunning = false;
 
         if (isDevMode) {
-            console.log('daemon exit : ' + code);
+            console.log(`${this.type} exit with ${code}`);
         }
     }
 

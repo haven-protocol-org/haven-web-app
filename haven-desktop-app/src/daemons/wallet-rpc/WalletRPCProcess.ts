@@ -46,14 +46,26 @@ export class WalletRPCProcess extends DaemonProcess {
             console.error('wallet stderr : ' + chunk.toString());
         }
 
-
-
     }
 
     onstdoutData(chunk: any): void {
 
         if (isDevMode) {
-            console.error('wallet stdout : ' + chunk.toString());
+          //  console.error('wallet stdout : ' + chunk.toString());
+        }
+
+
+        if ((chunk.toString()).includes(CONNECTION_TO_DAEMON_SUCCESS)) {
+            this.isConnectedToDaemon = true;
+        }
+
+
+        if ((chunk.toString()).includes(NO_CONNECTION_MESSAGE)) {
+            this.isConnectedToDaemon = false;
+        }
+
+        if (this._isHavendLocal) {
+            return;
         }
 
         let m;
@@ -72,14 +84,6 @@ export class WalletRPCProcess extends DaemonProcess {
             });
         }
 
-        if ((chunk.toString()).includes(CONNECTION_TO_DAEMON_SUCCESS)) {
-            this.isConnectedToDaemon = true;
-        }
-
-
-        if ((chunk.toString()).includes(NO_CONNECTION_MESSAGE)) {
-            this.isConnectedToDaemon = false;
-        }
         if ((chunk as string).includes(REFRESH_DONE_MESSAGE)){
             this.isSyncing = false;
         }

@@ -9,6 +9,7 @@ import { PrivateRoutesDesktop } from "./routes/private";
 import { StatusComponent } from "../../shared/components/_layout/status";
 import { HashRouter } from "react-router-dom";
 import { ModalContainerDesktop } from "./components/modalContainer";
+import {FixedStatus} from "./components/fixedStatusConatiner";
 
 class App extends Component {
   render() {
@@ -17,6 +18,7 @@ class App extends Component {
         <HashRouter history={history}>
           <NavigationDesktop />
           <ModalContainerDesktop />
+          <FixedStatus/>
           <StatusComponent />
           <PublicRoutesDesktop />
           <Route path="/wallet" component={PrivateRoutesDesktop} />

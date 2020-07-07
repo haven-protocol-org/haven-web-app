@@ -18,6 +18,8 @@ import {NotificationDuration} from "shared/reducers/notification";
 interface FixedStatusProps {
     isSyncing: boolean;
     isWalletConnected: boolean;
+    addNotificationByKey:typeof addNotificationByKey;
+    removeNotification: typeof removeNotification;
 }
 
 
@@ -35,26 +37,24 @@ class FixedStatusContainer extends Component<FixedStatusProps,any> {
         this.checkAndHandleSyncState(prevProps.isSyncing, this.props.isSyncing);
         this.checkAndHandleConnectionState(prevProps.isWalletConnected, this.props.isWalletConnected);
 
-
-
     }
 
 
     checkAndHandleSyncState(didSyncBefore : boolean, isSyncingNow: boolean) {
 
         // show a sync message
-        if (!didSyncBefore && isSyncingNow && !this.syncingMessageID) {
+        if (isSyncingNow && !this.syncingMessageID) {
             const id  = uuidv4();
-            addNotificationByKey(IS_SYNCING_MESSAGE, NotificationDuration.STICKY, id);
+            this.props.addNotificationByKey(IS_SYNCING_MESSAGE, NotificationDuration.STICKY, id);
             this.syncingMessageID = id;
         }
 
         // if sync succeed, remove fixed message and show success message
-        if (didSyncBefore && !isSyncingNow && this.syncingMessageID) {
+        if (!isSyncingNow && this.syncingMessageID) {
 
-            removeNotification(this.syncingMessageID);
+            this.props.removeNotification(this.syncingMessageID);
             this.syncingMessageID = null;
-            addNotificationByKey(SYNCING_SUCCEED_MESSAGE);
+            this.props.addNotificationByKey(SYNCING_SUCCEED_MESSAGE);
         }
 
     }
@@ -65,16 +65,16 @@ class FixedStatusContainer extends Component<FixedStatusProps,any> {
         // show a trying to connect message
         if (!isWalletConnectedNow && didWalletConnectBefore && !this.tryingConnectMessageID) {
             const id  = uuidv4();
-            addNotificationByKey(WALLET_IS_CONNECTING, NotificationDuration.STICKY, id);
+            this.props.addNotificationByKey(WALLET_IS_CONNECTING, NotificationDuration.STICKY, id);
             this.tryingConnectMessageID = id;
         }
 
         // if connection succeed, remove fixed message and show success message
         if (!didWalletConnectBefore && isWalletConnectedNow && this.tryingConnectMessageID) {
 
-            removeNotification(this.tryingConnectMessageID);
+            this.props.removeNotification(this.tryingConnectMessageID);
             this.tryingConnectMessageID = null;
-            addNotificationByKey(WALLET_CONNECT_SUCCEED);
+            this.props.addNotificationByKey(WALLET_CONNECT_SUCCEED);
         }
 
 

@@ -13,6 +13,7 @@ export const addNotificationByKey = (
     (notification) => notification.key === key
   );
   messageObject.id = id;
+  messageObject.duration = duration;
 
 
   if (typeof messageObject.message === "function") {
