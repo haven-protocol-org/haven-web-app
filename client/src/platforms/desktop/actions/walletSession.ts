@@ -14,7 +14,7 @@ export const closeWallet = () => {
 
 
     if (isDevMode()) {
-      storeWalletRPC()
+      closeWalletRPC()
           .catch((err) => console.log(err))
           // .then(() => closeWalletRPC())
           .then(() => dispatch(closeWalletSucceed()));

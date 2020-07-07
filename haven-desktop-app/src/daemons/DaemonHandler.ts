@@ -11,10 +11,8 @@ import {DAEMON_METHODS, WALLET_METHODS} from "../daemons/enum";
 
 export class DaemonHandler {
 
-
     private havend:IDaemonManager;
     private rpcWallet:IDaemonManager;
-
 
     public startDaemons() {
 
@@ -27,10 +25,11 @@ export class DaemonHandler {
 
     }
 
-
-
-
     public stopDaemons() {
+
+        ipcMain.removeHandler( CommunicationChannel.HAVEND );
+        ipcMain.removeHandler( CommunicationChannel.WALLET_RPC );
+        ipcMain.removeHandler( CommunicationChannel.RPC );
 
 
         if (this.havend.isRunning()) {
@@ -44,15 +43,10 @@ export class DaemonHandler {
 
          this.checkIfDaemonsQuit();
 
-        ipcMain.removeHandler( CommunicationChannel.HAVEND );
-        ipcMain.removeHandler( CommunicationChannel.WALLET_RPC );
-        ipcMain.removeHandler( CommunicationChannel.RPC );
-
     }
 
 
     private requestHandler(requestObject: RPCRequestObject): Promise<any> {
-
 
 
         const isWalletMethod =  WALLET_METHODS.some(
@@ -69,20 +63,34 @@ export class DaemonHandler {
         if (isHavendMethod) {
             return this.havend.requestHandler(requestObject);
         }
-
         return {data:{error: 'method not found'}} as any;
-
-
     }
 
 
     public checkIfDaemonsQuit(): void {
 
-        if (this.rpcWallet.isRunning() === false && this.havend.isRunning() === false) {
+        if (this.daemonsKilled()) {
             appEventBus.emit(DAEMONS_STOPPED_EVENT);
+            return;
         }
-
+        this.addDaemonsQuitChecker();
     }
 
 
+    private daemonsKilled () {
+        return this.rpcWallet.isRunning() === false && this.havend.isRunning() === false
+    }
+
+    private addDaemonsQuitChecker() {
+
+
+        const i = setInterval( () => {
+
+            if (this.daemonsKilled()) {
+                clearInterval(i);
+                appEventBus.emit(DAEMONS_STOPPED_EVENT);
+            }
+        }, 500 )
+
+    }
 }

@@ -8,6 +8,8 @@ import {LOCAL_DAEMON_MAP} from "../../daemons/config/enum";
 
 const configFileName = 'daemon_config.json';
 
+let daemonConfig: IConfig;
+
 const configFilePath = path.join(
     APP_DATA_PATH,
     configFileName
@@ -58,6 +60,7 @@ export const updateDaemonUrlInConfig = (daemonUrl: string) => {
   const configJson = JSON.stringify(config);
 
   fs.writeFileSync(configFilePath, configJson, 'utf8');
+  daemonConfig = readDaemonConfig();
 
 
 };
@@ -65,13 +68,22 @@ export const updateDaemonUrlInConfig = (daemonUrl: string) => {
 
 export const getDaemonConfig = (): IConfig => {
 
+  if (!daemonConfig) {
+    daemonConfig = readDaemonConfig();
+  }
+  return daemonConfig;
+};
+
+
+const readDaemonConfig = (): IConfig => {
+
   if (isDevMode) {
     console.log(configFilePath)
   }
 
-    const fileBuffer = fs.readFileSync(configFilePath);
+  const fileBuffer = fs.readFileSync(configFilePath);
 
-    return JSON.parse(fileBuffer.toString())
+  return JSON.parse(fileBuffer.toString())
 
 };
 
