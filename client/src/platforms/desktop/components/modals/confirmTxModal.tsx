@@ -22,6 +22,7 @@ interface ConfirmTxModalProps {
 class ConfirmTxModal extends React.Component<ConfirmTxModalProps, any> {
   state = {
     checked: false,
+    loading: false,
   };
 
   approveTransfer = () => {
@@ -42,8 +43,6 @@ class ConfirmTxModal extends React.Component<ConfirmTxModalProps, any> {
 
     const readableFee = convertToMoney(fee);
     const readableAmount = convertToMoney(fromAmount);
-    console.log("########################");
-    console.log("CHECKED", this.state.checked);
 
     return (
       <Modal
@@ -52,6 +51,7 @@ class ConfirmTxModal extends React.Component<ConfirmTxModalProps, any> {
         leftButton="Cancel"
         rightButton="Confirm"
         disabled={!checked}
+        isLoading={this.state.loading}
         onConfirm={() => this.onConfirm()}
         onCancel={() => this.onCancel()}
       >
@@ -75,7 +75,12 @@ class ConfirmTxModal extends React.Component<ConfirmTxModalProps, any> {
 
   onConfirm() {
     const { metaData } = this.props.transfer;
-    this.props.confirmTransfer(metaData);
+    this.setState({
+      loading: true,
+    });
+    setTimeout(() => {
+      this.props.confirmTransfer(metaData);
+    }, 3000);
   }
 }
 

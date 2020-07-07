@@ -1,5 +1,5 @@
 // Library Imports
-import React, { use } from "react";
+import React from "react";
 
 // Relative Imports
 import {
@@ -14,18 +14,21 @@ import {
   Details,
   Inner,
 } from "./styles";
+
 import {
   Title,
   Description,
   Information,
 } from "../../../assets/styles/type.js";
+import { Spinner } from "../spinner/index.js";
 
 export const Modal = ({
   title,
   description,
-  rightButton,
   leftButton,
+  rightButton,
   disabled,
+  isLoading,
   onCancel,
   onConfirm,
   children,
@@ -55,7 +58,7 @@ export const Modal = ({
             <Footer>
               <Cancel onClick={onCancel}>{leftButton}</Cancel>
               <Confirm onClick={onConfirm} disabled={disabled}>
-                {rightButton}
+                {isLoading ? <Spinner /> : rightButton}
               </Confirm>
             </Footer>
           </Body>

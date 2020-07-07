@@ -3,7 +3,7 @@ import { DesktopAppState } from "platforms/desktop/reducers";
 import { connect } from "react-redux";
 import {
   confirmExchange,
-  resetExchangeProcess
+  resetExchangeProcess,
 } from "platforms/desktop/actions";
 import { Modal } from "shared/components/modal";
 import { ExchangeProcessInfo } from "platforms/desktop/reducers/exchangeProcess";
@@ -27,7 +27,8 @@ class ConfirmExchangeModal extends React.Component<
       fromAmount,
       toAmount,
       fromTicker,
-      toTicker, fee
+      toTicker,
+      fee,
     } = this.props.exchange;
 
     return (
@@ -36,6 +37,7 @@ class ConfirmExchangeModal extends React.Component<
         description="Please confirm and finalize your exchange transaction"
         leftButton="Cancel"
         rightButton="Confirm"
+        isLoading={false}
         onCancel={() => this.onCancel()}
         onConfirm={() => this.onConfirm()}
         disabled={false}
@@ -71,10 +73,11 @@ class ConfirmExchangeModal extends React.Component<
 }
 
 const mapStateToProps = (state: DesktopAppState) => ({
-  exchange: state.exchangeProcess
+  exchange: state.exchangeProcess,
 });
 
-export const ConfirmExchangeModalDesktop = connect(
-  mapStateToProps,
-  { confirmExchange, hideModal, resetExchangeProcess }
-)(ConfirmExchangeModal);
+export const ConfirmExchangeModalDesktop = connect(mapStateToProps, {
+  confirmExchange,
+  hideModal,
+  resetExchangeProcess,
+})(ConfirmExchangeModal);

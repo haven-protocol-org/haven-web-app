@@ -60,6 +60,8 @@ class TransferContainer extends Component<TransferProps, TransferState> {
 
   componentDidMount() {
     window.scrollTo(0, 0);
+    let availableBalance = null;
+
     this.setState({
       selectedAsset: options[0],
     });
@@ -138,7 +140,6 @@ class TransferContainer extends Component<TransferProps, TransferState> {
 
     const checkValidation =
       send_amount.length > 0 && recipient_address.length > 97;
-    // && this.state.reviewed;
 
     const windowWidth = window.innerWidth;
 
