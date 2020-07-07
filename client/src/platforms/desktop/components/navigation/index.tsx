@@ -18,6 +18,7 @@ import {
   Menu,
   Options,
   Arrow,
+  Arr,
   OptionsList,
   OptionsSingleRow,
   OptionsDoubleRow,
@@ -134,7 +135,9 @@ class Navigation extends Component<NavigationProps, any> {
         {this.state.showOptions && (
           <>
             <OptionsList>
-              <Arrow src={arrow_up} />
+              <Arrow>
+                <Arr />
+              </Arrow>
               <OptionsDoubleRow>
                 <Body>Network</Body>
                 <Label>{current_network}</Label>

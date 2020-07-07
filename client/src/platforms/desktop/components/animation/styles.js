@@ -20,7 +20,6 @@ export const Brand = styled.div`
 export const Logo = styled.img`
   height: 24px;
   width: auto;
-  fill: red;
 `;
 
 export const Haven = styled.div`

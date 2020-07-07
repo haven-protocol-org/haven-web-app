@@ -1,6 +1,6 @@
 import styled, { keyframes } from "styled-components";
 import { Link } from "react-router-dom";
-import media from "../../../../assets/styles/media.js";
+import { ReactComponent as ArrowUp } from "../../../../assets/icons/arrow-up.svg";
 
 const appear = keyframes`
   0% { transform: translateY(-20px);  }
@@ -31,6 +31,28 @@ export const Logo = styled.img`
   width: auto;
 `;
 
+export const Arrow = styled.div`
+  height: auto;
+  width: 20px;
+  background: white;
+  right: 8px;
+  position: absolute;
+  z-index: 999;
+`;
+
+export const Arr = styled(ArrowUp)`
+  position: fixed;
+  margin-top: -7px;
+
+  .bg {
+    fill: ${(props) => props.theme.body.foreground};
+  }
+
+  .outline {
+    stroke: ${(props) => props.theme.body.border};
+  }
+`;
+
 export const Options = styled.button`
   height: 64px;
   width: 64px;
@@ -40,7 +62,7 @@ export const Options = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  border-left: 1px solid ${(props) => props.theme.body.border};
+  border-left: 1px solid #3a4048;
 
   &:hover {
     cursor: pointer;
@@ -51,7 +73,7 @@ export const OptionsList = styled.div`
   height: auto;
   min-height: 140px;
   width: 280px;
-  background: ${(props) => props.theme.body.foreground};
+  background: ${(props) => props.theme.body.foreground}
   border: 1px solid ${(props) => props.theme.body.border};
   border-radius: 4px;
   position: fixed;
@@ -60,15 +82,6 @@ export const OptionsList = styled.div`
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
   z-index: 1000;
   animation: ${appear} 0.5s forwards;
-`;
-
-export const Arrow = styled.img`
-  height: auto;
-  width: 20px;
-  margin-top: -8px;
-  right: 8px;
-  position: absolute;
-  z-index: 999;
 `;
 
 export const OptionsIcon = styled.img`
@@ -99,6 +112,7 @@ export const OptionsDoubleRow = styled.div`
   align-items: center;
   justify-content: space-between;
   font-size: 14px;
+  align-items: center;
   border-bottom: 1px solid ${(props) => props.theme.body.border};
 `;
 
