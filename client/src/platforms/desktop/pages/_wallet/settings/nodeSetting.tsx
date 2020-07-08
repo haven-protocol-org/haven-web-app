@@ -174,7 +174,7 @@ class NodeSettingComponent extends React.Component<
             <Information>
               Your vault is connected to a {this.state.selectedNodeOption.name}.
               To change nodes click "Disconnect", select a new node from the
-              dropdown, then click "Conenct".
+              dropdown, then click "Connect".
             </Information>
             <DoubleFooter
               // Left section
