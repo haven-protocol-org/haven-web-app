@@ -101,10 +101,10 @@ class Navigation extends Component<NavigationProps, any> {
                 <Tag>{current_network}</Tag>
               </Row>
             </Wrapper>
-            {isDevMode && wallet.isRunning && !wallet.isConnectedToDaemon && (
+            {isDevMode() && wallet.isRunning && !wallet.isConnectedToDaemon && (
               <State isActive={false}>Wallet not connected to a daemon</State>
             )}
-            {isDevMode && wallet.isRunning && wallet.isConnectedToDaemon && (
+            {isDevMode() && wallet.isRunning && wallet.isConnectedToDaemon && (
               <State isActive={true}>
                 Wallet connected to a {isLocalNode ? "local" : "remote"} daemon
               </State>
