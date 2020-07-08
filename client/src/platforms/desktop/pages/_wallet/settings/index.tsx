@@ -206,23 +206,3 @@ export const SettingsDesktop = connect(mapStateToProps, {
   stopMining,
   miningStatus,
 })(SettingsDesktopPage);
-
-{
-  /* <Header
-  title="Addresses"
-  description="Manage the sub-addresses connected to your account"
-/>
-<>
-  <AddressDropdown
-    width={true}
-    label="Vault Addresses"
-    placeholder="List of addresses"
-    type="text"
-    readOnly={true}
-    name="addresses"
-    value={"xhv...123"}
-    options={addresses}
-    onClick={this.manageAddress}
-  />
-</>*/
-}
