@@ -22,7 +22,7 @@ const DoubleFooter = ({
         {leftLabel}
       </Outline>
       <Fill disabled={rightDisabled} onClick={rightOnClick}>
-        {rightLoading ? <Spinner /> : rightLabel}
+        {rightLabel === "Loading" ? <Spinner /> : rightLabel}
       </Fill>
     </Container>
   );

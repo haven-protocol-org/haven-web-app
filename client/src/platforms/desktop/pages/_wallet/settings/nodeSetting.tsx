@@ -127,10 +127,34 @@ class NodeSettingComponent extends React.Component<
     return newState;
   }
 
+  buttonLogic = () => {
+    const { locked } = this.state;
+    const { localNode, isConnected, isRemoteSyncing } = this.props;
+    const { address, isRunning, location } = this.props.node;
+
+    if (!locked && localNode && !isConnected) {
+      return "Connect";
+    } else if (locked && localNode && !isConnected) {
+      // Don't change this label as it's equality checked on child
+      return "Loading";
+    } else if (locked && localNode && isConnected) {
+      return "Connected";
+    } else if (!locked && !localNode && !isConnected) {
+      return "Connect";
+    } else if (locked && !localNode && !isConnected) {
+      // Don't change this label as it's equality checked on child
+      return "Loading";
+    } else if (locked && !localNode && isConnected) {
+      return "Connected";
+    } else {
+      return "Connect";
+    }
+  };
+
   render() {
     const selectedNodeOption = this.state.selectedNodeOption;
-
     const { isRemoteSyncing } = this.props;
+    const { address } = this.props.node;
     const { locked } = this.state;
 
     return (
@@ -172,9 +196,10 @@ class NodeSettingComponent extends React.Component<
 
           <Container>
             <Information>
-              Your vault is connected to a {this.state.selectedNodeOption.name}.
-              To change nodes click "Disconnect", select a new node from the
-              dropdown, then click "Connect".
+              Vault is connected to a{" "}
+              <strong>{this.state.selectedNodeOption.name}</strong>. Change
+              nodes by clicking <strong>Disconnect</strong>, then select a new
+              node from the dropdown, then click <strong>Connect</strong>.
             </Information>
             <DoubleFooter
               // Left section
@@ -187,7 +212,7 @@ class NodeSettingComponent extends React.Component<
               rightOnClick={this.onConnect}
               rightDisabled={locked}
               rightLoading={isRemoteSyncing}
-              rightLabel={isRemoteSyncing === true ? "Syncing..." : "Connect"}
+              rightLabel={this.buttonLogic()}
             />
           </Container>
         </Form>
