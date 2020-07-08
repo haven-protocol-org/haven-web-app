@@ -33,7 +33,7 @@ const copyTargetNodesToBuild = (buildPath, electronVersion,platform, arch, callb
 
 
     fs.mkdirSync( path.resolve( buildPath, `./haven-node/${platform}/`), {recursive:true});
-    ncp(path.resolve(__dirname, `./haven-node/${platform}/`), path.resolve( buildPath, `./haven-node/${platform}/`), (err) =>{
+    ncp(path.resolve(__dirname, `./haven-node/${platform}/stagenet/`), path.resolve( buildPath, `./haven-node/${platform}/stagenet/`), (err) =>{
 
         if (err){
             console.log(err);
