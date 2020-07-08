@@ -67,8 +67,11 @@ class FixedStatusContainer extends Component<FixedStatusProps,any> {
 
         // show a trying to connect message
         if (!isWalletConnectedNow && didWalletConnectBefore && !this.tryingConnectMessageID) {
+
+            const nodeName = this.props.daemonUrl === "" ? 'local node' : this.props.daemonUrl;
+
             const id  = uuidv4();
-            this.props.addNotificationByKey(WALLET_IS_CONNECTING, NotificationDuration.STICKY, id, [this.props.daemonUrl]);
+            this.props.addNotificationByKey(WALLET_IS_CONNECTING, NotificationDuration.STICKY, id, [nodeName]);
             this.tryingConnectMessageID = id;
         }
 

@@ -9,15 +9,17 @@ export const addNotificationByKey = (
   duration = NotificationDuration.DEFAULT,
   id = uuidv4(), templateVars: Array<string> | null = null
 ) => {
-  const messageObject: any = notificationList.find(
+  const notification: any = notificationList.find(
     (notification) => notification.key === key
   );
-  messageObject.id = id;
-  messageObject.duration = duration;
+
+  const shownMessage = {...notification};
+  shownMessage.id = id;
+  shownMessage.duration = duration;
 
 
-  if (typeof messageObject.message === "function") {
-    messageObject.message = templateVars? messageObject.message(...templateVars): messageObject.message();
+  if (typeof shownMessage.message === "function") {
+    shownMessage.message = templateVars? shownMessage.message(...templateVars): shownMessage.message();
   }
 
 
@@ -25,10 +27,10 @@ export const addNotificationByKey = (
 
   return (dispatch: any) =>  {
 
-    dispatch(  { type: ADD_NOTIFICATION, payload: messageObject });
+    dispatch(  { type: ADD_NOTIFICATION, payload: shownMessage });
 
     if ( duration !== NotificationDuration.STICKY ) {
-      dispatch(removeNotification(messageObject.id))
+      dispatch(removeNotification(shownMessage.id))
     }
 
     }
