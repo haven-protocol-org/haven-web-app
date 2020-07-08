@@ -24,8 +24,7 @@ import light from "../../../../assets/haven-dark.svg";
 
 const Mining = ({ status, mining, hash, children }) => {
   const themeContext = useContext(ThemeContext);
-  console.log("############################");
-  console.log("Current theme: ", themeContext.value);
+
   return (
     <Container>
       <Header>
