@@ -332,14 +332,14 @@ export const notificationList = [
   {
     key: IS_SYNCING_MESSAGE,
     code: 0,
-    message: "Your Vault is syncing and will be fully functional soon.",
+    message: "Vault is syncing and will be fully functional soon.",
     type: NotificationType.SUCCESS,
     description: IS_SYNCING_MESSAGE,
   },
   {
     key: SYNCING_SUCCEED_MESSAGE,
     code: 0,
-    message: "Your Vault synced and is fully functional.",
+    message: "Vault has synced and can now be used. Enjoy.",
     type: NotificationType.SUCCESS,
     description: SYNCING_SUCCEED_MESSAGE,
   },
