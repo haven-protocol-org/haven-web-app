@@ -13,6 +13,7 @@ import { setHavenNode } from "platforms/desktop/actions/havenNode";
 import { NodeLocation, NodeState } from "platforms/desktop/types";
 import { REMOTE_NODES } from "platforms/desktop/nodes";
 import { selectIsWalletSyncingRemote } from "platforms/desktop/reducers/walletRPC";
+import { Information } from "../../../../../assets/styles/type.js";
 
 enum NodeSelectionType {
   local,
@@ -63,7 +64,6 @@ class NodeSettingComponent extends React.Component<
     port: this.props.node.port,
   };
 
-
   onConnect = (e: SyntheticEvent) => {
     e.preventDefault();
 
@@ -99,32 +99,30 @@ class NodeSettingComponent extends React.Component<
     });
   };
 
-  static getDerivedStateFromProps(nextProps: Readonly<NodeSettingProps>, prevState: Readonly<NodeSettingState>) {
-
+  static getDerivedStateFromProps(
+    nextProps: Readonly<NodeSettingProps>,
+    prevState: Readonly<NodeSettingState>
+  ) {
     let newState = {};
 
     // when we are connected to a daemon again lock
     if (nextProps.isConnected && !prevState.connected) {
-      newState = {...newState, locked: true};
+      newState = { ...newState, locked: true };
 
-
-      if (nextProps.node.address !== prevState.address){
-        const changes =  {
-          address:nextProps.node.address,
+      if (nextProps.node.address !== prevState.address) {
+        const changes = {
+          address: nextProps.node.address,
           selectedNodeOption: nextProps.nodeOptions.find(
-              (nodeOption) => nodeOption.address === nextProps.node.address
+            (nodeOption) => nodeOption.address === nextProps.node.address
           )!,
         };
-        newState = {...newState, ...changes}
+        newState = { ...newState, ...changes };
       }
-
     }
 
     if (nextProps.isConnected !== prevState.connected) {
-      newState = {...newState, connected: nextProps.isConnected}
+      newState = { ...newState, connected: nextProps.isConnected };
     }
-
-
 
     return newState;
   }
@@ -134,7 +132,6 @@ class NodeSettingComponent extends React.Component<
 
     const { isRemoteSyncing } = this.props;
     const { locked } = this.state;
-
 
     return (
       <>
@@ -172,11 +169,17 @@ class NodeSettingComponent extends React.Component<
               />
             </>
           )}
+
           <Container>
+            <Information>
+              Your vault is connected to a {this.state.selectedNodeOption.name}.
+              To change nodes click "Disconnect", select a new node from the
+              dropdown, then click "Conenct".
+            </Information>
             <DoubleFooter
               // Left section
               onClick={() => {}}
-              leftLabel={"Change"}
+              leftLabel={"Disconnect"}
               leftDisabled={!locked}
               leftOnClick={this.onDisconnect}
               leftLoading={false}
