@@ -12,25 +12,18 @@ import { connect } from "react-redux";
 import React from "react";
 
 interface StatusProps {
-  notifications: HavenNotification [];
+  notifications: HavenNotification[];
   removeNotification: typeof removeNotification;
 }
 
 class Status extends React.Component<StatusProps, any> {
-
   render() {
     if (!this.props.notifications) return null;
-    return (
-        this.props.notifications.map(notification => (
-              <Container>
-
-              <Content type={notification.type}>
-              {notification.message}
-            </Content>
-              </Container>
-
-          )))
-    ;
+    return this.props.notifications.map((notification) => (
+      <Container>
+        <Content type={notification.type}>{notification.message}</Content>
+      </Container>
+    ));
   }
 }
 

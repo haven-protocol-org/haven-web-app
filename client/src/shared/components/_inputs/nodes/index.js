@@ -46,7 +46,7 @@ class Nodes extends React.Component {
 
   render() {
     const { displayMenu } = this.state;
-    const { label, error, value, disabled } = this.props;
+    const { label, error, value } = this.props;
 
     return (
       <Container>
