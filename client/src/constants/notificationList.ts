@@ -346,7 +346,7 @@ export const notificationList = [
   {
     key: WALLET_IS_CONNECTING,
     code: 0,
-    message: (host: string) => `$Vault is connecting to ${host}`,
+    message: (host: string) => `Vault is connecting to ${host}`,
     type: NotificationType.SUCCESS,
     description: WALLET_IS_CONNECTING,
   },
