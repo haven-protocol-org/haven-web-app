@@ -43,7 +43,7 @@ interface TransferState {
   recipient_address: string;
   payment_id: string;
   amountError: string;
-  reviewed:boolean;
+  reviewed: boolean;
 }
 
 type TransferProps = TransferOwnProps & TransferReduxProps;
@@ -55,11 +55,12 @@ class TransferContainer extends Component<TransferProps, TransferState> {
     recipient_address: "",
     payment_id: "",
     amountError: "",
-    reviewed: false
+    reviewed: false,
   };
 
   componentDidMount() {
     window.scrollTo(0, 0);
+
     this.setState({
       selectedAsset: options[0],
     });
@@ -137,7 +138,8 @@ class TransferContainer extends Component<TransferProps, TransferState> {
     } = this.state;
 
     const checkValidation =
-      send_amount.length > 0 && recipient_address.length > 97 && this.state.reviewed;
+      send_amount.length > 0 && recipient_address.length > 97;
+
     const windowWidth = window.innerWidth;
 
     let availableBalance = null;
@@ -146,10 +148,6 @@ class TransferContainer extends Component<TransferProps, TransferState> {
         this.props.xBalances[selectedAsset.ticker].unlockedBalance
       );
     }
-
-    // const amountLabel: string = availableBalance
-    //   ? `Amount (Avail. ${availableBalance})`
-    //   : "Amount";
 
     return (
       <Fragment>
@@ -210,7 +208,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
                 onChange={this.handleChange}
               />
               <Input
-                label="Payment ID (Optional)"
+                label="Payment ID (Optional) "
                 placeholder="Enter an optional payment ID"
                 type={"text"}
                 width={true}
@@ -223,20 +221,18 @@ class TransferContainer extends Component<TransferProps, TransferState> {
         </Form>
         <Container>
           <TransferSummary
-            paymentId={payment_id === "" ? "none" : payment_id}
+            paymentId={payment_id === "" ? "--" : payment_id}
             recipientAddress={
               recipient_address === "" ? "--" : recipient_address
             }
             transferAsset={selectedAsset === null ? "--" : selectedAsset.ticker}
             transferAmount={send_amount === "" ? "--" : send_amount}
-            checked={this.state.reviewed}
             onChange={this.handleReviewSubmit}
-
           />
           <Footer
             onClick={() => this.handleSubmit()}
             loading={this.props.isProcessing}
-            label="Transfer"
+            label="Preview"
             validated={checkValidation}
           />
         </Container>
@@ -256,14 +252,3 @@ export const SendFunds = connect<TransferReduxProps, {}, TransferOwnProps>(
   mapStateToProps,
   {}
 )(TransferContainer);
-
-/**
-<TransferSummary
-  paymentId={payment_id === "" ? "none" : payment_id}
-  recipientAddress={
-    recipient_address === "" ? "--" : recipient_address
-  }
-  transferAsset={selectedAsset === null ? "--" : selectedAsset.ticker}
-  transferAmount={send_amount === "" ? "--" : send_amount}
-/>
-**/

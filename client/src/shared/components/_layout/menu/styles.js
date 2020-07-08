@@ -106,6 +106,7 @@ export const Item = styled(NavLink).attrs({
   &.${activeClassName} {
     border-left: 3px solid ${props => props.theme.body.active_menu};
     color: ${props => props.theme.type.primary};
+    transition:none;
   }
 
   ${media.laptop`

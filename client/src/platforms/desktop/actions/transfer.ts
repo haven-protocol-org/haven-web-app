@@ -1,4 +1,8 @@
-import { offshoreTransferRPC, relayTXRPC, transferRPC } from "../ipc/rpc/rpc";
+import {
+  offshoreTransferRPC,
+  relayTXRPC,
+  transfer_splitRPC,
+} from "../ipc/rpc/rpc";
 
 import {
   TRANSFER_CREATION_FAILED,
@@ -19,16 +23,14 @@ import { getOffshoreBalance } from "platforms/desktop/actions/offshoreBalance";
 import { Ticker } from "shared/reducers/types";
 import { hideModal, showModal } from "shared/actions/modal";
 import { MODAL_TYPE } from "shared/reducers/modal";
-import { convertBalanceForReading } from "utility/utility";
-import {getTransfers} from "platforms/desktop/actions/transferHistory";
-import {getBalance} from "platforms/desktop/actions/balance";
-
+import { getTransfers } from "platforms/desktop/actions/transferHistory";
+import { getBalance } from "platforms/desktop/actions/balance";
 
 export const transfer = (
-    address: string,
-    amount: number,
-    paymentId: string,
-    fromTicker: Ticker
+  address: string,
+  amount: number,
+  paymentId: string,
+  fromTicker: Ticker
 ) => {
   amount = amount * 1e12;
   return (dispatch: any) => {
@@ -39,19 +41,19 @@ export const transfer = (
       params["payment_id"] = paymentId;
     }
 
-      const transferFN =
-          fromTicker === Ticker.XHV ? transferRPC : offshoreTransferRPC;
+    const transferFN =
+      fromTicker === Ticker.XHV ? transfer_splitRPC : offshoreTransferRPC;
 
-      transferFN(params)
-        .then(result => {
-          dispatch(transferSucceed(result));
-          dispatch(addNotificationByKey(TRANSFER_SUCCEED_MESSAGE));
+    transferFN(params)
+      .then((result) => {
+        dispatch(transferSucceed(result));
+        dispatch(addNotificationByKey(TRANSFER_SUCCEED_MESSAGE));
 
-          dispatch(getTransfers());
-          dispatch(getBalance());
-          dispatch(getOffshoreBalance());
-        })
-        .catch(error => dispatch(manageTransferFailed(error)));
+        dispatch(getTransfers());
+        dispatch(getBalance());
+        dispatch(getOffshoreBalance());
+      })
+      .catch((error) => dispatch(manageTransferFailed(error)));
   };
 };
 
@@ -69,16 +71,16 @@ export const createTransfer = (
     const params: any = createTXInputs(address, amount, paymentId);
 
     const transferFN =
-      fromTicker === Ticker.XHV ? transferRPC : offshoreTransferRPC;
+      fromTicker === Ticker.XHV ? transfer_splitRPC : offshoreTransferRPC;
 
     transferFN(params)
       .then((result) => {
-        const { amount, fee, tx_metadata } = result;
+        const { amount_list, fee_list, tx_metadata_list } = result;
 
         const reduxParams = {
-          fee: convertBalanceForReading(fee),
-          fromAmount: convertBalanceForReading(amount),
-          metaData: tx_metadata,
+          fee: fee_list[0],
+          fromAmount: amount_list[0],
+          metaData: tx_metadata_list[0],
         };
 
         dispatch(transferCreationSucceed(reduxParams));
@@ -107,16 +109,12 @@ export const confirmTransfer = (hex: string) => {
   };
 };
 
-export const createTXInputs = (
-  address: string,
-  amount: number,
-  paymentId: string
-) => {
+const createTXInputs = (address: string, amount: number, paymentId: string) => {
   const params: any = {
     destinations: [{ address, amount }],
     ring_size: 11,
-   //  do_not_relay: true,
-   // get_tx_metadata: true
+    do_not_relay: true,
+    get_tx_metadata: true,
   };
 
   if (paymentId !== "") {

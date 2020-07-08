@@ -1,16 +1,12 @@
-import {IDaemonConfig} from "./config";
-import {DaemonState} from "../ipc/types";
-import {EventEmitter} from "events";
+import {RPCRequestObject} from "../rpc/RPCHRequestHandler";
 
 
 export interface IDaemonManager {
 
-    startDaemon():void
     killDaemon():void
-    setConfig(config: IDaemonConfig):void;
-    getDaemonState():DaemonState;
-    getDaemonStatusEventEmitter():EventEmitter;
-
+    isRunning(): boolean
+    getState(): any
+    requestHandler(requestObject: RPCRequestObject): Promise<any>
 
 }
 

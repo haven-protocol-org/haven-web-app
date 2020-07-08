@@ -84,7 +84,7 @@ export function exchange(
 const sanityCheck = (amount:number): boolean => {
 
   // check that our value has not more than 4 decimals
-  return (amount * 1000) % 1 === 0;
+  return (amount * 10000) % 1 === 0;
 
 };
 
@@ -113,7 +113,7 @@ export function createExchange(
     const params = createExchangeInputs(fromAmount, priority, address);
 
     dispatch(
-      onExchangeCreationFetch({ fromAmount, toAmount, priority, address })
+      onExchangeCreationFetch({...params, toAmount: toAmount  * 1e12 })
     );
 
     const exchangeRPCFN = isOffshore ? offshoreRPC : onshoreRPC;
@@ -176,8 +176,8 @@ const createExchangeInputs = (
     destinations: [{ address, amount: amount.toString() }],
     priority,
     ring_size: 11,
-  //  do_not_relay: true,
-   // get_tx_metadata: true,
+    do_not_relay: true,
+    get_tx_metadata: true,
   };
 };
 

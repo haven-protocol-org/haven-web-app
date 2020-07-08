@@ -1,5 +1,7 @@
 // Library Imports
 import React from "react";
+import { useContext } from "react";
+import { ThemeContext } from "styled-components";
 
 import {
   Active,
@@ -18,13 +20,16 @@ import {
   Row,
 } from "./styles.js";
 import icon from "../../../../assets/haven.svg";
+import light from "../../../../assets/haven-dark.svg";
 
 const Mining = ({ status, mining, hash, children }) => {
+  const themeContext = useContext(ThemeContext);
+
   return (
     <Container>
       <Header>
         <Brand>
-          <Logo src={icon} />
+          <Logo src={themeContext.value === "Dark Theme" ? icon : light} />
         </Brand>
         <Column>
           <Row>
@@ -39,10 +44,10 @@ const Mining = ({ status, mining, hash, children }) => {
           <Image>
             <Inactive status />
           </Image>
-          <Image>
+          <Image hide="true">
             <Inactive status />
           </Image>
-          <Image>
+          <Image hide="true">
             <Inactive status />
           </Image>
         </Grid>
@@ -51,10 +56,10 @@ const Mining = ({ status, mining, hash, children }) => {
           <Image>
             <Active status />
           </Image>
-          <Image>
+          <Image hide="true">
             <Active status />
           </Image>
-          <Image>
+          <Image hide="true">
             <Active status />
           </Image>
         </Grid>

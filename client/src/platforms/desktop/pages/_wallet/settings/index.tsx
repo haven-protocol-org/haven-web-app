@@ -4,49 +4,12 @@ import { connect } from "react-redux";
 // Library Imports
 import { selectTheme } from "shared/actions";
 // Relative Imports
-import { Container } from "./styles";
 import Body from "shared/components/_layout/body";
 import Header from "shared/components/_layout/header";
 import Form from "shared/components/_inputs/form";
 import Theme from "shared/components/_inputs/theme";
-// import AddressDropdown from "shared/components/_inputs/addresses_dropdown";
-import Input from "shared/components/_inputs/input";
 import Footer from "shared/components/_inputs/footer/index.js";
-
-// Implement later
-// import BalanceDropdown from "shared/components/_inputs/balances_dropdown";
 import Mining from "../../../components/animation/index.js";
-
-// » This is the option to enable a user to choose a default balance view
-// const balances: BalanceOption[] = [
-//   { ticker: "USD", value: "United States Dollars", code: "$" },
-//   { ticker: "BTC", value: "Bitcoin", code: "₿" },
-//   { ticker: "XHV", value: "Haven", code: "Ħ" },
-//   { ticker: "--", value: "Hide", code: "-" },
-// ];
-
-// » This is the option to enable the balance dropdown
-/*  <Header
-  title="Balances "
-  description="Select your desired balances view and reference pair"
-/>
-
-<BalanceDropdown
-  label="Overview"
-  placeholder="USD Dollars"
-  name="balances"
-  value={balance}
-  options={balances}
-  onClick={this.setBalance}
-/>
-<BalanceDropdown
-  label="Reference Pair"
-  placeholder="Australian Dollars"
-  name="balances"
-  value={"Canadian Dollars"}
-  options={balances}
-  onClick={this.setBalance}
-/> */
 
 import { dark, light } from "assets/styles/themes.js";
 import { DesktopAppState } from "platforms/desktop/reducers";
@@ -60,11 +23,11 @@ import {
   startMining,
   stopMining,
 } from "platforms/desktop/actions/mining";
+import { HavenNodeSetting } from "platforms/desktop/pages/_wallet/settings/nodeSetting";
 
 type ThemeOption = { theme: string; value: string };
 type BalanceOption = { ticker: string; value: string; code: string };
 type AddressOption = { name: string; address: string };
-type NodeOptions = { value: string };
 
 interface SettingsProps {
   theme: any;
@@ -162,32 +125,12 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
     }
   };
 
-  handleNode = ({ value }: ThemeOption) => {
-    alert("Select Node type");
-  };
-
-  handleCheck = () => {
-    this.setState({
-      checked: true,
-    });
-  };
-
-  setNodeType = ({ value }: ThemeOption) => {
-    alert("Save Changes");
-  };
-
   handleChange = (event: any) => {
     const name = event.target.name;
     const value = event.target.value;
 
     this.setState({
       [name]: value,
-    });
-  };
-
-  showModal = () => {
-    this.setState({
-      showModal: false,
     });
   };
 
@@ -227,43 +170,26 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
             onClick={this.handleClick}
           />
         </Form>
-        {/* <Header
-          title="Addresses"
-          description="Manage the sub-addresses connected to your account"
-        />
-        <>
-          <AddressDropdown
-            width={true}
-            label="Vault Addresses"
-            placeholder="List of addresses"
-            type="text"
-            readOnly={true}
-            name="addresses"
-            value={"xhv...123"}
-            options={addresses}
-            onClick={this.manageAddress}
-          />
-        </>*/}
+
+        <HavenNodeSetting />
+
         <Header
           title="Mining "
           description="Mine from your computer and earn Haven"
         />
-        <>
-          <Mining
-            //@ts-ignore
-            status={true}
-            mining={mining.active === true ? "Mining" : "Not Mining"}
-            hash={
-              mining.active === true ? `${mining.speed} Hashes` : "0 Hashes"
-            }
-          >
-            <Footer
-              onClick={this.onMiningButtonClicked}
-              loading={false}
-              label={buttonLabel}
-            />
-          </Mining>
-        </>
+
+        <Mining
+          //@ts-ignore
+          status={true}
+          mining={mining.active === true ? "Mining" : "Not Mining"}
+          hash={mining.active === true ? `${mining.speed} Hashes` : "0 Hashes"}
+        >
+          <Footer
+            onClick={this.onMiningButtonClicked}
+            loading={false}
+            label={buttonLabel}
+          />
+        </Mining>
       </Body>
     );
   }

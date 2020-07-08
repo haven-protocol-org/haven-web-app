@@ -1,6 +1,6 @@
 import { logM } from "utility/utility";
 import { ipcRenderer } from "electron";
-import { CommunicationChannels } from "../ipc-types";
+import {CommunicationChannel} from "platforms/desktop/ipc/ipc-types";
 
 // @ts-ignore
 const ipcRender: typeof ipcRenderer = window.ipcRenderer;
@@ -40,8 +40,8 @@ export function relayTXRPC(params: object) {
   return callRpc("relay_tx", params);
 }
 
-export function transferRPC(params: object) {
-  return callRpc("transfer", params);
+export function transfer_splitRPC(params: object) {
+  return callRpc("transfer_split", params);
 }
 
 export function getTransferRPC(params: object) {
@@ -62,6 +62,12 @@ export function refreshRPC(start_height = 0) {
 
 export function rescanBlockchainRPC() {
   return callRpc("rescan_blockchain");
+}
+
+export function setDaemonRPC(params: object) {
+
+  return callRpc("set_daemon", params);
+
 }
 
 export function onshoreRPC(params: object) {
@@ -127,7 +133,7 @@ function callRpc(method: string, params: object | undefined = undefined) {
   logM(objRequest);
 
   return ipcRender
-    .invoke(CommunicationChannels.RPC, objRequest)
+    .invoke(CommunicationChannel.RPC, objRequest)
     .then((response) => handleError(response));
 }
 

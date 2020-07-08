@@ -3,19 +3,23 @@ import React from "react";
 
 // Relative Imports
 import { Container, Row, Key, Value } from "./styles";
-import Confirm from "../../confirm/index.js";
+// import Confirm from "../../confirm/index.js";
 
 const TransferSummary = ({
   transferAsset,
   transferAmount,
   paymentId,
   recipientAddress,
-    checked,
-    onChange
+
+  onChange,
 }) => {
   const first = recipientAddress.substring(0, 4);
   const last = recipientAddress.substring(recipientAddress.length - 4);
   const truncated = first + "...." + last;
+
+  const paymentIdFirstFour = paymentId.substring(0, 4);
+  const paymentIdLastFour = paymentId.substring(paymentId.length - 4);
+  const paymentIdTruncated = paymentIdFirstFour + "...." + paymentIdLastFour;
   return (
     <Container>
       <Row>
@@ -30,13 +34,12 @@ const TransferSummary = ({
         <Key>Recipient Address</Key>
         <Value>{recipientAddress === "--" ? "--" : truncated}</Value>
       </Row>
-      {paymentId !== "none" && (
+      {paymentId.length > 63 ? (
         <Row>
           <Key>Payment ID</Key>
-          <Value>{paymentId}</Value>
+          <Value>{paymentIdTruncated}</Value>
         </Row>
-      )}
-      <Confirm description="I accept the transfer rates and fees" checked={checked} onChange={onChange} />
+      ) : null}
     </Container>
   );
 };

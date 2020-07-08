@@ -1,6 +1,6 @@
-import {UPDATE_CHAIN_DATA} from "shared/actions/types";
 import {AddressEntry} from "shared/reducers/address";
 import {getAddressSucceed} from "shared/actions";
+import {UPDATE_CHAIN_DATA} from "platforms/web/actions/types";
 
 export * from "./account";
 export * from "./balance";
@@ -8,6 +8,7 @@ export * from "./key";
 export * from "./transferHistory";
 export * from "./sendFunds";
 export * from "./xhvVsCurrencies";
+export * from "../../../shared/actions/exchangeRates";
 
 export const createAddressEntry = (address: string) => {
 

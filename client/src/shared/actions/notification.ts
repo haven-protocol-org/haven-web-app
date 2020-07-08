@@ -1,29 +1,59 @@
-import {
-  notificationList, NotificationType
-} from "constants/notificationList";
-import { uuidv4 } from "utility/utility";
-import { ADD_NOTIFICATION, REMOVE_NOTIFICATION } from "./types";
-import { Ticker } from "../reducers/types";
+import {notificationList, NotificationType} from "constants/notificationList";
+import {uuidv4} from "utility/utility";
+import {ADD_NOTIFICATION, REMOVE_NOTIFICATION} from "./types";
+import {Ticker} from "../reducers/types";
+import {NotificationDuration} from "shared/reducers/notification";
 
-export const addNotificationByKey = (key: any) => {
-  const statusObj: any = notificationList.find(
+export const addNotificationByKey = (
+  key: any,
+  duration = NotificationDuration.DEFAULT,
+  id = uuidv4(), templateVars: Array<string> | null = null
+) => {
+  const notification: any = notificationList.find(
     (notification) => notification.key === key
   );
-  statusObj.id = uuidv4();
-  return { type: ADD_NOTIFICATION, payload: statusObj };
+
+  const shownMessage = {...notification};
+  shownMessage.id = id;
+  shownMessage.duration = duration;
+
+
+  if (typeof shownMessage.message === "function") {
+    shownMessage.message = templateVars? shownMessage.message(...templateVars): shownMessage.message();
+  }
+
+
+
+
+  return (dispatch: any) =>  {
+
+    dispatch(  { type: ADD_NOTIFICATION, payload: shownMessage });
+
+    if ( duration !== NotificationDuration.STICKY ) {
+      dispatch(removeNotification(shownMessage.id))
+    }
+
+    }
+
+
 };
 
-export const addNotificationByCode = (code: any) => {
-  const statusObj: any = notificationList.find(
-    (notification) => notification.code === code
-  );
-  statusObj.id = uuidv4();
-  return { type: ADD_NOTIFICATION, payload: statusObj };
-};
+export const addNotificationByMessage = (
+  type: NotificationType,
+  message: string,
+  duration = NotificationDuration.DEFAULT
+) => {
+  const statusObj = { type, message, id: uuidv4(), duration };
 
-export const addNotificationByMessage = (type: string, message: string) => {
-  const statusObj = { type, message, id: uuidv4() };
-  return { type: ADD_NOTIFICATION, payload: statusObj };
+  return (dispatch: any) =>  {
+
+    dispatch(  { type: ADD_NOTIFICATION, payload: statusObj });
+
+    if ( duration !== NotificationDuration.STICKY ) {
+      dispatch(removeNotification(statusObj.id))
+    }
+  }
+
 };
 
 export const addExchangeSucceedMessage = (
@@ -40,21 +70,51 @@ export const removeNotification = (id: string) => {
   return { type: REMOVE_NOTIFICATION, payload: id };
 };
 
-export const addErrorNotification = (error: any) => {
+export const addErrorNotification = (
+  error: any,
+  duration: NotificationDuration = NotificationDuration.DEFAULT
+) => {
   const errorNotification = notificationList.find(
     (notification) => notification.code === error.code
   );
 
-  if (errorNotification)
-    return {
-      type: ADD_NOTIFICATION,
-      payload: { ...errorNotification, id: uuidv4() },
-    };
+  if (errorNotification) {
+    const id = uuidv4();
+    return (dispatch: any) =>  {
 
+      dispatch(  { type: ADD_NOTIFICATION, payload: {...errorNotification, id} });
+
+      if ( duration !== NotificationDuration.STICKY ) {
+        dispatch(removeNotification(id))
+      }
+    }
+
+  }
   const message = error.message || error.err_msg;
-  return buildNotification(message, NotificationType.ERROR);
+  return buildNotification(message, NotificationType.ERROR, duration);
 };
 
-const buildNotification = (message: string, type: string) => {
-  return { type: ADD_NOTIFICATION, payload: { type, message, id: uuidv4() } };
+const buildNotification = (
+  message: string | Function,
+  type: string,
+  duration: NotificationDuration, templateVars: Array<string> | null = null
+) => {
+
+  let notificationMessage: string;
+  if (typeof message === "function") {
+    notificationMessage = templateVars? message(...templateVars): message();
+  } else{
+    notificationMessage = message;
+  }
+  const id = uuidv4();
+  return (dispatch: any) =>  {
+
+    dispatch(  { type: ADD_NOTIFICATION, payload: { type, message :notificationMessage, id, duration }, });
+
+    if ( duration !== NotificationDuration.STICKY ) {
+      dispatch(removeNotification(id))
+    }
+  }
+
 };
+

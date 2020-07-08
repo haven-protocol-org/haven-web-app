@@ -8,13 +8,6 @@ export const RESTORE_WALLET_BY_SEED_FETCHING =
 export const RESTORE_WALLET_BY_SEED_SUCCEED = "restore_wallet_by_seed_succeed";
 export const RESTORE_WALLET_BY_SEED_FAILED = "restore_wallet_by_seed_failed";
 
-/*
-GET BALANCES
- */
-export const GET_BALANCES_FETCHING = "get_balances_fetching";
-export const GET_BALANCES_SUCCEED = "get_balances_succeed";
-export const GET_BALANCES_FAILED = "get_balances_failed";
-
 //
 export const CREATE_WALLET_FETCHING = "create_wallet_fetching";
 export const CREATE_WALLET_SUCCEED = "create_wallet_succeed";
@@ -52,9 +45,6 @@ export const EXCHANGE_CREATION_FETCHING = "exchange_creation_fetching";
 export const EXCHANGE_CREATION_FAILED = "exchange_creation_failed";
 export const EXCHANGE_CREATION_SUCCEED = "exchange_creation_succeed";
 
-export const GET_TRANSFERS_FETCHING = "get_transfers_fetching";
-export const GET_TRANSFERS_SUCCEED = "get_transfers_succeed";
-export const GET_TRANSFERS_FAILED = "get_transfers_failed";
 
 export const GET_BLOCK_INFO_FETCHING = "get_block_info_fetching";
 export const GET_BLOCK_INFO_SUCEED = "get_block_info_suceed";
@@ -64,9 +54,9 @@ export const GET_BLOCK_HEIGHT_FETCHING = "get_block_height_fetching";
 export const GET_BLOCK_HEIGHT_SUCCEED = "get_block_height_succeed";
 export const GET_BLOCK_HEIGHT_FAILED = "get_block_height_failed";
 
-export const START_REFRESH = "start_refresh";
-export const REFRESH_SUCCEED = "refresh_succeed";
-export const REFRESH_FAILED = "refresh_failed";
+export const START_RESCAN = "start_rescan";
+export const RESCAN_SUCCEED = "rescan_succeed";
+export const RESCAN_FAILED = "rescan_failed";
 
 export const EXCHANGE_RESET = "exchange_reset";
 
@@ -87,8 +77,11 @@ export const GET_BLOCK_HEADER_EXCHANGE_RATE_SUCCEED =
 export const GET_BLOCK_HEADER_EXCHANGE_RATE_FAILED =
   "get_block_header_exchange_rate_failed";
 
-export const UPDATE_DAEMON_STATES = "update_daemon_states";
-export const UPDATE_DAEMON_STATES_FAILED = "update_daemon_states_failed";
+export const GET_WALLET_RPC_STATE_SUCCEED = "GET_WALLET_RPC_STATE_SUCCEED";
+export const GET_WALLET_RPC_STATE_FAILED = "GET_WALLET_RPC_STATE_FAILED";
+
+export const GET_HAVEND_STATE_SUCCEED = "GET_LOCAL_HAVEN_NODE_STATE_SUCCEED";
+export const GET_HAVEND_STATE_FAILED = "GET_LOCAL_HAVEN_NODE_FAILED";
 
 export const UPDATE_SAVED_WALLETS = "update_saved_wallets";
 
@@ -102,3 +95,8 @@ export const MINING_STATUS_RESPONSE_FAILED = "mining_status_response";
 
 export const SELECT_FROM_TICKER = "select_from_ticker";
 export const SELECT_TO_TICKER = "select_to_ticker";
+
+
+export const SET_HAVEN_NODE_FETCH = "set_haven_node_fetch";
+export const SET_HAVEN_NODE_SUCCESS = "set_haven_node_success";
+export const SET_HAVEN_NODE_FAILED = "set_haven_node_failed";

@@ -1,6 +1,6 @@
-import { UPDATE_CHAIN_DATA } from "../../../shared/actions/types";
 import { SyncState } from "../../../shared/types/types";
 import { AnyAction } from "redux";
+import {UPDATE_CHAIN_DATA} from "platforms/web/actions/types";
 
 const INITIAL_STATE = {
   start_height: -1,

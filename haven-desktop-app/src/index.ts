@@ -1,11 +1,11 @@
 import { app, BrowserWindow, Menu } from "electron";
 import * as path from "path";
 import { devServerStarted } from "./dev";
-import { HavenWallet, DAEMONS_STOPPED_EVENT } from "./HavenWallet";
+import { HavenWallet} from "./HavenWallet";
 import { BrowserWindowConstructorOptions } from "electron";
 import { isDevMode } from "./env";
 import { havenMenu } from "./menu";
-import { appEventBus } from "./EventBus";
+import {appEventBus, DAEMONS_STOPPED_EVENT} from "./EventBus";
 
 const wallet = new HavenWallet();
 

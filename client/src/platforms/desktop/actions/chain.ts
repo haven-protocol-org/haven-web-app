@@ -3,12 +3,13 @@ import {
   GET_BLOCK_HEIGHT_FETCHING,
   GET_BLOCK_HEIGHT_SUCCEED,
   GET_BLOCK_INFO_FAILED,
-  GET_BLOCK_INFO_SUCEED,
+  GET_BLOCK_INFO_SUCEED, RESCAN_FAILED, RESCAN_SUCCEED, START_RESCAN
 } from "./types";
-import { getInfoRPC, getWalletHeightRPC } from "../ipc/rpc/rpc";
+import {getInfoRPC, getWalletHeightRPC, rescanBlockchainRPC} from "../ipc/rpc/rpc";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { getLastBlockHeader } from "platforms/desktop/actions/blockHeaderExchangeRate";
 import { OFFSHORE_ENABLED } from "constants/env";
+
 
 interface NodeInfoHeights {
   nodeHeight: number;
@@ -65,3 +66,30 @@ const parseHeight = (rawNodeInfo: any): NodeInfoHeights => {
     nodeHeight: rawNodeInfo.height,
   };
 };
+
+export const rescanBlockChain = () => {
+  return (dispatch: any) => {
+    dispatch(startRescan());
+
+    rescanBlockchainRPC()
+        .then(() => dispatch(rescanSucceed()))
+        .catch((err) => dispatch(rescanFailed()));
+
+  };
+};
+
+
+
+
+const startRescan = () => {
+  return { type: START_RESCAN };
+};
+
+const rescanSucceed = () => {
+  return { type: RESCAN_SUCCEED };
+};
+
+const rescanFailed = () => {
+  return { type: RESCAN_FAILED };
+};
+

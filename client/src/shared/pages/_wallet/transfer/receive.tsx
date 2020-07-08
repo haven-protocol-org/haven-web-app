@@ -1,15 +1,15 @@
-// Library Imports
-import * as clipboard from "clipboard-polyfill";
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import AddressDropdown from "../../../components/_inputs/addresses_dropdown/index.js";
 import Description from "../../../components/_inputs/description";
 import Footer from "../../../components/_inputs/footer";
+import DoubleFooter from "../../../components/_inputs/double_footer";
 import Form from "../../../components/_inputs/form";
 import Input from "../../../components/_inputs/input";
 import { Container } from "./styles";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { AddressEntry } from "shared/reducers/address";
+import { writeText } from "vendor/clipboard/clipboard-polyfill";
 
 interface OwnAddressState {
   selected: AddressEntry;
@@ -47,7 +47,7 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
       copyButtonState: "Copied...",
     });
 
-    clipboard.writeText(address);
+    writeText(address);
 
     setTimeout(() => {
       this.setState({
@@ -57,12 +57,13 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
   };
 
   render() {
-
     const windowWidth = window.innerWidth;
 
     if (this.props.addresses.length === 0) {
       return null;
     }
+
+    const qrEnabled = false;
 
     return (
       <Fragment>
@@ -97,10 +98,24 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
           )}
         </Form>
         <Container>
-          <Footer
-            label={this.state.copyButtonState}
-            onClick={this.clipboardAddress}
-          />
+          {qrEnabled ? (
+            <DoubleFooter
+              leftLabel={"Show QR"}
+              leftDisabled={false}
+              leftLoading={false}
+              leftOnClick={() => {}}
+              rightLabel={this.state.copyButtonState}
+              rightDisabled={false}
+              rightLoading={false}
+              rightOnClick={this.clipboardAddress}
+              onClick={() => {}}
+            />
+          ) : (
+            <Footer
+              label={this.state.copyButtonState}
+              onClick={this.clipboardAddress}
+            />
+          )}
         </Container>
       </Fragment>
     );

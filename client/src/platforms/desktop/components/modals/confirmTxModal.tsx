@@ -1,85 +1,94 @@
 import * as React from "react";
-import {Modal} from "shared/components/modal";
-import {Transaction} from "shared/components/_transactions/transfer";
-import {DesktopAppState} from "platforms/desktop/reducers";
-import {connect} from "react-redux";
-import {hideModal} from "shared/actions/modal";
-import {confirmTransfer, resetTransferProcess} from "platforms/desktop/actions/transfer";
-import {TxProcessInfo} from "platforms/desktop/reducers/transferProcess";
-
-
+import { Modal } from "shared/components/modal";
+import { Transaction } from "shared/components/_transactions/transfer";
+import { DesktopAppState } from "platforms/desktop/reducers";
+import { connect } from "react-redux";
+import { hideModal } from "shared/actions/modal";
+import {
+  confirmTransfer,
+  resetTransferProcess,
+} from "platforms/desktop/actions/transfer";
+import { TxProcessInfo } from "platforms/desktop/reducers/transferProcess";
+import { convertToMoney } from "utility/utility";
 
 interface ConfirmTxModalProps {
-    transfer:TxProcessInfo,
-    confirmTransfer: (hex: string) => void;
-    resetTransferProcess: () => void;
-    hideModal:() => void;
+  transfer: TxProcessInfo;
+  confirmTransfer: (hex: string) => void;
+  resetTransferProcess: () => void;
+  hideModal: () => void;
 }
-
-
 
 class ConfirmTxModal extends React.Component<ConfirmTxModalProps, any> {
+  state = {
+    checked: false,
+    loading: false,
+  };
 
+  approveTransfer = () => {
+    this.setState({
+      checked: !this.state.checked,
+    });
+  };
 
+  render() {
+    const {
+      paymentId,
+      fromTicker,
+      fromAmount,
+      address,
+      fee,
+    } = this.props.transfer;
+    const { checked } = this.state;
 
-    render () {
+    const readableFee = convertToMoney(fee);
+    const readableAmount = convertToMoney(fromAmount);
 
+    return (
+      <Modal
+        title="Transfer Confirmation"
+        description="Please review and confirm your transaction"
+        leftButton="Cancel"
+        rightButton="Confirm"
+        disabled={!checked}
+        isLoading={this.state.loading}
+        onConfirm={() => this.onConfirm()}
+        onCancel={() => this.onCancel()}
+      >
+        <Transaction
+          onChange={this.approveTransfer}
+          checked={this.state.checked}
+          paymentId={paymentId === "" ? "--" : paymentId}
+          recipientAddress={address}
+          ticker={fromTicker}
+          transferAmount={readableAmount}
+          fee={readableFee}
+        />
+      </Modal>
+    );
+  }
 
-        const {paymentId, fromTicker, fromAmount, address, fee} = this.props.transfer;
+  onCancel() {
+    this.props.hideModal();
+    this.props.resetTransferProcess();
+  }
 
-        return (
-
-            <Modal
-                title="Transfer Confirmation"
-                description="Please confirm and finalize your transfer transaction"
-                leftButton="Cancel"
-                rightButton="Confirm"
-                disabled={false}
-                onConfirm={() => this.onConfirm()}
-                onCancel={() => this.onCancel()}
-            >
-                <Transaction
-                    onChange={() => {}}
-                    checked={true}
-                    paymentId={paymentId === "" ? "--" : paymentId}
-                    recipientAddress={
-                        address === "" ? "--" : address
-                    }
-                    ticker={
-                        fromTicker === null ? "--" : fromTicker
-                    }
-                    transferAmount={fromAmount === null ? "--" : fromAmount}
-                    fee={fee}
-                />
-            </Modal>
-
-        )}
-
-
-    onCancel() {
-
-        this.props.hideModal();
-        this.props.resetTransferProcess();
-    }
-
-
-    onConfirm() {
-
-        const {metaData} = this.props.transfer;
-        this.props.confirmTransfer(metaData);
-
-    }
-
+  onConfirm() {
+    const { metaData } = this.props.transfer;
+    this.setState({
+      loading: true,
+    });
+    setTimeout(() => {
+      this.props.confirmTransfer(metaData);
+    }, 3000);
+  }
 }
 
-
-
 const mapStateToProps = (state: DesktopAppState) => ({
-    transfer:state.transferProcess
+  transfer: state.transferProcess,
 });
 
-export const ConfirmTxModalDesktop = connect(
-    mapStateToProps,
-    { confirmTransfer, hideModal, resetTransferProcess }
-)(ConfirmTxModal);
-
+export const ConfirmTxModalDesktop = connect(mapStateToProps, {
+  confirmTransfer,
+  hideModal,
+  resetTransferProcess,
+})(ConfirmTxModal);

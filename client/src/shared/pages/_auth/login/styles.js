@@ -3,15 +3,12 @@ import { NavLink } from "react-router-dom";
 import media from "../../../../assets/styles/media.js";
 import {
   background,
-  link,
-  link_hover
 } from "../../../../assets/styles/colors.js";
 
 export const Container = styled.div`
   min-height: 100vh;
   width: 100vw;
   display: flex;
-  overflow: scroll;
   justify-content: center;
   align-items: center;
   background: ${background};
@@ -22,22 +19,7 @@ export const Container = styled.div`
   `}
 `;
 
-export const External = styled.a`
-  font-family: Inter-Regular;
-  font-size: 13px;
-  color: ${link}
-  letter-spacing: 0;
-  text-align: center;
-  line-height: 22px;
-  text-decoration: none;
-  transition: 750ms;
 
-
-  &:hover {
-    color: ${link_hover};
-    transition: 750ms;
-  }
-`;
 
 export const Image = styled.img`
   height: auto;
@@ -60,25 +42,7 @@ export const Image = styled.img`
  `};
 `;
 
-export const Microcopy = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-auto;
-  z-index: 2000;
 
-
-  ${media.laptop`
-    width: 75%;
- `};
-
-  ${media.tablet`
-   width: 75%;
- `};
-
-  ${media.mobile`
-   width: 90%;
- `};
-`;
 
 export const Heading = styled.div`
   font-size: 48px;

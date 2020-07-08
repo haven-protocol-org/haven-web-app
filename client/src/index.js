@@ -1,4 +1,3 @@
-import * as serviceWorker from "./serviceWorker";
 import { isDesktop, isDevMode } from "./constants/env";
 
 if (isDesktop()) {
@@ -12,5 +11,3 @@ if (isDesktop()) {
     isDevMode() ? web.startWebAppInDevMode() : web.startWebApp();
   });
 }
-
-serviceWorker.unregister();

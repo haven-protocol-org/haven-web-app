@@ -1,5 +1,5 @@
 import * as fs from "fs";
-import { config } from "./daemons/config";
+import { config } from "./daemons/config/config";
 
 export const getAvailableWallets = (): string[] => {
   const walletPath: string = config().wallet.args["wallet-dir"] as string;

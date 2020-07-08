@@ -21,7 +21,7 @@ import {
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { selectNodeHeight } from "platforms/desktop/reducers/chain";
 import { getLastBlockHeader } from "platforms/desktop/actions/blockHeaderExchangeRate";
-import { exchange } from "platforms/desktop/actions";
+import {createExchange} from "platforms/desktop/actions";
 import { Ticker } from "shared/reducers/types";
 import {
   selectExchangeSucceed,
@@ -46,7 +46,7 @@ type ExchangeProps = {
   nodeHeight: number;
   getLastBlockHeader: () => void;
   showModal: (modalTyoe: MODAL_TYPE) => void;
-  createExchange: typeof exchange;
+  createExchange: typeof createExchange;
   isProcessingExchange: boolean;
   hasLatestXRate: boolean;
   exchangeSucceed: boolean;
@@ -101,7 +101,7 @@ const INITIAL_STATE: ExchangeState = {
   selectedTab: ExchangeTab.Basic,
   externAddress: "",
   selectedPrio: exchangePrioOptions[exchangePrioOptions.length - 1],
-  reviewed: false
+  reviewed: false,
 };
 class Exchange extends Component<ExchangeProps, ExchangeState> {
   state: ExchangeState = INITIAL_STATE;
@@ -120,7 +120,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
         fromAmount: "",
         toAmount: "",
         externAddress: "",
-        reviewed: false
+        reviewed: false,
       });
     }
   }
@@ -285,14 +285,16 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       : NO_BALANCE;
 
     const isValid: boolean =
-      !!(fromTicker && toTicker && fromAmount && toAmount) && hasLatestXRate && this.state.reviewed;
+      !!(fromTicker && toTicker && fromAmount && toAmount) &&
+      hasLatestXRate &&
+      this.state.reviewed;
 
     return (
       <Fragment>
         <Body>
           <Header
             title="Exchange "
-            description="Swap to and from various Haven Assets"
+            description="Swap between all available Haven assets'"
           />
           <Tab
             firstTabLabel="Basic"
@@ -319,7 +321,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 label={
                   "From Amount " +
                   (availBalance !== NO_BALANCE
-                    ? `(Balance: ${availBalance})`
+                    ? `(Avail. Balance: ${availBalance})`
                     : "")
                 }
                 placeholder="Enter amount"
@@ -346,7 +348,9 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 // @ts-ignore
                 label={
                   "To Amount " +
-                  (toBalance !== NO_BALANCE ? `(Balance: ${toBalance})` : "")
+                  (toBalance !== NO_BALANCE
+                    ? `(Avail. Balance: ${toBalance})`
+                    : "")
                 }
                 placeholder="Enter amount"
                 disabled={!hasLatestXRate}
@@ -431,7 +435,7 @@ const mapStateToProps = (state: DesktopAppState) => ({
 
 export const ExchangePage = connect(mapStateToProps, {
   getLastBlockHeader,
-  createExchange: exchange,
+  createExchange,
   setToTicker,
   setFromTicker,
   showModal,

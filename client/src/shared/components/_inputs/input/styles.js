@@ -7,7 +7,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding-bottom: 12px;
-  grid-column: ${props => (props.width ? "1 / 3" : null)};
+  grid-column: ${props => (props.grid ? "1 / 3" : null)};
 
   ${media.mobile`
     grid-column: 1 / 3;

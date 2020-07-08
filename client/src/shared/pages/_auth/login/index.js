@@ -1,18 +1,18 @@
 // Library Imports
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import * as clipboard from "clipboard-polyfill";
 // Relative Imports
 import { Container } from "./styles";
 import Auth from "../../../components/_auth/login";
 import Seed from "../../../components/_inputs/seed";
 import { Information } from "../../../../assets/styles/type.js";
+import { readText } from "../../../../vendor/clipboard/clipboard-polyfill";
 
 export default class Login extends Component {
   state = {
     seed_phrase: "",
     error: "",
-    action: "Paste from Clipboard"
+    action: "Paste from Clipboard",
   };
 
   componentDidMount() {
@@ -26,12 +26,12 @@ export default class Login extends Component {
     }
   }
 
-  handleChange = event => {
+  handleChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
 
     this.setState({
-      [name]: value
+      [name]: value,
     });
   };
 
@@ -42,24 +42,23 @@ export default class Login extends Component {
   };
 
   handlePaste = () => {
-    clipboard
-      .readText()
-      .then(response => {
+    readText()
+      .then((response) => {
         this.setState({
           seed_phrase: response,
-          action: "Pasted from Clipboard"
+          action: "Pasted from Clipboard",
         });
       })
       .then(
         setTimeout(() => {
           this.setState({
-            action: "Paste from Clipboard"
+            action: "Paste from Clipboard",
           });
         }, 1000)
       )
-      .catch(error => {
+      .catch((error) => {
         this.setState({
-          error: "Clipboard is empty"
+          error: "Clipboard is empty",
         });
       });
   };
@@ -73,7 +72,7 @@ export default class Login extends Component {
         <Auth
           title="Vault Login"
           link="/create"
-          route="Create a Vault"
+          route="Create or Restore a Vault"
           label="Don’t have a Vault?"
           disable={seed_phrase === "" ? true : this.props.isRequestingLogin}
           onClick={() => this.handleLogin()}
@@ -89,7 +88,7 @@ export default class Login extends Component {
             actionEvent={this.handlePaste}
             action={action}
             rows={windowWidth < 600 ? "6" : "4"}
-            onChange={event => this.handleChange(event)}
+            onChange={(event) => this.handleChange(event)}
           />
           <Information>
             <strong>Disclaimer:</strong> Your seed is used to generate an
@@ -106,5 +105,5 @@ export default class Login extends Component {
 Login.propTypes = {
   errorMessage: PropTypes.string,
   login: PropTypes.func.isRequired,
-  isRequestingLogin: PropTypes.bool
+  isRequestingLogin: PropTypes.bool,
 };

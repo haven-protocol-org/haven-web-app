@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 
 // Relative Imports
-import { Pending, Value, Wrapper, Amount } from "./styles";
+import { Value, Wrapper, Amount } from "./styles";
 import { connect } from "react-redux";
 import { selectWebSyncState } from "platforms/web/reducers/chain";
 import { Spinner } from "../../spinner";
@@ -14,7 +14,7 @@ import { selectDesktopSyncState } from "platforms/desktop/reducers/chain";
 import {
   selectBalances,
   selectTotalBalances,
-  XViewBalances
+  XViewBalances,
 } from "shared/reducers/xBalance";
 import { Ticker } from "shared/reducers/types";
 
@@ -33,7 +33,7 @@ interface BalanceState {
 class Balances extends Component<BalanceProps, BalanceState> {
   state: BalanceState = {
     currentIndex: 0,
-    currentTicker: OFFSHORE_ENABLED ? OFFSHORE_TICKERS[0] : Ticker.XHV
+    currentTicker: OFFSHORE_ENABLED ? OFFSHORE_TICKERS[0] : Ticker.XHV,
   };
 
   onClickNext() {
@@ -49,7 +49,7 @@ class Balances extends Component<BalanceProps, BalanceState> {
     }
     this.setState({
       currentIndex: nextIndex,
-      currentTicker: OFFSHORE_TICKERS[nextIndex] as Ticker
+      currentTicker: OFFSHORE_TICKERS[nextIndex] as Ticker,
     });
   }
 
@@ -59,8 +59,8 @@ class Balances extends Component<BalanceProps, BalanceState> {
     if (ticker === null)
       return (
         <Wrapper onClick={() => this.onClickNext()}>
-          <Amount>--</Amount>
-          <Value>Account Value (Hidden)</Value>
+          <Amount>-/-</Amount>
+          <Value>Portfolio Value Hidden</Value>
         </Wrapper>
       );
     const { prefix, suffix } =
@@ -70,12 +70,10 @@ class Balances extends Component<BalanceProps, BalanceState> {
         ? { prefix: "₿", suffix: "" }
         : { prefix: "Ħ", suffix: "" };
 
-    const { unlockedBalance, lockedBalance, balance } = this.props.balances[
-      ticker
-    ];
+    const { balance } = this.props.balances[ticker];
 
-    const amount = prefix + unlockedBalance.toFixed(4) + suffix;
-    const amountLocked = prefix + lockedBalance.toFixed(2) + suffix;
+    const totalBalance = prefix + balance.toFixed(4) + suffix;
+
     const { isSyncing, blockHeight, scannedHeight } = this.props.syncState;
 
     const percentage = ((scannedHeight / blockHeight) * 100).toFixed(2);
@@ -83,23 +81,24 @@ class Balances extends Component<BalanceProps, BalanceState> {
     return (
       <Wrapper onClick={() => this.onClickNext()}>
         <Amount isSyncing={isSyncing}>
-          {balance === -1 ? <Spinner /> : amount}
+          {balance === -1 ? <Spinner /> : totalBalance}
         </Amount>
         <Value>
           {isSyncing
             ? `Syncing Vault... ${percentage}%`
-            : `Account Value (${
+            : `Portfolio Value (${
                 ticker === "XHV" ? ticker : ticker.substring(1)
               }) `}
         </Value>
         {isSyncing && <ProgressBar percentage={percentage} />}
-        {lockedBalance > 0 ? (
+        {/*}
+        {lockedBalance > 0 && (
           <Pending>
-            You have {amountLocked} pending.
-            <br />
-            Balances are updating.
+            You have {amountLocked} in pending transactions. <br />
+            This amount is included within your portfolio balance but not
+            available to spend yet.
           </Pending>
-        ) : null}
+        )}*/}
       </Wrapper>
     );
   }
@@ -111,9 +110,6 @@ const mapStateToProps = (state: DesktopAppState) => ({
     : selectBalances(state),
   syncState: isDesktop()
     ? selectDesktopSyncState(state as DesktopAppState)
-    : selectWebSyncState(state)
+    : selectWebSyncState(state),
 });
-export const MultiBalance = connect(
-  mapStateToProps,
-  null
-)(Balances);
+export const MultiBalance = connect(mapStateToProps, null)(Balances);

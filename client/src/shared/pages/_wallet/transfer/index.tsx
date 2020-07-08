@@ -2,13 +2,12 @@
 import React, { Component, Fragment } from "react";
 import { OwnAddress } from "shared/pages/_wallet/transfer/receive";
 import { Ticker } from "shared/reducers/types";
-import { XBalances } from "shared/reducers/xBalance";
 import Tab from "../../../components/tab";
 // Relative Imports
 import Body from "../../../components/_layout/body";
 import Header from "../../../components/_layout/header";
 import { SendFunds } from "./send";
-import {AddressEntry} from "shared/reducers/address";
+import { AddressEntry } from "shared/reducers/address";
 // Relative Imports
 
 interface TransferOwnProps {
@@ -22,16 +21,12 @@ interface TransferOwnProps {
   isProcessing: boolean;
 }
 
-interface TransferReduxProps {
-  xBalances: XBalances;
-}
-
 interface TransferState {
   firstTabState: boolean;
   secondTabState: boolean;
 }
 
-type TransferProps = TransferOwnProps & TransferReduxProps;
+type TransferProps = TransferOwnProps;
 
 export class Transfer extends Component<TransferProps, TransferState> {
   state: TransferState = {

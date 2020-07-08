@@ -7,13 +7,25 @@ import {
 import {closeWalletRPC, openWalletRPC, storeWalletRPC} from "../ipc/rpc/rpc";
 import { CLOSE_WALLET } from "shared/actions/types";
 import { requestSavedWalletsIPC } from "../ipc/misc";
+import {isDevMode} from "constants/env";
 
 export const closeWallet = () => {
   return (dispatch: any) => {
-    closeWalletRPC()
-      .catch((err) => console.log(err))
-      // .then(() => closeWalletRPC())
-      .then(() => dispatch(closeWalletSucceed()));
+
+
+    if (isDevMode()) {
+      closeWalletRPC()
+          .catch((err) => console.log(err))
+          // .then(() => closeWalletRPC())
+          .then(() => dispatch(closeWalletSucceed()));
+      return;
+    }
+
+    storeWalletRPC()
+        .then(() => closeWalletRPC())
+        .then(() => dispatch(closeWalletSucceed()))
+        .catch((err) => console.log(err))
+
   };
 };
 
