@@ -41,8 +41,7 @@ export const Displayed = styled.div`
   height: 16px;
   border-radius: 3px;
   transition: all 150ms;
-  border: 1px solid
-    ${(props) => (props.checked ? "none" : props.theme.body.border)};
+  box-shadow: 0 0 0 3px ${(props) => props.theme.button.primary};
   background: ${(props) =>
     props.checked ? props.theme.button.primary : props.theme.body.background};
 
