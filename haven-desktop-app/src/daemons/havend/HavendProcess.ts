@@ -35,7 +35,7 @@ export class HavendProcess extends DaemonProcess {
 
         try {
             const response = await this.rpcHandler.sendRequest(requestObject);
-            return response;
+            return response.data;
         }
         catch(e) {
             connectionRefused = true;
@@ -45,7 +45,7 @@ export class HavendProcess extends DaemonProcess {
             }
 
             const message = this._isRunning? 'Local node is too busy' : 'Local node is not running';
-            return {'date': {'error':{message}}} as any
+            return {'error':{message}} as any
         }
         finally {
             this.isReachable = !connectionRefused;

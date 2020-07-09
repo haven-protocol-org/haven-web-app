@@ -5,6 +5,7 @@ import {config, getLocalDaemon} from "../config/config";
 import {appEventBus, HAVEND_LOCATION_CHANGED} from "../../EventBus";
 import {isDevMode} from "../../env";
 import {logInDevMode} from "../../dev";
+import {log} from "util";
 
 
 
@@ -127,7 +128,7 @@ export class WalletRPCProcess extends DaemonProcess {
                 this.isConnectedToDaemon = false;
             }
             this.isReachable = true;
-            return response;
+            return response.data;
 
         } catch (e) {
 
@@ -136,7 +137,7 @@ export class WalletRPCProcess extends DaemonProcess {
             }
             this.isReachable = false;
             const message = this._isRunning ? 'wallet is too busy to respond' : 'wallet is not running';
-            return {'data': {'error': {message}}} as any
+            return {'error': {message}} as any
         }
     }
 
