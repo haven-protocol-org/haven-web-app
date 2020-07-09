@@ -23,14 +23,14 @@ const CellDisabled = ({ tokenName, ticker, price, balance, fullwidth }) => {
           <Title>{tokenName}</Title>
           <Ticker>{ticker}</Ticker>
         </Row>
-        <Subtitle left>{balance}</Subtitle>
+        <Subtitle left>{price}</Subtitle>
       </Column>
       <Wrapper>
         <Column>
-          <Title>{price}</Title>
+          <Title>$0.00</Title>
           <Subtitle>
             {"$"}
-            {"0.00"}
+            {balance}
           </Subtitle>
         </Column>
         <Inner>
