@@ -8,7 +8,7 @@ import bigInt from "big-integer";
 
 const HAVEN_STATS_URL = 'https://network-api.havenprotocol.org/api-stagenet/info';
 
-// fetch prices from oracle for web to be consistent with desktop app -> will be replaced later by 'real' blockheader entries
+// fetch prices from stats api for web/desktop mainnet to be consistent with desktop app -> will be replaced later by 'real' blockheader entries
 export const getExchangeRates = () => {
     return (dispatch: any) => {
         fetch(HAVEN_STATS_URL)
@@ -20,18 +20,22 @@ export const getExchangeRates = () => {
     };
 };
 
-const createRecordEntry = (rawBlockHeaderData: any): BlockHeaderRate => {
-    const blockHeader = rawBlockHeaderData.block_header;
-    const blockHeight: number = blockHeader.height + 1;
-    Object.entries(blockHeader.pricing_record).forEach(([key, value]) => {
-        if (key !== "signature") {
-            blockHeader.pricing_record[key] = bigInt(value as number);
+const createRecordEntry = async (apiResponse: Response): Promise<BlockHeaderRate> => {
+
+    const data: any = await apiResponse.json();
+    const pricingRecord = data.db_lastblock.pricing_record;
+    Object.entries(pricingRecord).forEach(([key, value]) => {
+        try {
+            pricingRecord[key] = bigInt(value as number);
         }
+        catch {
+            pricingRecord[key] = bigInt(Number(value) * Math.pow(10,12));
+        }
+
     });
-    const priceRecord = blockHeader.pricing_record;
-    priceRecord.height = blockHeight;
-    priceRecord.timestamp = blockHeader.timestamp;
-    return priceRecord;
+    pricingRecord.height = -1;
+    pricingRecord.timestamp = Date.now();
+    return pricingRecord;
 };
 
 export const getLastBlockerHeaderSucceed = (
