@@ -12,7 +12,6 @@ import Footer from "shared/components/_inputs/footer/index.js";
 import Mining from "../../../components/animation/index.js";
 // For the miner
 import { selectisLocalNode } from "platforms/desktop/reducers/havenNode";
-import { setHavenNode } from "platforms/desktop/actions/havenNode";
 import { dark, light } from "assets/styles/themes.js";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import {

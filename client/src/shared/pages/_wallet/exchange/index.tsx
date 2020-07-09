@@ -11,7 +11,7 @@ import Form from "../../../components/_inputs/form";
 import Footer from "../../../components/_inputs/footer";
 import Dropdown from "../../../components/_inputs/dropdown";
 import Tab from "../../../components/tab";
-import { Container, Failed } from "./styles";
+import { Container } from "./styles";
 import {
   selectXRate,
   hasLatestXRate,

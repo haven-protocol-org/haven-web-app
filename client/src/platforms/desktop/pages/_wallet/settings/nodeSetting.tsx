@@ -129,8 +129,7 @@ class NodeSettingComponent extends React.Component<
 
   buttonLogic = () => {
     const { locked } = this.state;
-    const { localNode, isConnected, isRemoteSyncing } = this.props;
-    const { address, isRunning, location } = this.props.node;
+    const { localNode, isConnected } = this.props;
 
     if (!locked && localNode && !isConnected) {
       return "Connect";
@@ -154,7 +153,6 @@ class NodeSettingComponent extends React.Component<
   render() {
     const selectedNodeOption = this.state.selectedNodeOption;
     const { isRemoteSyncing } = this.props;
-    const { address } = this.props.node;
     const { locked } = this.state;
 
     return (
