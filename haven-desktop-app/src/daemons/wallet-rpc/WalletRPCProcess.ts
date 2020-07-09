@@ -135,7 +135,7 @@ export class WalletRPCProcess extends DaemonProcess {
                 console.log('wallet seems not reachable');
             }
             this.isReachable = false;
-            const message = this._isRunning ? 'wallet is too busy to response' : 'wallet is not running';
+            const message = this._isRunning ? 'wallet is too busy to respond' : 'wallet is not running';
             return {'data': {'error': {message}}} as any
         }
     }
