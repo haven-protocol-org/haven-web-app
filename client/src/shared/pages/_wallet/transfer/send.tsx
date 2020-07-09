@@ -233,7 +233,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
             onClick={() => this.handleSubmit()}
             loading={this.props.isProcessing}
             label="Preview"
-            validated={checkValidation}
+            disabled={!checkValidation}
           />
         </Container>
       </Fragment>

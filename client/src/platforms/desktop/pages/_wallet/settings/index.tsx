@@ -194,6 +194,7 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
             onClick={this.onMiningButtonClicked}
             loading={false}
             label={buttonLabel}
+            disabled={true}
           />
         </Mining>
       </Body>

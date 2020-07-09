@@ -168,11 +168,7 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
                 disabled={!(name.length > 0 && pw.length > 0)}
                 onClick={() => this.onRestoreWallet()}
               >
-                {this.props.isRequestingLogin ? (
-                  <Spinner color={"white"} />
-                ) : (
-                  "Finish"
-                )}
+                {this.props.isRequestingLogin ? <Spinner /> : "Finish"}
               </Submit>
             </Buttons>
           </Wrapper>

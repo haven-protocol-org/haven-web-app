@@ -400,7 +400,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
               <Footer
                 onClick={() => this.handleSubmit()}
                 label="Exchange"
-                validated={isValid}
+                disabled={isValid}
                 loading={this.props.isProcessingExchange}
               />
             </Container>
