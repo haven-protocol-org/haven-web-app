@@ -63,6 +63,7 @@ class Balances extends Component<BalanceProps, BalanceState> {
           <Value>Portfolio Value Hidden</Value>
         </Wrapper>
       );
+
     const { prefix, suffix } =
       ticker === Ticker.xUSD
         ? { prefix: "$", suffix: "" }

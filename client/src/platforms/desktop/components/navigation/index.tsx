@@ -96,11 +96,7 @@ class Navigation extends Component<NavigationProps, any> {
           <Logo src={Icon} />
           <Haven>HAVEN</Haven>
           <NetworkStatus>
-            <Wrapper>
-              <Row>
-                <Tag>{current_network}</Tag>
-              </Row>
-            </Wrapper>
+            <Wrapper></Wrapper>
             {isDevMode() && wallet.isRunning && !wallet.isConnectedToDaemon && (
               <State isActive={false}>Wallet not connected to a daemon</State>
             )}
@@ -108,12 +104,6 @@ class Navigation extends Component<NavigationProps, any> {
               <State isActive={true}>
                 Wallet connected {isLocalNode ? "local" : "remote"} daemon
               </State>
-            )}
-            {!wallet.isRunning && (
-              <State isActive={wallet.isRunning}>Wallet Offline</State>
-            )}
-            {!node.isRunning && isLocalNode && (
-              <State isActive={node.isRunning}>Node Offline</State>
             )}
           </NetworkStatus>
         </Brand>
@@ -142,6 +132,14 @@ class Navigation extends Component<NavigationProps, any> {
               <OptionsDoubleRow>
                 <Body>Node</Body>
                 <Label>{node.location}</Label>
+              </OptionsDoubleRow>
+              <OptionsDoubleRow>
+                <Body>Wallet</Body>
+                <Label>{wallet.isRunning ? "Online" : "Offline"}</Label>
+              </OptionsDoubleRow>
+              <OptionsDoubleRow>
+                <Body>Node</Body>
+                <Label>{node.isRunning ? "Online" : "Offline"}</Label>
               </OptionsDoubleRow>
               <OptionsDoubleRow>
                 <Body>Application</Body>
