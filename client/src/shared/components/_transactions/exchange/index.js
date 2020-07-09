@@ -3,6 +3,7 @@ import React, { Fragment } from "react";
 
 // Relative Imports
 import { Container, Row, Key, Value } from "./styles";
+import Confirm from "../../confirm/index.js";
 
 const Transaction = ({
   xRate,
@@ -11,7 +12,9 @@ const Transaction = ({
   fromTicker,
   toTicker,
   fee,
-  externAddress
+  externAddress,
+  checked,
+  onChange,
 }) => {
   return (
     <Fragment>
@@ -51,11 +54,16 @@ const Transaction = ({
           <Value>{"Unlocks ~2 hours"}</Value>
         </Row>
         <Row>
-          <Key>Fee (${"0.02 USD"})</Key>
+          <Key>Transaction Fee (${"0.02 USD"})</Key>
           <Value>
             {"0.1234"} {"XHV"}
           </Value>
         </Row>
+        <Confirm
+          description="I have reviewed my Exchange and accept the transaction fee"
+          checked={checked}
+          onChange={onChange}
+        />
       </Container>
     </Fragment>
   );
