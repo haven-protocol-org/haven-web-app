@@ -9,6 +9,7 @@ import {getInfoRPC, getWalletHeightRPC, rescanBlockchainRPC} from "../ipc/rpc/rp
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { getLastBlockHeader } from "platforms/desktop/actions/blockHeaderExchangeRate";
 import { OFFSHORE_ENABLED } from "constants/env";
+import {getExchangeRates} from "shared/actions/exchangeRates";
 
 
 interface NodeInfoHeights {
@@ -21,11 +22,15 @@ export const getNodeInfo = () => {
     getInfoRPC()
       .then((res: any) => parseHeight(res))
       .then((nodeInfoHeights: NodeInfoHeights) => {
-        if (
-          getState().chain.nodeHeight !== nodeInfoHeights.nodeHeight &&
-          OFFSHORE_ENABLED
-        ) {
-          dispatch(getLastBlockHeader());
+        if ( isNewBlockAdded(getState().chain.nodeHeight, nodeInfoHeights.nodeHeight))
+        {
+          if (OFFSHORE_ENABLED) {
+              dispatch(getLastBlockHeader());
+            }
+          else {
+            // get exhchange rates from api if offshore feature is not active yet
+            dispatch(getExchangeRates());
+          }
         }
         dispatch(getNodeInfoSucceed(nodeInfoHeights));
       })
@@ -93,3 +98,8 @@ const rescanFailed = () => {
   return { type: RESCAN_FAILED };
 };
 
+const isNewBlockAdded = (oldHeight: number, currentHeight: number) => {
+
+  return oldHeight !== currentHeight;
+
+};

@@ -141,12 +141,12 @@ export const handleError = async (response: any) => {
    console.log(response);
   // intercept error on protocol level
 
-  if (response.data.error) return Promise.reject(response.data.error);
+  if (response.error) return Promise.reject(response.error);
 
   // we must distinguish between two reponse styles from monero daemon rpc, oldschool vs new school
-  if (response.data.result) {
-    return response.data.result;
+  if (response.result) {
+    return response.result;
   }
 
-  return response.data;
+  return response;
 };
