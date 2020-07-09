@@ -30,7 +30,7 @@ export const addNotificationByKey = (
     dispatch(  { type: ADD_NOTIFICATION, payload: shownMessage });
 
     if ( duration !== NotificationDuration.STICKY ) {
-      dispatch(removeNotification(shownMessage.id))
+      dispatch(removeNotificationAfterDelay(shownMessage.id, duration))
     }
 
     }
@@ -50,7 +50,7 @@ export const addNotificationByMessage = (
     dispatch(  { type: ADD_NOTIFICATION, payload: statusObj });
 
     if ( duration !== NotificationDuration.STICKY ) {
-      dispatch(removeNotification(statusObj.id))
+      dispatch(removeNotificationAfterDelay(statusObj.id, duration))
     }
   }
 
@@ -85,12 +85,12 @@ export const addErrorNotification = (
       dispatch(  { type: ADD_NOTIFICATION, payload: {...errorNotification, id} });
 
       if ( duration !== NotificationDuration.STICKY ) {
-        dispatch(removeNotification(id))
+        dispatch(removeNotificationAfterDelay(id, duration))
       }
     }
 
   }
-  const message = error.message || error.err_msg;
+  const message = error.message || error.err_msg || error;
   return buildNotification(message, NotificationType.ERROR, duration);
 };
 
@@ -112,9 +112,19 @@ const buildNotification = (
     dispatch(  { type: ADD_NOTIFICATION, payload: { type, message :notificationMessage, id, duration }, });
 
     if ( duration !== NotificationDuration.STICKY ) {
-      dispatch(removeNotification(id))
+      dispatch(removeNotificationAfterDelay(id, duration))
     }
   }
+
+};
+
+
+const removeNotificationAfterDelay = (id: string, duration: NotificationDuration) => {
+
+  return (dispatch: any) => {
+    setTimeout( () => dispatch(removeNotification(id), duration) );
+  }
+
 
 };
 

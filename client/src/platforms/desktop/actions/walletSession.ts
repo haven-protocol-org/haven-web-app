@@ -7,24 +7,26 @@ import {
 import {closeWalletRPC, openWalletRPC, storeWalletRPC} from "../ipc/rpc/rpc";
 import { CLOSE_WALLET } from "shared/actions/types";
 import { requestSavedWalletsIPC } from "../ipc/misc";
-import {isDevMode} from "constants/env";
+import {addErrorNotification} from "shared/actions/notification";
 
 export const closeWallet = () => {
   return (dispatch: any) => {
 
 
-    if (isDevMode()) {
+  /**  if (isDevMode()) {
       closeWalletRPC()
           .catch((err) => console.log(err))
           // .then(() => closeWalletRPC())
           .then(() => dispatch(closeWalletSucceed()));
       return;
     }
+   **/
 
     storeWalletRPC()
-        .then(() => closeWalletRPC())
-        .then(() => dispatch(closeWalletSucceed()))
-        .catch((err) => console.log(err))
+        .catch((e)=> addErrorNotification('wallet state could not be stored'));
+    closeWalletRPC()
+        .catch((err) => dispatch(addErrorNotification(err)))
+        .finally(() => dispatch(closeWalletSucceed()));
 
   };
 };

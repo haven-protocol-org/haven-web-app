@@ -19,6 +19,7 @@ export class WalletRPCProcess extends DaemonProcess {
     private isConnectedToDaemon: boolean = true;
     private isSyncing: boolean;
     private syncHeight: number;
+    private isReachable: boolean;
 
 
     init(): void {
@@ -57,11 +58,19 @@ export class WalletRPCProcess extends DaemonProcess {
 
         if ((chunk.toString()).includes(CONNECTION_TO_DAEMON_SUCCESS)) {
             this.isConnectedToDaemon = true;
+            if (isDevMode) {
+                  console.error('wallet stdout : ' + chunk.toString());
+            }
+
         }
 
 
         if ((chunk.toString()).includes(NO_CONNECTION_MESSAGE)) {
             this.isConnectedToDaemon = false;
+            if (isDevMode) {
+                  console.error('wallet stdout : ' + chunk.toString());
+            }
+
         }
 
         if (this._isHavendLocal) {
@@ -97,7 +106,6 @@ export class WalletRPCProcess extends DaemonProcess {
         if (setsDaemon) {
 
 
-
             const {address} = requestObject.params;
             logInDevMode('set daemon to ' + address);
 
@@ -111,28 +119,30 @@ export class WalletRPCProcess extends DaemonProcess {
 
         }
 
-            try {
-                const response = await this.rpcHandler.sendRequest(requestObject);
+        try {
+            const response = await this.rpcHandler.sendRequest(requestObject);
 
-                // if that was a successfull daemon change we are disconnected to a daemon right away
-                if(setsDaemon) {
-                    this.isConnectedToDaemon = false;
-                }
-
-                return response;
-
+            // if that was a successfull daemon change we are disconnected to a daemon right away
+            if (setsDaemon) {
+                this.isConnectedToDaemon = false;
             }
-            catch(e) {
+            this.isReachable = true;
+            return response;
 
-                if (isDevMode) {
-                    console.log('wallet seems not reachable');
-                }
-                return {'error': 'wallet refused connection'} as any
+        } catch (e) {
+
+            if (isDevMode) {
+                console.log('wallet seems not reachable');
             }
-
-
-
+            this.isReachable = false;
+            const message = this._isRunning ? 'wallet is too busy to response' : 'wallet is not running';
+            return {'data': {'error': {message}}} as any
+        }
     }
+
+
+
+
 
     getConfig(): IDaemonConfig {
         return config().wallet;
@@ -145,7 +155,8 @@ export class WalletRPCProcess extends DaemonProcess {
             isRunning:this._isRunning,
             isConnectedToDaemon: this.isConnectedToDaemon,
             isSyncing: this.isSyncing,
-            syncHeight: this.syncHeight
+            syncHeight: this.syncHeight,
+            isReachable: this.isReachable,
         }
 
     }

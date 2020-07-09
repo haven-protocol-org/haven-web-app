@@ -43,7 +43,9 @@ export class HavendProcess extends DaemonProcess {
                 console.log('havend seems not reachable');
                 console.log(e.code)
             }
-            return {'error': 'daemon refused connection'} as any
+
+            const message = this._isRunning? 'Local node is too busy' : 'Local node is not running';
+            return {'date': {'error':{message}}} as any
         }
         finally {
             this.isReachable = !connectionRefused;

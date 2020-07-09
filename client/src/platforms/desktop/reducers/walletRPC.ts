@@ -12,7 +12,8 @@ const INITAL_STATE: WalletState = {
     isConnectedToDaemon: true,
     isSyncing: false,
     syncHeight: 0,
-    isRunning: true
+    isRunning: true,
+    isReachable: false
 };
 
 export const walletRPC = (

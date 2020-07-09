@@ -24,6 +24,7 @@ export interface WalletState extends ProcessState  {
   isConnectedToDaemon: boolean;
   isSyncing: boolean;
   syncHeight: number;
+  isReachable: boolean;
 
 }
 

@@ -13,6 +13,7 @@ export interface WalletState extends ProcessState  {
   isConnectedToDaemon: boolean;
   isSyncing: boolean;
   syncHeight: number;
+  isReachable: boolean;
 
 }
 
@@ -44,6 +45,11 @@ export enum NodeLocation {
   Remote="Remote",
   None="None"
 }
+
+export enum ThreeState {
+  True, False, Unset
+}
+
 
 
 

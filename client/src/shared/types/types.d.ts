@@ -4,3 +4,7 @@ export interface SyncState {
   scannedHeight: number;
   scannedDate?: Date;
 }
+
+export enum ThreeState {
+  True, False, Unset
+}
