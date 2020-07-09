@@ -175,7 +175,7 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
 
         <Header
           title="Mining "
-          description="Mine from your computer and earn Haven"
+          description="Contribute hashing power and earn Haven"
         />
 
         <Mining
