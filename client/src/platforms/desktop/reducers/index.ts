@@ -43,7 +43,6 @@ const appReducer = combineReducers({
 
 const rootReducer = (state: any, action: AnyAction) => {
   if (action.type === CLOSE_WALLET) {
-
     state = undefined;
   }
 

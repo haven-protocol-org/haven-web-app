@@ -2,7 +2,11 @@ import { getBalanceRPC } from "../ipc/rpc/rpc";
 
 import { Balance, XBalance } from "shared/reducers/xBalance";
 import bigInt from "big-integer";
-import {GET_BALANCES_FAILED, GET_BALANCES_FETCHING, GET_BALANCES_SUCCEED} from "shared/actions/types";
+import {
+  GET_BALANCES_FAILED,
+  GET_BALANCES_FETCHING,
+  GET_BALANCES_SUCCEED,
+} from "shared/actions/types";
 
 export const getBalance = () => {
   return (dispatch: any) => {

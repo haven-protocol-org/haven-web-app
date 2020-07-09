@@ -45,7 +45,6 @@ export const EXCHANGE_CREATION_FETCHING = "exchange_creation_fetching";
 export const EXCHANGE_CREATION_FAILED = "exchange_creation_failed";
 export const EXCHANGE_CREATION_SUCCEED = "exchange_creation_succeed";
 
-
 export const GET_BLOCK_INFO_FETCHING = "get_block_info_fetching";
 export const GET_BLOCK_INFO_SUCEED = "get_block_info_suceed";
 export const GET_BLOCK_INFO_FAILED = "get_block_info_failed";
@@ -95,7 +94,6 @@ export const MINING_STATUS_RESPONSE_FAILED = "mining_status_response";
 
 export const SELECT_FROM_TICKER = "select_from_ticker";
 export const SELECT_TO_TICKER = "select_to_ticker";
-
 
 export const SET_HAVEN_NODE_FETCH = "set_haven_node_fetch";
 export const SET_HAVEN_NODE_SUCCESS = "set_haven_node_success";

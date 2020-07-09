@@ -3,7 +3,6 @@ import React from "react";
 
 // Relative Imports
 import { Container, Row, Key, Value } from "./styles";
-import Confirm from "../../confirm/index.js";
 
 export const ExchangeSummary = ({
   xRate,
@@ -13,7 +12,8 @@ export const ExchangeSummary = ({
   toTicker,
   fee,
   hasLatestXRate,
-    checked, onChange
+  checked,
+  onChange,
 }) => {
   return (
     <>
@@ -41,10 +41,9 @@ export const ExchangeSummary = ({
           </Value>
         </Row>
         <Row>
-          <Key>Fee</Key>
+          <Key>Transaction Fee</Key>
           <Value>{fee}</Value>
         </Row>
-        <Confirm description="I accept the exchange rates and fees" checked={checked} onChange={onChange} />
       </Container>
     </>
   );

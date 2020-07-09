@@ -4,16 +4,14 @@ import {
   OPEN_WALLET_SUCCEED,
   UPDATE_SAVED_WALLETS,
 } from "./types";
-import {closeWalletRPC, openWalletRPC, storeWalletRPC} from "../ipc/rpc/rpc";
+import { closeWalletRPC, openWalletRPC, storeWalletRPC } from "../ipc/rpc/rpc";
 import { CLOSE_WALLET } from "shared/actions/types";
 import { requestSavedWalletsIPC } from "../ipc/misc";
-import {addErrorNotification} from "shared/actions/notification";
+import { addErrorNotification } from "shared/actions/notification";
 
 export const closeWallet = () => {
   return (dispatch: any) => {
-
-
-  /**  if (isDevMode()) {
+    /**  if (isDevMode()) {
       closeWalletRPC()
           .catch((err) => console.log(err))
           // .then(() => closeWalletRPC())
@@ -22,12 +20,12 @@ export const closeWallet = () => {
     }
    **/
 
-    storeWalletRPC()
-        .catch((e)=> addErrorNotification('wallet state could not be stored'));
+    storeWalletRPC().catch((e) =>
+      addErrorNotification("wallet state could not be stored")
+    );
     closeWalletRPC()
-        .catch((err) => dispatch(addErrorNotification(err)))
-        .finally(() => dispatch(closeWalletSucceed()));
-
+      .catch((err) => dispatch(addErrorNotification(err)))
+      .finally(() => dispatch(closeWalletSucceed()));
   };
 };
 

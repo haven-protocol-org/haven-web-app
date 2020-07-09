@@ -285,9 +285,10 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       : NO_BALANCE;
 
     const isValid: boolean =
-      !!(fromTicker && toTicker && fromAmount && toAmount) &&
-      hasLatestXRate &&
-      this.state.reviewed;
+      !!(fromTicker && toTicker && fromAmount && toAmount) && hasLatestXRate;
+
+    console.log("##################");
+    console.log("hasLatestXRate", hasLatestXRate);
 
     return (
       <Fragment>
@@ -391,7 +392,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 toAmount={toAmount}
                 toTicker={toTicker}
                 hasLatestXRate={hasLatestXRate}
-                fee={"-"}
+                fee={"--"}
                 fromTicker={fromTicker}
                 checked={this.state.reviewed}
                 onChange={this.handleReviewSubmit}
@@ -399,7 +400,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
 
               <Footer
                 onClick={() => this.handleSubmit()}
-                label="Exchange"
+                label="Preview"
                 disabled={isValid}
                 loading={this.props.isProcessingExchange}
               />
