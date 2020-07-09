@@ -130,7 +130,7 @@ class Navigation extends Component<NavigationProps, any> {
                 <Label>{current_network}</Label>
               </OptionsDoubleRow>
               <OptionsDoubleRow>
-                <Body>Node</Body>
+                <Body>Node Type</Body>
                 <Label>{node.location}</Label>
               </OptionsDoubleRow>
               <OptionsDoubleRow>
