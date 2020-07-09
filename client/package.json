@@ -18,7 +18,7 @@
   },
   "scripts": {
     "start:desktop:mainnet": "sh -ac '. ./env/.env.mainnet; . ./env/.env.desktop; react-scripts start'",
-    "start:desktop:testnet": "sh -acnpm audit '. ./env/.env.testnet; . ./env/.env.desktop; react-scripts start'",
+    "start:desktop:testnet": "sh -ac '. ./env/.env.testnet; . ./env/.env.desktop; react-scripts start'",
     "start:desktop:stagenet": "sh -ac '. ./env/.env.stagenet; . ./env/.env.desktop; react-scripts start'",
     "start:web:mainnet": "sh -ac '. ./env/.env.mainnet; . ./env/.env.web; react-scripts start'",
     "start:web:testnet": "sh -ac '. ./env/.env.testnet; . ./env/.env.web; react-scripts start'",
