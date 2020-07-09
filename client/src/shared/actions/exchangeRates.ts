@@ -29,7 +29,7 @@ const createRecordEntry = async (apiResponse: Response): Promise<BlockHeaderRate
             pricingRecord[key] = bigInt(value as number);
         }
         catch {
-            pricingRecord[key] = bigInt(Number(value) * Math.pow(10,12));
+            pricingRecord[key] = bigInt(Math.round(Number(value) * Math.pow(10,12)));
         }
 
     });
