@@ -1,7 +1,11 @@
 {
   "name": "haven-desktop-app",
   "productName": "Haven",
+<<<<<<< HEAD
+  "version": "1.3.0",
+=======
   "version": "1.4.0",
+>>>>>>> 5d5b39c018eb3434adbae2948b9043cb013c1e20
   "description": "Desktop App for Haven Vault",
   "main": "dist/index.js",
   "scripts": {
