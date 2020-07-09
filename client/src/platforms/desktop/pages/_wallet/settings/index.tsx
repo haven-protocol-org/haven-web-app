@@ -10,7 +10,8 @@ import Form from "shared/components/_inputs/form";
 import Theme from "shared/components/_inputs/theme";
 import Footer from "shared/components/_inputs/footer/index.js";
 import Mining from "../../../components/animation/index.js";
-
+// For the miner
+import { selectisLocalNode } from "platforms/desktop/reducers/havenNode";
 import { dark, light } from "assets/styles/themes.js";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import {
@@ -29,6 +30,10 @@ type ThemeOption = { theme: string; value: string };
 type BalanceOption = { ticker: string; value: string; code: string };
 type AddressOption = { name: string; address: string };
 
+export interface NodeSettingProps {
+  localNode: boolean;
+}
+
 interface SettingsProps {
   theme: any;
   balance: any;
@@ -40,6 +45,7 @@ interface SettingsProps {
   miningStatus: () => void;
   title: string;
   description: string;
+  localNode: boolean;
 }
 
 const options: ThemeOption[] = [
@@ -175,19 +181,22 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
 
         <Header
           title="Mining "
-          description="Mine from your computer and earn Haven"
+          description="Start mining with your computer and increase your chance earn Haven"
         />
 
         <Mining
           //@ts-ignore
+          isLocalNode={this.props.localNode}
           status={true}
           mining={mining.active === true ? "Mining" : "Not Mining"}
           hash={mining.active === true ? `${mining.speed} Hashes` : "0 Hashes"}
         >
           <Footer
+            //@ts-ignore
             onClick={this.onMiningButtonClicked}
             loading={false}
             label={buttonLabel}
+            disabled={!this.props.localNode}
           />
         </Mining>
       </Body>
@@ -198,6 +207,7 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
 const mapStateToProps = (state: DesktopAppState) => ({
   theme: state.theme,
   mining: state.mining,
+  localNode: selectisLocalNode(state.havenNode),
 });
 
 export const SettingsDesktop = connect(mapStateToProps, {

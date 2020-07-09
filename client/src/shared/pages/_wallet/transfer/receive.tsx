@@ -114,6 +114,8 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
             <Footer
               label={this.state.copyButtonState}
               onClick={this.clipboardAddress}
+              disabled={false}
+              loading={false}
             />
           )}
         </Container>

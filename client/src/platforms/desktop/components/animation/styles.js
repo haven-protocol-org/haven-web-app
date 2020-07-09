@@ -22,11 +22,12 @@ export const Logo = styled.img`
   width: auto;
 `;
 
-export const Haven = styled.div`
+export const Gpu = styled.div`
   color: white;
   font-size: 20px;
   font-family: "Inter-Bold";
   margin-left: 12px;
+  text-transform: uppercase;
 `;
 
 export const Image = styled.div`
@@ -45,7 +46,7 @@ export const Grid = styled.div`
   height: auto;
   padding: 16px 16px 0px 16px;
   grid-gap: 20px;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
 
   ${media.tablet`
     grid-template-columns: 1fr  ;
@@ -149,6 +150,10 @@ export const Footer = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 0px 16px;
+`;
+
+export const RemoteNode = styled.div`
+  padding: 8px 20px;
 `;
 
 export const Indicator = styled.div`

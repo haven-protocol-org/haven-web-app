@@ -11,7 +11,7 @@ import Form from "../../../components/_inputs/form";
 import Footer from "../../../components/_inputs/footer";
 import Dropdown from "../../../components/_inputs/dropdown";
 import Tab from "../../../components/tab";
-import { Container, Failed } from "./styles";
+import { Container } from "./styles";
 import {
   selectXRate,
   hasLatestXRate,
@@ -21,7 +21,7 @@ import {
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { selectNodeHeight } from "platforms/desktop/reducers/chain";
 import { getLastBlockHeader } from "platforms/desktop/actions/blockHeaderExchangeRate";
-import {createExchange} from "platforms/desktop/actions";
+import { createExchange } from "platforms/desktop/actions";
 import { Ticker } from "shared/reducers/types";
 import {
   selectExchangeSucceed,
@@ -383,12 +383,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                   />
                 </Fragment>
               )}
-              {!hasLatestXRate && (
-                <Failed>
-                  The ability to Exchange assets is temporarily disabled until
-                  the wallet is completely synced...
-                </Failed>
-              )}
             </Form>
             <Container>
               <ExchangeSummary
@@ -406,7 +400,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
               <Footer
                 onClick={() => this.handleSubmit()}
                 label="Exchange"
-                validated={isValid}
+                disabled={isValid}
                 loading={this.props.isProcessingExchange}
               />
             </Container>
