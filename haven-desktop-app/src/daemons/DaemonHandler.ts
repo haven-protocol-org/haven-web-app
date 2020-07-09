@@ -2,7 +2,7 @@ import {IDaemonManager} from "./IDaemonManager";
 import {appEventBus, DAEMONS_STOPPED_EVENT} from "../EventBus";
 import {HavendProcess} from "./havend/HavendProcess";
 import {WalletRPCProcess} from "./wallet-rpc/WalletRPCProcess";
-import {ipcMain} from "electron";
+import {ipcMain, BrowserWindow} from "electron";
 import {CommunicationChannel} from "../types";
 import {RPCRequestObject} from "../rpc/RPCHRequestHandler";
 import {DAEMON_METHODS, WALLET_METHODS} from "../daemons/enum";
@@ -73,6 +73,7 @@ export class DaemonHandler {
             appEventBus.emit(DAEMONS_STOPPED_EVENT);
             return;
         }
+
         this.addDaemonsQuitChecker();
     }
 
@@ -82,6 +83,7 @@ export class DaemonHandler {
     }
 
     private addDaemonsQuitChecker() {
+
 
 
         const i = setInterval( () => {

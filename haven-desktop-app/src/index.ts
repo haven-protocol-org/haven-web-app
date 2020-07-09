@@ -33,7 +33,7 @@ const startApp = () => {
 
   browserOptions.webPreferences = {
     nodeIntegration: false,
-    preload: path.join(__dirname, "../preload.js"),
+    preload: path.join(__dirname, "../sites/preload/preload.js"),
   };
   // Create the browser window.
   mainWindow = new BrowserWindow(browserOptions);
@@ -47,7 +47,7 @@ const startApp = () => {
       if (hasStarted) {
         mainWindow.loadURL("http://localhost:3000");
       } else {
-        mainWindow.loadURL(path.join(`file://${__dirname}`, "../index.html"));
+        mainWindow.loadURL(path.join(`file://${__dirname}`, "../sites/dev/index.html"));
       }
     });
   } else {
