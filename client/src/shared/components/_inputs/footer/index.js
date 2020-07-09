@@ -9,7 +9,7 @@ const Footer = ({ loading, onClick, label, disabled }) => {
   return (
     <Container>
       <Button disabled={disabled} onClick={onClick}>
-        {loading ? <Spinner color={"white"} /> : label}
+        {loading ? <Spinner /> : label}
       </Button>
     </Container>
   );

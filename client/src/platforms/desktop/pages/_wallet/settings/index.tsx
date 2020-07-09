@@ -45,6 +45,7 @@ interface SettingsProps {
   miningStatus: () => void;
   title: string;
   description: string;
+  localNode: boolean;
 }
 
 const options: ThemeOption[] = [
@@ -180,7 +181,7 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
 
         <Header
           title="Mining "
-          description="Contribute hashing power and earn Haven"
+          description="Start mining with your computer and increase your chance earn Haven"
         />
 
         <Mining
@@ -191,10 +192,11 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
           hash={mining.active === true ? `${mining.speed} Hashes` : "0 Hashes"}
         >
           <Footer
+            //@ts-ignore
             onClick={this.onMiningButtonClicked}
             loading={false}
             label={buttonLabel}
-            disabled={true}
+            disabled={!this.props.localNode}
           />
         </Mining>
       </Body>
