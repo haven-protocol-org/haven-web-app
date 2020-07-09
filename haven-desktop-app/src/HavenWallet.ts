@@ -2,14 +2,14 @@
  * responsible to wire everything together
  */
 
-import {WalletHandler} from "./wallets/WalletHandler";
-import {CommunicationChannel} from "./types";
-import {BrowserWindow, ipcMain} from "electron";
-import {getNetType, NET, setNetType} from "./env";
-import {DaemonHandler} from "./daemons/DaemonHandler";
-import {checkAndCreateWalletDir} from "./wallets/walletPaths";
-import {appEventBus, DAEMONS_STOPPED_EVENT} from "./EventBus";
-import {checkAndCreateDaemonConfig} from "./daemons/config/config";
+import { WalletHandler } from "./wallets/WalletHandler";
+import { CommunicationChannel } from "./types";
+import { BrowserWindow, ipcMain } from "electron";
+import { getNetType, NET, setNetType } from "./env";
+import { DaemonHandler } from "./daemons/DaemonHandler";
+import { checkAndCreateWalletDir } from "./wallets/walletPaths";
+import { appEventBus, DAEMONS_STOPPED_EVENT } from "./EventBus";
+import { checkAndCreateDaemonConfig } from "./daemons/config/config";
 import BrowserWindowConstructorOptions = Electron.BrowserWindowConstructorOptions;
 import * as path from "path";
 
@@ -21,8 +21,7 @@ export class HavenWallet {
 
   private isSwitchingNet: boolean = false;
   private requestShutDown: boolean = false;
-  private shutDownWindow:BrowserWindow;
-
+  private shutDownWindow: BrowserWindow;
 
   public start() {
     if (this._isRunning) {
@@ -36,7 +35,6 @@ export class HavenWallet {
 
     this.daemonHandler.startDaemons();
     this.walletHandler.start();
-
   }
 
   private onSwitchNetwork(netType: NET) {
@@ -68,21 +66,16 @@ export class HavenWallet {
     this._isRunning = false;
   }
 
-
-
   private addNetworkSwitchHandling() {
     ipcMain.handle(CommunicationChannel.SWITCH_NET, (event, args) =>
       this.onSwitchNetwork(args)
     );
   }
 
-
   private showShutDownWindow() {
-
     const shutDownConctruction: BrowserWindowConstructorOptions = {
-
-      width:400,
-      height:200,
+      width: 600,
+      height: 450,
       center: true,
       alwaysOnTop: true,
       closable: true,
@@ -90,17 +83,19 @@ export class HavenWallet {
       movable: false,
       frame: false,
       fullscreenable: false,
-      kiosk: true
+      kiosk: true,
     };
     this.shutDownWindow = new BrowserWindow(shutDownConctruction);
-    this.shutDownWindow.loadURL(path.join(`file://${__dirname}`, "../sites/shutdown/index.html"));
+    this.shutDownWindow.loadURL(
+      path.join(`file://${__dirname}`, "../sites/shutdown/index.html")
+    );
 
     this.shutDownWindow.on("ready-to-show", () => {
       this.shutDownWindow.show();
     });
 
-    appEventBus.once(DAEMONS_STOPPED_EVENT, () => this.shutDownWindow.destroy());
+    appEventBus.once(DAEMONS_STOPPED_EVENT, () =>
+      this.shutDownWindow.destroy()
+    );
   }
-
-
 }
