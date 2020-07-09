@@ -21,7 +21,7 @@ import {
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { selectNodeHeight } from "platforms/desktop/reducers/chain";
 import { getLastBlockHeader } from "platforms/desktop/actions/blockHeaderExchangeRate";
-import {createExchange} from "platforms/desktop/actions";
+import { createExchange } from "platforms/desktop/actions";
 import { Ticker } from "shared/reducers/types";
 import {
   selectExchangeSucceed,
@@ -382,12 +382,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                     onChange={this.onEnterExternAddress}
                   />
                 </Fragment>
-              )}
-              {!hasLatestXRate && (
-                <Failed>
-                  The ability to Exchange assets is temporarily disabled until
-                  the wallet is completely synced...
-                </Failed>
               )}
             </Form>
             <Container>
