@@ -50,7 +50,7 @@ export const Transaction = ({
           </Value>
         </Row>
         <Confirm
-          description="I have reviewed my transfer and accept the transaction fee"
+          description="I have reviewed my Transfer and accept the transaction fee"
           checked={checked}
           onChange={onChange}
         />
