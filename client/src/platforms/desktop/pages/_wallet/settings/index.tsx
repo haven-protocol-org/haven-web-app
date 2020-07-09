@@ -10,7 +10,9 @@ import Form from "shared/components/_inputs/form";
 import Theme from "shared/components/_inputs/theme";
 import Footer from "shared/components/_inputs/footer/index.js";
 import Mining from "../../../components/animation/index.js";
-
+// For the miner
+import { selectisLocalNode } from "platforms/desktop/reducers/havenNode";
+import { setHavenNode } from "platforms/desktop/actions/havenNode";
 import { dark, light } from "assets/styles/themes.js";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import {
@@ -28,6 +30,10 @@ import { HavenNodeSetting } from "platforms/desktop/pages/_wallet/settings/nodeS
 type ThemeOption = { theme: string; value: string };
 type BalanceOption = { ticker: string; value: string; code: string };
 type AddressOption = { name: string; address: string };
+
+export interface NodeSettingProps {
+  localNode: boolean;
+}
 
 interface SettingsProps {
   theme: any;
@@ -180,6 +186,7 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
 
         <Mining
           //@ts-ignore
+          isLocalNode={this.props.localNode}
           status={true}
           mining={mining.active === true ? "Mining" : "Not Mining"}
           hash={mining.active === true ? `${mining.speed} Hashes` : "0 Hashes"}
@@ -198,6 +205,7 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
 const mapStateToProps = (state: DesktopAppState) => ({
   theme: state.theme,
   mining: state.mining,
+  localNode: selectisLocalNode(state.havenNode),
 });
 
 export const SettingsDesktop = connect(mapStateToProps, {

@@ -152,6 +152,10 @@ export const Footer = styled.div`
   padding: 0px 16px;
 `;
 
+export const RemoteNode = styled.div`
+  padding: 8px 20px;
+`;
+
 export const Indicator = styled.div`
   height: 6px;
   width: 6px;

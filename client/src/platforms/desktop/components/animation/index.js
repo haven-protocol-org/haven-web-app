@@ -19,11 +19,13 @@ import {
   Indicator,
   Row,
   Gpu,
+  RemoteNode,
 } from "./styles.js";
 import icon from "../../../../assets/haven.svg";
 import light from "../../../../assets/haven-dark.svg";
+import { Information } from "../../../../assets/styles/type.js";
 
-const Mining = ({ status, mining, hash, children }) => {
+const Mining = ({ status, mining, hash, children, isLocalNode }) => {
   const themeContext = useContext(ThemeContext);
 
   return (
@@ -60,6 +62,15 @@ const Mining = ({ status, mining, hash, children }) => {
             <Active status />
           </Image>
         </Grid>
+      )}
+      {!isLocalNode && (
+        <RemoteNode>
+          <Information>
+            It appears that you are currently connected to a{" "}
+            <strong>Remote Node</strong>. To start mining please connect and
+            sync a <strong>Local Node</strong>.
+          </Information>
+        </RemoteNode>
       )}
       <Footer>{children}</Footer>
     </Container>
