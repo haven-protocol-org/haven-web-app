@@ -18,6 +18,7 @@ import {
   Footer,
   Indicator,
   Row,
+  Gpu,
 } from "./styles.js";
 import icon from "../../../../assets/haven.svg";
 import light from "../../../../assets/haven-dark.svg";
@@ -30,7 +31,9 @@ const Mining = ({ status, mining, hash, children }) => {
       <Header>
         <Brand>
           <Logo src={themeContext.value === "Dark Theme" ? icon : light} />
+          <Gpu>GPU Miner</Gpu>
         </Brand>
+
         <Column>
           <Row>
             <Indicator mining={mining} />
@@ -47,16 +50,10 @@ const Mining = ({ status, mining, hash, children }) => {
           <Image hide="true">
             <Inactive status />
           </Image>
-          <Image hide="true">
-            <Inactive status />
-          </Image>
         </Grid>
       ) : (
         <Grid>
           <Image>
-            <Active status />
-          </Image>
-          <Image hide="true">
             <Active status />
           </Image>
           <Image hide="true">
