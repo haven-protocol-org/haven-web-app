@@ -23,7 +23,7 @@ export const Logo = styled.img`
 `;
 
 export const Gpu = styled.div`
-  color: white;
+  color: ${(props) => props.theme.type.primary};
   font-size: 20px;
   font-family: "Inter-Bold";
   margin-left: 12px;
