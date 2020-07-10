@@ -287,9 +287,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     const isValid: boolean =
       !!(fromTicker && toTicker && fromAmount && toAmount) && hasLatestXRate;
 
-    console.log("##################");
-    console.log("hasLatestXRate", hasLatestXRate);
-
     return (
       <Fragment>
         <Body>
