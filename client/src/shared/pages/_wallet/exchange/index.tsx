@@ -111,7 +111,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     this.props.getLastBlockHeader();
   }
 
-  componentWillReceiveProps(
+  componentDidUpdate(
     nextProps: Readonly<ExchangeProps>,
     nextContext: any
   ): void {
