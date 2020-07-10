@@ -21,6 +21,17 @@ class ConfirmExchangeModal extends React.Component<
   ConfirmExchangeModalProps,
   any
 > {
+  state = {
+    checked: false,
+    loading: false,
+  };
+
+  approveTransfer = () => {
+    this.setState({
+      checked: !this.state.checked,
+    });
+  };
+
   render() {
     const {
       address,
@@ -34,7 +45,7 @@ class ConfirmExchangeModal extends React.Component<
     return (
       <Modal
         title="Exchange Confirmation"
-        description="Please confirm and finalize your exchange transaction"
+        description="Please review and finalize your exchange transaction"
         leftButton="Cancel"
         rightButton="Confirm"
         isLoading={false}
@@ -44,7 +55,9 @@ class ConfirmExchangeModal extends React.Component<
       >
         <Transaction
           xRate={1}
+          onChange={this.approveTransfer}
           fromAmount={fromAmount}
+          checked={this.state.checked}
           toAmount={toAmount}
           fromTicker={fromTicker}
           toTicker={toTicker}
@@ -62,7 +75,12 @@ class ConfirmExchangeModal extends React.Component<
 
   onConfirm() {
     const { metaData } = this.props.exchange;
-    this.props.confirmExchange(metaData);
+    this.setState({
+      loading: true,
+    });
+    setTimeout(() => {
+      this.props.confirmExchange(metaData);
+    }, 3000);
   }
 
   componentDidUpdate(prevProps: Readonly<ConfirmExchangeModalProps>): void {

@@ -1,11 +1,14 @@
 import {
   GET_BLOCK_HEIGHT_SUCCEED,
-  GET_BLOCK_INFO_SUCEED, RESCAN_FAILED, RESCAN_SUCCEED, START_RESCAN,
+  GET_BLOCK_INFO_SUCEED,
+  RESCAN_FAILED,
+  RESCAN_SUCCEED,
+  START_RESCAN,
 } from "../actions/types";
 import { AnyAction } from "redux";
 import { SyncState } from "shared/types/types";
 import { DesktopAppState } from "platforms/desktop/reducers/index";
-import {selectisLocalNode} from "platforms/desktop/reducers/havenNode";
+import { selectisLocalNode } from "platforms/desktop/reducers/havenNode";
 
 interface Chain {
   walletHeight: number;
@@ -45,7 +48,6 @@ export const selectNodeHeight = (state: DesktopAppState) => {
 };
 
 export const selectDesktopSyncState = (state: DesktopAppState): SyncState => {
-
   const isLocalNode = selectisLocalNode(state.havenNode);
   const blockHeight = state.chain.chainHeight;
   let scannedHeight: number;
@@ -57,13 +59,12 @@ export const selectDesktopSyncState = (state: DesktopAppState): SyncState => {
   if (isLocalNode) {
     isSyncing = state.chain.chainHeight > state.chain.nodeHeight + 3;
     scannedHeight = state.chain.nodeHeight;
-  } else
-    // when we use a remote node take the sync height from wallet
-    {
-      isSyncing = state.chain.chainHeight > state.chain.walletHeight + 3;
-      scannedHeight = state.chain.walletHeight;
   }
-
+  // when we use a remote node take the sync height from wallet
+  else {
+    isSyncing = state.chain.chainHeight > state.chain.walletHeight + 3;
+    scannedHeight = state.chain.walletHeight;
+  }
 
   return { isSyncing, blockHeight, scannedHeight };
 };

@@ -1,8 +1,8 @@
 import axios from "axios";
-import {LOCAL_HOST_URL} from "../daemons/config/enum";
-import {LOCAL_HOST} from "../daemons/config/enum";
-import {logInDevMode} from "../dev";
-import {URL} from "url";
+import { LOCAL_HOST_URL } from "../daemons/config/enum";
+import { LOCAL_HOST } from "../daemons/config/enum";
+import { logInDevMode } from "../dev";
+import { URL } from "url";
 
 export type RPCRequestObject = {
   id: number;
@@ -12,7 +12,6 @@ export type RPCRequestObject = {
 };
 
 export class RPCHRequestHandler {
-
   private _host: string = LOCAL_HOST_URL;
   private _port: number;
   private _ssl: boolean;
@@ -20,7 +19,7 @@ export class RPCHRequestHandler {
 
   public set port(portValue: number) {
     this._port = portValue;
-    this.setFullUrl(this._host +':'+ this._port);
+    this.setFullUrl(this._host + ":" + this._port);
   }
 
   public set ssl(sslMode: boolean) {
@@ -28,25 +27,20 @@ export class RPCHRequestHandler {
   }
 
   public setHost(host: string) {
-
-
     if (host === LOCAL_HOST) {
       this._host = LOCAL_HOST_URL;
     } else {
       this._host = host;
     }
-    this.setFullUrl(this._host +':'+ this._port);
+    this.setFullUrl(this._host + ":" + this._port);
   }
 
   public setFullUrl(url: string) {
     this._fullUrl = url;
-
   }
 
   public sendRequest(requestObject: RPCRequestObject): Promise<any> {
-
-    logInDevMode('send request to : ' + this._fullUrl);
-
+    logInDevMode("send request to : " + this._fullUrl);
 
     if (requestObject.method === "mining_status") {
       return axios.post(

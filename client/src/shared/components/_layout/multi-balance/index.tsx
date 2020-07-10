@@ -63,6 +63,7 @@ class Balances extends Component<BalanceProps, BalanceState> {
           <Value>Portfolio Value Hidden</Value>
         </Wrapper>
       );
+
     const { prefix, suffix } =
       ticker === Ticker.xUSD
         ? { prefix: "$", suffix: "" }
@@ -91,14 +92,6 @@ class Balances extends Component<BalanceProps, BalanceState> {
               }) `}
         </Value>
         {isSyncing && <ProgressBar percentage={percentage} />}
-        {/*}
-        {lockedBalance > 0 && (
-          <Pending>
-            You have {amountLocked} in pending transactions. <br />
-            This amount is included within your portfolio balance but not
-            available to spend yet.
-          </Pending>
-        )}*/}
       </Wrapper>
     );
   }

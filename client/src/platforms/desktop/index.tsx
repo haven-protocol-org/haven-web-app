@@ -1,3 +1,6 @@
+import React from "react";
+import { AppDesktop } from "./App";
+
 import { applyMiddleware, createStore, Store } from "redux";
 import reduxThunk from "redux-thunk";
 import reducers from "./reducers";
@@ -9,8 +12,6 @@ import {
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { GlobalStyle } from "globalStyle";
-import React from "react";
-import { AppDesktop } from "./App";
 
 let store: Store;
 

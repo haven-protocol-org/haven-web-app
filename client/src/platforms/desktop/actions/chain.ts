@@ -3,14 +3,20 @@ import {
   GET_BLOCK_HEIGHT_FETCHING,
   GET_BLOCK_HEIGHT_SUCCEED,
   GET_BLOCK_INFO_FAILED,
-  GET_BLOCK_INFO_SUCEED, RESCAN_FAILED, RESCAN_SUCCEED, START_RESCAN
+  GET_BLOCK_INFO_SUCEED,
+  RESCAN_FAILED,
+  RESCAN_SUCCEED,
+  START_RESCAN,
 } from "./types";
-import {getInfoRPC, getWalletHeightRPC, rescanBlockchainRPC} from "../ipc/rpc/rpc";
+import {
+  getInfoRPC,
+  getWalletHeightRPC,
+  rescanBlockchainRPC,
+} from "../ipc/rpc/rpc";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { getLastBlockHeader } from "platforms/desktop/actions/blockHeaderExchangeRate";
 import { OFFSHORE_ENABLED } from "constants/env";
-import {getExchangeRates} from "shared/actions/exchangeRates";
-
+import { getExchangeRates } from "shared/actions/exchangeRates";
 
 interface NodeInfoHeights {
   nodeHeight: number;
@@ -22,12 +28,15 @@ export const getNodeInfo = () => {
     getInfoRPC()
       .then((res: any) => parseHeight(res))
       .then((nodeInfoHeights: NodeInfoHeights) => {
-        if ( isNewBlockAdded(getState().chain.nodeHeight, nodeInfoHeights.nodeHeight))
-        {
+        if (
+          isNewBlockAdded(
+            getState().chain.nodeHeight,
+            nodeInfoHeights.nodeHeight
+          )
+        ) {
           if (OFFSHORE_ENABLED) {
-              dispatch(getLastBlockHeader());
-            }
-          else {
+            dispatch(getLastBlockHeader());
+          } else {
             // get exhchange rates from api if offshore feature is not active yet
             dispatch(getExchangeRates());
           }
@@ -77,14 +86,10 @@ export const rescanBlockChain = () => {
     dispatch(startRescan());
 
     rescanBlockchainRPC()
-        .then(() => dispatch(rescanSucceed()))
-        .catch((err) => dispatch(rescanFailed()));
-
+      .then(() => dispatch(rescanSucceed()))
+      .catch((err) => dispatch(rescanFailed()));
   };
 };
-
-
-
 
 const startRescan = () => {
   return { type: START_RESCAN };
@@ -99,7 +104,5 @@ const rescanFailed = () => {
 };
 
 const isNewBlockAdded = (oldHeight: number, currentHeight: number) => {
-
   return oldHeight !== currentHeight;
-
 };

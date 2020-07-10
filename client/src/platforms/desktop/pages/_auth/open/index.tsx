@@ -21,7 +21,7 @@ import { DesktopAppState } from "platforms/desktop/reducers";
 
 interface OpenWalletState {
   selectedWallet: string | null;
-  pw: string;
+  password: string;
   validated: boolean;
   showPassword: boolean;
   error: string;
@@ -29,7 +29,7 @@ interface OpenWalletState {
 
 interface OpenWalletProps {
   wallets: string[] | null;
-  openWallet: (filename: string, pw: string) => void;
+  openWallet: (filename: string, password: string) => void;
   loading: boolean;
   errorMessage: string;
 }
@@ -40,7 +40,7 @@ class OpenWalletDesktopContainer extends Component<
 > {
   state: OpenWalletState = {
     selectedWallet: null,
-    pw: "",
+    password: "",
     validated: false,
     showPassword: false,
     error: "",
@@ -48,7 +48,7 @@ class OpenWalletDesktopContainer extends Component<
 
   onOpenWallet = () => {
     if (this.state.selectedWallet !== null) {
-      this.props.openWallet(this.state.selectedWallet, this.state.pw);
+      this.props.openWallet(this.state.selectedWallet, this.state.password);
     }
   };
 
@@ -81,8 +81,8 @@ class OpenWalletDesktopContainer extends Component<
   };
 
   render() {
-    const { selectedWallet, pw } = this.state;
-    const disabled = selectedWallet !== null && pw.length > 0;
+    const { selectedWallet, password, showPassword, error } = this.state;
+    const disabled = selectedWallet !== null && password.length > 0;
 
     const { wallets } = this.props;
 
@@ -107,9 +107,9 @@ class OpenWalletDesktopContainer extends Component<
         <Input
           label="Vault Password"
           placeholder="Enter your Vault password"
-          name="pw"
+          name="password"
           type={"text"}
-          value={this.state.pw}
+          value={password}
           onChange={this.onChangeHandler}
         />
         <Information>
@@ -126,17 +126,17 @@ class OpenWalletDesktopContainer extends Component<
             options={this.props.wallets}
             placeholder={"Choose a Vault"}
             label={"Select Vault"}
-            error={this.state.error}
+            error={error}
             value={selectedWallet}
           />
           <InputButton
             // @ts-ignore
             label="Vault Password"
             placeholder="Enter your Vault password"
-            name="pw"
-            type={this.state.showPassword === true ? "text" : "password"}
-            button={this.state.showPassword === true ? "hide" : "show"}
-            value={this.state.pw}
+            name="password"
+            type={showPassword ? "text" : "password"}
+            button={showPassword ? "hide" : "show"}
+            value={password}
             onChange={this.onChangeHandler}
             onClick={this.togglePassword}
           />

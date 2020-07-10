@@ -111,7 +111,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     this.props.getLastBlockHeader();
   }
 
-  componentWillReceiveProps(
+  componentDidUpdate(
     nextProps: Readonly<ExchangeProps>,
     nextContext: any
   ): void {
@@ -285,9 +285,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       : NO_BALANCE;
 
     const isValid: boolean =
-      !!(fromTicker && toTicker && fromAmount && toAmount) &&
-      hasLatestXRate &&
-      this.state.reviewed;
+      !!(fromTicker && toTicker && fromAmount && toAmount) && hasLatestXRate;
 
     return (
       <Fragment>
@@ -391,7 +389,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 toAmount={toAmount}
                 toTicker={toTicker}
                 hasLatestXRate={hasLatestXRate}
-                fee={"-"}
+                fee={"--"}
                 fromTicker={fromTicker}
                 checked={this.state.reviewed}
                 onChange={this.handleReviewSubmit}
@@ -399,7 +397,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
 
               <Footer
                 onClick={() => this.handleSubmit()}
-                label="Exchange"
+                label="Preview"
                 disabled={isValid}
                 loading={this.props.isProcessingExchange}
               />

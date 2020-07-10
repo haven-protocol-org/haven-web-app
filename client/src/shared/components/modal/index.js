@@ -47,9 +47,9 @@ export const Modal = ({
                 {children}
                 <Information>
                   <strong>Note:</strong> Once you click <strong>Confirm</strong>{" "}
-                  a portion of your balance may be locked for ~20 mins until it
-                  is finalized. Your Vault will also indicate the pending
-                  balances which can be seen by clicking the{" "}
+                  a portion of your balance may be locked for ~20 mins until the
+                  transaction is complete. Your Vault will also indicate the
+                  pending balances which can be seen by clicking the{" "}
                   <strong>Show Pending Balances</strong> button in the Assets
                   page.
                 </Information>

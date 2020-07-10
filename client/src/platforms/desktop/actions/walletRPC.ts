@@ -2,10 +2,10 @@ import { getWalletStateIPC } from "platforms/desktop/ipc/misc";
 import { WalletState } from "platforms/desktop/ipc/ipc-types";
 import { GET_WALLET_RPC_STATE_SUCCEED } from "platforms/desktop/actions/types";
 import { getWalletHeightSucceed } from "platforms/desktop/actions/chain";
-import {DesktopAppState} from "platforms/desktop/reducers";
+import { DesktopAppState } from "platforms/desktop/reducers";
 
 export const getWalletRPCState = () => {
-  return (dispatch: any, getState:() => DesktopAppState) => {
+  return (dispatch: any, getState: () => DesktopAppState) => {
     getWalletStateIPC()
       .then((res: WalletState) => {
         dispatch(updateWalletRPCState(res));
