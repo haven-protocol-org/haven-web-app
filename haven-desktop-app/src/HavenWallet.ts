@@ -74,13 +74,13 @@ export class HavenWallet {
 
   private showShutDownWindow() {
     const shutDownConctruction: BrowserWindowConstructorOptions = {
-      width: 600,
-      height: 450,
+      width: 500,
+      height: 280,
       center: true,
       alwaysOnTop: true,
       closable: true,
       resizable: false,
-      movable: false,
+      movable: true,
       frame: false,
       fullscreenable: false,
       kiosk: true,
