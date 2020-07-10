@@ -1,11 +1,13 @@
-import { DaemonProcess } from "../DaemonProcess";
-import { IDaemonConfig, WalletState } from "../../types";
-import { RPCRequestObject } from "../../rpc/RPCHRequestHandler";
-import { config, getLocalDaemon } from "../config/config";
-import { appEventBus, HAVEND_LOCATION_CHANGED } from "../../EventBus";
-import { isDevMode } from "../../env";
-import { logInDevMode } from "../../dev";
-import { log } from "util";
+import {DaemonProcess} from "../DaemonProcess";
+import {IDaemonConfig, WalletState} from "../../types";
+import {RPCRequestObject} from "../../rpc/RPCHRequestHandler";
+import {config, getLocalDaemon} from "../config/config";
+import {appEventBus, HAVEND_LOCATION_CHANGED} from "../../EventBus";
+import {isDevMode} from "../../env";
+import {logInDevMode} from "../../dev";
+
+
+
 
 const SYNC_HEIGHT_REGEX = /.*D.*height (.*),/gm;
 const NO_CONNECTION_MESSAGE = "error::no_connection_to_daemon";
@@ -111,12 +113,12 @@ export class WalletRPCProcess extends DaemonProcess {
       return response.data;
     } catch (e) {
       if (isDevMode) {
-        console.log("Vault isn't reachable");
+        console.log("Wallet rpc isn't reachable");
       }
       this.isReachable = false;
       const message = this._isRunning
-        ? "Vault is too busy to respond"
-        : "Vault is not running";
+        ? "Wallet is too busy to respond"
+        : "Wallet is not running";
       return { error: { message } } as any;
     }
   }

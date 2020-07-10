@@ -118,6 +118,10 @@ const removeNotificationAfterDelay = (
   duration: NotificationDuration
 ) => {
   return (dispatch: any) => {
-    setTimeout(() => dispatch(removeNotification(id), duration));
-  };
+    setTimeout( () => {
+      dispatch(removeNotification(id))
+    }, duration );
+  }
+
+
 };

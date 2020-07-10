@@ -43,7 +43,9 @@ const appReducer = combineReducers({
 
 const rootReducer = (state: any, action: AnyAction) => {
   if (action.type === CLOSE_WALLET) {
-    state = undefined;
+
+    const {notification, havenNode, walletRPC} = state;
+    state = {notification, havenNode, walletRPC};
   }
 
   return appReducer(state, action);

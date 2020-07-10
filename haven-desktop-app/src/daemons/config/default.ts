@@ -22,17 +22,20 @@ export const daemonConfigMainnet = {
     args: {},
   },
   wallet: {
-    path: WALLET_RPC_PATH_MAINNET,
-    daemonUrl: LOCAL_DAEMON_MAP.get(NET.Mainnet),
-    port: 12345,
-    args: {
-      "max-log-file-size": 0,
-      "rpc-bind-port": 12345,
-      "disable-rpc-login": "",
-      "wallet-dir": WALLET_PATH_MAINNET,
-      "log-level": "2",
-    },
-  },
+      path: WALLET_RPC_PATH_MAINNET,
+      daemonUrl: LOCAL_DAEMON_MAP.get(NET.Mainnet) ,
+      port: 12345,
+      args: {
+          "max-log-file-size":100000,
+          "max-concurrency":3,
+          "max-log-files":2,
+          "rpc-bind-port": 12345,
+          "disable-rpc-login": "",
+          "wallet-dir": WALLET_PATH_MAINNET,
+           "log-level":"2"
+      }
+  }
+
 };
 
 export const daemonConfigTestnet = {
