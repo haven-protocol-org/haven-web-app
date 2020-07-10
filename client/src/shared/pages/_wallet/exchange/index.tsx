@@ -325,7 +325,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 placeholder="Enter amount"
                 type="number"
                 name="fromAmount"
-                disabled={hasLatestXRate}
+                disabled={!hasLatestXRate}
                 value={fromAmount}
                 onChange={this.onEnterFromAmount}
                 error={
@@ -351,7 +351,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                     : "")
                 }
                 placeholder="Enter amount"
-                disabled={hasLatestXRate}
+                disabled={!hasLatestXRate}
                 name="toAmount"
                 type="number"
                 value={toAmount}
