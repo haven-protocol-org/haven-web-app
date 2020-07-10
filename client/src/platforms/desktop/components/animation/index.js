@@ -47,19 +47,19 @@ const Mining = ({ status, mining, hash, children, isLocalNode }) => {
       {mining === "Not Mining" ? (
         <Grid>
           <Image>
-            <Inactive status />
+            <Inactive status="true" />
           </Image>
           <Image hide="true">
-            <Inactive status />
+            <Inactive status="true" />
           </Image>
         </Grid>
       ) : (
         <Grid>
           <Image>
-            <Active status />
+            <Active status="true" />
           </Image>
           <Image hide="true">
-            <Active status />
+            <Active status="true" />
           </Image>
         </Grid>
       )}
