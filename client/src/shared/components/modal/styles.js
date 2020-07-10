@@ -9,6 +9,8 @@ export const Container = styled.div`
   right: 0;
   bottom: 0;
   left: 0;
+  display: flex;
+  justify-content: center;
 `;
 
 export const Placeholder = styled.div`
@@ -22,6 +24,7 @@ export const Window = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  max-width: 680px;
 `;
 
 export const Details = styled.div`
