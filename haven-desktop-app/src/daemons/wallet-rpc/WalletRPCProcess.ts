@@ -1,14 +1,11 @@
-import {DaemonProcess} from "../DaemonProcess";
-import {IDaemonConfig, WalletState} from "../../types";
-import {RPCRequestObject} from "../../rpc/RPCHRequestHandler";
-import {config, getLocalDaemon} from "../config/config";
-import {appEventBus, HAVEND_LOCATION_CHANGED} from "../../EventBus";
-import {isDevMode} from "../../env";
-import {logInDevMode} from "../../dev";
-import {log} from "util";
-
-
-
+import { DaemonProcess } from "../DaemonProcess";
+import { IDaemonConfig, WalletState } from "../../types";
+import { RPCRequestObject } from "../../rpc/RPCHRequestHandler";
+import { config, getLocalDaemon } from "../config/config";
+import { appEventBus, HAVEND_LOCATION_CHANGED } from "../../EventBus";
+import { isDevMode } from "../../env";
+import { logInDevMode } from "../../dev";
+import { log } from "util";
 
 const SYNC_HEIGHT_REGEX = /.*D.*height (.*),/gm;
 const NO_CONNECTION_MESSAGE = "error::no_connection_to_daemon";
@@ -16,160 +13,129 @@ const REFRESH_DONE_MESSAGE = "Refresh done";
 const CONNECTION_TO_DAEMON_SUCCESS = "SSL handshake success";
 
 export class WalletRPCProcess extends DaemonProcess {
+  private isConnectedToDaemon: boolean = true;
+  private isSyncing: boolean;
+  private syncHeight: number;
+  private isReachable: boolean;
 
-    private isConnectedToDaemon: boolean = true;
-    private isSyncing: boolean;
-    private syncHeight: number;
-    private isReachable: boolean;
+  init(): void {
+    super.init();
+    this.startLocalProcess();
+  }
 
+  setRPCHandler(): void {
+    const config = this.getConfig();
 
-    init(): void {
-        super.init();
-        this.startLocalProcess();
+    // wallet-rpc is always local - never remote
+    this.rpcHandler.port = config.port;
+  }
+
+  onDaemonError(error: Error): void {
+    super.onDaemonError(error);
+  }
+
+  onstderrData(chunk: any): void {
+    if (isDevMode) {
+      console.error("Vault stderr : " + chunk.toString());
+    }
+  }
+
+  onstdoutData(chunk: any): void {
+    if (isDevMode) {
+      //  console.error('wallet stdout : ' + chunk.toString());
     }
 
-    setRPCHandler(): void {
-
-        const config = this.getConfig();
-
-        // wallet-rpc is always local - never remote
-        this.rpcHandler.port = config.port;
-
+    if (chunk.toString().includes(CONNECTION_TO_DAEMON_SUCCESS)) {
+      this.isConnectedToDaemon = true;
+      if (isDevMode) {
+        console.error("Vault stdout : " + chunk.toString());
+      }
     }
 
-    onDaemonError(error: Error): void {
-        super.onDaemonError(error);
+    if (chunk.toString().includes(NO_CONNECTION_MESSAGE)) {
+      this.isConnectedToDaemon = false;
+      if (isDevMode) {
+        console.error("Vault stdout : " + chunk.toString());
+      }
     }
 
-
-    onstderrData(chunk: any): void {
-
-        if (isDevMode) {
-            console.error('wallet stderr : ' + chunk.toString());
-        }
-
+    if (this._isHavendLocal) {
+      return;
     }
 
-    onstdoutData(chunk: any): void {
+    let m;
+    while ((m = SYNC_HEIGHT_REGEX.exec(chunk.toString())) !== null) {
+      // This is necessary to avoid infinite loops with zero-width matches
+      if (m.index === SYNC_HEIGHT_REGEX.lastIndex) {
+        SYNC_HEIGHT_REGEX.lastIndex++;
+      }
 
-        if (isDevMode) {
-          //  console.error('wallet stdout : ' + chunk.toString());
-        }
-
-
-        if ((chunk.toString()).includes(CONNECTION_TO_DAEMON_SUCCESS)) {
-            this.isConnectedToDaemon = true;
-            if (isDevMode) {
-                  console.error('wallet stdout : ' + chunk.toString());
-            }
-
-        }
-
-
-        if ((chunk.toString()).includes(NO_CONNECTION_MESSAGE)) {
-            this.isConnectedToDaemon = false;
-            if (isDevMode) {
-                  console.error('wallet stdout : ' + chunk.toString());
-            }
-
-        }
-
-        if (this._isHavendLocal) {
-            return;
-        }
-
-        let m;
-        while ((m = SYNC_HEIGHT_REGEX.exec(chunk.toString())) !== null) {
-            // This is necessary to avoid infinite loops with zero-width matches
-            if (m.index === SYNC_HEIGHT_REGEX.lastIndex) {
-                SYNC_HEIGHT_REGEX.lastIndex++;
-            }
-
-            // The result can be accessed through the 'm'-variable.
-            m.forEach((match, groupIndex) => {
-                logInDevMode("Found match, group" + groupIndex + " : "+ match);
-                this.isConnectedToDaemon = true;
-                this.isSyncing = true;
-                this.syncHeight = Number(match);
-            });
-        }
-
-        if ((chunk as string).includes(REFRESH_DONE_MESSAGE)){
-            this.isSyncing = false;
-        }
+      // The result can be accessed through the 'm'-variable.
+      m.forEach((match, groupIndex) => {
+        logInDevMode("Found match, group" + groupIndex + " : " + match);
+        this.isConnectedToDaemon = true;
+        this.isSyncing = true;
+        this.syncHeight = Number(match);
+      });
     }
 
+    if ((chunk as string).includes(REFRESH_DONE_MESSAGE)) {
+      this.isSyncing = false;
+    }
+  }
 
-    async requestHandler(requestObject: RPCRequestObject): Promise<any> {
+  async requestHandler(requestObject: RPCRequestObject): Promise<any> {
+    const setsDaemon = requestObject.method === "Set_daemon";
 
-        const setsDaemon = requestObject.method === "set_daemon";
+    if (setsDaemon) {
+      const { address } = requestObject.params;
+      logInDevMode("Set daemon to " + address);
 
-        if (setsDaemon) {
-
-
-            const {address} = requestObject.params;
-            logInDevMode('set daemon to ' + address);
-
-            // if address is empty we use the local daemon
-            if (address === "") {
-                requestObject.params.address = getLocalDaemon();
-                appEventBus.emit(HAVEND_LOCATION_CHANGED, getLocalDaemon());
-            } else {
-                appEventBus.emit(HAVEND_LOCATION_CHANGED, address);
-            }
-
-        }
-
-        try {
-            const response = await this.rpcHandler.sendRequest(requestObject);
-
-            // if that was a successfull daemon change we are disconnected to a daemon right away
-            if (setsDaemon) {
-                this.isConnectedToDaemon = false;
-            }
-            this.isReachable = true;
-            return response.data;
-
-        } catch (e) {
-
-            if (isDevMode) {
-                console.log('wallet seems not reachable');
-            }
-            this.isReachable = false;
-            const message = this._isRunning ? 'wallet is too busy to respond' : 'wallet is not running';
-            return {'error': {message}} as any
-        }
+      // if address is empty we use the local daemon
+      if (address === "") {
+        requestObject.params.address = getLocalDaemon();
+        appEventBus.emit(HAVEND_LOCATION_CHANGED, getLocalDaemon());
+      } else {
+        appEventBus.emit(HAVEND_LOCATION_CHANGED, address);
+      }
     }
 
+    try {
+      const response = await this.rpcHandler.sendRequest(requestObject);
 
-
-
-
-    getConfig(): IDaemonConfig {
-        return config().wallet;
+      // if that was a successfull daemon change we are disconnected to a daemon right away
+      if (setsDaemon) {
+        this.isConnectedToDaemon = false;
+      }
+      this.isReachable = true;
+      return response.data;
+    } catch (e) {
+      if (isDevMode) {
+        console.log("Vault isn't reachable");
+      }
+      this.isReachable = false;
+      const message = this._isRunning
+        ? "Vault is too busy to respond"
+        : "Vault is not running";
+      return { error: { message } } as any;
     }
+  }
 
+  getConfig(): IDaemonConfig {
+    return config().wallet;
+  }
 
-    getState() : WalletState {
+  getState(): WalletState {
+    return {
+      isRunning: this._isRunning,
+      isConnectedToDaemon: this.isConnectedToDaemon,
+      isSyncing: this.isSyncing,
+      syncHeight: this.syncHeight,
+      isReachable: this.isReachable,
+    };
+  }
 
-        return {
-            isRunning:this._isRunning,
-            isConnectedToDaemon: this.isConnectedToDaemon,
-            isSyncing: this.isSyncing,
-            syncHeight: this.syncHeight,
-            isReachable: this.isReachable,
-        }
-
-    }
-
-    onHavendLocationChanged(address: string): void {
-
-        super.onHavendLocationChanged(address);
-
-    }
-
-
-
-
-
+  onHavendLocationChanged(address: string): void {
+    super.onHavendLocationChanged(address);
+  }
 }
