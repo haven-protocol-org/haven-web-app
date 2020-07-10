@@ -1,3 +1,5 @@
+// E5E5E5, 202022, 7289da
+
 export const dark = {
   value: "Dark Theme",
   body: {
@@ -36,27 +38,27 @@ export const light = {
   value: "Light Theme",
   body: {
     navigation: "#26282C",
-    background: "#F7F7FB",
-    foreground: "#F4F5F9",
-    border: "#D9E2ED",
+    background: "#f5f5f5",
+    foreground: "#eeeeee",
+    border: "#e0e0e0",
     active_menu: "#7289da",
   },
   button: {
-    primary: "#7289da",
-    primary_hover: "#677bc4",
+    primary: "#677bc4",
+    primary_hover: "#5b6eae",
   },
   type: {
-    primary: "#384451",
-    secondary: "#697786",
+    primary: "#1d1d1f",
+    secondary: "#79797a",
   },
   input: {
-    input_border: "#c6c7cf",
+    input_border: "#e0e0e0",
     input_border_focus: "#b0b1b8",
-    input_placeholder: "#9CAAB9",
-    input_background: "#E6E7EF",
-    input_value: "#384451",
+    input_placeholder: "#a6a6a7",
+    input_background: "#eeeeee",
+    input_value: "#1d1d1f",
     input_select: "#5c5f63",
-    input_foreground: "#d9dadf",
+    input_foreground: "#e5e5e5",
     input_error: "#f04747",
   },
   states: {
