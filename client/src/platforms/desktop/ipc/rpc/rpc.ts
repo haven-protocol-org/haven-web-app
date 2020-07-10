@@ -1,6 +1,6 @@
 import { logM } from "utility/utility";
 import { ipcRenderer } from "electron";
-import {CommunicationChannel} from "platforms/desktop/ipc/ipc-types";
+import { CommunicationChannel } from "platforms/desktop/ipc/ipc-types";
 
 // @ts-ignore
 const ipcRender: typeof ipcRenderer = window.ipcRenderer;
@@ -65,9 +65,7 @@ export function rescanBlockchainRPC() {
 }
 
 export function setDaemonRPC(params: object) {
-
   return callRpc("set_daemon", params);
-
 }
 
 export function onshoreRPC(params: object) {
@@ -138,9 +136,7 @@ function callRpc(method: string, params: object | undefined = undefined) {
 }
 
 export const handleError = async (response: any) => {
-   console.log(response);
   // intercept error on protocol level
-
   if (response.error) return Promise.reject(response.error);
 
   // we must distinguish between two reponse styles from monero daemon rpc, oldschool vs new school
