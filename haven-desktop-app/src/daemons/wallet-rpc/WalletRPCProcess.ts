@@ -5,7 +5,6 @@ import {config, getLocalDaemon} from "../config/config";
 import {appEventBus, HAVEND_LOCATION_CHANGED} from "../../EventBus";
 import {isDevMode} from "../../env";
 import {logInDevMode} from "../../dev";
-import {log} from "util";
 
 
 
@@ -53,7 +52,7 @@ export class WalletRPCProcess extends DaemonProcess {
     onstdoutData(chunk: any): void {
 
         if (isDevMode) {
-          //  console.error('wallet stdout : ' + chunk.toString());
+            console.error('wallet stdout : ' + chunk.toString());
         }
 
 

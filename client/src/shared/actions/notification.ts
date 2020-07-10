@@ -122,7 +122,9 @@ const buildNotification = (
 const removeNotificationAfterDelay = (id: string, duration: NotificationDuration) => {
 
   return (dispatch: any) => {
-    setTimeout( () => dispatch(removeNotification(id), duration) );
+    setTimeout( () => {
+      dispatch(removeNotification(id))
+    }, duration );
   }
 
 

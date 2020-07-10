@@ -23,7 +23,7 @@ export const closeWallet = () => {
    **/
 
     storeWalletRPC()
-        .catch((e)=> addErrorNotification('wallet state could not be stored'));
+        .catch((e)=> dispatch(addErrorNotification('wallet state could not be stored')));
     closeWalletRPC()
         .catch((err) => dispatch(addErrorNotification(err)))
         .finally(() => dispatch(closeWalletSucceed()));

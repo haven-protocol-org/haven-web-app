@@ -28,7 +28,9 @@ export const daemonConfigMainnet = {
         daemonUrl: LOCAL_DAEMON_MAP.get(NET.Mainnet) ,
         port: 12345,
         args: {
-            "max-log-file-size":0,
+            "max-log-file-size":100000,
+            "max-concurrency":3,
+            "max-log-files":2,
             "rpc-bind-port": 12345,
             "disable-rpc-login": "",
             "wallet-dir": WALLET_PATH_MAINNET,
