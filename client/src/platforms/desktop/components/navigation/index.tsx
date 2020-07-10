@@ -58,6 +58,23 @@ class Navigation extends Component<NavigationProps, any> {
     });
   }
 
+  showDropdownMenu = (event: any) => {
+    event.preventDefault();
+    this.setState({ showOptions: true }, () => {
+      document.addEventListener("click", this.hideDropdownMenu);
+    });
+
+    console.log("SHOW");
+  };
+
+  hideDropdownMenu = () => {
+    this.setState({ showOptions: false }, () => {
+      document.removeEventListener("click", this.hideDropdownMenu);
+    });
+
+    console.log("HIDE");
+  };
+
   handleLogout = () => {
     this.props.logout();
   };
@@ -98,7 +115,7 @@ class Navigation extends Component<NavigationProps, any> {
             <Logout onClick={this.handleLogout}>Logout</Logout>
           )}
 
-          <Options onClick={this.showOptions}>
+          <Options onClick={this.showDropdownMenu}>
             <OptionsIcon src={OptionsSVG} />
           </Options>
         </Menu>
