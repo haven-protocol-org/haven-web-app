@@ -50,7 +50,6 @@ class Navigation extends Component<NavigationProps, any> {
   state = {
     current_network: getNetworkByName(),
     showOptions: false,
-    refreshNetwork: "Refresh Network",
   };
 
   onComponentDidMount() {
@@ -67,19 +66,6 @@ class Navigation extends Component<NavigationProps, any> {
     this.setState({
       showOptions: !this.state.showOptions,
     });
-  };
-
-  refreshNetwork = () => {
-    this.setState({
-      refreshNetwork: "Refreshing Network...",
-      showOptions: true,
-    });
-    setTimeout(() => {
-      this.setState({
-        refreshNetwork: "Refresh Network",
-        showOptions: true,
-      });
-    }, 3000);
   };
 
   render() {
@@ -127,17 +113,19 @@ class Navigation extends Component<NavigationProps, any> {
                 <Label>{current_network}</Label>
               </OptionsDoubleRow>
               <OptionsDoubleRow>
-                <Body>Node Type</Body>
+                <Body>Type</Body>
                 <Label>{node.location}</Label>
               </OptionsDoubleRow>
               <OptionsDoubleRow>
                 <Body>Wallet</Body>
                 <Label>{wallet.isRunning ? "Online" : "Offline"}</Label>
               </OptionsDoubleRow>
-              <OptionsDoubleRow>
-                <Body>Node</Body>
-                <Label>{node.isRunning ? "Online" : "Offline"}</Label>
-              </OptionsDoubleRow>
+              {isLocalNode && (
+                <OptionsDoubleRow>
+                  <Body>Node</Body>
+                  <Label>{node.isRunning ? "Online" : "Offline"}</Label>
+                </OptionsDoubleRow>
+              )}
               <OptionsDoubleRow>
                 <Body>Application</Body>
                 <Label>v{APP_VERSION}</Label>

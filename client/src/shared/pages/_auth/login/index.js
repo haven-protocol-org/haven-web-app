@@ -19,7 +19,7 @@ export default class Login extends Component {
     window.scrollTo(0, 0);
   }
 
-  componentWillReceiveProps(nextProps, nextContext) {
+  componentDidUpdate(nextProps, nextContext) {
     if (nextProps.errorMessage) {
       this.setState({ error: nextProps.errorMessage });
       setTimeout(() => this.setState({ error: "" }), 2000);
