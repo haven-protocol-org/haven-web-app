@@ -1,17 +1,12 @@
 import { ADD_NOTIFICATION, REMOVE_NOTIFICATION } from "../actions/types";
 import { AnyAction } from "redux";
-import {DesktopAppState} from "platforms/desktop/reducers";
-import {WebAppState} from "platforms/web/reducers";
-
+import { DesktopAppState } from "platforms/desktop/reducers";
+import { WebAppState } from "platforms/web/reducers";
 
 export enum NotificationDuration {
-  STICKY=-1,
-  DEFAULT=3000
-
+  STICKY = -1,
+  DEFAULT = 3000,
 }
-
-
-
 
 export interface HavenNotification {
   id: string;
@@ -39,7 +34,8 @@ export default function (state = INITIAL_STATE, action: AnyAction) {
   }
 }
 
-export const getNotification = (state: DesktopAppState | WebAppState) : HavenNotification[] => {
-
-  return state.notification.notifications
+export const getNotification = (
+  state: DesktopAppState | WebAppState
+): HavenNotification[] => {
+  return state.notification.notifications;
 };
