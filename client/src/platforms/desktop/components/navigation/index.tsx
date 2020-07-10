@@ -13,6 +13,7 @@ import {
   NetworkStatus,
   Button,
   Logout,
+  Icon,
   Menu,
   Options,
   Arrow,
@@ -21,7 +22,6 @@ import {
   OptionsDoubleRow,
   OptionsIcon,
 } from "./styles";
-import Icon from "assets/haven.svg";
 import OptionsSVG from "../../../../assets/icons/options.svg";
 import { Body, Label } from "../../../../assets/styles/type.js";
 
@@ -91,7 +91,7 @@ class Navigation extends Component<NavigationProps, any> {
     return (
       <Container>
         <Brand>
-          <Logo src={Icon} />
+          <Icon />
           <Haven>HAVEN</Haven>
           <NetworkStatus>
             <Wrapper></Wrapper>

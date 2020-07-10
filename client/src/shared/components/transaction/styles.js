@@ -56,15 +56,15 @@ export const State = styled.div`
   background: ${(props) => {
     switch (props.status) {
       case "Mined":
-        return "#F15050";
+        return `${props.theme.states.error}`;
       case "Received":
-        return "#2fc29b";
+        return `${props.theme.states.success}`;
       case "Sent":
-        return "#6A7FC8";
+        return `${props.theme.states.default}`;
       case "Exchange":
-        return "#E935A8";
+        return `${props.theme.states.alert}`;
       case "pending":
-        return "#EDBD5C";
+        return `${props.theme.states.warning}`;
       default:
     }
   }};

@@ -14,20 +14,17 @@ import {
 } from "./styles";
 import { isMainnet } from "constants/env";
 
-
-export interface TransactionProps  {
-
-  type: any,
-  date: any,
-  tx: any,
-  amount: any,
-  block: any,
-  currentValueInUSD: any,
-  status:any,
-  mempool:any,
-  timeTillUnlocked:any,
-  fee:any
-
+export interface TransactionProps {
+  type: any;
+  date: any;
+  tx: any;
+  amount: any;
+  block: any;
+  currentValueInUSD: any;
+  status: any;
+  mempool: any;
+  timeTillUnlocked: any;
+  fee: any;
 }
 
 export const Transaction = ({

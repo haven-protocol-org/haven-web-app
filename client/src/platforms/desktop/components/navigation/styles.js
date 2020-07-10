@@ -1,6 +1,7 @@
 import styled, { keyframes } from "styled-components";
 import { Link } from "react-router-dom";
 import { ReactComponent as ArrowUp } from "../../../../assets/icons/arrow-up.svg";
+import { ReactComponent as HavenIcon } from "../../../../assets/haven.svg";
 
 const appear = keyframes`
   0% { transform: translateY(-20px);  }
@@ -13,17 +14,27 @@ export const Container = styled.header`
   z-index: 1000;
   position: fixed;
   width: 100vw;
-  background: #26282c;
+  background: ${(props) => props.theme.body.navigation};
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border-bottom: 1px solid ${(props) => props.theme.body.border};
 `;
 
 export const Haven = styled.div`
-  color: white;
+  color: ${(props) => props.theme.type.primary};
   font-size: 20px;
   font-family: "Inter-Bold";
-  margin-left: 12px;
+  margin-left: 8px;
+`;
+
+export const Icon = styled(HavenIcon)`
+  height: 24px;
+  width: 24px;
+
+  .color {
+    fill: ${(props) => props.theme.type.primary};
+  }
 `;
 
 export const Logo = styled.img`
@@ -62,7 +73,7 @@ export const Options = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  border-left: 1px solid #3a4048;
+  border-left: 1px solid ${(props) => props.theme.body.border};
 
   &:hover {
     cursor: pointer;
@@ -138,7 +149,7 @@ export const Tag = styled.div`
   height: 22px;
   width: auto;
   font-size: 10px;
-  color: #26282c;
+  color: ${(props) => props.theme.type.primary};
   display: flex;
   align-items: center;
   justify-content: left;
@@ -153,12 +164,12 @@ export const State = styled.div`
   display: flex;
   align-items: center;
   height: 22px;
-  background: #34d8ac;
   font-size: 10px;
   border-radius: 3px;
   margin-left: 12px;
-  color: #26282c;
-  background: ${(props) => (props.isActive ? "#2D8872" : "#F04747")};
+  color: white;
+  background: ${(props) =>
+    props.isActive ? `${props.theme.states.success}` : "#F04747"};
 `;
 
 export const Wrapper = styled.div`
@@ -192,7 +203,7 @@ export const NetworkStatus = styled.div`
 
 export const Button = styled(Link)`
   padding: 12px 26px;
-  background: #7289da;
+  background: ${(props) => props.theme.button.primary};
   border: none;
   margin-right: 16px;
   height: auto;
@@ -204,14 +215,14 @@ export const Button = styled(Link)`
 
   &:hover {
     cursor: pointer;
-    background: #5b6eae;
+    background: ${(props) => props.theme.button.primary_hover};
     transition: 500ms;
   }
 `;
 
 export const Logout = styled.div`
   padding: 12px 26px;
-  background: #7289da;
+  background: ${(props) => props.theme.button.primary};
   border: none;
   margin-right: 16px;
   height: auto;
@@ -224,7 +235,7 @@ export const Logout = styled.div`
 
   &:hover {
     cursor: pointer;
-    background: #5b6eae;
+    background: ${(props) => props.theme.button.primary_hover};
     transition: 500ms;
   }
 `;

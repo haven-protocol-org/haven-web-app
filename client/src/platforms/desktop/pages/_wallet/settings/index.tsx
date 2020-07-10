@@ -25,6 +25,7 @@ import {
   stopMining,
 } from "platforms/desktop/actions/mining";
 import { HavenNodeSetting } from "platforms/desktop/pages/_wallet/settings/nodeSetting";
+import { Container } from "./styles";
 
 type ThemeOption = { theme: string; value: string };
 type BalanceOption = { ticker: string; value: string; code: string };

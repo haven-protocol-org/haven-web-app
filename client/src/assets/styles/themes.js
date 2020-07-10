@@ -1,4 +1,4 @@
-// E5E5E5, 202022, 7289da
+// https://maketintsandshades.com/#E5E5E5,202022,7289da,2fc29b,F04747,e6af3f,017FDD
 
 export const dark = {
   value: "Dark Theme",
@@ -28,16 +28,18 @@ export const dark = {
     input_error: "#f04747",
   },
   states: {
-    success: "#2fc29b",
-    error: "#F04747",
-    warning: "#e6af3f",
+    success: "#2aaf8c", // Green
+    error: "#F04747", // Red
+    warning: "#e6af3f", // Orange
+    alert: "#1a8ce0", // Blue
+    default: "#7289da", // Purple
   },
 };
 
 export const light = {
   value: "Light Theme",
   body: {
-    navigation: "#26282C",
+    navigation: "#e5e5e5",
     background: "#f5f5f5",
     foreground: "#eeeeee",
     border: "#e0e0e0",
@@ -62,8 +64,10 @@ export const light = {
     input_error: "#f04747",
   },
   states: {
-    success: "#2fc29b",
-    error: "#F04747",
-    warning: "#e6af3f",
+    success: "#269b7c", // Green
+    error: "#d84040", // Red
+    warning: "#cf9e39", // Orange
+    alert: "#017fdd", // Blue
+    default: "#677bc4", // Purple
   },
 };
