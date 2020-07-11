@@ -14,7 +14,7 @@ const load = keyframes`
 
 export const Container = styled.div`
   height: auto;
-  width: 100vw;
+  width: 98vw;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -32,7 +32,8 @@ export const Container = styled.div`
 
 export const Content = styled.div`
   height: auto;
-  font-size: 14px;
+  font-size: 16px;
+  font-weight:bold;
   color: white;
   margin: 12px;
   padding: 12px;
