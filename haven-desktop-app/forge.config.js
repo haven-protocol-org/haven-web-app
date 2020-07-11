@@ -61,6 +61,12 @@ module.exports = {
             name: "Haven"
         }
     },
+        {
+            name: '@electron-forge/maker-dmg',
+            platforms: [
+                "darwin"
+            ],
+        },
     {
         name: "@electron-forge/maker-zip",
         platforms: [
