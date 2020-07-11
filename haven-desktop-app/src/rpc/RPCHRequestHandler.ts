@@ -45,9 +45,9 @@ export class RPCHRequestHandler {
     if (requestObject.method === "mining_status") {
       return axios.post(
         `${this._host}:${this._port}/${requestObject.method}`,
-        requestObject.params, {timeout:2500}
+        requestObject.params, {timeout:3500}
       );
     }
-    return axios.post(`${this._fullUrl}/json_rpc`, requestObject, {timeout: 2500});
+    return axios.post(`${this._fullUrl}/json_rpc`, requestObject, {timeout: 3500});
   }
 }
