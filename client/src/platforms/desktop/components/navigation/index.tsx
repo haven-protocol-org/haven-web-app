@@ -63,16 +63,12 @@ class Navigation extends Component<NavigationProps, any> {
     this.setState({ showOptions: true }, () => {
       document.addEventListener("click", this.hideDropdownMenu);
     });
-
-    console.log("SHOW");
   };
 
   hideDropdownMenu = () => {
     this.setState({ showOptions: false }, () => {
       document.removeEventListener("click", this.hideDropdownMenu);
     });
-
-    console.log("HIDE");
   };
 
   handleLogout = () => {
