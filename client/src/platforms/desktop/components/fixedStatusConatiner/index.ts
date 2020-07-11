@@ -1,21 +1,18 @@
 /** this class takes care about status messages which are sticky and appearance and disappearance is dependent on the state**/
-import { connect } from "react-redux";
-import { DesktopAppState } from "platforms/desktop/reducers";
-import { selectDesktopSyncState } from "platforms/desktop/reducers/chain";
-import { isWalletConnectedToDaemoon } from "platforms/desktop/reducers/walletRPC";
-import { Component } from "react";
-import {
-  addNotificationByKey,
-  removeNotification,
-} from "shared/actions/notification";
-import { uuidv4 } from "utility/utility";
+import {connect} from "react-redux";
+import {DesktopAppState} from "platforms/desktop/reducers";
+import {selectDesktopSyncState} from "platforms/desktop/reducers/chain";
+import {isWalletConnectedToDaemoon} from "platforms/desktop/reducers/walletRPC";
+import {Component} from "react";
+import {addNotificationByKey, removeNotification,} from "shared/actions/notification";
+import {uuidv4} from "utility/utility";
 import {
   IS_SYNCING_MESSAGE,
   SYNCING_SUCCEED_MESSAGE,
   WALLET_CONNECT_SUCCEED,
   WALLET_IS_CONNECTING,
 } from "constants/notificationList";
-import { NotificationDuration } from "shared/reducers/notification";
+import {NotificationDuration} from "shared/reducers/notification";
 
 interface FixedStatusProps {
   daemonUrl: string;
@@ -95,9 +92,12 @@ class FixedStatusContainer extends Component<FixedStatusProps, any> {
       isWalletConnectedNow &&
       this.tryingConnectMessageID
     ) {
+
+      const nodeName =
+          this.props.daemonUrl === "" ? "local node" : this.props.daemonUrl;
       this.props.removeNotification(this.tryingConnectMessageID);
       this.tryingConnectMessageID = null;
-      this.props.addNotificationByKey(WALLET_CONNECT_SUCCEED);
+      this.props.addNotificationByKey(WALLET_CONNECT_SUCCEED, NotificationDuration.DEFAULT, uuidv4(), [nodeName]);
     }
   }
 
