@@ -38,26 +38,26 @@ export class WalletRPCProcess extends DaemonProcess {
 
   onstderrData(chunk: any): void {
     if (isDevMode) {
-      console.error("Vault stderr : " + chunk.toString());
+      console.error("wallet stderr : " + chunk.toString());
     }
   }
 
   onstdoutData(chunk: any): void {
     if (isDevMode) {
-      //  console.error('wallet stdout : ' + chunk.toString());
+        console.error('wallet stdout : ' + chunk.toString());
     }
 
     if (chunk.toString().includes(CONNECTION_TO_DAEMON_SUCCESS)) {
       this.isConnectedToDaemon = true;
       if (isDevMode) {
-        console.error("Vault stdout : " + chunk.toString());
+     //   console.error("wallet stdout : " + chunk.toString());
       }
     }
 
     if (chunk.toString().includes(NO_CONNECTION_MESSAGE)) {
       this.isConnectedToDaemon = false;
       if (isDevMode) {
-        console.error("Vault stdout : " + chunk.toString());
+        console.error("wallet stdout : " + chunk.toString());
       }
     }
 
@@ -87,28 +87,29 @@ export class WalletRPCProcess extends DaemonProcess {
   }
 
   async requestHandler(requestObject: RPCRequestObject): Promise<any> {
-    const setsDaemon = requestObject.method === "Set_daemon";
 
-    if (setsDaemon) {
-      const { address } = requestObject.params;
-      logInDevMode("Set daemon to " + address);
-
-      // if address is empty we use the local daemon
-      if (address === "") {
-        requestObject.params.address = getLocalDaemon();
-        appEventBus.emit(HAVEND_LOCATION_CHANGED, getLocalDaemon());
-      } else {
-        appEventBus.emit(HAVEND_LOCATION_CHANGED, address);
-      }
-    }
 
     try {
       const response = await this.rpcHandler.sendRequest(requestObject);
 
-      // if that was a successfull daemon change we are disconnected to a daemon right away
+
+      const setsDaemon = requestObject.method === "Set_daemon";
+
       if (setsDaemon) {
+        const { address } = requestObject.params;
+        logInDevMode("Set daemon to " + address);
+        // if that was a successfull daemon change we are disconnected to a daemon right away
         this.isConnectedToDaemon = false;
+
+        // if address is empty we use the local daemon
+        if (address === "") {
+          requestObject.params.address = getLocalDaemon();
+          appEventBus.emit(HAVEND_LOCATION_CHANGED, getLocalDaemon());
+        } else {
+          appEventBus.emit(HAVEND_LOCATION_CHANGED, address);
+        }
       }
+
       this.isReachable = true;
       return response.data;
     } catch (e) {
@@ -117,8 +118,8 @@ export class WalletRPCProcess extends DaemonProcess {
       }
       this.isReachable = false;
       const message = this._isRunning
-        ? "Wallet is too busy to respond"
-        : "Wallet is not running";
+        ? "Vault is too busy to respond"
+        : "Vault is not running";
       return { error: { message } } as any;
     }
   }

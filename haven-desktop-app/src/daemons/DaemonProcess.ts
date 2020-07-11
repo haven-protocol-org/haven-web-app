@@ -11,6 +11,7 @@ import {
   updateDaemonUrlInConfig,
 } from "../daemons/config/config";
 import { isDevMode } from "../env";
+import {dialog} from 'electron';
 
 export abstract class DaemonProcess implements IDaemonManager {
   protected type: DaemonType;
@@ -21,6 +22,7 @@ export abstract class DaemonProcess implements IDaemonManager {
   protected rpcHandler: RPCHRequestHandler = new RPCHRequestHandler();
   protected _isRunning: boolean = false;
   protected _isHavendLocal: boolean;
+  protected _shutDownRequested: boolean = false;
 
   constructor(type: DaemonType) {
     this._isHavendLocal = isLocalDaemon(this.getConfig().daemonUrl);
@@ -71,7 +73,7 @@ export abstract class DaemonProcess implements IDaemonManager {
     if (isDevMode) {
       console.log(`try to kill ${this.type}`);
     }
-
+    this._shutDownRequested = true;
     this.daemonProcess.kill();
   }
 
@@ -97,8 +99,13 @@ export abstract class DaemonProcess implements IDaemonManager {
   protected onDaemonExit(code: number | null, signal: string | null): void {
     this._isRunning = false;
 
+
+    if (code !== 0 && code !== null) {
+      dialog.showErrorBox(`${this.type} not running`, 'Process was stopped or did not even start');
+    }
+
     if (isDevMode) {
-      console.log(`${this.type} exit with ${code}`);
+      console.log(`${this.type} exit with code ${code} and signal ${signal}`);
     }
   }
 
