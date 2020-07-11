@@ -75,6 +75,13 @@ export abstract class DaemonProcess implements IDaemonManager {
     }
     this._shutDownRequested = true;
     this.daemonProcess.kill();
+
+    // if deamon doesn't die, we kill it hard
+    setTimeout(() => this._isRunning && this.killHard(), 10000);
+  }
+
+  private killHard() {
+    this.daemonProcess.kill('SIGKILL');
   }
 
   public isRunning(): boolean {
