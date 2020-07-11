@@ -1,4 +1,4 @@
-import { app, BrowserWindow, Menu } from "electron";
+import { shell, app, BrowserWindow, Menu } from "electron";
 import * as path from "path";
 import { devServerStarted } from "./dev";
 import { HavenWallet} from "./HavenWallet";
@@ -32,6 +32,8 @@ const startApp = () => {
   };
 
   browserOptions.webPreferences = {
+    contextIsolation:true,
+    enableRemoteModule: false,
     nodeIntegration: false,
     preload: path.join(__dirname, "../sites/preload/preload.js"),
   };
@@ -92,6 +94,14 @@ app.on("will-quit", (event) => {
 // Quit when all windows are closed.
 app.on("window-all-closed", () => {
   app.quit();
+});
+app.on('web-contents-created', (event, contents) => {
+  contents.on('new-window', async (event, navigationUrl) => {
+
+    event.preventDefault();
+
+    await shell.openExternal(navigationUrl)
+  })
 });
 
 const onAppQuit = () => {
