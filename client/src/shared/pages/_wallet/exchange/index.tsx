@@ -8,6 +8,7 @@ import Input from "../../../components/_inputs/input";
 // import InputButton from "../../../components/_inputs/input_button";
 import Form from "../../../components/_inputs/form";
 
+import { OFFSHORE_ENABLED } from "../../../../constants/env";
 import Footer from "../../../components/_inputs/footer";
 import Dropdown from "../../../components/_inputs/dropdown";
 import Tab from "../../../components/tab";
@@ -109,6 +110,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
   componentDidMount() {
     window.scrollTo(0, 0);
     this.props.getLastBlockHeader();
+    console.log("OFFSHORE_ENABLED", OFFSHORE_ENABLED);
   }
 
   componentDidUpdate(
@@ -285,7 +287,9 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       : NO_BALANCE;
 
     const isValid: boolean =
-      !!(fromTicker && toTicker && fromAmount && toAmount) && !hasLatestXRate;
+      !!(fromTicker && toTicker && fromAmount && toAmount) &&
+      !hasLatestXRate &&
+      OFFSHORE_ENABLED;
 
     return (
       <Fragment>
@@ -398,7 +402,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
               <Footer
                 onClick={() => this.handleSubmit()}
                 label="Preview"
-                disabled={isValid}
+                disabled={!isValid && !OFFSHORE_ENABLED}
                 loading={this.props.isProcessingExchange}
               />
             </Container>
