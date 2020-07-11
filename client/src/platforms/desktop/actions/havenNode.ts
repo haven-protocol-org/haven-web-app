@@ -78,17 +78,18 @@ export const setHavenNode = (
     const params = { address: address, trusted };
 
     setDaemonRPC(params)
-      .then(
+      .then((res) =>
+      {
+        console.log(res);
         dispatch(
-          sethavenNodeSucceed(
-            nodeAddress,
-            nodePort,
-            selectedNodeOption.location
-          )
-        )
-      )
-      .then(dispatch(getDaemonsState()))
-      .catch((error) => dispatch(sethavenNodeFailed(error)));
+            sethavenNodeSucceed(
+                nodeAddress,
+                nodePort,
+                selectedNodeOption.location
+            ))}).catch((error) => {
+        dispatch(sethavenNodeFailed(error))
+    })
+        .finally(dispatch(getDaemonsState()))
   };
 };
 
