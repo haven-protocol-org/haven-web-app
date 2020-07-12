@@ -13,7 +13,7 @@ import { setHavenNode } from "platforms/desktop/actions/havenNode";
 import { NodeLocation, NodeState } from "platforms/desktop/types";
 import { REMOTE_NODES } from "platforms/desktop/nodes";
 import { selectIsWalletSyncingRemote } from "platforms/desktop/reducers/walletRPC";
-import { Information } from "../../../../../assets/styles/type.js";
+import { Information } from "assets/styles/type.js";
 
 enum NodeSelectionType {
   local,
@@ -232,6 +232,8 @@ export const HavenNodeSetting = connect(mapStateToProps, {
 })(NodeSettingComponent);
 
 const createNodeOptions = (havendState: NodeState): NodeOption[] => {
+
+
   const remoteNodes: NodeOption[] = REMOTE_NODES.map((node) => {
     const host = new URL(node.address).host;
     return {
@@ -267,7 +269,13 @@ const createNodeOptions = (havendState: NodeState): NodeOption[] => {
         selectionType: NodeSelectionType.custom,
       };
 
-  return [localNode, ...remoteNodes, customNode];
+
+  //quick check to omit local node option for macOS for first
+   if (window.havenProcess.platform === "darwin") {
+     return  [...remoteNodes, customNode];
+   }
+
+    return [localNode, ...remoteNodes, customNode];
 };
 
 const createCustomNodeName = (havendState: NodeState) => {
