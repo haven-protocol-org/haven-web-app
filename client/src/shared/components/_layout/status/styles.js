@@ -14,15 +14,14 @@ const load = keyframes`
 
 export const Container = styled.div`
   height: auto;
-  width: 98vw;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  bottom: ${(props) => props.count * 50 + 'px'};
+  bottom: ${(props) => props.count * 50 + "px"};
   position: absolute;
   animation: ${load} 0.5s alternate;
-  
 
   ${media.laptop`
     order: 2;
@@ -32,8 +31,7 @@ export const Container = styled.div`
 
 export const Content = styled.div`
   height: auto;
-  font-size: 16px;
-  font-weight:bold;
+  font-size: 14px;
   color: white;
   margin: 12px;
   padding: 12px;

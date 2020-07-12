@@ -66,7 +66,6 @@ type ExchangeState = {
   selectedTab: ExchangeTab;
   externAddress: string;
   selectedPrio: ExchangePrioOption;
-  reviewed: boolean;
 };
 
 export interface AssetOption {
@@ -102,7 +101,6 @@ const INITIAL_STATE: ExchangeState = {
   selectedTab: ExchangeTab.Basic,
   externAddress: "",
   selectedPrio: exchangePrioOptions[exchangePrioOptions.length - 1],
-  reviewed: false,
 };
 class Exchange extends Component<ExchangeProps, ExchangeState> {
   state: ExchangeState = INITIAL_STATE;
@@ -110,7 +108,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
   componentDidMount() {
     window.scrollTo(0, 0);
     this.props.getLastBlockHeader();
-    console.log("OFFSHORE_ENABLED", OFFSHORE_ENABLED);
   }
 
   componentDidUpdate(
@@ -122,7 +119,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
         fromAmount: "",
         toAmount: "",
         externAddress: "",
-        reviewed: false,
       });
     }
   }
@@ -215,11 +211,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     );
   };
 
-  handleReviewSubmit = (event: any) => {
-    const { checked } = event.target;
-    this.setState({ reviewed: checked });
-  };
-
   toggleBasic = () => {
     this.setState({ selectedTab: ExchangeTab.Basic });
   };
@@ -258,6 +249,26 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     });
   };
 
+  validateExchange = () => {
+    const { fromAmount, toAmount } = this.state;
+    const { hasLatestXRate } = this.props;
+    const fromAmountValid = fromAmount !== "";
+    const toAmountValid = toAmount !== "";
+
+    if (
+      fromAmountValid &&
+      toAmountValid &&
+      hasLatestXRate &&
+      OFFSHORE_ENABLED
+    ) {
+      // If valid then make this 'false' so the footer is enabled
+      return !true;
+    } else {
+      // If invalid then make this 'true' so the footer is disabled
+      return !false;
+    }
+  };
+
   render() {
     const {
       fromAmount,
@@ -286,17 +297,12 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       ? convertBalanceForReading(this.props.balances[toTicker].unlockedBalance)
       : NO_BALANCE;
 
-    const isValid: boolean =
-      !!(fromTicker && toTicker && fromAmount && toAmount) &&
-      !hasLatestXRate &&
-      OFFSHORE_ENABLED;
-
     return (
       <Fragment>
         <Body>
           <Header
             title="Exchange "
-            description="Swap between all available Haven assets'"
+            description="Swap between all available Haven assets"
           />
           <Tab
             firstTabLabel="Basic"
@@ -395,14 +401,12 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 hasLatestXRate={hasLatestXRate}
                 fee={"--"}
                 fromTicker={fromTicker}
-                checked={this.state.reviewed}
-                onChange={this.handleReviewSubmit}
               />
 
               <Footer
                 onClick={() => this.handleSubmit()}
                 label="Preview"
-                disabled={!isValid && !OFFSHORE_ENABLED}
+                disabled={this.validateExchange()}
                 loading={this.props.isProcessingExchange}
               />
             </Container>

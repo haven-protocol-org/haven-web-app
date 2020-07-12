@@ -27,9 +27,12 @@ class ConfirmExchangeModal extends React.Component<
   };
 
   approveTransfer = () => {
-    this.setState({
-      checked: !this.state.checked,
-    });
+    this.setState(
+      {
+        checked: !this.state.checked,
+      },
+      () => console.log("CHECKED", this.state.checked)
+    );
   };
 
   render() {
@@ -48,7 +51,7 @@ class ConfirmExchangeModal extends React.Component<
         description="Please review and finalize your exchange transaction"
         leftButton="Cancel"
         rightButton="Confirm"
-        isLoading={false}
+        isLoading={this.state.loading}
         onCancel={() => this.onCancel()}
         onConfirm={() => this.onConfirm()}
         disabled={false}
