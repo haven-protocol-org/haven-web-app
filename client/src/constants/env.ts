@@ -49,4 +49,3 @@ export const getNetworkByName = () => {
 
 export const API_URL = apiUrl;
 
-export const OFFSHORE_ENABLED = isDesktop() && isMainnet() === false;

@@ -1,4 +1,4 @@
-import { OFFSHORE_ENABLED } from "constants/env";
+import { selectIsOffshoreEnabled } from "shared/reducers/havenFeature";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { getWalletHeightRPC } from "../ipc/rpc/rpc";
 import { getBalance } from "./balance";
@@ -55,7 +55,7 @@ export const updateApp = () => {
     dispatch(getTransfers());
     dispatch(getNodeInfo());
 
-    if (OFFSHORE_ENABLED) {
+    if (selectIsOffshoreEnabled(getState())) {
       dispatch(getOffshoreBalance());
     }
   };

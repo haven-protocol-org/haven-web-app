@@ -49,9 +49,9 @@ export const GET_BLOCK_INFO_FETCHING = "get_block_info_fetching";
 export const GET_BLOCK_INFO_SUCEED = "get_block_info_suceed";
 export const GET_BLOCK_INFO_FAILED = "get_block_info_failed";
 
-export const GET_BLOCK_HEIGHT_FETCHING = "get_block_height_fetching";
-export const GET_BLOCK_HEIGHT_SUCCEED = "get_block_height_succeed";
-export const GET_BLOCK_HEIGHT_FAILED = "get_block_height_failed";
+export const GET_WALLET_HEIGHT_FETCHING = "get_wallet_height_fetching";
+export const GET_WALLET_HEIGHT_SUCCEED = "get_wallet_height_succeed";
+export const GET_WALLET_HEIGHT_FAILED = "get_wallet_height_failed";
 
 export const START_RESCAN = "start_rescan";
 export const RESCAN_SUCCEED = "rescan_succeed";

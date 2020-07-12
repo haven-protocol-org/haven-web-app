@@ -18,6 +18,7 @@ import { exchangeProcess } from "./exchangeProcess";
 import { havenNode } from "./havenNode";
 import { walletRPC } from "./walletRPC";
 import { mining } from "./mining";
+import {havenFeature} from "shared/reducers/havenFeature";
 import modal from "shared/reducers/modal";
 
 const appReducer = combineReducers({
@@ -27,6 +28,7 @@ const appReducer = combineReducers({
   transferProcess,
   xTransferList,
   forex,
+  havenFeature,
   blockHeaderExchangeRate,
   walletCreation,
   exchangeProcess,

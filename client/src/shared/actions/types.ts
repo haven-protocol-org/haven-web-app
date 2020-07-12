@@ -47,3 +47,6 @@ export const SHOW_MODAL = "show_modal";
 export const HIDE_MODAL = "hide_modal";
 
 export const GET_ADDRESS_SUCCEED = "get_address_succeed";
+
+
+export const UPDATE_HAVEN_FEATURES = "update_haven_features";

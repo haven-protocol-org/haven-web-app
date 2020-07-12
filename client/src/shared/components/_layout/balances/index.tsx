@@ -11,14 +11,16 @@ import { ProgressBar } from "../../progress-bar";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { WebAppState } from "platforms/web/reducers";
 import { SyncState } from "shared/types/types";
-import { isDesktop, OFFSHORE_ENABLED } from "constants/env";
+import { isDesktop} from "constants/env";
 import { selectDesktopSyncState } from "platforms/desktop/reducers/chain";
 import { NO_BALANCE, XBalances } from "shared/reducers/xBalance";
 import { Ticker } from "shared/reducers/types";
+import {selectIsOffshoreEnabled} from "shared/reducers/havenFeature";
 
 interface BalanceProps {
   syncState: SyncState;
   balances: XBalances;
+  offshoreEnabled: boolean;
 }
 
 interface BalanceState {
@@ -33,7 +35,7 @@ class Balances extends Component<BalanceProps, BalanceState> {
   };
 
   onClickNext() {
-    if (!OFFSHORE_ENABLED) {
+    if (!this.props.offshoreEnabled) {
       return;
     }
 
@@ -86,6 +88,7 @@ class Balances extends Component<BalanceProps, BalanceState> {
 
 const mapStateToProps = (state: DesktopAppState | WebAppState) => ({
   balances: state.xBalance,
+  offshoreEnabled: selectIsOffshoreEnabled(state),
   syncState: isDesktop()
     ? selectDesktopSyncState(state as DesktopAppState)
     : selectWebSyncState(state)
