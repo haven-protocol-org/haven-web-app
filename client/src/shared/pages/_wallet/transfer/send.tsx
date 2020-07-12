@@ -1,5 +1,5 @@
 // Library Imports
-import { OFFSHORE_ENABLED } from "constants/env";
+import { selectIsOffshoreEnabled } from "shared/reducers/havenFeature";
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { AssetOption } from "shared/pages/_wallet/exchange";
@@ -17,10 +17,13 @@ import { Container } from "./styles";
 import TransferSummary from "shared/components/_summaries/transfer-summary";
 // Relative Imports
 
-const options: AssetOption[] = [{ name: "Haven", ticker: Ticker.XHV }];
+const xhvOption = { name: "Haven", ticker: Ticker.XHV };
+const xUSDOption = { name: "United States Dollar", ticker: Ticker.xUSD };
 
-if (OFFSHORE_ENABLED) {
-  options.push({ name: "United States Dollar", ticker: Ticker.xUSD });
+
+
+interface TransferOption {
+  name: string, ticker: Ticker
 }
 
 interface TransferOwnProps {
@@ -31,10 +34,13 @@ interface TransferOwnProps {
     ticker: Ticker
   ) => void;
   isProcessing: boolean;
+
 }
 
 interface TransferReduxProps {
   xBalances: XBalances;
+  offshoreEnabled: boolean;
+  options: Array<TransferOption>;
 }
 
 interface TransferState {
@@ -50,7 +56,7 @@ type TransferProps = TransferOwnProps & TransferReduxProps;
 
 class TransferContainer extends Component<TransferProps, TransferState> {
   state: TransferState = {
-    selectedAsset: options.length === 1 ? options[0] : null,
+    selectedAsset: options[0],
     send_amount: "",
     recipient_address: "",
     payment_id: "",
@@ -246,6 +252,8 @@ const mapStateToProps = (
   ownProps: TransferOwnProps
 ): TransferReduxProps => ({
   xBalances: state.xBalance,
+  offshoreEnabled: selectIsOffshoreEnabled(state),
+  options: selectIsOffshoreEnabled(state)? [xhvOption, xUSDOption] : [xhvOption]
 });
 
 export const SendFunds = connect<TransferReduxProps, {}, TransferOwnProps>(

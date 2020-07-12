@@ -1,5 +1,8 @@
 import {AnyAction} from "redux";
 import {UPDATE_HAVEN_FEATURES} from "shared/actions/types";
+import {isDesktop, isMainnet} from "constants/env";
+import {DesktopAppState} from "platforms/desktop/reducers";
+import {WebAppState} from "platforms/web/reducers";
 
 
 export interface HavenFeature {
@@ -14,7 +17,7 @@ const INITIAL_STATE: HavenFeature = {
     xUSDEnabled: false,
 };
 
-export default function (state = INITIAL_STATE, action: AnyAction) {
+export function havenFeature (state = INITIAL_STATE, action: AnyAction): HavenFeature{
     switch (action.type) {
         case UPDATE_HAVEN_FEATURES:
             return action.payload;
@@ -22,3 +25,6 @@ export default function (state = INITIAL_STATE, action: AnyAction) {
             return state;
     }
 }
+export const selectIsOffshoreEnabled = (state: DesktopAppState | WebAppState): boolean => {
+    return state.havenFeature.offshoreEnabled;
+};

@@ -15,7 +15,7 @@ import {
 } from "../ipc/rpc/rpc";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { getLastBlockHeader } from "platforms/desktop/actions/blockHeaderExchangeRate";
-import { OFFSHORE_ENABLED } from "constants/env";
+import { selectIsOffshoreEnabled } from "shared/reducers/havenFeature";
 import { getExchangeRates } from "shared/actions/exchangeRates";
 
 interface NodeInfoHeights {
@@ -34,7 +34,7 @@ export const getNodeInfo = () => {
             nodeInfoHeights.nodeHeight
           )
         ) {
-          if (OFFSHORE_ENABLED) {
+          if (selectIsOffshoreEnabled(getState())) {
             dispatch(getLastBlockHeader());
           } else {
             // get exhchange rates from api if offshore feature is not active yet

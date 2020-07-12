@@ -12,7 +12,7 @@ import CellDisabled from "../../../components/cell_disabled";
 import { AssetList } from "constants/assets";
 import { convertToMoney } from "utility/utility";
 import { Ticker } from "shared/reducers/types";
-import { OFFSHORE_ENABLED } from "constants/env";
+import { selectIsOffshoreEnabled } from "shared/reducers/havenFeature";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import {
   selectValueOfAssetsInUSD,
@@ -29,6 +29,7 @@ interface AssetsProps {
   balances: XBalances;
   rates: BlockHeaderRate[];
   assetsInUSD: XViewBalance;
+  offshoreEnabled: boolean;
 }
 
 interface AssetsState {}
@@ -45,7 +46,7 @@ class AssetsPage extends Component<AssetsProps, any> {
   }
 
   renderEnabledTokens = () => {
-    if (!OFFSHORE_ENABLED) {
+    if (!this.props.offshoreEnabled) {
       return null;
     }
 
@@ -87,7 +88,7 @@ class AssetsPage extends Component<AssetsProps, any> {
   };
 
   renderDisabledTokens = () => {
-    const disabledTokens = OFFSHORE_ENABLED
+    const disabledTokens = this.props.offshoreEnabled
       ? AssetList.filter(
           (asset: any) =>
             !Enabled_TICKER.includes(("x" + asset.ticker) as Ticker)
@@ -161,6 +162,7 @@ export const mapStateToProps = (state: DesktopAppState | WebAppState) => ({
   assetsInUSD: selectValueOfAssetsInUSD(state),
   rates: state.blockHeaderExchangeRate,
   balances: state.xBalance,
+  offshoreEnabled: selectIsOffshoreEnabled(state)
 });
 
 export const Assets = connect(mapStateToProps, { getForex, getSimplePrice })(

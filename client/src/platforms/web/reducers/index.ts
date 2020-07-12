@@ -16,11 +16,13 @@ import forex from "shared/reducers/forex";
 import { xBalance } from "shared/reducers/xBalance";
 import { xhvVsCurrencies } from "platforms/web/reducers/xhvVsCurrencies";
 import {blockHeaderExchangeRate} from "shared/reducers/blockHeaderExchangeRates";
+import {havenFeature} from "shared/reducers/havenFeature";
 
 const appReducer = combineReducers({
   theme,
   address,
   xBalance,
+  havenFeature,
   chain,
   keys,
   transferList,

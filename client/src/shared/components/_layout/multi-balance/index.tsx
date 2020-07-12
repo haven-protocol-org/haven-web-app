@@ -9,7 +9,7 @@ import { Spinner } from "../../spinner";
 import { ProgressBar } from "../../progress-bar";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { SyncState } from "shared/types/types";
-import { isDesktop, OFFSHORE_ENABLED } from "constants/env";
+import { isDesktop} from "constants/env";
 import { selectDesktopSyncState } from "platforms/desktop/reducers/chain";
 import {
   selectBalances,
@@ -17,12 +17,15 @@ import {
   XViewBalances,
 } from "shared/reducers/xBalance";
 import { Ticker } from "shared/reducers/types";
+import {selectIsOffshoreEnabled} from "shared/reducers/havenFeature";
+import {WebAppState} from "platforms/web/reducers";
 
 const OFFSHORE_TICKERS = [Ticker.xUSD, Ticker.xBTC, null];
 
 interface BalanceProps {
   syncState: SyncState;
   balances: XViewBalances;
+  offshoreEnabled: boolean;
 }
 
 interface BalanceState {
@@ -33,11 +36,11 @@ interface BalanceState {
 class Balances extends Component<BalanceProps, BalanceState> {
   state: BalanceState = {
     currentIndex: 0,
-    currentTicker: OFFSHORE_ENABLED ? OFFSHORE_TICKERS[0] : Ticker.XHV,
+    currentTicker: this.props.offshoreEnabled ? OFFSHORE_TICKERS[0] : Ticker.XHV,
   };
 
   onClickNext() {
-    if (!OFFSHORE_ENABLED) {
+    if (!selectIsOffshoreEnabled) {
       return;
     }
 
@@ -97,8 +100,9 @@ class Balances extends Component<BalanceProps, BalanceState> {
   }
 }
 
-const mapStateToProps = (state: DesktopAppState) => ({
-  balances: OFFSHORE_ENABLED
+const mapStateToProps = (state: DesktopAppState | WebAppState) => ({
+  offshoreEnabled: selectIsOffshoreEnabled(state),
+  balances: selectIsOffshoreEnabled(state)
     ? selectTotalBalances(state)
     : selectBalances(state),
   syncState: isDesktop()

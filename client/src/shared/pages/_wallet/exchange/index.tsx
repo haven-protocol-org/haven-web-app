@@ -8,7 +8,7 @@ import Input from "../../../components/_inputs/input";
 // import InputButton from "../../../components/_inputs/input_button";
 import Form from "../../../components/_inputs/form";
 
-import { OFFSHORE_ENABLED } from "../../../../constants/env";
+import { selectIsOffshoreEnabled } from "../../../reducers/havenFeature";
 import Footer from "../../../components/_inputs/footer";
 import Dropdown from "../../../components/_inputs/dropdown";
 import Tab from "../../../components/tab";
@@ -58,6 +58,7 @@ type ExchangeProps = {
   fromTicker: Ticker | null;
   toTicker: Ticker | null;
   balances: XBalances;
+  offshoreEnabled: boolean;
 };
 
 type ExchangeState = {
@@ -110,7 +111,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
   componentDidMount() {
     window.scrollTo(0, 0);
     this.props.getLastBlockHeader();
-    console.log("OFFSHORE_ENABLED", OFFSHORE_ENABLED);
   }
 
   componentDidUpdate(
@@ -289,7 +289,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     const isValid: boolean =
       !!(fromTicker && toTicker && fromAmount && toAmount) &&
       !hasLatestXRate &&
-      OFFSHORE_ENABLED;
+      this.props.offshoreEnabled;
 
     return (
       <Fragment>
@@ -402,7 +402,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
               <Footer
                 onClick={() => this.handleSubmit()}
                 label="Preview"
-                disabled={!isValid && !OFFSHORE_ENABLED}
+                disabled={!isValid && !selectIsOffshoreEnabled}
                 loading={this.props.isProcessingExchange}
               />
             </Container>
@@ -427,6 +427,7 @@ const mapStateToProps = (state: DesktopAppState) => ({
   fromTicker: selectFromTicker(state.exchangeProcess),
   toTicker: selectToTicker(state.exchangeProcess),
   balances: state.xBalance,
+  offshoreEnabled: selectIsOffshoreEnabled(state)
 });
 
 export const ExchangePage = connect(mapStateToProps, {
