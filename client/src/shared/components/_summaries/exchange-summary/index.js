@@ -12,8 +12,6 @@ export const ExchangeSummary = ({
   toTicker,
   fee,
   hasLatestXRate,
-  checked,
-  onChange,
 }) => {
   return (
     <>
