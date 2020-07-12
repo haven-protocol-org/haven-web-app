@@ -56,7 +56,7 @@ type TransferProps = TransferOwnProps & TransferReduxProps;
 
 class TransferContainer extends Component<TransferProps, TransferState> {
   state: TransferState = {
-    selectedAsset: options[0],
+    selectedAsset: this.props.options[0],
     send_amount: "",
     recipient_address: "",
     payment_id: "",
@@ -68,7 +68,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
     window.scrollTo(0, 0);
 
     this.setState({
-      selectedAsset: options[0],
+      selectedAsset: this.props.options[0],
     });
   }
 
@@ -164,7 +164,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
             name="send_asset"
             ticker={selectedAsset ? selectedAsset.ticker : ""}
             value={selectedAsset ? selectedAsset.name : "Select Asset"}
-            options={options}
+            options={this.props.options}
             onClick={this.setSendAsset}
           />
           <Input
