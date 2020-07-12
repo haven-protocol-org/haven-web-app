@@ -1,5 +1,5 @@
 import {
-  GET_BLOCK_HEIGHT_SUCCEED,
+  GET_WALLET_HEIGHT_SUCCEED,
   GET_BLOCK_INFO_SUCEED,
   RESCAN_FAILED,
   RESCAN_SUCCEED,
@@ -27,7 +27,7 @@ const INITIAL_STATE: Chain = {
 export const chain = (state = INITIAL_STATE, action: AnyAction): Chain => {
   switch (action.type) {
     case GET_BLOCK_INFO_SUCEED:
-    case GET_BLOCK_HEIGHT_SUCCEED:
+    case GET_WALLET_HEIGHT_SUCCEED:
       return { ...state, ...action.payload };
     case START_RESCAN:
       return { ...state, isRefreshing: true };

@@ -1,7 +1,7 @@
 import {
-  GET_BLOCK_HEIGHT_FAILED,
-  GET_BLOCK_HEIGHT_FETCHING,
-  GET_BLOCK_HEIGHT_SUCCEED,
+  GET_WALLET_HEIGHT_FAILED,
+  GET_WALLET_HEIGHT_FETCHING,
+  GET_WALLET_HEIGHT_SUCCEED,
   GET_BLOCK_INFO_FAILED,
   GET_BLOCK_INFO_SUCEED,
   RESCAN_FAILED,
@@ -49,7 +49,7 @@ export const getNodeInfo = () => {
 
 export const getWalletHeight = () => {
   return (dispatch: any) => {
-    dispatch({ type: GET_BLOCK_HEIGHT_FETCHING });
+    dispatch({ type: GET_WALLET_HEIGHT_FETCHING });
 
     getWalletHeightRPC()
       .then((res) => dispatch(getWalletHeightSucceed(res.height)))
@@ -58,11 +58,11 @@ export const getWalletHeight = () => {
 };
 
 export const getWalletHeightSucceed = (walletHeight: number) => {
-  return { type: GET_BLOCK_HEIGHT_SUCCEED, payload: { walletHeight } };
+  return { type: GET_WALLET_HEIGHT_SUCCEED, payload: { walletHeight } };
 };
 
 export const getWalletHeightFailed = (err: any) => {
-  return { type: GET_BLOCK_HEIGHT_FAILED, payload: err };
+  return { type: GET_WALLET_HEIGHT_FAILED, payload: err };
 };
 
 const getNodeInfoSucceed = (nodeInfo: NodeInfoHeights) => ({
