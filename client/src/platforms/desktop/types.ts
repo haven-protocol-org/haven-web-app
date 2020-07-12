@@ -1,6 +1,6 @@
 declare global {
   interface Window {
-    ipcRenderer: any;
+    havenProcess: any;
   }
 }
 

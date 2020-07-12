@@ -3,7 +3,7 @@ import { ipcRenderer } from "electron";
 import { CommunicationChannel } from "platforms/desktop/ipc/ipc-types";
 
 // @ts-ignore
-const ipcRender: typeof ipcRenderer = window.ipcRenderer;
+const ipcRender: typeof ipcRenderer = window.havenProcess;
 
 export function openWalletRPC(params: object) {
   return callRpc("open_wallet", params);
@@ -136,6 +136,8 @@ function callRpc(method: string, params: object | undefined = undefined) {
 }
 
 export const handleError = async (response: any) => {
+
+  console.log(response);
   // intercept error on protocol level
   if (response.error) return Promise.reject(response.error);
 

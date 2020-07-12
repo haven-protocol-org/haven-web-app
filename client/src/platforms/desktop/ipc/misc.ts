@@ -2,7 +2,7 @@ import { ipcRenderer } from "electron";
 import { CommunicationChannel } from "./ipc-types";
 
 // @ts-ignore
-const ipcRender: typeof ipcRenderer = window.ipcRenderer;
+const ipcRender: typeof ipcRenderer = window.havenProcess;
 
 export const getHavendStateIPC = () => {
   return ipcRender.invoke(CommunicationChannel.HAVEND);
