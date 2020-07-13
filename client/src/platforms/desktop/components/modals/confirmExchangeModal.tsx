@@ -9,6 +9,7 @@ import { Modal } from "shared/components/modal";
 import { ExchangeProcessInfo } from "platforms/desktop/reducers/exchangeProcess";
 import { hideModal } from "shared/actions/modal";
 import Transaction from "shared/components/_transactions/exchange";
+import { convertToMoney } from "utility/utility";
 
 interface ConfirmExchangeModalProps {
   exchange: ExchangeProcessInfo;
@@ -27,12 +28,9 @@ class ConfirmExchangeModal extends React.Component<
   };
 
   approveTransfer = () => {
-    this.setState(
-      {
-        checked: !this.state.checked,
-      },
-      () => console.log("CHECKED", this.state.checked)
-    );
+    this.setState({
+      checked: !this.state.checked,
+    });
   };
 
   render() {
@@ -45,10 +43,14 @@ class ConfirmExchangeModal extends React.Component<
       fee,
     } = this.props.exchange;
 
+    const readableToAmout = convertToMoney(toAmount);
+    // ####  Add in the fromAmount ####
+    // const readableFromAmout = convertToMoney(fromAmount);
+
     return (
       <Modal
         title="Exchange Confirmation"
-        description="Please review and finalize your exchange transaction"
+        description="Please review and confirm your transaction"
         leftButton="Cancel"
         rightButton="Confirm"
         isLoading={this.state.loading}
@@ -61,7 +63,7 @@ class ConfirmExchangeModal extends React.Component<
           onChange={this.approveTransfer}
           fromAmount={fromAmount}
           checked={this.state.checked}
-          toAmount={toAmount}
+          toAmount={readableToAmout}
           fromTicker={fromTicker}
           toTicker={toTicker}
           fee={fee}

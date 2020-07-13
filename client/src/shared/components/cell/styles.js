@@ -1,6 +1,12 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
+// const appear = keyframes`
+//   0% { transform: translateY(-20px);  }
+//   50% { transform: translateY(10px);  }
+//   100% {transform: translateY(0px);   }
+// `;
+
 export const Container = styled.div`
   display: flex;
   flex-direction: column;

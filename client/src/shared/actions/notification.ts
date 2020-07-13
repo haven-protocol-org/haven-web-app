@@ -55,7 +55,7 @@ export const addExchangeSucceedMessage = (
   fromAmount: number,
   toAmount: number
 ) => {
-  const message = `You exchanged ${fromAmount} ${fromTicker} to ${toAmount} ${toTicker} `;
+  const message = `Your exchange was successfully submitted`;
   return addNotificationByMessage(NotificationType.SUCCESS, message);
 };
 
@@ -118,10 +118,8 @@ const removeNotificationAfterDelay = (
   duration: NotificationDuration
 ) => {
   return (dispatch: any) => {
-    setTimeout( () => {
-      dispatch(removeNotification(id))
-    }, duration );
-  }
-
-
+    setTimeout(() => {
+      dispatch(removeNotification(id));
+    }, duration);
+  };
 };

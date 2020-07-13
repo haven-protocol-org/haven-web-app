@@ -133,12 +133,6 @@ class Navigation extends Component<NavigationProps, any> {
                 <Body>Wallet</Body>
                 <Label>{wallet.isRunning ? "Online" : "Offline"}</Label>
               </OptionsDoubleRow>
-              {isLocalNode && (
-                <OptionsDoubleRow>
-                  <Body>Node</Body>
-                  <Label>{node.isRunning ? "Online" : "Offline"}</Label>
-                </OptionsDoubleRow>
-              )}
               <OptionsDoubleRow>
                 <Body>Application</Body>
                 <Label>v{APP_VERSION}</Label>
