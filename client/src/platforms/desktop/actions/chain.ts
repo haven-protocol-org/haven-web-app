@@ -36,9 +36,6 @@ export const getNodeInfo = () => {
         ) {
           if (selectIsOffshoreEnabled(getState())) {
             dispatch(getLastBlockHeader());
-          } else {
-            // get exhchange rates from api if offshore feature is not active yet
-            dispatch(getExchangeRates());
           }
         }
         dispatch(getNodeInfoSucceed(nodeInfoHeights));

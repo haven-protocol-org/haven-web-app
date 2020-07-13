@@ -14,6 +14,7 @@ import { getAddress } from "./subadresses";
 import { getTransfers } from "./transferHistory";
 import { getWalletRPCState } from "platforms/desktop/actions/walletRPC";
 import { selectIsWalletSyncingRemote } from "platforms/desktop/reducers/walletRPC";
+import {getExchangeRates} from "shared/actions/exchangeRates";
 
 export const getDaemonsState = () => {
   return (dispatch: any) => {
@@ -26,6 +27,10 @@ export const refresh = () => {
   return (dispatch: any, getState: () => DesktopAppState) => {
     if (selectIsWalletSyncingRemote(getState())) {
       dispatch(getNodeInfo());
+
+      if (!selectIsOffshoreEnabled(getState())){
+          dispatch(getExchangeRates());
+      }
       return;
     }
 
