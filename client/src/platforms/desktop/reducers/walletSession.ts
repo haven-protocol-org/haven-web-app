@@ -10,6 +10,7 @@ import {
 } from "../actions/types";
 import { AnyAction } from "redux";
 import { DesktopAppState } from "./index";
+import {getMessageOfError} from "utility/utility";
 
 export type RPCError = {
   code: number;
@@ -83,7 +84,8 @@ export const selectErrorMessageForLogin = (state: DesktopAppState) => {
   const error = state.walletSession.error;
 
   if (error) {
-    return error.message;
+    const message =  getMessageOfError(state.walletSession.error);
+    return message || error.message;
   }
 
   return "";

@@ -1,7 +1,7 @@
 import { AnyAction } from "redux";
 import { NodeLocation, NodeState } from "platforms/desktop/types";
 import { DesktopAppState } from "platforms/desktop/reducers/index";
-import { GET_HAVEND_STATE_SUCCEED } from "platforms/desktop/actions/types";
+import {GET_HAVEND_STATE_SUCCEED, SET_NODE_FOR_WALLET_SUCCESS} from "platforms/desktop/actions/types";
 
 const INITAL_STATE: NodeState = {
   isRunning: false,
@@ -19,6 +19,8 @@ export const havenNode = (
   switch (action.type) {
     case GET_HAVEND_STATE_SUCCEED:
       return { ...action.payload };
+    case SET_NODE_FOR_WALLET_SUCCESS:
+      return { ...state, ...action.payload };
     default:
       return state;
   }

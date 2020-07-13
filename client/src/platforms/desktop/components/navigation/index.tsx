@@ -1,41 +1,36 @@
 // Library Imports
-import React, { Component } from "react";
-import { connect } from "react-redux";
-
+import React, {Component} from "react";
+import {connect} from "react-redux";
 // Relative Imports
 import {
+  Arr,
+  Arrow,
+  Brand,
+  Button,
   Container,
   Haven,
-  Brand,
-  State,
-  Wrapper,
-  NetworkStatus,
-  Button,
-  Logout,
   Icon,
+  Logout,
   Menu,
+  NetworkStatus,
   Options,
-  Arrow,
-  Arr,
-  OptionsList,
   OptionsDoubleRow,
   OptionsIcon,
+  OptionsList,
+  State,
+  Wrapper,
 } from "./styles";
 import OptionsSVG from "../../../../assets/icons/options.svg";
-import { Body, Label } from "../../../../assets/styles/type.js";
+import {Body, Label} from "assets/styles/type";
 
-import { closeWallet } from "../../actions";
-import { selectIsLoggedIn } from "../../reducers/walletSession";
-import {
-  getNetworkByName,
-  isDevMode,
-  NET_TYPE_NAME,
-  APP_VERSION,
-} from "constants/env";
-import { DesktopAppState } from "../../reducers";
-import { NodeState } from "platforms/desktop/types";
-import { WalletState } from "platforms/desktop/ipc/ipc-types";
-import { selectisLocalNode } from "platforms/desktop/reducers/havenNode";
+import {closeWallet} from "../../actions";
+import {selectIsLoggedIn} from "../../reducers/walletSession";
+import {APP_VERSION, getNetworkByName, isDevMode, NET_TYPE_NAME,} from "constants/env";
+import {DesktopAppState} from "../../reducers";
+import {NodeState} from "platforms/desktop/types";
+import {WalletState} from "platforms/desktop/ipc/ipc-types";
+import {selectisLocalNode} from "platforms/desktop/reducers/havenNode";
+import {ThreeState} from "shared/types/types";
 
 interface NavigationProps {
   wallet: WalletState;
@@ -93,10 +88,10 @@ class Navigation extends Component<NavigationProps, any> {
           <Haven>HAVEN</Haven>
           <NetworkStatus>
             <Wrapper></Wrapper>
-            {isDevMode() && wallet.isRunning && !wallet.isConnectedToDaemon && (
+            {isDevMode() && wallet.isRunning && wallet.isConnectedToDaemon === ThreeState.False && (
               <State isActive={false}>Wallet not connected to a daemon</State>
             )}
-            {isDevMode() && wallet.isRunning && wallet.isConnectedToDaemon && (
+            {isDevMode() && wallet.isRunning && wallet.isConnectedToDaemon === ThreeState.True && (
               <State isActive={true}>
                 Wallet connected {isLocalNode ? "local" : "remote"} daemon
               </State>

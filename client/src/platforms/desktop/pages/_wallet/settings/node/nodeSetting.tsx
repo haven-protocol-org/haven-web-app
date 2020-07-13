@@ -2,20 +2,21 @@ import Nodes from "shared/components/_inputs/nodes";
 import Header from "shared/components/_layout/header";
 import Form from "shared/components/_inputs/form";
 import Input from "shared/components/_inputs/input";
-import { Container } from "./styles";
+import {Container} from "../styles";
 
 import DoubleFooter from "shared/components/_inputs/double_footer/index.js";
-import React, { SyntheticEvent } from "react";
-import { DesktopAppState } from "platforms/desktop/reducers";
-import { connect } from "react-redux";
-import { selectisLocalNode } from "platforms/desktop/reducers/havenNode";
-import { setHavenNode } from "platforms/desktop/actions/havenNode";
-import { NodeLocation, NodeState } from "platforms/desktop/types";
-import { REMOTE_NODES } from "platforms/desktop/nodes";
-import { selectIsWalletSyncingRemote } from "platforms/desktop/reducers/walletRPC";
-import { Information } from "assets/styles/type.js";
+import React, {SyntheticEvent} from "react";
+import {DesktopAppState} from "platforms/desktop/reducers";
+import {connect} from "react-redux";
+import {selectisLocalNode} from "platforms/desktop/reducers/havenNode";
+import {setNodeForWallet} from "platforms/desktop/actions/walletRPC";
+import {NodeLocation, NodeState} from "platforms/desktop/types";
+import {selectIsWalletSyncingRemote} from "platforms/desktop/reducers/walletRPC";
+import {Information} from "assets/styles/type.js";
+import {createNodeOptions} from "platforms/desktop/pages/_wallet/settings/node/options";
+import {ThreeState} from "shared/types/types";
 
-enum NodeSelectionType {
+export enum NodeSelectionType {
   local,
   remote,
   custom,
@@ -29,11 +30,12 @@ export interface NodeOption {
   selectionType: NodeSelectionType;
 }
 
-export interface NodeSettingProps {
+ interface NodeSettingProps {
   isRemoteSyncing: boolean;
   localNode: boolean;
   node: NodeState;
-  isConnected: boolean;
+  isConnected: ThreeState;
+  isRequestingSwitch: boolean;
   nodeOptions: NodeOption[];
   setHavenNode: (
     selectedNodeOption: NodeOption,
@@ -42,11 +44,11 @@ export interface NodeSettingProps {
   ) => void;
 }
 
-export interface NodeSettingState {
+ interface NodeSettingState {
   selectedNodeOption: NodeOption;
   address: string;
   port: string;
-  connected: boolean;
+  connected: ThreeState;
   locked: boolean;
 }
 
@@ -57,7 +59,7 @@ class NodeSettingComponent extends React.Component<
   state = {
     address: this.props.node.address,
     connected: this.props.isConnected,
-    locked: this.props.isConnected,
+    locked: this.props.isConnected !== ThreeState.False,
     selectedNodeOption: this.props.nodeOptions.find(
       (nodeOption) => nodeOption.address === this.props.node.address
     )!,
@@ -72,6 +74,7 @@ class NodeSettingComponent extends React.Component<
     if (address === this.props.node.address && port === this.props.node.port) {
       return;
     }
+
 
     this.props.setHavenNode(selectedNodeOption, address, port);
   };
@@ -105,47 +108,58 @@ class NodeSettingComponent extends React.Component<
   ) {
     let newState = {};
 
-    // when we are connected to a daemon again lock
-    if (nextProps.isConnected && !prevState.connected) {
-      newState = { ...newState, locked: true };
 
-      if (nextProps.node.address !== prevState.address) {
-        const changes = {
-          address: nextProps.node.address,
-          selectedNodeOption: nextProps.nodeOptions.find(
-            (nodeOption) => nodeOption.address === nextProps.node.address
-          )!,
-        };
-        newState = { ...newState, ...changes };
-      }
+    const isConnectedOrTryingToConnectAgain = nextProps.isConnected !== ThreeState.False && prevState.connected !== nextProps.isConnected;
+
+    // when we are connected to a daemon or trying to connect  --> again lock
+    if (isConnectedOrTryingToConnectAgain) {
+      newState = { ...newState, locked: true };
     }
 
     if (nextProps.isConnected !== prevState.connected) {
       newState = { ...newState, connected: nextProps.isConnected };
     }
 
+    if (isConnectedOrTryingToConnectAgain) {
+
+      if (nextProps.node.address !== prevState.address) {
+        const changes = {
+          address: nextProps.node.address,
+          port: nextProps.node.port
+        };
+        newState = {...newState, ...changes};
+      }
+    }
+
+    if (isConnectedOrTryingToConnectAgain) {
+      if (prevState.selectedNodeOption.address !== nextProps.node.address) {
+        const changes  = {
+
+        selectedNodeOption: nextProps.nodeOptions.find(
+            (nodeOption) => nodeOption.address === nextProps.node.address
+        )!,
+      };
+        newState = { ...newState, ...changes };
+      }
+    }
     return newState;
   }
 
   buttonLogic = () => {
     const { locked } = this.state;
-    const { localNode, isConnected } = this.props;
+    const { isConnected, isRequestingSwitch } = this.props;
 
-    if (!locked && localNode && !isConnected) {
-      return "Connect";
-    } else if (locked && localNode && !isConnected) {
+    if (isConnected === ThreeState.Unset || isRequestingSwitch) {
       // Don't change this label as it's equality checked on child
       return "Loading";
-    } else if (locked && localNode && isConnected) {
+    }
+    else if (locked  && isConnected === ThreeState.True) {
       return "Connected";
-    } else if (!locked && !localNode && !isConnected) {
+    }
+    else if (!locked) {
       return "Connect";
-    } else if (locked && !localNode && !isConnected) {
-      // Don't change this label as it's equality checked on child
-      return "Loading";
-    } else if (locked && !localNode && isConnected) {
-      return "Connected";
-    } else {
+    }
+    else {
       return "Connect";
     }
   };
@@ -194,8 +208,10 @@ class NodeSettingComponent extends React.Component<
 
           <Container>
             <Information>
-              Vault is connected to a{" "}
-              <strong>{this.state.selectedNodeOption.name}</strong>. Change
+              {this.props.isConnected === ThreeState.True? 'Vault is connected to '
+                  : this.props.isConnected === ThreeState.Unset? 'Vault is trying to connect to '
+                      : 'Vault is not connected to '}
+              <strong>{this.props.node.address}</strong>. Change
               nodes by clicking <strong>Disconnect</strong>, then select a new
               node from the dropdown, then click <strong>Connect</strong>.
             </Information>
@@ -223,74 +239,13 @@ const mapStateToProps = (state: DesktopAppState) => ({
   node: state.havenNode,
   isRemoteSyncing: selectIsWalletSyncingRemote(state),
   isConnected: state.walletRPC.isConnectedToDaemon,
+  isRequestingSwitch: state.walletRPC.isRequestingSwitch,
   localNode: selectisLocalNode(state.havenNode),
   nodeOptions: createNodeOptions(state.havenNode),
 });
 
 export const HavenNodeSetting = connect(mapStateToProps, {
-  setHavenNode,
+  setHavenNode: setNodeForWallet,
 })(NodeSettingComponent);
 
-const createNodeOptions = (havendState: NodeState): NodeOption[] => {
 
-
-  const remoteNodes: NodeOption[] = REMOTE_NODES.map((node) => {
-    const host = new URL(node.address).host;
-    return {
-      location: NodeLocation.Remote,
-      address: node.address,
-      port: node.port,
-      name: `Remote Node ( ${host} )`,
-      selectionType: NodeSelectionType.local,
-    };
-  });
-
-  const localNode: NodeOption = {
-    location: NodeLocation.Local,
-    address: "",
-    port: "",
-    name: "Local Node",
-    selectionType: NodeSelectionType.local,
-  };
-
-  const customNode: NodeOption = isCustomNode(havendState)
-    ? {
-        location: NodeLocation.Remote,
-        address: havendState.address,
-        port: havendState.port,
-        name: createCustomNodeName(havendState),
-        selectionType: NodeSelectionType.custom,
-      }
-    : {
-        location: NodeLocation.Remote,
-        address: "",
-        port: "",
-        name: "Custom Node",
-        selectionType: NodeSelectionType.custom,
-      };
-
-
-  //quick check to omit local node option for macOS for first
-   if (window.havenProcess.platform === "darwin") {
-     return  [...remoteNodes, customNode];
-   }
-
-    return [localNode, ...remoteNodes, customNode];
-};
-
-const createCustomNodeName = (havendState: NodeState) => {
-  try {
-    return `Custom Node ( ${new URL(havendState.address).host} )`;
-  } catch (e) {
-    return "Custom Node";
-  }
-};
-
-const isCustomNode = (havendState: NodeState): boolean => {
-  return (
-    havendState.location === NodeLocation.Remote &&
-    !REMOTE_NODES.some(
-      (remoteNode) => remoteNode.address === havendState.address
-    )
-  );
-};

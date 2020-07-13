@@ -2,9 +2,8 @@
 import {connect} from "react-redux";
 import {DesktopAppState} from "platforms/desktop/reducers";
 import {selectDesktopSyncState} from "platforms/desktop/reducers/chain";
-import {isWalletConnectedToDaemoon} from "platforms/desktop/reducers/walletRPC";
 import {Component} from "react";
-import {addNotificationByKey, removeNotification,} from "shared/actions/notification";
+import {addNotificationByKey, removeNotification, addErrorNotification} from "shared/actions/notification";
 import {uuidv4} from "utility/utility";
 import {
   IS_SYNCING_MESSAGE,
@@ -13,11 +12,12 @@ import {
   WALLET_IS_CONNECTING,
 } from "constants/notificationList";
 import {NotificationDuration} from "shared/reducers/notification";
+import {ThreeState} from "shared/types/types";
 
 interface FixedStatusProps {
   daemonUrl: string;
   isSyncing: boolean;
-  isWalletConnected: boolean;
+  isWalletConnected: ThreeState;
   addNotificationByKey: (
     key: any,
     duration?: NotificationDuration,
@@ -25,6 +25,7 @@ interface FixedStatusProps {
     templateVars?: Array<string> | null
   ) => void;
   removeNotification: (id: string) => void;
+  addErrorNotification:(msg: string) => void;
 }
 
 class FixedStatusContainer extends Component<FixedStatusProps, any> {
@@ -64,13 +65,12 @@ class FixedStatusContainer extends Component<FixedStatusProps, any> {
   }
 
   checkAndHandleConnectionState(
-    didWalletConnectBefore: boolean,
-    isWalletConnectedNow: boolean
+    didWalletConnectBefore: ThreeState,
+    isWalletConnectedNow: ThreeState
   ) {
     // show a trying to connect message
-    if (
-      !isWalletConnectedNow &&
-      didWalletConnectBefore &&
+    if ( isWalletConnectedNow  === ThreeState.Unset &&
+      didWalletConnectBefore !== isWalletConnectedNow &&
       !this.tryingConnectMessageID
     ) {
       const nodeName =
@@ -87,10 +87,8 @@ class FixedStatusContainer extends Component<FixedStatusProps, any> {
     }
 
     // if connection succeed, remove fixed message and show success message
-    if (
-      !didWalletConnectBefore &&
-      isWalletConnectedNow &&
-      this.tryingConnectMessageID
+    if (isWalletConnectedNow === ThreeState.True && didWalletConnectBefore === ThreeState.Unset &&
+        this.tryingConnectMessageID
     ) {
 
       const nodeName =
@@ -99,6 +97,18 @@ class FixedStatusContainer extends Component<FixedStatusProps, any> {
       this.tryingConnectMessageID = null;
       this.props.addNotificationByKey(WALLET_CONNECT_SUCCEED, NotificationDuration.DEFAULT, uuidv4(), [nodeName]);
     }
+    else if (isWalletConnectedNow === ThreeState.False && didWalletConnectBefore === ThreeState.Unset &&
+        this.tryingConnectMessageID) {
+
+      const nodeName =
+          this.props.daemonUrl === "" ? "local node" : this.props.daemonUrl;
+      this.props.removeNotification(this.tryingConnectMessageID);
+      this.tryingConnectMessageID = null;
+
+      this.props.addErrorNotification(`The attempt to connect to ${nodeName} failed. Please select another Node`);
+
+    }
+
   }
 
   render() {
@@ -108,11 +118,11 @@ class FixedStatusContainer extends Component<FixedStatusProps, any> {
 
 const mapStateToProps = (state: DesktopAppState) => ({
   isSyncing: selectDesktopSyncState(state).isSyncing,
-  isWalletConnected: isWalletConnectedToDaemoon(state.walletRPC),
+  isWalletConnected: state.walletRPC.isConnectedToDaemon,
   daemonUrl: state.havenNode.address,
 });
 
 export const FixedStatus = connect(mapStateToProps, {
   addNotificationByKey,
-  removeNotification,
+  removeNotification,addErrorNotification
 })(FixedStatusContainer);
