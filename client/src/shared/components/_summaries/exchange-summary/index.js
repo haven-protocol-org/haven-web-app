@@ -27,7 +27,7 @@ export const ExchangeSummary = ({
           <Value>
             {(fromTicker ? fromTicker : "") +
               " " +
-              (fromAmount && !isNaN(fromAmount) ? fromAmount : "0")}
+              (fromAmount && !isNaN(fromAmount) ? fromAmount : "--")}
           </Value>
         </Row>
         <Row>
@@ -35,7 +35,7 @@ export const ExchangeSummary = ({
           <Value>
             {(toTicker ? toTicker : "") +
               " " +
-              (toAmount && !isNaN(toAmount) ? toAmount : "0")}
+              (toAmount && !isNaN(toAmount) ? toAmount : "--")}
           </Value>
         </Row>
       </Container>
