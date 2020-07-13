@@ -1,18 +1,22 @@
 /** this class takes care about status messages which are sticky and appearance and disappearance is dependent on the state**/
-import {connect} from "react-redux";
-import {DesktopAppState} from "platforms/desktop/reducers";
-import {selectDesktopSyncState} from "platforms/desktop/reducers/chain";
-import {Component} from "react";
-import {addNotificationByKey, removeNotification, addErrorNotification} from "shared/actions/notification";
-import {uuidv4} from "utility/utility";
+import { connect } from "react-redux";
+import { DesktopAppState } from "platforms/desktop/reducers";
+import { selectDesktopSyncState } from "platforms/desktop/reducers/chain";
+import { Component } from "react";
+import {
+  addNotificationByKey,
+  removeNotification,
+  addErrorNotification,
+} from "shared/actions/notification";
+import { uuidv4 } from "utility/utility";
 import {
   IS_SYNCING_MESSAGE,
   SYNCING_SUCCEED_MESSAGE,
   WALLET_CONNECT_SUCCEED,
   WALLET_IS_CONNECTING,
 } from "constants/notificationList";
-import {NotificationDuration} from "shared/reducers/notification";
-import {ThreeState} from "shared/types/types";
+import { NotificationDuration } from "shared/reducers/notification";
+import { ThreeState } from "shared/types/types";
 
 interface FixedStatusProps {
   daemonUrl: string;
@@ -25,7 +29,7 @@ interface FixedStatusProps {
     templateVars?: Array<string> | null
   ) => void;
   removeNotification: (id: string) => void;
-  addErrorNotification:(msg: string) => void;
+  addErrorNotification: (msg: string) => void;
 }
 
 class FixedStatusContainer extends Component<FixedStatusProps, any> {
@@ -69,7 +73,8 @@ class FixedStatusContainer extends Component<FixedStatusProps, any> {
     isWalletConnectedNow: ThreeState
   ) {
     // show a trying to connect message
-    if ( isWalletConnectedNow  === ThreeState.Unset &&
+    if (
+      isWalletConnectedNow === ThreeState.Unset &&
       didWalletConnectBefore !== isWalletConnectedNow &&
       !this.tryingConnectMessageID
     ) {
@@ -87,28 +92,35 @@ class FixedStatusContainer extends Component<FixedStatusProps, any> {
     }
 
     // if connection succeed, remove fixed message and show success message
-    if (isWalletConnectedNow === ThreeState.True && didWalletConnectBefore === ThreeState.Unset &&
-        this.tryingConnectMessageID
+    if (
+      isWalletConnectedNow === ThreeState.True &&
+      didWalletConnectBefore === ThreeState.Unset &&
+      this.tryingConnectMessageID
     ) {
-
       const nodeName =
-          this.props.daemonUrl === "" ? "local node" : this.props.daemonUrl;
+        this.props.daemonUrl === "" ? "local node" : this.props.daemonUrl;
       this.props.removeNotification(this.tryingConnectMessageID);
       this.tryingConnectMessageID = null;
-      this.props.addNotificationByKey(WALLET_CONNECT_SUCCEED, NotificationDuration.DEFAULT, uuidv4(), [nodeName]);
-    }
-    else if (isWalletConnectedNow === ThreeState.False && didWalletConnectBefore === ThreeState.Unset &&
-        this.tryingConnectMessageID) {
-
+      this.props.addNotificationByKey(
+        WALLET_CONNECT_SUCCEED,
+        NotificationDuration.DEFAULT,
+        uuidv4(),
+        [nodeName]
+      );
+    } else if (
+      isWalletConnectedNow === ThreeState.False &&
+      didWalletConnectBefore === ThreeState.Unset &&
+      this.tryingConnectMessageID
+    ) {
       const nodeName =
-          this.props.daemonUrl === "" ? "local node" : this.props.daemonUrl;
+        this.props.daemonUrl === "" ? "local node" : this.props.daemonUrl;
       this.props.removeNotification(this.tryingConnectMessageID);
       this.tryingConnectMessageID = null;
 
-      this.props.addErrorNotification(`The attempt to connect to ${nodeName} failed. Please select another Node`);
-
+      this.props.addErrorNotification(
+        `The attempt to connect to ${nodeName} failed. Please select another node`
+      );
     }
-
   }
 
   render() {
@@ -124,5 +136,6 @@ const mapStateToProps = (state: DesktopAppState) => ({
 
 export const FixedStatus = connect(mapStateToProps, {
   addNotificationByKey,
-  removeNotification,addErrorNotification
+  removeNotification,
+  addErrorNotification,
 })(FixedStatusContainer);

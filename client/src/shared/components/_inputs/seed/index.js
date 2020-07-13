@@ -2,7 +2,7 @@
 import React from "react";
 
 // Relative Imports
-import { Container, Field, Labels, Error, Paste } from "./styles";
+import { Container, Field, Labels, Error } from "./styles";
 import { Label } from "../../../../assets/styles/type.js";
 
 const Seed = ({
@@ -23,7 +23,6 @@ const Seed = ({
         <Error>{error}</Error>
       </Labels>
       <Field ref={ref} {...rest} />
-      <Paste onClick={actionEvent}>{action}</Paste>
     </Container>
   );
 };
