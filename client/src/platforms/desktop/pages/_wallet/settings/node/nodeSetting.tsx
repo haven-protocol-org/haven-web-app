@@ -204,8 +204,10 @@ class NodeSettingComponent extends React.Component<
 
           <Container>
             <Information>
-              Vault is connected to a{" "}
-              <strong>{this.state.selectedNodeOption.name}</strong>. Change
+              {this.props.isConnected === ThreeState.True? 'Vault is connected to a '
+                  : this.props.isConnected === ThreeState.Unset? 'Vault is trying to connect to '
+                      : 'Vault is not connected to '}
+              <strong>{this.props.node.address}</strong>. Change
               nodes by clicking <strong>Disconnect</strong>, then select a new
               node from the dropdown, then click <strong>Connect</strong>.
             </Information>
