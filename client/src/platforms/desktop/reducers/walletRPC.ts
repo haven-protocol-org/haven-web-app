@@ -12,7 +12,7 @@ import {ThreeState} from "shared/types/types";
 
 
 interface WalletRPC extends WalletState {
-  isSwitchingNode: boolean,
+  isRequestingSwitch: boolean,
 }
 
 const INITAL_STATE: WalletRPC = {
@@ -21,7 +21,7 @@ const INITAL_STATE: WalletRPC = {
   syncHeight: 0,
   isRunning: true,
   isReachable: false,
-  isSwitchingNode: false,
+  isRequestingSwitch: false,
 };
 
 export const walletRPC = (
@@ -30,13 +30,13 @@ export const walletRPC = (
 ): WalletRPC => {
   switch (action.type) {
     case GET_WALLET_RPC_STATE_SUCCEED:
-      return { ...action.payload };
+      return { ...state, ...action.payload };
     case SET_NODE_FOR_WALLET_SUCCESS:
-      return { ...state, isConnectedToDaemon: ThreeState.Unset, isSyncing: false, isSwitchingNode: false };
+      return { ...state, isConnectedToDaemon: ThreeState.Unset, isSyncing: false, isRequestingSwitch: false };
     case SET_NODE_FOR_WALLET_FAILED:
-      return { ...state, isSwitchingNode: false };
+      return { ...state, isRequestingSwitch: false };
     case SET_NODE_FOR_WALLET_REQUESTED:
-      return { ...state, isSwitchingNode: true };
+      return { ...state, isRequestingSwitch: true };
     default:
       return state;
   }

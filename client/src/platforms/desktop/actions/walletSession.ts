@@ -15,10 +15,12 @@ export const closeWallet = () => {
 
 
     if (isDevMode()) {
-      closeWalletRPC()
-          .catch((err) => console.log(err))
-          // .then(() => closeWalletRPC())
-          .then(() => dispatch(closeWalletSucceed()));
+      storeWalletRPC()
+          .catch((e) => addErrorNotification("wallet state could not be stored"))
+          .then( () =>  closeWalletRPC())
+          .catch((err) => dispatch(addErrorNotification('wallet is busy, you cannot logout in the moment')))
+          .finally((() => dispatch(closeWalletSucceed())));
+
       return;
     }
 

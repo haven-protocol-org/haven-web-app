@@ -2,7 +2,6 @@ import axios from "axios";
 import { LOCAL_HOST_URL } from "../daemons/config/enum";
 import { LOCAL_HOST } from "../daemons/config/enum";
 import { logInDevMode } from "../dev";
-import { URL } from "url";
 
 export type RPCRequestObject = {
   id: number;
@@ -40,14 +39,19 @@ export class RPCHRequestHandler {
   }
 
   public sendRequest(requestObject: RPCRequestObject): Promise<any> {
+
+
+    const timeLessMethods = ["close_wallet", "restore_deterministic_wallet", "create_wallet", "onshore", "offshore", "relay_tx", "transfer_split"];
+    let timeout = timeLessMethods.some((method ) => method === requestObject.method)? 0 : 4000;
+
     logInDevMode("send request to : " + this._fullUrl);
 
     if (requestObject.method === "mining_status") {
       return axios.post(
         `${this._host}:${this._port}/${requestObject.method}`,
-        requestObject.params, {timeout:3500}
+        requestObject.params, {timeout}
       );
     }
-    return axios.post(`${this._fullUrl}/json_rpc`, requestObject, {timeout: 3500});
+    return axios.post(`${this._fullUrl}/json_rpc`, requestObject, {timeout});
   }
 }

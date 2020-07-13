@@ -91,7 +91,7 @@ export class WalletRPCProcess extends DaemonProcess {
       const response = await this.rpcHandler.sendRequest(requestObject);
 
 
-      const setsDaemon = requestObject.method === "Set_daemon";
+      const setsDaemon = requestObject.method === "set_daemon";
 
       if (setsDaemon) {
         const { address } = requestObject.params;

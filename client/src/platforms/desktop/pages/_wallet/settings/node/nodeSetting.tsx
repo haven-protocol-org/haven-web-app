@@ -35,7 +35,7 @@ export interface NodeOption {
   localNode: boolean;
   node: NodeState;
   isConnected: ThreeState;
-  isSwitchingNode: boolean;
+  isRequestingSwitch: boolean;
   nodeOptions: NodeOption[];
   setHavenNode: (
     selectedNodeOption: NodeOption,
@@ -109,14 +109,16 @@ class NodeSettingComponent extends React.Component<
     let newState = {};
 
     // when we are connected to a daemon again lock
-    if (nextProps.isConnected === ThreeState.True && prevState.connected !== nextProps.isConnected) {
+    if (nextProps.isConnected !== ThreeState.False && prevState.connected !== nextProps.isConnected) {
       newState = { ...newState, locked: true };
+    }
 
+    if (nextProps.isConnected === ThreeState.True && prevState.connected !== nextProps.isConnected) {
       if (nextProps.node.address !== prevState.address) {
         const changes = {
           address: nextProps.node.address,
           selectedNodeOption: nextProps.nodeOptions.find(
-            (nodeOption) => nodeOption.address === nextProps.node.address
+              (nodeOption) => nodeOption.address === nextProps.node.address
           )!,
         };
         newState = { ...newState, ...changes };
@@ -132,20 +134,26 @@ class NodeSettingComponent extends React.Component<
 
   buttonLogic = () => {
     const { locked } = this.state;
-    const { isConnected, isSwitchingNode } = this.props;
+    const { isConnected, isRequestingSwitch } = this.props;
+
+    console.log("isConnected : ");
+    console.log(isConnected === ThreeState.Unset);
+
+    console.log("isRequestingSwitch : ");
+    console.log(isRequestingSwitch);
 
 
-
-    if (!locked ) {
-      return "Connect";
-    }
-    else if (locked  && isConnected === ThreeState.Unset) {
+    if (isConnected === ThreeState.Unset || isRequestingSwitch) {
       // Don't change this label as it's equality checked on child
       return "Loading";
     }
     else if (locked  && isConnected === ThreeState.True) {
       return "Connected";
-    } else {
+    }
+    else if (!locked) {
+      return "Connect";
+    }
+    else {
       return "Connect";
     }
   };
@@ -223,7 +231,7 @@ const mapStateToProps = (state: DesktopAppState) => ({
   node: state.havenNode,
   isRemoteSyncing: selectIsWalletSyncingRemote(state),
   isConnected: state.walletRPC.isConnectedToDaemon,
-  isSwitchingNode: state.walletRPC.isSwitchingNode,
+  isRequestingSwitch: state.walletRPC.isRequestingSwitch,
   localNode: selectisLocalNode(state.havenNode),
   nodeOptions: createNodeOptions(state.havenNode),
 });
