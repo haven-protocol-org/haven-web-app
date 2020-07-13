@@ -40,7 +40,7 @@ class Balances extends Component<BalanceProps, BalanceState> {
   };
 
   onClickNext() {
-    if (!selectIsOffshoreEnabled) {
+    if (!this.props.offshoreEnabled) {
       return;
     }
 
