@@ -95,6 +95,6 @@ export const MINING_STATUS_RESPONSE_FAILED = "mining_status_response";
 export const SELECT_FROM_TICKER = "select_from_ticker";
 export const SELECT_TO_TICKER = "select_to_ticker";
 
-export const SET_HAVEN_NODE_FETCH = "set_haven_node_fetch";
-export const SET_HAVEN_NODE_SUCCESS = "set_haven_node_success";
-export const SET_HAVEN_NODE_FAILED = "set_haven_node_failed";
+export const SET_NODE_FOR_WALLET_REQUESTED = "SET_NODE_FOR_WALLET_REQUESTED";
+export const SET_NODE_FOR_WALLET_SUCCESS = "SET_NODE_FOR_WALLET_SUCCESS";
+export const SET_NODE_FOR_WALLET_FAILED = "SET_NODE_FOR_WALLET_FAILED";

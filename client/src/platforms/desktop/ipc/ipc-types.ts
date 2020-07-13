@@ -1,4 +1,5 @@
 import { NodeLocation } from "platforms/desktop/types";
+import {ThreeState} from "shared/types/types";
 
 export enum CommunicationChannel {
   HAVEND = "havend",
@@ -19,7 +20,7 @@ export interface AVAILABLE_WALLETS {
 }
 
 export interface WalletState extends ProcessState {
-  isConnectedToDaemon: boolean;
+  isConnectedToDaemon: ThreeState;
   isSyncing: boolean;
   syncHeight: number;
   isReachable: boolean;

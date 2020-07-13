@@ -10,7 +10,7 @@ export enum CommunicationChannel {
 
 export interface WalletState extends ProcessState  {
 
-  isConnectedToDaemon: boolean;
+  isConnectedToDaemon: ThreeState;
   isSyncing: boolean;
   syncHeight: number;
   isReachable: boolean;
