@@ -17,17 +17,18 @@ import { NET } from "../../env";
 export const daemonConfigMainnet = {
   havend: {
     path: HAVEND_PATH_MAINNET,
-    daemonUrl: LOCAL_DAEMON_MAP.get(NET.Mainnet),
+    //daemonUrl: LOCAL_DAEMON_MAP.get(NET.Mainnet),
+    daemonUrl: 'http://remote.eu.havenprotocol.org:17750',
     port: HAVEND_STANDARD_PORT.Mainnet,
     args: {},
   },
   wallet: {
       path: WALLET_RPC_PATH_MAINNET,
-      daemonUrl: LOCAL_DAEMON_MAP.get(NET.Mainnet) ,
+      daemonUrl: 'http://remote.eu.havenprotocol.org:17750',
       port: 12345,
       args: {
           "max-log-file-size":100000,
-          "max-concurrency":3,
+          "daemon-address": "http://remote.eu.havenprotocol.org:17750",
           "max-log-files":2,
           "rpc-bind-port": 12345,
           "disable-rpc-login": "",
@@ -71,6 +72,8 @@ export const daemonConfigStagenet = {
     args: {
       stagenet: "",
       "add-priority-node": "seed01.stagenet.havenprotocol.org",
+      "offline":"",
+      "fixed-difficulty": 50
     },
   },
   wallet: {
