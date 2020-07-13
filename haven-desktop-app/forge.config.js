@@ -66,6 +66,9 @@ module.exports = {
             platforms: [
                 "darwin"
             ],
+            config: {
+                background:'./icons/dmg-bg.png'
+            }
         },
     {
         name: "@electron-forge/maker-zip",
