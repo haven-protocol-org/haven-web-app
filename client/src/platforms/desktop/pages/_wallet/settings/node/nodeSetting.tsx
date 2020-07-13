@@ -109,13 +109,10 @@ class NodeSettingComponent extends React.Component<
     let newState = {};
 
 
-    console.log(nextProps.node.address);
-
-
-    const isConnectedOrTryingToConnect = nextProps.isConnected !== ThreeState.False && prevState.connected !== nextProps.isConnected;
+    const isConnectedOrTryingToConnectAgain = nextProps.isConnected !== ThreeState.False && prevState.connected !== nextProps.isConnected;
 
     // when we are connected to a daemon or trying to connect  --> again lock
-    if (isConnectedOrTryingToConnect) {
+    if (isConnectedOrTryingToConnectAgain) {
       newState = { ...newState, locked: true };
     }
 
@@ -123,21 +120,28 @@ class NodeSettingComponent extends React.Component<
       newState = { ...newState, connected: nextProps.isConnected };
     }
 
-
-
-    if (nextProps.isRequestingSwitch === false && isConnectedOrTryingToConnect) {
+    if (isConnectedOrTryingToConnectAgain) {
 
       if (nextProps.node.address !== prevState.address) {
         const changes = {
           address: nextProps.node.address,
-          selectedNodeOption: nextProps.nodeOptions.find(
-              (nodeOption) => nodeOption.address === nextProps.node.address
-          )!,
+          port: nextProps.node.port
         };
-        newState = { ...newState, ...changes };
+        newState = {...newState, ...changes};
       }
     }
 
+    if (isConnectedOrTryingToConnectAgain) {
+      if (prevState.selectedNodeOption.address !== nextProps.node.address) {
+        const changes  = {
+
+        selectedNodeOption: nextProps.nodeOptions.find(
+            (nodeOption) => nodeOption.address === nextProps.node.address
+        )!,
+      };
+        newState = { ...newState, ...changes };
+      }
+    }
     return newState;
   }
 
@@ -204,7 +208,7 @@ class NodeSettingComponent extends React.Component<
 
           <Container>
             <Information>
-              {this.props.isConnected === ThreeState.True? 'Vault is connected to a '
+              {this.props.isConnected === ThreeState.True? 'Vault is connected to '
                   : this.props.isConnected === ThreeState.Unset? 'Vault is trying to connect to '
                       : 'Vault is not connected to '}
               <strong>{this.props.node.address}</strong>. Change

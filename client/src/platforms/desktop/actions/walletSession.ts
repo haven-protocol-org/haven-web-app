@@ -13,7 +13,7 @@ import {isDevMode} from "constants/env";
 export const closeWallet = () => {
   return (dispatch: any) => {
 
-
+/*
     if (isDevMode()) {
       storeWalletRPC()
           .catch((e) => addErrorNotification("wallet state could not be stored"))
@@ -23,10 +23,14 @@ export const closeWallet = () => {
 
       return;
     }
+    */
 
 
-    storeWalletRPC().catch((e) =>
-      addErrorNotification("wallet state could not be stored"))
+    storeWalletRPC()
+        .catch((e) => {
+              dispatch(addErrorNotification("wallet is busy, you cannot logout in the moment"));
+              return true;
+          })
         .then( () =>  closeWalletRPC())
         .then(() => dispatch(closeWalletSucceed()))
         .catch((err) => dispatch(addErrorNotification('wallet is busy, you cannot logout in the moment')))
