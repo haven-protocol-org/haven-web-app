@@ -7,7 +7,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding-bottom: 12px;
-  grid-column: ${props => (props.width ? "1 / 3" : null)};
+  grid-column: ${(props) => (props.width ? "1 / 3" : null)};
 
   ${media.mobile`
     grid-column: 1 / 3;
@@ -17,8 +17,8 @@ export const Container = styled.div`
 export const Select = styled.div`
   position: relative;
   display: inline-block;
-  background: ${props => props.theme.input.input_background};
-  border: 1px solid ${props => props.theme.input.input_border};
+  background: ${(props) => props.theme.input.input_background};
+  border: 1px solid ${(props) => props.theme.input.input_border};
   border-radius: 4px;
   grid-column: 1 / 3;
 
@@ -46,8 +46,8 @@ export const Wrapper = styled.ul`
   border-radius: 4px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
-  background: ${props => props.theme.input.input_background};
-  border: 1px solid ${props => props.theme.input.input_border};
+  background: ${(props) => props.theme.input.input_background};
+  border: 1px solid ${(props) => props.theme.input.input_border};
   overflow: auto;
 `;
 
@@ -63,17 +63,17 @@ export const Item = styled.li`
   padding: 16px;
   margin-left: -40px;
   width: calc(100% + 8px);
-  border-bottom: 1px solid ${props => props.theme.input.input_border};
+  border-bottom: 1px solid ${(props) => props.theme.input.input_border};
   font-family: Inter-Regular;
   font-size: 16px;
   line-height: 26px;
-  color: ${props => props.theme.input.input_value};
+  color: ${(props) => props.theme.input.input_value};
   font-weight: regular;
   cursor: pointer;
 
   &:hover {
     cursor: pointer;
-    background: ${props => props.theme.input.input_foreground};
+    background: ${(props) => props.theme.input.input_foreground};
   }
 
   &:last-child {
@@ -87,28 +87,32 @@ export const Row = styled.div`
 `;
 
 export const Ticker = styled.div`
-  color: ${props => props.theme.type.secondary};
+  color: ${(props) => props.theme.type.secondary};
   margin-left: 12px;
 `;
 
 export const Name = styled.div`
-  color: ${props => props.theme.input.input_value};
+  color: ${(props) => props.theme.input.input_value};
 `;
 
 export const Button = styled.button`
     width: 100%;
     height: auto;
-    background: ${props => props.theme.input.input_background};
+    background: ${(props) => props.theme.input.input_background};
     outline: none;
     grid-column: 1 / 3;
     padding: 20px;
     border-radius: 3px;
     font-size: 16px;
-    color: ${props => props.theme.input.input_value};
+    color: ${(props) => props.theme.input.input_value};
     display: flex;
     align-items: flex-start;
     border: none;
     cursor: pointer;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
 
 
 
@@ -118,7 +122,7 @@ export const Button = styled.button`
     width: 0px;
     height: 0px;
     border: 7px solid;
-    border-color: ${props =>
+    border-color: ${(props) =>
       props.theme.input.input_select} transparent transparent transparent;
     right: 16px;
     top: 24px;

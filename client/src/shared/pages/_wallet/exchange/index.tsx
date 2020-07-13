@@ -319,6 +319,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 value={fromAsset ? fromAsset.name : "Select Asset"}
                 options={assetOptions}
                 onClick={this.setFromAsset}
+                disabled={!this.props.offshoreEnabled}
               />
               <Input
                 // @ts-ignore
@@ -331,7 +332,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 placeholder="Enter amount"
                 type="number"
                 name="fromAmount"
-                disabled={!hasLatestXRate}
+                disabled={!this.props.offshoreEnabled}
                 value={fromAmount}
                 onChange={this.onEnterFromAmount}
                 error={
@@ -347,6 +348,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 ticker={toTicker}
                 options={assetOptions}
                 onClick={this.setToAsset}
+                disabled={!this.props.offshoreEnabled}
               />
               <Input
                 // @ts-ignore
@@ -357,7 +359,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                     : "")
                 }
                 placeholder="Enter amount"
-                disabled={!hasLatestXRate}
+                disabled={!this.props.offshoreEnabled}
                 name="toAmount"
                 type="number"
                 value={toAmount}
@@ -375,6 +377,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                     ticker={selectedPrio.ticker}
                     options={exchangePrioOptions}
                     onClick={this.setExchangePriority}
+                    disabled={!this.props.offshoreEnabled}
                   />
                   <Input
                     label="Exchange Address (Optional)"
@@ -382,7 +385,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                     name="externAddress"
                     type="text"
                     value={externAddress}
-                    disabled={!hasLatestXRate}
+                    disabled={!this.props.offshoreEnabled}
                     onChange={this.onEnterExternAddress}
                   />
                 </Fragment>

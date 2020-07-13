@@ -9,17 +9,17 @@ import {
   Labels,
   Ticker,
   Name,
-  Row
+  Row,
 } from "./styles";
 import { Label, Error } from "../../../../assets/styles/type.js";
 
 class Dropdown extends React.Component {
   state = {
     displayMenu: false,
-    selected: this.props.placeholder
+    selected: this.props.placeholder,
   };
 
-  showDropdownMenu = event => {
+  showDropdownMenu = (event) => {
     event.preventDefault();
     this.setState({ displayMenu: true }, () => {
       document.addEventListener("click", this.hideDropdownMenu);
@@ -34,7 +34,7 @@ class Dropdown extends React.Component {
 
   renderOptions = () => {
     const { onClick, options } = this.props;
-    return options.map(option => {
+    return options.map((option) => {
       const { name, ticker } = option;
       return (
         <Item key={name} onClick={() => onClick(option)}>
@@ -49,7 +49,15 @@ class Dropdown extends React.Component {
 
   render() {
     const { displayMenu } = this.state;
-    const { label, error, placeholder, value, ticker, width } = this.props;
+    const {
+      label,
+      error,
+      placeholder,
+      value,
+      ticker,
+      width,
+      disabled,
+    } = this.props;
 
     return (
       <Container width={width}>
@@ -58,7 +66,7 @@ class Dropdown extends React.Component {
           <Error>{error}</Error>
         </Labels>
         <Select>
-          <Button onClick={this.showDropdownMenu}>
+          <Button disabled={disabled} onClick={this.showDropdownMenu}>
             {value === "Select Asset" ? (
               placeholder
             ) : (
