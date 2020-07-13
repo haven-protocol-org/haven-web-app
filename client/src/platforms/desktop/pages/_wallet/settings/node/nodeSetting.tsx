@@ -108,12 +108,25 @@ class NodeSettingComponent extends React.Component<
   ) {
     let newState = {};
 
-    // when we are connected to a daemon again lock
-    if (nextProps.isConnected !== ThreeState.False && prevState.connected !== nextProps.isConnected) {
+
+    console.log(nextProps.node.address);
+
+
+    const isConnectedOrTryingToConnect = nextProps.isConnected !== ThreeState.False && prevState.connected !== nextProps.isConnected;
+
+    // when we are connected to a daemon or trying to connect  --> again lock
+    if (isConnectedOrTryingToConnect) {
       newState = { ...newState, locked: true };
     }
 
-    if (nextProps.isConnected === ThreeState.True && prevState.connected !== nextProps.isConnected) {
+    if (nextProps.isConnected !== prevState.connected) {
+      newState = { ...newState, connected: nextProps.isConnected };
+    }
+
+
+
+    if (nextProps.isRequestingSwitch === false && isConnectedOrTryingToConnect) {
+
       if (nextProps.node.address !== prevState.address) {
         const changes = {
           address: nextProps.node.address,
@@ -125,23 +138,12 @@ class NodeSettingComponent extends React.Component<
       }
     }
 
-    if (nextProps.isConnected !== prevState.connected) {
-      newState = { ...newState, connected: nextProps.isConnected };
-    }
-
     return newState;
   }
 
   buttonLogic = () => {
     const { locked } = this.state;
     const { isConnected, isRequestingSwitch } = this.props;
-
-    console.log("isConnected : ");
-    console.log(isConnected === ThreeState.Unset);
-
-    console.log("isRequestingSwitch : ");
-    console.log(isRequestingSwitch);
-
 
     if (isConnected === ThreeState.Unset || isRequestingSwitch) {
       // Don't change this label as it's equality checked on child
