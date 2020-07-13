@@ -38,10 +38,6 @@ export const ExchangeSummary = ({
               (toAmount && !isNaN(toAmount) ? toAmount : "0")}
           </Value>
         </Row>
-        <Row>
-          <Key>Transaction Fee</Key>
-          <Value>{fee}</Value>
-        </Row>
       </Container>
     </>
   );

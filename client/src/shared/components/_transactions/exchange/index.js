@@ -16,17 +16,14 @@ const Transaction = ({
   checked,
   onChange,
 }) => {
+  // ####  Add in the fromAmount ####
+  const first = externAddress.substring(0, 4);
+  const last = externAddress.substring(externAddress.length - 4);
+  const truncatedAddress = first + "...." + last;
+
   return (
     <Fragment>
       <Container>
-        <Row>
-          <Key>Conversion Rate</Key>
-          <Value>
-            {xRate && fromTicker && toTicker
-              ? `1 ${fromTicker} =  ${xRate.toFixed(4)} ${toTicker}`
-              : "Syncing..."}
-          </Value>
-        </Row>
         <Row>
           <Key>From Asset</Key>
           <Value>
@@ -46,18 +43,16 @@ const Transaction = ({
         {externAddress && (
           <Row>
             <Key>Exchange To</Key>
-            <Value>{externAddress}</Value>
+            <Value>{truncatedAddress}</Value>
           </Row>
         )}
         <Row>
-          <Key>Priority ({"Medium"}) </Key>
-          <Value>{"Unlocks ~2 hours"}</Value>
+          <Key>Exchange Priority</Key>
+          <Value>{"**REPLACE**"}</Value>
         </Row>
         <Row>
-          <Key>Transaction Fee (${"0.02 USD"})</Key>
-          <Value>
-            {"0.1234"} {"XHV"}
-          </Value>
+          <Key>Transaction Fee</Key>
+          <Value>{"**REPLACE**"}</Value>
         </Row>
         <Confirm
           description="I have reviewed my Exchange and accept the transaction fee"
