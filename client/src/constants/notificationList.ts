@@ -183,7 +183,7 @@ export const notificationList = [
   {
     key: "",
     code: -23,
-    message: "Sorry, your Vaults directory can't be found.",
+    message: "Sorry, your Vault directory can't be found.",
     type: NotificationType.ERROR,
     description: "WALLET_RPC_ERROR_CODE_NO_WALLET_DIR",
   },
