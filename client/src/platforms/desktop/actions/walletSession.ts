@@ -8,12 +8,11 @@ import { closeWalletRPC, openWalletRPC, storeWalletRPC } from "../ipc/rpc/rpc";
 import { CLOSE_WALLET } from "shared/actions/types";
 import { requestSavedWalletsIPC } from "../ipc/misc";
 import { addErrorNotification } from "shared/actions/notification";
-import {isDevMode} from "constants/env";
+import { isDevMode } from "constants/env";
 
 export const closeWallet = () => {
   return (dispatch: any) => {
-
-/*
+    /*
     if (isDevMode()) {
       storeWalletRPC()
           .catch((e) => addErrorNotification("wallet state could not be stored"))
@@ -25,15 +24,24 @@ export const closeWallet = () => {
     }
     */
 
-
     storeWalletRPC()
-        .catch((e) => {
-              dispatch(addErrorNotification("wallet is busy, you cannot logout in the moment"));
-              return true;
-          })
-        .then( () =>  closeWalletRPC())
-        .then(() => dispatch(closeWalletSucceed()))
-        .catch((err) => dispatch(addErrorNotification('wallet is busy, you cannot logout in the moment')))
+      .catch((e) => {
+        dispatch(
+          addErrorNotification(
+            "Vault is busy, and can't logout right now. Please wait a moment."
+          )
+        );
+        return true;
+      })
+      .then(() => closeWalletRPC())
+      .then(() => dispatch(closeWalletSucceed()))
+      .catch((err) =>
+        dispatch(
+          addErrorNotification(
+            "Vault is busy, and can't logout right now. Please wait a moment."
+          )
+        )
+      );
   };
 };
 
