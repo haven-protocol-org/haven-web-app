@@ -29,7 +29,7 @@ const Transaction = ({
           <Value>
             {(fromTicker ? fromTicker : "") +
               " " +
-              (fromAmount && !isNaN(fromAmount) ? fromAmount : "--")}
+              (fromAmount && !isNaN(fromAmount) ? fromAmount : "**REPLACE**")}
           </Value>
         </Row>
         <Row>

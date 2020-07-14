@@ -20,10 +20,9 @@ import TransferSummary from "shared/components/_summaries/transfer-summary";
 const xhvOption = { name: "Haven", ticker: Ticker.XHV };
 const xUSDOption = { name: "United States Dollar", ticker: Ticker.xUSD };
 
-
-
 interface TransferOption {
-  name: string, ticker: Ticker
+  name: string;
+  ticker: Ticker;
 }
 
 interface TransferOwnProps {
@@ -34,7 +33,6 @@ interface TransferOwnProps {
     ticker: Ticker
   ) => void;
   isProcessing: boolean;
-
 }
 
 interface TransferReduxProps {
@@ -135,6 +133,42 @@ class TransferContainer extends Component<TransferProps, TransferState> {
     }
   };
 
+  paymentIdIsValid = () => {
+    const regexp = new RegExp(/^[0-9a-fA-F]+$/);
+
+    const { payment_id } = this.state;
+    const length = payment_id.length;
+
+    if (
+      (regexp.test(payment_id) && payment_id.length === 64) ||
+      payment_id === ""
+    ) {
+      return "";
+    } else {
+      return "Enter a valid Payment ID";
+    }
+  };
+
+  amountIsValid = (availableBalance: any) => {
+    if (this.state.send_amount > availableBalance) {
+      return "Not enough funds";
+    } else {
+      return "";
+    }
+  };
+
+  // @ts-ignore
+  recipientIsValid = () => {
+    const recipient = this.state.recipient_address;
+    if (recipient.length === 99) {
+      return "";
+    } else if (recipient === "") {
+      return "";
+    } else {
+      return "Enter a valid address";
+    }
+  };
+
   render() {
     const {
       selectedAsset,
@@ -176,7 +210,8 @@ class TransferContainer extends Component<TransferProps, TransferState> {
             }
             placeholder="Enter amount"
             type="number"
-            error={this.state.amountError}
+            // @ts-ignore
+            error={this.amountIsValid(availableBalance)}
             name="send_amount"
             value={send_amount}
             onChange={this.handleChange}
@@ -191,6 +226,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
                 width={true}
                 rows={windowWidth < 600 ? "3" : "2"}
                 onChange={this.handleChange}
+                error={this.recipientIsValid()}
               />
               <Input
                 label="Payment ID (Optional)"
@@ -200,6 +236,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
                 width={true}
                 value={payment_id}
                 onChange={this.handleChange}
+                error={this.paymentIdIsValid()}
               />
             </Fragment>
           ) : (
@@ -212,6 +249,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
                 name="recipient_address"
                 value={recipient_address}
                 onChange={this.handleChange}
+                error={this.recipientIsValid()}
               />
               <Input
                 label="Payment ID (Optional) "
@@ -221,6 +259,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
                 name="payment_id"
                 value={payment_id}
                 onChange={this.handleChange}
+                error={this.paymentIdIsValid()}
               />
             </Fragment>
           )}
@@ -253,7 +292,9 @@ const mapStateToProps = (
 ): TransferReduxProps => ({
   xBalances: state.xBalance,
   offshoreEnabled: selectIsOffshoreEnabled(state),
-  options: selectIsOffshoreEnabled(state)? [xhvOption, xUSDOption] : [xhvOption]
+  options: selectIsOffshoreEnabled(state)
+    ? [xhvOption, xUSDOption]
+    : [xhvOption],
 });
 
 export const SendFunds = connect<TransferReduxProps, {}, TransferOwnProps>(
