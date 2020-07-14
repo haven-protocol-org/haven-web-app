@@ -49,6 +49,11 @@ export const refresh = () => {
 export const updateApp = () => {
   return (dispatch: any, getState: () => DesktopAppState) => {
     //if we sync via remote node, wallet-rpc will be blocked
+
+    if (!selectIsOffshoreEnabled(getState())){
+      dispatch(getExchangeRates());
+    }
+
     if (selectIsWalletSyncingRemote(getState())) {
       dispatch(getNodeInfo());
       return;
