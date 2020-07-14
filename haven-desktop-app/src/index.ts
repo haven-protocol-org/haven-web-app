@@ -1,11 +1,11 @@
 import { shell, app, BrowserWindow, Menu } from "electron";
 import * as path from "path";
 import { devServerStarted } from "./dev";
-import { HavenWallet} from "./HavenWallet";
+import { HavenWallet } from "./HavenWallet";
 import { BrowserWindowConstructorOptions } from "electron";
 import { isDevMode } from "./env";
 import { havenMenu } from "./menu";
-import {appEventBus, DAEMONS_STOPPED_EVENT} from "./EventBus";
+import { appEventBus, DAEMONS_STOPPED_EVENT } from "./EventBus";
 
 const wallet = new HavenWallet();
 
@@ -32,7 +32,7 @@ const startApp = () => {
   };
 
   browserOptions.webPreferences = {
-    contextIsolation:true,
+    contextIsolation: true,
     enableRemoteModule: false,
     nodeIntegration: false,
     preload: path.join(__dirname, "../sites/preload/preload.js"),
@@ -49,7 +49,9 @@ const startApp = () => {
       if (hasStarted) {
         mainWindow.loadURL("http://localhost:3000");
       } else {
-        mainWindow.loadURL(path.join(`file://${__dirname}`, "../sites/dev/index.html"));
+        mainWindow.loadURL(
+          path.join(`file://${__dirname}`, "../sites/dev/index.html")
+        );
       }
     });
   } else {
@@ -95,13 +97,12 @@ app.on("will-quit", (event) => {
 app.on("window-all-closed", () => {
   app.quit();
 });
-app.on('web-contents-created', (event, contents) => {
-  contents.on('new-window', async (event, navigationUrl) => {
-
+app.on("web-contents-created", (event, contents) => {
+  contents.on("new-window", async (event, navigationUrl) => {
     event.preventDefault();
 
-    await shell.openExternal(navigationUrl)
-  })
+    await shell.openExternal(navigationUrl);
+  });
 });
 
 const onAppQuit = () => {

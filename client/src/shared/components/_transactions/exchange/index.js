@@ -13,8 +13,8 @@ const Transaction = ({
   toTicker,
   fee,
   externAddress,
-  checked,
   onChange,
+  checked,
 }) => {
   // ####  Add in the fromAmount ####
   const first = externAddress.substring(0, 4);
@@ -29,7 +29,7 @@ const Transaction = ({
           <Value>
             {(fromTicker ? fromTicker : "") +
               " " +
-              (fromAmount && !isNaN(fromAmount) ? fromAmount : "--")}
+              (fromAmount && !isNaN(fromAmount) ? fromAmount : "**REPLACE**")}
           </Value>
         </Row>
         <Row>

@@ -1,6 +1,5 @@
 import { AnyAction } from "redux";
 import { UPDATE_HAVEN_FEATURES } from "shared/actions/types";
-import { isDesktop, isMainnet } from "constants/env";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { WebAppState } from "platforms/web/reducers";
 

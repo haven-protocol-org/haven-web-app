@@ -249,15 +249,48 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
   validateExchange = () => {
     const { fromAmount, toAmount } = this.state;
     const { hasLatestXRate } = this.props;
+    const { offshoreEnabled } = this.props;
     const fromAmountValid = fromAmount !== "";
     const toAmountValid = toAmount !== "";
 
-    if (fromAmountValid && toAmountValid && hasLatestXRate) {
+    if (fromAmountValid && toAmountValid && hasLatestXRate && offshoreEnabled) {
       // If valid then make this 'false' so the footer is enabled
+
       return !true;
     } else {
       // If invalid then make this 'true' so the footer is disabled
       return !false;
+    }
+  };
+
+  toAmountIsValid = (availableBalance: any) => {
+    const { toAmount } = this.state;
+    //@ts-ignore
+    if (toAmount > availableBalance) {
+      return "Not enough funds";
+    } else {
+      return "";
+    }
+  };
+
+  fromAmountIsValid = (availableBalance: any) => {
+    const { fromAmount } = this.state;
+    //@ts-ignore
+    if (fromAmount > availableBalance) {
+      return "Not enough funds";
+    } else {
+      return "";
+    }
+  };
+
+  recipientIsValid = () => {
+    const { externAddress } = this.state;
+    if (externAddress.length === 99) {
+      return "";
+    } else if (externAddress === "") {
+      return "";
+    } else {
+      return "Enter a valid address";
     }
   };
 
@@ -322,7 +355,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 label={
                   "From Amount " +
                   (availBalance !== NO_BALANCE
-                    ? `(Avail. Balance: ${availBalance})`
+                    ? `(Avail: ${availBalance})`
                     : "")
                 }
                 placeholder="Enter amount"
@@ -331,9 +364,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 disabled={!this.props.offshoreEnabled}
                 value={fromAmount}
                 onChange={this.onEnterFromAmount}
-                error={
-                  fromTicker === null ? "Please select an asset first" : ""
-                }
+                error={this.fromAmountIsValid(availBalance)}
                 readOnly={fromTicker === null}
               />
               <Dropdown
@@ -350,9 +381,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 // @ts-ignore
                 label={
                   "To Amount " +
-                  (toBalance !== NO_BALANCE
-                    ? `(Avail. Balance: ${toBalance})`
-                    : "")
+                  (toBalance !== NO_BALANCE ? `(Avail: ${toBalance})` : "")
                 }
                 placeholder="Enter amount"
                 disabled={!this.props.offshoreEnabled}
@@ -383,6 +412,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                     value={externAddress}
                     disabled={!this.props.offshoreEnabled}
                     onChange={this.onEnterExternAddress}
+                    error={this.recipientIsValid()}
                   />
                 </Fragment>
               )}

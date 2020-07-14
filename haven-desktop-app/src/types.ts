@@ -1,37 +1,31 @@
-import {NET} from "./env";
+import { NET } from "./env";
 
 export enum CommunicationChannel {
   HAVEND = "havend",
   WALLET_RPC = "wallet-rpc",
-  RPC="rpc",
+  RPC = "rpc",
   STORED_WALLETS = "wallets",
-  SWITCH_NET = "switch_net"
+  SWITCH_NET = "switch_net",
 }
 
-export interface WalletState extends ProcessState  {
-
+export interface WalletState extends ProcessState {
   isConnectedToDaemon: ThreeState;
   isSyncing: boolean;
   syncHeight: number;
   isReachable: boolean;
-
 }
 
 export interface HavendState extends ProcessState {
-
   isReachable: boolean;
   location: NodeLocation;
   address: string;
-
 }
 
-
-export interface ProcessState  {
+export interface ProcessState {
   isRunning: boolean;
   code?: number;
   signal?: string;
-};
-
+}
 
 export interface IDaemonConfig {
   path: string;
@@ -41,32 +35,30 @@ export interface IDaemonConfig {
 }
 
 export enum NodeLocation {
-  Local="Local",
-  Remote="Remote",
-  None="None"
+  Local = "Local",
+  Remote = "Remote",
+  None = "None",
 }
 
 export enum ThreeState {
-  True, False, Unset
+  True,
+  False,
+  Unset,
 }
 
-
-
-
-export type DaemonType = 'havend' | 'wallet';
+export type DaemonType = "havend" | "wallet";
 
 export type IConfig = {
-
-  [NET.Mainnet] : {
-    havend:IDaemonConfig;
+  [NET.Mainnet]: {
+    havend: IDaemonConfig;
     wallet: IDaemonConfig;
-  }
-  [NET.Testnet] : {
-    havend:IDaemonConfig;
+  };
+  [NET.Testnet]: {
+    havend: IDaemonConfig;
     wallet: IDaemonConfig;
-  }
-  [NET.Stagenet] : {
-    havend:IDaemonConfig;
+  };
+  [NET.Stagenet]: {
+    havend: IDaemonConfig;
     wallet: IDaemonConfig;
-  }
-}
+  };
+};

@@ -25,8 +25,6 @@ const PRIVATE_SPEND_KEY = "spend_key";
 const PUBLIC_VIEW_KEY = "public_view_key";
 const PUBLIC_SPEND_KEY = "public_spend_key";
 
-
-
 export const showKey = (key: KeyType) => {
   switch (key) {
     case KeyType.MNEMONIC:

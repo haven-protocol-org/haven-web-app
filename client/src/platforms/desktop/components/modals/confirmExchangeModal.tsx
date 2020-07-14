@@ -53,10 +53,10 @@ class ConfirmExchangeModal extends React.Component<
         description="Please review and confirm your transaction"
         leftButton="Cancel"
         rightButton="Confirm"
+        disabled={!this.state.checked}
         isLoading={this.state.loading}
         onCancel={() => this.onCancel()}
         onConfirm={() => this.onConfirm()}
-        disabled={false}
       >
         <Transaction
           xRate={1}
