@@ -31,12 +31,14 @@ interface BalanceProps {
 interface BalanceState {
   currentTicker: Ticker | null;
   currentIndex: number;
+  tickerOptions: Array<Ticker | null>;
 }
 
 class Balances extends Component<BalanceProps, BalanceState> {
   state: BalanceState = {
     currentIndex: 0,
     currentTicker: this.props.offshoreEnabled ? OFFSHORE_TICKERS[0] : Ticker.XHV,
+    tickerOptions: this.props.offshoreEnabled ? OFFSHORE_TICKERS : [Ticker.XHV]
   };
 
   onClickNext() {
@@ -54,6 +56,19 @@ class Balances extends Component<BalanceProps, BalanceState> {
       currentIndex: nextIndex,
       currentTicker: OFFSHORE_TICKERS[nextIndex] as Ticker,
     });
+  }
+
+  static getDerivedStateFromProps(nextProps: Readonly<BalanceProps>, prevState: Readonly<BalanceState>): any | null {
+
+    if (nextProps.offshoreEnabled && prevState.tickerOptions.length === 1) {
+      return {
+        tickerOptions: OFFSHORE_TICKERS,
+        currentTicker: OFFSHORE_TICKERS[0]
+      } as Partial<BalanceState>
+    }
+
+    return null;
+
   }
 
   render() {

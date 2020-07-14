@@ -16,6 +16,9 @@ import {
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { getLastBlockHeader } from "platforms/desktop/actions/blockHeaderExchangeRate";
 import { selectIsOffshoreEnabled } from "shared/reducers/havenFeature";
+import { getExchangeRates } from "shared/actions/exchangeRates";
+import { updateHavenFeatures } from "shared/actions/havenFeature";
+import { isDevMode } from "../../../constants/env";
 
 interface NodeInfoHeights {
   nodeHeight: number;
@@ -37,6 +40,7 @@ export const getNodeInfo = () => {
             dispatch(getLastBlockHeader());
           }
         }
+        dispatch(updateHavenFeatures(nodeInfoHeights.chainHeight));
         dispatch(getNodeInfoSucceed(nodeInfoHeights));
       })
       .catch((err: any) => dispatch(getNodeInfoFailed(err)));

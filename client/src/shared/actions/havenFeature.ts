@@ -6,6 +6,10 @@ export const PRICE_RECORDS_IN_HEADER_HEIGHT: number = 640640;
 export const OFFSHORE_START_HEIGHT: number =  640650;
 
 
+export const PRICE_RECORDS_IN_HEADER_HEIGHT_STAGENET: number = 640640;
+export const OFFSHORE_START_HEIGHT_STAGENET: number =  135;
+
+
 
 export const updateHavenFeatures = (height: number) => {
 
