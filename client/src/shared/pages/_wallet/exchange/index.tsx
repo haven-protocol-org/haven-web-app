@@ -46,7 +46,6 @@ enum ExchangeTab {
 type ExchangeProps = {
   conversionRates: XRates | null;
   nodeHeight: number;
-  getLastBlockHeader: () => void;
   showModal: (modalTyoe: MODAL_TYPE) => void;
   createExchange: typeof createExchange;
   isProcessingExchange: boolean;
@@ -109,7 +108,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
 
   componentDidMount() {
     window.scrollTo(0, 0);
-    this.props.getLastBlockHeader();
   }
 
   componentDidUpdate(
@@ -468,7 +466,6 @@ const mapStateToProps = (state: DesktopAppState) => ({
 });
 
 export const ExchangePage = connect(mapStateToProps, {
-  getLastBlockHeader,
   createExchange,
   setToTicker,
   setFromTicker,
