@@ -361,7 +361,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 label={
                   "From Amount " +
                   (availBalance !== NO_BALANCE
-                    ? `(Balance: ${availBalance})`
+                    ? `(Avail: ${availBalance})`
                     : "")
                 }
                 placeholder="Enter amount"
