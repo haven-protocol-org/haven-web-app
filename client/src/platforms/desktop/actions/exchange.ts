@@ -71,7 +71,7 @@ export function exchange(
     const exchangeRPCFN = isOffshore ? offshoreRPC : onshoreRPC;
     exchangeRPCFN(params)
       .then((result: any) => {
-        dispatch(onExchangeSucceed(result));
+        dispatch(onExchangeSucceed());
         dispatch(
           addExchangeSucceedMessage(
             fromTicker!,
@@ -125,7 +125,7 @@ export function createExchange(
 
     const params = createExchangeInputs(fromAmount, priority, address);
 
-    dispatch(onExchangeCreationFetch({ priority, exchangeType } as Partial<ExchangeProcessInfo>));
+    dispatch(onExchangeCreationFetch({ priority, exchangeType, address } as Partial<ExchangeProcessInfo>));
 
     const exchangeRPCFN = exchangeType === ExchangeType.Offshore ? offshoreRPC : onshoreRPC;
     exchangeRPCFN(params)
@@ -159,18 +159,19 @@ const parseExchangeResonse = (exchangeResponse: RPCExchangeResponse, exchangeTyp
   fee = exchangeResponse.fee_list.reduce ( (acc: bigint, value: number) => acc +BigInt(value), BigInt(0));
 
 
-  return {fromAmount, toAmount, fee};
+  return {fromAmount, toAmount, fee, metaList: exchangeResponse.tx_metadata_list};
 }
 
-export const confirmExchange = (hex: string) => {
+export const confirmExchange = (metaList: Array<string>) => {
   return (dispatch: any, getState: () => DesktopAppState) => {
-    const params = { hex };
 
     dispatch(onExchangeFetch());
 
-    relayTXRPC(params)
+    const promises = metaList.map( (hex) => relayTXRPC({hex}) );
+
+    Promise.allSettled(promises)
       .then((result: any) => {
-        dispatch(onExchangeSucceed(result));
+        dispatch(onExchangeSucceed());
 
         const {
           fromAmount,
@@ -224,8 +225,8 @@ const onExchangeCreationFetch = (payload: Partial<ExchangeProcessInfo>) => {
   return { type: EXCHANGE_CREATION_FETCHING, payload };
 };
 
-const onExchangeSucceed = (payload: any) => {
-  return { type: EXCHANGE_SUCCEED, payload };
+const onExchangeSucceed = () => {
+  return { type: EXCHANGE_SUCCEED };
 };
 
 const onExchangeFailed = (error: any) => {

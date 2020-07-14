@@ -25,6 +25,7 @@ import { hideModal, showModal } from "shared/actions/modal";
 import { MODAL_TYPE } from "shared/reducers/modal";
 import { getTransfers } from "platforms/desktop/actions/transferHistory";
 import { getBalance } from "platforms/desktop/actions/balance";
+import {TxProcessInfo} from "platforms/desktop/reducers/transferProcess";
 
 export const transfer = (
   address: string,
@@ -46,7 +47,7 @@ export const transfer = (
 
     transferFN(params)
       .then((result) => {
-        dispatch(transferSucceed(result));
+        dispatch(transferSucceed());
         dispatch(addNotificationByKey(TRANSFER_SUCCEED_MESSAGE));
 
         dispatch(getTransfers());
@@ -78,10 +79,10 @@ export const createTransfer = (
         const { amount_list, fee_list, tx_metadata_list } = result;
 
         const reduxParams = {
-          fee: fee_list[0],
-          fromAmount: amount_list[0],
-          metaData: tx_metadata_list[0],
-        };
+          fee: fee_list.reduce( (acc: number, value: number) => acc + value,0 ),
+          fromAmount: amount_list.reduce( (acc: number, value: number) => acc + value,0 ),
+          metaList: tx_metadata_list,
+        } as Partial<TxProcessInfo>;
 
         dispatch(transferCreationSucceed(reduxParams));
         dispatch(showModal(MODAL_TYPE.ConfirmTx));
@@ -90,15 +91,15 @@ export const createTransfer = (
   };
 };
 
-export const confirmTransfer = (hex: string) => {
+export const confirmTransfer = (metaList: Array<string>) => {
   return (dispatch: any) => {
     dispatch(transferFetch());
 
-    const params = { hex };
+    const promises = metaList.map( (hex) => relayTXRPC({hex}) );
 
-    relayTXRPC(params)
-      .then((result) => {
-        dispatch(transferSucceed(result));
+    Promise.allSettled(promises)
+      .then(() => {
+        dispatch(transferSucceed());
         dispatch(addNotificationByKey(TRANSFER_SUCCEED_MESSAGE));
         dispatch(getOffshoreBalance());
         dispatch(getTransfers());
@@ -128,9 +129,8 @@ const transferFetch = () => ({
   type: TRANSFER_FETCHING,
   payload: { isFetching: true },
 });
-const transferSucceed = (result: object) => ({
-  type: TRANSFER_SUCCEED,
-  payload: { ...result, isFetching: false },
+const transferSucceed = () => ({
+  type: TRANSFER_SUCCEED
 });
 
 const transferFailed = (error: any) => ({

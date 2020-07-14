@@ -37,7 +37,7 @@ const INITIAL_STATE: ExchangeProcessInfo = {
   exchangeType: null,
   toTicker: Ticker.xUSD,
   fromTicker: Ticker.XHV,
-  metaData: "",
+  metaList: [],
 };
 
 export const exchangeProcess = (

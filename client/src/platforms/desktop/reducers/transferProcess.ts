@@ -20,7 +20,7 @@ export interface TxProcessInfo {
   error: string;
   succeed: boolean;
   created: boolean;
-  metaData: string;
+  metaList: Array<string>;
   paymentId?: string;
   priority?: number;
   fromTicker: Ticker | null;
@@ -35,7 +35,7 @@ const INITIAL_STATE: TxProcessInfo = {
   error: "",
   succeed: false,
   created: false,
-  metaData: "",
+  metaList: [],
   paymentId: "",
   fromTicker: null,
 };
@@ -60,7 +60,7 @@ export const transferProcess = (
         isFetching: true,
       };
     case TRANSFER_SUCCEED:
-      return { ...state, ...action.payload, isFetching: false, succeed: true };
+      return { ...state, isFetching: false, succeed: true };
     case TRANSFER_FAILED:
       return {
         ...state,
