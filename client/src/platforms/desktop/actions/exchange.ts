@@ -1,10 +1,5 @@
-import { offshoreRPC, onshoreRPC, relayTXRPC } from "../ipc/rpc/rpc";
-import {
-  addErrorNotification,
-  addExchangeSucceedMessage,
-  addNotificationByMessage,
-} from "shared/actions/notification";
-
+import {offshoreRPC, onshoreRPC, relayTXRPC} from "../ipc/rpc/rpc";
+import {addErrorNotification, addExchangeSucceedMessage, addNotificationByMessage,} from "shared/actions/notification";
 import {
   EXCHANGE_CREATION_FAILED,
   EXCHANGE_CREATION_FETCHING,
@@ -16,13 +11,23 @@ import {
   SELECT_FROM_TICKER,
   SELECT_TO_TICKER,
 } from "./types";
-import { updateApp } from "./refresh";
-import { DesktopAppState } from "../reducers";
-import { Ticker } from "shared/reducers/types";
-import { showModal } from "shared/actions/modal";
-import { MODAL_TYPE } from "shared/reducers/modal";
-import { selectPrimaryAddress } from "shared/reducers/address";
-import { NotificationType } from "constants/notificationList";
+import {updateApp} from "./refresh";
+import {DesktopAppState} from "../reducers";
+import {Ticker} from "shared/reducers/types";
+import {showModal} from "shared/actions/modal";
+import {MODAL_TYPE} from "shared/reducers/modal";
+import {selectPrimaryAddress} from "shared/reducers/address";
+import {NotificationType} from "constants/notificationList";
+import {ExchangeProcessInfo, ExchangeType} from "platforms/desktop/reducers/exchangeProcess";
+
+
+interface RPCExchangeResponse {
+
+  amount_list: Array<number>;
+  amount_usd_list: Array<number>;
+  fee_list: Array<number>;
+  tx_metadata_list: Array<string>;
+}
 
 export const setToTicker = (toTicker: Ticker | null) => {
   return { type: SELECT_TO_TICKER, payload: toTicker };
@@ -85,6 +90,9 @@ export function exchange(
   };
 }
 
+
+
+
 const sanityCheck = (amount: number): boolean => {
   // check that our value has not more than 4 decimals
   return (amount * 10000) % 1 === 0;
@@ -97,7 +105,7 @@ export function createExchange(
   toAmount: number,
   priority: number,
   externAddress: string,
-  isOffshore: boolean
+  exchangeType: ExchangeType
 ): any {
   return (dispatch: any, getState: () => DesktopAppState) => {
     const address =
@@ -105,7 +113,7 @@ export function createExchange(
         ? externAddress
         : selectPrimaryAddress(getState().address);
 
-    const xhvAnmount = isOffshore ? fromAmount : toAmount;
+    const xhvAnmount = exchangeType === ExchangeType.Offshore ? fromAmount : toAmount;
 
     if (!sanityCheck(xhvAnmount)) {
       addNotificationByMessage(
@@ -117,14 +125,14 @@ export function createExchange(
 
     const params = createExchangeInputs(fromAmount, priority, address);
 
-    dispatch(onExchangeCreationFetch({ ...params, toAmount: toAmount * 1e12 }));
+    dispatch(onExchangeCreationFetch({ priority, exchangeType } as Partial<ExchangeProcessInfo>));
 
-    const exchangeRPCFN = isOffshore ? offshoreRPC : onshoreRPC;
+    const exchangeRPCFN = exchangeType === ExchangeType.Offshore ? offshoreRPC : onshoreRPC;
     exchangeRPCFN(params)
-      .then((result: any) => {
-        console.log(result);
-        dispatch(
-          onExchangeCreationSucceed({ metaData: result.tx_metadata_list[0] })
+        .then( (rpcResponse: RPCExchangeResponse) =>  parseExchangeResonse(rpcResponse, exchangeType))
+        .then((exchangeInfo: Partial<ExchangeProcessInfo>) => {
+          dispatch(
+          onExchangeCreationSucceed(exchangeInfo)
         );
         dispatch(showModal(MODAL_TYPE.ConfirmExchange));
       })
@@ -132,6 +140,26 @@ export function createExchange(
         dispatch(onExchangeCreationFailed(error));
       });
   };
+}
+
+const parseExchangeResonse = (exchangeResponse: RPCExchangeResponse, exchangeType: ExchangeType): Partial<ExchangeProcessInfo> => {
+
+  let fromAmount: bigint;
+  let toAmount : bigint;
+  let fee: bigint;
+
+  if (exchangeType === ExchangeType.Onshore) {
+    fromAmount = exchangeResponse.amount_usd_list.reduce ( (acc: bigint, value: number) => acc +BigInt(value), BigInt(0));
+    toAmount = exchangeResponse.amount_list.reduce ( (acc: bigint, value: number) => acc +BigInt(value), BigInt(0));
+  } else {
+    fromAmount = exchangeResponse.amount_list.reduce ( (acc: bigint, value: number) => acc +BigInt(value), BigInt(0));
+    toAmount = exchangeResponse.amount_usd_list.reduce ( (acc: bigint, value: number) => acc +BigInt(value), BigInt(0));
+  }
+
+  fee = exchangeResponse.fee_list.reduce ( (acc: bigint, value: number) => acc +BigInt(value), BigInt(0));
+
+
+  return {fromAmount, toAmount, fee};
 }
 
 export const confirmExchange = (hex: string) => {
@@ -192,7 +220,7 @@ const onExchangeCreationFailed = (error: any) => {
   return { type: EXCHANGE_CREATION_FAILED, payload: error };
 };
 
-const onExchangeCreationFetch = (payload: any) => {
+const onExchangeCreationFetch = (payload: Partial<ExchangeProcessInfo>) => {
   return { type: EXCHANGE_CREATION_FETCHING, payload };
 };
 
