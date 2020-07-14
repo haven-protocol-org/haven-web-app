@@ -13,15 +13,15 @@ import { AnyAction } from "redux";
 import { TxProcessInfo } from "./transferProcess";
 import { Ticker } from "shared/reducers/types";
 
-export enum EXCHANGE_TYPE {
+export enum ExchangeType {
   Onshore,
   Offshore,
 }
 
 export interface ExchangeProcessInfo extends TxProcessInfo {
-  offshoreType: EXCHANGE_TYPE | null;
+  exchangeType: ExchangeType | null;
   toTicker: Ticker | null;
-  toAmount: number | null;
+  toAmount: number | null | bigint;
 }
 
 const INITIAL_STATE: ExchangeProcessInfo = {
@@ -34,10 +34,10 @@ const INITIAL_STATE: ExchangeProcessInfo = {
   error: "",
   created: false,
   succeed: false,
-  offshoreType: null,
+  exchangeType: null,
   toTicker: Ticker.xUSD,
   fromTicker: Ticker.XHV,
-  metaData: "",
+  metaList: [],
 };
 
 export const exchangeProcess = (

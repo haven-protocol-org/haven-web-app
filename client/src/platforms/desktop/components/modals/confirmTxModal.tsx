@@ -13,7 +13,7 @@ import { convertToMoney } from "utility/utility";
 
 interface ConfirmTxModalProps {
   transfer: TxProcessInfo;
-  confirmTransfer: (hex: string) => void;
+  confirmTransfer: (metaList: Array<string>) => void;
   resetTransferProcess: () => void;
   hideModal: () => void;
 }
@@ -73,12 +73,12 @@ class ConfirmTxModal extends React.Component<ConfirmTxModalProps, any> {
   }
 
   onConfirm() {
-    const { metaData } = this.props.transfer;
+    const { metaList } = this.props.transfer;
     this.setState({
       loading: true,
     });
     setTimeout(() => {
-      this.props.confirmTransfer(metaData);
+      this.props.confirmTransfer(metaList);
     }, 3000);
   }
 }

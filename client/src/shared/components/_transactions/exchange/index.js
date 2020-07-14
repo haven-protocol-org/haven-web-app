@@ -15,6 +15,7 @@ const Transaction = ({
   externAddress,
   onChange,
   checked,
+    priority
 }) => {
   // ####  Add in the fromAmount ####
   const first = externAddress.substring(0, 4);
@@ -48,11 +49,11 @@ const Transaction = ({
         )}
         <Row>
           <Key>Exchange Priority</Key>
-          <Value>{"**REPLACE**"}</Value>
+          <Value>{priority}</Value>
         </Row>
         <Row>
           <Key>Transaction Fee</Key>
-          <Value>{"**REPLACE**"}</Value>
+          <Value>{fee}</Value>
         </Row>
         <Confirm
           description="I have reviewed my Exchange and accept the transaction fee"

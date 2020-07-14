@@ -13,7 +13,7 @@ import { convertToMoney } from "utility/utility";
 
 interface ConfirmExchangeModalProps {
   exchange: ExchangeProcessInfo;
-  confirmExchange: (hex: string) => void;
+  confirmExchange: (metaList: Array<string>) => void;
   resetExchangeProcess: () => void;
   hideModal: () => void;
 }
@@ -40,10 +40,12 @@ class ConfirmExchangeModal extends React.Component<
       toAmount,
       fromTicker,
       toTicker,
-      fee,
+      fee,priority
     } = this.props.exchange;
 
     const readableToAmout = convertToMoney(toAmount);
+    const readAbleFromAmount = convertToMoney(fromAmount);
+    const readAbleFeeAmount = convertToMoney(fee);
     // ####  Add in the fromAmount ####
     // const readableFromAmout = convertToMoney(fromAmount);
 
@@ -60,13 +62,14 @@ class ConfirmExchangeModal extends React.Component<
       >
         <Transaction
           xRate={1}
+          priority={priority}
           onChange={this.approveTransfer}
-          fromAmount={fromAmount}
+          fromAmount={readAbleFromAmount}
           checked={this.state.checked}
           toAmount={readableToAmout}
           fromTicker={fromTicker}
           toTicker={toTicker}
-          fee={fee}
+          fee={readAbleFeeAmount}
           externAddress={address}
         />
       </Modal>
@@ -79,12 +82,12 @@ class ConfirmExchangeModal extends React.Component<
   }
 
   onConfirm() {
-    const { metaData } = this.props.exchange;
+    const { metaList } = this.props.exchange;
     this.setState({
       loading: true,
     });
     setTimeout(() => {
-      this.props.confirmExchange(metaData);
+      this.props.confirmExchange(metaList);
     }, 3000);
   }
 
