@@ -28,10 +28,7 @@ const CellDisabled = ({ tokenName, ticker, price, balance, fullwidth }) => {
       <Wrapper>
         <Column>
           <Title>$0.00</Title>
-          <Subtitle>
-            {"$"}
-            {balance}
-          </Subtitle>
+          <Subtitle>{balance}</Subtitle>
         </Column>
         <Inner>
           <Icon src={chevron} />
