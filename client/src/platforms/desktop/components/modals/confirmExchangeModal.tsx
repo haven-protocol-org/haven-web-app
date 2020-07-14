@@ -44,6 +44,8 @@ class ConfirmExchangeModal extends React.Component<
     } = this.props.exchange;
 
     const readableToAmout = convertToMoney(toAmount);
+    const readAbleFromAmount = convertToMoney(fromAmount);
+    const readAbleFeeAmount = convertToMoney(fee);
     // ####  Add in the fromAmount ####
     // const readableFromAmout = convertToMoney(fromAmount);
 
@@ -61,12 +63,12 @@ class ConfirmExchangeModal extends React.Component<
         <Transaction
           xRate={1}
           onChange={this.approveTransfer}
-          fromAmount={fromAmount}
+          fromAmount={readAbleFromAmount}
           checked={this.state.checked}
           toAmount={readableToAmout}
           fromTicker={fromTicker}
           toTicker={toTicker}
-          fee={fee}
+          fee={readAbleFeeAmount}
           externAddress={address}
         />
       </Modal>
