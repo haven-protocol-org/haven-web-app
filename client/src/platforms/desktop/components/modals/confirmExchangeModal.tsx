@@ -62,6 +62,7 @@ class ConfirmExchangeModal extends React.Component<
       >
         <Transaction
           xRate={1}
+          priority={priority}
           onChange={this.approveTransfer}
           fromAmount={readAbleFromAmount}
           checked={this.state.checked}
