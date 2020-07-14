@@ -6,7 +6,7 @@ export const PRICE_RECORDS_IN_HEADER_HEIGHT: number = 640640;
 export const OFFSHORE_START_HEIGHT: number =  640650;
 
 
-export const PRICE_RECORDS_IN_HEADER_HEIGHT_STAGENET: number = 640640;
+export const PRICE_RECORDS_IN_HEADER_HEIGHT_STAGENET: number = 125;
 export const OFFSHORE_START_HEIGHT_STAGENET: number =  135;
 
 
@@ -25,9 +25,9 @@ export const updateHavenFeatures = (height: number) => {
 
     } else {
             const update: HavenFeature = {
-                pricesInHeader: true,
-                offshoreEnabled:true,
-                xUSDEnabled: true
+                pricesInHeader: height >= PRICE_RECORDS_IN_HEADER_HEIGHT_STAGENET,
+                offshoreEnabled: height >= OFFSHORE_START_HEIGHT_STAGENET,
+                xUSDEnabled: height >= OFFSHORE_START_HEIGHT_STAGENET
             };
 
             dispatch({type: UPDATE_HAVEN_FEATURES, payload: update});
