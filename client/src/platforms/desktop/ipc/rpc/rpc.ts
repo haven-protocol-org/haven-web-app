@@ -136,8 +136,7 @@ function callRpc(method: string, params: object | undefined = undefined) {
 }
 
 export const handleError = async (response: any) => {
-
-  console.log(response);
+  // console.log(response);
   // intercept error on protocol level
   if (response.error) return Promise.reject(response.error);
 
