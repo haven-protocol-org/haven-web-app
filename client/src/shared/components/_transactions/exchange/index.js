@@ -1,5 +1,5 @@
 // Library Imports
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 
 // Relative Imports
 import { Container, Row, Key, Value } from "./styles";
@@ -13,8 +13,8 @@ const Transaction = ({
   toTicker,
   fee,
   externAddress,
-  checked,
   onChange,
+  checked,
 }) => {
   // ####  Add in the fromAmount ####
   const first = externAddress.substring(0, 4);
