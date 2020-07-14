@@ -259,12 +259,10 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
 
     if (fromAmountValid && toAmountValid && hasLatestXRate && offshoreEnabled) {
       // If valid then make this 'false' so the footer is enabled
-      console.log("VALID");
 
       return !true;
     } else {
       // If invalid then make this 'true' so the footer is disabled
-      console.log("NOT VALID");
       return !false;
     }
   };

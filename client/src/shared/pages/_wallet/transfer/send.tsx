@@ -137,7 +137,6 @@ class TransferContainer extends Component<TransferProps, TransferState> {
     const regexp = new RegExp(/^[0-9a-fA-F]+$/);
 
     const { payment_id } = this.state;
-    const length = payment_id.length;
 
     if (
       (regexp.test(payment_id) && payment_id.length === 64) ||

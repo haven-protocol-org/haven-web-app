@@ -1,5 +1,5 @@
 // Library Imports
-import React, { Fragment, useState } from "react";
+import React, { Fragment } from "react";
 
 // Relative Imports
 import { Container, Row, Key, Value } from "./styles";
