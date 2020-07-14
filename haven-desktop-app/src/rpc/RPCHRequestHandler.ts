@@ -41,7 +41,22 @@ export class RPCHRequestHandler {
   public sendRequest(requestObject: RPCRequestObject): Promise<any> {
 
 
-    const timeLessMethods = ["close_wallet", "restore_deterministic_wallet", "create_wallet", "onshore", "offshore", "relay_tx", "transfer_split"];
+    const timeLessMethods = [
+      "stop_mining",
+      "start_mining",
+        "mining_status",
+      "get_info",
+      "get_last_block_header",
+      "get_block_count",
+      "get_block_header_by_height",
+      "close_wallet",
+      "restore_deterministic_wallet",
+      "create_wallet",
+      "onshore",
+      "offshore",
+      "relay_tx",
+      "transfer_split"];
+
     let timeout = timeLessMethods.some((method ) => method === requestObject.method)? 0 : 4000;
 
     logInDevMode("send request to : " + this._fullUrl);
