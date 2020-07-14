@@ -31,3 +31,9 @@ export const selectIsOffshoreEnabled = (
 ): boolean => {
   return state.havenFeature.offshoreEnabled;
 };
+
+export const selectIsPriceInHeader = (
+    state: DesktopAppState | WebAppState
+): boolean => {
+  return state.havenFeature.pricesInHeader;
+};

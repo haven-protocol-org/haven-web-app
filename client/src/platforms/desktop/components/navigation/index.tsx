@@ -36,11 +36,13 @@ import { NodeState } from "platforms/desktop/types";
 import { WalletState } from "platforms/desktop/ipc/ipc-types";
 import { selectisLocalNode } from "platforms/desktop/reducers/havenNode";
 import { ThreeState } from "shared/types/types";
+import {selectBlockHeight} from "platforms/desktop/reducers/chain";
 
 interface NavigationProps {
   wallet: WalletState;
   node: NodeState;
   isLoggedIn: boolean;
+  height: number;
   isLocalNode: boolean;
   show_networks: boolean;
   logout: () => void;
@@ -84,7 +86,7 @@ class Navigation extends Component<NavigationProps, any> {
   render() {
     const auth = this.props.isLoggedIn;
     const { current_network } = this.state;
-    const { wallet, node, isLocalNode } = this.props;
+    const { wallet, node, isLocalNode, height } = this.props;
 
     return (
       <Container>
@@ -139,7 +141,7 @@ class Navigation extends Component<NavigationProps, any> {
               </OptionsDoubleRow>
               <OptionsDoubleRow>
                 <Body>Block</Body>
-                <Label>{"ADD_BLOCK_NUMBER"}</Label>
+                <Label>{height}</Label>
               </OptionsDoubleRow>
               <OptionsDoubleRow>
                 <Body>Application</Body>
@@ -158,6 +160,7 @@ const mapStateToProps = (state: DesktopAppState) => ({
   wallet: state.walletRPC,
   node: state.havenNode,
   isLocalNode: selectisLocalNode(state.havenNode),
+  height: selectBlockHeight(state)
 });
 
 export const NavigationDesktop = connect(mapStateToProps, {
