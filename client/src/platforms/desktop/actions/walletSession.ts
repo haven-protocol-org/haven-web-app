@@ -14,12 +14,12 @@ export const closeWallet = () => {
   return (dispatch: any) => {
     if (isDevMode()) {
       storeWalletRPC()
-        .catch((e) => addErrorNotification("wallet state could not be stored"))
+        .catch((e) => addErrorNotification("Vault state could not be stored"))
         .then(() => closeWalletRPC())
         .catch((err) =>
           dispatch(
             addErrorNotification(
-              "wallet is busy, you cannot logout in the moment"
+              "Vault is busy, you cannot logout in the moment"
             )
           )
         )
