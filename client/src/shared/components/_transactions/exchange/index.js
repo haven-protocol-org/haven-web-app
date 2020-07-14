@@ -15,7 +15,7 @@ const Transaction = ({
   externAddress,
   onChange,
   checked,
-    priority
+  priority,
 }) => {
   // ####  Add in the fromAmount ####
   const first = externAddress.substring(0, 4);
@@ -30,7 +30,7 @@ const Transaction = ({
           <Value>
             {(fromTicker ? fromTicker : "") +
               " " +
-              (fromAmount && !isNaN(fromAmount) ? fromAmount : "**REPLACE**")}
+              (fromAmount && !isNaN(fromAmount) ? fromAmount : "--")}
           </Value>
         </Row>
         <Row>

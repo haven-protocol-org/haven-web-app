@@ -1,6 +1,6 @@
 // Library Imports
-import React, {Component, Fragment} from "react";
-import {connect} from "react-redux";
+import React, { Component, Fragment } from "react";
+import { connect } from "react-redux";
 // Relative Imports
 import Body from "../../../components/_layout/body";
 import Header from "../../../components/_layout/header";
@@ -8,17 +8,22 @@ import Input from "../../../components/_inputs/input";
 // import InputButton from "../../../components/_inputs/input_button";
 import Form from "../../../components/_inputs/form";
 
-import {selectIsOffshoreEnabled} from "../../../reducers/havenFeature";
+import { selectIsOffshoreEnabled } from "../../../reducers/havenFeature";
 import Footer from "../../../components/_inputs/footer";
 import Dropdown from "../../../components/_inputs/dropdown";
 import Tab from "../../../components/tab";
-import {Container} from "./styles";
-import {hasLatestXRate, priceDelta, selectXRate, XRates,} from "shared/reducers/blockHeaderExchangeRates";
-import {DesktopAppState} from "platforms/desktop/reducers";
-import {selectNodeHeight} from "platforms/desktop/reducers/chain";
-import {getLastBlockHeader} from "platforms/desktop/actions/blockHeaderExchangeRate";
-import {createExchange} from "platforms/desktop/actions";
-import {Ticker} from "shared/reducers/types";
+import { Container } from "./styles";
+import {
+  hasLatestXRate,
+  priceDelta,
+  selectXRate,
+  XRates,
+} from "shared/reducers/blockHeaderExchangeRates";
+import { DesktopAppState } from "platforms/desktop/reducers";
+import { selectNodeHeight } from "platforms/desktop/reducers/chain";
+import { getLastBlockHeader } from "platforms/desktop/actions/blockHeaderExchangeRate";
+import { createExchange } from "platforms/desktop/actions";
+import { Ticker } from "shared/reducers/types";
 import {
   ExchangeType,
   selectExchangeSucceed,
@@ -26,12 +31,12 @@ import {
   selectIsProcessingExchange,
   selectToTicker,
 } from "platforms/desktop/reducers/exchangeProcess";
-import {setFromTicker, setToTicker} from "platforms/desktop/actions/exchange";
-import {NO_BALANCE, XBalances} from "shared/reducers/xBalance";
-import {convertBalanceForReading} from "utility/utility";
-import {showModal} from "shared/actions/modal";
-import {MODAL_TYPE} from "shared/reducers/modal";
-import {ExchangeSummary} from "shared/components/_summaries/exchange-summary";
+import { setFromTicker, setToTicker } from "platforms/desktop/actions/exchange";
+import { NO_BALANCE, XBalances } from "shared/reducers/xBalance";
+import { convertBalanceForReading } from "utility/utility";
+import { showModal } from "shared/actions/modal";
+import { MODAL_TYPE } from "shared/reducers/modal";
+import { ExchangeSummary } from "shared/components/_summaries/exchange-summary";
 
 enum ExchangeTab {
   Basic,
@@ -193,7 +198,10 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     )
       return;
 
-    const exchangeType = (fromTicker === Ticker.XHV && toTicker !== Ticker.XHV)? ExchangeType.Offshore : ExchangeType.Onshore;
+    const exchangeType =
+      fromTicker === Ticker.XHV && toTicker !== Ticker.XHV
+        ? ExchangeType.Offshore
+        : ExchangeType.Onshore;
     const fromAmount = parseFloat(this.state.fromAmount);
     const toAmount = parseFloat(this.state.toAmount);
 
