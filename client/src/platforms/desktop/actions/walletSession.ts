@@ -8,7 +8,6 @@ import { closeWalletRPC, openWalletRPC, storeWalletRPC } from "../ipc/rpc/rpc";
 import { CLOSE_WALLET } from "shared/actions/types";
 import { requestSavedWalletsIPC } from "../ipc/misc";
 import { addErrorNotification } from "shared/actions/notification";
-import { isDevMode } from "constants/env";
 
 export const closeWallet = () => {
   return (dispatch: any) => {

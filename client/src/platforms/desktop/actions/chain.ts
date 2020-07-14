@@ -16,7 +16,6 @@ import {
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { getLastBlockHeader } from "platforms/desktop/actions/blockHeaderExchangeRate";
 import { selectIsOffshoreEnabled } from "shared/reducers/havenFeature";
-import { getExchangeRates } from "shared/actions/exchangeRates";
 
 interface NodeInfoHeights {
   nodeHeight: number;
