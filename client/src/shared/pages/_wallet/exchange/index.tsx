@@ -21,7 +21,6 @@ import {
 } from "shared/reducers/blockHeaderExchangeRates";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { selectNodeHeight } from "platforms/desktop/reducers/chain";
-import { getLastBlockHeader } from "platforms/desktop/actions/blockHeaderExchangeRate";
 import { createExchange } from "platforms/desktop/actions";
 import { Ticker } from "shared/reducers/types";
 import {
@@ -101,7 +100,7 @@ const INITIAL_STATE: ExchangeState = {
   toAmount: "",
   selectedTab: ExchangeTab.Basic,
   externAddress: "",
-  selectedPrio: exchangePrioOptions[exchangePrioOptions.length - 1],
+  selectedPrio: exchangePrioOptions[1],
 };
 class Exchange extends Component<ExchangeProps, ExchangeState> {
   state: ExchangeState = INITIAL_STATE;
@@ -259,7 +258,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     const fromAmountValid = fromAmount !== "";
     const toAmountValid = toAmount !== "";
 
-    if (fromAmountValid && toAmountValid && hasLatestXRate && offshoreEnabled) {
+    if (fromAmountValid && toAmountValid && offshoreEnabled) {
       // If valid then make this 'false' so the footer is enabled
 
       return !true;
