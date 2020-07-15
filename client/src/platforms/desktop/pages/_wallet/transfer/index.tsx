@@ -9,7 +9,6 @@ import { transferSucceed } from "../../../reducers/transferProcess";
 import { createTransfer } from "platforms/desktop/actions";
 
 class TransferDesktopContainer extends Component<any, any> {
-  private sendTicker: Ticker = Ticker.XHV;
 
   componentDidMount(): void {
     if (this.props.address.length === 0) {
@@ -24,7 +23,7 @@ class TransferDesktopContainer extends Component<any, any> {
   ): void {
     if (this.props.transferSucceed) {
       this.props.resetTransferProcess();
-      this.props.history.push("/wallet/assets/" + this.sendTicker);
+      this.props.history.push("/wallet/assets/" + this.props.tx.fromTicker);
     }
   }
 
@@ -34,7 +33,6 @@ class TransferDesktopContainer extends Component<any, any> {
     paymentId: string,
     ticker: Ticker = Ticker.XHV
   ) => {
-    this.sendTicker = ticker;
     this.props.createTransfer(address, amount, paymentId, ticker);
   };
 

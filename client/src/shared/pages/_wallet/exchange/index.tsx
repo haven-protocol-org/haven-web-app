@@ -7,8 +7,8 @@ import Header from "../../../components/_layout/header";
 import Input from "../../../components/_inputs/input";
 // import InputButton from "../../../components/_inputs/input_button";
 import Form from "../../../components/_inputs/form";
-
-import { selectIsOffshoreEnabled } from "../../../reducers/havenFeature";
+import {RouteComponentProps, withRouter} from "react-router";
+import { selectIsOffshoreEnabled } from "shared/reducers/havenFeature";
 import Footer from "../../../components/_inputs/footer";
 import Dropdown from "../../../components/_inputs/dropdown";
 import Tab from "../../../components/tab";
@@ -42,8 +42,7 @@ enum ExchangeTab {
   Adanvced,
 }
 
-type ExchangeProps = {
-  conversionRates: XRates | null;
+interface ExchangeProps extends RouteComponentProps<any> {
   nodeHeight: number;
   showModal: (modalTyoe: MODAL_TYPE) => void;
   createExchange: typeof createExchange;
@@ -119,7 +118,9 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
         toAmount: "",
         externAddress: "",
       });
+      this.props.history.push("/wallet/assets/" + this.props.fromTicker);
     }
+
   }
 
   onEnterFromAmount = (event: any) => {
@@ -465,9 +466,9 @@ const mapStateToProps = (state: DesktopAppState) => ({
   offshoreEnabled: selectIsOffshoreEnabled(state),
 });
 
-export const ExchangePage = connect(mapStateToProps, {
+export const ExchangePage = withRouter(connect(mapStateToProps, {
   createExchange,
   setToTicker,
   setFromTicker,
   showModal,
-})(Exchange);
+})(Exchange));
