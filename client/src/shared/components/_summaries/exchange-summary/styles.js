@@ -1,12 +1,17 @@
 import styled from "styled-components";
 
+export const Wrapper = styled.div`
+  height: auto;
+  margin-top: 20px;
+`;
+
 export const Container = styled.div`
   height: auto;
   width: 100%;
   border-radius: 4px;
+  margin-top: 4px;
   background: ${(props) => props.theme.body.foreground};
   border: 1px solid ${(props) => props.theme.input.input_border};
-  margin-top: 20px;
 `;
 
 export const Row = styled.div`
