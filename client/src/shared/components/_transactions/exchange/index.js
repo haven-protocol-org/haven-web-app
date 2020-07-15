@@ -16,8 +16,8 @@ const Transaction = ({
   onChange,
   checked,
   priority,
+  isOwnAddress,
 }) => {
-  // ####  Add in the fromAmount ####
   const first = externAddress.substring(0, 4);
   const last = externAddress.substring(externAddress.length - 4);
   const truncatedAddress = first + "...." + last;
@@ -37,24 +37,43 @@ const Transaction = ({
             {toAmount} {toTicker}
           </Value>
         </Row>
-        {externAddress && (
+        {isOwnAddress ? null : (
           <Row>
             <Key>Exchange To</Key>
             <Value>{truncatedAddress}</Value>
           </Row>
         )}
         <Row>
-          <Key>Exchange Priority</Key>
           {(function () {
             switch (priority) {
               case 1:
-                return <Value>Low: Unlocks in ~2 days</Value>;
+                return (
+                  <>
+                    <Key>Low Priority</Key>
+                    <Value>Unlocks in ~2d</Value>
+                  </>
+                );
               case 2:
-                return <Value>Medium: Unlocks ~18 hours</Value>;
+                return (
+                  <>
+                    <Key>Medium Priority</Key>
+                    <Value>Unlocks ~18h</Value>
+                  </>
+                );
               case 3:
-                return <Value>High: Unlocks ~6 hours</Value>;
+                return (
+                  <>
+                    <Key>High Priority</Key>
+                    <Value>Unlocks ~6h</Value>
+                  </>
+                );
               case 4:
-                return <Value>Very High: Unlocks ~2 hours</Value>;
+                return (
+                  <>
+                    <Key>Very High Priority</Key>
+                    <Value>Unlocks ~2h</Value>
+                  </>
+                );
 
               default:
             }
