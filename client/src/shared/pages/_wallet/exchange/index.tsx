@@ -102,6 +102,9 @@ const INITIAL_STATE: ExchangeState = {
   selectedPrio: exchangePrioOptions[1],
 };
 class Exchange extends Component<ExchangeProps, ExchangeState> {
+
+  private sendTicker: Ticker = Ticker.XHV;
+
   state: ExchangeState = INITIAL_STATE;
 
   componentDidMount() {
@@ -119,7 +122,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
         externAddress: "",
       });
 
-      this.props.history.push("/wallet/assets/" + this.props.fromTicker);
+      this.props.history.push("/wallet/assets/" + this.sendTicker);
     }
   }
 
@@ -202,6 +205,8 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
         : ExchangeType.Onshore;
     const fromAmount = parseFloat(this.state.fromAmount);
     const toAmount = parseFloat(this.state.toAmount);
+
+    this.sendTicker = fromTicker;
 
     this.props.createExchange(
       fromTicker,
