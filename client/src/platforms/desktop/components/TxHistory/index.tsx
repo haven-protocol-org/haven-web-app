@@ -77,7 +77,9 @@ class TxHistoryContainer extends Component<TxHistoryProps, any> {
                   status: transaction.direction,
                   block: transaction.height,
                   tx: transaction.txid,
-                  fee: convertBalanceForReading(transaction.fee),
+                  // fee: convertBalanceForReading(transaction.fee),
+                  // this is a quick fix to avoid showing wrong fee values
+                  fee: 0,
                 } as TransactionProps;
 
                 return <Transaction {...txProps} key={index} />;
