@@ -10,7 +10,6 @@ import { ExchangeProcessInfo } from "platforms/desktop/reducers/exchangeProcess"
 import { hideModal } from "shared/actions/modal";
 import Transaction from "shared/components/_transactions/exchange";
 import { convertToMoney } from "utility/utility";
-import { Redirect } from "react-router-dom";
 
 interface ConfirmExchangeModalProps {
   exchange: ExchangeProcessInfo;

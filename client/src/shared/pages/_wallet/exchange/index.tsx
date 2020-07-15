@@ -253,7 +253,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
 
   validateExchange = () => {
     const { fromAmount, toAmount } = this.state;
-    const { hasLatestXRate } = this.props;
     const { offshoreEnabled } = this.props;
     const fromAmountValid = fromAmount !== "";
     const toAmountValid = toAmount !== "";
