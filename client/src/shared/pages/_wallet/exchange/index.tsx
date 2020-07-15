@@ -8,7 +8,10 @@ import Input from "../../../components/_inputs/input";
 // import InputButton from "../../../components/_inputs/input_button";
 import Form from "../../../components/_inputs/form";
 import { RouteComponentProps, withRouter } from "react-router";
-import {selectIsOffshoreEnabled, selectRemainingTimeStringTillUnlocked} from "shared/reducers/havenFeature";
+import {
+  selectIsOffshoreEnabled,
+  selectRemainingTimeStringTillUnlocked,
+} from "shared/reducers/havenFeature";
 import Footer from "../../../components/_inputs/footer";
 import Dropdown from "../../../components/_inputs/dropdown";
 import Tab from "../../../components/tab";
@@ -102,7 +105,6 @@ const INITIAL_STATE: ExchangeState = {
   selectedPrio: exchangePrioOptions[1],
 };
 class Exchange extends Component<ExchangeProps, ExchangeState> {
-
   private sendTicker: Ticker = Ticker.XHV;
 
   state: ExchangeState = INITIAL_STATE;
@@ -295,7 +297,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
 
   recipientIsValid = () => {
     const { externAddress } = this.state;
-    if (externAddress.length === 99) {
+    if (externAddress.length > 97) {
       return "";
     } else if (externAddress === "") {
       return "";
@@ -471,7 +473,7 @@ const mapStateToProps = (state: DesktopAppState) => ({
   toTicker: selectToTicker(state.exchangeProcess),
   balances: state.xBalance,
   offshoreEnabled: selectIsOffshoreEnabled(state),
-  timeTillUnlock: selectRemainingTimeStringTillUnlocked(state)
+  timeTillUnlock: selectRemainingTimeStringTillUnlocked(state),
 });
 
 export const ExchangePage = withRouter(
