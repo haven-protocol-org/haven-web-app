@@ -19,7 +19,7 @@ export const ExchangeSummary = ({
   return (
     <Wrapper>
       {offshoreEnabled ? (
-        <Error>{hasLatestXRate ? "" : "Awaiting lastest exchange rates"}</Error>
+        <Error>{!hasLatestXRate && "Awaiting lastest exchange rates"}</Error>
       ) : (
         <Error>{`Offshore is available in ${timeTillUnlock}`}</Error>
       )}

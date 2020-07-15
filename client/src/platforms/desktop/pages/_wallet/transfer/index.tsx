@@ -23,6 +23,8 @@ class TransferDesktopContainer extends Component<any, any> {
     snapshot?: any
   ): void {
     if (this.props.transferSucceed) {
+      console.log("ROUTE", this.props.tx.fromTicker);
+
       this.props.resetTransferProcess();
       this.props.history.push("/wallet/assets/" + this.sendTicker);
     }

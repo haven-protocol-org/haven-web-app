@@ -17,7 +17,6 @@ import {
   hasLatestXRate,
   priceDelta,
   selectXRate,
-  XRates,
 } from "shared/reducers/blockHeaderExchangeRates";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { selectNodeHeight } from "platforms/desktop/reducers/chain";
@@ -119,6 +118,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
         toAmount: "",
         externAddress: "",
       });
+
       this.props.history.push("/wallet/assets/" + this.props.fromTicker);
     }
   }
