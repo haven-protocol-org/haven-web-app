@@ -12,6 +12,7 @@ import {
   Wrapper,
   Row,
   Ticker,
+  Balance,
 } from "./styles";
 import chevron from "../../../assets/icons/chevron.svg";
 
@@ -27,7 +28,7 @@ const CellDisabled = ({ tokenName, ticker, price, balance, fullwidth }) => {
       </Column>
       <Wrapper>
         <Column>
-          <Title>$0.00</Title>
+          <Balance>$0.00</Balance>
           <Subtitle>{balance}</Subtitle>
         </Column>
         <Inner>

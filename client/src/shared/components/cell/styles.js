@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import media from "../../../assets/styles/media.js";
 
 // const appear = keyframes`
 //   0% { transform: translateY(-20px);  }
@@ -111,9 +112,22 @@ export const Balances = styled.div`
 export const Asset = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: flex-start;
 `;
 
 export const Title = styled.div`
+  font-family: Inter-Bold;
+  font-size: 17px;
+  color: ${(props) => props.theme.type.primary};
+  letter-spacing: 0;
+  line-height: 30px;
+
+  ${media.mobile`
+    display: none;
+  `}
+`;
+
+export const Balance = styled.div`
   font-family: Inter-Bold;
   font-size: 17px;
   color: ${(props) => props.theme.type.primary};
@@ -128,6 +142,12 @@ export const Ticker = styled.div`
   letter-spacing: 0;
   line-height: 30px;
   padding-left: 12px;
+
+  ${media.mobile`
+    padding-left: 0px;
+    color: ${(props) => props.theme.type.primary};
+    font-family: Inter-Bold;
+  `}
 `;
 
 export const Subtitle = styled.div`

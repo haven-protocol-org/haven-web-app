@@ -159,7 +159,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
   // @ts-ignore
   recipientIsValid = () => {
     const recipient = this.state.recipient_address;
-    if (recipient.length === 99) {
+    if (recipient.length > 97) {
       return "";
     } else if (recipient === "") {
       return "";
