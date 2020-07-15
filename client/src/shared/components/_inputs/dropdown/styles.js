@@ -1,5 +1,11 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import media from "../../../../assets/styles/media.js";
+
+const appear = keyframes`
+  0% { transform: translateY(-5px);  }
+  50% { transform: translateY(8px);  }
+  100% {transform: translateY(0px);   }
+`;
 
 export const Container = styled.div`
   width: auto;
@@ -49,6 +55,7 @@ export const Wrapper = styled.ul`
   background: ${(props) => props.theme.input.input_background};
   border: 1px solid ${(props) => props.theme.input.input_border};
   overflow: auto;
+  animation: ${appear} 0.5s forwards;
 `;
 
 export const Labels = styled.div`

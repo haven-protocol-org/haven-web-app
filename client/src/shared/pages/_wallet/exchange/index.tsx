@@ -7,7 +7,7 @@ import Header from "../../../components/_layout/header";
 import Input from "../../../components/_inputs/input";
 // import InputButton from "../../../components/_inputs/input_button";
 import Form from "../../../components/_inputs/form";
-import {RouteComponentProps, withRouter} from "react-router";
+import { RouteComponentProps, withRouter } from "react-router";
 import { selectIsOffshoreEnabled } from "shared/reducers/havenFeature";
 import Footer from "../../../components/_inputs/footer";
 import Dropdown from "../../../components/_inputs/dropdown";
@@ -57,7 +57,7 @@ interface ExchangeProps extends RouteComponentProps<any> {
   toTicker: Ticker | null;
   balances: XBalances;
   offshoreEnabled: boolean;
-};
+}
 
 type ExchangeState = {
   fromAmount?: string;
@@ -120,7 +120,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       });
       this.props.history.push("/wallet/assets/" + this.props.fromTicker);
     }
-
   }
 
   onEnterFromAmount = (event: any) => {
@@ -466,9 +465,11 @@ const mapStateToProps = (state: DesktopAppState) => ({
   offshoreEnabled: selectIsOffshoreEnabled(state),
 });
 
-export const ExchangePage = withRouter(connect(mapStateToProps, {
-  createExchange,
-  setToTicker,
-  setFromTicker,
-  showModal,
-})(Exchange));
+export const ExchangePage = withRouter(
+  connect(mapStateToProps, {
+    createExchange,
+    setToTicker,
+    setFromTicker,
+    showModal,
+  })(Exchange)
+);
