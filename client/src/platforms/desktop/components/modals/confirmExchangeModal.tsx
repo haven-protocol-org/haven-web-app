@@ -10,13 +10,14 @@ import { ExchangeProcessInfo } from "platforms/desktop/reducers/exchangeProcess"
 import { hideModal } from "shared/actions/modal";
 import Transaction from "shared/components/_transactions/exchange";
 import { convertToMoney } from "utility/utility";
-import { selectPrimaryAddress } from "../../../../shared/reducers/address";
+import { selectPrimaryAddress } from "shared/reducers/address";
 
 interface ConfirmExchangeModalProps {
   exchange: ExchangeProcessInfo;
   confirmExchange: (metaList: Array<string>) => void;
   resetExchangeProcess: () => void;
   hideModal: () => void;
+  isOwnAddress: boolean;
 }
 
 class ConfirmExchangeModal extends React.Component<
@@ -44,6 +45,8 @@ class ConfirmExchangeModal extends React.Component<
       fee,
       priority,
     } = this.props.exchange;
+
+    const isOwnAddress = this.props.isOwnAddress;
 
     const readableToAmout = convertToMoney(toAmount);
     const readAbleFromAmount = convertToMoney(fromAmount);
@@ -100,7 +103,8 @@ class ConfirmExchangeModal extends React.Component<
 
 const mapStateToProps = (state: DesktopAppState) => ({
   exchange: state.exchangeProcess,
-  address: state.address,
+  isOwnAddress:
+    selectPrimaryAddress(state.address) === state.exchangeProcess.address,
 });
 
 export const ConfirmExchangeModalDesktop = connect(mapStateToProps, {
