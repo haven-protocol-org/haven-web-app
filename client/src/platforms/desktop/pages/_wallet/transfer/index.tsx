@@ -9,7 +9,6 @@ import { transferSucceed } from "../../../reducers/transferProcess";
 import { createTransfer } from "platforms/desktop/actions";
 
 class TransferDesktopContainer extends Component<any, any> {
-
   componentDidMount(): void {
     if (this.props.address.length === 0) {
       this.props.getOwnAddress();
@@ -22,6 +21,8 @@ class TransferDesktopContainer extends Component<any, any> {
     snapshot?: any
   ): void {
     if (this.props.transferSucceed) {
+      console.log("ROUTE", this.props.tx.fromTicker);
+
       this.props.resetTransferProcess();
       this.props.history.push("/wallet/assets/" + this.props.tx.fromTicker);
     }
