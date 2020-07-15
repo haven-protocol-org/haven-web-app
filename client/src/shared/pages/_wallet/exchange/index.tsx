@@ -256,8 +256,10 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     const { offshoreEnabled } = this.props;
     const fromAmountValid = fromAmount !== "";
     const toAmountValid = toAmount !== "";
+    const { hasLatestXRate } = this.props;
+    console.log("hasLatestXRate", hasLatestXRate);
 
-    if (fromAmountValid && toAmountValid && offshoreEnabled) {
+    if (fromAmountValid && toAmountValid && hasLatestXRate && offshoreEnabled) {
       // If valid then make this 'false' so the footer is enabled
 
       return !true;
