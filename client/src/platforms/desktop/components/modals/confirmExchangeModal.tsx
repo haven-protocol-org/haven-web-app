@@ -47,7 +47,6 @@ class ConfirmExchangeModal extends React.Component<
     } = this.props.exchange;
 
     const isOwnAddress = this.props.isOwnAddress;
-    console.log("isOwnAddress", isOwnAddress);
 
     const readableToAmout = convertToMoney(toAmount);
     const readAbleFromAmount = convertToMoney(fromAmount);
