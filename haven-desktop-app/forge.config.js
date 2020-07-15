@@ -46,22 +46,42 @@ const copyTargetNodesToBuild = (
   arch,
   callback
 ) => {
+
+
+  const netTypes = {
+    '0': 'mainnet',
+    '1': 'testnet',
+    '2': 'stagenet'
+  };
+
+
+  const filter = (fileName) => {
+
+    return (fileName.includes('.log')) === false;
+
+  };
+
+
+  const netType = netTypes[process.env.NET_TYPE_ID];
+
+
   fs.mkdirSync(path.resolve(buildPath, `./haven-node/${platform}/`), {
     recursive: true,
   });
   ncp(
-    path.resolve(__dirname, `./haven-node/${platform}/mainnet`),
-    path.resolve(buildPath, `./haven-node/${platform}/mainnet`),
-    (err) => {
-      if (err) {
-        console.log(err);
-      }
+      path.resolve(__dirname, `./haven-node/${platform}/${netType}/`),
+      path.resolve(buildPath, `./haven-node/${platform}/${netType}/`), {filter},
+      (err) => {
+        if (err) {
+          console.log(err);
+        }
 
-      console.log("copied node for " + platform);
-      callback();
-    }
+        console.log(`copied daemons for  ${platform} ${netType}`);
+        callback();
+      }
   );
-};
+}
+
 
 module.exports = {
   packagerConfig: {

@@ -71,7 +71,6 @@ export const daemonConfigStagenet = {
     port: HAVEND_STANDARD_PORT.Stagenet,
     args: {
       stagenet: "",
-      "add-priority-node": "seed01.stagenet.havenprotocol.org",
       "offline":"",
       "fixed-difficulty": 50
     },
