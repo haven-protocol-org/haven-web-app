@@ -14,13 +14,14 @@ export const ExchangeSummary = ({
   fee,
   hasLatestXRate,
   offshoreEnabled,
+    timeTillUnlock
 }) => {
   return (
     <Wrapper>
       {offshoreEnabled ? (
         <Error>{hasLatestXRate ? "" : "Awaiting lastest exchange rates"}</Error>
       ) : (
-        <Error>{"Offshore is available in 2d"}</Error>
+        <Error>{`Offshore is available in ${timeTillUnlock}`}</Error>
       )}
 
       <Container>

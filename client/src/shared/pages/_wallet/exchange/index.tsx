@@ -8,7 +8,7 @@ import Input from "../../../components/_inputs/input";
 // import InputButton from "../../../components/_inputs/input_button";
 import Form from "../../../components/_inputs/form";
 import { RouteComponentProps, withRouter } from "react-router";
-import { selectIsOffshoreEnabled } from "shared/reducers/havenFeature";
+import {selectIsOffshoreEnabled, selectRemainingTimeStringTillUnlocked} from "shared/reducers/havenFeature";
 import Footer from "../../../components/_inputs/footer";
 import Dropdown from "../../../components/_inputs/dropdown";
 import Tab from "../../../components/tab";
@@ -57,6 +57,7 @@ interface ExchangeProps extends RouteComponentProps<any> {
   toTicker: Ticker | null;
   balances: XBalances;
   offshoreEnabled: boolean;
+  timeTillUnlock: string;
 }
 
 type ExchangeState = {
@@ -260,10 +261,10 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
 
     if (fromAmountValid && toAmountValid && hasLatestXRate && offshoreEnabled) {
       // If valid then make this 'false' so the footer is enabled
-      return !true;
+      return false;
     } else {
       // If invalid then make this 'true' so the footer is disabled
-      return !false;
+      return true;
     }
   };
 
@@ -433,6 +434,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 fee={"--"}
                 fromTicker={fromTicker}
                 offshoreEnabled={this.props.offshoreEnabled}
+                timeTillUnlock={this.props.timeTillUnlock}
               />
 
               <Footer
@@ -464,6 +466,7 @@ const mapStateToProps = (state: DesktopAppState) => ({
   toTicker: selectToTicker(state.exchangeProcess),
   balances: state.xBalance,
   offshoreEnabled: selectIsOffshoreEnabled(state),
+  timeTillUnlock: selectRemainingTimeStringTillUnlocked(state)
 });
 
 export const ExchangePage = withRouter(

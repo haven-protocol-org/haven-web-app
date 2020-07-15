@@ -17,6 +17,7 @@ export const updateHavenFeatures = (height: number) => {
 
         if (isMainnet()) {
             const update: HavenFeature = {
+                blocksTillOffshore: Math.max(OFFSHORE_START_HEIGHT - height, 0),
                 pricesInHeader: height >= PRICE_RECORDS_IN_HEADER_HEIGHT,
                 offshoreEnabled: height >= OFFSHORE_START_HEIGHT,
                 xUSDEnabled: height >= OFFSHORE_START_HEIGHT
@@ -25,6 +26,7 @@ export const updateHavenFeatures = (height: number) => {
 
     } else {
             const update: HavenFeature = {
+                blocksTillOffshore: Math.max(OFFSHORE_START_HEIGHT_STAGENET - height),
                 pricesInHeader: height >= PRICE_RECORDS_IN_HEADER_HEIGHT_STAGENET,
                 offshoreEnabled: height >= OFFSHORE_START_HEIGHT_STAGENET,
                 xUSDEnabled: height >= OFFSHORE_START_HEIGHT_STAGENET
