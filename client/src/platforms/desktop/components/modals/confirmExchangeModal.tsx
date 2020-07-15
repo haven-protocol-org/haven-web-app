@@ -10,6 +10,7 @@ import { ExchangeProcessInfo } from "platforms/desktop/reducers/exchangeProcess"
 import { hideModal } from "shared/actions/modal";
 import Transaction from "shared/components/_transactions/exchange";
 import { convertToMoney } from "utility/utility";
+import { Redirect } from "react-router-dom";
 
 interface ConfirmExchangeModalProps {
   exchange: ExchangeProcessInfo;
@@ -34,13 +35,18 @@ class ConfirmExchangeModal extends React.Component<
   };
 
   render() {
+    console.log("################");
+
+    console.log("PROPS", this.props);
+
     const {
       address,
       fromAmount,
       toAmount,
       fromTicker,
       toTicker,
-      fee,priority
+      fee,
+      priority,
     } = this.props.exchange;
 
     const readableToAmout = convertToMoney(toAmount);
