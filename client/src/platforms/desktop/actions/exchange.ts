@@ -95,7 +95,9 @@ export function exchange(
 
 const sanityCheck = (amount: number): boolean => {
   // check that our value has not more than 4 decimals
-  return (amount * 10000) % 1 === 0;
+
+  const checkValue = (amount * 10000);
+  return checkValue % 1 === 0;
 };
 
 export function createExchange(
@@ -116,14 +118,14 @@ export function createExchange(
     const xhvAnmount = exchangeType === ExchangeType.Offshore ? fromAmount : toAmount;
 
     if (!sanityCheck(xhvAnmount)) {
-      addNotificationByMessage(
+      dispatch(addNotificationByMessage(
         NotificationType.ERROR,
         "Exchanges cannot exceed 4 decimals"
-      );
+      ));
       return;
     }
 
-    const params = createExchangeInputs(fromAmount, priority, address);
+    const params = createExchangeInputs(xhvAnmount, priority, address);
 
     dispatch(onExchangeCreationFetch({ priority, exchangeType, address } as Partial<ExchangeProcessInfo>));
 
