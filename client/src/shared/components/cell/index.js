@@ -18,6 +18,7 @@ import {
   Balances,
   PendingWrapper,
   PendingSpacer,
+  Balance,
 } from "./styles";
 import chevron from "../../../assets/icons/chevron.svg";
 
@@ -37,15 +38,13 @@ const Cell = ({
     <>
       {lockedBalance === 0 ? (
         <Container>
-          <Unlocked
-            to={`/wallet/assets/${ticker}`}
-          >
+          <Unlocked to={`/wallet/assets/${ticker}`}>
             <Column>
               <Row>
                 <Asset>
                   <Title>{tokenName} </Title> <Ticker>{ticker}</Ticker>
                 </Asset>
-                <Title>${balance.toFixed(4)}</Title>
+                <Balance>${balance.toFixed(4)}</Balance>
               </Row>
               <Row>
                 <Subtitle>${price}</Subtitle>
@@ -65,7 +64,7 @@ const Cell = ({
                 <Asset>
                   <Title>{tokenName} </Title> <Ticker>{ticker}</Ticker>
                 </Asset>
-                <Title>${balance.toFixed(4)}</Title>
+                <Balance>${balance.toFixed(4)}</Balance>
               </Row>
               <Row>
                 <Subtitle>${price}</Subtitle>
