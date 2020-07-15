@@ -432,6 +432,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 hasLatestXRate={hasLatestXRate}
                 fee={"--"}
                 fromTicker={fromTicker}
+                offshoreEnabled={this.props.offshoreEnabled}
               />
 
               <Footer

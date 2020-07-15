@@ -13,10 +13,16 @@ export const ExchangeSummary = ({
   toTicker,
   fee,
   hasLatestXRate,
+  offshoreEnabled,
 }) => {
   return (
     <Wrapper>
-      <Error>{hasLatestXRate ? "" : "Awaiting lastest exchange rates"}</Error>
+      {offshoreEnabled ? (
+        <Error>{hasLatestXRate ? "" : "Awaiting lastest exchange rates"}</Error>
+      ) : (
+        <Error>{"Offshore is available in 2d"}</Error>
+      )}
+
       <Container>
         <Row>
           <Key>Conversion Rate</Key>
