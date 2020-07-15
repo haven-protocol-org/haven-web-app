@@ -16,7 +16,7 @@ const Transaction = ({
   onChange,
   checked,
   priority,
-  isOwnAddress,
+                       isOwnAddress,
 }) => {
   const first = externAddress.substring(0, 4);
   const last = externAddress.substring(externAddress.length - 4);

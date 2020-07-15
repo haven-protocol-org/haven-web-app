@@ -82,7 +82,7 @@ class ConfirmExchangeModal extends React.Component<
 
   onCancel() {
     this.props.hideModal();
-    this.props.resetExchangeProcess();
+   // this.props.resetExchangeProcess();
   }
 
   onConfirm() {
@@ -111,5 +111,5 @@ const mapStateToProps = (state: DesktopAppState) => ({
 export const ConfirmExchangeModalDesktop = connect(mapStateToProps, {
   confirmExchange,
   hideModal,
-  resetExchangeProcess,
+  resetExchangeProcess
 })(ConfirmExchangeModal);

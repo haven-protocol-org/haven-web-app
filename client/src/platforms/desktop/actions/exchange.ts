@@ -204,7 +204,7 @@ const createExchangeInputs = (
   priority: number,
   address: string
 ) => {
-  const amount = BigInt(fromAmount * 1e12);
+  const amount = BigInt(Math.round(fromAmount * 10000) * 1e8);
 
   return {
     destinations: [{ address, amount: amount.toString() }],

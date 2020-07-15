@@ -28,6 +28,8 @@ export const getNodeInfo = () => {
     getInfoRPC()
       .then((res: any) => parseHeight(res))
       .then((nodeInfoHeights: NodeInfoHeights) => {
+        dispatch(updateHavenFeatures(nodeInfoHeights.chainHeight));
+
         if (
           isNewBlockAdded(
             getState().chain.nodeHeight,
@@ -38,7 +40,6 @@ export const getNodeInfo = () => {
             dispatch(getLastBlockHeader());
           }
         }
-        dispatch(updateHavenFeatures(nodeInfoHeights.chainHeight));
         dispatch(getNodeInfoSucceed(nodeInfoHeights));
       })
       .catch((err: any) => dispatch(getNodeInfoFailed(err)));

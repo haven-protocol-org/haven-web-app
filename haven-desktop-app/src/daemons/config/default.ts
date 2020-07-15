@@ -14,17 +14,37 @@ import {
 import { HAVEND_STANDARD_PORT, LOCAL_DAEMON_MAP } from "./enum";
 import { NET } from "../../env";
 
+
+ const REMOTE_NODES = [
+  {
+    address: "http://remote.haven.miner.rocks",
+    port: "17750",
+  },
+  {
+    address:'http://nodes.hashvault.pro',
+    port: "17750",
+  },
+  {
+    address:'http://remote.eu.havenprotocol.org',
+    port: "17750",
+  }
+];
+
+
+const nodeIndex =  Math.floor(Math.random() * 3);
+const remoteNode = REMOTE_NODES[nodeIndex];
+
 export const daemonConfigMainnet = {
   havend: {
     path: HAVEND_PATH_MAINNET,
     //daemonUrl: LOCAL_DAEMON_MAP.get(NET.Mainnet),
-    daemonUrl: 'http://remote.eu.havenprotocol.org:17750',
+    daemonUrl: `${remoteNode.address}:${remoteNode.port}`,
     port: HAVEND_STANDARD_PORT.Mainnet,
     args: {},
   },
   wallet: {
       path: WALLET_RPC_PATH_MAINNET,
-      daemonUrl: 'http://remote.eu.havenprotocol.org:17750',
+      daemonUrl: `${remoteNode.address}:${remoteNode.port}`,
       port: 12345,
       args: {
           "max-log-file-size":100000,
@@ -38,6 +58,8 @@ export const daemonConfigMainnet = {
   }
 
 };
+
+
 
 export const daemonConfigTestnet = {
   havend: {
@@ -89,3 +111,4 @@ export const daemonConfigStagenet = {
     },
   },
 };
+
