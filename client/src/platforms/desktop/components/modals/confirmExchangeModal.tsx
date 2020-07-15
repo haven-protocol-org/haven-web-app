@@ -10,6 +10,7 @@ import { ExchangeProcessInfo } from "platforms/desktop/reducers/exchangeProcess"
 import { hideModal } from "shared/actions/modal";
 import Transaction from "shared/components/_transactions/exchange";
 import { convertToMoney } from "utility/utility";
+import { selectPrimaryAddress } from "../../../../shared/reducers/address";
 
 interface ConfirmExchangeModalProps {
   exchange: ExchangeProcessInfo;
@@ -99,6 +100,7 @@ class ConfirmExchangeModal extends React.Component<
 
 const mapStateToProps = (state: DesktopAppState) => ({
   exchange: state.exchangeProcess,
+  address: state.address,
 });
 
 export const ConfirmExchangeModalDesktop = connect(mapStateToProps, {

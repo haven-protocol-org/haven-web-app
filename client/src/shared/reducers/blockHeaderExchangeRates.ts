@@ -3,7 +3,7 @@ import { GET_BLOCK_HEADER_EXCHANGE_RATE_SUCCEED } from "../../platforms/desktop/
 import { DesktopAppState } from "../../platforms/desktop/reducers";
 import { Ticker } from "shared/reducers/types";
 import bigInt from "big-integer";
-import {WebAppState} from "platforms/web/reducers";
+import { WebAppState } from "platforms/web/reducers";
 
 export interface ConversionRate {
   fromTicker: Ticker;
@@ -19,7 +19,7 @@ export interface XRates {
 }
 
 export interface BlockHeaderRate {
-  [key: string]: BlockHeaderRate[keyof BlockHeaderRate]
+  [key: string]: BlockHeaderRate[keyof BlockHeaderRate];
   height: number;
   signature: string;
   unused1: bigInt.BigInteger;
@@ -66,7 +66,6 @@ export const selectXRate = (
     return 0;
   }
 
-
   if (fromTicker === toTicker) {
     return 1;
   }
@@ -91,10 +90,11 @@ export const selectXRate = (
   return 0;
 };
 
-export const selectLastExchangeRates = (state: DesktopAppState | WebAppState): BlockHeaderRate | null => {
-
+export const selectLastExchangeRates = (
+  state: DesktopAppState | WebAppState
+): BlockHeaderRate | null => {
   const latestBlockerHeader: BlockHeaderRate =
-      state.blockHeaderExchangeRate[blockHeaderExchangeRate.length - 1];
+    state.blockHeaderExchangeRate[blockHeaderExchangeRate.length - 1];
 
   return latestBlockerHeader;
 };
