@@ -28,17 +28,13 @@ const Transaction = ({
         <Row>
           <Key>From Asset</Key>
           <Value>
-            {(fromTicker ? fromTicker : "") +
-              " " +
-              (fromAmount && !isNaN(fromAmount) ? fromAmount : "--")}
+            {fromAmount} {fromTicker}
           </Value>
         </Row>
         <Row>
           <Key>To Asset</Key>
           <Value>
-            {(toTicker ? toTicker : "") +
-              " " +
-              (toAmount && !isNaN(toAmount) ? toAmount : "--")}
+            {toAmount} {toTicker}
           </Value>
         </Row>
         {externAddress && (

@@ -408,15 +408,17 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                     options={exchangePrioOptions}
                     onClick={this.setExchangePriority}
                     disabled={!this.props.offshoreEnabled}
+                    width
                   />
                   <Input
-                    label="Exchange Address (Optional)"
+                    label="Recipient Address (Optional)"
                     placeholder="Exchange to another address"
                     name="externAddress"
                     type="text"
                     value={externAddress}
                     disabled={!this.props.offshoreEnabled}
                     onChange={this.onEnterExternAddress}
+                    width
                     error={this.recipientIsValid()}
                   />
                 </Fragment>

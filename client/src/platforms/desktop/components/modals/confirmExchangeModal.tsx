@@ -35,10 +35,6 @@ class ConfirmExchangeModal extends React.Component<
   };
 
   render() {
-    console.log("################");
-
-    console.log("PROPS", this.props);
-
     const {
       address,
       fromAmount,
@@ -52,8 +48,6 @@ class ConfirmExchangeModal extends React.Component<
     const readableToAmout = convertToMoney(toAmount);
     const readAbleFromAmount = convertToMoney(fromAmount);
     const readAbleFeeAmount = convertToMoney(fee);
-    // ####  Add in the fromAmount ####
-    // const readableFromAmout = convertToMoney(fromAmount);
 
     return (
       <Modal
