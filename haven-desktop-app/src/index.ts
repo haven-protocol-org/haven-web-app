@@ -35,6 +35,7 @@ const startApp = () => {
     contextIsolation: true,
     enableRemoteModule: false,
     nodeIntegration: false,
+    additionalArguments:[app.getVersion()],
     preload: path.join(__dirname, "../sites/preload/preload.js"),
   };
   // Create the browser window.
@@ -82,6 +83,7 @@ const startApp = () => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on("ready", startApp);
+
 
 let willQuit = false;
 

@@ -26,7 +26,6 @@ import { Body, Label } from "assets/styles/type";
 import { closeWallet } from "../../actions";
 import { selectIsLoggedIn } from "../../reducers/walletSession";
 import {
-  APP_VERSION,
   getNetworkByName,
   isDevMode,
   NET_TYPE_NAME,
@@ -145,7 +144,7 @@ class Navigation extends Component<NavigationProps, any> {
               </OptionsDoubleRow>
               <OptionsDoubleRow>
                 <Body>Application</Body>
-                <Label>v{APP_VERSION}</Label>
+                <Label>v{window.havenProcess.appVersion}</Label>
               </OptionsDoubleRow>
             </OptionsList>
           </>

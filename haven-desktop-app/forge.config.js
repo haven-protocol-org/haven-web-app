@@ -94,6 +94,11 @@ module.exports = {
     },
   },
 
+  hooks: {readPackageJson: (value) => {
+
+   //console.log(process);
+
+    }},
   makers: [
     {
       name: "@electron-forge/maker-squirrel",

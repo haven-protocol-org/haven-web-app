@@ -1,4 +1,5 @@
 const {
+    app,
     contextBridge,
     ipcRenderer
 } = require("electron");
@@ -15,7 +16,8 @@ contextBridge.exposeInMainWorld(
             }
         },
 
-        platform:process.platform
+        platform:process.platform,
+        appVersion:process.argv[process.argv.length -1]
 
     }
 
