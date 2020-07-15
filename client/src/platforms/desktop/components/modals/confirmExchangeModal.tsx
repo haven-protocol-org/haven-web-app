@@ -40,14 +40,13 @@ class ConfirmExchangeModal extends React.Component<
       toAmount,
       fromTicker,
       toTicker,
-      fee,priority
+      fee,
+      priority,
     } = this.props.exchange;
 
     const readableToAmout = convertToMoney(toAmount);
     const readAbleFromAmount = convertToMoney(fromAmount);
     const readAbleFeeAmount = convertToMoney(fee);
-    // ####  Add in the fromAmount ####
-    // const readableFromAmout = convertToMoney(fromAmount);
 
     return (
       <Modal

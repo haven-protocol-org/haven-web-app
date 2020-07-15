@@ -6,7 +6,7 @@ export const Container = styled.div`
   border-radius: 4px;
   background: ${(props) => props.theme.body.foreground};
   border: 1px solid ${(props) => props.theme.input.input_border};
-  margin-top: 12px;
+  margin-top: 20px;
 `;
 
 export const Row = styled.div`
