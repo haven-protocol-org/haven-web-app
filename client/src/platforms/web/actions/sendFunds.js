@@ -17,6 +17,7 @@ import {
 import { decrypt } from "../../../utility/utility-encrypt";
 import { getTransfers } from "./transferHistory";
 import { TRANSFER_SUCCEED_MESSAGE } from "../../../constants/notificationList";
+import {selectPrimaryAddress} from "../../../shared/reducers/address";
 
 export const sendFunds = (toAddress, amount, paymentId = "", ticker) => {
   console.log(core.monero_amount_format_utils.parseMoney);
@@ -31,7 +32,7 @@ export const sendFunds = (toAddress, amount, paymentId = "", ticker) => {
     // arguments for the send funds routine, including functions for backend requests
     const sendFundsArgs = {};
 
-    const ownAddress = getState().address.main;
+    const ownAddress = selectPrimaryAddress(getState().address);
     sendFundsArgs.to_address_string = toAddress;
     sendFundsArgs.from_address_string = ownAddress;
 
