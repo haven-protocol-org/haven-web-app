@@ -12,9 +12,9 @@ export const gethavenNodeState = () => {
       .then((res: HavendState) => {
 
         if (!getState().havenNode.isRunning && res.isRunning){
-          dispatch(addNotificationByMessage(NotificationType.SUCCESS, 'Local Node is starting'));
+          dispatch(addNotificationByMessage(NotificationType.SUCCESS, 'Attempting to connect to a Local node'));
         } else if (getState().havenNode.isRunning && !res.isRunning){
-          dispatch(addNotificationByMessage(NotificationType.SUCCESS, 'Local Node did stop'));
+          dispatch(addNotificationByMessage(NotificationType.SUCCESS, 'Local node is no longer running'));
         }
 
         dispatch(updatehavenNodeState(res));
