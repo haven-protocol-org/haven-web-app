@@ -1,44 +1,56 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+
 // Library Imports
 import { selectTheme } from "shared/actions";
 // Relative Imports
-import { Container } from "./styles";
 import Body from "shared/components/_layout/body";
 import Header from "shared/components/_layout/header";
 import Form from "shared/components/_inputs/form";
 import Theme from "shared/components/_inputs/theme";
-import Input from "shared/components/_inputs/input";
 import Footer from "shared/components/_inputs/footer/index.js";
-
+import Mining from "../../../components/animation/index.js";
+// For the miner
+import { selectisLocalNode } from "platforms/desktop/reducers/havenNode";
 import { dark, light } from "assets/styles/themes.js";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import {
   MiningRequestTypes,
-  MiningStatus
+  MiningStatus,
 } from "platforms/desktop/reducers/mining";
 import { Spinner } from "shared/components/spinner";
 import {
   miningStatus,
   startMining,
-  stopMining
+  stopMining,
 } from "platforms/desktop/actions/mining";
+import { HavenNodeSetting } from "platforms/desktop/pages/_wallet/settings/node/nodeSetting";
 
 type ThemeOption = { theme: string; value: string };
-type NodeOptions = { value: string };
+type BalanceOption = { ticker: string; value: string; code: string };
+type AddressOption = { name: string; address: string };
+
+export interface NodeSettingProps {
+  localNode: boolean;
+}
 
 interface SettingsProps {
   theme: any;
+  balance: any;
   mining: MiningStatus;
   selectTheme: (theme: any) => void;
   startMining: () => void;
   stopMining: () => void;
+  onChange: () => void;
   miningStatus: () => void;
+  title: string;
+  description: string;
+  localNode: boolean;
 }
 
 const options: ThemeOption[] = [
   { theme: "dark", value: "Dark Theme" },
-  { theme: "light", value: "Light Theme" }
+  { theme: "light", value: "Light Theme" },
 ];
 
 class SettingsDesktopPage extends Component<SettingsProps, any> {
@@ -46,7 +58,8 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
 
   state = {
     value: "",
-    node: "remote"
+    node: "remote",
+    balance: "United States Dollars",
   };
 
   componentDidMount() {
@@ -56,7 +69,7 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
     }
     window.scrollTo(0, 0);
     this.setState({
-      value: this.props.theme.value
+      value: this.props.theme.value,
     });
   }
 
@@ -93,12 +106,12 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
     if (theme === "light") {
       this.props.selectTheme(light);
       this.setState({
-        value: value
+        value: value,
       });
     } else if (theme === "dark") {
       this.props.selectTheme(dark);
       this.setState({
-        value: value
+        value: value,
       });
     } else {
       return null;
@@ -107,7 +120,6 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
 
   onMiningButtonClicked = () => {
     const mining: MiningStatus = this.props.mining;
-
     if (mining.miningRequest !== MiningRequestTypes.None) {
       return;
     }
@@ -119,13 +131,20 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
     }
   };
 
-  handleNode = ({ value }: ThemeOption) => {
-    alert("Select Node type");
+  handleChange = (event: any) => {
+    const name = event.target.name;
+    const value = event.target.value;
+
+    this.setState({
+      [name]: value,
+    });
   };
 
-  setNodeType = ({ value }: ThemeOption) => {
-    alert("Save Changes");
+  setBalance = ({ ticker, value }: BalanceOption) => {
+    alert("set state here");
   };
+
+  manageAddress = ({ name, address }: AddressOption) => {};
 
   render() {
     const { value } = this.state;
@@ -157,87 +176,29 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
             onClick={this.handleClick}
           />
         </Form>
+
+        <HavenNodeSetting />
+
         <Header
-          title="Mining"
-          description="Decentralize the Haven protocol by mining and have the chance to earn XHV as a reward"
+          title="Mining "
+          description="Start mining with your computer and increase your chance to earn Haven"
         />
 
-        <>
-          <Input
-            width={true}
-            label="Status"
-            placeholder="Mining Status"
-            type="text"
-            readOnly={true}
-            name="daemon_password"
-            value={
-              mining.active
-                ? `Mining with ${mining.speed} hashes per second`
-                : "Not Mining"
-            }
+        <Mining
+          //@ts-ignore
+          isLocalNode={this.props.localNode}
+          status={true}
+          mining={mining.active === true ? "Mining" : "Not Mining"}
+          hash={mining.active === true ? `${mining.speed} Hashes` : "0 Hashes"}
+        >
+          <Footer
+            //@ts-ignore
+            onClick={this.onMiningButtonClicked}
+            loading={false}
+            label={buttonLabel}
+            disabled={!this.props.localNode}
           />
-          <Container>
-            <Footer
-              onClick={this.onMiningButtonClicked}
-              loading={false}
-              label={buttonLabel}
-            />
-          </Container>
-        </>
-
-        {/*<Header
-          title="Nodes"
-          description="Choose between running a local or remote node"
-        />
-        <Form onSubmit={() => {}}>
-          <Nodes
-            label="Select Node"
-            placeholder="Select Node"
-            name="node"
-            value={"Remote"}
-            options={nodes}
-            onClick={this.handleNode}
-          />
-          {localeNode == true && (
-            <>
-              <Input
-                label="Node Address"
-                placeholder="Enter node address"
-                type="text"
-                name="node_address"
-                value={""}
-              />
-              <Input
-                label="Node Port"
-                placeholder="Enter port number"
-                type="text"
-                name="port_number"
-                value={""}
-              />
-              <Input
-                label="Daemon Username (Optional)"
-                placeholder="Enter daemon username"
-                type="text"
-                name="daemon_username"
-                value={""}
-              />
-              <Input
-                label="Daemon Password (Optional)"
-                placeholder="Enter daemon password"
-                type="text"
-                name="daemon_password"
-                value={""}
-              />
-              <Container>
-                <Footer
-                  onClick={this.setNodeType}
-                  loading={false}
-                  label="Save"
-                />
-              </Container>
-            </>
-          )}
-        </Form>*/}
+        </Mining>
       </Body>
     );
   }
@@ -245,10 +206,13 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
 
 const mapStateToProps = (state: DesktopAppState) => ({
   theme: state.theme,
-  mining: state.mining
+  mining: state.mining,
+  localNode: selectisLocalNode(state.havenNode),
 });
 
-export const SettingsDesktop = connect(
-  mapStateToProps,
-  { selectTheme, startMining, stopMining, miningStatus }
-)(SettingsDesktopPage);
+export const SettingsDesktop = connect(mapStateToProps, {
+  selectTheme,
+  startMining,
+  stopMining,
+  miningStatus,
+})(SettingsDesktopPage);

@@ -9,7 +9,7 @@ import {
 } from "shared/reducers/xBalance";
 import { Ticker, BalanceTypes as BalanceType } from "shared/reducers/types";
 import { Container, DonutChart, Legend } from "./style";
-import { blockHeaderExchangeRate } from "platforms/desktop/reducers/blockHeaderExchangeRates";
+import { blockHeaderExchangeRate } from "shared/reducers/blockHeaderExchangeRates";
 
 interface AssetAllocationProps {
   assetsInUSD: XViewBalance;
@@ -126,7 +126,7 @@ class AssetAllocationComponent extends Component<AssetAllocationProps, any> {
                 cy={center}
                 strokeWidth={strokeWidth}
                 fill="none"
-              ></circle>
+              />
             );
           })}
         </svg>

@@ -1,14 +1,13 @@
 import { AnyAction } from "redux";
 import {
   GET_BLOCK_HEADER_EXCHANGE_RATE_FETCH,
-  GET_BLOCK_HEADER_EXCHANGE_RATE_SUCCEED
+  GET_BLOCK_HEADER_EXCHANGE_RATE_SUCCEED,
 } from "./types";
 import { getLastBlockHeaderRPC } from "../ipc/rpc/rpc";
-import { BlockHeaderRate } from "../reducers/blockHeaderExchangeRates";
+import { BlockHeaderRate } from "shared/reducers/blockHeaderExchangeRates";
 import bigInt from "big-integer";
 
 export const getLastBlockHeader = () => {
-
   return (dispatch: any) => {
     dispatch({ type: GET_BLOCK_HEADER_EXCHANGE_RATE_FETCH });
 
@@ -23,13 +22,12 @@ export const getLastBlockHeader = () => {
 
 const createRecordEntry = (rawBlockHeaderData: any): BlockHeaderRate => {
   const blockHeader = rawBlockHeaderData.block_header;
-  const blockHeight: number = blockHeader.height +1;
-  Object.entries(blockHeader.pricing_record)
-      .forEach(([key, value]) => {
-        if (key !== 'signature') {
-          blockHeader.pricing_record[key] = bigInt(value as number)
-        }
-      });
+  const blockHeight: number = blockHeader.height + 1;
+  Object.entries(blockHeader.pricing_record).forEach(([key, value]) => {
+    if (key !== "signature") {
+      blockHeader.pricing_record[key] = bigInt(value as number);
+    }
+  });
   const priceRecord = blockHeader.pricing_record;
   priceRecord.height = blockHeight;
   priceRecord.timestamp = blockHeader.timestamp;

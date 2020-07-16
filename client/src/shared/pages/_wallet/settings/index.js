@@ -20,7 +20,7 @@ import { dark, light } from "../../../../assets/styles/themes.js";
 
 const options = [
   { theme: "dark", value: "Dark Theme" },
-  { theme: "light", value: "Light Theme" }
+  { theme: "light", value: "Light Theme" },
 ];
 
 class SettingsPage extends Component {
@@ -30,13 +30,13 @@ class SettingsPage extends Component {
     reveal: false,
     validated: true,
     psk: "",
-    seed: ""
+    seed: "",
   };
 
   componentDidMount() {
     window.scrollTo(0, 0);
     this.setState({
-      value: this.props.theme.value
+      value: this.props.theme.value,
     });
   }
 
@@ -44,12 +44,12 @@ class SettingsPage extends Component {
     if (theme === "light") {
       this.props.selectTheme(light);
       this.setState({
-        value: value
+        value: value,
       });
     } else if (theme === "dark") {
       this.props.selectTheme(dark);
       this.setState({
-        value: value
+        value: value,
       });
     } else {
       return null;
@@ -58,7 +58,7 @@ class SettingsPage extends Component {
 
   toggleVisibility = () => {
     this.setState({
-      reveal: !this.state.reveal
+      reveal: !this.state.reveal,
     });
   };
 
@@ -191,19 +191,16 @@ class SettingsPage extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  theme: state.theme
+const mapStateToProps = (state) => ({
+  theme: state.theme,
 });
 
-export const Settings = connect(
-  mapStateToProps,
-  { selectTheme }
-)(SettingsPage);
+export const Settings = connect(mapStateToProps, { selectTheme })(SettingsPage);
 
 Settings.propTypes = {
   psk: PropTypes.string.isRequired,
   seed: PropTypes.string.isRequired,
   sec_viewKey_string: PropTypes.string.isRequired,
   pub_spendKey_string: PropTypes.string.isRequired,
-  pub_viewKey_string: PropTypes.string.isRequired
+  pub_viewKey_string: PropTypes.string.isRequired,
 };

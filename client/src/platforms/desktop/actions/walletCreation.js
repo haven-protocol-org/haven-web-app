@@ -4,50 +4,50 @@ import {
   CREATE_WALLET_SUCCEED,
   VALIDATE_MNEMONIC_FAILED,
   VALIDATE_MNEMONIC_SUCCEED,
-  QUERY_MNEMONIC_FOR_WALLET_GENERATION_SUCCEED
+  QUERY_MNEMONIC_FOR_WALLET_GENERATION_SUCCEED,
 } from "./types";
 import { createWalletRPC, queryMnemonicKeyRPC } from "../ipc/rpc/rpc";
 
 const createWalletFetch = () => ({ type: CREATE_WALLET_FETCHING });
 const createWalletSucceed = () => ({
   type: CREATE_WALLET_SUCCEED,
-  payload: null
+  payload: null,
 });
-const createWalletFailed = error => ({
+const createWalletFailed = (error) => ({
   type: CREATE_WALLET_FAILED,
-  payload: error
+  payload: error,
 });
 
 export const createWallet = (filename, password) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(createWalletFetch());
 
     const language = "English";
     const params = { language, filename, password };
 
     createWalletRPC(params)
-      .then(result => queryMnemonicKeyRPC())
-      .then(result => {
+      .then((result) => queryMnemonicKeyRPC())
+      .then((result) => {
         dispatch(queryMnemonicForWalletGenerationSucceed(result.key));
       })
       .then(() => {
         dispatch(createWalletSucceed());
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(createWalletFailed(error));
       });
   };
 };
 
-const queryMnemonicForWalletGenerationSucceed = key => ({
+const queryMnemonicForWalletGenerationSucceed = (key) => ({
   type: QUERY_MNEMONIC_FOR_WALLET_GENERATION_SUCCEED,
-  payload: key
+  payload: key,
 });
 
-export const mnenomicVerificationSucceed = fileName => ({
+export const mnenomicVerificationSucceed = (fileName) => ({
   type: VALIDATE_MNEMONIC_SUCCEED,
-  payload: fileName
+  payload: fileName,
 });
 export const mneomicVerifcationFailed = () => ({
-  type: VALIDATE_MNEMONIC_FAILED
+  type: VALIDATE_MNEMONIC_FAILED,
 });

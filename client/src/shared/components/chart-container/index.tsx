@@ -45,7 +45,7 @@ class ChartWrapper extends Component<any, any> {
       prices = [1.0, 1.0];
       labels = [
         new Date(1792, 3, 2).toLocaleDateString(),
-        new Date().toLocaleDateString()
+        new Date().toLocaleDateString(),
       ];
     }
 
@@ -65,13 +65,13 @@ class ChartWrapper extends Component<any, any> {
           }
         />
         <Row>
-          <Statistic label="Amount" value={amount} />
+          <Statistic label="Amount" value={amount.toFixed(4)} />
           <Statistic label="Price" value={`$` + price.toFixed(4)} />
           <Statistic
             label="Value"
             value={value.toLocaleString("en-US", {
               style: "currency",
-              currency: "USD"
+              currency: "USD",
             })}
           />
         </Row>
@@ -81,12 +81,9 @@ class ChartWrapper extends Component<any, any> {
 }
 
 const mapStateToProps = (state: any) => ({
-  priceHistory: state.priceHistory
+  priceHistory: state.priceHistory,
 });
 
 export const ChartContainer = withRouter(
-  connect(
-    mapStateToProps,
-    { getPriceHistory }
-  )(ChartWrapper)
+  connect(mapStateToProps, { getPriceHistory })(ChartWrapper)
 );

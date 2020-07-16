@@ -1,26 +1,17 @@
-import {ipcRenderer} from 'electron';
-import {CommunicationChannels} from "./ipc-types";
-
-
+import { ipcRenderer } from "electron";
+import { CommunicationChannel } from "./ipc-types";
 
 // @ts-ignore
-const ipcRender:typeof ipcRenderer= window.ipcRenderer;
+const ipcRender: typeof ipcRenderer = window.havenProcess;
 
+export const getHavendStateIPC = () => {
+  return ipcRender.invoke(CommunicationChannel.HAVEND);
+};
 
-export const getDaemonStatesIPC = () => {
-
-    return ipcRender.invoke(CommunicationChannels.DAEMON)
+export const getWalletStateIPC = () => {
+  return ipcRender.invoke(CommunicationChannel.WALLET_RPC);
 };
 
 export const requestSavedWalletsIPC = () => {
-
-    return ipcRender.invoke(CommunicationChannels.WALLETS)
-
+  return ipcRender.invoke(CommunicationChannel.STORED_WALLETS);
 };
-
-
-
-
-
-
-

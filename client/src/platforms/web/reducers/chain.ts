@@ -1,6 +1,6 @@
-import { UPDATE_CHAIN_DATA } from "../../../shared/actions/types";
-import {SyncState} from "../../../shared/types/types";
-import {AnyAction} from "redux";
+import { SyncState } from "../../../shared/types/types";
+import { AnyAction } from "redux";
+import {UPDATE_CHAIN_DATA} from "platforms/web/actions/types";
 
 const INITIAL_STATE = {
   start_height: -1,
@@ -18,18 +18,16 @@ export const chain = (state = INITIAL_STATE, action: AnyAction) => {
   }
 };
 
-export const selectBlockchainHeight = (state:any) => {
+export const selectBlockchainHeight = (state: any) => {
   return state.chain.blockchain_height;
 };
 
 export const selectWebSyncState = (state: any): SyncState => {
-
-  const isSyncing =  state.chain.blockchain_height > state.chain.scanned_block_height + 5;
+  const isSyncing =
+    state.chain.blockchain_height > state.chain.scanned_block_height + 5;
   const blockHeight = state.chain.blockchain_height;
   const scannedHeight = state.chain.scanned_block_height;
   const scannedDate = new Date(state.chain.scanned_block_timestamp * 1000);
 
-  return {isSyncing, blockHeight, scannedHeight, scannedDate}
-
-
+  return { isSyncing, blockHeight, scannedHeight, scannedDate };
 };

@@ -4,6 +4,7 @@ import {
   ACCOUNT_CREATION_REQUESTED
 } from "../actions/types";
 import { getMessageOfError } from "../../../utility/utility";
+import {selectPrimaryAddress} from "../../../shared/reducers/address";
 
 const INITIAL_STATE = {
   status: "",
@@ -44,9 +45,9 @@ export const selectErrorMessageForLogin = state => {
   return "";
 };
 
-export const selectCredentials = state => {
+export const selectCredentials = (state) => {
   const view_key = state.keys.sec_viewKey_string;
-  const address = state.address.main;
+  const address = selectPrimaryAddress(state.address);
 
   return { view_key, address };
 };

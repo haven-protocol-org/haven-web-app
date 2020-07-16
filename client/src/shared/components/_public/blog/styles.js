@@ -9,6 +9,11 @@ export const Wrapper = styled.div`
   flex-direction: column;
   padding: 40px;
   align-items: center;
+  justify-items: center;
+
+  ${media.mobile`
+  padding: 20px;
+  `}
 `;
 
 export const Container = styled.div`
@@ -46,6 +51,7 @@ export const Route = styled.a`
 export const Cell = styled.div`
   height: auto;
   display: flex;
+  width: auto;
   flex-direction: column;
   align-items: left;
   flex: 1;
@@ -95,4 +101,13 @@ export const Description = styled.div`
   color: #8a8d90;
   letter-spacing: 0;
   line-height: 26px;
+`;
+
+export const Date = styled.div`
+  font-size: 14px;
+  color: #8a8d90;
+  letter-spacing: 0;
+  line-height: 20px;
+  margin-bottom: 12px;
+  margin-top: -4px;
 `;

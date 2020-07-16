@@ -4,11 +4,10 @@ import React, { Component } from "react";
 import Body from "../../../components/_layout/body";
 import { ChartContainer } from "shared/components/chart-container";
 
-
 interface DetailsProps {
-  amount:number,
-  price:number,
-  value:number,
+  amount: number;
+  price: number;
+  value: number;
   assetId: string;
 }
 

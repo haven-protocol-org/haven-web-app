@@ -54,7 +54,7 @@ export const Progress = styled.div`
 `;
 
 export const Step = styled.div`
-  width: ${props =>
+  width: ${(props) =>
     (props.width === 1 ? "10%" : null) ||
     (props.width === 2 ? "50%" : null) ||
     (props.width === 3 ? "100%" : null)}
@@ -74,7 +74,7 @@ export const Buttons = styled.div`
   margin: 10px;
   display: flex;
   align-items: center;
-  justify-content: ${props =>
+  justify-content: ${(props) =>
     props.buttons === "single" ? "flex-end" : "space-between"}
   margin-top: 40px;
 

@@ -7,7 +7,7 @@ export const Container = styled.div`
   border-radius: 4px;
   background: ${props => props.theme.body.foreground};
   border: 1px solid ${props => props.theme.body.border};
-  margin-top: 12px;
+  margin-bottom: 12px;
 `;
 
 export const Header = styled.div`
@@ -18,7 +18,11 @@ export const Header = styled.div`
 export const Footer = styled.div`
   height: auto;
   padding: 16px 12px;
+  margin-top: 12px;
+  border-radius: 4px;
   border-top: 1px solid ${props => props.theme.body.border};
+  background: ${props => props.theme.body.foreground};
+  border: 1px solid ${props => props.theme.body.border};
 `;
 
 export const Row = styled.div`

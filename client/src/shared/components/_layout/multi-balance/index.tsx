@@ -2,40 +2,51 @@
 import React, { Component } from "react";
 
 // Relative Imports
-import { Pending, Value, Wrapper, Amount } from "./styles";
+import { Value, Wrapper, Amount } from "./styles";
 import { connect } from "react-redux";
 import { selectWebSyncState } from "platforms/web/reducers/chain";
 import { Spinner } from "../../spinner";
 import { ProgressBar } from "../../progress-bar";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { SyncState } from "shared/types/types";
-import { isDesktop, OFFSHORE_ENABLED } from "constants/env";
+import { isDesktop} from "constants/env";
 import { selectDesktopSyncState } from "platforms/desktop/reducers/chain";
-import { selectTotalBalances, XViewBalances } from "shared/reducers/xBalance";
+import {
+  selectBalances,
+  selectTotalBalances,
+  XViewBalances,
+} from "shared/reducers/xBalance";
 import { Ticker } from "shared/reducers/types";
+import {selectIsOffshoreEnabled} from "shared/reducers/havenFeature";
+import {WebAppState} from "platforms/web/reducers";
+
+const OFFSHORE_TICKERS = [Ticker.xUSD, Ticker.xBTC, null];
 
 interface BalanceProps {
   syncState: SyncState;
   balances: XViewBalances;
+  offshoreEnabled: boolean;
 }
 
 interface BalanceState {
-  currentTicker: Ticker;
+  currentTicker: Ticker | null;
   currentIndex: number;
+  tickerOptions: Array<Ticker | null>;
 }
 
 class Balances extends Component<BalanceProps, BalanceState> {
   state: BalanceState = {
     currentIndex: 0,
-    currentTicker: Object.keys(Ticker)[0] as Ticker
+    currentTicker: this.props.offshoreEnabled ? OFFSHORE_TICKERS[0] : Ticker.XHV,
+    tickerOptions: this.props.offshoreEnabled ? OFFSHORE_TICKERS : [Ticker.XHV]
   };
 
   onClickNext() {
-    if (!OFFSHORE_ENABLED) {
+    if (!this.props.offshoreEnabled) {
       return;
     }
 
-    const tickerNum: number = Object.keys(Ticker).length;
+    const tickerNum: number = OFFSHORE_TICKERS.length;
 
     let nextIndex = this.state.currentIndex + 1;
     if (nextIndex === tickerNum) {
@@ -43,54 +54,74 @@ class Balances extends Component<BalanceProps, BalanceState> {
     }
     this.setState({
       currentIndex: nextIndex,
-      currentTicker: Object.keys(Ticker)[nextIndex] as Ticker
+      currentTicker: OFFSHORE_TICKERS[nextIndex] as Ticker,
     });
+  }
+
+  static getDerivedStateFromProps(nextProps: Readonly<BalanceProps>, prevState: Readonly<BalanceState>): any | null {
+
+    if (nextProps.offshoreEnabled && prevState.tickerOptions.length === 1) {
+      return {
+        tickerOptions: OFFSHORE_TICKERS,
+        currentTicker: OFFSHORE_TICKERS[0]
+      } as Partial<BalanceState>
+    }
+
+    return null;
+
   }
 
   render() {
     const ticker = this.state.currentTicker;
+
+    if (ticker === null)
+      return (
+        <Wrapper onClick={() => this.onClickNext()}>
+          <Amount>-/-</Amount>
+          <Value>Portfolio Value Hidden</Value>
+        </Wrapper>
+      );
+
     const { prefix, suffix } =
       ticker === Ticker.xUSD
         ? { prefix: "$", suffix: "" }
         : ticker === Ticker.xBTC
         ? { prefix: "₿", suffix: "" }
-        : { prefix: "", suffix: " XHV" };
+        : { prefix: "Ħ", suffix: "" };
 
-    const xUsdAmount =
-      prefix + this.props.balances[ticker].unlockedBalance.toFixed(4) + suffix;
-    const xUsdAmountLocked =
-      prefix + this.props.balances[ticker].lockedBalance.toFixed(2) + suffix;
+    const { balance } = this.props.balances[ticker];
+
+    const totalBalance = prefix + balance.toFixed(4) + suffix;
+
     const { isSyncing, blockHeight, scannedHeight } = this.props.syncState;
 
-    const amount = (scannedHeight / blockHeight) * 100;
-    const percentage = amount.toFixed(2);
+    const percentage = ((scannedHeight / blockHeight) * 100).toFixed(2);
 
     return (
       <Wrapper onClick={() => this.onClickNext()}>
         <Amount isSyncing={isSyncing}>
-          {this.props.balances.xUSD.balance === 0 ? <Spinner /> : xUsdAmount}
+          {balance === -1 ? <Spinner /> : totalBalance}
         </Amount>
-        <Value>{isSyncing ? `Syncing Vault... ${percentage}%` : ``}</Value>
+        <Value>
+          {isSyncing
+            ? `Syncing Vault... ${percentage}%`
+            : `Portfolio Value (${
+                ticker === "XHV" ? ticker : ticker.substring(1)
+              }) `}
+        </Value>
         {isSyncing && <ProgressBar percentage={percentage} />}
-        {this.props.balances.xUSD.lockedBalance > 0 ? (
-          <Pending>
-            You have {xUsdAmountLocked} pending.
-            <br />
-            Balances are updating.
-          </Pending>
-        ) : null}
       </Wrapper>
     );
   }
 }
 
-const mapStateToProps = (state: DesktopAppState) => ({
-  balances: selectTotalBalances(state),
+const mapStateToProps = (state: DesktopAppState | WebAppState) => ({
+  offshoreEnabled: selectIsOffshoreEnabled(state),
+  balances: selectIsOffshoreEnabled(state)
+    ? selectTotalBalances(state)
+    : selectBalances(state),
   syncState: isDesktop()
     ? selectDesktopSyncState(state as DesktopAppState)
-    : selectWebSyncState(state)
+    : selectWebSyncState(state),
 });
-export const MultiBalance = connect(
-  mapStateToProps,
-  null
-)(Balances);
+export const MultiBalance = connect(mapStateToProps, null)(Balances);

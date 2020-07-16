@@ -1,34 +1,43 @@
 import {
+  TRANSFER_CREATION_FAILED,
+  TRANSFER_CREATION_FETCHING,
+  TRANSFER_CREATION_SUCCEED,
   TRANSFER_FAILED,
   TRANSFER_FETCHING,
-  TRANSFER_SUCCEED,
   TRANSFER_RESET,
-  OFFSHORE_TRANSFER_SUCCEED,
-  OFFSHORE_TRANSFER_FETCHING,
-  OFFSHORE_TRANSFER_FAILED
+  TRANSFER_SUCCEED,
 } from "../actions/types";
 import { AnyAction } from "redux";
 import { DesktopAppState } from "./index";
+import { Ticker } from "shared/reducers/types";
 
 export interface TxProcessInfo {
   address: string;
-  amount: bigint|null;
-  fee: bigint|null;
+  fromAmount: number | null | bigint;
+  fee: bigint | null;
   isFetching: boolean;
   info: string;
   error: string;
   succeed: boolean;
+  created: boolean;
+  metaList: Array<string>;
+  paymentId?: string;
+  priority?: number;
+  fromTicker: Ticker | null;
 }
 
 const INITIAL_STATE: TxProcessInfo = {
-  address:'',
-  amount:null,
-  fee:null,
-  isFetching:false,
-  info:'',
-  error:'',
-  succeed:false
-
+  address: "",
+  fromAmount: null,
+  fee: null,
+  isFetching: false,
+  info: "",
+  error: "",
+  succeed: false,
+  created: false,
+  metaList: [],
+  paymentId: "",
+  fromTicker: null,
 };
 
 export const transferProcess = (
@@ -36,27 +45,31 @@ export const transferProcess = (
   action: AnyAction
 ): TxProcessInfo => {
   switch (action.type) {
-    case TRANSFER_RESET:
-      return INITIAL_STATE;
-    case OFFSHORE_TRANSFER_FETCHING:
+    case TRANSFER_CREATION_FETCHING:
+      return { ...state, ...action.payload, isFetching: true };
+
+    case TRANSFER_CREATION_SUCCEED:
+      return { ...state, ...action.payload, created: true, isFetching: false };
+
+    case TRANSFER_CREATION_FAILED:
+      return { ...state, error: action.payload, isFetching: false };
+
     case TRANSFER_FETCHING:
       return {
         ...state,
-        amount: action.payload.amount,
-        address: action.payload.address,
-        isFetching: true
+        isFetching: true,
       };
-    case OFFSHORE_TRANSFER_SUCCEED:
     case TRANSFER_SUCCEED:
-      return { ...state, ...action.payload, isFetching: false, succeed: true };
-    case OFFSHORE_TRANSFER_FAILED:
+      return { ...state, isFetching: false, succeed: true };
     case TRANSFER_FAILED:
       return {
         ...state,
         error: action.payload.error,
         isFetching: false,
-        succeed: false
+        succeed: false,
       };
+    case TRANSFER_RESET:
+      return INITIAL_STATE;
     default:
       return state;
   }

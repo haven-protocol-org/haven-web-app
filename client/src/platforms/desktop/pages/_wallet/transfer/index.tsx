@@ -1,21 +1,18 @@
-import { connect } from "react-redux";
-import {
-  offshoreTransfer,
-  resetTransferProcess,
-  transfer
-} from "../../../actions";
-import  {Transfer}  from "shared/pages/_wallet/transfer";
-import React, { Component } from "react";
-import { transferSucceed } from "../../../reducers/transferProcess";
-import { Ticker } from "shared/reducers/types";
+import { getAddress } from "platforms/desktop/actions/subadresses";
 import { DesktopAppState } from "platforms/desktop/reducers";
-import { getOwnAddress } from "platforms/desktop/actions/walletSession";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Transfer } from "shared/pages/_wallet/transfer";
+import { Ticker } from "shared/reducers/types";
+import { resetTransferProcess } from "../../../actions";
+import { transferSucceed } from "../../../reducers/transferProcess";
+import { createTransfer } from "platforms/desktop/actions";
 
 class TransferDesktopContainer extends Component<any, any> {
-  private sendTicker: Ticker = Ticker.XHV;
 
+  private sendTicker: Ticker = Ticker.XHV;
   componentDidMount(): void {
-    if (!this.props.address) {
+    if (this.props.address.length === 0) {
       this.props.getOwnAddress();
     }
   }
@@ -26,6 +23,8 @@ class TransferDesktopContainer extends Component<any, any> {
     snapshot?: any
   ): void {
     if (this.props.transferSucceed) {
+      console.log("ROUTE", this.props.tx.fromTicker);
+
       this.props.resetTransferProcess();
       this.props.history.push("/wallet/assets/" + this.sendTicker);
     }
@@ -38,20 +37,15 @@ class TransferDesktopContainer extends Component<any, any> {
     ticker: Ticker = Ticker.XHV
   ) => {
     this.sendTicker = ticker;
-    if (ticker === Ticker.XHV) {
-      this.props.transfer(address, amount, paymentId);
-    }
-    if (ticker === Ticker.xUSD) {
-      this.props.offshoreTransfer(address, amount, paymentId);
-    }
+    this.props.createTransfer(address, amount, paymentId, ticker);
   };
 
   render() {
     return (
-        //@ts-ignore
+      //@ts-ignore
       <Transfer
         isProcessing={this.props.tx.isFetching}
-        address={this.props.address}
+        addresses={this.props.address}
         sendFunds={this.onSendFunds}
       />
     );
@@ -59,12 +53,13 @@ class TransferDesktopContainer extends Component<any, any> {
 }
 
 export const mapStateToProps = (state: DesktopAppState) => ({
-  address: state.address.main,
+  address: state.address,
   transferSucceed: transferSucceed(state),
-  tx: state.transferProcess
+  tx: state.transferProcess,
 });
 
-export const TransferDesktop = connect(
-  mapStateToProps,
-  { transfer, resetTransferProcess, offshoreTransfer, getOwnAddress }
-)(TransferDesktopContainer);
+export const TransferDesktop = connect(mapStateToProps, {
+  createTransfer,
+  resetTransferProcess,
+  getOwnAddress: getAddress,
+})(TransferDesktopContainer);

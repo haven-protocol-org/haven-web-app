@@ -1,12 +1,17 @@
+import React from "react";
+import { AppDesktop } from "./App";
+
 import { applyMiddleware, createStore, Store } from "redux";
 import reduxThunk from "redux-thunk";
 import reducers from "./reducers";
-import { loadState, logger, saveState } from "utility/dev-helper";
+import {
+  loadState,
+  logger,
+  saveDesktopState,
+} from "vendor/clipboard/dev-helper";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { GlobalStyle } from "globalStyle";
-import React from "react";
-import { AppDesktop } from "./App";
 
 let store: Store;
 
@@ -24,7 +29,7 @@ export const startDesktopAppInDevMode = () => {
   )(createStore);
   store = createStoreWithMiddleware(reducers, persistedState);
   store.subscribe(() => {
-    saveState(store.getState());
+    saveDesktopState(store.getState());
   });
 
   render();

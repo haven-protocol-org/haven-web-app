@@ -1,6 +1,6 @@
-import {THEME} from "./types";
+import { THEME } from "./types";
 
-export const selectTheme = theme => ({
-    type: THEME,
-    payload: theme
+export const selectTheme = (theme) => ({
+  type: THEME,
+  payload: theme,
 });

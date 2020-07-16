@@ -1,10 +1,8 @@
 // Library Imports
 import React from "react";
-
 // Relative Imports
 import {
   Core,
-  Contributors,
   Cell,
   Description,
   Title,
@@ -24,15 +22,13 @@ import marty from "../../../../assets/team/marty.png";
 import ahawk from "../../../../assets/team/ahawk.png";
 import mad from "../../../../assets/team/mad.png";
 import rare from "../../../../assets/team/rare.png";
-import goshiz from "../../../../assets/team/goshiz.png";
 import jriggs from "../../../../assets/team/jriggs.png";
-import luge from "../../../../assets/team/luge.png";
 
 const Content = () => {
   return (
     <Container>
       <Wrapper>
-        <Heading>Core Team</Heading>
+        <Heading>Core Developers</Heading>
         <Core>
           <Cell>
             <Avatar src={dweab} />
@@ -59,39 +55,30 @@ const Content = () => {
       </Wrapper>
       <Wrapper>
         <Heading>Contributing Team</Heading>
-        <Contributors>
-          <Cell>
-            <Avatar src={goshiz} />
-            <Title>Goshiz</Title>
-            <Description>Core Developer</Description>
-          </Cell>
+        <Core>
           <Cell>
             <Avatar src={ahawk} />
             <Title>AHawk</Title>
             <Description>Community Manager</Description>
           </Cell>
-          <Cell>
-            <Avatar src={jriggs} />
-            <Title>Jriggs</Title>
-            <Description>Community Manager</Description>
-          </Cell>
+
           <Cell>
             <Avatar src={mad} />
             <Title>Madlentil</Title>
             <Description>Community Manager</Description>
           </Cell>
           <Cell>
-            <Avatar src={luge} />
-            <Title>Luge</Title>
-            <Description>Community Manager</Description>
-          </Cell>
-
-          <Cell>
             <Avatar src={rare} />
             <Title>Rarecommons</Title>
             <Description>Community Manager</Description>
           </Cell>
-        </Contributors>
+
+          <Cell>
+            <Avatar src={jriggs} />
+            <Title>Jriggs</Title>
+            <Description>Community Manager</Description>
+          </Cell>
+        </Core>
       </Wrapper>
     </Container>
   );

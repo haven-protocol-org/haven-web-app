@@ -11,7 +11,7 @@ import { TransferDesktop } from "../../pages/_wallet/transfer";
 import { SettingsDesktop } from "../../pages/_wallet/settings";
 import { connect } from "react-redux";
 import { selectIsLoggedIn } from "../../reducers/walletSession";
-import { refresh, updateApp } from "../../actions";
+import { refresh, updateApp, getDaemonsState } from "../../actions";
 import Page from "../../../../shared/components/_layout/page";
 import Menu from "../../../../shared/components/_layout/menu";
 
@@ -20,17 +20,22 @@ import Menu from "../../../../shared/components/_layout/menu";
  */
 class PrivateRoutes extends Component {
   componentDidMount() {
-    this.props.refreshApp();
-    this.addTimer();
+    this.props.getDaemonsState();
+      this.props.refreshApp();
+      this.addTimer();
+
   }
 
   addTimer() {
+    this.updateDaemonsTimer = setInterval(this.props.getDaemonsState, 2000);
     this.updateTimer = setInterval(this.props.updateApp, 15000);
   }
 
   removeTimer() {
     clearInterval(this.updateTimer);
+    clearInterval(this.updateDaemonsTimer);
     this.updateTimer = null;
+    this.updateDaemonsTimer = null;
   }
 
   componentWillUnmount() {
@@ -76,10 +81,10 @@ class PrivateRoutes extends Component {
 }
 
 export const mapStateToProps = state => ({
-  isLoggedIn: selectIsLoggedIn(state)
+  isLoggedIn: selectIsLoggedIn(state),
 });
 
 export const PrivateRoutesDesktop = connect(
   mapStateToProps,
-  { refreshApp: refresh, updateApp }
+  { refreshApp: refresh, updateApp, getDaemonsState }
 )(PrivateRoutes);

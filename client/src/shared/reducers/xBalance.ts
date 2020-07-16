@@ -1,15 +1,16 @@
+import { AnyAction } from "redux";
+import { DesktopAppState } from "platforms/desktop/reducers";
+import { INITAL_FETCHING_STATE, Ticker, XFetching } from "./types";
+import { selectXRate } from "shared/reducers/blockHeaderExchangeRates";
+import bigInt from "big-integer";
+import { convertBalanceForReading, convertToMoney } from "utility/utility";
+import { WebAppState } from "platforms/web/reducers";
 import {
   GET_BALANCES_FAILED,
   GET_BALANCES_FETCHING,
   GET_BALANCES_SUCCEED,
-  GET_OFFSHORE_BALANCE_SUCCEED
-} from "platforms/desktop/actions/types";
-import { AnyAction } from "redux";
-import { DesktopAppState } from "platforms/desktop/reducers";
-import { INITAL_FETCHING_STATE, Ticker, XFetching } from "./types";
-import { WebAppState } from "platforms/web/reducers";
-import { selectXRate } from "platforms/desktop/reducers/blockHeaderExchangeRates";
-import bigInt from "big-integer";
+} from "shared/actions/types";
+import { GET_OFFSHORE_BALANCE_SUCCEED } from "platforms/desktop/actions/types";
 
 export const NO_BALANCE = bigInt.zero;
 
@@ -35,19 +36,19 @@ export type XViewBalances = { [key in Ticker]: ViewBalance };
 const INITIAL_BALANCE: Balance = {
   balance: NO_BALANCE,
   unlockedBalance: NO_BALANCE,
-  lockedBalance: NO_BALANCE
+  lockedBalance: NO_BALANCE,
 };
 
 const INITIAL_VIEW_BALANCE: ViewBalance = {
-  balance: 0,
-  unlockedBalance: 0,
-  lockedBalance: 0
+  balance: -1,
+  unlockedBalance: -1,
+  lockedBalance: -1,
 };
 
 const INITIAL_STATE: XBalances = {
   xUSD: { ...INITIAL_BALANCE },
   XHV: { ...INITIAL_BALANCE },
-  xBTC: { ...INITIAL_BALANCE }
+  xBTC: { ...INITIAL_BALANCE },
 };
 
 export function fetching(
@@ -77,23 +78,25 @@ export function xBalance(
   }
 }
 
-export function selectReadableBalance(
-  state: DesktopAppState | WebAppState
-): number {
-  if (state.xBalance.XHV.balance === NO_BALANCE) return -1;
+export const selectBalances = (state: DesktopAppState | WebAppState): XViewBalance => {
+  return {
+    [Ticker.XHV]: {
+      balance: convertBalanceForReading(state.xBalance[Ticker.XHV].balance),
+      unlockedBalance: convertBalanceForReading(
+        state.xBalance[Ticker.XHV].unlockedBalance
+      ),
+      lockedBalance: convertBalanceForReading(
+        state.xBalance[Ticker.XHV].lockedBalance
+      ),
+    },
+  };
+};
 
-  const readableNum = Number(
-    state.xBalance.XHV.balance.divide(bigInt(Math.pow(10, 12)))
-  );
-
-  return Math.round(readableNum / 10000) * 10000;
-}
-
-export const selectTotalBalances = (state: DesktopAppState): XViewBalance => {
+export const selectTotalBalances = (state: DesktopAppState | WebAppState): XViewBalance => {
   const defaultBalance = {
     [Ticker.XHV]: { ...INITIAL_VIEW_BALANCE },
     [Ticker.xUSD]: { ...INITIAL_VIEW_BALANCE },
-    xBTC: { ...INITIAL_VIEW_BALANCE }
+    xBTC: { ...INITIAL_VIEW_BALANCE },
   };
 
   const xBalance = state.xBalance;
@@ -125,7 +128,7 @@ export const selectTotalBalances = (state: DesktopAppState): XViewBalance => {
       const total =
         xBalance.XHV[balanceType].toJSNumber() * xhvToUSdRate +
         balance.toJSNumber();
-      result[balanceType] = total / Math.pow(10, 12);
+      result[balanceType] = convertToMoney(total);
       return result;
     },
     {}
@@ -136,7 +139,7 @@ export const selectTotalBalances = (state: DesktopAppState): XViewBalance => {
       const total =
         xBalance.xUSD[balanceType].toJSNumber() * usdToXhvRate +
         balance.toJSNumber();
-      result[balanceType] = total / Math.pow(10, 12);
+      result[balanceType] = convertToMoney(total);
       return result;
     },
     {}
@@ -152,20 +155,14 @@ export const selectTotalBalances = (state: DesktopAppState): XViewBalance => {
   );
 
   return {
-    [Ticker.XHV]: xHVTotalBalance,
     [Ticker.xUSD]: xUSDTotalBalance,
-    xBTC: btcTotalBalance
+    xBTC: btcTotalBalance,
   };
 };
 
 export const selectValueOfAssetsInUSD = (
-  state: DesktopAppState
+  state: DesktopAppState | WebAppState
 ): XViewBalance => {
-  // const defaultBalance = {
-  //   [Ticker.XHV] : {...INITIAL_VIEW_BALANCE},
-  //   [Ticker.xUSD] : {...INITIAL_VIEW_BALANCE}
-  // };
-
   const xhvToUSDRate: number = selectXRate(
     state.blockHeaderExchangeRate,
     Ticker.XHV,
@@ -175,18 +172,19 @@ export const selectValueOfAssetsInUSD = (
   let xUSDBalance: ViewBalance = { ...INITIAL_VIEW_BALANCE };
   Object.entries(state.xBalance.xUSD).forEach(
     ([balanceType, balance]) =>
-      (xUSDBalance[balanceType] = balance.toJSNumber() / Math.pow(10, 12))
+      (xUSDBalance[balanceType] = convertToMoney(balance.toJSNumber()))
   );
 
   let xhvBalanceInUSD: ViewBalance = { ...INITIAL_VIEW_BALANCE };
   Object.entries(state.xBalance.XHV).forEach(
     ([balanceType, balance]) =>
-      (xhvBalanceInUSD[balanceType] =
-        (balance.toJSNumber() / Math.pow(10, 12)) * xhvToUSDRate)
+      (xhvBalanceInUSD[balanceType] = convertToMoney(
+        balance.toJSNumber() * xhvToUSDRate
+      ))
   );
 
   return {
     [Ticker.XHV]: xhvBalanceInUSD,
-    [Ticker.xUSD]: xUSDBalance
+    [Ticker.xUSD]: xUSDBalance,
   };
 };

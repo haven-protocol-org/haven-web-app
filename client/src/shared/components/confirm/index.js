@@ -2,14 +2,21 @@
 import React from "react";
 
 // Relative Imports
-import { Container, Message, Checkbox, Check } from "./styles";
+import { Container, Message, Checkbox, Description } from "./styles";
+import { Information } from "../../../assets/styles/type.js";
+import Radio from "../_inputs/radio/index.js";
 
-const Confirm = ({ props, checked, onChange, label }) => {
+const Confirm = ({ checked, onChange, label, description }) => {
   return (
     <Container>
-      <Message>{label}</Message>
+      {description && (
+        <Description>
+          <Information>{description}</Information>
+        </Description>
+      )}
       <Checkbox>
-        <Check type="checkbox" checked={checked} onChange={onChange} />
+        <Message>{label}</Message>
+        <Radio type="checkbox" checked={checked} onChange={onChange} />
       </Checkbox>
     </Container>
   );

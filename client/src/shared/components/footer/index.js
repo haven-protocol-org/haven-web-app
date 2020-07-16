@@ -17,20 +17,7 @@ const Footer = () => {
       <Wrapper>
         <Section>
           <Title>Mining Pools</Title>
-          <External
-            rel="noopener"
-            href="http://cryptoknight.cc/haven/"
-            target="_blank"
-          >
-            Fair Pool
-          </External>
-          <External
-            rel="noopener"
-            href="https://xhv.dark-mine.su/"
-            target="_blank"
-          >
-            Dark Mine
-          </External>
+
           <External
             rel="noopener"
             href="https://haven.herominers.com/"
@@ -51,6 +38,20 @@ const Footer = () => {
             target="_blank"
           >
             Zergpool
+          </External>
+          <External
+            rel="noopener"
+            href="https://haven.hashvault.pro/en/"
+            target="_blank"
+          >
+            Hashvault
+          </External>
+          <External
+            rel="noopener"
+            href="https://haven.miner.rocks/"
+            target="_blank"
+          >
+            Miner Rocks
           </External>
         </Section>
         <Section>
@@ -179,13 +180,6 @@ const Footer = () => {
             target="_blank"
           >
             Citex
-          </External>
-          <External
-            rel="noopener"
-            href="https://zel.network/project/zelcore/"
-            target="_blank"
-          >
-            Zelcore
           </External>
         </Section>
         <Section>

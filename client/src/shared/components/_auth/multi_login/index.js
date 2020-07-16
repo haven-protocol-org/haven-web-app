@@ -5,7 +5,7 @@ import React, { Component } from "react";
 import {
   Title,
   Description as Subtitle,
-  Information
+  Information,
 } from "../../../../assets/styles/type.js";
 import {
   Container,
@@ -19,7 +19,7 @@ import {
   Route,
   Label,
   Tabs,
-  Tab
+  Tab,
 } from "./styles";
 import { Spinner } from "../../spinner";
 import Input from "../../_inputs/input";
@@ -33,7 +33,7 @@ export class MultiLogin extends Component {
     seed: true,
     ledger: false,
     keystore: false,
-    error: ""
+    error: "",
   };
 
   submitLogin = () => {
@@ -48,7 +48,7 @@ export class MultiLogin extends Component {
     this.setState({
       seed: true,
       ledger: false,
-      keystore: false
+      keystore: false,
     });
   };
 
@@ -56,7 +56,7 @@ export class MultiLogin extends Component {
     this.setState({
       seed: false,
       ledger: true,
-      keystore: false
+      keystore: false,
     });
   };
 
@@ -64,7 +64,7 @@ export class MultiLogin extends Component {
     this.setState({
       seed: false,
       ledger: false,
-      keystore: true
+      keystore: true,
     });
   };
 
@@ -80,13 +80,13 @@ export class MultiLogin extends Component {
         </Header>
         <Tabs>
           <Tab active={keystore} onClick={this.selectKeystore}>
-            Open Wallet
+            Open Vault
           </Tab>
           <Tab active={seed} onClick={this.selectSeed}>
-            Create Wallet
+            Create Vault
           </Tab>
           <Tab active={ledger} onClick={this.selectLedger}>
-            Restore Wallet
+            Restore Vault
           </Tab>
         </Tabs>
         <Main>
@@ -98,7 +98,7 @@ export class MultiLogin extends Component {
                   placeholder="Enter your 25 word seed phrase or Private Spend Key..."
                   name=""
                   value={""}
-                  onChange={event => this.handleChange(event)}
+                  onChange={(event) => this.handleChange(event)}
                 />
                 <Information>
                   Before entering your Seed Phrase please ensure you're not on a
@@ -113,7 +113,7 @@ export class MultiLogin extends Component {
                   placeholder="Open the Ledger application and sign in"
                   name=""
                   value={""}
-                  onChange={event => this.handleChange(event)}
+                  onChange={(event) => this.handleChange(event)}
                 />
                 <Information>
                   We recommend you login with a Ledger device as it's the most
@@ -131,14 +131,14 @@ export class MultiLogin extends Component {
                   rows="2"
                   value={""}
                   onClick={this.selectFile}
-                  onChange={event => this.handleChange(event)}
+                  onChange={(event) => this.handleChange(event)}
                 />
                 <Input
                   label="Keystore Password"
                   placeholder="Enter the password for your keystore"
                   name=""
                   value={""}
-                  onChange={event => this.handleChange(event)}
+                  onChange={(event) => this.handleChange(event)}
                 />
                 <Information>
                   Upload your encrypted Keystore File and enter the password
@@ -157,7 +157,7 @@ export class MultiLogin extends Component {
         </Main>
         <Footer>
           <Label>Don't have a Vault?</Label>
-          <Route to={"/create"}>Create a Vault</Route>
+          <Route to={"/create"}>Create or Restore a Vault</Route>
         </Footer>
       </Container>
     );

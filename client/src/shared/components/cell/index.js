@@ -1,5 +1,5 @@
 // Library Imports
-import React from "react";
+import React, { useState } from "react";
 
 // Relative Imports
 import {
@@ -7,30 +7,103 @@ import {
   Column,
   Title,
   Subtitle,
+  Ticker,
   Icon,
-  Inner,
-  Wrapper
+  Locked,
+  Unlocked,
+  Row,
+  Pending,
+  Route,
+  Asset,
+  Balances,
+  PendingWrapper,
+  PendingSpacer,
+  Balance,
 } from "./styles";
 import chevron from "../../../assets/icons/chevron.svg";
 
-const Cell = ({ tokenName, ticker, price, change, fullwidth }) => {
+const Cell = ({
+  tokenName,
+  ticker,
+  price,
+  value,
+  fullwidth,
+  totalBalance,
+  lockedBalance,
+  unlockedBalance,
+}) => {
+  const [open, openBalance] = useState(false);
+  const balance = totalBalance * price;
   return (
-    <Container fullwidth={fullwidth} to={`/wallet/assets/${ticker}`}>
-      <Column>
-        <Title left>{tokenName}</Title>
-        <Subtitle left>{price}</Subtitle>
-      </Column>
+    <>
+      {lockedBalance === 0 ? (
+        <Container>
+          <Unlocked to={`/wallet/assets/${ticker}`}>
+            <Column>
+              <Row>
+                <Asset>
+                  <Title>{tokenName} </Title> <Ticker>{ticker}</Ticker>
+                </Asset>
+                <Balance>${balance.toFixed(4)}</Balance>
+              </Row>
+              <Row>
+                <Subtitle>${price}</Subtitle>
+                <Subtitle>{totalBalance}</Subtitle>
+              </Row>
+            </Column>
+            <Route>
+              <Icon src={chevron} />
+            </Route>
+          </Unlocked>
+        </Container>
+      ) : (
+        <Container>
+          <Locked to={`/wallet/assets/${ticker}`}>
+            <Column>
+              <Row>
+                <Asset>
+                  <Title>{tokenName} </Title> <Ticker>{ticker}</Ticker>
+                </Asset>
+                <Balance>${balance.toFixed(4)}</Balance>
+              </Row>
+              <Row>
+                <Subtitle>${price}</Subtitle>
+                <Subtitle>{totalBalance}</Subtitle>
+              </Row>
+            </Column>
+            <Route>
+              <Icon src={chevron} />
+            </Route>
+          </Locked>
+          {open && (
+            <PendingWrapper to={`/wallet/assets/${ticker}`}>
+              <PendingSpacer />
+              <Pending>
+                <Subtitle>Total Balance</Subtitle>
+                <Subtitle>{totalBalance}</Subtitle>
+              </Pending>
+              <Pending>
+                <Subtitle>Locked Balance</Subtitle>
+                <Subtitle>{lockedBalance}</Subtitle>
+              </Pending>
+              <Pending>
+                <Subtitle>Unlocked Balance</Subtitle>
+                <Subtitle>{unlockedBalance}</Subtitle>
+              </Pending>
 
-      <Wrapper>
-        <Column>
-          <Title>{ticker}</Title>
-          <Subtitle>{change}</Subtitle>
-        </Column>
-        <Inner>
-          <Icon src={chevron} />
-        </Inner>
-      </Wrapper>
-    </Container>
+              <PendingSpacer />
+            </PendingWrapper>
+          )}
+          <Balances onClick={() => openBalance(!open)}>
+            <Row>
+              <Subtitle>
+                {open ? "Hide Pending Balances" : "Show Pending Balances"}
+              </Subtitle>
+            </Row>
+          </Balances>
+        </Container>
+      )}
+    </>
   );
 };
 

@@ -11,7 +11,7 @@ import { DesktopAppState } from "platforms/desktop/reducers";
 import { connect } from "react-redux";
 import {
   selectErrorMessage,
-  WalletCreation
+  WalletCreation,
 } from "platforms/desktop/reducers/walletCreation";
 import { Spinner } from "shared/components/spinner";
 import { Information } from "assets/styles/type";
@@ -45,7 +45,7 @@ enum CREATION_STEPS {
   Info,
   Credentials,
   Seed,
-  Verification
+  Verification,
 }
 
 class CreateDesktopContainer extends Component<
@@ -59,7 +59,7 @@ class CreateDesktopContainer extends Component<
     fileName: "",
     pw: "",
     showPassword: false,
-    wordsToVerify: []
+    wordsToVerify: [],
   };
 
   componentDidMount() {
@@ -110,7 +110,9 @@ class CreateDesktopContainer extends Component<
     const userInput = this.state.verify_seed.trim();
     return (
       userInput ===
-      this.state.wordsToVerify.map(wordToVerify => wordToVerify.word).join(" ")
+      this.state.wordsToVerify
+        .map((wordToVerify) => wordToVerify.word)
+        .join(" ")
     );
   }
 
@@ -168,13 +170,13 @@ class CreateDesktopContainer extends Component<
     const value = event.target.value;
 
     this.setState<never>({
-      [name]: value
+      [name]: value,
     });
   };
 
   togglePassword = () => {
     this.setState({
-      showPassword: !this.state.showPassword
+      showPassword: !this.state.showPassword,
     });
   };
 
@@ -190,8 +192,8 @@ class CreateDesktopContainer extends Component<
           <>
             <Input
               error={this.state.error}
-              label="Wallet Name"
-              placeholder="Create a wallet name"
+              label="Vault Name"
+              placeholder="Create a Vault name"
               name="fileName"
               type={"text"}
               value={fileName}
@@ -200,8 +202,8 @@ class CreateDesktopContainer extends Component<
 
             <InputButton
               // @ts-ignore
-              label="Wallet Password"
-              placeholder="Enter your wallet password"
+              label="Vault Password"
+              placeholder="Enter your Vault password"
               name="pw"
               type={this.state.showPassword === true ? "text" : "password"}
               button={this.state.showPassword === true ? "hide" : "show"}
@@ -211,8 +213,8 @@ class CreateDesktopContainer extends Component<
             />
 
             <Information>
-              Creating a new wallet with a name and password means you’ll be
-              able to log in without entering your seed phrase. This makes your
+              Creating a new Vault with a name and password means you’ll be able
+              to log in without entering your seed phrase. This makes your
               experience more secure, safe and efficient.
             </Information>
           </>
@@ -229,11 +231,11 @@ class CreateDesktopContainer extends Component<
       case CREATION_STEPS.Verification:
         const labelString = (
           <Fragment>
-            type in the words{" "}
+            Enter seed words{" "}
             <span style={{ color: "#34d8ac" }}>
               {" "}
               {this.state.wordsToVerify
-                .map(word => "#" + (word.index + 1))
+                .map((word) => "#" + (word.index + 1))
                 .join(" ")}{" "}
             </span>{" "}
             seperated by blank space
@@ -308,10 +310,10 @@ class CreateDesktopContainer extends Component<
 const mapStateToProps = (state: DesktopAppState) => ({
   walletCreation: state.walletCreation,
   loading: selectIsRequestingLogin(state),
-  errorMessage: selectErrorMessage(state)
+  errorMessage: selectErrorMessage(state),
 });
 
-export const CreateDesktop = connect(
-  mapStateToProps,
-  { createWallet, mnenomicVerificationSucceed }
-)(CreateDesktopContainer);
+export const CreateDesktop = connect(mapStateToProps, {
+  createWallet,
+  mnenomicVerificationSucceed,
+})(CreateDesktopContainer);

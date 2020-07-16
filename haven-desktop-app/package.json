@@ -1,7 +1,7 @@
 {
   "name": "haven-desktop-app",
   "productName": "Haven",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Desktop App for Haven Vault",
   "main": "dist/index.js",
   "scripts": {
@@ -23,23 +23,24 @@
     "forge": "./forge.config.js"
   },
   "dependencies": {
-    "axios": "^0.19.0",
+    "axios": "^0.19.2",
     "electron-squirrel-startup": "^1.0.0",
     "keccakjs": "^0.2.3",
-    "rxjs": "^6.5.3"
+    "rxjs": "^6.6.0"
   },
   "devDependencies": {
-    "@electron-forge/cli": "6.0.0-beta.45",
-    "@electron-forge/maker-deb": "6.0.0-beta.45",
-    "@electron-forge/maker-rpm": "6.0.0-beta.45",
-    "@electron-forge/maker-squirrel": "6.0.0-beta.45",
-    "@electron-forge/maker-zip": "6.0.0-beta.45",
-    "@electron-forge/plugin-auto-unpack-natives": "^6.0.0-beta.47",
-    "@electron-forge/publisher-github": "^6.0.0-beta.47",
-    "electron": "7.1.1",
+    "@electron-forge/cli": "^6.0.0-beta.52",
+    "@electron-forge/maker-deb": "^6.0.0-beta.52",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.52",
+    "@electron-forge/maker-squirrel": "6.0.0-beta.52",
+    "@electron-forge/maker-dmg": "6.0.0-beta.52",
+    "@electron-forge/maker-zip": "6.0.0-beta.52",
+    "@electron-forge/plugin-auto-unpack-natives": "^6.0.0-beta.52",
+    "@electron-forge/publisher-github": "^6.0.0-beta.52",
+    "electron": "^9.1.0",
     "ncp": "^2.0.0",
     "tslint": "^5.20.1",
-    "typescript": "^3.7.3",
-    "webpack": "^4.41.4"
+    "typescript": "^3.9.6",
+    "webpack": "^4.43.0"
   }
 }

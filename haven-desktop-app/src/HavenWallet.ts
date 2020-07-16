@@ -1,119 +1,101 @@
 /**
  * responsible to wire everything together
  */
-import {IDaemonManager} from "./daemons/IDaemonManager";
-import {BasicDaemonManager, UPDATE_DAEMON_STATUS_EVENT} from "./daemons/BasicDaemonManager";
-import {checkAndCreateWalletDir, daemonConfig} from "./daemonConfig";
-import {IPCHandler} from "./ipc/IPCHandler";
-import {CommunicationChannels, DAEMON_STATUS_MESSAGE} from "./ipc/types";
-import {ipcMain} from 'electron';
-import {EventEmitter} from "events";
 
-
-export const QUIT_EVENT: string = 'quietEvent';
-
+import { WalletHandler } from "./wallets/WalletHandler";
+import { CommunicationChannel } from "./types";
+import { BrowserWindow, ipcMain } from "electron";
+import { getNetType, NET, setNetType } from "./env";
+import { DaemonHandler } from "./daemons/DaemonHandler";
+import { checkAndCreateWalletDir } from "./wallets/walletPaths";
+import { appEventBus, DAEMONS_STOPPED_EVENT } from "./EventBus";
+import { checkAndCreateDaemonConfig } from "./daemons/config/config";
+import BrowserWindowConstructorOptions = Electron.BrowserWindowConstructorOptions;
+import * as path from "path";
 
 export class HavenWallet {
+  private _isRunning: boolean = false;
 
-    private _isRunning:boolean = false;
-    private havend:IDaemonManager = new BasicDaemonManager();
-    private rpcWallet:IDaemonManager = new BasicDaemonManager();
-    private ipcHandler: IPCHandler = new IPCHandler();
+  private walletHandler: WalletHandler = new WalletHandler();
+  private daemonHandler: DaemonHandler = new DaemonHandler();
 
-    private appStatusEmitter:EventEmitter = new EventEmitter();
+  private isSwitchingNet: boolean = false;
+  private requestShutDown: boolean = false;
+  private shutDownWindow: BrowserWindow;
 
-    private requestShutDown: boolean  = false;
-
-
-
-    public start() {
-
-        if (this._isRunning) {
-            return;
-        }
-
-        checkAndCreateWalletDir();
-
-        this.havend.setConfig(daemonConfig.havend);
-        this.rpcWallet.setConfig(daemonConfig.wallet);
-        this.havend.startDaemon();
-        this.rpcWallet.startDaemon();
-        this.ipcHandler.start();
-        this._isRunning = true;
-        this.addDaemonStateHandling();
-
+  public start() {
+    if (this._isRunning) {
+      return;
     }
 
+    this._isRunning = true;
 
-    public quit() {
+    checkAndCreateWalletDir();
+    checkAndCreateDaemonConfig();
 
-        this.requestShutDown = true;
-        if (this.havend.getDaemonState().isRunning) {
+    this.daemonHandler.startDaemons();
+    this.walletHandler.start();
+  }
 
-            this.havend.getDaemonStatusEventEmitter().on(UPDATE_DAEMON_STATUS_EVENT, (status) => this.checkIfAppQuit())
-
-            this.havend.killDaemon();
-        }
-
-        if (this.rpcWallet.getDaemonState().isRunning){
-
-            this.rpcWallet.getDaemonStatusEventEmitter().on(UPDATE_DAEMON_STATUS_EVENT, (status) => this.checkIfAppQuit())
-            this.rpcWallet.killDaemon();
-        }
-
-
-        this.ipcHandler.quit();
-        this.removeDaemonStateHandling();
-        this._isRunning = false;
-
-        this.checkIfAppQuit();
-
+  private onSwitchNetwork(netType: NET) {
+    if (!(netType in NET)) {
+      return;
     }
 
-
-    private addDaemonStateHandling() {
-
-        ipcMain.handle(CommunicationChannels.DAEMON, (event, args) => this.onDaemonStateRequest());
-
+    //for the case clients is doing dumb stuff
+    if (this.isSwitchingNet) {
+      return;
     }
 
-    private removeDaemonStateHandling() {
-
-        ipcMain.removeHandler(CommunicationChannels.DAEMON);
-
+    // no need to switch
+    if (netType === getNetType()) {
+      return;
     }
 
-    private onDaemonStateRequest():DAEMON_STATUS_MESSAGE  {
+    this.isSwitchingNet = true;
+    setNetType(netType);
+    appEventBus.once(DAEMONS_STOPPED_EVENT, () => this.start());
+    this.quit();
+  }
 
-        const nodeState = this.havend.getDaemonState();
-        const walletState = this.rpcWallet.getDaemonState();
-        return {node: nodeState, wallet: walletState};
+  public quit() {
+    this.requestShutDown = true;
+    this.showShutDownWindow();
+    this.daemonHandler.stopDaemons();
+    this.walletHandler.quit();
+    this._isRunning = false;
+  }
 
-    }
+  private addNetworkSwitchHandling() {
+    ipcMain.handle(CommunicationChannel.SWITCH_NET, (event, args) =>
+      this.onSwitchNetwork(args)
+    );
+  }
 
-    public getAppStatus(): EventEmitter {
-        return this.appStatusEmitter;
-    }
+  private showShutDownWindow() {
+    const shutDownConctruction: BrowserWindowConstructorOptions = {
+      width: 500,
+      height: 280,
+      center: true,
+      alwaysOnTop: true,
+      closable: true,
+      resizable: false,
+      movable: true,
+      frame: false,
+      fullscreenable: false,
+      kiosk: true,
+    };
+    this.shutDownWindow = new BrowserWindow(shutDownConctruction);
+    this.shutDownWindow.loadURL(
+      path.join(`file://${__dirname}`, "../sites/shutdown/index.html")
+    );
 
+    this.shutDownWindow.on("ready-to-show", () => {
+      this.shutDownWindow.show();
+    });
 
-    private checkIfAppQuit(): void {
-
-        if (this.rpcWallet.getDaemonState().isRunning === false && this.havend.getDaemonState().isRunning === false) {
-            this.appStatusEmitter.emit(QUIT_EVENT);
-        }
-
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
+    appEventBus.once(DAEMONS_STOPPED_EVENT, () =>
+      this.shutDownWindow.destroy()
+    );
+  }
 }

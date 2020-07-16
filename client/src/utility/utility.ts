@@ -4,6 +4,7 @@ import { notificationList } from "constants/notificationList";
 import { NO_PRICE } from "shared/reducers/priceHistory";
 import { NO_BALANCE } from "shared/reducers/xBalance";
 import { Ticker } from "shared/reducers/types";
+import bigInt from "big-integer";
 
 export const convertTimestampToDateString = (timestamp: any) =>
   new Date(timestamp).toLocaleDateString();
@@ -38,11 +39,11 @@ export const getCurrentValueInUSD = (
 };
 
 export const convertBalanceForReading = (balance: any) => {
-  if (balance === NO_BALANCE) return balance;
+  if (balance === NO_BALANCE) return Number(balance);
 
   let readableBalance: any;
-  if (typeof balance === "bigint") {
-    readableBalance = Number(balance / BigInt(Math.pow(10, 8)));
+  if (bigInt.isInstance(balance)) {
+    readableBalance = Number(balance.divide(Math.pow(10, 8)));
 
     return readableBalance / 10000;
   }
@@ -53,8 +54,9 @@ export const convertBalanceForReading = (balance: any) => {
   return readableBalance;
 };
 
+
 export const convertToMoney = (atomicMoney: any) => {
-  if (atomicMoney === NO_BALANCE) return -1;
+  if (atomicMoney === NO_BALANCE) return 0;
 
   let readableBalance;
   if (typeof atomicMoney === "bigint") {
@@ -63,10 +65,10 @@ export const convertToMoney = (atomicMoney: any) => {
     return readableBalance / 10000;
   }
 
-  readableBalance = atomicMoney / Math.pow(10, 12);
+  readableBalance = (atomicMoney / Math.pow(10, 12));
 
   if (readableBalance % 1 === 0) return Math.round(readableBalance);
-  return readableBalance;
+  return Number(readableBalance.toFixed(4));
 };
 
 export const uuidv4 = () => {
@@ -86,7 +88,7 @@ export const uuidv4 = () => {
 
 export const getMessageOfError = (error: any) => {
   const errorNotification = notificationList.find(
-    notification => notification.code === error.code
+    (notification) => notification.code === error.code
   );
   return errorNotification ? errorNotification.message : error.message;
 };
@@ -102,7 +104,7 @@ export const calcValue = (amount: any, price: any) => {
   } else {
     return (amount * price).toLocaleString("en-US", {
       style: "currency",
-      currency: "USD"
+      currency: "USD",
     });
   }
 };
@@ -118,7 +120,7 @@ export const getPriceValues = (prices: any) => {
 };
 
 export const logM = (message: any) => {
-  console.log(message);
+  // console.log(message);
 };
 
 export const createRemainingTimeString = (remainingTimeInMinutes: number) => {

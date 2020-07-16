@@ -1,13 +1,13 @@
 import {
   GET_SIMPLE_PRICE_FAILED,
   GET_SIMPLE_PRICE_FETCHING,
-  GET_SIMPLE_PRICE_SUCCEED
+  GET_SIMPLE_PRICE_SUCCEED,
 } from "../actions/types";
 
 const INITIAL_STATE = {
   error: "",
   isFetching: false,
-  price: -1
+  price: -1,
 };
 
 export function simplePrice(state = INITIAL_STATE, action) {
@@ -23,6 +23,6 @@ export function simplePrice(state = INITIAL_STATE, action) {
   }
 }
 
-export const selectSimplePrice = state => {
+export const selectSimplePrice = (state) => {
   return state.simplePrice.price;
 };

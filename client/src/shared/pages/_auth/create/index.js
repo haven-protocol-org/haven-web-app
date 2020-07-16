@@ -1,6 +1,5 @@
 // Library Imports
 import React, { Component } from "react";
-import * as clipboard from "clipboard-polyfill";
 
 // Relative Imports
 import Auth from "../../../components/_auth/create/index.js";
@@ -10,6 +9,7 @@ import VerifySeed from "../../../components/_create/verify_seed";
 import { Container } from "./styles";
 import { decrypt } from "../../../../utility/utility-encrypt";
 import PropTypes from "prop-types";
+import {readText} from "../../../../vendor/clipboard/clipboard-polyfill";
 
 export class CreateWebComponent extends Component {
   state = {
@@ -26,7 +26,7 @@ export class CreateWebComponent extends Component {
   }
 
   async componentDidUpdate(prevProps, prevState) {
-    if (this.props.mnemonicString !== "" && this.state.mnemonicString === "") {
+    if (this.props.createdSeed !== "" && this.state.mnemonicString === "") {
       const seed = await decrypt(this.props.createdSeed);
       this.setState({ mnemonicString: seed });
     }
@@ -44,7 +44,8 @@ export class CreateWebComponent extends Component {
     else if (stepThree) {
       const { mnemonicString, verify_seed } = this.state;
 
-        const validationSucceed = this.props.verifySeed(verify_seed);
+        const validationSucceed = verify_seed === mnemonicString;
+        this.props.verifySeed(validationSucceed);
 
       if (!validationSucceed) {
         this.setState({ error: "Sorry, that seed is incorrect" });
@@ -71,8 +72,8 @@ export class CreateWebComponent extends Component {
   };
 
   handlePaste = () => {
-    clipboard
-      .readText()
+
+      readText()
       .then(response => {
         this.setState({
           verify_seed: response,

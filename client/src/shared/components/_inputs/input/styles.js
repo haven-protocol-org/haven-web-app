@@ -7,7 +7,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding-bottom: 12px;
-  grid-column: ${props => (props.width ? "1 / 3" : null)};
+  grid-column: ${(props) => (props.grid ? "1 / 3" : null)};
 
   ${media.mobile`
     grid-column: 1 / 3;
@@ -15,30 +15,41 @@ export const Container = styled.div`
 `;
 
 export const Field = styled.input`
-  background: ${props => props.theme.input.input_background};
-  border: 1px solid ${props => props.theme.input.input_border};
+  background: ${(props) => props.theme.input.input_background};
+  border: 1px solid ${(props) => props.theme.input.input_border};
   border-radius: 4px;
   padding: 16px;
   font-family: Inter-Regular;
   font-size: 16px;
-  color: ${props => props.theme.input.input_value};
+  color: ${(props) => props.theme.input.input_value};
   line-height: 26px;
   outline: none;
   width: auto;
-
   transition: 500ms;
-  -webkit-appearance: none;
+
+  ::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  ::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 
   &:focus {
-    border: 1px solid ${props => props.theme.input.input_border_focus};
+    border: 1px solid ${(props) => props.theme.input.input_border_focus};
     transition: 500ms;
   }
 
   &::placeholder {
     font-family: Inter-Regular;
     font-size: 16px;
-    color: ${props => props.theme.input.input_placeholder};
+    color: ${(props) => props.theme.input.input_placeholder};
     line-height: 26px;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
   }
 `;
 

@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import React, { Component } from "react";
 import {
   Buttons,
-  Submit
+  Submit,
 } from "platforms/desktop/pages/_auth/multi_login/styles";
 import { Spinner } from "../../../../../shared/components/spinner";
 import { Body, Wrapper } from "./styles";
@@ -10,7 +10,7 @@ import { Information } from "assets/styles/type";
 import Input from "shared/components/_inputs/input";
 import {
   selectErrorMessageForLogin,
-  selectIsRequestingLogin
+  selectIsRequestingLogin,
 } from "../../../reducers/walletSession";
 import { WalletSelection } from "shared/components/_inputs/wallet-selection";
 import Dropdown from "../../../../../shared/components/_inputs/dropdown";
@@ -21,7 +21,7 @@ import { DesktopAppState } from "platforms/desktop/reducers";
 
 interface OpenWalletState {
   selectedWallet: string | null;
-  pw: string;
+  password: string;
   validated: boolean;
   showPassword: boolean;
   error: string;
@@ -29,7 +29,7 @@ interface OpenWalletState {
 
 interface OpenWalletProps {
   wallets: string[] | null;
-  openWallet: (filename: string, pw: string) => void;
+  openWallet: (filename: string, password: string) => void;
   loading: boolean;
   errorMessage: string;
 }
@@ -40,15 +40,15 @@ class OpenWalletDesktopContainer extends Component<
 > {
   state: OpenWalletState = {
     selectedWallet: null,
-    pw: "",
+    password: "",
     validated: false,
     showPassword: false,
-    error: ""
+    error: "",
   };
 
   onOpenWallet = () => {
     if (this.state.selectedWallet !== null) {
-      this.props.openWallet(this.state.selectedWallet, this.state.pw);
+      this.props.openWallet(this.state.selectedWallet, this.state.password);
     }
   };
 
@@ -76,22 +76,20 @@ class OpenWalletDesktopContainer extends Component<
 
   togglePassword = () => {
     this.setState({
-      showPassword: !this.state.showPassword
+      showPassword: !this.state.showPassword,
     });
   };
 
   render() {
-    const { selectedWallet, pw } = this.state;
-    const disabled = selectedWallet !== null && pw.length > 0;
+    const { selectedWallet, password, showPassword, error } = this.state;
+    const disabled = selectedWallet !== null && password.length > 0;
 
     const { wallets } = this.props;
 
-    console.log(this.props.loading);
-
     const noWallets = [
       {
-        name: "No Vault detected. Please Create a Vault"
-      }
+        name: "Please create a Haven Vault",
+      },
     ];
 
     return wallets === null || wallets.length === 0 ? (
@@ -99,23 +97,23 @@ class OpenWalletDesktopContainer extends Component<
         <Dropdown
           onClick={this.handleNoWallet}
           options={noWallets}
-          placeholder="Choose a wallet"
-          label={"Select Wallet"}
+          placeholder="Choose a Vault"
+          label={"Select Vault"}
           error={""}
-          value={"Choose a wallet"}
+          value={"Choose a Vault"}
         >
           {noWallets}
         </Dropdown>
         <Input
-          label="Wallet Password"
-          placeholder="Enter your wallet password"
-          name="pw"
+          label="Vault Password"
+          placeholder="Enter your Vault password"
+          name="password"
           type={"text"}
-          value={this.state.pw}
+          value={password}
           onChange={this.onChangeHandler}
         />
         <Information>
-          Select a wallet and enter the password. If you don't see a wallet, or
+          Select a Vault and enter the password. If you don't see a Vault, or
           forgot your password, then please click the{" "}
           <strong>Create a Vault</strong> link below.
         </Information>
@@ -124,28 +122,28 @@ class OpenWalletDesktopContainer extends Component<
       <Wrapper>
         <Body>
           <WalletSelection
-            onClick={wallet => this.onSelectWallet(wallet)}
+            onClick={(wallet) => this.onSelectWallet(wallet)}
             options={this.props.wallets}
-            placeholder={"Choose a wallet"}
-            label={"Select Wallet"}
-            error={this.state.error}
+            placeholder={"Choose a Vault"}
+            label={"Select Vault"}
+            error={error}
             value={selectedWallet}
           />
           <InputButton
             // @ts-ignore
-            label="Wallet Password"
-            placeholder="Enter your wallet password"
-            name="pw"
-            type={this.state.showPassword === true ? "text" : "password"}
-            button={this.state.showPassword === true ? "hide" : "show"}
-            value={this.state.pw}
+            label="Vault Password"
+            placeholder="Enter your Vault password"
+            name="password"
+            type={showPassword ? "text" : "password"}
+            button={showPassword ? "hide" : "show"}
+            value={password}
             onChange={this.onChangeHandler}
             onClick={this.togglePassword}
           />
 
           <Information>
-            Select a wallet and enter the password. If you don't see a wallet,
-            or forgot your password, then please click the{" "}
+            Select a Vault and enter the password. If you don't see a Vault, or
+            forgot your password, then please click the{" "}
             <strong>Create a Vault</strong> link below.
           </Information>
         </Body>
@@ -167,10 +165,9 @@ class OpenWalletDesktopContainer extends Component<
 
 const mapStateToProps = (state: DesktopAppState) => ({
   loading: selectIsRequestingLogin(state),
-  errorMessage: selectErrorMessageForLogin(state)
+  errorMessage: selectErrorMessageForLogin(state),
 });
 
-export const OpenWalletDesktop = connect(
-  mapStateToProps,
-  { openWallet }
-)(OpenWalletDesktopContainer);
+export const OpenWalletDesktop = connect(mapStateToProps, { openWallet })(
+  OpenWalletDesktopContainer
+);

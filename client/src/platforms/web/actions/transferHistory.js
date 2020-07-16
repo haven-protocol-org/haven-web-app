@@ -6,11 +6,14 @@ import {
 import { getAddressTxs } from "../api/api";
 import { selectCredentials } from "../reducers/account";
 import { core } from "../declarations/open_monero.service";
-import { getBalancesSucceed } from "./index";
-import { updateChainData } from "./index";
+import { getBalancesSucceed } from ".";
+import { updateChainData } from ".";
 import { decrypt } from "../../../utility/utility-encrypt";
-import {Ticker} from "../../../shared/reducers/types";
+import { Ticker } from "../../../shared/reducers/types";
 import bigInt from "big-integer";
+import {selectPrimaryAddress} from "../../../shared/reducers/address";
+
+
 export const getTransfers = () => {
   return (dispatch, getState) => {
     dispatch(getTransfersFetching());
@@ -21,7 +24,7 @@ export const getTransfers = () => {
           parsedTxData.serialized_transactions,
           parsedTxData.blockchain_height
         );
-        dispatch(getBalancesSucceed({[Ticker.XHV]:balance}));
+        dispatch(getBalancesSucceed({ [Ticker.XHV]: balance }));
         dispatch(getTransfersSucceed(parsedTxData.serialized_transactions));
         dispatch(updateChainData(parsedTxData));
       })
@@ -30,7 +33,7 @@ export const getTransfers = () => {
 };
 
 const parseTx = async (rawTXs, state) => {
-  const address = state.address.main;
+  const address = selectPrimaryAddress(state.address);
   let {
     sec_viewKey_string,
     pub_spendKey_string,
@@ -55,7 +58,7 @@ const parseTx = async (rawTXs, state) => {
 };
 
 const calcBalanceByTxs = (txList, bHeight) => {
-  let totalSend =  bigInt("0");
+  let totalSend = bigInt("0");
   let totalReceived = bigInt("0");
   let totalReceivedLocked = bigInt("0");
 

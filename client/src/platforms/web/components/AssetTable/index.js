@@ -13,7 +13,8 @@ import {
   Title,
   Table,
   TableFooter,
-  TableHeader
+  TableHeader,
+  TableTitle
 } from "./styles";
 import { xhvVsCurrenciesFetch } from "../../actions/xhvVsCurrencies";
 import { Subtitle } from "../../../../shared/pages/_public/welcome/styles";
@@ -66,7 +67,7 @@ class AssetTable extends Component {
     return (
       <Table>
         <TableHeader>
-          <Title>Haven Assets</Title>
+          <TableTitle>Haven Assets</TableTitle>
           <Subtitle left>
             Private, anonymous, and untraceable assets available within Haven
             Vault

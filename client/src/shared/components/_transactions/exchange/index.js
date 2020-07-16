@@ -1,58 +1,97 @@
 // Library Imports
-import React from "react";
+import React, { Fragment } from "react";
 
 // Relative Imports
-import { Container, Header, Row, Key, Value, Footer } from "./styles";
+import { Container, Row, Key, Value } from "./styles";
 import Confirm from "../../confirm/index.js";
 
-const Transaction = ({ xRate,fromAmount, toAmount,  fromTicker, toTicker, estimatedFee, checked, onChange }) => {
+const Transaction = ({
+  xRate,
+  fromAmount,
+  toAmount,
+  fromTicker,
+  toTicker,
+  fee,
+  externAddress,
+  onChange,
+  checked,
+  priority,
+                       isOwnAddress,
+}) => {
+  const first = externAddress.substring(0, 4);
+  const last = externAddress.substring(externAddress.length - 4);
+  const truncatedAddress = first + "...." + last;
 
   return (
-    <Container>
-      <Header>
-        <Value>Exchange Details</Value>
-        <Value />
-      </Header>
-      <Row>
-        <Key>Conversion Rate</Key>
-        <Value>
-          {xRate && fromTicker && toTicker
-            ? `1 ${fromTicker} =  ${xRate.toFixed(4)} ${toTicker}`
-            : ""}
-        </Value>
-      </Row>
-      <Row>
-        <Key>From Asset</Key>
-        <Value>
-          {(fromTicker ? fromTicker : "") +
-            " " +
-            (fromAmount && !isNaN(fromAmount) ? fromAmount : "--")}
-        </Value>
-      </Row>
-      <Row>
-        <Key>To Asset</Key>
-        <Value>
-          {(toTicker ? toTicker : "") +
-            " " +
-            (toAmount && !isNaN(toAmount) ? toAmount : "--")}
-        </Value>
-      </Row>
-      <Row>
-        <Key>Estimated Fees</Key>
-        <Value>
-          {estimatedFee !== 0
-            ? `${estimatedFee.toFixed(4)} ${fromTicker}`
-            : "--"}
-        </Value>
-      </Row>
-      <Footer>
+    <Fragment>
+      <Container>
+        <Row>
+          <Key>From Asset</Key>
+          <Value>
+            {fromAmount} {fromTicker}
+          </Value>
+        </Row>
+        <Row>
+          <Key>To Asset</Key>
+          <Value>
+            {toAmount} {toTicker}
+          </Value>
+        </Row>
+        {isOwnAddress ? null : (
+          <Row>
+            <Key>Exchange To</Key>
+            <Value>{truncatedAddress}</Value>
+          </Row>
+        )}
+        <Row>
+          {(function () {
+            switch (priority) {
+              case 1:
+                return (
+                  <>
+                    <Key>Low Priority</Key>
+                    <Value>Unlocks in ~2d</Value>
+                  </>
+                );
+              case 2:
+                return (
+                  <>
+                    <Key>Medium Priority</Key>
+                    <Value>Unlocks ~18h</Value>
+                  </>
+                );
+              case 3:
+                return (
+                  <>
+                    <Key>High Priority</Key>
+                    <Value>Unlocks ~6h</Value>
+                  </>
+                );
+              case 4:
+                return (
+                  <>
+                    <Key>Very High Priority</Key>
+                    <Value>Unlocks ~2h</Value>
+                  </>
+                );
+
+              default:
+            }
+          })()}
+        </Row>
+        <Row>
+          <Key>Transaction Fee</Key>
+          <Value>
+            {fee} {fromTicker}
+          </Value>
+        </Row>
         <Confirm
+          description="I have reviewed my Exchange and accept the transaction fee"
           checked={checked}
           onChange={onChange}
-          label="Confirm and Exchange"
         />
-      </Footer>
-    </Container>
+      </Container>
+    </Fragment>
   );
 };
 

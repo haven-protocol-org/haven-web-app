@@ -8,17 +8,17 @@ import {
   Button,
   Labels,
   Name,
-  Row
+  Row,
 } from "./styles";
 import { Label, Error } from "../../../../assets/styles/type.js";
 
 class Nodes extends React.Component {
   state = {
     displayMenu: false,
-    selected: this.props.placeholder
+    selected: this.props.placeholder,
   };
 
-  showDropdownMenu = event => {
+  showDropdownMenu = (event) => {
     event.preventDefault();
     this.setState({ displayMenu: true }, () => {
       document.addEventListener("click", this.hideDropdownMenu);
@@ -33,12 +33,11 @@ class Nodes extends React.Component {
 
   renderOptions = () => {
     const { onClick, options } = this.props;
-    return options.map(option => {
-      const { theme, value } = option;
+    return options.map((option) => {
       return (
-        <Item key={value} onClick={() => onClick({ theme, value })}>
+        <Item key={option.name} onClick={() => onClick(option)}>
           <Row>
-            <Name>{value}</Name>
+            <Name>{option.name}</Name>
           </Row>
         </Item>
       );
@@ -56,7 +55,10 @@ class Nodes extends React.Component {
           <Error>{error}</Error>
         </Labels>
         <Select>
-          <Button onClick={this.showDropdownMenu}>
+          <Button
+            disabled={this.props.disabled}
+            onClick={this.showDropdownMenu}
+          >
             <Row>
               <Name>{value}</Name>
             </Row>

@@ -6,8 +6,10 @@ import { history } from "../../utility/history";
 import { NavigationDesktop } from "./components/navigation";
 import { PublicRoutesDesktop } from "./routes/public";
 import { PrivateRoutesDesktop } from "./routes/private";
-import Status from "../../shared/components/_layout/status";
+import { StatusComponent } from "../../shared/components/_layout/status";
 import { HashRouter } from "react-router-dom";
+import { ModalContainerDesktop } from "./components/modalContainer";
+import {FixedStatus} from "./components/fixedStatusConatiner";
 
 class App extends Component {
   render() {
@@ -15,7 +17,9 @@ class App extends Component {
       <ThemeProvider theme={this.props.theme}>
         <HashRouter history={history}>
           <NavigationDesktop />
-          <Status />
+          <ModalContainerDesktop />
+          <FixedStatus/>
+          <StatusComponent />
           <PublicRoutesDesktop />
           <Route path="/wallet" component={PrivateRoutesDesktop} />
         </HashRouter>
@@ -24,8 +28,8 @@ class App extends Component {
   }
 }
 
-export const mapStateToProps = state => ({
-  theme: state.theme
+export const mapStateToProps = (state) => ({
+  theme: state.theme,
 });
 
 export const AppDesktop = connect(mapStateToProps)(App);

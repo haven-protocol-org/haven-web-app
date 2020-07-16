@@ -9,7 +9,7 @@ import {
   Title,
   Heading,
   Important,
-  Wrapper
+  Wrapper,
 } from "./styles";
 
 const English = () => {
@@ -35,12 +35,10 @@ const English = () => {
           </Description>
           <Title>Payments</Title>
           <Description>
-            Haven could be used for any purchases where privacy and security is
-            a priority. Anything that does not require instant settlement could
-            potentially be bought with any of the xAssets within the Haven
-            network such as real estate, cars, art work, yachts as examples. As
-            the network grows and matures there are many more use cases that
-            could be built on top of the Haven network.
+            Haven could be used for any purchases where privacy and security are
+            a priority and where they don't require instant settlement As the
+            network grows and matures there are many more use cases that could
+            be built on top of the Haven network.
           </Description>
         </Cell>
 
@@ -53,11 +51,11 @@ const English = () => {
           </Description>
           <Title>How many XHV coins are there?</Title>
           <Description>
-            As of August 2019 there around 9 million XHV in circulation with a
+            As of May 2020 there around 12.5 million XHV in circulation with a
             maximum supply of 18.4 million. There is also a tail coin-emission
-            at the same rate as Monero. Once the offshore part of the protocol
-            is live, the circulating supply will fluctuate due to users minting
-            and burning their funds (XHV to xUSD etc).
+            at the same rate as Monero. Once the xAsset part of the protocol is
+            live, the circulating supply will fluctuate due to users minting and
+            burning their funds (XHV to xUSD etc).
           </Description>
           <Title>Was Haven an ICO?</Title>
           <Description>No, there was no ICO.</Description>
@@ -126,7 +124,7 @@ const English = () => {
             This is the simplest method for those using computers who do not
             wish to run their own node.
           </Description>
-          <Title>GUI Vault (Graphical User Interface)</Title>
+          <Title>Haven Desktop Vault (GUI)</Title>
           <Description>
             This is downloaded as an app on your computer and provides a simple
             to use vault for storing XHV and all Haven xAssets.

@@ -5,11 +5,11 @@ import React from "react";
 import { Container, Button } from "./styles";
 import { Spinner } from "../../spinner";
 
-const Footer = ({ loading = false, onClick, label, validated = true }) => {
+const Footer = ({ loading, onClick, label, disabled }) => {
   return (
     <Container>
-      <Button disabled={!validated} onClick={onClick}>
-        {loading ? <Spinner color={"white"} /> : label}
+      <Button disabled={disabled} onClick={onClick}>
+        {loading ? <Spinner /> : label}
       </Button>
     </Container>
   );

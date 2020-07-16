@@ -1,10 +1,11 @@
-import {app, BrowserWindow, Menu} from "electron";
+import { shell, app, BrowserWindow, Menu } from "electron";
 import * as path from "path";
 import { devServerStarted } from "./dev";
-import { HavenWallet, QUIT_EVENT } from "./HavenWallet";
+import { HavenWallet } from "./HavenWallet";
 import { BrowserWindowConstructorOptions } from "electron";
-import {isDevMode} from "./env";
-import {havenMenu} from "./menu";
+import { isDevMode } from "./env";
+import { havenMenu } from "./menu";
+import { appEventBus, DAEMONS_STOPPED_EVENT } from "./EventBus";
 
 const wallet = new HavenWallet();
 
@@ -19,7 +20,6 @@ if (require("electron-squirrel-startup")) {
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow: Electron.BrowserWindow;
 
-
 const menu = Menu.buildFromTemplate(havenMenu);
 Menu.setApplicationMenu(menu);
 
@@ -28,12 +28,15 @@ const startApp = () => {
     width: 992,
     minWidth: 470,
     minHeight: 720,
-    height: 600
+    height: 600,
   };
 
   browserOptions.webPreferences = {
+    contextIsolation: true,
+    enableRemoteModule: false,
     nodeIntegration: false,
-    preload: path.join(__dirname, "../preload.js")
+    additionalArguments:[app.getVersion()],
+    preload: path.join(__dirname, "../sites/preload/preload.js"),
   };
   // Create the browser window.
   mainWindow = new BrowserWindow(browserOptions);
@@ -42,12 +45,14 @@ const startApp = () => {
     // Open the DevTools.
     mainWindow.webContents.openDevTools();
 
-    devServerStarted.subscribe(hasStarted => {
+    devServerStarted.subscribe((hasStarted) => {
       console.log("hasStarted : ", hasStarted);
       if (hasStarted) {
         mainWindow.loadURL("http://localhost:3000");
       } else {
-        mainWindow.loadURL(path.join(`file://${__dirname}`, "../index.html"));
+        mainWindow.loadURL(
+          path.join(`file://${__dirname}`, "../sites/dev/index.html")
+        );
       }
     });
   } else {
@@ -57,8 +62,6 @@ const startApp = () => {
     );
 
     mainWindow.maximize();
-
-
   }
 
   // start the app
@@ -74,8 +77,6 @@ const startApp = () => {
   mainWindow.on("ready-to-show", () => {
     mainWindow.show();
   });
-
-
 };
 
 // This method will be called when Electron has finished
@@ -83,9 +84,10 @@ const startApp = () => {
 // Some APIs can only be used after this event occurs.
 app.on("ready", startApp);
 
+
 let willQuit = false;
 
-app.on("will-quit", event => {
+app.on("will-quit", (event) => {
   if (!willQuit) {
     willQuit = true;
     event.preventDefault();
@@ -97,11 +99,18 @@ app.on("will-quit", event => {
 app.on("window-all-closed", () => {
   app.quit();
 });
+app.on("web-contents-created", (event, contents) => {
+  contents.on("new-window", async (event, navigationUrl) => {
+    event.preventDefault();
+
+    await shell.openExternal(navigationUrl);
+  });
+});
 
 const onAppQuit = () => {
   console.log("on App quit called");
 
-  wallet.getAppStatus().once(QUIT_EVENT, () => {
+  appEventBus.once(DAEMONS_STOPPED_EVENT, () => {
     app.quit();
   });
 

@@ -7,7 +7,6 @@ export const Container = styled.div`
   min-height: 100vh;
   width: 100vw;
   display: flex;
-  overflow: scroll;
   justify-content: center;
   align-items: center;
   background: ${background};
@@ -39,25 +38,6 @@ export const Image = styled.img`
  `};
 `;
 
-export const Microcopy = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-auto;
-  z-index: 2000;
-
-
-  ${media.laptop`
-    width: 75%;
- `};
-
-  ${media.tablet`
-   width: 75%;
- `};
-
-  ${media.mobile`
-   width: 90%;
- `};
-`;
 
 export const Heading = styled.div`
   font-size: 48px;

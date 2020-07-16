@@ -1,11 +1,12 @@
 import { getBalanceRPC } from "../ipc/rpc/rpc";
+
+import { Balance, XBalance } from "shared/reducers/xBalance";
+import bigInt from "big-integer";
 import {
   GET_BALANCES_FAILED,
   GET_BALANCES_FETCHING,
-  GET_BALANCES_SUCCEED
-} from "./types";
-import { Balance, XBalance } from "shared/reducers/xBalance";
-import bigInt from "big-integer";
+  GET_BALANCES_SUCCEED,
+} from "shared/actions/types";
 
 export const getBalance = () => {
   return (dispatch: any) => {
@@ -24,11 +25,11 @@ export const getBalance = () => {
 const getBalancesFetching = () => ({ type: GET_BALANCES_FETCHING });
 const getBalancesSucceed = (result: any) => ({
   type: GET_BALANCES_SUCCEED,
-  payload: result
+  payload: result,
 });
 const getBalancesFailed = (error: any) => ({
   type: GET_BALANCES_FAILED,
-  payload: error
+  payload: error,
 });
 
 const parseBalances = (rpcBalanceData: any): XBalance => {
@@ -37,10 +38,10 @@ const parseBalances = (rpcBalanceData: any): XBalance => {
     unlockedBalance: bigInt(rpcBalanceData.unlocked_balance),
     lockedBalance: bigInt(rpcBalanceData.balance).subtract(
       rpcBalanceData.unlocked_balance
-    )
+    ),
   };
 
   return {
-    XHV: balance
+    XHV: balance,
   };
 };
