@@ -88,7 +88,7 @@ module.exports = {
     name: "Haven",
     ignore: ignoredPaths,
     afterCopy: [copyTargetNodesToBuild, substituteEnvsForBuild],
-    icon: "./icons/haven_icon",
+    icon: "./icons/icon",
     asar: {
       unpackDir: "haven-node/**",
     },
