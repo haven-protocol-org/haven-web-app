@@ -1,11 +1,10 @@
-import {DaemonProcess} from "../DaemonProcess";
-import {IDaemonConfig, ThreeState, WalletState} from "../../types";
-import {RPCRequestObject} from "../../rpc/RPCHRequestHandler";
-import {config, getLocalDaemon} from "../config/config";
-import {appEventBus, HAVEND_LOCATION_CHANGED} from "../../EventBus";
-import {isDevMode} from "../../env";
-import {logInDevMode} from "../../dev";
-
+import { DaemonProcess } from "../DaemonProcess";
+import { IDaemonConfig, ThreeState, WalletState } from "../../types";
+import { RPCRequestObject } from "../../rpc/RPCHRequestHandler";
+import { config, getLocalDaemon } from "../config/config";
+import { appEventBus, HAVEND_LOCATION_CHANGED } from "../../EventBus";
+import { isDevMode } from "../../env";
+import { logInDevMode } from "../../dev";
 
 const SYNC_HEIGHT_REGEX = /.*D.*height (.*),/gm;
 const NO_CONNECTION_MESSAGE = "error::no_connection_to_daemon";
@@ -42,13 +41,13 @@ export class WalletRPCProcess extends DaemonProcess {
 
   onstdoutData(chunk: any): void {
     if (isDevMode) {
-        console.error('wallet stdout : ' + chunk.toString());
+      console.error("wallet stdout : " + chunk.toString());
     }
 
     if (chunk.toString().includes(CONNECTION_TO_DAEMON_SUCCESS)) {
       this.isConnectedToDaemon = ThreeState.True;
       if (isDevMode) {
-     //   console.error("wallet stdout : " + chunk.toString());
+        //   console.error("wallet stdout : " + chunk.toString());
       }
     }
 
@@ -85,11 +84,8 @@ export class WalletRPCProcess extends DaemonProcess {
   }
 
   async requestHandler(requestObject: RPCRequestObject): Promise<any> {
-
-
     try {
       const response = await this.rpcHandler.sendRequest(requestObject);
-
 
       const setsDaemon = requestObject.method === "set_daemon";
 
@@ -116,7 +112,7 @@ export class WalletRPCProcess extends DaemonProcess {
       }
       this.isReachable = false;
       const message = this._isRunning
-        ? "Vault is too busy to respond"
+        ? "Vault is busy, wait and retry"
         : "Vault is not running";
       return { error: { message } } as any;
     }
