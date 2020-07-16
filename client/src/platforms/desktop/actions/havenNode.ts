@@ -2,11 +2,21 @@ import {getHavendStateIPC} from "../ipc/misc";
 import {GET_HAVEND_STATE_FAILED, GET_HAVEND_STATE_SUCCEED,} from "./types";
 import {NodeLocation} from "platforms/desktop/types";
 import {HavendState} from "platforms/desktop/ipc/ipc-types";
+import {DesktopAppState} from "platforms/desktop/reducers";
+import {addNotificationByMessage} from "shared/actions/notification";
+import {NotificationType} from "constants/notificationList";
 
 export const gethavenNodeState = () => {
-  return (dispatch: any) => {
+  return (dispatch: any, getState:() => DesktopAppState) => {
     getHavendStateIPC()
       .then((res: HavendState) => {
+
+        if (!getState().havenNode.isRunning && res.isRunning){
+          dispatch(addNotificationByMessage(NotificationType.SUCCESS, 'Local Node is starting'));
+        } else if (getState().havenNode.isRunning && !res.isRunning){
+          dispatch(addNotificationByMessage(NotificationType.SUCCESS, 'Local Node did stop'));
+        }
+
         dispatch(updatehavenNodeState(res));
       })
       .catch((err) => dispatch(updatehavenNodeStateFailed(err)));
