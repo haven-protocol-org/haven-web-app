@@ -34,9 +34,7 @@ class Navigation extends Component {
             v{APP_VERSION} {NET_TYPE_NAME}
           </Tag>
         </Brand>
-        {auth === false ? (
-          <Button to="/">Login</Button>
-        ) : (
+        {auth === true && (
           <Logout onClick={this.handleLogout}>Logout</Logout>
         )}
       </Container>
