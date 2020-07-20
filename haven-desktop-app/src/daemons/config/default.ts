@@ -48,7 +48,7 @@ export const daemonConfigMainnet = {
       port: 12345,
       args: {
           "max-log-file-size":100000,
-          "daemon-address": "http://remote.eu.havenprotocol.org:17750",
+          "daemon-address": `${remoteNode.address}:${remoteNode.port}`,
           "max-log-files":2,
           "rpc-bind-port": 12345,
           "disable-rpc-login": "",
