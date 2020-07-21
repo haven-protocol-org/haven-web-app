@@ -85,7 +85,7 @@ const copyTargetNodesToBuild = (
 
 module.exports = {
   packagerConfig: {
-    executableName: "haven",
+    executableName: "Haven",
     name: "Haven",
     ignore: ignoredPaths,
     afterCopy: [copyTargetNodesToBuild, substituteEnvsForBuild],

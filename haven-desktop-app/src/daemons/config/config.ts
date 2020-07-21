@@ -1,17 +1,20 @@
+import { app } from "electron";
 import * as fs from "fs";
 import * as path from "path";
 import {daemonConfigMainnet, daemonConfigStagenet, daemonConfigTestnet} from "../../daemons/config/default";
 import {LOCAL_DAEMON_MAP} from "../../daemons/config/enum";
 import {APP_DATA_PATH, getNetTypeId, isDevMode} from "../../env";
-import {IConfig, NET} from "../../types";
+import {AppConfig, NET} from "../../types";
+import {logInDevMode} from "../../dev";
 
 const configFileName = "daemon_config.json";
 
-let daemonConfig: IConfig;
+let daemonConfig: AppConfig;
 
 const configFilePath = path.join(APP_DATA_PATH, configFileName);
 
-const DEFAULT_CONFIG: IConfig = {
+const DEFAULT_CONFIG: AppConfig = {
+  version: app.getVersion(),
   [NET.Stagenet]: daemonConfigStagenet,
   [NET.Testnet]: daemonConfigTestnet,
   [NET.Mainnet]: daemonConfigMainnet,
@@ -23,6 +26,16 @@ export const checkAndCreateDaemonConfig = () => {
     const configJson = JSON.stringify(DEFAULT_CONFIG);
 
     fs.writeFileSync(configFilePath, configJson, "utf8");
+  } else {
+
+    const daemonConfig = readDaemonConfig();
+
+    if (!(daemonConfig.version && daemonConfig.version === app.getVersion())) {
+      logInDevMode("overwrite config");
+      const configJson = JSON.stringify(DEFAULT_CONFIG);
+      fs.writeFileSync(configFilePath, configJson, "utf8");
+    }
+
   }
 };
 
@@ -48,14 +61,14 @@ export const updateDaemonUrlInConfig = (daemonUrl: string) => {
   daemonConfig = readDaemonConfig();
 };
 
-export const getDaemonConfig = (): IConfig => {
+export const getDaemonConfig = (): AppConfig => {
   if (!daemonConfig) {
     daemonConfig = readDaemonConfig();
   }
   return daemonConfig;
 };
 
-const readDaemonConfig = (): IConfig => {
+const readDaemonConfig = (): AppConfig => {
   if (isDevMode) {
     console.log(configFilePath);
   }

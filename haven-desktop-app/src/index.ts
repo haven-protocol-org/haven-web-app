@@ -62,7 +62,7 @@ const startApp = () => {
       path.join(`file://${__dirname}`, "../client/index.html"),
     );
 
-    mainWindow.maximize();
+    // mainWindow.maximize();
   }
 
   // start the app
