@@ -3,9 +3,9 @@
  */
 
 import { WalletHandler } from "./wallets/WalletHandler";
-import { CommunicationChannel } from "./types";
+import {CommunicationChannel, NET} from "./types";
 import { BrowserWindow, ipcMain } from "electron";
-import { getNetType, NET, setNetType } from "./env";
+import { getNetTypeId, setNetType } from "./env";
 import { DaemonHandler } from "./daemons/DaemonHandler";
 import { checkAndCreateWalletDir } from "./wallets/walletPaths";
 import { appEventBus, DAEMONS_STOPPED_EVENT } from "./EventBus";
@@ -48,7 +48,7 @@ export class HavenWallet {
     }
 
     // no need to switch
-    if (netType === getNetType()) {
+    if (netType === getNetTypeId()) {
       return;
     }
 

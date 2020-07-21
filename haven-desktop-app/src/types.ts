@@ -1,5 +1,3 @@
-import { NET } from "./env";
-
 export enum CommunicationChannel {
   HAVEND = "havend",
   WALLET_RPC = "wallet-rpc",
@@ -28,11 +26,13 @@ export interface ProcessState {
 }
 
 export interface IDaemonConfig {
-  path: string;
+
   port: number;
   args: { [key: string]: string | number };
   daemonUrl: string;
+
 }
+
 
 export enum NodeLocation {
   Local = "Local",
@@ -45,20 +45,25 @@ export enum ThreeState {
   False,
   Unset,
 }
+export enum NET {
+  Mainnet = 0,
+  Testnet = 1,
+  Stagenet = 2,
+}
 
-export type DaemonType = "havend" | "wallet";
+export type IConfig = { [key in  NET]:{[key in DaemonType]: IDaemonConfig} };
 
-export type IConfig = {
-  [NET.Mainnet]: {
-    havend: IDaemonConfig;
-    wallet: IDaemonConfig;
-  };
-  [NET.Testnet]: {
-    havend: IDaemonConfig;
-    wallet: IDaemonConfig;
-  };
-  [NET.Stagenet]: {
-    havend: IDaemonConfig;
-    wallet: IDaemonConfig;
-  };
-};
+
+export enum DaemonType  {
+  havend='havend',
+ wallet='wallet'
+}
+
+
+
+
+export enum NetTypeName {
+  mainnet='mainnet',
+  testnet='testnet',
+  stagenet='stagenet'
+}

@@ -1,18 +1,11 @@
-import {
-  HAVEND_PATH_MAINNET,
-  HAVEND_PATH_STAGENET,
-  HAVEND_PATH_TESTNET,
-  WALLET_RPC_PATH_MAINNET,
-  WALLET_RPC_PATH_STAGENET,
-  WALLET_RPC_PATH_TESTNET,
-} from "../../daemonPaths";
+
 import {
   WALLET_PATH_MAINNET,
   WALLET_PATH_STAGENET,
   WALLET_PATH_TESTNET,
 } from "../../wallets/walletPaths";
 import { HAVEND_STANDARD_PORT, LOCAL_DAEMON_MAP } from "./enum";
-import { NET } from "../../env";
+import { NET } from "../../types";
 
 
  const REMOTE_NODES = [
@@ -27,23 +20,26 @@ import { NET } from "../../env";
   {
     address:'http://remote.eu.havenprotocol.org',
     port: "17750",
+  },
+  {
+    address:'Http://xhv-pst.minershive.ca',
+    port:"17750"
+
   }
 ];
 
 
-const nodeIndex =  Math.floor(Math.random() * 3);
+const nodeIndex =  Math.floor(Math.random() * REMOTE_NODES.length);
 const remoteNode = REMOTE_NODES[nodeIndex];
 
 export const daemonConfigMainnet = {
   havend: {
-    path: HAVEND_PATH_MAINNET,
     //daemonUrl: LOCAL_DAEMON_MAP.get(NET.Mainnet),
     daemonUrl: `${remoteNode.address}:${remoteNode.port}`,
     port: HAVEND_STANDARD_PORT.Mainnet,
     args: {},
   },
   wallet: {
-      path: WALLET_RPC_PATH_MAINNET,
       daemonUrl: `${remoteNode.address}:${remoteNode.port}`,
       port: 12345,
       args: {
@@ -63,7 +59,6 @@ export const daemonConfigMainnet = {
 
 export const daemonConfigTestnet = {
   havend: {
-    path: HAVEND_PATH_TESTNET,
     daemonUrl: LOCAL_DAEMON_MAP.get(NET.Testnet),
     port: HAVEND_STANDARD_PORT.Testnet,
     args: {
@@ -72,7 +67,6 @@ export const daemonConfigTestnet = {
     },
   },
   wallet: {
-    path: WALLET_RPC_PATH_TESTNET,
     daemonUrl: LOCAL_DAEMON_MAP.get(NET.Testnet),
     port: 12345,
     args: {
@@ -88,7 +82,6 @@ export const daemonConfigTestnet = {
 
 export const daemonConfigStagenet = {
   havend: {
-    path: HAVEND_PATH_STAGENET,
     daemonUrl: LOCAL_DAEMON_MAP.get(NET.Stagenet),
     port: HAVEND_STANDARD_PORT.Stagenet,
     args: {
@@ -98,7 +91,6 @@ export const daemonConfigStagenet = {
     },
   },
   wallet: {
-    path: WALLET_RPC_PATH_STAGENET,
     daemonUrl: LOCAL_DAEMON_MAP.get(NET.Stagenet),
     port: 12345,
     args: {
