@@ -1,5 +1,5 @@
 import {app} from "electron";
-import {NET, NetTypeName} from "../src/types";
+import {NET, NetTypeName} from "./types";
 
 export const APP_DATA_PATH = app.getPath("userData");
 export const isDevMode = process.env.HAVEN_DESKTOP_DEVELOPMENT;

@@ -21,13 +21,13 @@ export function decode_address(address: string) {
 
 	let dec = cnBase58.decode(address);
 	const expectedPrefix = encode_varint(
-		CRYPTONOTE_PUBLIC_ADDRESS_BASE58_PREFIX
+		CRYPTONOTE_PUBLIC_ADDRESS_BASE58_PREFIX,
 	);
 	const expectedPrefixInt = encode_varint(
-		CRYPTONOTE_PUBLIC_INTEGRATED_ADDRESS_BASE58_PREFIX
+		CRYPTONOTE_PUBLIC_INTEGRATED_ADDRESS_BASE58_PREFIX,
 	);
 	const expectedPrefixSub = encode_varint(
-		CRYPTONOTE_PUBLIC_SUBADDRESS_BASE58_PREFIX
+		CRYPTONOTE_PUBLIC_SUBADDRESS_BASE58_PREFIX,
 	);
 	const prefix = dec.slice(0, expectedPrefix.length);
 	if (
@@ -65,20 +65,20 @@ export function decode_address(address: string) {
 	}
 	if (intPaymentId) {
 		return {
-			spend: spend,
-			view: view,
-			intPaymentId: intPaymentId,
+			spend,
+			view,
+			intPaymentId,
 		};
 	} else {
 		return {
-			spend: spend,
-			view: view,
+			spend,
+			view,
 		};
 	}
 }
 
 
- function encode_varint(input: number | string) {
+function encode_varint(input: number | string) {
 	let i = new BigInt(input);
 	let out = "";
 	// While i >= b10000000

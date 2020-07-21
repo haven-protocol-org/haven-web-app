@@ -51,19 +51,19 @@ export enum NET {
   Stagenet = 2,
 }
 
-export type IConfig = { [key in  NET]:{[key in DaemonType]: IDaemonConfig} };
+export type IConfig = { [key in  NET]: {[key in DaemonType]: IDaemonConfig} };
 
 
 export enum DaemonType  {
-  havend='havend',
- wallet='wallet'
+  havend= "havend",
+ wallet= "wallet",
 }
 
 
 
 
 export enum NetTypeName {
-  mainnet='mainnet',
-  testnet='testnet',
-  stagenet='stagenet'
+  mainnet= "mainnet",
+  testnet= "testnet",
+  stagenet= "stagenet",
 }

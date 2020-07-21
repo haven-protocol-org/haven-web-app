@@ -218,8 +218,9 @@ This file has been modified by Paul Shapiro to bring in the function lowVal whic
 			str += this._d[this._d.length - 1].toString();
 			for (var i = this._d.length - 2; i >= 0; i--) {
 				var group = this._d[i].toString();
-				while (group.length < BigInteger_base_log10)
+				while (group.length < BigInteger_base_log10) {
 					group = "0" + group;
+				}
 				str += group;
 			}
 			return str;
@@ -1398,7 +1399,7 @@ This file has been modified by Paul Shapiro to bring in the function lowVal whic
 			for (; n >= BigInteger_base_log10; n -= BigInteger_base_log10) {
 				k._d.unshift(0);
 			}
-			if (n == 0) return k;
+			if (n == 0) { return k; }
 			k._s = 1;
 			k = k.multiplySingleDigit(Math.pow(10, n));
 			return this._s < 0 ? k.negate() : k;

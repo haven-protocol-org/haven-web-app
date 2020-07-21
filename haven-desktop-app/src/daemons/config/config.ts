@@ -1,9 +1,9 @@
-import {APP_DATA_PATH, getNetTypeId, isDevMode} from "../../env";
-import {daemonConfigMainnet, daemonConfigStagenet, daemonConfigTestnet,} from "../../daemons/config/default";
-import * as path from "path";
 import * as fs from "fs";
-import {IConfig, NET} from "../../types";
+import * as path from "path";
+import {daemonConfigMainnet, daemonConfigStagenet, daemonConfigTestnet} from "../../daemons/config/default";
 import {LOCAL_DAEMON_MAP} from "../../daemons/config/enum";
+import {APP_DATA_PATH, getNetTypeId, isDevMode} from "../../env";
+import {IConfig, NET} from "../../types";
 
 const configFileName = "daemon_config.json";
 
@@ -29,9 +29,9 @@ export const checkAndCreateDaemonConfig = () => {
 export const updateDaemonUrlInConfig = (daemonUrl: string) => {
   const isLocal = isLocalDaemon(daemonUrl);
 
-  const config = getDaemonConfig();
+  const storedConfig = getDaemonConfig();
 
-  const daemonConfigNet = config[getNetTypeId()];
+  const daemonConfigNet = storedConfig[getNetTypeId()];
 
   daemonConfigNet.havend.daemonUrl = daemonUrl;
   daemonConfigNet.wallet.daemonUrl = daemonUrl;
@@ -42,7 +42,7 @@ export const updateDaemonUrlInConfig = (daemonUrl: string) => {
     daemonConfigNet.wallet.args["daemon-address"] = daemonUrl;
   }
 
-  const configJson = JSON.stringify(config);
+  const configJson = JSON.stringify(storedConfig);
 
   fs.writeFileSync(configFilePath, configJson, "utf8");
   daemonConfig = readDaemonConfig();

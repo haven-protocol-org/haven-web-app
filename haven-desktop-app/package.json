@@ -11,7 +11,9 @@
     "publish": "npm run build && electron-forge publish",
     "build": "tsc",
     "watch": "tsc -w",
-    "lint": "tslint -c tslint.json -p tsconfig.json"
+    "lint": "tslint -c tslint.json -p tsconfig.json",
+    "fixlint": "tslint --fix -c tslint.json -p tsconfig.json"
+
   },
   "keywords": [],
   "author": {

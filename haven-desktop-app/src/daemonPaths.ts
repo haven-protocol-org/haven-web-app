@@ -1,6 +1,6 @@
 import * as path from "path";
-import {DaemonType} from "../src/types";
-import {getNetTypeName} from "../src/env";
+import {getNetTypeName} from "./env";
+import {DaemonType} from "./types";
 
 
 const PLATFORM = process.platform;
@@ -19,13 +19,13 @@ export const getLocalDaemonPath  = (type: DaemonType) => {
     if (type === DaemonType.havend) {
 
        return  checkForUnpackedPath(
-            path.resolve(__dirname, `../haven-node/${PLATFORM}/${getNetTypeName()}/havend`)
+            path.resolve(__dirname, `../haven-node/${PLATFORM}/${getNetTypeName()}/havend`),
         );
 
-    } else if (type === DaemonType.wallet){
+    } else if (type === DaemonType.wallet) {
 
         return  checkForUnpackedPath(
-            path.resolve(__dirname, `../haven-node/${PLATFORM}/${getNetTypeName()}/haven-wallet-rpc`)
+            path.resolve(__dirname, `../haven-node/${PLATFORM}/${getNetTypeName()}/haven-wallet-rpc`),
         );
     }
 };

@@ -1,18 +1,19 @@
-import { shell, app, BrowserWindow, Menu } from "electron";
+import { app, BrowserWindow, Menu, shell } from "electron";
+import { BrowserWindowConstructorOptions } from "electron";
 import * as path from "path";
 import { devServerStarted } from "./dev";
-import { HavenWallet } from "./HavenWallet";
-import { BrowserWindowConstructorOptions } from "electron";
 import { isDevMode } from "./env";
-import { havenMenu } from "./menu";
 import { appEventBus, DAEMONS_STOPPED_EVENT } from "./EventBus";
+import { HavenWallet } from "./HavenWallet";
+import { havenMenu } from "./menu";
 
 const wallet = new HavenWallet();
 
 app.enableSandbox();
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
+// tslint:disable-next-line: no-var-requires
 if (require("electron-squirrel-startup")) {
-  // eslint-disable-line global-require
+
   app.quit();
 }
 
@@ -35,7 +36,7 @@ const startApp = () => {
     contextIsolation: true,
     enableRemoteModule: false,
     nodeIntegration: false,
-    additionalArguments:[app.getVersion()],
+    additionalArguments: [app.getVersion()],
     preload: path.join(__dirname, "../sites/preload/preload.js"),
   };
   // Create the browser window.
@@ -51,14 +52,14 @@ const startApp = () => {
         mainWindow.loadURL("http://localhost:3000");
       } else {
         mainWindow.loadURL(
-          path.join(`file://${__dirname}`, "../sites/dev/index.html")
+          path.join(`file://${__dirname}`, "../sites/dev/index.html"),
         );
       }
     });
   } else {
     // and load the index.html of the app.
     mainWindow.loadURL(
-      path.join(`file://${__dirname}`, "../client/index.html")
+      path.join(`file://${__dirname}`, "../client/index.html"),
     );
 
     mainWindow.maximize();
