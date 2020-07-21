@@ -12,6 +12,7 @@ import {
 } from "../daemons/config/config";
 import { isDevMode } from "../env";
 import {dialog} from 'electron';
+import {getLocalDaemonPath} from "../../src/daemonPaths";
 
 export abstract class DaemonProcess implements IDaemonManager {
   protected type: DaemonType;
@@ -43,7 +44,7 @@ export abstract class DaemonProcess implements IDaemonManager {
 
   protected startLocalProcess(): void {
     const config = this.getConfig();
-    this.filePath = config.path;
+    this.filePath = getLocalDaemonPath(this.type);
     this.startArgs = config.args;
     this.port = config.port;
 

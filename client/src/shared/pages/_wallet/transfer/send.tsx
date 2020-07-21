@@ -15,6 +15,7 @@ import Input from "../../../components/_inputs/input";
 // import TransferSummary from "../../../components/_summaries/transfer-summary";
 import { Container } from "./styles";
 import TransferSummary from "shared/components/_summaries/transfer-summary";
+import {isDesktop} from "constants/env";
 // Relative Imports
 
 const xhvOption = { name: "Haven", ticker: Ticker.XHV };
@@ -276,7 +277,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
           <Footer
             onClick={() => this.handleSubmit()}
             loading={this.props.isProcessing}
-            label="Preview"
+            label={isDesktop() ? 'Preview' : 'Transfer'}
             disabled={!checkValidation}
           />
         </Container>

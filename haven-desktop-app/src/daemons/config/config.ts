@@ -1,13 +1,9 @@
-import { APP_DATA_PATH, getNetType, isDevMode, NET } from "../../env";
-import {
-  daemonConfigMainnet,
-  daemonConfigStagenet,
-  daemonConfigTestnet,
-} from "../../daemons/config/default";
+import {APP_DATA_PATH, getNetTypeId, isDevMode} from "../../env";
+import {daemonConfigMainnet, daemonConfigStagenet, daemonConfigTestnet,} from "../../daemons/config/default";
 import * as path from "path";
 import * as fs from "fs";
-import { IConfig } from "../../types";
-import { LOCAL_DAEMON_MAP } from "../../daemons/config/enum";
+import {IConfig, NET} from "../../types";
+import {LOCAL_DAEMON_MAP} from "../../daemons/config/enum";
 
 const configFileName = "daemon_config.json";
 
@@ -35,7 +31,7 @@ export const updateDaemonUrlInConfig = (daemonUrl: string) => {
 
   const config = getDaemonConfig();
 
-  const daemonConfigNet = config[getNetType()];
+  const daemonConfigNet = config[getNetTypeId()];
 
   daemonConfigNet.havend.daemonUrl = daemonUrl;
   daemonConfigNet.wallet.daemonUrl = daemonUrl;
@@ -74,7 +70,9 @@ export const isLocalDaemon = (url: string) => {
 };
 
 export const getLocalDaemon = (): string => {
-  return LOCAL_DAEMON_MAP.get(getNetType());
+  return LOCAL_DAEMON_MAP.get(getNetTypeId());
 };
 
-export const config = () => getDaemonConfig()[getNetType()];
+export const config = () => getDaemonConfig()[getNetTypeId()];
+
+

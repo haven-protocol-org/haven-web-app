@@ -1,30 +1,9 @@
 import * as path from "path";
+import {DaemonType} from "../src/types";
+import {getNetTypeName} from "../src/env";
 
 
 const PLATFORM = process.platform;
-
-
-export const HAVEND_PATH_TESTNET: string = checkForUnpackedPath(
-    path.resolve(__dirname, `../haven-node/${PLATFORM}/testnet/havend`)
-);
-export const HAVEND_PATH_MAINNET: string = checkForUnpackedPath(
-    path.resolve(__dirname, `../haven-node/${PLATFORM}/mainnet/havend`)
-);
-
-export const HAVEND_PATH_STAGENET: string = checkForUnpackedPath(
-    path.resolve(__dirname, `../haven-node/${PLATFORM}/stagenet/havend`)
-);
-
-
-export const WALLET_RPC_PATH_TESTNET: string = checkForUnpackedPath(
-    path.resolve(__dirname, `../haven-node/${PLATFORM}/testnet/haven-wallet-rpc`)
-);
-export const WALLET_RPC_PATH_MAINNET: string = checkForUnpackedPath(
-    path.resolve(__dirname, `../haven-node/${PLATFORM}/mainnet/haven-wallet-rpc`)
-);
-export const WALLET_RPC_PATH_STAGENET: string = checkForUnpackedPath(
-    path.resolve(__dirname, `../haven-node/${PLATFORM}/stagenet/haven-wallet-rpc`)
-);
 
 
 
@@ -34,3 +13,19 @@ function checkForUnpackedPath(path: string) {
     }
     return path;
 }
+
+
+export const getLocalDaemonPath  = (type: DaemonType) => {
+    if (type === DaemonType.havend) {
+
+       return  checkForUnpackedPath(
+            path.resolve(__dirname, `../haven-node/${PLATFORM}/${getNetTypeName()}/havend`)
+        );
+
+    } else if (type === DaemonType.wallet){
+
+        return  checkForUnpackedPath(
+            path.resolve(__dirname, `../haven-node/${PLATFORM}/${getNetTypeName()}/haven-wallet-rpc`)
+        );
+    }
+};

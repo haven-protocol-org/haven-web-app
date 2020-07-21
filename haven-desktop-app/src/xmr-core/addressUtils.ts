@@ -1,5 +1,5 @@
 
-import {getNetType} from "../env";
+import {getNetTypeId} from "../env";
 import {BigInt} from "./biginteger/src";
 import {cnBase58} from "./xmr-b58/src";
 import {cn_fast_hash} from "./xmr-fast-hash/src";
@@ -15,9 +15,9 @@ const INTEGRATED_ID_SIZE = 8;
 export function decode_address(address: string) {
 
 
-	const CRYPTONOTE_PUBLIC_ADDRESS_BASE58_PREFIX = [0x5af4, 0x59f4, 0x239974][getNetType()];
-	const CRYPTONOTE_PUBLIC_INTEGRATED_ADDRESS_BASE58_PREFIX = [0xcd774, 0x499f4, 0x279974][getNetType()];
-	const CRYPTONOTE_PUBLIC_SUBADDRESS_BASE58_PREFIX = [0x12d974, 0x919f4, 0x2c1974][getNetType()];
+	const CRYPTONOTE_PUBLIC_ADDRESS_BASE58_PREFIX = [0x5af4, 0x59f4, 0x239974][getNetTypeId()];
+	const CRYPTONOTE_PUBLIC_INTEGRATED_ADDRESS_BASE58_PREFIX = [0xcd774, 0x499f4, 0x279974][getNetTypeId()];
+	const CRYPTONOTE_PUBLIC_SUBADDRESS_BASE58_PREFIX = [0x12d974, 0x919f4, 0x2c1974][getNetTypeId()];
 
 	let dec = cnBase58.decode(address);
 	const expectedPrefix = encode_varint(

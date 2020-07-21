@@ -32,15 +32,11 @@ export const isDesktop = () => {
 let apiUrl;
 
 if (isWeb()) {
-  if (isMainnet()) {
+
     apiUrl = isDevMode()
-      ? process.env.REACT_APP_API_URL_MAINNET_DEVELOP
-      : process.env.REACT_APP_API_URL_MAINNET;
-  } else {
-    apiUrl = isDevMode()
-      ? process.env.REACT_APP_API_URL_TESTNET_DEVELOP
-      : process.env.REACT_APP_API_URL_TESTNET;
-  }
+      ? process.env.REACT_APP_API_URL_DEVELOP
+      : process.env.REACT_APP_API_URL;
+
 }
 
 export const getNetworkByName = () => {

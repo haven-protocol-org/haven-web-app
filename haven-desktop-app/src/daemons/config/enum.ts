@@ -1,4 +1,4 @@
-import { NET } from "../../env";
+import { NET } from "../../types";
 
 export enum HAVEND_STANDARD_PORT {
   Mainnet = 17750,
