@@ -5,7 +5,7 @@ import MenuItemConstructorOptions = Electron.MenuItemConstructorOptions;
 
 const isMac = process.platform === "darwin";
 
-export const havenMenu: Array<MenuItemConstructorOptions> = [
+export const havenMenu: MenuItemConstructorOptions[] = [
   // { role: 'appMenu' }
   ...(isMac
     ? [
@@ -15,7 +15,7 @@ export const havenMenu: Array<MenuItemConstructorOptions> = [
             { role: "about" },
             { type: "separator" },
             { role: "hide" },
-            //@ts-ignore
+            // @ts-ignore
             ...(isDevMode ? [{ role: "forcereload" }] : []),
             { role: "hideothers" },
             { role: "unhide" },
@@ -103,7 +103,7 @@ export const havenMenu: Array<MenuItemConstructorOptions> = [
         click: async () => {
           const { shell } = require("electron");
           await shell.openExternal(
-            "https://web.telegram.org/#/im?p=s1273047334_13986713956461503950"
+            "https://web.telegram.org/#/im?p=s1273047334_13986713956461503950",
           );
         },
       },
@@ -126,7 +126,7 @@ export const havenMenu: Array<MenuItemConstructorOptions> = [
         click: async () => {
           const { shell } = require("electron");
           await shell.openExternal(
-            "http://docs.havenprotocol.org/whitepapers/english.pdf"
+            "http://docs.havenprotocol.org/whitepapers/english.pdf",
           );
         },
       },
@@ -136,7 +136,7 @@ export const havenMenu: Array<MenuItemConstructorOptions> = [
         click: async () => {
           const { shell } = require("electron");
           await shell.openExternal(
-            "http://docs.havenprotocol.org/whitepapers/french.pdf"
+            "http://docs.havenprotocol.org/whitepapers/french.pdf",
           );
         },
       },
@@ -145,7 +145,7 @@ export const havenMenu: Array<MenuItemConstructorOptions> = [
         click: async () => {
           const { shell } = require("electron");
           await shell.openExternal(
-            "http://docs.havenprotocol.org/whitepapers/chinese.pdf"
+            "http://docs.havenprotocol.org/whitepapers/chinese.pdf",
           );
         },
       },
@@ -201,10 +201,10 @@ export const havenMenu: Array<MenuItemConstructorOptions> = [
         click: async () => {
           const { shell } = require("electron");
           await shell.openExternal(
-            "https://discordapp.com/channels/536838513182638090/570818940553527296"
+            "https://discordapp.com/channels/536838513182638090/570818940553527296",
           );
         },
       },
     ],
   },
-] as Array<MenuItemConstructorOptions>;
+] as MenuItemConstructorOptions[];

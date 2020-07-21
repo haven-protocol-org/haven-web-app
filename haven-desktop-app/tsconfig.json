@@ -7,7 +7,6 @@
     "allowJs": true,
     "outDir": "dist",
     "moduleResolution": "node"
-
   },
   "include": [
     "src/**/*"

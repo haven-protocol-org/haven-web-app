@@ -1,7 +1,7 @@
 {
-  "name": "haven-desktop-app",
+  "name": "haven",
   "productName": "Haven",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Desktop App for Haven Vault",
   "main": "dist/index.js",
   "scripts": {
@@ -11,7 +11,9 @@
     "publish": "npm run build && electron-forge publish",
     "build": "tsc",
     "watch": "tsc -w",
-    "lint": "tslint -c tslint.json -p tsconfig.json"
+    "lint": "tslint -c tslint.json -p tsconfig.json",
+    "fixlint": "tslint --fix -c tslint.json -p tsconfig.json"
+
   },
   "keywords": [],
   "author": {

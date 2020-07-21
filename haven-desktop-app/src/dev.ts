@@ -2,7 +2,7 @@ import * as net from "net";
 import { BehaviorSubject } from "rxjs";
 import {isDevMode} from "./env";
 
-let devServerStartedObservable: BehaviorSubject<boolean> = new BehaviorSubject<
+const devServerStartedObservable: BehaviorSubject<boolean> = new BehaviorSubject<
   boolean
 >(false);
 
@@ -29,4 +29,4 @@ export const logInDevMode = (mes: string) => {
     console.log(mes);
   }
 
-}
+};

@@ -1,4 +1,3 @@
-import { selectIsOffshoreEnabled } from "shared/reducers/havenFeature";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { getWalletHeightRPC } from "../ipc/rpc/rpc";
 import { getBalance } from "./balance";
@@ -27,14 +26,7 @@ export const getDaemonsState = () => {
 export const refresh = () => {
   return (dispatch: any, getState: () => DesktopAppState) => {
 
-
-    if (!selectIsOffshoreEnabled(getState())){
-      dispatch(getExchangeRates());
-    } else {
-      dispatch(getLastBlockHeader())
-    }
-
-
+    dispatch(getLastBlockHeader())
     if (selectIsWalletSyncingRemote(getState())) {
       dispatch(getNodeInfo());
 
@@ -57,9 +49,6 @@ export const updateApp = () => {
   return (dispatch: any, getState: () => DesktopAppState) => {
     //if we sync via remote node, wallet-rpc will be blocked
 
-    if (!selectIsOffshoreEnabled(getState())){
-      dispatch(getExchangeRates());
-    }
 
     if (selectIsWalletSyncingRemote(getState())) {
       dispatch(getNodeInfo());
@@ -71,9 +60,7 @@ export const updateApp = () => {
     dispatch(getBalance());
     dispatch(getTransfers());
     dispatch(getNodeInfo());
-
-    if (selectIsOffshoreEnabled(getState())) {
-      dispatch(getOffshoreBalance());
-    }
+    dispatch(getOffshoreBalance());
+    
   };
 };

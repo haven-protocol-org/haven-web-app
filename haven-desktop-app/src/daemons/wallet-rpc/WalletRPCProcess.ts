@@ -1,10 +1,10 @@
-import { DaemonProcess } from "../DaemonProcess";
-import { IDaemonConfig, ThreeState, WalletState } from "../../types";
-import { RPCRequestObject } from "../../rpc/RPCHRequestHandler";
-import { config, getLocalDaemon } from "../config/config";
-import { appEventBus, HAVEND_LOCATION_CHANGED } from "../../EventBus";
-import { isDevMode } from "../../env";
 import { logInDevMode } from "../../dev";
+import { isDevMode } from "../../env";
+import { appEventBus, HAVEND_LOCATION_CHANGED } from "../../EventBus";
+import { RPCRequestObject } from "../../rpc/RPCHRequestHandler";
+import { IDaemonConfig, ThreeState, WalletState } from "../../types";
+import { config, getLocalDaemon } from "../config/config";
+import { DaemonProcess } from "../DaemonProcess";
 
 const SYNC_HEIGHT_REGEX = /.*D.*height (.*),/gm;
 const NO_CONNECTION_MESSAGE = "error::no_connection_to_daemon";
@@ -17,29 +17,29 @@ export class WalletRPCProcess extends DaemonProcess {
   private syncHeight: number;
   private isReachable: boolean;
 
-  init(): void {
+  public init(): void {
     super.init();
     this.startLocalProcess();
   }
 
-  setRPCHandler(): void {
+  public setRPCHandler(): void {
     const config = this.getConfig();
 
     // wallet-rpc is always local - never remote
     this.rpcHandler.port = config.port;
   }
 
-  onDaemonError(error: Error): void {
+  public onDaemonError(error: Error): void {
     super.onDaemonError(error);
   }
 
-  onstderrData(chunk: any): void {
+  public onstderrData(chunk: any): void {
     if (isDevMode) {
       console.error("wallet stderr : " + chunk.toString());
     }
   }
 
-  onstdoutData(chunk: any): void {
+  public onstdoutData(chunk: any): void {
     if (isDevMode) {
       console.error("wallet stdout : " + chunk.toString());
     }
@@ -83,7 +83,7 @@ export class WalletRPCProcess extends DaemonProcess {
     }
   }
 
-  async requestHandler(requestObject: RPCRequestObject): Promise<any> {
+  public async requestHandler(requestObject: RPCRequestObject): Promise<any> {
     try {
       const response = await this.rpcHandler.sendRequest(requestObject);
 
@@ -118,11 +118,11 @@ export class WalletRPCProcess extends DaemonProcess {
     }
   }
 
-  getConfig(): IDaemonConfig {
+  public getConfig(): IDaemonConfig {
     return config().wallet;
   }
 
-  getState(): WalletState {
+  public getState(): WalletState {
     return {
       isRunning: this._isRunning,
       isConnectedToDaemon: this.isConnectedToDaemon,
@@ -132,7 +132,7 @@ export class WalletRPCProcess extends DaemonProcess {
     };
   }
 
-  onHavendLocationChanged(address: string): void {
+  public onHavendLocationChanged(address: string): void {
     super.onHavendLocationChanged(address);
   }
 }

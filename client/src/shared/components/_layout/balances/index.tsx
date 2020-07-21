@@ -15,12 +15,10 @@ import { isDesktop} from "constants/env";
 import { selectDesktopSyncState } from "platforms/desktop/reducers/chain";
 import { NO_BALANCE, XBalances } from "shared/reducers/xBalance";
 import { Ticker } from "shared/reducers/types";
-import {selectIsOffshoreEnabled} from "shared/reducers/havenFeature";
 
 interface BalanceProps {
   syncState: SyncState;
   balances: XBalances;
-  offshoreEnabled: boolean;
 }
 
 interface BalanceState {
@@ -35,9 +33,7 @@ class Balances extends Component<BalanceProps, BalanceState> {
   };
 
   onClickNext() {
-    if (!this.props.offshoreEnabled) {
-      return;
-    }
+
 
     const tickerNum: number = Object.keys(Ticker).length;
 
@@ -88,7 +84,6 @@ class Balances extends Component<BalanceProps, BalanceState> {
 
 const mapStateToProps = (state: DesktopAppState | WebAppState) => ({
   balances: state.xBalance,
-  offshoreEnabled: selectIsOffshoreEnabled(state),
   syncState: isDesktop()
     ? selectDesktopSyncState(state as DesktopAppState)
     : selectWebSyncState(state)

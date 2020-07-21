@@ -12,7 +12,7 @@ export function cn_fast_hash(input: string) {
 
 
 export function hextobin(hex: string) {
-	if (hex.length % 2 !== 0) throw Error("Hex string has invalid length!");
+	if (hex.length % 2 !== 0) { throw Error("Hex string has invalid length!"); }
 	const res = new Uint8Array(hex.length / 2);
 	for (let i = 0; i < hex.length / 2; ++i) {
 		res[i] = parseInt(hex.slice(i * 2, i * 2 + 2), 16);

@@ -1,5 +1,4 @@
 // Library Imports
-import { selectIsOffshoreEnabled } from "shared/reducers/havenFeature";
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { AssetOption } from "shared/pages/_wallet/exchange";
@@ -11,10 +10,10 @@ import Dropdown from "../../../components/_inputs/dropdown";
 import Footer from "../../../components/_inputs/footer";
 import Form from "../../../components/_inputs/form";
 import Input from "../../../components/_inputs/input";
-// import InputButton from "../../../components/_inputs/input_button";
-// import TransferSummary from "../../../components/_summaries/transfer-summary";
+
 import { Container } from "./styles";
 import TransferSummary from "shared/components/_summaries/transfer-summary";
+import {isDesktop} from "constants/env";
 // Relative Imports
 
 const xhvOption = { name: "Haven", ticker: Ticker.XHV };
@@ -37,7 +36,6 @@ interface TransferOwnProps {
 
 interface TransferReduxProps {
   xBalances: XBalances;
-  offshoreEnabled: boolean;
   options: Array<TransferOption>;
 }
 
@@ -276,7 +274,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
           <Footer
             onClick={() => this.handleSubmit()}
             loading={this.props.isProcessing}
-            label="Preview"
+            label={isDesktop() ? 'Preview' : 'Transfer'}
             disabled={!checkValidation}
           />
         </Container>
@@ -290,10 +288,7 @@ const mapStateToProps = (
   ownProps: TransferOwnProps
 ): TransferReduxProps => ({
   xBalances: state.xBalance,
-  offshoreEnabled: selectIsOffshoreEnabled(state),
-  options: selectIsOffshoreEnabled(state)
-    ? [xhvOption, xUSDOption]
-    : [xhvOption],
+  options:[xhvOption, xUSDOption]
 });
 
 export const SendFunds = connect<TransferReduxProps, {}, TransferOwnProps>(

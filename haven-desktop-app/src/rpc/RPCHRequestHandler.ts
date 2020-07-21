@@ -3,12 +3,12 @@ import { LOCAL_HOST_URL } from "../daemons/config/enum";
 import { LOCAL_HOST } from "../daemons/config/enum";
 import { logInDevMode } from "../dev";
 
-export type RPCRequestObject = {
+export interface RPCRequestObject {
   id: number;
   jsonrpc: string;
   method: string;
   params?: any;
-};
+}
 
 export class RPCHRequestHandler {
   private _host: string = LOCAL_HOST_URL;
@@ -57,14 +57,14 @@ export class RPCHRequestHandler {
       "relay_tx",
       "transfer_split"];
 
-    let timeout = timeLessMethods.some((method ) => method === requestObject.method)? 0 : 4000;
+    const timeout = timeLessMethods.some((method ) => method === requestObject.method) ? 0 : 4000;
 
     logInDevMode("send request to : " + this._fullUrl);
 
     if (requestObject.method === "mining_status") {
       return axios.post(
         `${this._host}:${this._port}/${requestObject.method}`,
-        requestObject.params, {timeout}
+        requestObject.params, {timeout},
       );
     }
     return axios.post(`${this._fullUrl}/json_rpc`, requestObject, {timeout});
