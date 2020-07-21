@@ -51,7 +51,9 @@ export enum NET {
   Stagenet = 2,
 }
 
-export type IConfig = { [key in  NET]: {[key in DaemonType]: IDaemonConfig} };
+export type IDaemonNetConfig = { [key in  NET]: {[key in DaemonType]: IDaemonConfig} };
+
+export type AppConfig = IDaemonNetConfig & {version: string};
 
 
 export enum DaemonType  {

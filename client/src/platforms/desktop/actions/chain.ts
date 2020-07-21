@@ -15,7 +15,6 @@ import {
 } from "../ipc/rpc/rpc";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { getLastBlockHeader } from "platforms/desktop/actions/blockHeaderExchangeRate";
-import { selectIsOffshoreEnabled } from "shared/reducers/havenFeature";
 import { updateHavenFeatures } from "shared/actions/havenFeature";
 
 interface NodeInfoHeights {
@@ -36,9 +35,7 @@ export const getNodeInfo = () => {
             nodeInfoHeights.nodeHeight
           )
         ) {
-          if (selectIsOffshoreEnabled(getState())) {
             dispatch(getLastBlockHeader());
-          }
         }
         dispatch(getNodeInfoSucceed(nodeInfoHeights));
       })

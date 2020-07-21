@@ -8,6 +8,10 @@ export const REMOTE_NODES = [
     port: "17750",
   },
   {
+    address: "http://xhv-pst.minershive.ca",
+    port: "17750",
+  },
+  {
     address:'http://remote.eu.havenprotocol.org',
     port: "17750",
   }

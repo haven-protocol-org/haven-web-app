@@ -12,12 +12,10 @@ import { SyncState } from "shared/types/types";
 import { isDesktop} from "constants/env";
 import { selectDesktopSyncState } from "platforms/desktop/reducers/chain";
 import {
-  selectBalances,
   selectTotalBalances,
   XViewBalances,
 } from "shared/reducers/xBalance";
 import { Ticker } from "shared/reducers/types";
-import {selectIsOffshoreEnabled} from "shared/reducers/havenFeature";
 import {WebAppState} from "platforms/web/reducers";
 
 const OFFSHORE_TICKERS = [Ticker.xUSD, Ticker.xBTC, null];
@@ -25,7 +23,6 @@ const OFFSHORE_TICKERS = [Ticker.xUSD, Ticker.xBTC, null];
 interface BalanceProps {
   syncState: SyncState;
   balances: XViewBalances;
-  offshoreEnabled: boolean;
 }
 
 interface BalanceState {
@@ -37,14 +34,12 @@ interface BalanceState {
 class Balances extends Component<BalanceProps, BalanceState> {
   state: BalanceState = {
     currentIndex: 0,
-    currentTicker: this.props.offshoreEnabled ? OFFSHORE_TICKERS[0] : Ticker.XHV,
-    tickerOptions: this.props.offshoreEnabled ? OFFSHORE_TICKERS : [Ticker.XHV]
+    currentTicker:  OFFSHORE_TICKERS[0],
+    tickerOptions: OFFSHORE_TICKERS
   };
 
   onClickNext() {
-    if (!this.props.offshoreEnabled) {
-      return;
-    }
+
 
     const tickerNum: number = OFFSHORE_TICKERS.length;
 
@@ -58,18 +53,7 @@ class Balances extends Component<BalanceProps, BalanceState> {
     });
   }
 
-  static getDerivedStateFromProps(nextProps: Readonly<BalanceProps>, prevState: Readonly<BalanceState>): any | null {
 
-    if (nextProps.offshoreEnabled && prevState.tickerOptions.length === 1) {
-      return {
-        tickerOptions: OFFSHORE_TICKERS,
-        currentTicker: OFFSHORE_TICKERS[0]
-      } as Partial<BalanceState>
-    }
-
-    return null;
-
-  }
 
   render() {
     const ticker = this.state.currentTicker;
@@ -116,10 +100,7 @@ class Balances extends Component<BalanceProps, BalanceState> {
 }
 
 const mapStateToProps = (state: DesktopAppState | WebAppState) => ({
-  offshoreEnabled: selectIsOffshoreEnabled(state),
-  balances: selectIsOffshoreEnabled(state)
-    ? selectTotalBalances(state)
-    : selectBalances(state),
+  balances: selectTotalBalances(state),
   syncState: isDesktop()
     ? selectDesktopSyncState(state as DesktopAppState)
     : selectWebSyncState(state),
