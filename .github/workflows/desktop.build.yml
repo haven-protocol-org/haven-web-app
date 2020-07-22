@@ -26,11 +26,11 @@ jobs:
         node-version: '14'
     
     - name: Install dependencies
-      working-directory: docs
+      working-directory: client
       run: |
           npm install
 
     - name: Build
-      working-directory: docs
+      working-directory: client
       run: |
           npm run build:desktop:mainnet
