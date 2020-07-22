@@ -19,23 +19,20 @@ import {
   OptionsList,
   State,
   Wrapper,
+  OptionsSVG,
 } from "./styles";
-import OptionsSVG from "../../../../assets/icons/options.svg";
+
 import { Body, Label } from "assets/styles/type";
 
 import { closeWallet } from "../../actions";
 import { selectIsLoggedIn } from "../../reducers/walletSession";
-import {
-  getNetworkByName,
-  isDevMode,
-  NET_TYPE_NAME,
-} from "constants/env";
+import { getNetworkByName, isDevMode, NET_TYPE_NAME } from "constants/env";
 import { DesktopAppState } from "../../reducers";
 import { NodeState } from "platforms/desktop/types";
 import { WalletState } from "platforms/desktop/ipc/ipc-types";
 import { selectisLocalNode } from "platforms/desktop/reducers/havenNode";
 import { ThreeState } from "shared/types/types";
-import {selectBlockHeight} from "platforms/desktop/reducers/chain";
+import { selectBlockHeight } from "platforms/desktop/reducers/chain";
 
 interface NavigationProps {
   wallet: WalletState;
@@ -117,7 +114,9 @@ class Navigation extends Component<NavigationProps, any> {
           )}
 
           <Options onClick={this.showDropdownMenu}>
-            <OptionsIcon src={OptionsSVG} />
+            <OptionsIcon>
+              <OptionsSVG />
+            </OptionsIcon>
           </Options>
         </Menu>
         {this.state.showOptions && (
@@ -159,7 +158,7 @@ const mapStateToProps = (state: DesktopAppState) => ({
   wallet: state.walletRPC,
   node: state.havenNode,
   isLocalNode: selectisLocalNode(state.havenNode),
-  height: selectBlockHeight(state)
+  height: selectBlockHeight(state),
 });
 
 export const NavigationDesktop = connect(mapStateToProps, {

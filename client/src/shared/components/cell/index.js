@@ -8,7 +8,6 @@ import {
   Title,
   Subtitle,
   Ticker,
-  Icon,
   Locked,
   Unlocked,
   Row,
@@ -19,8 +18,9 @@ import {
   PendingWrapper,
   PendingSpacer,
   Balance,
+  Arrow,
 } from "./styles";
-import chevron from "../../../assets/icons/chevron.svg";
+// import chevron from "../../../assets/icons/chevron.svg";
 
 const Cell = ({
   tokenName,
@@ -52,7 +52,7 @@ const Cell = ({
               </Row>
             </Column>
             <Route>
-              <Icon src={chevron} />
+              <Arrow />
             </Route>
           </Unlocked>
         </Container>
@@ -72,7 +72,7 @@ const Cell = ({
               </Row>
             </Column>
             <Route>
-              <Icon src={chevron} />
+              <Arrow />
             </Route>
           </Locked>
           {open && (

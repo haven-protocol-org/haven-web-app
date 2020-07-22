@@ -143,7 +143,7 @@ export const Button = styled.button`
     padding: 20px;
     border-radius: 3px;
     font-size: 16px;
-    color: white;
+    color: ${(props) => props.theme.button.primary_label};
     display: flex;
     align-items: flex-start;
     border: none;
@@ -161,7 +161,7 @@ export const Button = styled.button`
     height: 0px;
     border: 7px solid;
     border-color: ${(props) =>
-      props.theme.input.input_select} transparent transparent transparent;
+      props.theme.type.primary} transparent transparent transparent;
     right: 16px;
     top: 24px;
 `;

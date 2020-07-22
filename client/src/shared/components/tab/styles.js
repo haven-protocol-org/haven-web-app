@@ -8,8 +8,8 @@ export const Container = styled.div`
   background: red;
   border-radius: 4px;
   overflow: hidden;
-  border: 1px solid ${props => props.theme.body.border};
-  background: ${props => props.theme.body.foreground};
+  border: 1px solid ${(props) => props.theme.body.border};
+  background: ${(props) => props.theme.body.foreground};
 `;
 
 export const Item = styled.div`
@@ -20,15 +20,18 @@ export const Item = styled.div`
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  color: ${props => (props.active ? "#fff" : `${props.theme.type.secondary}`)};
-  background: ${props =>
+  color: ${(props) =>
+    props.active
+      ? `${props.theme.button.primary_label}`
+      : `${props.theme.type.secondary}`};
+  background: ${(props) =>
     props.active
       ? `${props.theme.button.primary}`
       : `${props.theme.body.foreground}`};
   transition: 500ms;
 
   &:hover {
-    background: ${props =>
+    background: ${(props) =>
       props.active
         ? `${props.theme.button.primary_hover}`
         : `${props.theme.body.foreground}`};

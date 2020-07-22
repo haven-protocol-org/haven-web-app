@@ -2,6 +2,7 @@
 import React, { Component } from "react";
 import { Line } from "react-chartjs-2";
 import { Spinner } from "../spinner/index.js";
+import { withTheme } from "styled-components";
 
 // Relative Imports
 import {
@@ -173,9 +174,9 @@ class Chart extends Component {
               labels: this.props.labels,
               datasets: [
                 {
-                  backgroundColor: "rgba(114, 137, 218, 0.20)",
-                  borderColor: "rgba(114, 137, 218, 1)",
-                  pointBackgroundColor: "rgba(114, 137, 218, 1)",
+                  backgroundColor: `${this.props.theme.charts.background}`,
+                  borderColor: `${this.props.theme.charts.border}`,
+                  pointBackgroundColor: `${this.props.theme.charts.border}`,
                   data: this.props.prices,
                 },
               ],
@@ -187,4 +188,4 @@ class Chart extends Component {
   }
 }
 
-export default Chart;
+export default withTheme(Chart);

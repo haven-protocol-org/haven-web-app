@@ -7,7 +7,6 @@ import {
 
 export const createNodeOptions = (havendState: NodeState): NodeOption[] => {
   const remoteNodes: NodeOption[] = REMOTE_NODES.map((node) => {
-    const host = new URL(node.address).host;
     return {
       location: NodeLocation.Remote,
       address: node.address,

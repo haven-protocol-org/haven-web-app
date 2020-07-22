@@ -10,8 +10,8 @@ class ChartSingle extends Component {
     price: "",
     data: {
       labels: [],
-      datasets: [{ data: [] }]
-    }
+      datasets: [{ data: [] }],
+    },
   };
 
   componentDidMount() {
@@ -21,12 +21,11 @@ class ChartSingle extends Component {
     updateData.data = this.props.data;
     this.setState({
       updateLabel: updateLabel,
-      updateData: updateData
+      updateData: updateData,
     });
   }
 
   render() {
-    console.log("DATA", this.state);
     return (
       <Container>
         <Line
@@ -36,14 +35,14 @@ class ChartSingle extends Component {
             pointBackgroundColor: "rgba(114, 137, 218, 1)",
             responsive: true,
             title: {
-              display: false
+              display: false,
             },
             legend: {
-              display: false
+              display: false,
             },
             scales: {
               yAxes: [{ display: false }],
-              xAxes: [{ display: false }]
+              xAxes: [{ display: false }],
             },
             tooltips: {
               yAlign: "bottom",
@@ -62,8 +61,9 @@ class ChartSingle extends Component {
               bodySpacing: 10,
               titleFontFamily:
                 "Inter-SemiBold, 'Helvetica', 'Arial', sans-serif",
-              bodyFontFamily: "Inter-SemiBold, 'Helvetica', 'Arial', sans-serif"
-            }
+              bodyFontFamily:
+                "Inter-SemiBold, 'Helvetica', 'Arial', sans-serif",
+            },
           }}
           data={this.state.data}
         />
@@ -73,6 +73,3 @@ class ChartSingle extends Component {
 }
 
 export default ChartSingle;
-
-
-

@@ -8,17 +8,14 @@ import Body from "shared/components/_layout/body";
 import Header from "shared/components/_layout/header";
 import Form from "shared/components/_inputs/form";
 import Theme from "shared/components/_inputs/theme";
-import Footer from "shared/components/_inputs/footer/index.js";
-import Mining from "../../../components/animation/index.js";
 // For the miner
 import { selectisLocalNode } from "platforms/desktop/reducers/havenNode";
-import { dark, light } from "assets/styles/themes.js";
+import { dark, light, sepia } from "assets/styles/themes.js";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import {
   MiningRequestTypes,
   MiningStatus,
 } from "platforms/desktop/reducers/mining";
-import { Spinner } from "shared/components/spinner";
 import {
   miningStatus,
   startMining,
@@ -51,6 +48,7 @@ interface SettingsProps {
 const options: ThemeOption[] = [
   { theme: "dark", value: "Dark Theme" },
   { theme: "light", value: "Light Theme" },
+  { theme: "sepia", value: "Sepia Theme" },
 ];
 
 class SettingsDesktopPage extends Component<SettingsProps, any> {
@@ -113,6 +111,11 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
       this.setState({
         value: value,
       });
+    } else if (theme === "sepia") {
+      this.props.selectTheme(sepia);
+      this.setState({
+        value: value,
+      });
     } else {
       return null;
     }
@@ -149,17 +152,6 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
   render() {
     const { value } = this.state;
 
-    const mining: MiningStatus = this.props.mining;
-    let buttonLabel =
-      mining.miningRequest !== MiningRequestTypes.None &&
-      mining.miningRequest !== MiningRequestTypes.Status ? (
-        <Spinner />
-      ) : mining.active ? (
-        "Stop Mining"
-      ) : (
-        "Start Mining"
-      );
-
     return (
       <Body>
         <Header
@@ -176,29 +168,7 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
             onClick={this.handleClick}
           />
         </Form>
-
         <HavenNodeSetting />
-
-        <Header
-          title="Mining "
-          description="Start mining with your computer and increase your chance to earn Haven"
-        />
-
-        <Mining
-          //@ts-ignore
-          isLocalNode={this.props.localNode}
-          status={true}
-          mining={mining.active === true ? "Mining" : "Not Mining"}
-          hash={mining.active === true ? `${mining.speed} Hashes` : "0 Hashes"}
-        >
-          <Footer
-            //@ts-ignore
-            onClick={this.onMiningButtonClicked}
-            loading={false}
-            label={buttonLabel}
-            disabled={!this.props.localNode}
-          />
-        </Mining>
       </Body>
     );
   }
