@@ -49,15 +49,15 @@ jobs:
           sh './sh/make_mainnet.sh'
 
     - if: matrix.os == 'macOS-latest'
-      - name: Upload macOS
-        uses: actions/upload-artifact@v2
-        with:
-          name: Haven-macOS-x64
-          path: haven-desktop-app/out/make/
+      name: Upload macOS
+      uses: actions/upload-artifact@v2
+      with:
+        name: Haven-macOS-x64
+        path: haven-desktop-app/out/make/
 
     - if: matrix.os == 'windows-latest'
-      - name: Upload Windows
-        uses: actions/upload-artifact@v2
-        with:
-          name: Haven-Win-x64
-          path: haven-desktop-app/out/make/
+      name: Upload Windows
+      uses: actions/upload-artifact@v2
+      with:
+        name: Haven-Win-x64
+        path: haven-desktop-app/out/make/
