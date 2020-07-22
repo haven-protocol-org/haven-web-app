@@ -2,19 +2,19 @@ import Nodes from "shared/components/_inputs/nodes";
 import Header from "shared/components/_layout/header";
 import Form from "shared/components/_inputs/form";
 import Input from "shared/components/_inputs/input";
-import {Container} from "../styles";
+import { Container, Intstructions } from "../styles";
 
 import DoubleFooter from "shared/components/_inputs/double_footer/index.js";
-import React, {SyntheticEvent} from "react";
-import {DesktopAppState} from "platforms/desktop/reducers";
-import {connect} from "react-redux";
-import {selectisLocalNode} from "platforms/desktop/reducers/havenNode";
-import {setNodeForWallet} from "platforms/desktop/actions/walletRPC";
-import {NodeLocation, NodeState} from "platforms/desktop/types";
-import {selectIsWalletSyncingRemote} from "platforms/desktop/reducers/walletRPC";
-import {Information} from "assets/styles/type.js";
-import {createNodeOptions} from "platforms/desktop/pages/_wallet/settings/node/options";
-import {ThreeState} from "shared/types/types";
+import React, { SyntheticEvent } from "react";
+import { DesktopAppState } from "platforms/desktop/reducers";
+import { connect } from "react-redux";
+import { selectisLocalNode } from "platforms/desktop/reducers/havenNode";
+import { setNodeForWallet } from "platforms/desktop/actions/walletRPC";
+import { NodeLocation, NodeState } from "platforms/desktop/types";
+import { selectIsWalletSyncingRemote } from "platforms/desktop/reducers/walletRPC";
+import { Information } from "assets/styles/type.js";
+import { createNodeOptions } from "platforms/desktop/pages/_wallet/settings/node/options";
+import { ThreeState } from "shared/types/types";
 
 export enum NodeSelectionType {
   local,
@@ -30,7 +30,7 @@ export interface NodeOption {
   selectionType: NodeSelectionType;
 }
 
- interface NodeSettingProps {
+interface NodeSettingProps {
   isRemoteSyncing: boolean;
   localNode: boolean;
   node: NodeState;
@@ -44,7 +44,7 @@ export interface NodeOption {
   ) => void;
 }
 
- interface NodeSettingState {
+interface NodeSettingState {
   selectedNodeOption: NodeOption;
   address: string;
   port: string;
@@ -71,10 +71,13 @@ class NodeSettingComponent extends React.Component<
 
     const { address, selectedNodeOption, port } = this.state;
 
-    if (address === this.props.node.address && port === this.props.node.port && this.props.isConnected === ThreeState.True) {
+    if (
+      address === this.props.node.address &&
+      port === this.props.node.port &&
+      this.props.isConnected === ThreeState.True
+    ) {
       return;
     }
-
 
     this.props.setHavenNode(selectedNodeOption, address, port);
   };
@@ -108,8 +111,9 @@ class NodeSettingComponent extends React.Component<
   ) {
     let newState = {};
 
-
-    const isConnectedOrTryingToConnectAgain = nextProps.isConnected !== ThreeState.False && prevState.connected !== nextProps.isConnected;
+    const isConnectedOrTryingToConnectAgain =
+      nextProps.isConnected !== ThreeState.False &&
+      prevState.connected !== nextProps.isConnected;
 
     // when we are connected to a daemon or trying to connect  --> again lock
     if (isConnectedOrTryingToConnectAgain) {
@@ -121,24 +125,22 @@ class NodeSettingComponent extends React.Component<
     }
 
     if (isConnectedOrTryingToConnectAgain) {
-
       if (nextProps.node.address !== prevState.address) {
         const changes = {
           address: nextProps.node.address,
-          port: nextProps.node.port
+          port: nextProps.node.port,
         };
-        newState = {...newState, ...changes};
+        newState = { ...newState, ...changes };
       }
     }
 
     if (isConnectedOrTryingToConnectAgain) {
       if (prevState.selectedNodeOption.address !== nextProps.node.address) {
-        const changes  = {
-
-        selectedNodeOption: nextProps.nodeOptions.find(
+        const changes = {
+          selectedNodeOption: nextProps.nodeOptions.find(
             (nodeOption) => nodeOption.address === nextProps.node.address
-        )!,
-      };
+          )!,
+        };
         newState = { ...newState, ...changes };
       }
     }
@@ -152,14 +154,11 @@ class NodeSettingComponent extends React.Component<
     if (isConnected === ThreeState.Unset || isRequestingSwitch) {
       // Don't change this label as it's equality checked on child
       return "Loading";
-    }
-    else if (locked  && isConnected === ThreeState.True) {
+    } else if (locked && isConnected === ThreeState.True) {
       return "Connected";
-    }
-    else if (!locked) {
+    } else if (!locked) {
       return "Connect";
-    }
-    else {
+    } else {
       return "Connect";
     }
   };
@@ -207,14 +206,18 @@ class NodeSettingComponent extends React.Component<
           )}
 
           <Container>
-            <Information>
-              {this.props.isConnected === ThreeState.True? 'Vault is connected to '
-                  : this.props.isConnected === ThreeState.Unset? 'Vault is trying to connect to '
-                      : 'Vault is not connected to '}
-              <strong>{this.props.node.address}</strong>. Change
-              nodes by clicking <strong>Disconnect</strong>, then select a new
-              node from the dropdown, then click <strong>Connect</strong>.
-            </Information>
+            <Intstructions>
+              <Information>
+                {this.props.isConnected === ThreeState.True
+                  ? "Vault is connected to "
+                  : this.props.isConnected === ThreeState.Unset
+                  ? "Vault is trying to connect to "
+                  : "Vault is not connected to "}
+                <strong>{this.props.node.address}</strong>. Change nodes by
+                clicking <strong>Disconnect</strong>, then select a new node
+                from the dropdown, then click <strong>Connect</strong>.
+              </Information>
+            </Intstructions>
             <DoubleFooter
               // Left section
               onClick={() => {}}
@@ -247,5 +250,3 @@ const mapStateToProps = (state: DesktopAppState) => ({
 export const HavenNodeSetting = connect(mapStateToProps, {
   setHavenNode: setNodeForWallet,
 })(NodeSettingComponent);
-
-
