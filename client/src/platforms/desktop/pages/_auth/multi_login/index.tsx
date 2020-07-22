@@ -56,7 +56,7 @@ class MultiLoginPage extends Component<MultiLoginProps, MultiloginState> {
           <OpenWalletDesktop wallets={this.props.wallets} />
         </Main>
         <Footer>
-          <Label>Don't have a Vault?</Label>
+          <Label>Need a Vault?</Label>
           <Route to={"/create"}>Create or Restore a Vault</Route>
         </Footer>
       </Container>

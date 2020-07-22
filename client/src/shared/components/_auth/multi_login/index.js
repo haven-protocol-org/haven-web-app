@@ -156,7 +156,7 @@ export class MultiLogin extends Component {
           </Buttons>
         </Main>
         <Footer>
-          <Label>Don't have a Vault?</Label>
+          <Label>Need a Vault?</Label>
           <Route to={"/create"}>Create or Restore a Vault</Route>
         </Footer>
       </Container>
