@@ -7,7 +7,7 @@ export const REMOTE_NODES = [
   },
   {
     address: "http://nodes.hashvault.pro",
-    provider: "Hashvault",
+    provider: "Hash Vault",
     port: "17750",
     trusted: true,
   },
