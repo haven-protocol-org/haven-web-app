@@ -30,7 +30,11 @@ jobs:
       run: |
           npm install
 
-    - name: Build
+    - name: Client Build for Desktop
       working-directory: client
       run: |
           npm run build:desktop:mainnet
+    - name: Copy Build
+      working-directory: client
+      run: |
+          npm run copy-build
