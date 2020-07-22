@@ -22,6 +22,7 @@ export const createNodeOptions = (havendState: NodeState): NodeOption[] => {
     location: NodeLocation.Local,
     address: "",
     port: "",
+    trusted:true,
     name: "Local Node",
     selectionType: NodeSelectionType.local,
   };
@@ -33,6 +34,7 @@ export const createNodeOptions = (havendState: NodeState): NodeOption[] => {
         port: havendState.port,
         name: createCustomNodeName(havendState),
         selectionType: NodeSelectionType.custom,
+        trusted:false
       }
     : {
         location: NodeLocation.Remote,
@@ -40,6 +42,7 @@ export const createNodeOptions = (havendState: NodeState): NodeOption[] => {
         port: "",
         name: "Custom Node",
         selectionType: NodeSelectionType.custom,
+        trusted:false
       };
 
   //quick check to omit local node option for macOS for first

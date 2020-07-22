@@ -23,6 +23,7 @@ export enum NodeSelectionType {
 }
 
 export interface NodeOption {
+  trusted:boolean;
   name: string;
   location: NodeLocation;
   address: string;
