@@ -16,7 +16,7 @@ export const getLastBlockHeader = () => {
       .then((priceEntry: BlockHeaderRate) =>
         dispatch(getLastBlockerHeaderSucceed(priceEntry))
       )
-      .catch((err) => console.log(err));
+      .catch((err: any) => console.log(err));
   };
 };
 
