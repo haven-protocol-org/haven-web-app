@@ -96,7 +96,7 @@ class MultiLoginPage extends Component<MultiLoginProps, MultiloginState> {
           {loginType === LOGIN_TYPE.Create && <CreateDesktop />}
         </Main>
         <Footer>
-          <Label>Have a Vault already?</Label>
+          <Label>Have a Vault?</Label>
           <Route to={"/"}>Sign In</Route>
         </Footer>
       </Container>
