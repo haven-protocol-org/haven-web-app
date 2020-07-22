@@ -23,7 +23,7 @@ For Mainnet
 
 For Testnet
 
-`npm run start:desktop:testnet`
+`npm run start:web:testnet`
 
 #### Build 
 

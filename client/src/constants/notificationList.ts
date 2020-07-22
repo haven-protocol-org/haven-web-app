@@ -362,7 +362,7 @@ export const notificationList = [
     key: WALLET_NEEDS_CONNECTION,
     code: 0,
     message: `Please select a node in settings to start syncing your Vault`,
-    type: NotificationType.SUCCESS,
+    type: NotificationType.ERROR,
     description: WALLET_NEEDS_CONNECTION,
   },
 ];
