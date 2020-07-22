@@ -30,6 +30,7 @@ client/deploy/deploy.sh
 sh/team_deploy.sh
 sh/git_deploy.sh
 sh/deploy.sh
+sh/publish_mainnet.sh
 sh/publish_testnet.sh
 sh/publish_stagenet.sh
 sh/publish_mainnet.sh
