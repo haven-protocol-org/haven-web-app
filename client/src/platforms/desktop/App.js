@@ -9,7 +9,7 @@ import { PrivateRoutesDesktop } from "./routes/private";
 import { StatusComponent } from "../../shared/components/_layout/status";
 import { HashRouter } from "react-router-dom";
 import { ModalContainerDesktop } from "./components/modalContainer";
-import {FixedStatus} from "./components/fixedStatusConatiner";
+import {FixedStatus} from "./components/fixedStatusContainer";
 
 class App extends Component {
   render() {

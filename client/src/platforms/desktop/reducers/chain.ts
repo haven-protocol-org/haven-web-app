@@ -1,14 +1,14 @@
 import {
-  GET_WALLET_HEIGHT_SUCCEED,
   GET_BLOCK_INFO_SUCEED,
+  GET_WALLET_HEIGHT_SUCCEED,
   RESCAN_FAILED,
   RESCAN_SUCCEED,
   START_RESCAN,
 } from "../actions/types";
-import { AnyAction } from "redux";
-import { SyncState } from "shared/types/types";
-import { DesktopAppState } from "platforms/desktop/reducers/index";
-import { selectisLocalNode } from "platforms/desktop/reducers/havenNode";
+import {AnyAction} from "redux";
+import {SyncState, ThreeState} from "shared/types/types";
+import {DesktopAppState} from "platforms/desktop/reducers/index";
+import {selectisLocalNode} from "platforms/desktop/reducers/havenNode";
 
 interface Chain {
   walletHeight: number;
@@ -48,10 +48,19 @@ export const selectNodeHeight = (state: DesktopAppState) => {
 };
 
 export const selectDesktopSyncState = (state: DesktopAppState): SyncState => {
+
+
+  // if wallet is not connected at all, we are not syncing
+  const isWalletConnected = state.walletRPC.isConnectedToDaemon === ThreeState.True;
+
+
+
+
   const isLocalNode = selectisLocalNode(state.havenNode);
   const blockHeight = state.chain.chainHeight;
   let scannedHeight: number;
   let isSyncing: boolean;
+
 
   //we must distinguish between multiple cases
   // 1. local syncing node -> show progress of node
@@ -65,6 +74,13 @@ export const selectDesktopSyncState = (state: DesktopAppState): SyncState => {
     isSyncing = state.chain.chainHeight > state.chain.walletHeight + 3;
     scannedHeight = state.chain.walletHeight;
   }
+
+  if (!isWalletConnected) {
+    return {isSyncing:false, blockHeight, scannedHeight};
+  }
+
+
+
 
   return { isSyncing, blockHeight, scannedHeight };
 };

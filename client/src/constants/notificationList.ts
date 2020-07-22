@@ -7,6 +7,7 @@ export const TRANSFER_SUCCEED_MESSAGE = "transfer_succeed_message";
 export const IS_SYNCING_MESSAGE = "syncing_message";
 export const SYNCING_SUCCEED_MESSAGE = "syncing_succeed_message";
 export const INCOMING_TRANSFER_MESSAGE = "incoming_transfer_message";
+export const WALLET_NEEDS_CONNECTION = "wallet_needs_connection";
 
 export const WALLET_IS_CONNECTING = "wallet_is_connecting";
 export const WALLET_CONNECT_SUCCEED = "wallet_connect_succeed";
@@ -356,5 +357,12 @@ export const notificationList = [
     message: (host: string) => `Vault is now connected to ${host}`,
     type: NotificationType.SUCCESS,
     description: WALLET_CONNECT_SUCCEED,
+  },
+  {
+    key: WALLET_NEEDS_CONNECTION,
+    code: 0,
+    message: `Please select a node in settings to start syncing your Vault`,
+    type: NotificationType.SUCCESS,
+    description: WALLET_NEEDS_CONNECTION,
   },
 ];

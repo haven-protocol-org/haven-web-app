@@ -1,27 +1,25 @@
 /** this class takes care about status messages which are sticky and appearance and disappearance is dependent on the state**/
-import { connect } from "react-redux";
-import { DesktopAppState } from "platforms/desktop/reducers";
-import { selectDesktopSyncState } from "platforms/desktop/reducers/chain";
-import { Component } from "react";
-import {
-  addNotificationByKey,
-  removeNotification,
-  addErrorNotification,
-} from "shared/actions/notification";
-import { uuidv4 } from "utility/utility";
+import {connect} from "react-redux";
+import {DesktopAppState} from "platforms/desktop/reducers";
+import {selectDesktopSyncState} from "platforms/desktop/reducers/chain";
+import {Component} from "react";
+import {addErrorNotification, addNotificationByKey, removeNotification,} from "shared/actions/notification";
+import {uuidv4} from "utility/utility";
 import {
   IS_SYNCING_MESSAGE,
   SYNCING_SUCCEED_MESSAGE,
   WALLET_CONNECT_SUCCEED,
-  WALLET_IS_CONNECTING,
+  WALLET_IS_CONNECTING, WALLET_NEEDS_CONNECTION,
 } from "constants/notificationList";
-import { NotificationDuration } from "shared/reducers/notification";
-import { ThreeState } from "shared/types/types";
+import {NotificationDuration} from "shared/reducers/notification";
+import {ThreeState} from "shared/types/types";
+import {selectIsLoggedIn} from "platforms/desktop/reducers/walletSession";
 
 interface FixedStatusProps {
   daemonUrl: string;
   isSyncing: boolean;
   isWalletConnected: ThreeState;
+  isLoggedIn:boolean;
   addNotificationByKey: (
     key: any,
     duration?: NotificationDuration,
@@ -46,7 +44,9 @@ class FixedStatusContainer extends Component<FixedStatusProps, any> {
       prevProps.isWalletConnected,
       this.props.isWalletConnected
     );
+    this.checkAndHandleLoggedInState(prevProps.isLoggedIn, this.props.isLoggedIn, this.props.isWalletConnected)
   }
+
 
   checkAndHandleSyncState(didSyncBefore: boolean, isSyncingNow: boolean) {
     // show a sync message
@@ -123,12 +123,25 @@ class FixedStatusContainer extends Component<FixedStatusProps, any> {
     }
   }
 
+
+  checkAndHandleLoggedInState(loggedInBefore:boolean, loggedInNow: boolean, isConnected: ThreeState) {
+
+
+    if (!loggedInBefore && loggedInNow && isConnected !== ThreeState.True) {
+      this.props.addNotificationByKey(WALLET_NEEDS_CONNECTION);
+    }
+
+
+
+  }
+
   render() {
     return null;
   }
 }
 
 const mapStateToProps = (state: DesktopAppState) => ({
+  isLoggedIn: selectIsLoggedIn(state),
   isSyncing: selectDesktopSyncState(state).isSyncing,
   isWalletConnected: state.walletRPC.isConnectedToDaemon,
   daemonUrl: state.havenNode.address,

@@ -71,7 +71,7 @@ class NodeSettingComponent extends React.Component<
 
     const { address, selectedNodeOption, port } = this.state;
 
-    if (address === this.props.node.address && port === this.props.node.port) {
+    if (address === this.props.node.address && port === this.props.node.port && this.props.isConnected === ThreeState.True) {
       return;
     }
 
