@@ -29,7 +29,7 @@ const startApp = () => {
     width: 992,
     minWidth: 470,
     minHeight: 720,
-    height: 600,
+    height: 750,
   };
 
   browserOptions.webPreferences = {
