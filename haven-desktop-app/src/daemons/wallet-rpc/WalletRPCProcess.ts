@@ -12,6 +12,7 @@ const REFRESH_DONE_MESSAGE = "Refresh done";
 const CONNECTION_TO_DAEMON_SUCCESS = "SSL handshake success";
 
 export class WalletRPCProcess extends DaemonProcess {
+
   private isConnectedToDaemon: ThreeState = ThreeState.Unset;
   private isSyncing: boolean;
   private syncHeight: number;

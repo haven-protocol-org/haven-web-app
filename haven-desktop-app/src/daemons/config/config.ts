@@ -40,7 +40,7 @@ export const checkAndCreateDaemonConfig = () => {
 };
 
 export const updateDaemonUrlInConfig = (daemonUrl: string) => {
-  const isLocal = isLocalDaemon(daemonUrl);
+ // const isLocal = isLocalDaemon(daemonUrl);
 
   const storedConfig = getDaemonConfig();
 
@@ -49,11 +49,11 @@ export const updateDaemonUrlInConfig = (daemonUrl: string) => {
   daemonConfigNet.havend.daemonUrl = daemonUrl;
   daemonConfigNet.wallet.daemonUrl = daemonUrl;
 
-  if (isLocal) {
+  /*if (isLocal) {
     delete daemonConfigNet.wallet.args["daemon-address"];
   } else {
     daemonConfigNet.wallet.args["daemon-address"] = daemonUrl;
-  }
+  }*/
 
   const configJson = JSON.stringify(storedConfig);
 

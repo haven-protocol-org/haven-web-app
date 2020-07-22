@@ -135,7 +135,7 @@ module.exports = {
           owner: "haven-protocol-org",
           name: "haven-web-app",
         },
-        prerelease: true,
+        prerelease: false,
         draft: true,
       },
     },
