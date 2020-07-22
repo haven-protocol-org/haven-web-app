@@ -13,12 +13,12 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding-bottom: 12px;
-  grid-column: ${props => (props.useGridColumn ? "1 / 3" : null)};
+  grid-column: ${(props) => (props.useGridColumn ? "1 / 3" : null)};
 `;
 
-export const Field = styled.textarea.attrs(props => ({
+export const Field = styled.textarea.attrs((props) => ({
   type: "password",
-  rows: props.rows ? props.rows : "4"
+  rows: props.rows ? props.rows : "4",
 }))`
   display: flex;
   align-items: flex-start;
@@ -32,19 +32,19 @@ export const Field = styled.textarea.attrs(props => ({
   outline: none;
   transition: 500ms;
   -webkit-appearance: none;
-  background: ${props => props.theme.input.input_background};
-  border: 1px solid ${props => props.theme.input.input_border};
-  color: ${props => props.theme.input.input_value};
+  background: ${(props) => props.theme.input.input_background};
+  border: 1px solid ${(props) => props.theme.input.input_border};
+  color: ${(props) => props.theme.input.input_value};
 
   &:focus {
-    border: 1px solid #5c5f63;
+    border: 1px solid ${(props) => props.theme.input.input_border_focus};
     transition: 500ms;
   }
 
   &::placeholder {
     font-family: Inter-Regular;
     font-size: 16px;
-    color: #8a8d90;
+    color: ${(props) => props.theme.type.secondary};
     line-height: 26px;
   }
 `;

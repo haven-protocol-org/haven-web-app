@@ -10,7 +10,7 @@ export const Container = styled.div`
 `;
 
 export const Button = styled.button`
-  background: ${props => props.theme.button.primary};
+  background: ${(props) => props.theme.button.primary};
   border: none;
   width: auto;
   min-width: 128px;
@@ -30,14 +30,14 @@ export const Button = styled.button`
     color: rgba(255, 255, 255, 0.5);
 
     &:hover {
-      background: #677bc4;
+      background: ${(props) => props.theme.button.primary_hover};
       cursor: not-allowed;
     }
   }
 
   &:hover {
     cursor: pointer;
-    background: #5b6eae;
+    background: ${(props) => props.theme.button.primary_hover};
     transition: 500ms;
   }
 `;

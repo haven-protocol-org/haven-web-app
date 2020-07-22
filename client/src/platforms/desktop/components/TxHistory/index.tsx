@@ -3,6 +3,7 @@ import {
   History,
   Message,
   NoTransactions,
+  Illustration,
 } from "shared/pages/_wallet/details/styles";
 import { Spinner } from "shared/components/spinner";
 import {
@@ -86,7 +87,9 @@ class TxHistoryContainer extends Component<TxHistoryProps, any> {
               })
             ) : (
               <EmptyState>
-                <NoTransactions src={empty} />
+                <NoTransactions>
+                  <Illustration />
+                </NoTransactions>
                 <Message>
                   No transactions found. Once you send, receive or exchange
                   tokens your transactions will appear here.

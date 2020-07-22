@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import media from "../../../assets/styles/media.js";
+import { ReactComponent as ChevronIcon } from "../../../assets/icons/chevron.svg";
 
 export const Container = styled.div`
   background: ${(props) => props.theme.body.foreground};
@@ -28,6 +29,14 @@ export const Container = styled.div`
     box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.15);
     border-radius: 4px;
     transition: 500ms;
+`;
+
+export const Arrow = styled(ChevronIcon)`
+  margin-left: 8px;
+
+  .bg {
+    fill: ${(props) => props.theme.type.secondary};
+  }
 `;
 
 export const Row = styled.div`

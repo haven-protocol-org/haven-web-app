@@ -2,6 +2,7 @@ import styled, { keyframes } from "styled-components";
 import { Link } from "react-router-dom";
 import { ReactComponent as ArrowUp } from "../../../../assets/icons/arrow-up.svg";
 import { ReactComponent as HavenIcon } from "../../../../assets/haven.svg";
+import { ReactComponent as OptionIcon } from "../../../../assets/icons/options.svg";
 
 const appear = keyframes`
   0% { transform: translateY(-20px);  }
@@ -34,6 +35,12 @@ export const Icon = styled(HavenIcon)`
 
   .color {
     fill: ${(props) => props.theme.type.primary};
+  }
+`;
+
+export const OptionsSVG = styled(OptionIcon)`
+  .bg {
+    fill: ${(props) => props.theme.type.secondary};
   }
 `;
 
@@ -95,9 +102,12 @@ export const OptionsList = styled.div`
   animation: ${appear} 0.5s forwards;
 `;
 
-export const OptionsIcon = styled.img`
+export const OptionsIcon = styled.div`
   height: 20px;
   width: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const OptionsSingleRow = styled.div`

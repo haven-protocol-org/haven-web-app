@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import media from "../../../assets/styles/media.js";
+import { ReactComponent as ChevronIcon } from "../../../assets/icons/chevron.svg";
 
 // const appear = keyframes`
 //   0% { transform: translateY(-20px);  }
@@ -18,6 +19,12 @@ export const Container = styled.div`
     cursor: pointer;
     box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.15);
     transition: 500ms;
+  }
+`;
+
+export const Arrow = styled(ChevronIcon)`
+  .bg {
+    fill: ${(props) => props.theme.type.secondary};
   }
 `;
 

@@ -10,7 +10,7 @@ import Form from "shared/components/_inputs/form";
 import Theme from "shared/components/_inputs/theme";
 // For the miner
 import { selectisLocalNode } from "platforms/desktop/reducers/havenNode";
-import { dark, light } from "assets/styles/themes.js";
+import { dark, light, sepia } from "assets/styles/themes.js";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import {
   MiningRequestTypes,
@@ -48,6 +48,7 @@ interface SettingsProps {
 const options: ThemeOption[] = [
   { theme: "dark", value: "Dark Theme" },
   { theme: "light", value: "Light Theme" },
+  { theme: "sepia", value: "Sepia Theme" },
 ];
 
 class SettingsDesktopPage extends Component<SettingsProps, any> {
@@ -107,6 +108,11 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
       });
     } else if (theme === "dark") {
       this.props.selectTheme(dark);
+      this.setState({
+        value: value,
+      });
+    } else if (theme === "sepia") {
+      this.props.selectTheme(sepia);
       this.setState({
         value: value,
       });
