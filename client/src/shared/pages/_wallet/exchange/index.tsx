@@ -8,10 +8,6 @@ import Input from "../../../components/_inputs/input";
 // import InputButton from "../../../components/_inputs/input_button";
 import Form from "../../../components/_inputs/form";
 import { RouteComponentProps, withRouter } from "react-router";
-import {
-  selectIsOffshoreEnabled,
-  selectRemainingTimeStringTillUnlocked,
-} from "shared/reducers/havenFeature";
 import Footer from "../../../components/_inputs/footer";
 import Dropdown from "../../../components/_inputs/dropdown";
 import Tab from "../../../components/tab";
@@ -58,8 +54,7 @@ interface ExchangeProps extends RouteComponentProps<any> {
   fromTicker: Ticker | null;
   toTicker: Ticker | null;
   balances: XBalances;
-  offshoreEnabled: boolean;
-  timeTillUnlock: string;
+
 }
 
 type ExchangeState = {
@@ -261,12 +256,11 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
 
   validateExchange = () => {
     const { fromAmount, toAmount } = this.state;
-    const { offshoreEnabled } = this.props;
     const fromAmountValid = fromAmount !== "";
     const toAmountValid = toAmount !== "";
     const { hasLatestXRate } = this.props;
 
-    if (fromAmountValid && toAmountValid && hasLatestXRate && offshoreEnabled) {
+    if (fromAmountValid && toAmountValid && hasLatestXRate) {
       // If valid then make this 'false' so the footer is enabled
       return false;
     } else {
@@ -360,7 +354,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 value={fromAsset ? fromAsset.name : "Select Asset"}
                 options={assetOptions}
                 onClick={this.setFromAsset}
-                disabled={!this.props.offshoreEnabled}
               />
               <Input
                 // @ts-ignore
@@ -373,7 +366,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 placeholder="Enter amount"
                 type="number"
                 name="fromAmount"
-                disabled={!this.props.offshoreEnabled}
                 value={fromAmount}
                 onChange={this.onEnterFromAmount}
                 error={this.fromAmountIsValid(availBalance)}
@@ -387,7 +379,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 ticker={toTicker}
                 options={assetOptions}
                 onClick={this.setToAsset}
-                disabled={!this.props.offshoreEnabled}
               />
               <Input
                 // @ts-ignore
@@ -396,7 +387,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                   (toBalance !== NO_BALANCE ? `(Avail: ${toBalance})` : "")
                 }
                 placeholder="Enter amount"
-                disabled={!this.props.offshoreEnabled}
                 name="toAmount"
                 type="number"
                 value={toAmount}
@@ -414,7 +404,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                     ticker={selectedPrio.ticker}
                     options={exchangePrioOptions}
                     onClick={this.setExchangePriority}
-                    disabled={!this.props.offshoreEnabled}
                     width
                   />
                   <Input
@@ -423,7 +412,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                     name="externAddress"
                     type="text"
                     value={externAddress}
-                    disabled={!this.props.offshoreEnabled}
                     onChange={this.onEnterExternAddress}
                     width
                     error={this.recipientIsValid()}
@@ -440,8 +428,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 hasLatestXRate={hasLatestXRate}
                 fee={"--"}
                 fromTicker={fromTicker}
-                offshoreEnabled={this.props.offshoreEnabled}
-                timeTillUnlock={this.props.timeTillUnlock}
               />
 
               <Footer
@@ -472,8 +458,6 @@ const mapStateToProps = (state: DesktopAppState) => ({
   fromTicker: selectFromTicker(state.exchangeProcess),
   toTicker: selectToTicker(state.exchangeProcess),
   balances: state.xBalance,
-  offshoreEnabled: selectIsOffshoreEnabled(state),
-  timeTillUnlock: selectRemainingTimeStringTillUnlocked(state),
 });
 
 export const ExchangePage = withRouter(

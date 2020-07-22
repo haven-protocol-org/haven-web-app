@@ -1,27 +1,27 @@
-import { DaemonProcess } from "../DaemonProcess";
+import { isDevMode } from "../../env";
+import { RPCRequestObject } from "../../rpc/RPCHRequestHandler";
 import { HavendState, IDaemonConfig, NodeLocation } from "../../types";
 import { config } from "../config/config";
-import { RPCRequestObject } from "../../rpc/RPCHRequestHandler";
-import { isDevMode } from "../../env";
+import { DaemonProcess } from "../DaemonProcess";
 
 export class HavendProcess extends DaemonProcess {
   private isReachable: boolean = true;
 
-  init(): void {
+  public init(): void {
     super.init();
     this.checkHavendLocationToggle();
   }
 
-  setRPCHandler(): void {
+  public setRPCHandler(): void {
     const config = this.getConfig();
     this.rpcHandler.setFullUrl(config.daemonUrl);
   }
 
-  getConfig(): IDaemonConfig {
+  public getConfig(): IDaemonConfig {
     return config().havend;
   }
 
-  async requestHandler(requestObject: RPCRequestObject): Promise<any> {
+  public async requestHandler(requestObject: RPCRequestObject): Promise<any> {
     let connectionRefused = false;
 
     try {
@@ -43,16 +43,7 @@ export class HavendProcess extends DaemonProcess {
     }
   }
 
-  protected onHavendLocationChanged(address: string): void {
-    super.onHavendLocationChanged(address);
-    // in havend we must set the rpc handler again
-    this.setRPCHandler();
-
-    // and start or stop the local process
-    this.checkHavendLocationToggle();
-  }
-
-  checkHavendLocationToggle() {
+  public checkHavendLocationToggle() {
     if (!this._isHavendLocal && this._isRunning) {
       this.killDaemon();
     } else if (this._isHavendLocal && !this._isRunning) {
@@ -60,7 +51,7 @@ export class HavendProcess extends DaemonProcess {
     }
   }
 
-  getState(): HavendState {
+  public getState(): HavendState {
     return {
       isRunning: this._isRunning,
       isReachable: this.isReachable,
@@ -69,19 +60,28 @@ export class HavendProcess extends DaemonProcess {
     };
   }
 
-  onDaemonError(error: Error): void {
+  public onDaemonError(error: Error): void {
     super.onDaemonError(error);
   }
 
-  onstderrData(chunk: any): void {
+  public onstderrData(chunk: any): void {
     if (isDevMode) {
       console.error("havend stderr : " + chunk.toString());
     }
   }
 
-  onstdoutData(chunk: any): void {
+  public onstdoutData(chunk: any): void {
     if (isDevMode) {
       console.error("havend stdout : " + chunk.toString());
     }
+  }
+
+  protected onHavendLocationChanged(address: string): void {
+    super.onHavendLocationChanged(address);
+    // in havend we must set the rpc handler again
+    this.setRPCHandler();
+
+    // and start or stop the local process
+    this.checkHavendLocationToggle();
   }
 }

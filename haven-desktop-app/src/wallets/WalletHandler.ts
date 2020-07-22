@@ -1,6 +1,6 @@
+import { ipcMain } from "electron";
 import { CommunicationChannel } from "../types";
 import { getAvailableWallets } from "../userSettings";
-import { ipcMain } from "electron";
 
 /**
  * this class establishes the communication between client app and daemons
@@ -16,7 +16,7 @@ export class WalletHandler {
 
   private addHandlers() {
     ipcMain.handle(CommunicationChannel.STORED_WALLETS, (event, args) =>
-      this.handleWalletRequest()
+      this.handleWalletRequest(),
     );
   }
 

@@ -80,11 +80,12 @@ const copyTargetNodesToBuild = (
         callback();
       }
   );
-}
+};
 
 
 module.exports = {
   packagerConfig: {
+    executableName: "Haven",
     name: "Haven",
     ignore: ignoredPaths,
     afterCopy: [copyTargetNodesToBuild, substituteEnvsForBuild],
@@ -120,11 +121,7 @@ module.exports = {
     },
     {
       name: "@electron-forge/maker-deb",
-      config: {},
-    },
-    {
-      name: "@electron-forge/maker-rpm",
-      config: {},
+      config: {name:"haven", productName:"Haven"},
     },
   ],
 
@@ -138,7 +135,7 @@ module.exports = {
           owner: "haven-protocol-org",
           name: "haven-web-app",
         },
-        prerelease: true,
+        prerelease: false,
         draft: true,
       },
     },

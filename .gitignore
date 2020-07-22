@@ -30,6 +30,15 @@ client/deploy/deploy.sh
 sh/team_deploy.sh
 sh/git_deploy.sh
 sh/deploy.sh
+sh/publish_mainnet.sh
 sh/publish_testnet.sh
 sh/publish_stagenet.sh
+sh/publish_mainnet.sh
 .idea/
+haven-desktop-app/haven-node/darwin/mainnet/haven-wallet-rpc.log-2020-06-30-13-46-35
+haven-desktop-app/haven-node/darwin/mainnet/haven-wallet-rpc.log-2020-06-30-13-58-29
+haven-desktop-app/haven-node/darwin/mainnet/haven-wallet-rpc.log-2020-06-30-18-25-58
+haven-desktop-app/haven-node/darwin/mainnet/haven-wallet-rpc.log-2020-06-30-18-47-44
+haven-desktop-app/haven-node/darwin/mainnet/haven-wallet-rpc.log-2020-06-30-19-13-26
+haven-desktop-app/haven-node/darwin/mainnet/haven-wallet-rpc.log-2020-06-30-19-33-46
+haven-desktop-app/haven-node/darwin/mainnet/haven-wallet-rpc.log-2020-06-30-19-49-50

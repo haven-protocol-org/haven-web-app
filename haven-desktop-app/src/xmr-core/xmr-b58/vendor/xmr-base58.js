@@ -1,4 +1,4 @@
-import {BigInteger as JSBigInt} from "../../biginteger/vendor/biginteger"
+import {BigInteger as JSBigInt} from "../../biginteger/vendor/biginteger";
 // Copyright (c) 2014-2018, MyMonero.com
 //
 // All rights reserved.
@@ -47,7 +47,7 @@ var cnBase58 = (function() {
 	var UINT64_MAX = new JSBigInt(2).pow(64);
 
 	function hextobin(hex) {
-		if (hex.length % 2 !== 0) throw Error("Hex string has invalid length!");
+		if (hex.length % 2 !== 0) { throw Error("Hex string has invalid length!"); }
 		var res = new Uint8Array(hex.length / 2);
 		for (var i = 0; i < hex.length / 2; ++i) {
 			res[i] = parseInt(hex.slice(i * 2, i * 2 + 2), 16);

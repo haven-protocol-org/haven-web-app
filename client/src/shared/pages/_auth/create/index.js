@@ -9,7 +9,7 @@ import VerifySeed from "../../../components/_create/verify_seed";
 import { Container } from "./styles";
 import { decrypt } from "../../../../utility/utility-encrypt";
 import PropTypes from "prop-types";
-import {readText} from "../../../../vendor/clipboard/clipboard-polyfill";
+import { readText } from "../../../../vendor/clipboard/clipboard-polyfill";
 
 export class CreateWebComponent extends Component {
   state = {
@@ -17,7 +17,7 @@ export class CreateWebComponent extends Component {
     error: "",
     verify_seed: "",
     mnemonicString: "",
-    action: "Paste Seed"
+    action: "Paste Seed",
   };
 
   componentDidMount() {
@@ -44,8 +44,8 @@ export class CreateWebComponent extends Component {
     else if (stepThree) {
       const { mnemonicString, verify_seed } = this.state;
 
-        const validationSucceed = verify_seed === mnemonicString;
-        this.props.verifySeed(validationSucceed);
+      const validationSucceed = verify_seed === mnemonicString;
+      this.props.verifySeed(validationSucceed);
 
       if (!validationSucceed) {
         this.setState({ error: "Sorry, that seed is incorrect" });
@@ -53,7 +53,6 @@ export class CreateWebComponent extends Component {
           this.setState({ error: "" });
         }, 2000);
       }
-
     }
   };
 
@@ -62,34 +61,33 @@ export class CreateWebComponent extends Component {
     this.setState({ step: step - 1 });
   };
 
-  handleChange = event => {
+  handleChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
 
     this.setState({
-      [name]: value
+      [name]: value,
     });
   };
 
   handlePaste = () => {
-
-      readText()
-      .then(response => {
+    readText()
+      .then((response) => {
         this.setState({
           verify_seed: response,
-          action: "Seed Pasted"
+          action: "Seed Pasted",
         });
       })
       .then(
         setTimeout(() => {
           this.setState({
-            action: "Paste Seed"
+            action: "Paste Seed",
           });
         }, 1000)
       )
-      .catch(error => {
+      .catch((error) => {
         this.setState({
-          error: "Clipboard is empty"
+          error: "Clipboard is empty",
         });
       });
   };
@@ -137,7 +135,7 @@ export class CreateWebComponent extends Component {
           title="Create a Vault"
           link="/login"
           route="Sign In!"
-          label="Have a Vault already?"
+          label="Have a Vault?"
           submit="Generate"
           step={step}
           nextStep={this.nextStep}
@@ -156,5 +154,5 @@ CreateWebComponent.propTypes = {
   getSeed: PropTypes.func.isRequired,
   isRequestingLogin: PropTypes.bool,
   verifySeed: PropTypes.func.isRequired,
-  createdSeed: PropTypes.any.isRequired
+  createdSeed: PropTypes.any.isRequired,
 };

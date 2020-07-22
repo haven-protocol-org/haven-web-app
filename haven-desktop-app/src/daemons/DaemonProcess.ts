@@ -1,22 +1,23 @@
 import { ChildProcess, spawn } from "child_process";
-import { IDaemonManager } from "./IDaemonManager";
-import { DaemonType, IDaemonConfig } from "../types";
-import {
-  RPCHRequestHandler,
-  RPCRequestObject,
-} from "../rpc/RPCHRequestHandler";
-import { appEventBus, HAVEND_LOCATION_CHANGED } from "../EventBus";
+import {dialog} from "electron";
+import {getLocalDaemonPath} from "../daemonPaths";
 import {
   isLocalDaemon,
   updateDaemonUrlInConfig,
 } from "../daemons/config/config";
 import { isDevMode } from "../env";
-import {dialog} from 'electron';
+import { appEventBus, HAVEND_LOCATION_CHANGED } from "../EventBus";
+import {
+  RPCHRequestHandler,
+  RPCRequestObject,
+} from "../rpc/RPCHRequestHandler";
+import { DaemonType, IDaemonConfig } from "../types";
+import { IDaemonManager } from "./IDaemonManager";
 
 export abstract class DaemonProcess implements IDaemonManager {
   protected type: DaemonType;
   protected filePath: string;
-  protected startArgs: Object;
+  protected startArgs: object;
   protected port: number;
   protected daemonProcess: ChildProcess;
   protected rpcHandler: RPCHRequestHandler = new RPCHRequestHandler();
@@ -28,14 +29,31 @@ export abstract class DaemonProcess implements IDaemonManager {
     this._isHavendLocal = isLocalDaemon(this.getConfig().daemonUrl);
     this.type = type;
     appEventBus.on(HAVEND_LOCATION_CHANGED, (havendLocation: string) =>
-      this.onHavendLocationChanged(havendLocation)
+      this.onHavendLocationChanged(havendLocation),
     );
     this.init();
   }
 
-  abstract getConfig(): IDaemonConfig;
-  abstract requestHandler(requestObject: RPCRequestObject): Promise<any>;
-  abstract setRPCHandler(): void;
+  public abstract getConfig(): IDaemonConfig;
+  public abstract requestHandler(requestObject: RPCRequestObject): Promise<any>;
+  public abstract setRPCHandler(): void;
+
+  public killDaemon(): void {
+    if (isDevMode) {
+      console.log(`try to kill ${this.type}`);
+    }
+    this._shutDownRequested = true;
+    this.daemonProcess.kill();
+
+    // if deamon doesn't die, we kill it hard
+    setTimeout(() => this._isRunning && this.killHard(), 10000);
+  }
+
+  public isRunning(): boolean {
+    return this._isRunning;
+  }
+
+  public getState(): any {}
 
   protected init() {
     this.setRPCHandler();
@@ -43,14 +61,14 @@ export abstract class DaemonProcess implements IDaemonManager {
 
   protected startLocalProcess(): void {
     const config = this.getConfig();
-    this.filePath = config.path;
+    this.filePath = getLocalDaemonPath(this.type);
     this.startArgs = config.args;
     this.port = config.port;
 
     const args: ReadonlyArray<string> = Object.entries(this.startArgs).map(
       ([key, value]) => {
         return "--" + key + (value !== "" ? "=" + value : "");
-      }
+      },
     );
     if (isDevMode) {
       console.log(args);
@@ -64,28 +82,9 @@ export abstract class DaemonProcess implements IDaemonManager {
     this.daemonProcess.on(
       "exit",
       (code: number | null, signal: string | null) =>
-        this.onDaemonExit(code, signal)
+        this.onDaemonExit(code, signal),
     );
     this.daemonProcess.on("error", (error: Error) => this.onDaemonError(error));
-  }
-
-  public killDaemon(): void {
-    if (isDevMode) {
-      console.log(`try to kill ${this.type}`);
-    }
-    this._shutDownRequested = true;
-    this.daemonProcess.kill();
-
-    // if deamon doesn't die, we kill it hard
-    setTimeout(() => this._isRunning && this.killHard(), 10000);
-  }
-
-  private killHard() {
-    this.daemonProcess.kill('SIGKILL');
-  }
-
-  public isRunning(): boolean {
-    return this._isRunning;
   }
 
   protected onDaemonError(error: Error): void {
@@ -108,7 +107,7 @@ export abstract class DaemonProcess implements IDaemonManager {
 
 
     if (code !== 0 && code !== null) {
-      dialog.showErrorBox(`${this.type} not running`, 'Process was stopped or did not even start');
+      dialog.showErrorBox(`${this.type} not running`, "Process was stopped or did not even start");
     }
 
     if (isDevMode) {
@@ -116,5 +115,7 @@ export abstract class DaemonProcess implements IDaemonManager {
     }
   }
 
-  getState(): any {}
+  private killHard() {
+    this.daemonProcess.kill("SIGKILL");
+  }
 }
