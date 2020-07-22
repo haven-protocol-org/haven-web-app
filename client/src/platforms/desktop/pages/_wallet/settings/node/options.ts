@@ -12,7 +12,9 @@ export const createNodeOptions = (havendState: NodeState): NodeOption[] => {
       location: NodeLocation.Remote,
       address: node.address,
       port: node.port,
-      name: `Remote Node ( ${host} )`,
+      trusted: node.trusted,
+      provider: node.provider,
+      name: `Remote Node (${node.provider})`,
       selectionType: NodeSelectionType.local,
     };
   });

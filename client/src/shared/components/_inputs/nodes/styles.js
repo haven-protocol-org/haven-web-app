@@ -74,6 +74,9 @@ export const Item = styled.li`
   width: calc(100% + 8px);
   border-bottom: 1px solid ${(props) => props.theme.input.input_border};
   font-family: Inter-Regular;
+  display: flex;
+  justify-content: ${(props) =>
+    props.trusted ? "space-between" : "flex-start"};
   font-size: 16px;
   line-height: 26px;
   color: ${(props) => props.theme.input.input_value};
@@ -100,8 +103,35 @@ export const Ticker = styled.div`
   margin-left: 12px;
 `;
 
-export const Name = styled.div`
+export const Primary = styled.div`
   color: ${(props) => props.theme.input.input_value};
+`;
+
+export const Secondary = styled.div`
+  color: ${(props) => props.theme.input.input_placeholder};
+  margin-left: 8px;
+`;
+
+export const Trusted = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 12px;
+  width: 64px;
+  background: ${(props) => props.theme.button.primary};
+  color: white;
+  border-radius: 2px;
+  font-size: 12px;
+
+  text-transform: uppercase;
+  transition: 500ms;
+  font-family: Inter-Regular;
+
+  &:hover {
+    background: ${(props) => props.theme.button.primary_hover};
+    cursor: pointer;
+    transition: 500ms;
+  }
 `;
 
 export const Button = styled.button`

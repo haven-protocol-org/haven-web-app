@@ -7,8 +7,10 @@ import {
   Item,
   Button,
   Labels,
-  Name,
+  Primary,
+  Secondary,
   Row,
+  Trusted,
 } from "./styles";
 import { Label, Error } from "../../../../assets/styles/type.js";
 
@@ -33,12 +35,16 @@ class Nodes extends React.Component {
 
   renderOptions = () => {
     const { onClick, options } = this.props;
+
     return options.map((option) => {
+      const { name, trusted } = option;
+
       return (
-        <Item key={option.name} onClick={() => onClick(option)}>
+        <Item trusted={trusted} key={name} onClick={() => onClick(option)}>
           <Row>
-            <Name>{option.name}</Name>
+            <Primary>{name}</Primary>
           </Row>
+          {trusted && <Trusted>{trusted && "Trusted"}</Trusted>}
         </Item>
       );
     });
@@ -60,7 +66,7 @@ class Nodes extends React.Component {
             onClick={this.showDropdownMenu}
           >
             <Row>
-              <Name>{value}</Name>
+              <Primary>{value}</Primary>
             </Row>
           </Button>
           {displayMenu && <Wrapper>{this.renderOptions()}</Wrapper>}
