@@ -10,7 +10,6 @@ import {
   convertBalanceForReading,
   createRemainingTimeString,
 } from "utility/utility";
-import empty from "assets/illustration/no_transactions.svg";
 import React, { Component } from "react";
 import { getTransfers } from "../../actions";
 import { connect } from "react-redux";

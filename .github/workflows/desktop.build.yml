@@ -21,16 +21,43 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v1
       with:
         node-version: '14'
     
-    - name: Install dependencies
+    - name: Install client dependencies
       working-directory: client
       run: |
           npm install
 
-    - name: Build
+    - name: Client Build for Desktop
       working-directory: client
       run: |
           npm run build:desktop:mainnet
+    - name: Copy Build
+      working-directory: client
+      run: |
+          npm run copy-build
+
+    - name: Install backend dependencies
+      working-directory: haven-desktop-app
+      run: |
+          npm install
+
+    - name: Build Final App
+      run: |
+          sh './sh/make_mainnet.sh'
+
+    - if: matrix.os == 'macOS-latest'
+      name: Upload macOS
+      uses: actions/upload-artifact@v2
+      with:
+        name: Haven-macOS-x64
+        path: haven-desktop-app/out/make/
+
+    - if: matrix.os == 'windows-latest'
+      name: Upload Windows
+      uses: actions/upload-artifact@v2
+      with:
+        name: Haven-Win-x64
+        path: haven-desktop-app/out/make/
