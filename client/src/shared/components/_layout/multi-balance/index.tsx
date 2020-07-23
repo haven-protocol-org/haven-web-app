@@ -67,6 +67,7 @@ class Balances extends Component<BalanceProps, BalanceState> {
         : { prefix: "Ħ", suffix: "" };
 
     const { balance } = this.props.balances[ticker];
+    console.log("BALANCES", this.props.balances);
 
     const totalBalance = prefix + balance.toFixed(4) + suffix;
 
