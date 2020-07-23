@@ -55,6 +55,7 @@ export class RPCHRequestHandler {
       "onshore",
       "offshore",
       "relay_tx",
+      "offshore_transfer",
       "transfer_split"];
 
     const timeout = timeLessMethods.some((method ) => method === requestObject.method) ? 0 : 4000;
