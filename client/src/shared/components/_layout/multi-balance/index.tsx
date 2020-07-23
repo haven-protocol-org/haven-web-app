@@ -9,14 +9,11 @@ import { Spinner } from "../../spinner";
 import { ProgressBar } from "../../progress-bar";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { SyncState } from "shared/types/types";
-import { isDesktop} from "constants/env";
+import { isDesktop } from "constants/env";
 import { selectDesktopSyncState } from "platforms/desktop/reducers/chain";
-import {
-  selectTotalBalances,
-  XViewBalances,
-} from "shared/reducers/xBalance";
+import { selectTotalBalances, XViewBalances } from "shared/reducers/xBalance";
 import { Ticker } from "shared/reducers/types";
-import {WebAppState} from "platforms/web/reducers";
+import { WebAppState } from "platforms/web/reducers";
 
 const OFFSHORE_TICKERS = [Ticker.xUSD, Ticker.xBTC, null];
 
@@ -34,13 +31,11 @@ interface BalanceState {
 class Balances extends Component<BalanceProps, BalanceState> {
   state: BalanceState = {
     currentIndex: 0,
-    currentTicker:  OFFSHORE_TICKERS[0],
-    tickerOptions: OFFSHORE_TICKERS
+    currentTicker: OFFSHORE_TICKERS[0],
+    tickerOptions: OFFSHORE_TICKERS,
   };
 
   onClickNext() {
-
-
     const tickerNum: number = OFFSHORE_TICKERS.length;
 
     let nextIndex = this.state.currentIndex + 1;
@@ -52,8 +47,6 @@ class Balances extends Component<BalanceProps, BalanceState> {
       currentTicker: OFFSHORE_TICKERS[nextIndex] as Ticker,
     });
   }
-
-
 
   render() {
     const ticker = this.state.currentTicker;
@@ -74,6 +67,7 @@ class Balances extends Component<BalanceProps, BalanceState> {
         : { prefix: "Ħ", suffix: "" };
 
     const { balance } = this.props.balances[ticker];
+    console.log("BALANCES", this.props.balances);
 
     const totalBalance = prefix + balance.toFixed(4) + suffix;
 
