@@ -23,6 +23,16 @@ const Transaction = ({
   const last = externAddress.substring(externAddress.length - 4);
   const truncatedAddress = first + "...." + last;
 
+  const rate = function () {
+    if (priority === 1) {
+      return "1";
+    } else if (priority === 2) {
+      return "2";
+    } else {
+      return null;
+    }
+  };
+
   return (
     <Fragment>
       <Container>
@@ -81,7 +91,23 @@ const Transaction = ({
           })()}
         </Row>
         <Row>
-          <Key>Exchange Fee</Key>
+          <Key>
+            Exchange Fee (
+            {(function () {
+              switch (priority) {
+                case 1:
+                  return "0.2%";
+                case 2:
+                  return "5%";
+                case 3:
+                  return "10%";
+                case 4:
+                  return "20%";
+                default:
+              }
+            })()}
+            )
+          </Key>
           <Tag priority={priority}>
             <Value>
               {fee} {fromTicker}
@@ -89,7 +115,7 @@ const Transaction = ({
           </Tag>
         </Row>
         <Confirm
-          description="I have reviewed my Exchange details and I accept the Fees and Terms"
+          description="I reviewed my Exchange details and I accept the Fees and Terms"
           checked={checked}
           onChange={onChange}
         />
