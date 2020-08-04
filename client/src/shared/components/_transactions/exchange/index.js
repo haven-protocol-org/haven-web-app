@@ -2,7 +2,7 @@
 import React, { Fragment } from "react";
 
 // Relative Imports
-import { Container, Row, Key, Value } from "./styles";
+import { Container, Row, Key, Value, Tag } from "./styles";
 import Confirm from "../../confirm/index.js";
 
 const Transaction = ({
@@ -16,7 +16,7 @@ const Transaction = ({
   onChange,
   checked,
   priority,
-                       isOwnAddress,
+  isOwnAddress,
 }) => {
   const first = externAddress.substring(0, 4);
   const last = externAddress.substring(externAddress.length - 4);
@@ -26,13 +26,13 @@ const Transaction = ({
     <Fragment>
       <Container>
         <Row>
-          <Key>From Asset</Key>
+          <Key>Exchange From</Key>
           <Value>
             {fromAmount} {fromTicker}
           </Value>
         </Row>
         <Row>
-          <Key>To Asset</Key>
+          <Key>Exchange To</Key>
           <Value>
             {toAmount} {toTicker}
           </Value>
@@ -49,29 +49,29 @@ const Transaction = ({
               case 1:
                 return (
                   <>
-                    <Key>Low Priority</Key>
-                    <Value>Unlocks in ~2d</Value>
+                    <Key>Normal Priority</Key>
+                    <Value>Unlocks ~7d</Value>
                   </>
                 );
               case 2:
                 return (
                   <>
-                    <Key>Medium Priority</Key>
-                    <Value>Unlocks ~18h</Value>
+                    <Key>Low Priority</Key>
+                    <Value>Unlocks ~48hr</Value>
                   </>
                 );
               case 3:
                 return (
                   <>
-                    <Key>High Priority</Key>
-                    <Value>Unlocks ~6h</Value>
+                    <Key>Medium Priority</Key>
+                    <Value>Unlocks ~24hr</Value>
                   </>
                 );
               case 4:
                 return (
                   <>
-                    <Key>Very High Priority</Key>
-                    <Value>Unlocks ~2h</Value>
+                    <Key>High Priority</Key>
+                    <Value>Unlocks ~6hr</Value>
                   </>
                 );
 
@@ -80,10 +80,12 @@ const Transaction = ({
           })()}
         </Row>
         <Row>
-          <Key>Transaction Fee</Key>
-          <Value>
-            {fee} {fromTicker}
-          </Value>
+          <Key>Exchange Fee</Key>
+          <Tag priority={priority}>
+            <Value>
+              {fee} {fromTicker}
+            </Value>
+          </Tag>
         </Row>
         <Confirm
           description="I have reviewed my Exchange and accept the transaction fee"
