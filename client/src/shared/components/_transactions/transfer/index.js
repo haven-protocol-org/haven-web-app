@@ -2,8 +2,9 @@
 import React, { Fragment } from "react";
 
 // Relative Imports
-import { Container, Row, Key, Value } from "./styles";
+import { Container, Row, Key, Value, Tag } from "./styles";
 import Confirm from "../../confirm/index.js";
+import { Information } from "../../../../assets/styles/type.js";
 
 export const Transaction = ({
   checked,
@@ -44,16 +45,28 @@ export const Transaction = ({
         ) : null}
         <Row>
           <Key>Transaction Fee </Key>
-          <Value>
-            {fee} {ticker}
-          </Value>
+          <Tag>
+            {" "}
+            <Value>
+              {fee} {ticker}
+            </Value>
+          </Tag>
         </Row>
         <Confirm
-          description="I have reviewed my Transfer and accept the transaction fee"
+          description="I have reviewed my Transfer details and I accept the Fees and Terms"
           checked={checked}
           onChange={onChange}
         />
       </Container>
+      <Information>
+        <strong>Terms:</strong> You accept any and all responsibility for your
+        Transfer including the verification of Recipient Addresses, Payment
+        ID's, Amounts and Fees. Upon clicking <strong>Confirm</strong> a portion
+        of your balance may be locked for ~20 mins until the transaction is
+        complete. The Vault will indicate any pending balances which can be seen
+        by clicking the <strong>Show Pending Balances</strong> button in the
+        Assets page.
+      </Information>
     </Fragment>
   );
 };

@@ -15,11 +15,7 @@ import {
   Inner,
 } from "./styles";
 
-import {
-  Title,
-  Description,
-  Information,
-} from "../../../assets/styles/type.js";
+import { Title, Description } from "../../../assets/styles/type.js";
 import { Spinner } from "../spinner/index.js";
 
 export const Modal = ({
@@ -43,17 +39,7 @@ export const Modal = ({
           </Header>
           <Body>
             <Details>
-              <Placeholder>
-                {children}
-                <Information>
-                  <strong>Note:</strong> Once you click <strong>Confirm</strong>{" "}
-                  a portion of your balance may be locked for ~20 mins until the
-                  transaction is complete. Your Vault will also indicate the
-                  pending balances which can be seen by clicking the{" "}
-                  <strong>Show Pending Balances</strong> button in the Assets
-                  page.
-                </Information>
-              </Placeholder>
+              <Placeholder>{children}</Placeholder>
             </Details>
             <Footer>
               <Cancel onClick={onCancel}>{leftButton}</Cancel>

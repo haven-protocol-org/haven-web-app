@@ -53,14 +53,17 @@ export const Tag = styled.div`
   display: flex;
   align-items: center;
   justify-content: left;
-  padding-left: 4px;
-  padding-right: 4px;
+  padding-left: 8px;
+  padding-right: 8px;
+  border-radius: 2px;
+  border: 1px solid ${(props) =>
+    props.priority === 1 ? props.theme.body.border : "none"}
   background: ${(props) => {
     switch (props.priority) {
       case 1:
-        return `${props.theme.states.success}`;
+        return `${props.theme.body.background}`;
       case 2:
-        return `${props.theme.states.alert}`;
+        return `${props.theme.button.primary_hover}`;
       case 3:
         return `${props.theme.states.warning}`;
       case 4:
@@ -68,5 +71,5 @@ export const Tag = styled.div`
       default:
     }
   }};
-  border-radius: 2px;
+
 `;

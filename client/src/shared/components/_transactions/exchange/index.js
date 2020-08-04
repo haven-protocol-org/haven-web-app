@@ -4,6 +4,7 @@ import React, { Fragment } from "react";
 // Relative Imports
 import { Container, Row, Key, Value, Tag } from "./styles";
 import Confirm from "../../confirm/index.js";
+import { Information } from "../../../../assets/styles/type.js";
 
 const Transaction = ({
   xRate,
@@ -88,11 +89,20 @@ const Transaction = ({
           </Tag>
         </Row>
         <Confirm
-          description="I have reviewed my Exchange and accept the transaction fee"
+          description="I have reviewed my Exchange details and I accept the Fees and Terms"
           checked={checked}
           onChange={onChange}
         />
       </Container>
+      <Information>
+        <strong>Terms:</strong> You accept any and all responsibility for your
+        Exchange including the verification of Recipient Addresses, Amounts and
+        Fees. Upon clicking <strong>Confirm</strong> a portion of your balance
+        may be locked for the entirety of your Priority Unlock Time, until the
+        transaction is complete. The Vault will indicate any pending balances
+        which can be seen by clicking the <strong>Show Pending Balances</strong>{" "}
+        button in the Assets page.
+      </Information>
     </Fragment>
   );
 };
