@@ -21,8 +21,7 @@ import {
   OptionsSVG,
 } from "./styles";
 
-import { Body, Label, Timestamp } from "assets/styles/type";
-
+import { Body, Label } from "assets/styles/type";
 import { closeWallet } from "../../actions";
 import { selectIsLoggedIn } from "../../reducers/walletSession";
 import { getNetworkByName, isDevMode, NET_TYPE_NAME } from "constants/env";

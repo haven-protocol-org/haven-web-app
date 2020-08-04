@@ -23,16 +23,6 @@ const Transaction = ({
   const last = externAddress.substring(externAddress.length - 4);
   const truncatedAddress = first + "...." + last;
 
-  const rate = function () {
-    if (priority === 1) {
-      return "1";
-    } else if (priority === 2) {
-      return "2";
-    } else {
-      return null;
-    }
-  };
-
   return (
     <Fragment>
       <Container>
