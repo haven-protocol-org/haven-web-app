@@ -17,10 +17,10 @@ export const REMOTE_NODES = [
     port: "17750",
     trusted: true,
   },
-  // {
-  //   address: "http://remote.eu.havenprotocol.org",
-  //   provider: "Haven European Node",
-  //   port: "17750",
-  //   trusted: true,
-  // },
+   {
+     address: "http://remote.eu.havenprotocol.org",
+     provider: "Haven European Node",
+     port: "17750",
+     trusted: true,
+   },
 ];
