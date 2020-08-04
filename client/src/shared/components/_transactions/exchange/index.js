@@ -28,13 +28,13 @@ const Transaction = ({
         <Row>
           <Key>Exchange From</Key>
           <Value>
-            {fromAmount} {fromTicker}
+            {fromAmount.toFixed(4)} {fromTicker}
           </Value>
         </Row>
         <Row>
           <Key>Exchange To</Key>
           <Value>
-            {toAmount} {toTicker}
+            {toAmount.toFixed(4)} {toTicker}
           </Value>
         </Row>
         {isOwnAddress ? null : (

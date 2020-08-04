@@ -289,7 +289,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       return "Not enough funds";
     }
     //@ts-ignore
-    if (fromAmount >= availableBalanceString) {
+    if (fromAmount === availableBalanceString) {
       return "Save some for fees";
     }
   };

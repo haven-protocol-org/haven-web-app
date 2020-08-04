@@ -27,12 +27,11 @@ export const Transaction = ({
       <Container>
         <Row>
           <Key>Transfer Asset</Key>
-          <Value>{ticker}</Value>
+          <Value>
+            {transferAmount.toFixed(4)} {ticker}
+          </Value>
         </Row>
-        <Row>
-          <Key>Transfer Amount</Key>
-          <Value>{transferAmount}</Value>
-        </Row>
+
         <Row>
           <Key>Recipient Address</Key>
           <Value>{truncated}</Value>

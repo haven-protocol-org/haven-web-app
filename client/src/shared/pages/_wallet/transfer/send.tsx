@@ -154,7 +154,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
     }
 
     //@ts-ignore
-    if (send_amount >= availableBalanceString) {
+    if (send_amount === availableBalanceString) {
       return "Save some for fees";
     }
   };
