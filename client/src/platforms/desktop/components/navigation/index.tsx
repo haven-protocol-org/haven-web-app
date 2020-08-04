@@ -106,6 +106,8 @@ class Navigation extends Component<NavigationProps, any> {
     const auth = this.props.isLoggedIn;
     const { current_network } = this.state;
     const { wallet, node, isLocalNode, height } = this.props;
+    // console.log("#############################");
+    // console.log(window.havenProcess.appVersion);
 
     return (
       <Container>
@@ -164,8 +166,8 @@ class Navigation extends Component<NavigationProps, any> {
                 <Label>{height}</Label>
               </OptionsDoubleRow>
               <OptionsDoubleRow>
-                <Body>Application</Body>
-                <Label>v{window.havenProcess.appVersion}</Label>
+                <Body>Version</Body>
+                <Label>v1.0.5</Label>
               </OptionsDoubleRow>
             </OptionsList>
           </>
