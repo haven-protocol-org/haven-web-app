@@ -13,7 +13,7 @@ import Input from "../../../components/_inputs/input";
 
 import { Container } from "./styles";
 import TransferSummary from "shared/components/_summaries/transfer-summary";
-import {isDesktop} from "constants/env";
+import { isDesktop } from "constants/env";
 // Relative Imports
 
 const xhvOption = { name: "Haven", ticker: Ticker.XHV };
@@ -147,10 +147,15 @@ class TransferContainer extends Component<TransferProps, TransferState> {
   };
 
   amountIsValid = (availableBalance: any) => {
-    if (this.state.send_amount > availableBalance) {
+    const { send_amount } = this.state;
+    const availableBalanceString = availableBalance.toString();
+    if (send_amount > availableBalance) {
       return "Not enough funds";
-    } else {
-      return "";
+    }
+
+    //@ts-ignore
+    if (send_amount === availableBalanceString) {
+      return "Save some for fees";
     }
   };
 
@@ -174,9 +179,6 @@ class TransferContainer extends Component<TransferProps, TransferState> {
       payment_id,
     } = this.state;
 
-    const checkValidation =
-      send_amount.length > 0 && recipient_address.length > 97;
-
     const windowWidth = window.innerWidth;
 
     let availableBalance = null;
@@ -185,6 +187,11 @@ class TransferContainer extends Component<TransferProps, TransferState> {
         this.props.xBalances[selectedAsset.ticker].unlockedBalance
       );
     }
+
+    const checkValidation =
+      send_amount.length > 0 &&
+      recipient_address.length > 97 &&
+      send_amount < availableBalance;
 
     return (
       <Fragment>
@@ -274,7 +281,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
           <Footer
             onClick={() => this.handleSubmit()}
             loading={this.props.isProcessing}
-            label={isDesktop() ? 'Preview' : 'Transfer'}
+            label={isDesktop() ? "Preview" : "Transfer"}
             disabled={!checkValidation}
           />
         </Container>
@@ -288,7 +295,7 @@ const mapStateToProps = (
   ownProps: TransferOwnProps
 ): TransferReduxProps => ({
   xBalances: state.xBalance,
-  options:[xhvOption, xUSDOption]
+  options: [xhvOption, xUSDOption],
 });
 
 export const SendFunds = connect<TransferReduxProps, {}, TransferOwnProps>(

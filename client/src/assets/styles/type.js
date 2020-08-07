@@ -28,6 +28,12 @@ export const Label = styled.div`
   color: ${(props) => props.theme.type.secondary};
 `;
 
+export const Timestamp = styled.div`
+  font-family: Inter-Regular;
+  font-size: 12px;
+  color: ${(props) => props.theme.type.secondary};
+`;
+
 export const Error = styled.div`
   font-family: Inter-Regular;
   font-size: 14px;

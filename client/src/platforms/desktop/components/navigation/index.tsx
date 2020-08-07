@@ -18,12 +18,10 @@ import {
   OptionsIcon,
   OptionsList,
   State,
-  Wrapper,
   OptionsSVG,
 } from "./styles";
 
 import { Body, Label } from "assets/styles/type";
-
 import { closeWallet } from "../../actions";
 import { selectIsLoggedIn } from "../../reducers/walletSession";
 import { getNetworkByName, isDevMode, NET_TYPE_NAME } from "constants/env";
@@ -48,6 +46,7 @@ class Navigation extends Component<NavigationProps, any> {
   state = {
     current_network: getNetworkByName(),
     showOptions: false,
+    showNotifications: false,
   };
 
   onComponentDidMount() {
@@ -66,6 +65,29 @@ class Navigation extends Component<NavigationProps, any> {
   hideDropdownMenu = () => {
     this.setState({ showOptions: false }, () => {
       document.removeEventListener("click", this.hideDropdownMenu);
+    });
+  };
+
+  showNotifications = (event: any) => {
+    event.preventDefault();
+    this.setState({ showNotifications: true }, () => {
+      document.addEventListener("click", this.hideNotifications);
+    });
+  };
+
+  hideNotifications = () => {
+    this.setState({ showNotifications: false }, () => {
+      document.removeEventListener("click", this.hideNotifications);
+    });
+  };
+
+  userFocused = () => {
+    this.setState({ showNotifications: true });
+  };
+
+  handleClick = () => {
+    this.setState({ showNotifications: true }, () => {
+      document.addEventListener("click", this.hideNotifications);
     });
   };
 
@@ -90,7 +112,6 @@ class Navigation extends Component<NavigationProps, any> {
           <Icon />
           <Haven>HAVEN</Haven>
           <NetworkStatus>
-            <Wrapper></Wrapper>
             {isDevMode() &&
               wallet.isRunning &&
               wallet.isConnectedToDaemon === ThreeState.False && (
@@ -142,8 +163,8 @@ class Navigation extends Component<NavigationProps, any> {
                 <Label>{height}</Label>
               </OptionsDoubleRow>
               <OptionsDoubleRow>
-                <Body>Application</Body>
-                <Label>v{window.havenProcess.appVersion}</Label>
+                <Body>Version</Body>
+                <Label>v1.0.5</Label>
               </OptionsDoubleRow>
             </OptionsList>
           </>
