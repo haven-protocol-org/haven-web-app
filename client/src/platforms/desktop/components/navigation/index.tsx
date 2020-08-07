@@ -164,7 +164,7 @@ class Navigation extends Component<NavigationProps, any> {
               </OptionsDoubleRow>
               <OptionsDoubleRow>
                 <Body>Version</Body>
-                <Label>v1.0.5</Label>
+                <Label>v1.1.1</Label>
               </OptionsDoubleRow>
             </OptionsList>
           </>
