@@ -81,23 +81,7 @@ const Transaction = ({
           })()}
         </Row>
         <Row>
-          <Key>
-            Exchange Fee (
-            {(function () {
-              switch (priority) {
-                case 1:
-                  return "0.2%";
-                case 2:
-                  return "5%";
-                case 3:
-                  return "10%";
-                case 4:
-                  return "20%";
-                default:
-              }
-            })()}
-            )
-          </Key>
+          <Key>Final Exchange Fee</Key>
           <Tag priority={priority}>
             <Value>
               {fee} {fromTicker}

@@ -83,7 +83,7 @@ const assetOptions: AssetOption[] = [
 ];
 
 const exchangePrioOptions: ExchangePrioOption[] = [
-  { name: "Normal", ticker: "Unlocks ~7d", percent: "0.2%", prio: 1 },
+  { name: "Default", ticker: "Unlocks ~7d", percent: "0.2%", prio: 1 },
   { name: "Low", ticker: "Unlocks ~48hr", percent: "5%", prio: 2 },
   { name: "Medium", ticker: "Unlocks ~24hr", percent: "10%", prio: 3 },
   { name: "High", ticker: "Unlocks ~6hr", percent: "20%", prio: 4 },
@@ -426,7 +426,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                     ticker={selectedPrio.ticker}
                     options={exchangePrioOptions}
                     onClick={this.setExchangePriority}
-                    width
                   />
                   <Input
                     label="Recipient Address (Optional)"
@@ -435,7 +434,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                     type="text"
                     value={externAddress}
                     onChange={this.onEnterExternAddress}
-                    width
                     error={this.recipientIsValid()}
                   />
                 </Fragment>

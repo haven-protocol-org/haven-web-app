@@ -40,14 +40,14 @@ export const ExchangeSummary = ({
         <Row>
           <Key>Converting From</Key>
           <Value>
-            {fromAmount && !isNaN(fromAmount) ? fromAmount : ""}{" "}
+            {fromAmount && !isNaN(fromAmount) ? fromAmount : "0"}{" "}
             {fromTicker ? fromTicker : "--"}
           </Value>
         </Row>
         <Row>
           <Key>Converting To</Key>
           <Value>
-            {toAmount && !isNaN(toAmount) ? toAmount : ""}{" "}
+            {toAmount && !isNaN(toAmount) ? toAmount : "0"}{" "}
             {toTicker ? toTicker : "--"}
           </Value>
         </Row>
@@ -58,7 +58,7 @@ export const ExchangeSummary = ({
       </Container>
       <FeeRow>
         <FeePadding>
-          <Key>Estimated Fee ({selectedPrio.percent})</Key>
+          <Key>Minimum Fee ({selectedPrio.percent})</Key>
           <Tag priority={selectedPrio.prio}>
             <Value>{fee === "" ? "" : `${fee.toFixed(4)} ${fromTicker}`}</Value>
           </Tag>

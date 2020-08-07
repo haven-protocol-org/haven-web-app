@@ -44,7 +44,7 @@ export const Transaction = ({
           </Row>
         ) : null}
         <Row>
-          <Key>Transaction Fee </Key>
+          <Key>Final Transfer Fee </Key>
           <Tag>
             {" "}
             <Value>
