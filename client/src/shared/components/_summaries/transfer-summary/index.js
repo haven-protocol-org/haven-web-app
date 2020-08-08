@@ -25,7 +25,7 @@ const TransferSummary = ({
       <Row>
         <Key>Transfer Asset</Key>
         <Value>
-          {transferAmount === "--" ? "" : transferAmount} {transferAsset}
+          {transferAmount === "--" ? "0" : transferAmount} {transferAsset}
         </Value>
       </Row>
       <Row>
@@ -38,9 +38,9 @@ const TransferSummary = ({
       </Row>
       <FeeRow>
         <FeePadding>
-          <Key>Estimated Fee</Key>
+          <Key>Minimum Fee</Key>
           <Tag>
-            <Value>0.001 {transferAsset}</Value>
+            <Value>0.0005 {transferAsset}</Value>
           </Tag>
         </FeePadding>
       </FeeRow>
