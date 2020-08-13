@@ -3,11 +3,11 @@
     <!-- Generator: Sketch 55.2 (78181) - https://sketchapp.com -->
     <title>Group 4</title>
     <desc>Created with Sketch.</desc>
-    <g id="iOS-11" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+    <g id="iOS-11" stroke="none" stroke-width="1" fill="none"  fill-rule="evenodd">
         <g transform="translate(-3208.000000, -1663.000000)" id="Group-4">
             <g transform="translate(3192.000000, 1657.000000)">
                 <rect id="Rectangle" x="0" y="0" width="25" height="25"></rect>
-                <polygon id="Chevron-Small" fill="#8A8D90" fill-rule="nonzero" points="22.108584 12.7306347 16.6 7.44283194 17.985004 6 25.0064582 12.7400379 17.9758288 19.4017559 16.6002174 17.9499661"></polygon>
+                <polygon id="Chevron-Small" class="bg"  fill-rule="nonzero" points="22.108584 12.7306347 16.6 7.44283194 17.985004 6 25.0064582 12.7400379 17.9758288 19.4017559 16.6002174 17.9499661"></polygon>
             </g>
         </g>
     </g>

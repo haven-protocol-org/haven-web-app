@@ -2,7 +2,16 @@
 import React from "react";
 
 // Relative Imports
-import { Wrapper, Container, Row, Key, Value } from "./styles";
+import {
+  Wrapper,
+  Container,
+  Row,
+  Key,
+  Value,
+  FeeRow,
+  FeePadding,
+  Tag,
+} from "./styles";
 import { Error } from "../../../../assets/styles/type.js";
 
 export const ExchangeSummary = ({
@@ -12,37 +21,49 @@ export const ExchangeSummary = ({
   fromTicker,
   toTicker,
   fee,
-  hasLatestXRate
+  selectedPrio,
+  hasLatestXRate,
 }) => {
   return (
     <Wrapper>
-
-        <Error>{!hasLatestXRate && "Awaiting lastest exchange rates"}</Error>
-
       <Container>
         <Row>
-          <Key>Conversion Rate</Key>
+          <Key>Exchange Rate</Key>
           <Value active={true}>
-            {`1 ${fromTicker} : ${xRate.toFixed(4)} ${toTicker}`}
+            {!hasLatestXRate ? (
+              <Error>Checking lastest rates...</Error>
+            ) : (
+              `1 ${fromTicker} : ${xRate.toFixed(4)} ${toTicker}`
+            )}
           </Value>
         </Row>
         <Row>
-          <Key>From Asset</Key>
+          <Key>Converting From</Key>
           <Value>
-            {(fromTicker ? fromTicker : "") +
-              " " +
-              (fromAmount && !isNaN(fromAmount) ? fromAmount : "--")}
+            {fromAmount && !isNaN(fromAmount) ? fromAmount : "0"}{" "}
+            {fromTicker ? fromTicker : "--"}
           </Value>
         </Row>
         <Row>
-          <Key>To Asset</Key>
+          <Key>Converting To</Key>
           <Value>
-            {(toTicker ? toTicker : "") +
-              " " +
-              (toAmount && !isNaN(toAmount) ? toAmount : "--")}
+            {toAmount && !isNaN(toAmount) ? toAmount : "0"}{" "}
+            {toTicker ? toTicker : "--"}
           </Value>
+        </Row>
+        <Row>
+          <Key>{selectedPrio.name} Priority</Key>
+          <Value>{selectedPrio.ticker}</Value>
         </Row>
       </Container>
+      <FeeRow>
+        <FeePadding>
+          <Key>Minimum Fee ({selectedPrio.percent})</Key>
+          <Tag priority={selectedPrio.prio}>
+            <Value>{fee === "" ? "" : `${fee.toFixed(4)} ${fromTicker}`}</Value>
+          </Tag>
+        </FeePadding>
+      </FeeRow>
     </Wrapper>
   );
 };

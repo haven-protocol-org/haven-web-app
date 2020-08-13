@@ -1,0 +1,30 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Start Desktop Mainnet Development",
+			"dependsOn": [
+				"Electron Desktop Mainnet",
+				"Client Desktop Mainnet"
+			],
+			"problemMatcher": []
+		},
+		{
+			"type": "npm",
+			"script": "start:desktop:mainnet",
+			"path": "client/",
+			"problemMatcher": [],
+			"label": "Client Desktop Mainnet",
+			"detail": "sh -ac '. ./env/.env.mainnet; . ./env/.env.desktop; react-scripts start'"
+		},
+		{
+			"type": "process",
+			"command": "sh",
+			"args": [
+				"./sh/develop_mainnet.sh"
+			],
+			"label": "Electron Desktop Mainnet",
+			"problemMatcher": []
+		}
+	]
+}

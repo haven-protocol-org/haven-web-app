@@ -12,6 +12,7 @@ export const dark = {
   button: {
     primary: "#7289da",
     primary_hover: "#677bc4",
+    primary_label: "#ffffff",
   },
   type: {
     primary: "#ffffff",
@@ -34,6 +35,15 @@ export const dark = {
     alert: "#1a8ce0", // Blue
     default: "#7289da", // Purple
   },
+  charts: {
+    background: "rgba(114, 137, 218, 0.2)",
+    border: "rgba(114, 137, 218, 1)",
+  },
+  illustration: {
+    border: "#8A8D90",
+    fill: "#7289da",
+    outline: "#7289da",
+  },
 };
 
 export const light = {
@@ -48,6 +58,7 @@ export const light = {
   button: {
     primary: "#677bc4",
     primary_hover: "#5b6eae",
+    primary_label: "#ffffff",
   },
   type: {
     primary: "#1d1d1f",
@@ -69,5 +80,60 @@ export const light = {
     warning: "#cf9e39", // Orange
     alert: "#017fdd", // Blue
     default: "#677bc4", // Purple
+  },
+  charts: {
+    background: "rgba(114, 137, 218, 0.2)",
+    border: "rgba(114, 137, 218, 1)",
+  },
+  illustration: {
+    border: "#79797a",
+    fill: "#677bc4",
+    outline: "#1d1d1f",
+  },
+};
+
+export const sepia = {
+  value: "Sepia Theme",
+  body: {
+    navigation: "#c6b3a1",
+    background: "#e2d9d0",
+    foreground: "#d4c6b9",
+    border: "#b8a18a",
+    active_menu: "#704214",
+  },
+  button: {
+    primary: "#704214",
+    primary_hover: "#653b12",
+    primary_label: "#ffffff",
+  },
+  type: {
+    primary: "#43280c",
+    secondary: "#7e552c",
+  },
+  input: {
+    input_border: "#b8a18a",
+    input_border_focus: "#a98e72",
+    input_placeholder: "#7e552c",
+    input_background: "#d4c6b9",
+    input_value: "#704214",
+    input_select: "#5c5f63",
+    input_foreground: "#e2d9d0",
+    input_error: "#f04747",
+  },
+  states: {
+    success: "#269b7c", // Green
+    error: "#d84040", // Red
+    warning: "#cf9e39", // Orange
+    alert: "#017fdd", // Blue
+    default: "#677bc4", // Purple
+  },
+  charts: {
+    background: "rgba(155, 123, 91, 0.2)",
+    border: "rgba(155, 123, 91, 1)",
+  },
+  illustration: {
+    border: "#7e552c",
+    fill: "#704214",
+    outline: "#43280c",
   },
 };

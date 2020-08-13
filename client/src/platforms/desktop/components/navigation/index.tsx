@@ -18,24 +18,19 @@ import {
   OptionsIcon,
   OptionsList,
   State,
-  Wrapper,
+  OptionsSVG,
 } from "./styles";
-import OptionsSVG from "../../../../assets/icons/options.svg";
-import { Body, Label } from "assets/styles/type";
 
+import { Body, Label } from "assets/styles/type";
 import { closeWallet } from "../../actions";
 import { selectIsLoggedIn } from "../../reducers/walletSession";
-import {
-  getNetworkByName,
-  isDevMode,
-  NET_TYPE_NAME,
-} from "constants/env";
+import { getNetworkByName, isDevMode, NET_TYPE_NAME } from "constants/env";
 import { DesktopAppState } from "../../reducers";
 import { NodeState } from "platforms/desktop/types";
 import { WalletState } from "platforms/desktop/ipc/ipc-types";
 import { selectisLocalNode } from "platforms/desktop/reducers/havenNode";
 import { ThreeState } from "shared/types/types";
-import {selectBlockHeight} from "platforms/desktop/reducers/chain";
+import { selectBlockHeight } from "platforms/desktop/reducers/chain";
 
 interface NavigationProps {
   wallet: WalletState;
@@ -51,6 +46,7 @@ class Navigation extends Component<NavigationProps, any> {
   state = {
     current_network: getNetworkByName(),
     showOptions: false,
+    showNotifications: false,
   };
 
   onComponentDidMount() {
@@ -69,6 +65,29 @@ class Navigation extends Component<NavigationProps, any> {
   hideDropdownMenu = () => {
     this.setState({ showOptions: false }, () => {
       document.removeEventListener("click", this.hideDropdownMenu);
+    });
+  };
+
+  showNotifications = (event: any) => {
+    event.preventDefault();
+    this.setState({ showNotifications: true }, () => {
+      document.addEventListener("click", this.hideNotifications);
+    });
+  };
+
+  hideNotifications = () => {
+    this.setState({ showNotifications: false }, () => {
+      document.removeEventListener("click", this.hideNotifications);
+    });
+  };
+
+  userFocused = () => {
+    this.setState({ showNotifications: true });
+  };
+
+  handleClick = () => {
+    this.setState({ showNotifications: true }, () => {
+      document.addEventListener("click", this.hideNotifications);
     });
   };
 
@@ -93,7 +112,6 @@ class Navigation extends Component<NavigationProps, any> {
           <Icon />
           <Haven>HAVEN</Haven>
           <NetworkStatus>
-            <Wrapper></Wrapper>
             {isDevMode() &&
               wallet.isRunning &&
               wallet.isConnectedToDaemon === ThreeState.False && (
@@ -117,7 +135,9 @@ class Navigation extends Component<NavigationProps, any> {
           )}
 
           <Options onClick={this.showDropdownMenu}>
-            <OptionsIcon src={OptionsSVG} />
+            <OptionsIcon>
+              <OptionsSVG />
+            </OptionsIcon>
           </Options>
         </Menu>
         {this.state.showOptions && (
@@ -143,8 +163,8 @@ class Navigation extends Component<NavigationProps, any> {
                 <Label>{height}</Label>
               </OptionsDoubleRow>
               <OptionsDoubleRow>
-                <Body>Application</Body>
-                <Label>v{window.havenProcess.appVersion}</Label>
+                <Body>Version</Body>
+                <Label>v1.1.1</Label>
               </OptionsDoubleRow>
             </OptionsList>
           </>
@@ -159,7 +179,7 @@ const mapStateToProps = (state: DesktopAppState) => ({
   wallet: state.walletRPC,
   node: state.havenNode,
   isLocalNode: selectisLocalNode(state.havenNode),
-  height: selectBlockHeight(state)
+  height: selectBlockHeight(state),
 });
 
 export const NavigationDesktop = connect(mapStateToProps, {

@@ -37,7 +37,7 @@ import { ExchangeSummary } from "shared/components/_summaries/exchange-summary";
 
 enum ExchangeTab {
   Basic,
-  Adanvced,
+  Advanced,
 }
 
 interface ExchangeProps extends RouteComponentProps<any> {
@@ -54,7 +54,6 @@ interface ExchangeProps extends RouteComponentProps<any> {
   fromTicker: Ticker | null;
   toTicker: Ticker | null;
   balances: XBalances;
-
 }
 
 type ExchangeState = {
@@ -63,6 +62,7 @@ type ExchangeState = {
   selectedTab: ExchangeTab;
   externAddress: string;
   selectedPrio: ExchangePrioOption;
+  hasEnough: boolean;
 };
 
 export interface AssetOption {
@@ -74,6 +74,7 @@ export interface ExchangePrioOption {
   ticker: string;
   name: string;
   prio: number;
+  percent: string;
 }
 
 const assetOptions: AssetOption[] = [
@@ -82,14 +83,10 @@ const assetOptions: AssetOption[] = [
 ];
 
 const exchangePrioOptions: ExchangePrioOption[] = [
-  {
-    name: "Low:",
-    ticker: "Unlocks in ~2 days",
-    prio: 1,
-  },
-  { name: "Medium:", ticker: "Unlocks ~18 hours", prio: 2 },
-  { name: "High:", ticker: "Unlocks ~6 hours", prio: 3 },
-  { name: "Very High:", ticker: "Unlocks ~2 hours", prio: 4 },
+  { name: "Default", ticker: "Unlocks ~7d", percent: "0.2%", prio: 1 },
+  { name: "Low", ticker: "Unlocks ~48hr", percent: "5%", prio: 2 },
+  { name: "Medium", ticker: "Unlocks ~24hr", percent: "10%", prio: 3 },
+  { name: "High", ticker: "Unlocks ~6hr", percent: "20%", prio: 4 },
 ];
 
 const INITIAL_STATE: ExchangeState = {
@@ -97,7 +94,8 @@ const INITIAL_STATE: ExchangeState = {
   toAmount: "",
   selectedTab: ExchangeTab.Basic,
   externAddress: "",
-  selectedPrio: exchangePrioOptions[1],
+  selectedPrio: exchangePrioOptions[0],
+  hasEnough: false,
 };
 class Exchange extends Component<ExchangeProps, ExchangeState> {
   private sendTicker: Ticker = Ticker.XHV;
@@ -217,11 +215,14 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
   };
 
   toggleBasic = () => {
-    this.setState({ selectedTab: ExchangeTab.Basic });
+    this.setState({
+      selectedTab: ExchangeTab.Basic,
+      selectedPrio: exchangePrioOptions[0],
+    });
   };
 
   toggleAdvanced = () => {
-    this.setState({ selectedTab: ExchangeTab.Adanvced });
+    this.setState({ selectedTab: ExchangeTab.Advanced });
   };
 
   setExchangePriority = (selectedOption: ExchangePrioOption) => {
@@ -254,13 +255,15 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     });
   };
 
-  validateExchange = () => {
+  validateExchange = (availableBalance: any) => {
     const { fromAmount, toAmount } = this.state;
     const fromAmountValid = fromAmount !== "";
     const toAmountValid = toAmount !== "";
     const { hasLatestXRate } = this.props;
+    const hasEnoughFunds =
+      fromAmount !== undefined ? fromAmount < availableBalance : false;
 
-    if (fromAmountValid && toAmountValid && hasLatestXRate) {
+    if (fromAmountValid && toAmountValid && hasLatestXRate && hasEnoughFunds) {
       // If valid then make this 'false' so the footer is enabled
       return false;
     } else {
@@ -274,18 +277,20 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     //@ts-ignore
     if (toAmount > availableBalance) {
       return "Not enough funds";
-    } else {
-      return "";
     }
   };
 
   fromAmountIsValid = (availableBalance: any) => {
     const { fromAmount } = this.state;
+    const availableBalanceString = availableBalance.toString();
+
     //@ts-ignore
     if (fromAmount > availableBalance) {
       return "Not enough funds";
-    } else {
-      return "";
+    }
+    //@ts-ignore
+    if (fromAmount === availableBalanceString) {
+      return "Save some for fees";
     }
   };
 
@@ -297,6 +302,23 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       return "";
     } else {
       return "Enter a valid address";
+    }
+  };
+
+  calculateFeeEstimate = () => {
+    const { selectedPrio, fromAmount } = this.state;
+    const { prio } = selectedPrio;
+    const amount = Number(fromAmount);
+    if (prio === 1) {
+      return amount * 0.002;
+    } else if (prio === 2) {
+      return amount * 0.05;
+    } else if (prio === 3) {
+      return amount * 0.1;
+    } else if (prio === 4) {
+      return amount * 0.2;
+    } else {
+      return null;
     }
   };
 
@@ -339,7 +361,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
             firstTabLabel="Basic"
             secondTabLabel="Advanced"
             firstTabState={selectedTab === ExchangeTab.Basic}
-            secondTabState={selectedTab === ExchangeTab.Adanvced}
+            secondTabState={selectedTab === ExchangeTab.Advanced}
             firstTabClickEvent={this.toggleBasic}
             secondTabClickEvent={this.toggleAdvanced}
             onClick={() => {}}
@@ -372,7 +394,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 readOnly={fromTicker === null}
               />
               <Dropdown
-                label={"To Asset "}
+                label={"To Asset"}
                 placeholder="Select Asset"
                 name="to_asset"
                 value={toAsset ? toAsset.name : "Select Asset"}
@@ -394,7 +416,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 error={toTicker === null ? "Please select an asset first" : ""}
                 readOnly={toTicker === null}
               />
-              {selectedTab === ExchangeTab.Adanvced && (
+              {selectedTab === ExchangeTab.Advanced && (
                 <Fragment>
                   <Dropdown
                     label="Priority"
@@ -404,7 +426,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                     ticker={selectedPrio.ticker}
                     options={exchangePrioOptions}
                     onClick={this.setExchangePriority}
-                    width
                   />
                   <Input
                     label="Recipient Address (Optional)"
@@ -413,7 +434,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                     type="text"
                     value={externAddress}
                     onChange={this.onEnterExternAddress}
-                    width
                     error={this.recipientIsValid()}
                   />
                 </Fragment>
@@ -426,14 +446,15 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 toAmount={toAmount}
                 toTicker={toTicker}
                 hasLatestXRate={hasLatestXRate}
-                fee={"--"}
+                fee={this.calculateFeeEstimate()}
                 fromTicker={fromTicker}
+                selectedPrio={selectedPrio}
               />
 
               <Footer
                 onClick={() => this.handleSubmit()}
                 label="Preview"
-                disabled={this.validateExchange()}
+                disabled={this.validateExchange(availBalance)}
                 loading={this.props.isProcessingExchange}
               />
             </Container>

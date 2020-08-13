@@ -2,7 +2,7 @@
 import React from "react";
 
 // Relative Imports
-import { Container, Row, Key, Value } from "./styles";
+import { Container, Row, Key, Value, FeePadding, FeeRow, Tag } from "./styles";
 // import Confirm from "../../confirm/index.js";
 
 const TransferSummary = ({
@@ -24,22 +24,26 @@ const TransferSummary = ({
     <Container>
       <Row>
         <Key>Transfer Asset</Key>
-        <Value>{transferAsset}</Value>
-      </Row>
-      <Row>
-        <Key>Transfer Amount</Key>
-        <Value>{transferAmount}</Value>
+        <Value>
+          {transferAmount === "--" ? "0" : transferAmount} {transferAsset}
+        </Value>
       </Row>
       <Row>
         <Key>Recipient Address</Key>
         <Value>{recipientAddress === "--" ? "--" : truncated}</Value>
       </Row>
-      {paymentId.length > 63 ? (
-        <Row>
-          <Key>Payment ID</Key>
-          <Value>{paymentIdTruncated}</Value>
-        </Row>
-      ) : null}
+      <Row>
+        <Key>Payment ID</Key>
+        <Value>{paymentId === "--" ? "--" : paymentIdTruncated}</Value>
+      </Row>
+      <FeeRow>
+        <FeePadding>
+          <Key>Minimum Fee</Key>
+          <Tag>
+            <Value>0.0005 {transferAsset}</Value>
+          </Tag>
+        </FeePadding>
+      </FeeRow>
     </Container>
   );
 };

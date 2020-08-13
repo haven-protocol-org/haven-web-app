@@ -32,11 +32,9 @@ export const isDesktop = () => {
 let apiUrl;
 
 if (isWeb()) {
-
-    apiUrl = isDevMode()
-      ? process.env.REACT_APP_API_URL_DEVELOP
-      : process.env.REACT_APP_API_URL;
-
+  apiUrl = isDevMode()
+    ? process.env.REACT_APP_API_URL_DEVELOP
+    : process.env.REACT_APP_API_URL;
 }
 
 export const getNetworkByName = () => {
@@ -44,4 +42,3 @@ export const getNetworkByName = () => {
 };
 
 export const API_URL = apiUrl;
-

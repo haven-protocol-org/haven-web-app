@@ -35,5 +35,5 @@ export const Circle = styled.span`
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  color: #fff;
+  color: ${(props) => props.theme.button.primary_label};
 `;

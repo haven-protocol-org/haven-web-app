@@ -124,7 +124,7 @@ export const Button = styled.button`
     height: 0px;
     border: 7px solid;
     border-color: ${(props) =>
-      props.theme.input.input_select} transparent transparent transparent;
+      props.theme.type.primary} transparent transparent transparent;
     right: 16px;
     top: 24px;
 `;

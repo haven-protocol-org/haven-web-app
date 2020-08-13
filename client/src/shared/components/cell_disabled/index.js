@@ -7,14 +7,13 @@ import {
   Column,
   Title,
   Subtitle,
-  Icon,
   Inner,
   Wrapper,
   Row,
   Ticker,
   Balance,
+  Arrow,
 } from "./styles";
-import chevron from "../../../assets/icons/chevron.svg";
 
 const CellDisabled = ({ tokenName, ticker, price, balance, fullwidth }) => {
   return (
@@ -32,7 +31,7 @@ const CellDisabled = ({ tokenName, ticker, price, balance, fullwidth }) => {
           <Subtitle>{balance}</Subtitle>
         </Column>
         <Inner>
-          <Icon src={chevron} />
+          <Arrow />
         </Inner>
       </Wrapper>
     </Container>

@@ -71,13 +71,14 @@ export const createTransfer = (
     );
     const params: any = createTXInputs(address, amount, paymentId);
 
+    const isOffshoreTX = fromTicker !== Ticker.XHV;
     const transferFN =
-      fromTicker === Ticker.XHV ? transfer_splitRPC : offshoreTransferRPC;
+    isOffshoreTX ? offshoreTransferRPC:transfer_splitRPC;
 
     transferFN(params)
       .then((result) => {
-        const { amount_list, fee_list, tx_metadata_list } = result;
-
+        const { fee_list, tx_metadata_list } = result;
+        const amount_list = isOffshoreTX ? result.amount_usd_list : result.amount_list;
         const reduxParams = {
           fee: fee_list.reduce( (acc: number, value: number) => acc + value,0 ),
           fromAmount: amount_list.reduce( (acc: number, value: number) => acc + value,0 ),

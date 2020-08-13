@@ -8,7 +8,6 @@ import {
   Button,
   Labels,
   Primary,
-  Secondary,
   Row,
   Trusted,
 } from "./styles";

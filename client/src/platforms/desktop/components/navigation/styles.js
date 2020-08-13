@@ -2,6 +2,7 @@ import styled, { keyframes } from "styled-components";
 import { Link } from "react-router-dom";
 import { ReactComponent as ArrowUp } from "../../../../assets/icons/arrow-up.svg";
 import { ReactComponent as HavenIcon } from "../../../../assets/haven.svg";
+import { ReactComponent as OptionIcon } from "../../../../assets/icons/options.svg";
 
 const appear = keyframes`
   0% { transform: translateY(-20px);  }
@@ -34,6 +35,12 @@ export const Icon = styled(HavenIcon)`
 
   .color {
     fill: ${(props) => props.theme.type.primary};
+  }
+`;
+
+export const OptionsSVG = styled(OptionIcon)`
+  .bg {
+    fill: ${(props) => props.theme.type.secondary};
   }
 `;
 
@@ -95,9 +102,12 @@ export const OptionsList = styled.div`
   animation: ${appear} 0.5s forwards;
 `;
 
-export const OptionsIcon = styled.img`
+export const OptionsIcon = styled.div`
   height: 20px;
   width: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const OptionsSingleRow = styled.div`
@@ -237,5 +247,65 @@ export const Logout = styled.div`
     cursor: pointer;
     background: ${(props) => props.theme.button.primary_hover};
     transition: 500ms;
+  }
+`;
+
+// Notifications
+
+export const Notifications = styled.button`
+  height: 64px;
+  width: 64px;
+  background: none;
+  border: none;
+  outline: none;
+  display: flex;
+  margin-left: 20px;
+  align-items: center;
+  justify-content: center;
+  /* border-left: 1px solid ${(props) => props.theme.body.border};
+  border-right: 1px solid ${(props) => props.theme.body.border}; */
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+export const NotificationDropdown = styled.div`
+  height: auto;
+  min-height: 140px;
+  width: 280px;
+  background: ${(props) => props.theme.body.foreground}
+  border: 1px solid ${(props) => props.theme.body.border};
+  border-radius: 4px;
+  position: fixed;
+  left: 10px;
+  top: 74px;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+  z-index: 1000;
+  animation: ${appear} 0.5s forwards;
+`;
+
+export const NotificationArrow = styled.div`
+  height: auto;
+  width: 20px;
+  background: white;
+  left: 165px;
+  position: absolute;
+  z-index: 999;
+`;
+
+export const NotificationCell = styled.div`
+  height: auto;
+  color: white;
+  padding-left: 20px;
+  padding: 16px;
+  font-size: 14px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid ${(props) => props.theme.body.border};
+
+  &:hover {
+    cursor: pointer;
   }
 `;

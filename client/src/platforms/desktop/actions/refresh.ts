@@ -13,8 +13,7 @@ import { getAddress } from "./subadresses";
 import { getTransfers } from "./transferHistory";
 import { getWalletRPCState } from "platforms/desktop/actions/walletRPC";
 import { selectIsWalletSyncingRemote } from "platforms/desktop/reducers/walletRPC";
-import {getExchangeRates} from "shared/actions/exchangeRates";
-import {getLastBlockHeader} from "platforms/desktop/actions/blockHeaderExchangeRate";
+import { getLastBlockHeader } from "platforms/desktop/actions/blockHeaderExchangeRate";
 
 export const getDaemonsState = () => {
   return (dispatch: any) => {
@@ -25,8 +24,7 @@ export const getDaemonsState = () => {
 
 export const refresh = () => {
   return (dispatch: any, getState: () => DesktopAppState) => {
-
-    dispatch(getLastBlockHeader())
+    dispatch(getLastBlockHeader());
     if (selectIsWalletSyncingRemote(getState())) {
       dispatch(getNodeInfo());
 
@@ -49,7 +47,6 @@ export const updateApp = () => {
   return (dispatch: any, getState: () => DesktopAppState) => {
     //if we sync via remote node, wallet-rpc will be blocked
 
-
     if (selectIsWalletSyncingRemote(getState())) {
       dispatch(getNodeInfo());
       return;
@@ -61,6 +58,5 @@ export const updateApp = () => {
     dispatch(getTransfers());
     dispatch(getNodeInfo());
     dispatch(getOffshoreBalance());
-    
   };
 };

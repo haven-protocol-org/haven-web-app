@@ -3,13 +3,13 @@ import {
   History,
   Message,
   NoTransactions,
+  Illustration,
 } from "shared/pages/_wallet/details/styles";
 import { Spinner } from "shared/components/spinner";
 import {
   convertBalanceForReading,
   createRemainingTimeString,
 } from "utility/utility";
-import empty from "assets/illustration/no_transactions.svg";
 import React, { Component } from "react";
 import { getTransfers } from "../../actions";
 import { connect } from "react-redux";
@@ -77,16 +77,18 @@ class TxHistoryContainer extends Component<TxHistoryProps, any> {
                   status: transaction.direction,
                   block: transaction.height,
                   tx: transaction.txid,
-                  // fee: convertBalanceForReading(transaction.fee),
+                   fee: convertBalanceForReading(transaction.fee),
                   // this is a quick fix to avoid showing wrong fee values
-                  fee: 0,
+                //  fee: 0,
                 } as TransactionProps;
 
                 return <Transaction {...txProps} key={index} />;
               })
             ) : (
               <EmptyState>
-                <NoTransactions src={empty} />
+                <NoTransactions>
+                  <Illustration />
+                </NoTransactions>
                 <Message>
                   No transactions found. Once you send, receive or exchange
                   tokens your transactions will appear here.
