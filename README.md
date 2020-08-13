@@ -9,65 +9,37 @@ Official Haven Frontend Monorepository for Haven Desktop and Haven Web Version.
 
 ## Web
 
-#### Build 
+####Environments
 
+* mainnet
+* stagenet
+* testnet
+
+#### Build & Develop
+ 
 1. Navigate to client folder
 2. Build the app for the environment
+3. Start the app
 
-`cd client <br />   npm run build:web:mainnet`
-
-
-Mainnet
-
-`npm run build:web:mainnet`
-
-Testnet
-
-`npm run build:web:testnet`
-
-#### Development
-
-Navigate to client folder
-
-`cd client`
-
-
-Mainnet
-
-`npm run start:web:mainnet`
-
-Testnet
-
-`npm run start:web:testnet`
+```bash
+cd client
+npm run build:web:testnet
+npm run start:web:testnet
+```
 
 ## Desktop
 
-#### Build 
+#### Build & Develop
 
-Navigate to client folder
+1. Navigate to client folder
+2. Build the app for the environment
+3. Run Scripts to start the app in appropriate environment from root directory
 
-`cd client`
+```bash
+cd client
+npm run build:web:testnet
+cd ../
+sh ./sh/develop_testnet.sh
+```
 
-Build the app for the environment
 
-Mainnet
-
-`npm run build:desktop:mainnet`
-
-Testnet
-
-`npm run build:desktop:testnet`
-
-#### Development
-
-Run scripts to start the app
-
-Mainnet
-
-`sh ./sh/develop_mainnet.sh`
-
-Testnet
-
-`sh ./sh/develop_testnet.sh`
-
-  
