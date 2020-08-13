@@ -18,8 +18,8 @@ Official Haven Frontend Monorepository for Haven Desktop and Haven Web Version.
 #### Build & Develop
  
 1. Navigate to client folder
-2. Build the app for the environment
-3. Start the app
+2. Build the app for given environment
+3. Start the app for given environment 
 
 ```bash
 cd client
