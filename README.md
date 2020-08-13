@@ -9,6 +9,22 @@ Official Haven Frontend Monorepository for Haven Desktop and Haven Web Version.
 
 ## Web
 
+#### Build 
+
+Navigate to client folder
+
+`cd client`
+
+Build the app for the environment
+
+Mainnet
+
+`npm run build:web:mainnet`
+
+Testnet
+
+`npm run build:web:testnet`
+
 #### Development
 
 Navigate to client folder
@@ -16,14 +32,15 @@ Navigate to client folder
 `cd client`
 
 
-For Mainnet
-
+Mainnet
 
 `npm run start:web:mainnet`
 
-For Testnet
+Testnet
 
 `npm run start:web:testnet`
+
+## Desktop
 
 #### Build 
 
@@ -31,11 +48,26 @@ Navigate to client folder
 
 `cd client`
 
+Build the app for the environment
 
-For Mainnet
+Mainnet
 
-`npm run build:web:mainnet`
+`npm run build:desktop:mainnet`
 
-For Testnet
+Testnet
 
-`npm run build:web:testnet`
+`npm run build:desktop:testnet`
+
+#### Development
+
+Run scripts to start the app
+
+Mainnet
+
+`sh ./sh/develop_mainnet.sh`
+
+Testnet
+
+`sh ./sh/develop_testnet.sh`
+
+  
