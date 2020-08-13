@@ -11,11 +11,11 @@ Official Haven Frontend Monorepository for Haven Desktop and Haven Web Version.
 
 #### Build 
 
-Navigate to client folder
+1. Navigate to client folder
+2. Build the app for the environment
 
-`cd client`
+`cd client <br />   npm run build:web:mainnet`
 
-Build the app for the environment
 
 Mainnet
 
