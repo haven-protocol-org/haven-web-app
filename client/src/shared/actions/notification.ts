@@ -83,9 +83,11 @@ export const addErrorNotification = (
         dispatch(removeNotificationAfterDelay(id, duration));
       }
     };
+  } else {
+    const message = error.message || error.err_msg || error;
+    return buildNotification(message, NotificationType.ERROR, duration);
   }
-  const message = error.message || error.err_msg || error;
-  return buildNotification(message, NotificationType.ERROR, duration);
+
 };
 
 const buildNotification = (

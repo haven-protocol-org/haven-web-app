@@ -139,6 +139,7 @@ export function createExchange(
         dispatch(showModal(MODAL_TYPE.ConfirmExchange));
       })
       .catch((error: any) => {
+        dispatch(addErrorNotification(error))
         dispatch(onExchangeCreationFailed(error));
       });
   };
