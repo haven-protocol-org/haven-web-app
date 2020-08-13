@@ -33,7 +33,7 @@ npm run start:web:testnet
 
 1. Navigate to client folder
 2. Build the app for the environment
-3. Run Scripts to start the app in appropriate environment from root directory
+3. Run the appropriate script for the environment you want to run the app in
 
 ```bash
 cd client
