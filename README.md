@@ -14,7 +14,7 @@ Official Haven Frontend Monorepository for Haven Desktop and Haven Web Version.
 * stagenet
 * testnet
 
-#### Build
+#### Build & Develop
  
 1. Navigate to client folder
 2. Build the app for given environment
@@ -23,11 +23,6 @@ Official Haven Frontend Monorepository for Haven Desktop and Haven Web Version.
 ```bash
 cd client
 npm run build:web:testnet
-```
-
-#### Develop
-
-```bash
 npm run start:web:testnet
 ```
 
