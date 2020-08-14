@@ -25,14 +25,6 @@ export const notificationList = [
     message: "Cha ching! You received a transfer...",
     type: NotificationType.SUCCESS,
   },
-
-  {
-    key: "",
-    code: -1,
-    message: "Oops, that seed was incorrect",
-    type: NotificationType.ERROR,
-    description: "electrum style list failed --> comes with wrong seed",
-  },
   {
     key: "",
     code: -2,

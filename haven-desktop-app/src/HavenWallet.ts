@@ -23,7 +23,10 @@ export class HavenWallet {
   private requestShutDown: boolean = false;
   private shutDownWindow: BrowserWindow;
 
-  public start() {
+  /**
+   * Initializes the wallet by creating wallet dir, starting the Daemon, and initializing wallet handlers
+   */
+  public start(): void {
     if (this._isRunning) {
       return;
     }
@@ -72,6 +75,9 @@ export class HavenWallet {
     );
   }
 
+  /**
+   * display shut down window and once stop event is emitted destroys the window
+   */
   private showShutDownWindow() {
     const shutDownConctruction: BrowserWindowConstructorOptions = {
       width: 500,

@@ -24,7 +24,7 @@ let mainWindow: Electron.BrowserWindow;
 const menu = Menu.buildFromTemplate(havenMenu);
 Menu.setApplicationMenu(menu);
 
-const startApp = () => {
+const startApp = (): void => {
   const browserOptions: BrowserWindowConstructorOptions = {
     width: 992,
     minWidth: 470,
