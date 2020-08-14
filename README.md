@@ -8,14 +8,13 @@ Official Haven Frontend Monorepository for Haven Desktop and Haven Web Version.
 **Languages:** Typescript, Javascript
 
 ## Web
-
 #### Environments
 
 * mainnet
 * stagenet
 * testnet
 
-#### Build & Develop
+#### Build
  
 1. Navigate to client folder
 2. Build the app for given environment
@@ -24,20 +23,40 @@ Official Haven Frontend Monorepository for Haven Desktop and Haven Web Version.
 ```bash
 cd client
 npm run build:web:testnet
+```
+
+#### Develop
+
+```bash
 npm run start:web:testnet
 ```
 
+
 ## Desktop
 
-#### Build & Develop
+#### Build 
 
 1. Navigate to client folder
 2. Build the app for the environment
-3. Run the appropriate script for the environment you want to run the app in
 
 ```bash
 cd client
-npm run build:web:testnet
+npm run build:desktop:testnet
+```
+
+To build the final desktop build
+
+```bash
+sh ./sh/make_testnet.sh
+```
+
+#### Develop 
+
+1. Run start script to prepare client
+2. Start the build by executing shell script
+
+```bash
+npm run start:desktop:testnet
 cd ../
 sh ./sh/develop_testnet.sh
 ```
