@@ -6,6 +6,7 @@
   "main": "dist/index.js",
   "scripts": {
     "start": "npm run build && electron-forge start",
+    "test": "jest",
     "package": "npm run build && electron-forge package",
     "make": "npm run build && electron-forge make",
     "publish": "npm run build && electron-forge publish",
@@ -47,5 +48,37 @@
     "tslint": "^5.20.1",
     "typescript": "^3.9.6",
     "webpack": "^4.43.0"
+  },
+  "jest": {
+    "verbose": true,
+    "coverageDirectory": "<rootDir>/coverage",
+    "moduleFileExtensions": [
+      "js",
+      "ts"
+    ],
+    "transform": {
+      "^.+\\.ts$": "ts-jest"
+    },
+    "testMatch": [
+      "<rootDir>/__tests__/**.ts"
+    ],
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "tsconfig.json",
+        "diagnostics": true
+      }
+    },
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "<rootDir>/src/**/*"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 100,
+        "functions": 100,
+        "lines": 100,
+        "statements": 100
+      }
+    }
   }
 }
