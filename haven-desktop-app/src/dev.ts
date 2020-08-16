@@ -22,6 +22,9 @@ client.on("error", (error) => {
 });
 
 
+export const destroySocket = (): void => {
+  client.destroy();
+};
 
 export const logInDevMode = (mes: string): void => {
 

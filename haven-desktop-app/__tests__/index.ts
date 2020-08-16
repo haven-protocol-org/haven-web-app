@@ -1,8 +1,13 @@
 import { checkForUnpackedPath} from "../src/daemonPaths";
+import { destroySocket } from "../src/dev";
 import { RPCHRequestHandler } from "../src/rpc/RPCHRequestHandler";
 
 afterEach(() => {
     jest.clearAllMocks();
+});
+
+afterAll(() => {
+    destroySocket();
 });
 
 const LOCAL_HOST_URL = "http://localhost:";
@@ -34,3 +39,5 @@ describe("Utilities", () => {
         expect(checkForUnpackedPath(mockPath)).toEqual(expectedPath);
     });
 });
+
+
