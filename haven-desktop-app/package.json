@@ -33,14 +33,17 @@
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.52",
     "@electron-forge/maker-deb": "^6.0.0-beta.52",
+    "@electron-forge/maker-dmg": "6.0.0-beta.52",
     "@electron-forge/maker-rpm": "^6.0.0-beta.52",
     "@electron-forge/maker-squirrel": "6.0.0-beta.52",
-    "@electron-forge/maker-dmg": "6.0.0-beta.52",
     "@electron-forge/maker-zip": "6.0.0-beta.52",
     "@electron-forge/plugin-auto-unpack-natives": "^6.0.0-beta.52",
     "@electron-forge/publisher-github": "^6.0.0-beta.52",
+    "@types/jest": "^26.0.10",
     "electron": "^9.1.0",
+    "jest": "^26.4.0",
     "ncp": "^2.0.0",
+    "ts-jest": "^26.2.0",
     "tslint": "^5.20.1",
     "typescript": "^3.9.6",
     "webpack": "^4.43.0"
