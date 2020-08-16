@@ -1,6 +1,6 @@
 import * as net from "net";
 import { BehaviorSubject } from "rxjs";
-import {isDevMode} from "./env";
+import { isDevMode } from "./env";
 
 const devServerStartedObservable: BehaviorSubject<boolean> = new BehaviorSubject<
   boolean
@@ -23,7 +23,7 @@ client.on("error", (error) => {
 
 
 
-export const logInDevMode = (mes: string) => {
+export const logInDevMode = (mes: string): void => {
 
   if (isDevMode) {
     console.log(mes);
