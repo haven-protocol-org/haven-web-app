@@ -1,3 +1,4 @@
+import { checkForUnpackedPath} from "../src/daemonPaths";
 import { RPCHRequestHandler } from "../src/rpc/RPCHRequestHandler";
 
 afterEach(() => {
@@ -22,5 +23,14 @@ describe("RPC Request Handler", () => {
         const spy = jest.spyOn(rpcRequestHandler, "setFullUrl");
         rpcRequestHandler.port = PORT;
         expect(spy).toHaveBeenCalledWith(LOCAL_HOST_URL + PORT);
+    });
+});
+
+
+describe("Utilities", () => {
+    it("should correctly check for unpackedPath and return new path", () => {
+        const mockPath = "mocked/app.asar/userData";
+        const expectedPath = "mocked/app.asar.unpacked/userData";
+        expect(checkForUnpackedPath(mockPath)).toEqual(expectedPath);
     });
 });
