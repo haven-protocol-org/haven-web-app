@@ -6,7 +6,7 @@
   "main": "dist/index.js",
   "scripts": {
     "start": "npm run build && electron-forge start",
-    "test": "jest",
+    "test": "jest --detectOpenHandles",
     "package": "npm run build && electron-forge package",
     "make": "npm run build && electron-forge make",
     "publish": "npm run build && electron-forge publish",
