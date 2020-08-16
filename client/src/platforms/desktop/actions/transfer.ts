@@ -88,9 +88,12 @@ export const createTransfer = (
         dispatch(transferCreationSucceed(reduxParams));
         dispatch(showModal(MODAL_TYPE.ConfirmTx));
       })
-      .catch((error) => dispatch(transferCreationFailed(error)));
-  };
-};
+      .catch((error) => {
+        dispatch(addErrorNotification(error));
+        dispatch(transferCreationFailed(error));
+      })
+    }
+}
 
 export const confirmTransfer = (metaList: Array<string>) => {
   return (dispatch: any) => {
