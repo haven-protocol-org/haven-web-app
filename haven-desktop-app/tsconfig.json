@@ -3,7 +3,7 @@
     "module": "commonjs",
     "noImplicitAny": true,
     "sourceMap": true,
-    "target": "esnext",
+    "target": "ES2019",
     "allowJs": true,
     "outDir": "dist",
     "moduleResolution": "node"
