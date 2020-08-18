@@ -9,7 +9,7 @@ import { checkAndCreateDaemonConfig } from "./daemons/config/config";
 import { DaemonHandler } from "./daemons/DaemonHandler";
 import { getNetTypeId, setNetType } from "./env";
 import { appEventBus, DAEMONS_STOPPED_EVENT } from "./EventBus";
-import {CommunicationChannel, NET} from "./types";
+import { CommunicationChannel, NET } from "./types";
 import { WalletHandler } from "./wallets/WalletHandler";
 import { checkAndCreateWalletDir } from "./wallets/walletPaths";
 

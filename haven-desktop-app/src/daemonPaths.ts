@@ -1,21 +1,21 @@
 import * as path from "path";
-import {getNetTypeName} from "./env";
-import {DaemonType} from "./types";
+import { getNetTypeName } from "./env";
+import { DaemonType } from "./types";
 
 
 const PLATFORM = process.platform;
 
 
 
-function checkForUnpackedPath(path: string) {
-    if (!path.includes("app.asar.unpacked")) {
-        return path.replace("app.asar", "app.asar.unpacked");
+export function checkForUnpackedPath(pathName: string): string {
+    if (!pathName.includes("app.asar.unpacked")) {
+        return pathName.replace("app.asar", "app.asar.unpacked");
     }
-    return path;
+    return pathName;
 }
 
 
-export const getLocalDaemonPath  = (type: DaemonType) => {
+export const getLocalDaemonPath  = (type: DaemonType): string => {
     if (type === DaemonType.havend) {
 
        return  checkForUnpackedPath(

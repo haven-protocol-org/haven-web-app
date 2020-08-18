@@ -1,6 +1,6 @@
 import { ChildProcess, spawn } from "child_process";
-import {dialog} from "electron";
-import {getLocalDaemonPath} from "../daemonPaths";
+import { dialog } from "electron";
+import { getLocalDaemonPath } from "../daemonPaths";
 import {
   isLocalDaemon,
   updateDaemonUrlInConfig,
@@ -53,7 +53,8 @@ export abstract class DaemonProcess implements IDaemonManager {
     return this._isRunning;
   }
 
-  public getState(): any {}
+  public getState(): void {
+  }
 
   protected init() {
     this.setRPCHandler();
@@ -93,14 +94,16 @@ export abstract class DaemonProcess implements IDaemonManager {
     }
   }
 
-  protected onstdoutData(chunk: any): void {}
+  protected onstdoutData(chunk: any): void {
+  }
 
   protected onHavendLocationChanged(address: string): void {
     this._isHavendLocal = isLocalDaemon(address);
     updateDaemonUrlInConfig(address);
   }
 
-  protected onstderrData(chunk: any): void {}
+  protected onstderrData(chunk: any): void {
+  }
 
   protected onDaemonExit(code: number | null, signal: string | null): void {
     this._isRunning = false;
