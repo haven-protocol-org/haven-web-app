@@ -1,11 +1,11 @@
 import { app } from "electron";
 import * as fs from "fs";
 import * as path from "path";
-import {daemonConfigMainnet, daemonConfigStagenet, daemonConfigTestnet} from "../../daemons/config/default";
-import {LOCAL_DAEMON_MAP} from "../../daemons/config/enum";
-import {APP_DATA_PATH, getNetTypeId, isDevMode} from "../../env";
-import {AppConfig, NET} from "../../types";
-import {logInDevMode} from "../../dev";
+import { daemonConfigMainnet, daemonConfigStagenet, daemonConfigTestnet } from "../../daemons/config/default";
+import { LOCAL_DAEMON_MAP } from "../../daemons/config/enum";
+import { logInDevMode } from "../../dev";
+import { APP_DATA_PATH, getNetTypeId, isDevMode } from "../../env";
+import { AppConfig, NET } from "../../types";
 
 const configFileName = "daemon_config.json";
 
