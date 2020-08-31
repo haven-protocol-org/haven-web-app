@@ -6,7 +6,6 @@ import {
   GET_PRICE_HISTORY_SUCCEED,
   GET_SIMPLE_PRICE_SUCCEED,
 } from "./types";
-import { handleError } from "../../platforms/web/api/api";
 
 export const getPriceHistory = (rangeInDays) => {
   return (dispatch, getState) => {
@@ -51,7 +50,7 @@ export const getSimplePrice = () => {
     fetch(
       "https://api.coingecko.com/api/v3/simple/price?ids=haven,bitcoin&vs_currencies=usd"
     )
-      .then(handleError)
+      //.then(handleError)
       .then((priceData) => {
         dispatch(getSimplePriceSucceed(priceData.haven.usd));
         const BTC = { BTC: priceData.bitcoin.usd };

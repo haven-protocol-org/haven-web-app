@@ -6,7 +6,7 @@ import React, {Component} from "react";
 import {selectBlockchainHeight} from "../../reducers/chain";
 import {getTransfers} from "../../actions";
 import {connect} from "react-redux";
-import {core} from "../../declarations/open_monero.service";
+import {core} from "../../declarations/haven_core";
 import {Transaction} from "../../../../shared/components/transaction";
 import Header from "../../../../shared/components/_layout/header/index.js"
 import {withRouter} from "react-router-dom";

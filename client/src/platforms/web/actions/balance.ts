@@ -3,9 +3,8 @@ import {
   GET_BALANCES_FETCHING,
   GET_BALANCES_SUCCEED
 } from "shared/actions/types";
-import { getAddressInfo } from "../api/api";
 import { selectCredentials } from "../reducers/account";
-import { core } from "../declarations/open_monero.service";
+import { core } from "../declarations/haven_core";
 import { updateChainData } from ".";
 import { decrypt } from "utility/utility-encrypt";
 import { WebAppState } from "platforms/web/reducers";
@@ -18,17 +17,10 @@ export const getBalances = () => {
   return (dispatch: any, getState: () => WebAppState) => {
     dispatch(getBalancesFetching());
 
-    const credentials = selectCredentials(getState());
 
-    getAddressInfo(credentials)
-      .then(res => {
-        dispatch(updateChainData(res));
-        return parseAddressInfo(res, getState());
-      })
-      .then(res => setBalance(res))
-      .then(res => {
-        dispatch(getBalancesSucceed(res));
-      });
+
+      //  dispatch(getBalancesSucceed(res))
+      
   };
 };
 
@@ -42,26 +34,6 @@ const setBalance = (addressInfo: any) => {
   return { [Ticker.XHV]: { balance, lockedBalance, unlockedBalance } };
 };
 
-const parseAddressInfo = async (rawAddressInfo: any, state: WebAppState) => {
-  const address = selectPrimaryAddress(state.address);
-  let {
-    sec_viewKey_string,
-    pub_spendKey_string,
-    sec_spendKey_string
-  } = state.keys;
-
-  const lWallet = await core.monero_utils_promise;
-  sec_spendKey_string = await decrypt(sec_spendKey_string);
-  const parsedData = core.api_response_parser_utils.Parsed_AddressInfo__sync__keyImageManaged(
-    rawAddressInfo,
-    address,
-    sec_viewKey_string,
-    pub_spendKey_string,
-    sec_spendKey_string,
-    lWallet
-  );
-  return parsedData;
-};
 
 const getBalancesFetching = () => ({ type: GET_BALANCES_FETCHING });
 
