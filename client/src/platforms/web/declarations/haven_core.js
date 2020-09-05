@@ -4,6 +4,6 @@
 // export let mnemonic = window.mnemonic;
 
 //import {openWalletWasm} from "./haven.js"
-export let core = {openWallet: window.openWalletWasm, createWallet: window.createWalletWasm}
-console.log(core);
+//export let core = {openWallet: window.openWalletWasm, createWallet: window.createWalletWasm}
+//console.log(core);
 

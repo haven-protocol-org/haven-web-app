@@ -6,13 +6,7 @@ import {
 } from "./types";
 
 import { VALIDATE_MNEMONIC_FAILED } from "../../../shared/actions/types";
-
-import { keysGeneratedFailed, keysGeneratedSucceed } from "./key";
-import { core } from "../declarations/haven_core";
-import { NET_TYPE_ID } from "../../../constants/env";
-import { selectCredentials } from "../reducers/account";
-import { createAddressEntry } from ".";
-import {selectPrimaryAddress} from "../../../shared/reducers/address";
+import * as core from "haven-wallet-core";
 
 export const keepAlive = () => {
   return (dispatch, getState) => {
@@ -47,12 +41,12 @@ const accountCreationFailed = (error) => ({
 
 export const createWallet = () => {
 
-
+console.log(core);
 
   return async (dispatch) => {
 
 
-    const lWallet = await core.createWallet({
+    const lWallet = await core.createWalletWasm({
       path: "sample_wallet_wasm",
       password: "supersecretpassword123",
       networkType: "stagenet"

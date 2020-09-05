@@ -4,7 +4,7 @@ import {
   GET_BALANCES_SUCCEED
 } from "shared/actions/types";
 import { selectCredentials } from "../reducers/account";
-import { core } from "../declarations/haven_core";
+//import { core } from "../declarations/haven_core";
 import { updateChainData } from ".";
 import { decrypt } from "utility/utility-encrypt";
 import { WebAppState } from "platforms/web/reducers";
