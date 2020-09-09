@@ -1,7 +1,7 @@
 import {
   selectIsLoggedIn,
   selectIsRequestingLogin
-} from "../../../reducers/account";
+} from "shared/reducers/walletSession";
 import { connect } from "react-redux";
 import {
   createWallet,

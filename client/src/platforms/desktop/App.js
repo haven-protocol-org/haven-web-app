@@ -10,13 +10,15 @@ import { StatusComponent } from "../../shared/components/_layout/status";
 import { HashRouter } from "react-router-dom";
 import { ModalContainerDesktop } from "./components/modalContainer";
 import {FixedStatus} from "./components/fixedStatusContainer";
+import { isDesktop } from "constants/env";
+import { NavigationWeb } from "platforms/web/components/navigation";
 
 class App extends Component {
   render() {
     return (
       <ThemeProvider theme={this.props.theme}>
         <HashRouter history={history}>
-          <NavigationDesktop />
+          {isDesktop()? (<NavigationDesktop />) : (<NavigationWeb/>) }
           <ModalContainerDesktop />
           <FixedStatus/>
           <StatusComponent />

@@ -14,7 +14,6 @@
     "watch": "tsc -w",
     "lint": "tslint -c tslint.json -p tsconfig.json",
     "fixlint": "tslint --fix -c tslint.json -p tsconfig.json"
-
   },
   "keywords": [],
   "author": {
@@ -28,6 +27,7 @@
   "dependencies": {
     "axios": "^0.19.2",
     "electron-squirrel-startup": "^1.0.0",
+    "haven-wallet-core": "^1.0.6",
     "keccakjs": "^0.2.3",
     "rxjs": "^6.6.0"
   },

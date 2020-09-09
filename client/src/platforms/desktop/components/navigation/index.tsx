@@ -23,14 +23,14 @@ import {
 
 import { Body, Label } from "assets/styles/type";
 import { closeWallet } from "../../actions";
-import { selectIsLoggedIn } from "../../reducers/walletSession";
+import { selectIsLoggedIn } from "../../../../shared/reducers/walletSession";
 import { getNetworkByName, isDevMode, NET_TYPE_NAME } from "constants/env";
 import { DesktopAppState } from "../../reducers";
 import { NodeState } from "platforms/desktop/types";
 import { WalletState } from "platforms/desktop/ipc/ipc-types";
 import { selectisLocalNode } from "platforms/desktop/reducers/havenNode";
 import { ThreeState } from "shared/types/types";
-import { selectBlockHeight } from "platforms/desktop/reducers/chain";
+import { selectBlockHeight } from "shared/reducers/chain";
 
 interface NavigationProps {
   wallet: WalletState;

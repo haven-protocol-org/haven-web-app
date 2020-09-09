@@ -14,7 +14,7 @@ import {
 } from "./styles.js";
 import Icon from "../../../../assets/haven.svg";
 import { closeWallet } from "../../../actions";
-import { selectIsLoggedIn } from "../../../../platforms/web/reducers/account";
+import { selectIsLoggedIn } from "shared/reducers/walletSession";
 import { APP_VERSION, NET_TYPE_NAME } from "../../../../constants/env";
 
 class Navigation extends Component {

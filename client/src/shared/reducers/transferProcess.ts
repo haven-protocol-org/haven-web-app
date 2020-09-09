@@ -6,9 +6,9 @@ import {
   TRANSFER_FETCHING,
   TRANSFER_RESET,
   TRANSFER_SUCCEED,
-} from "../actions/types";
+} from "platforms/desktop/actions/types";
 import { AnyAction } from "redux";
-import { DesktopAppState } from "./index";
+import { DesktopAppState } from "../../platforms/desktop/reducers/index";
 import { Ticker } from "shared/reducers/types";
 
 export interface TxProcessInfo {

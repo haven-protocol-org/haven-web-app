@@ -1,7 +1,7 @@
 /** this class takes care about status messages which are sticky and appearance and disappearance is dependent on the state**/
 import {connect} from "react-redux";
 import {DesktopAppState} from "platforms/desktop/reducers";
-import {selectDesktopSyncState} from "platforms/desktop/reducers/chain";
+import {selectDesktopSyncState} from "shared/reducers/chain";
 import {Component} from "react";
 import {addErrorNotification, addNotificationByKey, removeNotification,} from "shared/actions/notification";
 import {uuidv4} from "utility/utility";
@@ -13,7 +13,7 @@ import {
 } from "constants/notificationList";
 import {NotificationDuration} from "shared/reducers/notification";
 import {ThreeState} from "shared/types/types";
-import {selectIsLoggedIn} from "platforms/desktop/reducers/walletSession";
+import {selectIsLoggedIn} from "shared/reducers/walletSession";
 
 interface FixedStatusProps {
   daemonUrl: string;

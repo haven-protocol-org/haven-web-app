@@ -10,7 +10,7 @@ import { ExchangePage } from "../../../../shared/pages/_wallet/exchange";
 import { TransferDesktop } from "../../pages/_wallet/transfer";
 import { SettingsDesktop } from "../../pages/_wallet/settings";
 import { connect } from "react-redux";
-import { selectIsLoggedIn } from "../../reducers/walletSession";
+import { selectIsLoggedIn } from "../../../../shared/reducers/walletSession";
 import { refresh, updateApp, getDaemonsState } from "../../actions";
 import Page from "../../../../shared/components/_layout/page";
 import Menu from "../../../../shared/components/_layout/menu";

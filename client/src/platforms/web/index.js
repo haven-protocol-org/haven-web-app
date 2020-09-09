@@ -1,13 +1,12 @@
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { GlobalStyle } from "../../globalStyle";
-import { AppWeb } from "./App";
 import React from "react";
-import {loadState, saveWebState} from "../../vendor/clipboard/dev-helper";
 import { applyMiddleware, createStore } from "redux";
 import reduxThunk from "redux-thunk";
 import reducers from "./reducers";
 import { logger } from "../../vendor/clipboard/dev-helper";
+import {AppDesktop} from "platforms/desktop/App"
 
 let store = null;
 
@@ -18,14 +17,11 @@ export const startWebApp = () => {
 };
 
 export const startWebAppInDevMode = () => {
-  const persistedState = loadState();
   const createStoreWithMiddleware = applyMiddleware(reduxThunk, logger)(
     createStore
   );
-  store = createStoreWithMiddleware(reducers, persistedState);
-  store.subscribe(() => {
-    saveWebState(store.getState());
-  });
+  store = createStoreWithMiddleware(reducers);
+
 
   render();
 };
@@ -34,7 +30,7 @@ const render = () => {
   ReactDOM.render(
     <Provider store={store}>
       <GlobalStyle />
-      <AppWeb />
+      <AppDesktop />
     </Provider>,
     document.querySelector("#root")
   );

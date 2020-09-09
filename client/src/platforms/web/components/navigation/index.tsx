@@ -13,11 +13,19 @@ import {
   Tag
 } from "./styles.js";
 import Icon from "../../../../assets/haven.svg";
-import { closeWallet } from "../../../../universal/actions";
-import { selectIsLoggedIn } from "../../reducers/account";
-import { APP_VERSION, NET_TYPE_NAME } from "../../../../constants/env";
+import { closeWallet } from "shared/actions";
+import { selectIsLoggedIn } from "shared/reducers/walletSession";
+import { APP_VERSION, NET_TYPE_NAME } from "constants/env";
+import { WebAppState } from "platforms/web/reducers/index.js";
 
-class Navigation extends Component {
+
+interface NavigationProps {
+  isLoggedIn: boolean;
+  logout:() => void;
+}
+
+
+class Navigation extends Component<NavigationProps,{}> {
   handleLogout = () => {
     this.props.logout();
   };
@@ -42,7 +50,7 @@ class Navigation extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = ( state: WebAppState ) => ({
   isLoggedIn: selectIsLoggedIn(state)
 });
 

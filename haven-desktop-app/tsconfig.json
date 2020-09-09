@@ -6,7 +6,8 @@
     "target": "ES2019",
     "allowJs": true,
     "outDir": "dist",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "skipLibCheck": true
   },
   "include": [
     "src/**/*"

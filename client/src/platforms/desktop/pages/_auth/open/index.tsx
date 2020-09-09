@@ -11,7 +11,7 @@ import Input from "shared/components/_inputs/input";
 import {
   selectErrorMessageForLogin,
   selectIsRequestingLogin,
-} from "../../../reducers/walletSession";
+} from "../../../../../shared/reducers/walletSession";
 import { WalletSelection } from "shared/components/_inputs/wallet-selection";
 import Dropdown from "../../../../../shared/components/_inputs/dropdown";
 import InputButton from "../../../../../shared/components/_inputs/input_button/index.js";

@@ -20,7 +20,7 @@ import { RestoreDesktop } from "../restore";
 import { DesktopAppState } from "../../../reducers";
 import { connect } from "react-redux";
 import { getSavedWallets } from "../../../actions/walletSession";
-import { selectIsLoggedIn } from "../../../reducers/walletSession";
+import { selectIsLoggedIn } from "../../../../../shared/reducers/walletSession";
 import { Redirect } from "react-router";
 import { CreateDesktop } from "platforms/desktop/pages/_auth/create";
 

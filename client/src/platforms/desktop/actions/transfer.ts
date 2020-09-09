@@ -25,7 +25,7 @@ import { hideModal, showModal } from "shared/actions/modal";
 import { MODAL_TYPE } from "shared/reducers/modal";
 import { getTransfers } from "platforms/desktop/actions/transferHistory";
 import { getBalance } from "platforms/desktop/actions/balance";
-import {TxProcessInfo} from "platforms/desktop/reducers/transferProcess";
+import {TxProcessInfo} from "shared/reducers/transferProcess";
 
 export const transfer = (
   address: string,

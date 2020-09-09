@@ -18,7 +18,7 @@ import {
   selectXRate,
 } from "shared/reducers/blockHeaderExchangeRates";
 import { DesktopAppState } from "platforms/desktop/reducers";
-import { selectNodeHeight } from "platforms/desktop/reducers/chain";
+import { selectNodeHeight } from "shared/reducers/chain";
 import { createExchange } from "platforms/desktop/actions";
 import { Ticker } from "shared/reducers/types";
 import {
@@ -27,7 +27,7 @@ import {
   selectFromTicker,
   selectIsProcessingExchange,
   selectToTicker,
-} from "platforms/desktop/reducers/exchangeProcess";
+} from "shared/reducers/exchangeProcess";
 import { setFromTicker, setToTicker } from "platforms/desktop/actions/exchange";
 import { NO_BALANCE, XBalances } from "shared/reducers/xBalance";
 import { convertBalanceForReading } from "utility/utility";

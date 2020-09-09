@@ -18,7 +18,7 @@ import {showModal} from "shared/actions/modal";
 import {MODAL_TYPE} from "shared/reducers/modal";
 import {selectPrimaryAddress} from "shared/reducers/address";
 import {NotificationType} from "constants/notificationList";
-import {ExchangeProcessInfo, ExchangeType} from "platforms/desktop/reducers/exchangeProcess";
+import {ExchangeProcessInfo, ExchangeType} from "shared/reducers/exchangeProcess";
 
 
 interface RPCExchangeResponse {

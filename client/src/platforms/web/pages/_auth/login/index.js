@@ -2,7 +2,7 @@ import {
   selectErrorMessageForLogin,
   selectIsLoggedIn,
   selectIsRequestingLogin
-} from "../../../reducers/account";
+} from "shared/reducers/walletSession";
 import { connect } from "react-redux";
 import { restoreWallet } from "../../../actions";
 import Login from "../../../../../shared/pages/_auth/login";

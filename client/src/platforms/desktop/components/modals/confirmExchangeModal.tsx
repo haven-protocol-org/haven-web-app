@@ -6,7 +6,7 @@ import {
   resetExchangeProcess,
 } from "platforms/desktop/actions";
 import { Modal } from "shared/components/modal";
-import { ExchangeProcessInfo } from "platforms/desktop/reducers/exchangeProcess";
+import { ExchangeProcessInfo } from "shared/reducers/exchangeProcess";
 import { hideModal } from "shared/actions/modal";
 import Transaction from "shared/components/_transactions/exchange";
 import { convertToMoney } from "utility/utility";

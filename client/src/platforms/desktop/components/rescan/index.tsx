@@ -3,10 +3,10 @@ import React from "react";
 
 import { Icon } from "./styles";
 import { DesktopAppState } from "../../reducers";
-import { selectIsLoggedIn } from "../../reducers/walletSession";
+import { selectIsLoggedIn } from "../../../../shared/reducers/walletSession";
 import { connect } from "react-redux";
 import { closeWallet, rescanBlockChain } from "../../actions";
-import { selectRefreshing } from "platforms/desktop/reducers/chain";
+import { selectRefreshing } from "shared/reducers/chain";
 
 const RefreshIconComponent = (props: any) => {
   return (

@@ -8,7 +8,7 @@ import {
   confirmTransfer,
   resetTransferProcess,
 } from "platforms/desktop/actions/transfer";
-import { TxProcessInfo } from "platforms/desktop/reducers/transferProcess";
+import { TxProcessInfo } from "shared/reducers/transferProcess";
 import { convertToMoney } from "utility/utility";
 
 interface ConfirmTxModalProps {

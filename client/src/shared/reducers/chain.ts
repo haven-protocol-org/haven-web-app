@@ -4,7 +4,7 @@ import {
   RESCAN_FAILED,
   RESCAN_SUCCEED,
   START_RESCAN,
-} from "../actions/types";
+} from "../../platforms/desktop/actions/types";
 import {AnyAction} from "redux";
 import {SyncState, ThreeState} from "shared/types/types";
 import {DesktopAppState} from "platforms/desktop/reducers/index";

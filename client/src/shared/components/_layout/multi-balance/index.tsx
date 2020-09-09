@@ -10,7 +10,7 @@ import { ProgressBar } from "../../progress-bar";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { SyncState } from "shared/types/types";
 import { isDesktop } from "constants/env";
-import { selectDesktopSyncState } from "platforms/desktop/reducers/chain";
+import { selectDesktopSyncState } from "shared/reducers/chain";
 import { selectTotalBalances, XViewBalances } from "shared/reducers/xBalance";
 import { Ticker } from "shared/reducers/types";
 import { WebAppState } from "platforms/web/reducers";

@@ -12,14 +12,14 @@ import { connect } from "react-redux";
 import {
   selectErrorMessage,
   WalletCreation,
-} from "platforms/desktop/reducers/walletCreation";
+} from "shared/reducers/walletCreation";
 import { Spinner } from "shared/components/spinner";
 import { Information } from "assets/styles/type";
 import Description from "shared/components/_inputs/description";
 import Input from "shared/components/_inputs/input";
 import InputButton from "../../../../../shared/components/_inputs/input_button/index.js";
 import { mnenomicVerificationSucceed } from "platforms/desktop/actions";
-import { selectIsRequestingLogin } from "platforms/desktop/reducers/walletSession";
+import { selectIsRequestingLogin } from "shared/reducers/walletSession";
 
 interface CreateDesktopProps {
   createWallet: (name: string, pw: string) => void;

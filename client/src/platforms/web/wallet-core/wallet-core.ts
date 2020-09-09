@@ -42,8 +42,8 @@ export const getBalance = async (accountIdx: number | undefined = undefined, sub
         throw Error('no wallet exist')
     }
     //@ts-ignore
-    const balance:bigInt.BigInteger =  await wallet.getBalance(accountIdx, subaddressIdx);
-    return balance;
+    const balance:BigInteger =  await wallet.getBalance(accountIdx, subaddressIdx);
+    return bigIntegerToBigInt(balance);
 }
 
 export const getOffshoreBalance = async (accountIdx: number | undefined = undefined, subaddressIdx: number | undefined = undefined) => {
@@ -53,8 +53,8 @@ export const getOffshoreBalance = async (accountIdx: number | undefined = undefi
         throw Error('no wallet exist')
     }
     //@ts-ignore
-    const balance:bigInt.BigInteger = await wallet.getOffshoreBalance(accountIdx, subaddressIdx);
-    return balance;
+    const balance:BigInteger = await wallet.getOffshoreBalance(accountIdx, subaddressIdx);
+    return bigIntegerToBigInt(balance);
 }
 
 export const getUnlockedBalance = async (accountIdx: number | undefined = undefined, subaddressIdx: number | undefined = undefined) => {
@@ -64,8 +64,8 @@ export const getUnlockedBalance = async (accountIdx: number | undefined = undefi
         throw Error('no wallet exist')
     }
     //@ts-ignore
-    const balance:bigInt.BigInteger =  await wallet.getUnlockedBalance(accountIdx, subaddressIdx);
-    return balance;
+    const balance:BigInteger =  await wallet.getUnlockedBalance(accountIdx, subaddressIdx);
+    return bigIntegerToBigInt(balance);
 }
 
 export const getUnlockedOffshoreBalance = async (accountIdx: number | undefined = undefined, subaddressIdx: number | undefined = undefined) => {
@@ -75,8 +75,8 @@ export const getUnlockedOffshoreBalance = async (accountIdx: number | undefined 
         throw Error('no wallet exist')
     }
     //@ts-ignore
-    const balance:bigInt.BigInteger = await wallet.getUnlockedOffshoreBalance(accountIdx, subaddressIdx);
-    return balance;
+    const balance:BigInteger = await wallet.getUnlockedOffshoreBalance(accountIdx, subaddressIdx);
+    return bigIntegerToBigInt(balance);
 }
 
 export const transfer = async () => {
@@ -96,9 +96,8 @@ export const offshore = async() => {
 
 
 
-const BigIntegerToBigInt = (value: BigInteger):bigInt.BigInteger => {
+const bigIntegerToBigInt = (value: BigInteger):bigInt.BigInteger => {
 
         return  bigInt(value.toString(10));
-
 
 }

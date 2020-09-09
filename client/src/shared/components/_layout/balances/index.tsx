@@ -12,7 +12,7 @@ import { DesktopAppState } from "platforms/desktop/reducers";
 import { WebAppState } from "platforms/web/reducers";
 import { SyncState } from "shared/types/types";
 import { isDesktop} from "constants/env";
-import { selectDesktopSyncState } from "platforms/desktop/reducers/chain";
+import { selectDesktopSyncState } from "shared/reducers/chain";
 import { NO_BALANCE, XBalances } from "shared/reducers/xBalance";
 import { Ticker } from "shared/reducers/types";
 

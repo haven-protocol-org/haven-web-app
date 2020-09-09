@@ -15,7 +15,7 @@ import { getTransfers } from "../../actions";
 import { connect } from "react-redux";
 import { Transaction, TransactionProps } from "shared/components/transaction";
 import Header from "shared/components/_layout/header/index.js";
-import { selectBlockHeight } from "../../reducers/chain";
+import { selectBlockHeight } from "../../../../shared/reducers/chain";
 import { getTransferListByTicker } from "shared/reducers/xTransferList";
 import { withRouter } from "react-router";
 import { Ticker } from "shared/reducers/types";

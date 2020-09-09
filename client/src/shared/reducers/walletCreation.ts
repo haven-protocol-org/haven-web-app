@@ -6,9 +6,9 @@ import {
   RESTORE_WALLET_BY_SEED_SUCCEED,
   VALIDATE_MNEMONIC_FAILED,
   VALIDATE_MNEMONIC_SUCCEED,
-} from "../actions/types";
+} from "../../platforms/desktop/actions/types";
 import { AnyAction } from "redux";
-import { RPCError } from "platforms/desktop/reducers/walletSession";
+import { RPCError } from "shared/reducers/walletSession";
 import { DesktopAppState } from "platforms/desktop/reducers/index";
 
 export interface WalletCreation {

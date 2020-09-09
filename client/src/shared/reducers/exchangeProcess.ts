@@ -8,7 +8,7 @@ import {
   EXCHANGE_SUCCEED,
   SELECT_FROM_TICKER,
   SELECT_TO_TICKER,
-} from "../actions/types";
+} from "platforms/desktop/actions/types";
 import { AnyAction } from "redux";
 import { TxProcessInfo } from "./transferProcess";
 import { Ticker } from "shared/reducers/types";

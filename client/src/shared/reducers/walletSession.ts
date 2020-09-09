@@ -7,10 +7,11 @@ import {
   RESTORE_WALLET_BY_SEED_SUCCEED,
   UPDATE_SAVED_WALLETS,
   VALIDATE_MNEMONIC_SUCCEED,
-} from "../actions/types";
+} from "platforms/desktop/actions/types";
 import { AnyAction } from "redux";
-import { DesktopAppState } from "./index";
+import { DesktopAppState, HavenAppState } from "platforms/desktop/reducers/index";
 import {getMessageOfError} from "utility/utility";
+import { WebAppState } from "platforms/web/reducers";
 
 export type RPCError = {
   code: number;
@@ -23,6 +24,9 @@ interface WalletSession {
   isFetching: boolean;
   isWalletOpen: boolean;
   error: RPCError | null;
+  isOffline: boolean;
+  isSyncing: boolean;
+  syncHeight: number;
 }
 
 const INITIAL_STATE: WalletSession = {
@@ -31,6 +35,9 @@ const INITIAL_STATE: WalletSession = {
   isFetching: false,
   isWalletOpen: false,
   error: null,
+  isOffline: true,
+  isSyncing: false,
+  syncHeight: -1
 };
 
 export const walletSession = function (
@@ -58,6 +65,7 @@ export const walletSession = function (
     case RESTORE_WALLET_BY_SEED_SUCCEED:
     case VALIDATE_MNEMONIC_SUCCEED:
       return {
+        ...state,
         error: null,
         isFetching: false,
         activeWallet: action.payload,
@@ -76,11 +84,11 @@ export const walletSession = function (
   }
 };
 
-export const selectIsLoggedIn = (state: DesktopAppState) => {
+export const selectIsLoggedIn = (state: HavenAppState) => {
   return state.walletSession.isWalletOpen;
 };
 
-export const selectErrorMessageForLogin = (state: DesktopAppState) => {
+export const selectErrorMessageForLogin = (state: HavenAppState) => {
   const error = state.walletSession.error;
 
   if (error) {
@@ -91,6 +99,6 @@ export const selectErrorMessageForLogin = (state: DesktopAppState) => {
   return "";
 };
 
-export const selectIsRequestingLogin = (state: DesktopAppState) => {
+export const selectIsRequestingLogin = (state: HavenAppState) => {
   return state.walletSession.isFetching;
 };

@@ -6,14 +6,11 @@ import { Redirect, Route } from "react-router-dom";
 
 import { AssetsWeb } from "../../pages/_wallet/assets";
 import { DetailsWeb } from "../../pages/_wallet/details";
-import { TransferWeb } from "../../pages/_wallet/transfer";
 import { connect } from "react-redux";
-import { selectIsLoggedIn } from "../../reducers/account";
+import { selectIsLoggedIn } from "shared/reducers/walletSession";
 import Idle from "../../../../shared/components/idle";
 import { SettingsWeb } from "../../pages/_wallet/settings";
 import { getExchangeRates } from "shared/actions/exchangeRates";
-import { getTransfers } from "platforms/web/actions/transferHistory.js";
-import { keepAlive } from "platforms/web/actions/account.js";
 
 import Menu from "shared/components/_layout/menu";
 import Page from "shared/components/_layout/page";
@@ -73,7 +70,6 @@ class PrivateRoutes extends Component<any, any> {
             exact
             component={DetailsWeb}
           />
-          <Route path={`${match.url}/transfer`} exact component={TransferWeb} />
           <Route path={`${match.url}/settings`} exact component={SettingsWeb} />
         </Page>
       </div>
@@ -86,7 +82,5 @@ export const mapStateToProps = (state: DesktopAppState) => ({
 });
 
 export default connect(mapStateToProps, {
-  keepAlive,
-  getTransfers,
   getExchangeRates,
 })(PrivateRoutes);

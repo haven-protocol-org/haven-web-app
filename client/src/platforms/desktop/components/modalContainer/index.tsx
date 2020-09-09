@@ -18,6 +18,7 @@ class ModalContainer extends React.Component<any, any> {
       case MODAL_TYPE.ConfirmTx:
         return <ConfirmTxModalDesktop />;
     }
+    return null;
   }
 }
 
