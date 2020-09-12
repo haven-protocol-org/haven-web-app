@@ -44,4 +44,6 @@ export interface ICreateWallet {
     /** if not provided - a view only wallet is created*/
     privateSpendKey?: string;
     restoreHeight?: number;
+
+    proxyToWorker?: boolean;
 }

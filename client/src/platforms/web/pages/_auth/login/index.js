@@ -4,7 +4,7 @@ import {
   selectIsRequestingLogin
 } from "shared/reducers/walletSession";
 import { connect } from "react-redux";
-import { restoreWallet } from "../../../actions";
+import { restoreWalletByMnemomic } from "shared/actions/wallet";
 import Login from "../../../../../shared/pages/_auth/login";
 import { Redirect } from "react-router";
 import React, { Component } from "react";
@@ -33,5 +33,5 @@ const mapStateToProps = state => ({
 
 export const LoginWeb = connect(
   mapStateToProps,
-  { login: restoreWallet }
+  { login: restoreWalletByMnemomic }
 )(LoginWebContainer);

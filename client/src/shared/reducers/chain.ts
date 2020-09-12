@@ -9,6 +9,7 @@ import {AnyAction} from "redux";
 import {SyncState, ThreeState} from "shared/types/types";
 import {DesktopAppState} from "platforms/desktop/reducers/index";
 import {selectisLocalNode} from "platforms/desktop/reducers/havenNode";
+import { isDesktop } from "constants/env";
 
 interface Chain {
   walletHeight: number;
@@ -51,12 +52,8 @@ export const selectDesktopSyncState = (state: DesktopAppState): SyncState => {
 
 
   // if wallet is not connected at all, we are not syncing
-  const isWalletConnected = state.walletRPC.isConnectedToDaemon === ThreeState.True;
+  const isWalletConnected = state.walletSession.isOffline === false;
 
-
-
-
-  const isLocalNode = selectisLocalNode(state.havenNode);
   const blockHeight = state.chain.chainHeight;
   let scannedHeight: number;
   let isSyncing: boolean;
@@ -65,7 +62,9 @@ export const selectDesktopSyncState = (state: DesktopAppState): SyncState => {
   //we must distinguish between multiple cases
   // 1. local syncing node -> show progress of node
   //when we use a local node syncing of wallet itself is super fast, so just show the sync state of the node
-  if (isLocalNode) {
+  if (isDesktop()) {
+
+    const isLocalNode = selectisLocalNode(state.havenNode);
     isSyncing = state.chain.chainHeight > state.chain.nodeHeight + 3;
     scannedHeight = state.chain.nodeHeight;
   }

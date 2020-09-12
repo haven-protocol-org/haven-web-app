@@ -11,36 +11,20 @@ import { TransferDesktop } from "../../pages/_wallet/transfer";
 import { SettingsDesktop } from "../../pages/_wallet/settings";
 import { connect } from "react-redux";
 import { selectIsLoggedIn } from "../../../../shared/reducers/walletSession";
-import { refresh, updateApp, getDaemonsState } from "../../actions";
+import { initReduxWallet} from "../../actions";
 import Page from "../../../../shared/components/_layout/page";
 import Menu from "../../../../shared/components/_layout/menu";
+import { isDesktop } from "constants/env";
 
 /**
  *root component for private wallet
  */
 class PrivateRoutes extends Component {
   componentDidMount() {
-    this.props.getDaemonsState();
-      this.props.refreshApp();
-      this.addTimer();
-
+      
+    this.props.initReduxWallet();
   }
 
-  addTimer() {
-    this.updateDaemonsTimer = setInterval(this.props.getDaemonsState, 2000);
-    this.updateTimer = setInterval(this.props.updateApp, 15000);
-  }
-
-  removeTimer() {
-    clearInterval(this.updateTimer);
-    clearInterval(this.updateDaemonsTimer);
-    this.updateTimer = null;
-    this.updateDaemonsTimer = null;
-  }
-
-  componentWillUnmount() {
-    this.removeTimer();
-  }
 
   render() {
     const { match } = this.props;
@@ -86,5 +70,5 @@ export const mapStateToProps = state => ({
 
 export const PrivateRoutesDesktop = connect(
   mapStateToProps,
-  { refreshApp: refresh, updateApp, getDaemonsState }
+  { initReduxWallet }
 )(PrivateRoutes);

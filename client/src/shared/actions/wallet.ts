@@ -1,7 +1,7 @@
 import { IOpenWallet, IMonerRPCConnection, ICreateWallet } from "typings"
 import { getNetworkByName } from "constants/env"
-import { OPEN_WALLET_FETCHING, OPEN_WALLET_FAILED, OPEN_WALLET_SUCCEED, CREATE_WALLET_FAILED, CREATE_WALLET_SUCCEED, CREATE_WALLET_FETCHING } from "platforms/desktop/actions/types"
-import { createWallet as createWalletCore, openWallet as openWalletCore } from "../../platforms/web/wallet-core/wallet-core"
+import { OPEN_WALLET_FETCHING, OPEN_WALLET_FAILED, OPEN_WALLET_SUCCEED, CREATE_WALLET_FAILED, CREATE_WALLET_SUCCEED, CREATE_WALLET_FETCHING, QUERY_MNEMONIC_FOR_WALLET_GENERATION_SUCCEED, VALIDATE_MNEMONIC_SUCCEED, VALIDATE_MNEMONIC_FAILED } from "platforms/desktop/actions/types"
+import { createWallet as createWalletCore, openWallet as openWalletCore, getMnemonic } from "../wallet-core/wallet-core"
 import { addErrorNotification, addNotificationByMessage } from "./notification"
 import { NotificationType } from "constants/notificationList"
 
@@ -74,8 +74,24 @@ export const createNewWallet = (path: string, password: string) => {
         path, password, server: webWalletConnection, networkType: getNetworkByName()
     }
 
-    
+    return async(dispatch: any) => {
 
+
+        dispatch(createWalletFetch())
+        const successOrError: boolean | object = await createWalletCore(walletData);
+
+
+        if (successOrError === true) {
+            const mnemomic = getMnemonic();
+            dispatch(queryMnemonicForWalletGenerationSucceed(mnemomic));
+            dispatch(createWalletSucceed())
+     //       addNotificationByMessage(NotificationType.SUCCESS, 'wallet is open');
+        }
+        else {
+          //  addNotificationByMessage(NotificationType.ERROR, 'open wallet is not working, pls try again tomorrow');
+            dispatch(createWalletFailed(successOrError as object))
+         }
+    }
 }
 
 export const restoreWalletByMnemomic = (mnemonic: string, password: string) => {
@@ -107,9 +123,6 @@ export const restoreWalletByKeys = (primaryAddress: string, privateSpendKey: str
 
 const createWallet = (walletData: ICreateWallet) => {
 
-
-
-
     return async(dispatch: any) => {
 
 
@@ -125,10 +138,7 @@ const createWallet = (walletData: ICreateWallet) => {
             addNotificationByMessage(NotificationType.ERROR, 'open wallet is not working, pls try again tomorrow');
             dispatch(createWalletFailed(successOrError as object))
          }
-
-
     }
-
 }
 
 const openWalletFetching = () => {
@@ -151,3 +161,23 @@ const createWalletSucceed = () => ({
 const createWalletFailed = (error: object) => ({
   type: CREATE_WALLET_FAILED, payload: error
 });
+
+const queryMnemonicForWalletGenerationSucceed = (key: string) => ({
+    type: QUERY_MNEMONIC_FOR_WALLET_GENERATION_SUCCEED,
+    payload: key,
+  });
+  
+  export const mnenomicVerificationSucceed = (fileName: string) => ({
+    type: VALIDATE_MNEMONIC_SUCCEED,
+    payload: fileName,
+  });
+  export const mneomicVerifcationFailed = () => ({
+    type: VALIDATE_MNEMONIC_FAILED,
+  });
+  
+
+  const addWalletListeners = (dispatch: any) => {
+
+  }
+
+

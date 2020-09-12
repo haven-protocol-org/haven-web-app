@@ -22,7 +22,7 @@ export class CreateWebComponent extends Component {
 
   componentDidMount() {
     window.scrollTo(0, 0);
-    this.props.getSeed();
+    this.props.getSeed(undefined, 'secret');
   }
 
   async componentDidUpdate(prevProps, prevState) {

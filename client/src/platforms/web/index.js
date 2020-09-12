@@ -6,7 +6,7 @@ import { applyMiddleware, createStore } from "redux";
 import reduxThunk from "redux-thunk";
 import reducers from "./reducers";
 import { logger } from "../../vendor/clipboard/dev-helper";
-import {AppDesktop} from "platforms/desktop/App"
+import {HavenApp} from "shared/App"
 
 let store = null;
 
@@ -30,7 +30,7 @@ const render = () => {
   ReactDOM.render(
     <Provider store={store}>
       <GlobalStyle />
-      <AppDesktop />
+      <HavenApp />
     </Provider>,
     document.querySelector("#root")
   );

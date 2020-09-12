@@ -11,7 +11,6 @@ import {
   SELECT_FROM_TICKER,
   SELECT_TO_TICKER,
 } from "./types";
-import {updateApp} from "./refresh";
 import {DesktopAppState} from "../reducers";
 import {Ticker} from "shared/reducers/types";
 import {showModal} from "shared/actions/modal";
@@ -80,7 +79,6 @@ export function exchange(
             toAmount!
           )
         );
-        dispatch(updateApp());
       })
       .catch((error: any) => {
         dispatch(addErrorNotification(error));
@@ -190,7 +188,6 @@ export const confirmExchange = (metaList: Array<string>) => {
             toAmount!
           )
         );
-        dispatch(updateApp());
       })
       .catch((error: any) => {
         dispatch(addErrorNotification(error));

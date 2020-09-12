@@ -19,12 +19,10 @@ import {
   addNotificationByKey,
 } from "shared/actions/notification";
 import { TRANSFER_SUCCEED_MESSAGE } from "constants/notificationList";
-import { getOffshoreBalance } from "platforms/desktop/actions/offshoreBalance";
 import { Ticker } from "shared/reducers/types";
 import { hideModal, showModal } from "shared/actions/modal";
 import { MODAL_TYPE } from "shared/reducers/modal";
 import { getTransfers } from "platforms/desktop/actions/transferHistory";
-import { getBalance } from "platforms/desktop/actions/balance";
 import {TxProcessInfo} from "shared/reducers/transferProcess";
 
 export const transfer = (
@@ -51,8 +49,6 @@ export const transfer = (
         dispatch(addNotificationByKey(TRANSFER_SUCCEED_MESSAGE));
 
         dispatch(getTransfers());
-        dispatch(getBalance());
-        dispatch(getOffshoreBalance());
       })
       .catch((error) => dispatch(manageTransferFailed(error)));
   };
@@ -105,9 +101,7 @@ export const confirmTransfer = (metaList: Array<string>) => {
       .then(() => {
         dispatch(transferSucceed());
         dispatch(addNotificationByKey(TRANSFER_SUCCEED_MESSAGE));
-        dispatch(getOffshoreBalance());
         dispatch(getTransfers());
-        dispatch(getBalance());
       })
       .catch((error) => dispatch(manageTransferFailed(error)))
       .finally(() => dispatch(hideModal()));

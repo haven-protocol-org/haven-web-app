@@ -3,7 +3,7 @@ import { AnyAction, combineReducers } from "redux";
 // Reducers
 import theme from "shared/reducers/currentTheme.js";
 import address from "shared/reducers/address";
-import { transferList } from "shared/reducers/transferList";
+import { xTransferList } from "shared/reducers/xTransferList";
 import { priceHistory } from "shared/reducers/priceHistory";
 import notification from "shared/reducers/notification";
 import { CLOSE_WALLET } from "shared/actions/types";
@@ -17,6 +17,7 @@ import { xhvVsCurrencies } from "platforms/web/reducers/xhvVsCurrencies";
 import {blockHeaderExchangeRate} from "shared/reducers/blockHeaderExchangeRates";
 import {havenFeature} from "shared/reducers/havenFeature";
 import {walletSession} from "shared/reducers/walletSession"
+import {walletCreation} from "shared/reducers/walletCreation"
 
 const appReducer = combineReducers({
   theme,
@@ -24,7 +25,7 @@ const appReducer = combineReducers({
   xBalance,
   havenFeature,
   chain,
-  transferList,
+  xTransferList,
   priceHistory,
   notification,
   simplePrice,
@@ -33,7 +34,8 @@ const appReducer = combineReducers({
   forex,
   xhvVsCurrencies,
   blockHeaderExchangeRate,
-  walletSession
+  walletSession,
+  walletCreation
 });
 
 const rootReducer = (state: any, action: AnyAction) => {
