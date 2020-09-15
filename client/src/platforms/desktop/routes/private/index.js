@@ -11,7 +11,6 @@ import { TransferDesktop } from "../../pages/_wallet/transfer";
 import { SettingsDesktop } from "../../pages/_wallet/settings";
 import { connect } from "react-redux";
 import { selectIsLoggedIn } from "../../../../shared/reducers/walletSession";
-import { initReduxWallet} from "../../actions";
 import Page from "../../../../shared/components/_layout/page";
 import Menu from "../../../../shared/components/_layout/menu";
 import { isDesktop } from "constants/env";
@@ -22,7 +21,6 @@ import { isDesktop } from "constants/env";
 class PrivateRoutes extends Component {
   componentDidMount() {
       
-    this.props.initReduxWallet();
   }
 
 
@@ -70,5 +68,5 @@ export const mapStateToProps = state => ({
 
 export const PrivateRoutesDesktop = connect(
   mapStateToProps,
-  { initReduxWallet }
+  {  }
 )(PrivateRoutes);

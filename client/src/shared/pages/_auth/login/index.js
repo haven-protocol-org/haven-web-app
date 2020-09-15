@@ -38,7 +38,7 @@ export default class Login extends Component {
   handleLogin = () => {
     // Deconstruct state
     const { seed_phrase } = this.state;
-    this.props.login(seed_phrase);
+    this.props.login(seed_phrase, 'secret');
   };
 
   handlePaste = () => {

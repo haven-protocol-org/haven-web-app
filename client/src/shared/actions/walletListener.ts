@@ -4,13 +4,7 @@ import MoneroWalletListener from "haven-wallet-core/src/main/js/wallet/model/Mon
 
 export class HavenWalletListener extends MoneroWalletListener  {
 
-    dispatch: any;
 
-    constructor(dispatch: any) {
-
-        super();
-        this.dispatch = dispatch;
-    }
     /**
      * Invoked as the wallet is synchronized.
      *
@@ -41,6 +35,17 @@ export class HavenWalletListener extends MoneroWalletListener  {
      * @param {BigInteger} newUnlockedBalance - new unlocked wallet balance
      */
     onBalancesChanged(newBalance: BigInteger, newUnlockedBalance: BigInteger): void {
+
+        console.log(arguments);
+
+    }
+       /**
+     * Invoked when the wallet's offshore balances change.
+     *
+     * @param {BigInteger} newBalance - new wallet balance
+     * @param {BigInteger} newUnlockedBalance - new unlocked wallet balance
+     */
+    onOffshoreBalancesChanged(newBalance: BigInteger, newUnlockedBalance: BigInteger): void {
 
         console.log(arguments);
 

@@ -11,7 +11,6 @@ import { DesktopAppState } from "platforms/desktop/reducers";
 import { NodeOption } from "platforms/desktop/pages/_wallet/settings/node/nodeSetting";
 import { NodeLocation } from "platforms/desktop/types";
 import { setDaemonRPC } from "platforms/desktop/ipc/rpc/rpc";
-import { getDaemonsState } from "shared/actions/refresh";
 import { addErrorNotification } from "shared/actions/notification";
 
 export const getWalletRPCState = () => {
@@ -76,7 +75,6 @@ export const setNodeForWallet = (
       .catch((error) => {
         dispatch(setNodeForWalletFailed(error));
       })
-      .finally(dispatch(getDaemonsState()));
   };
 };
 

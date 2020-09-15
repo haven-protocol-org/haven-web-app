@@ -1,14 +1,16 @@
 import { IOpenWallet, IMonerRPCConnection, ICreateWallet } from "typings"
 import { getNetworkByName } from "constants/env"
-import { OPEN_WALLET_FETCHING, OPEN_WALLET_FAILED, OPEN_WALLET_SUCCEED, CREATE_WALLET_FAILED, CREATE_WALLET_SUCCEED, CREATE_WALLET_FETCHING, QUERY_MNEMONIC_FOR_WALLET_GENERATION_SUCCEED, VALIDATE_MNEMONIC_SUCCEED, VALIDATE_MNEMONIC_FAILED } from "platforms/desktop/actions/types"
-import { createWallet as createWalletCore, openWallet as openWalletCore, getMnemonic } from "../wallet-core/wallet-core"
+import { OPEN_WALLET_FETCHING, OPEN_WALLET_FAILED, OPEN_WALLET_SUCCEED, CREATE_WALLET_FAILED, CREATE_WALLET_SUCCEED, CREATE_WALLET_FETCHING, QUERY_MNEMONIC_FOR_WALLET_GENERATION_SUCCEED, VALIDATE_MNEMONIC_SUCCEED, VALIDATE_MNEMONIC_FAILED, RESTORE_WALLET_BY_SEED_FETCHING, RESTORE_WALLET_BY_SEED_SUCCEED, RESTORE_WALLET_BY_SEED_FAILED } from "platforms/desktop/actions/types"
+import { createWallet as createWalletCore, openWallet as openWalletCore, getMnemonic, addWalletListener, getOffshoreBalance, syncWallet } from "../wallet-core/wallet-core"
 import { addErrorNotification, addNotificationByMessage } from "./notification"
 import { NotificationType } from "constants/notificationList"
+import { getXHVBalance, getXUSDBalance } from "./balance"
+import { getPrimaryAddress } from "./address"
 
 /** collection of actions to open, create and store wallet */
 
 const webWalletConnection: IMonerRPCConnection = {
-    uri:'http://localhost:37750', username:'test', password:'test'
+    uri:'http://localhost:37750', username:'super', password:'super'
 }
 
 
@@ -51,6 +53,7 @@ const openWallet = (walletData: IOpenWallet, path: string) => {
         if (successOrError === true) {
             dispatch(openWalletSucceed(path))
             addNotificationByMessage(NotificationType.SUCCESS, 'wallet is open');
+            dispatch(startWalletSession());
         }
         else {
             addNotificationByMessage(NotificationType.ERROR, 'open wallet is not working, pls try again tomorrow');
@@ -85,10 +88,10 @@ export const createNewWallet = (path: string, password: string) => {
             const mnemomic = getMnemonic();
             dispatch(queryMnemonicForWalletGenerationSucceed(mnemomic));
             dispatch(createWalletSucceed())
-     //       addNotificationByMessage(NotificationType.SUCCESS, 'wallet is open');
+            addNotificationByMessage(NotificationType.SUCCESS, 'wallet is open');
         }
         else {
-          //  addNotificationByMessage(NotificationType.ERROR, 'open wallet is not working, pls try again tomorrow');
+            addNotificationByMessage(NotificationType.ERROR, 'open wallet is not working, pls try again tomorrow');
             dispatch(createWalletFailed(successOrError as object))
          }
     }
@@ -100,8 +103,21 @@ export const restoreWalletByMnemomic = (mnemonic: string, password: string) => {
         mnemonic, password, networkType: getNetworkByName(), server: webWalletConnection
     }
 
-    return (dispatch: any) => {
-        dispatch(createWallet(walletData))
+    return async(dispatch: any) => {
+        dispatch(createWalletFetch())
+        const successOrError: boolean | object = await createWalletCore(walletData);
+
+        if (successOrError === true) {
+            dispatch(restoreWalletSucceed());
+            addNotificationByMessage(NotificationType.SUCCESS, 'restored wallet by Mnemomic');
+            dispatch(startWalletSession());
+            
+        }
+        else {
+            addNotificationByMessage(NotificationType.ERROR, 'restore wallet is not working, pls try again tomorrow');
+            dispatch(restoreWalletFailed(successOrError));
+         }
+
     }
 
 
@@ -113,31 +129,54 @@ export const restoreWalletByKeys = (primaryAddress: string, privateSpendKey: str
     networkType: getNetworkByName(), server: webWalletConnection, password
     }
 
-    return (dispatch: any) => {
-        dispatch(createWallet(walletData))
-    }
-
-
-
-}
-
-const createWallet = (walletData: ICreateWallet) => {
-
     return async(dispatch: any) => {
-
 
         dispatch(createWalletFetch())
         const successOrError: boolean | object = await createWalletCore(walletData);
 
 
         if (successOrError === true) {
-            dispatch(createWalletSucceed())
-            addNotificationByMessage(NotificationType.SUCCESS, 'wallet is open');
+            dispatch(restoreWalletSucceed());
+            addNotificationByMessage(NotificationType.SUCCESS, 'restored wallet by keys');
+            dispatch(startWalletSession());
+            
         }
         else {
             addNotificationByMessage(NotificationType.ERROR, 'open wallet is not working, pls try again tomorrow');
-            dispatch(createWalletFailed(successOrError as object))
+            dispatch(restoreWalletFailed(successOrError));
          }
+    }
+}
+
+export const mnenomicVerificationSucceed = (fileName: string) => {
+    
+    
+    return (dispatch: any) => {
+     dispatch({
+            type: VALIDATE_MNEMONIC_SUCCEED,
+            payload: fileName,
+          })
+
+          dispatch(startWalletSession());
+        
+    }
+    
+};
+  export const mneomicVerifcationFailed = () => ({
+    type: VALIDATE_MNEMONIC_FAILED,
+  });
+
+
+const startWalletSession = () => {
+
+    return (dispatch: any) => {
+
+        addWalletListener(dispatch);
+        syncWallet();
+        dispatch(getPrimaryAddress())
+        dispatch(getXHVBalance());
+        dispatch(getXUSDBalance());
+        //dispatch
     }
 }
 
@@ -167,17 +206,13 @@ const queryMnemonicForWalletGenerationSucceed = (key: string) => ({
     payload: key,
   });
   
-  export const mnenomicVerificationSucceed = (fileName: string) => ({
-    type: VALIDATE_MNEMONIC_SUCCEED,
-    payload: fileName,
-  });
-  export const mneomicVerifcationFailed = () => ({
-    type: VALIDATE_MNEMONIC_FAILED,
-  });
-  
-
-  const addWalletListeners = (dispatch: any) => {
-
-  }
 
 
+  const restoreWalletFetching = () => ({ type: RESTORE_WALLET_BY_SEED_FETCHING });
+const restoreWalletSucceed = () => ({
+  type: RESTORE_WALLET_BY_SEED_SUCCEED,
+});
+const restoreWalletFailed = (error: any) => ({
+  type: RESTORE_WALLET_BY_SEED_FAILED,
+  payload: error,
+});

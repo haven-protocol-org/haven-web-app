@@ -6,6 +6,7 @@ import BigInteger from "haven-wallet-core/src/main/js/common/biginteger";
 import bigInt from "big-integer";
 import { ICreateWallet, IOpenWallet } from "typings";
 import { HavenWalletListener } from "shared/actions/walletListener";
+import MoneroWalletListener from "haven-wallet-core/src/main/js/wallet/model/MoneroWalletListener";
 //const core = require("haven-wallet-core");
 
 let wallet: MoneroWalletWasm;
@@ -83,7 +84,15 @@ export const getMnemonic = () => {
     return wallet.getMnemonic();
 }
 
-// export const get
+export const getPrimaryAddress = async(): Promise<string> => {
+
+    return await wallet.getPrimaryAddress();
+}
+
+export const syncWallet = ():Promise<void> => {
+ //@ts-ignore
+    return wallet.startSyncing();
+} 
 
 export const transfer = async () => {
 
@@ -103,11 +112,9 @@ export const offshore = async() => {
 
 export const addWalletListener = (dispatch: any) => {
 
-    const listener = new HavenWalletListener(dispatch);
+    const listener = new HavenWalletListener();
     wallet.addListener(listener);
 }
-
-
 
 const bigIntegerToBigInt = (value: BigInteger):bigInt.BigInteger => {
 
