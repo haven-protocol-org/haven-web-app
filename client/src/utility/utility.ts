@@ -5,6 +5,8 @@ import { NO_PRICE } from "shared/reducers/priceHistory";
 import { NO_BALANCE } from "shared/reducers/xBalance";
 import { Ticker } from "shared/reducers/types";
 import bigInt from "big-integer";
+import BigInteger from "haven-wallet-core/src/main/js/common/biginteger";
+
 
 export const convertTimestampToDateString = (timestamp: any) =>
   new Date(timestamp).toLocaleDateString();
@@ -134,3 +136,12 @@ export const createRemainingTimeString = (remainingTimeInMinutes: number) => {
     (minutes > 0 ? minutes + "m" : "");
   return timeString;
 };
+
+
+// haven wallet core uses its own implementation of BigInteger, and we need to convert to adapt the apps 
+//implementaion of bigInts
+export const bigIntegerToBigInt = (value: BigInteger):bigInt.BigInteger => {
+
+  return  bigInt(value.toString(10));
+
+}

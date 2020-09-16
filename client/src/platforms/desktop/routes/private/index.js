@@ -7,7 +7,7 @@ import { Redirect, Route } from "react-router-dom";
 import { AssetsDesktop } from "../../pages/_wallet/assets";
 import { DetailsDesktop } from "../../pages/_wallet/details";
 import { ExchangePage } from "../../../../shared/pages/_wallet/exchange";
-import { TransferDesktop } from "../../pages/_wallet/transfer";
+import { HavenTransfer } from "../../pages/_wallet/transfer";
 import { SettingsDesktop } from "../../pages/_wallet/settings";
 import { connect } from "react-redux";
 import { selectIsLoggedIn } from "../../../../shared/reducers/walletSession";
@@ -44,7 +44,7 @@ class PrivateRoutes extends Component {
           <Route
             path={`${match.url}/transfer`}
             exact
-            component={TransferDesktop}
+            component={HavenTransfer}
           />
           <Route
             path={`${match.url}/settings`}

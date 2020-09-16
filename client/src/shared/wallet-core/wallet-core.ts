@@ -4,9 +4,11 @@ import * as core from "haven-wallet-core";
 import MoneroWalletWasm from "haven-wallet-core/src/main/js/wallet/MoneroWalletWasm";
 import BigInteger from "haven-wallet-core/src/main/js/common/biginteger";
 import bigInt from "big-integer";
-import { ICreateWallet, IOpenWallet } from "typings";
+import { ICreateWallet, IOpenWallet, ITxConfig } from "typings";
 import { HavenWalletListener } from "shared/actions/walletListener";
 import MoneroWalletListener from "haven-wallet-core/src/main/js/wallet/model/MoneroWalletListener";
+import MoneroTxConfig from "haven-wallet-core/src/main/js/wallet/model/MoneroTxConfig";
+import { bigIntegerToBigInt } from "utility/utility";
 //const core = require("haven-wallet-core");
 
 let wallet: MoneroWalletWasm;
@@ -86,7 +88,7 @@ export const getMnemonic = () => {
 
 export const getPrimaryAddress = async(): Promise<string> => {
 
-    return await wallet.getPrimaryAddress();
+    return wallet.getPrimaryAddress();
 }
 
 export const syncWallet = ():Promise<void> => {
@@ -94,8 +96,15 @@ export const syncWallet = ():Promise<void> => {
     return wallet.startSyncing();
 } 
 
-export const transfer = async () => {
+export const transfer = async (txConfig: Partial<ITxConfig>) => {
 
+    return wallet.createTxs(txConfig);
+
+}
+
+export const isWalletSynced = async(): Promise<boolean> => {
+
+    return wallet.isSynced()
 
 }
 
@@ -112,12 +121,9 @@ export const offshore = async() => {
 
 export const addWalletListener = (dispatch: any) => {
 
-    const listener = new HavenWalletListener();
+    const listener = new HavenWalletListener(dispatch);
+    // @ts-ignore 
     wallet.addListener(listener);
 }
 
-const bigIntegerToBigInt = (value: BigInteger):bigInt.BigInteger => {
 
-        return  bigInt(value.toString(10));
-
-}

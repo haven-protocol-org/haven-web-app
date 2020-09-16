@@ -85,6 +85,6 @@ export interface ITxConfig  {
      sweepEachSubaddress: boolean
      /** key image to sweep (ignored except in sweepOutput() requests) */
      keyImage:string;
-
-
+     /** tx type which differntiate between various tx/exchange types */
+    txType:number;
 }

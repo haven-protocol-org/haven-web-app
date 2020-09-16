@@ -12,7 +12,7 @@ const INITIAL_STATE: AddressEntry[] = [];
 export default function (state = INITIAL_STATE, action: any): AddressEntry[] {
   switch (action.type) {
     case GET_ADDRESS_SUCCEED:
-      return action.payload;
+      return [...state,action.payload];
     default:
       return state;
   }

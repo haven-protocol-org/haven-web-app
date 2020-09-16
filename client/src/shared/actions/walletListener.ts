@@ -1,8 +1,20 @@
 import MoneroWalletListener from "haven-wallet-core/src/main/js/wallet/model/MoneroWalletListener";
+import { bigIntegerToBigInt } from "utility/utility";
+import BigInteger from "haven-wallet-core/src/main/js/common/biginteger";
+import { Balance } from "shared/reducers/xBalance";
+import { getBalancesSucceed } from "./balance";
 
 
 
 export class HavenWalletListener extends MoneroWalletListener  {
+
+    // we keep a dispatch instance in the walletlistener 
+    // - not sure if its a good praxis
+    private dispatch: any;
+    constructor(dispatch: any) {
+        super();
+        this.dispatch = dispatch;
+    }
 
 
     /**
@@ -34,9 +46,15 @@ export class HavenWalletListener extends MoneroWalletListener  {
      * @param {BigInteger} newBalance - new wallet balance
      * @param {BigInteger} newUnlockedBalance - new unlocked wallet balance
      */
+    // @ts-ignore
     onBalancesChanged(newBalance: BigInteger, newUnlockedBalance: BigInteger): void {
 
-        console.log(arguments);
+        const balance = bigIntegerToBigInt(newBalance);
+        const unlockedBalance = bigIntegerToBigInt(newUnlockedBalance);
+        const xhvBalance: Balance = {
+            unlockedBalance,balance,lockedBalance:balance.subtract(unlockedBalance)
+        }
+        this.dispatch(getBalancesSucceed({XHV:xhvBalance}))
 
     }
        /**
@@ -47,7 +65,12 @@ export class HavenWalletListener extends MoneroWalletListener  {
      */
     onOffshoreBalancesChanged(newBalance: BigInteger, newUnlockedBalance: BigInteger): void {
 
-        console.log(arguments);
+        const balance = bigIntegerToBigInt(newBalance);
+        const unlockedBalance = bigIntegerToBigInt(newUnlockedBalance);
+        const xUSDBalance: Balance = {
+            unlockedBalance,balance,lockedBalance:balance.subtract(unlockedBalance)
+        }
+        this.dispatch(getBalancesSucceed({xUSD:xUSDBalance}))
 
     }
     /**
@@ -57,7 +80,7 @@ export class HavenWalletListener extends MoneroWalletListener  {
      */
     onOutputReceived(output: any): void {
 
-        console.log(arguments);
+        console.log('hey you received some money');
 
     }
     /**
@@ -67,7 +90,7 @@ export class HavenWalletListener extends MoneroWalletListener  {
      */
     onOutputSpent(output: any): void {
 
-        console.log(arguments);
+        console.log('hey you sent some money');
 
     }
 }

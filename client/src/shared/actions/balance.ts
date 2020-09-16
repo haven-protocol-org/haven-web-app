@@ -57,7 +57,8 @@ export const getXUSDBalance = () => {
 
 
 const getBalancesFetching = () => ({ type: GET_BALANCES_FETCHING });
-const getBalancesSucceed = ( balance: XBalance) => ({
+
+export const getBalancesSucceed = ( balance: XBalance) => ({
   type: GET_BALANCES_SUCCEED,
   payload: balance,
 });

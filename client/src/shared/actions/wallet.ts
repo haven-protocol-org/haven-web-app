@@ -1,7 +1,7 @@
 import { IOpenWallet, IMonerRPCConnection, ICreateWallet } from "typings"
 import { getNetworkByName } from "constants/env"
 import { OPEN_WALLET_FETCHING, OPEN_WALLET_FAILED, OPEN_WALLET_SUCCEED, CREATE_WALLET_FAILED, CREATE_WALLET_SUCCEED, CREATE_WALLET_FETCHING, QUERY_MNEMONIC_FOR_WALLET_GENERATION_SUCCEED, VALIDATE_MNEMONIC_SUCCEED, VALIDATE_MNEMONIC_FAILED, RESTORE_WALLET_BY_SEED_FETCHING, RESTORE_WALLET_BY_SEED_SUCCEED, RESTORE_WALLET_BY_SEED_FAILED } from "platforms/desktop/actions/types"
-import { createWallet as createWalletCore, openWallet as openWalletCore, getMnemonic, addWalletListener, getOffshoreBalance, syncWallet } from "../wallet-core/wallet-core"
+import { createWallet as createWalletCore, openWallet as openWalletCore, getMnemonic, addWalletListener, getOffshoreBalance, syncWallet, isWalletSynced } from "../wallet-core/wallet-core"
 import { addErrorNotification, addNotificationByMessage } from "./notification"
 import { NotificationType } from "constants/notificationList"
 import { getXHVBalance, getXUSDBalance } from "./balance"
@@ -169,14 +169,22 @@ export const mnenomicVerificationSucceed = (fileName: string) => {
 
 const startWalletSession = () => {
 
-    return (dispatch: any) => {
+    return async (dispatch: any) => {
 
+
+        await dispatch(getPrimaryAddress())
+        const isSynced = await isWalletSynced();
+
+        // if wallet is synced get all basic infos 
+        // TODO if sync is giving back an initial callback, so we can remove that part 
+        if (isSynced) {
+
+            dispatch(getXHVBalance());
+            dispatch(getXUSDBalance());
+        }
         addWalletListener(dispatch);
         syncWallet();
-        dispatch(getPrimaryAddress())
-        dispatch(getXHVBalance());
-        dispatch(getXUSDBalance());
-        //dispatch
+
     }
 }
 

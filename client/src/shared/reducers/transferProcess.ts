@@ -8,7 +8,7 @@ import {
   TRANSFER_SUCCEED,
 } from "platforms/desktop/actions/types";
 import { AnyAction } from "redux";
-import { DesktopAppState } from "../../platforms/desktop/reducers/index";
+import { DesktopAppState, HavenAppState } from "../../platforms/desktop/reducers/index";
 import { Ticker } from "shared/reducers/types";
 
 export interface TxProcessInfo {
@@ -75,6 +75,6 @@ export const transferProcess = (
   }
 };
 
-export const transferSucceed = (state: DesktopAppState) => {
+export const transferSucceed = (state: HavenAppState) => {
   return state.transferProcess.succeed;
 };
