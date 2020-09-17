@@ -1,7 +1,7 @@
 /** this class takes care about status messages which are sticky and appearance and disappearance is dependent on the state**/
 import {connect} from "react-redux";
 import {DesktopAppState} from "platforms/desktop/reducers";
-import {selectDesktopSyncState} from "shared/reducers/chain";
+import {selectSyncState} from "shared/reducers/chain";
 import {Component} from "react";
 import {addErrorNotification, addNotificationByKey, removeNotification,} from "shared/actions/notification";
 import {uuidv4} from "utility/utility";
@@ -124,7 +124,7 @@ class FixedStatusContainer extends Component<FixedStatusProps, any> {
 
 const mapStateToProps = (state: DesktopAppState) => ({
   isLoggedIn: selectIsLoggedIn(state),
-  isSyncing: selectDesktopSyncState(state).isSyncing,
+  isSyncing: selectSyncState(state).isSyncing,
   isWalletConnected: !state.walletSession.isOffline,
   daemonUrl: state.havenNode.address,
 });

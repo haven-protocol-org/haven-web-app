@@ -5,16 +5,14 @@ import React, { Component } from "react";
 import { Pending, Value, Wrapper, Amount } from "./styles";
 import { connect } from "react-redux";
 import { convertBalanceForReading } from "utility/utility";
-import { selectWebSyncState } from "platforms/web/reducers/chain";
 import { Spinner } from "../../spinner";
 import { ProgressBar } from "../../progress-bar";
-import { DesktopAppState } from "platforms/desktop/reducers";
-import { WebAppState } from "platforms/web/reducers";
+import { HavenAppState } from "platforms/desktop/reducers";
 import { SyncState } from "shared/types/types";
-import { isDesktop} from "constants/env";
-import { selectDesktopSyncState } from "shared/reducers/chain";
+import { selectSyncState } from "shared/reducers/chain";
 import { NO_BALANCE, XBalances } from "shared/reducers/xBalance";
 import { Ticker } from "shared/reducers/types";
+
 
 interface BalanceProps {
   syncState: SyncState;
@@ -82,11 +80,9 @@ class Balances extends Component<BalanceProps, BalanceState> {
   }
 }
 
-const mapStateToProps = (state: DesktopAppState | WebAppState) => ({
+const mapStateToProps = (state: HavenAppState) => ({
   balances: state.xBalance,
-  syncState: isDesktop()
-    ? selectDesktopSyncState(state as DesktopAppState)
-    : selectWebSyncState(state)
+  syncState: selectSyncState(state)
 });
 export default connect(
   mapStateToProps,

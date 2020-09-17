@@ -140,6 +140,7 @@ export const createRemainingTimeString = (remainingTimeInMinutes: number) => {
 
 // haven wallet core uses its own implementation of BigInteger, and we need to convert to adapt the apps 
 //implementaion of bigInts
+
 export const bigIntegerToBigInt = (value: BigInteger):bigInt.BigInteger => {
 
   return  bigInt(value.toString(10));

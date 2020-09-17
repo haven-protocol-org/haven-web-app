@@ -7,22 +7,20 @@ import {
 } from "../../platforms/desktop/actions/types";
 import {AnyAction} from "redux";
 import {SyncState, ThreeState} from "shared/types/types";
-import {DesktopAppState} from "platforms/desktop/reducers/index";
+import {DesktopAppState, HavenAppState} from "platforms/desktop/reducers/index";
 import {selectisLocalNode} from "platforms/desktop/reducers/havenNode";
 import { isDesktop } from "constants/env";
 
-interface Chain {
+export interface Chain {
   walletHeight: number;
   nodeHeight: number;
   chainHeight: number;
-  isRefreshing: boolean;
 }
 
 const INITIAL_STATE: Chain = {
   walletHeight: 0,
   chainHeight: 0,
   nodeHeight: 0,
-  isRefreshing: false,
 };
 
 export const chain = (state = INITIAL_STATE, action: AnyAction): Chain => {
@@ -30,11 +28,6 @@ export const chain = (state = INITIAL_STATE, action: AnyAction): Chain => {
     case GET_BLOCK_INFO_SUCEED:
     case GET_WALLET_HEIGHT_SUCCEED:
       return { ...state, ...action.payload };
-    case START_RESCAN:
-      return { ...state, isRefreshing: true };
-    case RESCAN_FAILED:
-    case RESCAN_SUCCEED:
-      return { ...state, isRefreshing: false };
     default:
       return state;
   }
@@ -48,7 +41,7 @@ export const selectNodeHeight = (state: DesktopAppState) => {
   return state.chain.nodeHeight;
 };
 
-export const selectDesktopSyncState = (state: DesktopAppState): SyncState => {
+export const selectSyncState = (state: HavenAppState): SyncState => {
 
 
   // if wallet is not connected at all, we are not syncing
@@ -64,7 +57,7 @@ export const selectDesktopSyncState = (state: DesktopAppState): SyncState => {
   //when we use a local node syncing of wallet itself is super fast, so just show the sync state of the node
   if (isDesktop()) {
 
-    const isLocalNode = selectisLocalNode(state.havenNode);
+    const isLocalNode = selectisLocalNode((state as DesktopAppState).havenNode);
     isSyncing = state.chain.chainHeight > state.chain.nodeHeight + 3;
     scannedHeight = state.chain.nodeHeight;
   }
@@ -88,9 +81,6 @@ export const selectWalletHeight = (state: DesktopAppState) => {
   return state.chain.walletHeight;
 };
 
-export const selectRefreshing = (state: DesktopAppState) => {
-  return state.chain.isRefreshing;
-};
 
 export const isWalletSynced = (state: DesktopAppState): boolean => {
   if (state.chain.walletHeight === 0) {

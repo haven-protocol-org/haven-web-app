@@ -10,13 +10,12 @@ import { connect } from "react-redux";
 import { selectIsLoggedIn } from "shared/reducers/walletSession";
 import Idle from "../../../../shared/components/idle";
 import { SettingsWeb } from "../../pages/_wallet/settings";
-import { getExchangeRates } from "shared/actions/exchangeRates";
 
 import Menu from "shared/components/_layout/menu";
 import Page from "shared/components/_layout/page";
 import { DesktopAppState } from "platforms/desktop/reducers";
 /**
- *root component for private web wallet
+ * root component for private web wallet
  * by updating blockheight in given interval
  * it is responsible for updating blockheight related data ( balances, transfers )
  * which is done in the action getHeight which might not be the best place -> c'est la vie
@@ -82,5 +81,5 @@ export const mapStateToProps = (state: DesktopAppState) => ({
 });
 
 export default connect(mapStateToProps, {
-  getExchangeRates,
+ 
 })(PrivateRoutes);

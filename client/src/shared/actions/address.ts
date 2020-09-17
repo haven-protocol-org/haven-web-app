@@ -1,4 +1,4 @@
-import {getPrimaryAddress as getPrimaryAddressCore} from "../wallet-core/wallet-core";
+import {getPrimaryAddress as getPrimaryAddressCore} from "../core/wallet";
 import { GET_ADDRESS_SUCCEED } from "./types";
 import { AddressEntry } from "shared/reducers/address";
 
@@ -7,7 +7,6 @@ export const getPrimaryAddress = () => {
     return async (dispatch: any) => {
 
 
-        console.log('hey fetch address now')
 
         const address = await getPrimaryAddressCore();
 
@@ -22,6 +21,7 @@ export const getPrimaryAddress = () => {
 
         dispatch(addAddress(addressEntry));
 
+        return;
 
     }
 

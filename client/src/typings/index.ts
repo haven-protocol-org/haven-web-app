@@ -9,7 +9,7 @@ export enum NetworkType {
 
 export interface IMonerRPCConnection {
     uri: string;
-    username?: string;
+    username: string;
     password?: string;
     rejectUnauthorized?: boolean;
 }

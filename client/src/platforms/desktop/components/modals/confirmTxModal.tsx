@@ -7,7 +7,7 @@ import { hideModal } from "shared/actions/modal";
 import {
   confirmTransfer,
   resetTransferProcess,
-} from "platforms/desktop/actions/transfer";
+} from "shared/actions/transfer";
 import { TxProcessInfo } from "shared/reducers/transferProcess";
 import { convertToMoney } from "utility/utility";
 

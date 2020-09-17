@@ -7,12 +7,10 @@ import {
   RESTORE_WALLET_BY_SEED_SUCCEED,
   UPDATE_SAVED_WALLETS,
   VALIDATE_MNEMONIC_SUCCEED,
-  CREATE_WALLET_SUCCEED,
 } from "platforms/desktop/actions/types";
 import { AnyAction } from "redux";
-import { DesktopAppState, HavenAppState } from "platforms/desktop/reducers/index";
+import { HavenAppState } from "platforms/desktop/reducers/index";
 import {getMessageOfError} from "utility/utility";
-import { WebAppState } from "platforms/web/reducers";
 
 export type RPCError = {
   code: number;

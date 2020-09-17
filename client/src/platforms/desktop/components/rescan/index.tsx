@@ -6,7 +6,6 @@ import { DesktopAppState } from "../../reducers";
 import { selectIsLoggedIn } from "../../../../shared/reducers/walletSession";
 import { connect } from "react-redux";
 import { closeWallet, rescanBlockChain } from "../../actions";
-import { selectRefreshing } from "shared/reducers/chain";
 
 const RefreshIconComponent = (props: any) => {
   return (
@@ -17,7 +16,7 @@ const RefreshIconComponent = (props: any) => {
 };
 
 const mapStateToProps = (state: DesktopAppState) => ({
-  isRefreshing: selectRefreshing(state),
+  isRefreshing: false,
 });
 
 export const Refresh = connect(mapStateToProps, {

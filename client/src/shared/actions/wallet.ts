@@ -1,17 +1,17 @@
 import { IOpenWallet, IMonerRPCConnection, ICreateWallet } from "typings"
 import { getNetworkByName } from "constants/env"
 import { OPEN_WALLET_FETCHING, OPEN_WALLET_FAILED, OPEN_WALLET_SUCCEED, CREATE_WALLET_FAILED, CREATE_WALLET_SUCCEED, CREATE_WALLET_FETCHING, QUERY_MNEMONIC_FOR_WALLET_GENERATION_SUCCEED, VALIDATE_MNEMONIC_SUCCEED, VALIDATE_MNEMONIC_FAILED, RESTORE_WALLET_BY_SEED_FETCHING, RESTORE_WALLET_BY_SEED_SUCCEED, RESTORE_WALLET_BY_SEED_FAILED } from "platforms/desktop/actions/types"
-import { createWallet as createWalletCore, openWallet as openWalletCore, getMnemonic, addWalletListener, getOffshoreBalance, syncWallet, isWalletSynced } from "../wallet-core/wallet-core"
+import { createWallet as createWalletCore, openWallet as openWalletCore, getMnemonic, addWalletListener, getOffshoreBalance, syncWallet, isWalletSynced, getNodeHeight, syncAtOnce } from "../core/wallet"
 import { addErrorNotification, addNotificationByMessage } from "./notification"
 import { NotificationType } from "constants/notificationList"
 import { getXHVBalance, getXUSDBalance } from "./balance"
 import { getPrimaryAddress } from "./address"
+import { webWalletConnection } from "platforms/web/nodes"
+import { createDaemonConnection } from "./havend"
+import { updateHavenFeatures } from "./havenFeature"
 
 /** collection of actions to open, create and store wallet */
 
-const webWalletConnection: IMonerRPCConnection = {
-    uri:'http://localhost:37750', username:'super', password:'super'
-}
 
 
 
@@ -172,8 +172,12 @@ const startWalletSession = () => {
     return async (dispatch: any) => {
 
 
-        await dispatch(getPrimaryAddress())
+        dispatch(createDaemonConnection());
+        await dispatch(getPrimaryAddress());
         const isSynced = await isWalletSynced();
+        const daemonHeight = await getNodeHeight();
+
+        dispatch(updateHavenFeatures(daemonHeight));
 
         // if wallet is synced get all basic infos 
         // TODO if sync is giving back an initial callback, so we can remove that part 
@@ -183,7 +187,9 @@ const startWalletSession = () => {
             dispatch(getXUSDBalance());
         }
         addWalletListener(dispatch);
-        syncWallet();
+        syncAtOnce();
+        dispatch(getXHVBalance());
+        dispatch(getXUSDBalance());
 
     }
 }

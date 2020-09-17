@@ -51,7 +51,7 @@ class Container extends Component<any, any> {
 }
 
 export const mapStateToProps = (state: HavenAppState) => ({
-  address: selectPrimaryAddress(state.address),
+  address: state.address,
   transferSucceed: transferSucceed(state),
   tx: state.transferProcess,
 });

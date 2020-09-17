@@ -1,16 +1,16 @@
 import * as React from "react";
-import { DesktopAppState } from "platforms/desktop/reducers";
 import { connect } from "react-redux";
 import {
   confirmExchange,
   resetExchangeProcess,
-} from "platforms/desktop/actions";
+} from "shared/actions/exchange";
 import { Modal } from "shared/components/modal";
 import { ExchangeProcessInfo } from "shared/reducers/exchangeProcess";
 import { hideModal } from "shared/actions/modal";
 import Transaction from "shared/components/_transactions/exchange";
 import { convertToMoney } from "utility/utility";
 import { selectPrimaryAddress } from "shared/reducers/address";
+import { HavenAppState } from "platforms/desktop/reducers";
 
 interface ConfirmExchangeModalProps {
   exchange: ExchangeProcessInfo;
@@ -102,7 +102,7 @@ class ConfirmExchangeModal extends React.Component<
   }
 }
 
-const mapStateToProps = (state: DesktopAppState) => ({
+const mapStateToProps = (state: HavenAppState) => ({
   exchange: state.exchangeProcess,
   isOwnAddress:
     selectPrimaryAddress(state.address) === state.exchangeProcess.address,

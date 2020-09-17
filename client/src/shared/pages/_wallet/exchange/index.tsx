@@ -28,7 +28,7 @@ import {
   selectIsProcessingExchange,
   selectToTicker,
 } from "shared/reducers/exchangeProcess";
-import { setFromTicker, setToTicker } from "platforms/desktop/actions/exchange";
+import { setFromTicker, setToTicker } from "shared/actions/exchange";
 import { NO_BALANCE, XBalances } from "shared/reducers/xBalance";
 import { convertBalanceForReading } from "utility/utility";
 import { showModal } from "shared/actions/modal";

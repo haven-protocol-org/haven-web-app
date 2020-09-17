@@ -6,7 +6,6 @@ import {
   SET_NODE_FOR_WALLET_REQUESTED,
   SET_NODE_FOR_WALLET_SUCCESS,
 } from "platforms/desktop/actions/types";
-import { getWalletHeightSucceed } from "platforms/desktop/actions/chain";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { NodeOption } from "platforms/desktop/pages/_wallet/settings/node/nodeSetting";
 import { NodeLocation } from "platforms/desktop/types";
@@ -20,7 +19,7 @@ export const getWalletRPCState = () => {
         dispatch(updateWalletRPCState(res));
 
         if (res.isSyncing) {
-          dispatch(getWalletHeightSucceed(res.syncHeight));
+         // dispatch(getWalletHeightSucceed(res.syncHeight));
         }
       })
       .catch((err) => dispatch(updateWalletRPCStateFailed(err)));

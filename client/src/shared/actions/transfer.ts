@@ -1,6 +1,6 @@
 
 import bigInt from "big-integer";
-import { transfer as transferCore } from "shared/wallet-core/wallet-core"; 
+import { transfer as transferCore, relayTxs } from "shared/core/wallet"; 
 import {
   addErrorNotification,
   addNotificationByKey,
@@ -9,12 +9,11 @@ import { TRANSFER_SUCCEED_MESSAGE } from "constants/notificationList";
 import { Ticker } from "shared/reducers/types";
 import { hideModal, showModal } from "shared/actions/modal";
 import { MODAL_TYPE } from "shared/reducers/modal";
-import { getTransfers } from "platforms/desktop/actions/transferHistory";
 import {TxProcessInfo} from "shared/reducers/transferProcess";
 import { ITxConfig } from "typings";
 import { MoneroDestination, HavenTxType, MoneroTxPriority } from "haven-wallet-core";
 import { TRANSFER_FETCHING, TRANSFER_FAILED, TRANSFER_SUCCEED, TRANSFER_CREATION_FETCHING, TRANSFER_CREATION_SUCCEED, TRANSFER_CREATION_FAILED, TRANSFER_RESET } from "platforms/desktop/actions/types";
-import { transfer_splitRPC, offshoreTransferRPC, relayTXRPC } from "platforms/desktop/ipc/rpc/rpc";
+import MoneroTxWallet from "haven-wallet-core/src/main/js/wallet/model/MoneroTxWallet";
 
 export const createTransfer = (
   address: string,
@@ -24,112 +23,61 @@ export const createTransfer = (
 ) => {
 
   const amountInt =  bigInt(amount).multiply(bigInt(1e12));
-  return (dispatch: any) => {
-    dispatch(transferFetch());
+
+
+  return async(dispatch: any) => {
 
     const destinations = [new MoneroDestination(address, amountInt.toString())]
-
+    const priority = MoneroTxPriority.NORMAL
     const txType =  fromTicker === Ticker.XHV ? HavenTxType.CLASSIC : HavenTxType.OFFSHORE_TO_OFFSHORE;
+    dispatch(transferCreationFetch({paymentId, address, fromTicker, fromAmount: amount, priority}));
 
     const txConfig:  Partial<ITxConfig> = {
       canSplit: true,
       paymentId, destinations,accountIndex:0,
-      relay:false,txType,priority:MoneroTxPriority.NORMAL,
+      relay:false,txType,priority
     } as Partial<ITxConfig> 
-  
 
-    transferCore(txConfig)
-    .then((createdTx: any[]) => {
-    //  const { fee_list, tx_metadata_list } = result;
-      const amount_list = 1
+
+    try {
+
+      const txList: MoneroTxWallet[] = await transferCore(txConfig);
+    
       const reduxParams = {
-        fee: null,
-        fromAmount: null,
-        metaList: undefined,
+        fee: txList.reduce( (acc: bigint, tx: MoneroTxWallet) => acc + BigInt(tx.getFee().toString()), BigInt(0)),
+        fromAmount: txList.reduce( (acc: bigint, tx: MoneroTxWallet) => acc + BigInt(tx.getOutgoingAmount().toString()), BigInt(0)),
+        metaList: txList.map( (tx: MoneroTxWallet) => tx.getMetadata())
       } as Partial<TxProcessInfo>; 
 
-      console.log(createdTx[0].toJson());
-
-
-
+      //console.log(createdTx[0].toJson());
       dispatch(transferCreationSucceed(reduxParams));
-//     dispatch(showModal(MODAL_TYPE.ConfirmTx));
-    })
-    .catch((error) => {
-      dispatch(addErrorNotification(error));
-      dispatch(transferCreationFailed(error));
-    })
-  };
-};
-
-export const createTransferOld = (
-  address: string,
-  fromAmount: number,
-  paymentId: string,
-  fromTicker: Ticker
-) => {
-  const amount = fromAmount * 1e12;
-  return (dispatch: any) => {
-    dispatch(
-      transferCreationFetch({ address, fromAmount, paymentId, fromTicker })
-    );
-    const params: any = createTXInputs(address, amount, paymentId);
-
-    const isOffshoreTX = fromTicker !== Ticker.XHV;
-    const transferFN =
-    isOffshoreTX ? offshoreTransferRPC:transfer_splitRPC;
-
-    transferFN(params)
-      .then((result) => {
-        const { fee_list, tx_metadata_list } = result;
-        const amount_list = isOffshoreTX ? result.amount_usd_list : result.amount_list;
-        const reduxParams = {
-          fee: fee_list.reduce( (acc: number, value: number) => acc + value,0 ),
-          fromAmount: amount_list.reduce( (acc: number, value: number) => acc + value,0 ),
-          metaList: tx_metadata_list,
-        } as Partial<TxProcessInfo>;
-
-        dispatch(transferCreationSucceed(reduxParams));
-        dispatch(showModal(MODAL_TYPE.ConfirmTx));
-      })
-      .catch((error) => {
-        dispatch(addErrorNotification(error));
-        dispatch(transferCreationFailed(error));
-      })
+      dispatch(showModal(MODAL_TYPE.ConfirmTx));
+    } catch(e) {
+      dispatch(addErrorNotification(e));
+      dispatch(transferCreationFailed(e));
     }
-}
-
-export const confirmTransfer = (metaList: Array<string>) => {
-  return (dispatch: any) => {
-    dispatch(transferFetch());
-
-    const promises = metaList.map( (hex) => relayTXRPC({hex}) );
-
-    Promise.allSettled(promises)
-      .then(() => {
-        dispatch(transferSucceed());
-        dispatch(addNotificationByKey(TRANSFER_SUCCEED_MESSAGE));
-        dispatch(getTransfers());
-      })
-      .catch((error) => dispatch(manageTransferFailed(error)))
-      .finally(() => dispatch(hideModal()));
-  };
-};
-
-const createTXInputs = (address: string, amount: number, paymentId: string) => {
-  const params: any = {
-    destinations: [{ address, amount }],
-    ring_size: 11,
-    do_not_relay: true,
-    get_tx_metadata: true,
-  };
-
-  if (paymentId !== "") {
-    params["payment_id"] = paymentId;
   }
 
-  return params;
 };
+
+
+
+export const confirmTransfer = (metaList: Array<string>) => {
+  return async(dispatch: any) => {
+    dispatch(transferFetch());
+
+    try{
+      const hashes = await relayTxs(metaList);
+      dispatch(transferSucceed());
+      dispatch(addNotificationByKey(TRANSFER_SUCCEED_MESSAGE));
+    } 
+    catch(e) {
+      dispatch(manageTransferFailed(e))
+    }
+    dispatch(hideModal())
+  };
+};
+
 
 const transferFetch = () => ({
   type: TRANSFER_FETCHING,

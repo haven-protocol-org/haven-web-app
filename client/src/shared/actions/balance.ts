@@ -1,9 +1,10 @@
 
 import { getBalance as getBalanceCore, getOffshoreBalance as getOffshoreBalanceCore, 
     getUnlockedBalance as getUnlockedBalanceCore, 
-    getUnlockedOffshoreBalance} from "../wallet-core/wallet-core"
+    getUnlockedOffshoreBalance} from "../core/wallet"
 import { Balance, XBalance } from "shared/reducers/xBalance";
 import { GET_BALANCES_SUCCEED, GET_BALANCES_FETCHING, GET_BALANCES_FAILED } from "./types";
+import bigInt from "big-integer";
 
 
 export const getXHVBalance = () => {
@@ -36,7 +37,7 @@ export const getXUSDBalance = () => {
         dispatch(getBalancesFetching());
         try {
 
-            const balance = await getOffshoreBalanceCore();
+            const balance =  bigInt(0) //await getOffshoreBalanceCore();
             const unlockedBalance = await getUnlockedOffshoreBalance();
             const xUSDBalance: Balance = {
                 unlockedBalance,balance,lockedBalance:balance.subtract(unlockedBalance)

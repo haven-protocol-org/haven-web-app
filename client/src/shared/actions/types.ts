@@ -50,3 +50,6 @@ export const GET_ADDRESS_SUCCEED = "get_address_succeed";
 
 
 export const UPDATE_HAVEN_FEATURES = "update_haven_features";
+
+// DAEMON CONNECTION
+export const DAEMON_CONECTION_CREATED = "daemon_conection_created";

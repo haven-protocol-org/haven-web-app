@@ -18,6 +18,7 @@ import {blockHeaderExchangeRate} from "shared/reducers/blockHeaderExchangeRates"
 import {havenFeature} from "shared/reducers/havenFeature";
 import {walletSession} from "shared/reducers/walletSession"
 import {walletCreation} from "shared/reducers/walletCreation"
+import modal from "shared/reducers/modal";
 
 const appReducer = combineReducers({
   theme,
@@ -35,7 +36,7 @@ const appReducer = combineReducers({
   xhvVsCurrencies,
   blockHeaderExchangeRate,
   walletSession,
-  walletCreation
+  walletCreation,modal
 });
 
 const rootReducer = (state: any, action: AnyAction) => {

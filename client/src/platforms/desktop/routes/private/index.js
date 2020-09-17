@@ -13,7 +13,6 @@ import { connect } from "react-redux";
 import { selectIsLoggedIn } from "../../../../shared/reducers/walletSession";
 import Page from "../../../../shared/components/_layout/page";
 import Menu from "../../../../shared/components/_layout/menu";
-import { isDesktop } from "constants/env";
 
 /**
  *root component for private wallet

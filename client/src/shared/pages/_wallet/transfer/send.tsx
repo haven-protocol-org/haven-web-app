@@ -281,7 +281,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
           <Footer
             onClick={() => this.handleSubmit()}
             loading={this.props.isProcessing}
-            label={isDesktop() ? "Preview" : "Transfer"}
+            label={"Preview"}
             disabled={!checkValidation}
           />
         </Container>
