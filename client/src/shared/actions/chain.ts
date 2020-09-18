@@ -54,7 +54,7 @@ export const getWalletHeight = () => {
   };
 };
 
-export const onWalletSyncUpdateSucceed = (heights: Chain) => {
+export const onWalletSyncUpdateSucceed = (heights: Partial<Chain>) => {
   return { type: GET_WALLET_HEIGHT_SUCCEED, payload: heights };
 };
 

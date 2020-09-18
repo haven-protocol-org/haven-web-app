@@ -1,12 +1,9 @@
 import {
   GET_BLOCK_INFO_SUCEED,
   GET_WALLET_HEIGHT_SUCCEED,
-  RESCAN_FAILED,
-  RESCAN_SUCCEED,
-  START_RESCAN,
 } from "../../platforms/desktop/actions/types";
 import {AnyAction} from "redux";
-import {SyncState, ThreeState} from "shared/types/types";
+import {SyncState} from "shared/types/types";
 import {DesktopAppState, HavenAppState} from "platforms/desktop/reducers/index";
 import {selectisLocalNode} from "platforms/desktop/reducers/havenNode";
 import { isDesktop } from "constants/env";
@@ -45,9 +42,9 @@ export const selectSyncState = (state: HavenAppState): SyncState => {
 
 
   // if wallet is not connected at all, we are not syncing
-  const isWalletConnected = state.walletSession.isOffline === false;
+  const isWalletConnected = state.walletSession.isConnectedToDaemon === true;
 
-  const blockHeight = state.chain.chainHeight;
+  const blockHeight = state.chain.nodeHeight;
   let scannedHeight: number;
   let isSyncing: boolean;
 
@@ -63,7 +60,7 @@ export const selectSyncState = (state: HavenAppState): SyncState => {
   }
   // when we use a remote node take the sync height from wallet
   else {
-    isSyncing = state.chain.chainHeight > state.chain.walletHeight + 3;
+    isSyncing = state.chain.nodeHeight > state.chain.walletHeight + 3;
     scannedHeight = state.chain.walletHeight;
   }
 

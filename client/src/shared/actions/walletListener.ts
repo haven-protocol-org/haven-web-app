@@ -3,21 +3,26 @@ import { bigIntegerToBigInt } from "utility/utility";
 import BigInteger from "haven-wallet-core/src/main/js/common/biginteger";
 import { Balance } from "shared/reducers/xBalance";
 import { getBalancesSucceed } from "./balance";
-import { Chain } from "shared/reducers/chain";
+import { Chain, selectSyncState } from "shared/reducers/chain";
 import {  onWalletSyncUpdateSucceed } from "shared/actions/chain";
 import { getLastBlockHeader } from "./blockHeaderExchangeRate";
 import { updateHavenFeatures } from "./havenFeature";
+import { getAllTransfers } from "./transferHistory";
+import { HavenAppState } from "platforms/desktop/reducers";
 
 
 
 export class HavenWalletListener extends MoneroWalletListener  {
 
-    // we keep a dispatch instance in the walletlistener 
+    // we keep a dispatch and getStore instance in the walletlistener 
     // - not sure if its a good praxis
+
+    private getStore:() => HavenAppState
     private dispatch: any;
-    constructor(dispatch: any) {
+    constructor(dispatch: any, getStore:() => HavenAppState) {
         super();
         this.dispatch = dispatch;
+        this.getStore = getStore;
     }
 
 
@@ -32,15 +37,18 @@ export class HavenWalletListener extends MoneroWalletListener  {
      */
     onSyncProgress(height: number, startHeight: number, endHeight: number, percentDone: number, message: string): void {
 
-       const chain: Chain = {
-           
-        nodeHeight:endHeight,
-        walletHeight:height,
-        chainHeight:endHeight
-       }
-       console.log(height);
-       this.dispatch(onWalletSyncUpdateSucceed(chain));
+       if ( height <= startHeight + 2
+        || height + 1000 < endHeight && height%100 === 0 
+        || height + 30 < endHeight  && height%10 === 0 
+        || height + 30 >= endHeight ) {
 
+            const chain: Partial<Chain> = {
+           
+                walletHeight:height,
+               // chainHeight:endHeight
+               }
+               this.dispatch(onWalletSyncUpdateSucceed(chain));
+        }
     }
     /**
      * Invoked when a new block is added to the chain.
@@ -49,9 +57,14 @@ export class HavenWalletListener extends MoneroWalletListener  {
      */
     onNewBlock(height: any): void {
 
-       // our trigger to fetch latest block header
-       this.dispatch(getLastBlockHeader())
-       this.dispatch(updateHavenFeatures(height));
+       const syncState = selectSyncState(this.getStore());
+
+       if (!syncState.isSyncing) {
+
+        this.dispatch(getLastBlockHeader());
+        this.dispatch(updateHavenFeatures(height));
+
+       }
     }
     /**
      * Invoked when the wallet's balances change.
@@ -68,6 +81,7 @@ export class HavenWalletListener extends MoneroWalletListener  {
             unlockedBalance,balance,lockedBalance:balance.subtract(unlockedBalance)
         }
         this.dispatch(getBalancesSucceed({XHV:xhvBalance}))
+       // this.dispatch(getAllTransfers());
 
     }
        /**
@@ -84,6 +98,8 @@ export class HavenWalletListener extends MoneroWalletListener  {
             unlockedBalance,balance,lockedBalance:balance.subtract(unlockedBalance)
         }
         this.dispatch(getBalancesSucceed({xUSD:xUSDBalance}))
+      //  this.dispatch(getAllTransfers());
+
 
     }
     /**

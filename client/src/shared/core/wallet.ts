@@ -9,6 +9,7 @@ import { HavenWalletListener } from "shared/actions/walletListener";
 import { bigIntegerToBigInt } from "utility/utility";
 import MoneroTxSet from "haven-wallet-core/src/main/js/wallet/model/MoneroTxSet";
 import MoneroTxWallet from "haven-wallet-core/src/main/js/wallet/model/MoneroTxWallet";
+import { HavenAppState } from "platforms/desktop/reducers";
 //const core = require("haven-wallet-core");
 
 let wallet: MoneroWalletWasm;
@@ -36,6 +37,12 @@ export const openWallet = async(walletData: IOpenWallet) => {
         return e;
     }
     
+}
+
+export const closeWallet = async() => {
+
+     //@ts-ignore
+    return wallet.close();
 }
 
 export const getBalance = async (accountIdx: number | undefined = undefined, subaddressIdx: number | undefined = undefined) => {
@@ -122,6 +129,17 @@ export const transfer = async (txConfig: Partial<ITxConfig>): Promise<MoneroTxWa
 
 }
 
+export const getTransfers = () => {
+    //@ts-ignore    
+    return wallet.getTransfers();
+} 
+
+export const getTxs = () => {
+
+    //@ts-ignore    
+    return wallet.getTxs();
+}
+
 export const isWalletSynced = async(): Promise<boolean> => {
 
     return wallet.isSynced()
@@ -140,9 +158,9 @@ export const relayTxs = async(metaDataList: string[]) => {
 }
 
 
-export const addWalletListener = (dispatch: any) => {
+export const addWalletListener = (dispatch: any, getStore:() => HavenAppState) => {
 
-    const listener = new HavenWalletListener(dispatch);
+    const listener = new HavenWalletListener(dispatch, getStore);
     // @ts-ignore 
     wallet.addListener(listener);
 }

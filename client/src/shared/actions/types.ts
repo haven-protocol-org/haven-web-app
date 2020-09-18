@@ -53,3 +53,6 @@ export const UPDATE_HAVEN_FEATURES = "update_haven_features";
 
 // DAEMON CONNECTION
 export const DAEMON_CONECTION_CREATED = "daemon_conection_created";
+
+// WALLET CONNECTION TO DAEMON
+export const SET_WALLET_CONNECTION_STATE = "set_wallet_connection_state";

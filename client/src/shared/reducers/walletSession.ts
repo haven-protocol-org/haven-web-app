@@ -7,10 +7,12 @@ import {
   RESTORE_WALLET_BY_SEED_SUCCEED,
   UPDATE_SAVED_WALLETS,
   VALIDATE_MNEMONIC_SUCCEED,
+  CREATE_WALLET_FETCHING,
 } from "platforms/desktop/actions/types";
 import { AnyAction } from "redux";
 import { HavenAppState } from "platforms/desktop/reducers/index";
 import {getMessageOfError} from "utility/utility";
+import { SET_WALLET_CONNECTION_STATE } from "shared/actions/types";
 
 export type RPCError = {
   code: number;
@@ -23,9 +25,7 @@ interface WalletSession {
   isFetching: boolean;
   isWalletOpen: boolean;
   error: RPCError | null;
-  isOffline: boolean;
-  isSyncing: boolean;
-  syncHeight: number;
+  isConnectedToDaemon: boolean;
 }
 
 const INITIAL_STATE: WalletSession = {
@@ -34,9 +34,7 @@ const INITIAL_STATE: WalletSession = {
   isFetching: false,
   isWalletOpen: false,
   error: null,
-  isOffline: true,
-  isSyncing: false,
-  syncHeight: -1
+  isConnectedToDaemon: false,
 };
 
 export const walletSession = function (
@@ -61,6 +59,8 @@ export const walletSession = function (
         activeWallet: action.payload,
         isWalletOpen: true,
       };
+    case SET_WALLET_CONNECTION_STATE:
+      return {...state, isConnectedToDaemon: action.payload};
     case RESTORE_WALLET_BY_SEED_SUCCEED:
     case VALIDATE_MNEMONIC_SUCCEED:
       return {

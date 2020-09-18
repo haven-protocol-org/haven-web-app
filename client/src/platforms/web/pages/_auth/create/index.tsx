@@ -13,6 +13,7 @@ import React from "react";
 import { Redirect } from "react-router";
 import { CreateWebComponent } from "../../../../../shared/pages/_auth/create";
 import { WebAppState } from "platforms/web/reducers";
+import { selectisRequestingWalletCreation } from "shared/reducers/walletCreation";
 
 interface CreateWebProps {
   mnenomicVerificationSucceed: (fileName: string) => void,
@@ -52,7 +53,7 @@ class CreateWebContainer extends Component<CreateWebProps,{}> {
 const mapStateToProps = (state: WebAppState ) => ({
   mnemonicString: state.walletCreation.mnemonicKey,
   isLoggedIn: selectIsLoggedIn(state),
-  isRequestingLogin: selectIsRequestingLogin(state)
+  isRequestingLogin: selectisRequestingWalletCreation(state)
 });
 
 export const CreateWeb = connect(

@@ -1,7 +1,7 @@
 import { IOpenWallet, IMonerRPCConnection, ICreateWallet } from "typings"
 import { getNetworkByName } from "constants/env"
 import { OPEN_WALLET_FETCHING, OPEN_WALLET_FAILED, OPEN_WALLET_SUCCEED, CREATE_WALLET_FAILED, CREATE_WALLET_SUCCEED, CREATE_WALLET_FETCHING, QUERY_MNEMONIC_FOR_WALLET_GENERATION_SUCCEED, VALIDATE_MNEMONIC_SUCCEED, VALIDATE_MNEMONIC_FAILED, RESTORE_WALLET_BY_SEED_FETCHING, RESTORE_WALLET_BY_SEED_SUCCEED, RESTORE_WALLET_BY_SEED_FAILED } from "platforms/desktop/actions/types"
-import { createWallet as createWalletCore, openWallet as openWalletCore, getMnemonic, addWalletListener, getOffshoreBalance, syncWallet, isWalletSynced, getNodeHeight, syncAtOnce } from "../core/wallet"
+import { createWallet as createWalletCore, openWallet as openWalletCore, getMnemonic, addWalletListener, getOffshoreBalance, syncWallet, isWalletSynced, getNodeHeight, syncAtOnce, isWalletConnected, getWalletHeight } from "../core/wallet"
 import { addErrorNotification, addNotificationByMessage } from "./notification"
 import { NotificationType } from "constants/notificationList"
 import { getXHVBalance, getXUSDBalance } from "./balance"
@@ -9,6 +9,10 @@ import { getPrimaryAddress } from "./address"
 import { webWalletConnection } from "platforms/web/nodes"
 import { createDaemonConnection } from "./havend"
 import { updateHavenFeatures } from "./havenFeature"
+import { SET_WALLET_CONNECTION_STATE } from "./types"
+import { Chain } from "shared/reducers/chain"
+import { onWalletSyncUpdateSucceed } from "./chain"
+import { HavenAppState } from "platforms/desktop/reducers"
 
 /** collection of actions to open, create and store wallet */
 
@@ -104,7 +108,7 @@ export const restoreWalletByMnemomic = (mnemonic: string, password: string) => {
     }
 
     return async(dispatch: any) => {
-        dispatch(createWalletFetch())
+        dispatch(restoreWalletFetching())
         const successOrError: boolean | object = await createWalletCore(walletData);
 
         if (successOrError === true) {
@@ -169,29 +173,51 @@ export const mnenomicVerificationSucceed = (fileName: string) => {
 
 const startWalletSession = () => {
 
-    return async (dispatch: any) => {
+    return async (dispatch: any, getStore:() => HavenAppState) => {
 
-
+        // initialize own connection to daemon ( needed for fetching block headers ) 
         dispatch(createDaemonConnection());
-        await dispatch(getPrimaryAddress());
-        const isSynced = await isWalletSynced();
-        const daemonHeight = await getNodeHeight();
 
-        dispatch(updateHavenFeatures(daemonHeight));
+        await dispatch(initReduxWallet());
+    
+        // start wallet listeners
+        addWalletListener(dispatch, getStore);
+        syncWallet();
 
-        // if wallet is synced get all basic infos 
-        // TODO if sync is giving back an initial callback, so we can remove that part 
-        if (isSynced) {
+    }
+}
 
-            dispatch(getXHVBalance());
-            dispatch(getXUSDBalance());
-        }
-        addWalletListener(dispatch);
-        syncAtOnce();
+
+// init some basic data before wallet listener 
+// will be responsible for data updates
+const initReduxWallet = () => {
+
+
+    return async(dispatch: any) => {
+
         dispatch(getXHVBalance());
         dispatch(getXUSDBalance());
 
+        dispatch(getPrimaryAddress());
+        const isConnected = await isWalletConnected();
+        dispatch(setWalletConnectionState(isConnected));
+        const nodeHeight = await getNodeHeight();
+        const walletHeight = await getWalletHeight();
+
+        const chainHeights: Partial<Chain> = {
+            walletHeight, nodeHeight
+        } as Partial<Chain>
+        
+        dispatch(onWalletSyncUpdateSucceed(chainHeights))
+        dispatch(updateHavenFeatures(nodeHeight));
+
+        return;
+
+
+
     }
+        
+
 }
 
 const openWalletFetching = () => {
@@ -220,6 +246,12 @@ const queryMnemonicForWalletGenerationSucceed = (key: string) => ({
     payload: key,
   });
   
+
+  const setWalletConnectionState = (isConnected: boolean) => {
+
+    return {type: SET_WALLET_CONNECTION_STATE, payload: isConnected};
+
+  }
 
 
   const restoreWalletFetching = () => ({ type: RESTORE_WALLET_BY_SEED_FETCHING });
