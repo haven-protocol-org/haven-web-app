@@ -57,12 +57,21 @@ export class HavenWalletListener extends MoneroWalletListener  {
      */
     onNewBlock(height: any): void {
 
-       const syncState = selectSyncState(this.getStore());
+       const store: HavenAppState = this.getStore();
+       const syncState = selectSyncState(store);
 
        if (!syncState.isSyncing) {
 
         this.dispatch(getLastBlockHeader());
         this.dispatch(updateHavenFeatures(height));
+
+        if (store.chain.chainHeight < height) {
+            this.dispatch(onWalletSyncUpdateSucceed({nodeHeight: height, chainHeight:height}));
+        } else {
+            this.dispatch(onWalletSyncUpdateSucceed({nodeHeight: height}));
+        }
+
+       
 
        }
     }

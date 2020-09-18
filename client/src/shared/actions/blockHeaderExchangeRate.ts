@@ -33,7 +33,7 @@ const createRecordEntry = (blockHeader: MoneroBlockHeader): BlockHeaderRate => {
       pricingRecord[key] = bigInt(value as number);
     }
   });
-  pricingRecord.height = blockHeader.getHeight() + 1;
+  pricingRecord.height = blockHeader.getHeight();
   pricingRecord.timestamp = blockHeader.getTimestamp();
   return pricingRecord;
 };
