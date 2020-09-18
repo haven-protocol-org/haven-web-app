@@ -24,7 +24,7 @@ export const encrypt = async (message) => {
   if (isDevMode()) {
     return message;
   }
-
+  return message;
   const enc = new TextEncoder();
   const encMessage = enc.encode(message);
 
@@ -42,7 +42,7 @@ export const decrypt = async (cipher) => {
   if (isDevMode()) {
     return cipher;
   }
-
+  return cipher;
   const decrypted = await window.crypto.subtle.decrypt(
     {
       name: "AES-GCM",
