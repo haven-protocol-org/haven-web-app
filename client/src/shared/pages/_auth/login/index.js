@@ -5,8 +5,6 @@ import PropTypes from "prop-types";
 import { Container } from "./styles";
 import Auth from "../../../components/_auth/login";
 import FileUpload from "../../../components/_inputs/file-upload";
-
-import Input from "../../../components/_inputs/input";
 import Toggle from "../../../components/_inputs/toggle";
 import Seed from "../../../components/_inputs/seed";
 import { Information } from "../../../../assets/styles/type.js";
