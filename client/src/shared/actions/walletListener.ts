@@ -90,7 +90,7 @@ export class HavenWalletListener extends MoneroWalletListener  {
             unlockedBalance,balance,lockedBalance:balance.subtract(unlockedBalance)
         }
         this.dispatch(getBalancesSucceed({XHV:xhvBalance}))
-        this.dispatch(getAllTransfers());
+       // this.dispatch(getAllTransfers());
 
     }
        /**
@@ -107,7 +107,7 @@ export class HavenWalletListener extends MoneroWalletListener  {
             unlockedBalance,balance,lockedBalance:balance.subtract(unlockedBalance)
         }
         this.dispatch(getBalancesSucceed({xUSD:xUSDBalance}))
-        this.dispatch(getAllTransfers());
+       // this.dispatch(getAllTransfers());
 
 
     }

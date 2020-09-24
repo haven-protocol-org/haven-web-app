@@ -23,6 +23,7 @@ import {
   BlockHeaderRate,
   selectXRate,
 } from "shared/reducers/blockHeaderExchangeRates";
+import { getAllTransfers } from "shared/actions/transferHistory";
 
 
 export interface TxEntry {
@@ -45,6 +46,7 @@ interface TxHistoryProps {
   height: number;
   rates: BlockHeaderRate[];
   assetId: Ticker;
+  getAllTransfers:() => void;
 }
 
 class TxHistoryContainer extends Component<TxHistoryProps, any> {
@@ -59,6 +61,10 @@ class TxHistoryContainer extends Component<TxHistoryProps, any> {
     } else  {
       return "Received";
     }
+  }
+
+  componentDidMount() {
+    this.props.getAllTransfers();
   }
 
   render() {
@@ -111,11 +117,15 @@ const mapStateToProps = (state: HavenAppState, props: any) => ({
   transferList: selectTransferListByTicker(state, props.match.params.id),
   height: selectBlockHeight(state),
   rates: state.blockHeaderExchangeRate,
+  getAllTransfers: getAllTransfers
 });
 
 export const TxHistoryDesktop = withRouter(
   connect(mapStateToProps, { })(TxHistoryContainer)
 );
+
+
+
 
 const prepareTxInfo = (
   tx: TxEntry,
