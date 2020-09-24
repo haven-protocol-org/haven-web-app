@@ -15,9 +15,9 @@ export default class Login extends Component {
     seed_phrase: "",
     error: "",
     action: "Paste from Clipboard",
-    key_store: "",
-    selectSeed: true,
-    selectKeystore: false,
+    vault_file: "",
+    selectSeed: false,
+    selectKeystore: true,
     keyStoreFile: "",
     reveal: false,
   };
@@ -100,7 +100,7 @@ export default class Login extends Component {
 
   render() {
     const windowWidth = window.innerWidth;
-    const { seed_phrase, error, action, selectSeed, key_store } = this.state;
+    const { seed_phrase, error, action, selectSeed, vault_file } = this.state;
 
     return (
       <Container>
@@ -132,19 +132,19 @@ export default class Login extends Component {
                 onChange={(event) => this.handleChange(event)}
               />
               <Information>
-                <strong>Disclaimer:</strong> Your seed is used to generate an
-                encrypted signature on your device and unlock your account. This
-                ensures the security of your seed or keys, as they're never
-                submitted to a server or sent across the internet.
+                Haven recommends logging in with a Vault File, not a Seed Phrase
+                as it's more secure. While your Seed is <strong>never</strong>{" "}
+                sent across the internet, your Vault will need to resync every
+                time you login, providing a degraded experience.
               </Information>
             </>
           ) : (
             <>
               <Toggle
-                label="Keystore Password"
-                placeholder="Enter keystore password"
-                name="key_store"
-                value={key_store}
+                label="Vault Password"
+                placeholder="Enter vault password"
+                name="vault_file"
+                value={vault_file}
                 error={error}
                 onChange={(event) => this.handleChange(event)}
                 onClick={this.showPassword}
@@ -156,8 +156,11 @@ export default class Login extends Component {
                 keyStoreFile={this.state.keyStoreFile}
               />
               <Information>
-                Before entering your Keystore Password please ensure you're not
-                on a public wifi and no one is looking at your screen.
+                A Vault File is more secure then a Seed Phrase because it's an
+                encrypted file that requires a password. In addition, it
+                prevents your wallet from resyncing every login, providing a
+                smoother experience. If you don't have Vault File please restore
+                a vault with your seed to generate one.
               </Information>
             </>
           )}

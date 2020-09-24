@@ -1,6 +1,5 @@
 import { getTransferRPC } from "../ipc/rpc/rpc";
 
-import { TransferType, XTransferList } from "shared/reducers/xTransferList";
 import { Ticker } from "shared/reducers/types";
 import {
   GET_TRANSFERS_FAILED,
@@ -9,19 +8,7 @@ import {
 } from "shared/actions/types";
 
 export const getTransfers = () => {
-  return (dispatch: any) => {
-    dispatch(getTransfersFetching());
-    const params = { in: true, out: true, pending: true, pool: true };
-    getTransferRPC(params)
-      .then(mergeAndSort)
-      .then(createTxListByCurrency)
-      .then((txLists: XTransferList) => {
-        dispatch(getTransfersSucceed(txLists));
-      })
-      .catch((error: any) => {
-        dispatch(getTransfersFailed(error));
-      });
-  };
+
 };
 
 const getTransfersFetching = () => ({
@@ -29,10 +16,7 @@ const getTransfersFetching = () => ({
   payload: { isFetching: true },
 });
 
-const getTransfersSucceed = (txListEntry: XTransferList) => ({
-  type: GET_TRANSFERS_SUCCEED,
-  payload: txListEntry,
-});
+
 
 const getTransfersFailed = (error: any) => ({
   type: GET_TRANSFERS_FAILED,
@@ -55,26 +39,8 @@ const filterForDoubleEntries = (entries: any[] | undefined) => {
   });
 };
 
-const createTxListByCurrency = (txList: any) => {
-  const xUSDList = txList.filter(
-    (txEntry: any) =>
-      txEntry.type === TransferType.xUSDIn ||
-      txEntry.type === TransferType.xUSDOut ||
-      txEntry.type === TransferType.xUSDPending
-  );
-  const xhvList = txList.filter(
-    (txEntry: any) =>
-      txEntry.type === TransferType.XHVIn ||
-      txEntry.type === TransferType.XHVOut ||
-      txEntry.type === TransferType.XHVPending ||
-      txEntry.type === TransferType.Mining
-  );
 
-  return {
-    [Ticker.XHV]: xhvList,
-    [Ticker.xUSD]: xUSDList,
-  };
-};
+
 
 export const mergeAndSort = (result: {
   [key: string]: any | undefined[];

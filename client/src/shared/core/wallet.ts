@@ -129,12 +129,12 @@ export const transfer = async (txConfig: Partial<ITxConfig>): Promise<MoneroTxWa
 
 }
 
-export const getTransfers = () => {
+export const getTransfers = async() => {
     //@ts-ignore    
     return wallet.getTransfers();
 } 
 
-export const getTxs = () => {
+export const getTxs = async() => {
 
     //@ts-ignore    
     return wallet.getTxs();

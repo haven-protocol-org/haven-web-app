@@ -78,7 +78,9 @@ export function xBalance(
   }
 }
 
-export const selectBalances = (state: DesktopAppState | WebAppState): XViewBalance => {
+export const selectBalances = (
+  state: DesktopAppState | WebAppState
+): XViewBalance => {
   return {
     [Ticker.XHV]: {
       balance: convertBalanceForReading(state.xBalance[Ticker.XHV].balance),
@@ -92,7 +94,9 @@ export const selectBalances = (state: DesktopAppState | WebAppState): XViewBalan
   };
 };
 
-export const selectTotalBalances = (state: DesktopAppState | WebAppState): XViewBalance => {
+export const selectTotalBalances = (
+  state: DesktopAppState | WebAppState
+): XViewBalance => {
   const defaultBalance = {
     [Ticker.XHV]: { ...INITIAL_VIEW_BALANCE },
     [Ticker.xUSD]: { ...INITIAL_VIEW_BALANCE },

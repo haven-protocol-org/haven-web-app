@@ -30,11 +30,11 @@ export const chain = (state = INITIAL_STATE, action: AnyAction): Chain => {
   }
 };
 
-export const selectBlockHeight = (state: DesktopAppState) => {
+export const selectBlockHeight = (state: HavenAppState) => {
   return state.chain.chainHeight;
 };
 
-export const selectNodeHeight = (state: DesktopAppState) => {
+export const selectNodeHeight = (state: HavenAppState) => {
   return state.chain.nodeHeight;
 };
 

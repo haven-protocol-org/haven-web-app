@@ -7,7 +7,7 @@ import {selectBlockchainHeight} from "../../reducers/chain";
 import {getTransfers} from "../../actions";
 import {connect} from "react-redux";
 import {core} from "../../declarations/haven_core";
-import {Transaction} from "../../../../shared/components/transaction";
+import {Transaction} from "../../../../shared/components/tx-history/component";
 import Header from "../../../../shared/components/_layout/header/index.js"
 import {withRouter} from "react-router-dom";
 import {Ticker} from "../../../../shared/reducers/types";

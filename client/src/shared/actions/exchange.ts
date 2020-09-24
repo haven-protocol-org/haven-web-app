@@ -108,14 +108,9 @@ const parseExchangeResonse = (txList: MoneroTxWallet[], exchangeType: ExchangeTy
   let toAmount : bigint;
   let fee: bigint;
 
-  if (exchangeType === ExchangeType.Onshore) {
-    fromAmount = BigInt(0);
-    toAmount = txList.reduce( (acc: bigint, tx: MoneroTxWallet) => acc + BigInt(tx.getOutgoingAmount().toString()), BigInt(0));
-  } else {
-    fromAmount = txList.reduce( (acc: bigint, tx: MoneroTxWallet) => acc + BigInt(tx.getOutgoingAmount().toString()), BigInt(0));
-    toAmount = BigInt(0);
-  }
-
+    //@ts-ignore
+  toAmount = txList.reduce( (acc: bigint, tx: MoneroTxWallet) => acc + BigInt(tx.getIncomingAmount().toString()), BigInt(0));
+  fromAmount = txList.reduce( (acc: bigint, tx: MoneroTxWallet) => acc + BigInt(tx.getOutgoingAmount().toString()), BigInt(0));
   fee = txList.reduce( (acc: bigint, tx: MoneroTxWallet) => acc + BigInt(tx.getFee().toString()), BigInt(0));
   const metaList: Array<string> =  txList.map( (tx: MoneroTxWallet) => tx.getMetadata());
   return {fromAmount, toAmount, fee, metaList};
