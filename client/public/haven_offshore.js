@@ -839,8 +839,8 @@ var wasmMemory;
 // In the wasm backend, we polyfill the WebAssembly object,
 // so this creates a (non-native-wasm) table for us.
 var wasmTable = new WebAssembly.Table({
-  'initial': 7740,
-  'maximum': 7740 + 5,
+  'initial': 7736,
+  'maximum': 7736 + 5,
   'element': 'anyfunc'
 });
 
@@ -1478,11 +1478,11 @@ function updateGlobalBufferAndViews(buf) {
 }
 
 var STATIC_BASE = 1024,
-    STACK_BASE = 6619504,
+    STACK_BASE = 6619264,
     STACKTOP = STACK_BASE,
-    STACK_MAX = 1376624,
-    DYNAMIC_BASE = 6619504,
-    DYNAMICTOP_PTR = 1376448;
+    STACK_MAX = 1376384,
+    DYNAMIC_BASE = 6619264,
+    DYNAMICTOP_PTR = 1376208;
 
 assert(STACK_BASE % 16 === 0, 'stack must start aligned');
 assert(DYNAMIC_BASE % 16 === 0, 'heap must start aligned');
@@ -2063,7 +2063,7 @@ function js_send_json_request(uri,username,password,reject_unauthorized_fn_id,me
 
 
 
-// STATICTOP = STATIC_BASE + 1375600;
+// STATICTOP = STATIC_BASE + 1375360;
 /* global initializers */  __ATINIT__.push({ func: function() { ___wasm_call_ctors() } });
 
 
@@ -2580,7 +2580,7 @@ function js_send_json_request(uri,username,password,reject_unauthorized_fn_id,me
   
       var pointer = ___cxa_is_pointer_type(throwntype);
       // can_catch receives a **, add indirection
-      var buffer = 1376608;
+      var buffer = 1376368;
       HEAP32[((buffer)>>2)]=thrown;
       thrown = buffer;
       // The different catch blocks are denoted by different types.
@@ -2617,7 +2617,7 @@ function js_send_json_request(uri,username,password,reject_unauthorized_fn_id,me
   
       var pointer = ___cxa_is_pointer_type(throwntype);
       // can_catch receives a **, add indirection
-      var buffer = 1376608;
+      var buffer = 1376368;
       HEAP32[((buffer)>>2)]=thrown;
       thrown = buffer;
       // The different catch blocks are denoted by different types.
@@ -7685,7 +7685,7 @@ function js_send_json_request(uri,username,password,reject_unauthorized_fn_id,me
     }
 
   function _emscripten_get_sbrk_ptr() {
-      return 1376448;
+      return 1376208;
     }
 
   function _emscripten_memcpy_big(dest, src, num) {
@@ -7895,7 +7895,7 @@ function js_send_json_request(uri,username,password,reject_unauthorized_fn_id,me
     }
 
   
-  var ___tm_timezone=(stringToUTF8("GMT", 1376512, 4), 1376512);function _gmtime_r(time, tmPtr) {
+  var ___tm_timezone=(stringToUTF8("GMT", 1376272, 4), 1376272);function _gmtime_r(time, tmPtr) {
       var date = new Date(HEAP32[((time)>>2)]*1000);
       HEAP32[((tmPtr)>>2)]=date.getUTCSeconds();
       HEAP32[(((tmPtr)+(4))>>2)]=date.getUTCMinutes();
