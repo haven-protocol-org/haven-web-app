@@ -117,11 +117,10 @@ const mapStateToProps = (state: HavenAppState, props: any) => ({
   transferList: selectTransferListByTicker(state, props.match.params.id),
   height: selectBlockHeight(state),
   rates: state.blockHeaderExchangeRate,
-  getAllTransfers: getAllTransfers
 });
 
 export const TxHistoryDesktop = withRouter(
-  connect(mapStateToProps, { })(TxHistoryContainer)
+  connect(mapStateToProps, { getAllTransfers })(TxHistoryContainer)
 );
 
 
