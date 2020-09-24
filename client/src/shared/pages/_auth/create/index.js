@@ -22,7 +22,7 @@ export class CreateWebComponent extends Component {
 
   componentDidMount() {
     window.scrollTo(0, 0);
-    this.props.getSeed(undefined, 'secret');
+    this.props.getSeed(undefined, "secret");
   }
 
   async componentDidUpdate(prevProps, prevState) {
@@ -133,7 +133,7 @@ export class CreateWebComponent extends Component {
       <Container>
         <Auth
           title="Create a Vault"
-          link="/login"
+          link="/"
           route="Sign In!"
           label="Have a Vault?"
           submit="Generate"

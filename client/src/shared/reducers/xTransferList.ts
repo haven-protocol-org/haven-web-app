@@ -59,6 +59,7 @@ export const selectTransferListByTicker = (
       const outgoing:
         | undefined
         | MoneroOutgoingTransfer = walletTx.getOutgoingTransfer();
+
       if (incomings !== undefined && incomings[0].getCurrency() === tickerId) {
         const txEntry: Partial<TxEntry> = {};
         txEntry.hash = walletTx.getHash();
