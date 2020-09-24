@@ -1,23 +1,20 @@
 import { getTransfers as getTransfersCore, getTxs as getTxsCore } from "shared/core/wallet"
+import { addErrorNotification } from "./notification";
+import MoneroTxWallet from "haven-wallet-core/src/main/js/wallet/model/MoneroTxWallet";
 
 
 export const getAllTransfers = () => {
 
-
     return async(dispatch: any) => {
+        try {
 
+            const transfers:MoneroTxWallet[] = await getTransfersCore();
+        }
+        catch(e) {
 
-       // const transfers = await getTransfersCore();
+            dispatch(addErrorNotification(e));
 
-        // console.log(transfers);
-
-
-        const txs = await getTxsCore();
-
-        console.log(txs);
-
-        dispatch({type:'TEST_TRANSFERS'});
-
+        }
     }
 
 }

@@ -13,6 +13,7 @@ import { SET_WALLET_CONNECTION_STATE } from "./types"
 import { Chain } from "shared/reducers/chain"
 import { onWalletSyncUpdateSucceed } from "./chain"
 import { HavenAppState } from "platforms/desktop/reducers"
+import { getAllTransfers } from "./transferHistory"
 
 /** collection of actions to open, create and store wallet */
 
@@ -197,10 +198,9 @@ const initReduxWallet = () => {
 
         dispatch(getXHVBalance());
         dispatch(getXUSDBalance());
-
+        dispatch(getAllTransfers());
         dispatch(getPrimaryAddress());
         const isConnected = await isWalletConnected();
-        const isSynced = await isWalletSynced();
         dispatch(setWalletConnectionState(isConnected));
         const chainHeight = await getChainHeight();
         const nodeHeight = await getNodeHeight();

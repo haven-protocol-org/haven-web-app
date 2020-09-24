@@ -17,12 +17,11 @@ import { isMainnet } from "constants/env";
 export interface TransactionProps {
   type: any;
   date: any;
-  tx: any;
+  hash: string;
   amount: any;
   block: any;
   currentValueInUSD: any;
-  status: any;
-  mempool: any;
+  mempool: boolean;
   timeTillUnlocked: any;
   fee: any;
 }
@@ -30,17 +29,16 @@ export interface TransactionProps {
 export const Transaction = ({
   type,
   date,
-  tx,
+  hash,
   amount,
   block,
   currentValueInUSD,
-  status,
   mempool,
   timeTillUnlocked,
-  fee = 0,
+  fee,
 }: TransactionProps) => {
-  const first = tx.substring(0, 4);
-  const last = tx.substring(tx.length - 4);
+  const first = hash.substring(0, 4);
+  const last = hash.substring(hash.length - 4);
   const truncated = first + "...." + last;
 
   const inUsd = isNaN(parseFloat(currentValueInUSD))
