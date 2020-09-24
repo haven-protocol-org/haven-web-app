@@ -13,7 +13,9 @@ import {
   Cancel,
   Body,
   Route,
-  Label
+  Label,
+  Tabs,
+  Tab,
 } from "./styles";
 import { Spinner } from "../../spinner";
 
@@ -31,7 +33,12 @@ const Auth = ({
   step,
   width,
   loading,
-  disable
+  disable,
+  active,
+  selectSeed,
+  selectedSeed,
+  selectKeystore,
+  selectedKeystore,
 }) => {
   return (
     <Container>
@@ -39,6 +46,14 @@ const Auth = ({
         <Title>{title}</Title>
         <Description>{description}</Description>
       </Header>
+      <Tabs>
+        <Tab active={selectedSeed} onClick={selectSeed}>
+          Seed Phrase
+        </Tab>
+        <Tab active={!selectedSeed} onClick={selectKeystore}>
+          Keystore File
+        </Tab>
+      </Tabs>
       <Main>
         <Body>{children}</Body>
         <Buttons>
