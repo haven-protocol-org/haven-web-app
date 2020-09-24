@@ -13,10 +13,10 @@ import {
 import React, { Component } from "react";
 import { getTransfers } from "../../actions";
 import { connect } from "react-redux";
-import { Transaction, TransactionProps } from "shared/components/transaction";
+import { Transaction, TransactionProps } from "shared/components/tx-history/component";
 import Header from "shared/components/_layout/header/index.js";
 import { selectBlockHeight } from "../../../../shared/reducers/chain";
-import { getTransferListByTicker } from "shared/reducers/xTransferList";
+import { selectTransferListByTicker } from "shared/reducers/xTransferList";
 import { withRouter } from "react-router";
 import { Ticker } from "shared/reducers/types";
 import { DesktopAppState } from "platforms/desktop/reducers";
@@ -103,7 +103,7 @@ class TxHistoryContainer extends Component<TxHistoryProps, any> {
 }
 
 const mapStateToProps = (state: DesktopAppState, props: any) => ({
-  transferList: getTransferListByTicker(state, props.match.params.id),
+  transferList: selectTransferListByTicker(state, props.match.params.id),
   height: selectBlockHeight(state),
   rates: state.blockHeaderExchangeRate,
 });

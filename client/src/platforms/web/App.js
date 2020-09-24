@@ -1,7 +1,7 @@
 // Library Imports
 import React, { Component, Suspense, lazy } from "react";
 import { Router } from "react-router-dom";
-import { ThemeProvider } from "styled-components";
+import { ThemeProvider } from "shared/components/tx-history/component/node_modules/styled-components";
 import { connect } from "react-redux";
 import { history } from "../../utility/history.js";
 

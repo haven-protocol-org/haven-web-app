@@ -118,7 +118,7 @@ export class HavenWalletListener extends MoneroWalletListener  {
      */
     onOutputReceived(output: any): void {
 
-        console.log('hey you received some money');
+        console.log('Hey you received some money');
 
     }
     /**
@@ -128,7 +128,7 @@ export class HavenWalletListener extends MoneroWalletListener  {
      */
     onOutputSpent(output: any): void {
 
-        console.log('hey you sent some money');
+        console.log('Hey you sent some money');
 
     }
 }

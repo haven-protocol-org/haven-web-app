@@ -35,7 +35,7 @@ const fetching = (
 const list = (state = INITAL_STATE, action: AnyAction): MoneroTxWallet[] => {
   switch (action.type) {
     case GET_TRANSFERS_SUCCEED:
-      return { ...action.payload };
+      return action.payload;
     default:
       return state;
   }
@@ -71,9 +71,10 @@ export const selectTransferListByTicker = (
       txEntry.height = walletTx.getHeight();
       txEntry.unlockHeight = walletTx.getUnlockHeight();
       txEntry.mempool = walletTx.inTxPool();
+      txEntry.isIncoming = true;
       txEntry.isConfirmed = walletTx.isConfirmed();
       txEntry.isMinerTx = walletTx.isMinerTx();
-      txEntry.timestamp = walletTx.getReceivedTimestamp();
+      txEntry.timestamp = walletTx.isConfirmed() ? walletTx.getBlock().getTimestamp() :  walletTx.getReceivedTimestamp();
       list.push(txEntry as TxEntry);
 
 
@@ -82,14 +83,16 @@ export const selectTransferListByTicker = (
     if (outgoing !== undefined && outgoing.getCurrency()  === tickerId) {
 
       const txEntry: Partial<TxEntry> = {};
+      txEntry.hash = walletTx.getHash();
       txEntry.amount =  bigIntegerToBigInt(walletTx.getOutgoingAmount());
       txEntry.fee = bigIntegerToBigInt(walletTx.getFee());
       txEntry.height = walletTx.getHeight();
       txEntry.unlockHeight = walletTx.getUnlockHeight();
+      txEntry.isIncoming = false;
       txEntry.mempool = walletTx.inTxPool();
       txEntry.isConfirmed = walletTx.isConfirmed();
       txEntry.isMinerTx = walletTx.isMinerTx();
-      txEntry.timestamp = walletTx.getLastRelayedTimestamp();
+      txEntry.timestamp = walletTx.isConfirmed() ? walletTx.getBlock().getTimestamp() :  walletTx.getLastRelayedTimestamp();
       list.push(txEntry as TxEntry);
 
 

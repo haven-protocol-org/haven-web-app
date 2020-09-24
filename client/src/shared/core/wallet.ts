@@ -134,7 +134,7 @@ export const getTransfers = async() => {
     return wallet.getTransfers();
 } 
 
-export const getTxs = () => {
+export const getTxs = async() => {
 
     //@ts-ignore    
     return wallet.getTxs();

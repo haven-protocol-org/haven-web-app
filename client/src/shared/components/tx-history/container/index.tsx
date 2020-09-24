@@ -140,7 +140,7 @@ const prepareTxInfo = (
 
   // when unlock_time is 0 we have a regular tx which is unlocked after 10 confirmations
   if (tx.unlockHeight === 0) {
-    blocksTillUnlocked = Math.max(currentHeight - tx.height + 10,0);
+    blocksTillUnlocked = Math.max(tx.height + 10 - currentHeight,0);
   }
   // if unlock_time is higher than transaction height then we expect a mining
   // income where unlock_time is the index of the block where it is unlocked

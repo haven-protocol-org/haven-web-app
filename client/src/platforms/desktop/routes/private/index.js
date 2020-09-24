@@ -5,7 +5,7 @@ import { Redirect, Route } from "react-router-dom";
 // Relative Imports
 
 import { AssetsDesktop } from "../../pages/_wallet/assets";
-import { DetailsDesktop } from "../../pages/_wallet/details";
+import { HavenDetails } from "../../pages/_wallet/details";
 import { ExchangePage } from "../../../../shared/pages/_wallet/exchange";
 import { HavenTransfer } from "../../pages/_wallet/transfer";
 import { SettingsDesktop } from "../../pages/_wallet/settings";
@@ -38,7 +38,7 @@ class PrivateRoutes extends Component {
           <Route
             path={`${match.url}/assets/:id`}
             exact
-            component={DetailsDesktop}
+            component={HavenDetails}
           />
           <Route
             path={`${match.url}/transfer`}
