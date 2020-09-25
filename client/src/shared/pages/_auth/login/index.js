@@ -97,8 +97,8 @@ export default class Login extends Component {
           {selectSeed ? (
             <>
               <Seed
-                label="Seed Phrase or Private Spend Key"
-                placeholder="Enter your 25 word seed phrase or Private Spend Key..."
+                label="Seed Phrase"
+                placeholder="Enter your 25 word seed phrase.."
                 name="seed_phrase"
                 value={seed_phrase}
                 error={error}

@@ -21,7 +21,7 @@ import {
 } from "./styles";
 import { Spinner } from "../../spinner";
 
-const MultiCreate = (props) => {
+const MultiRestore = (props) => {
   return (
     <Container>
       <Header>
@@ -44,10 +44,11 @@ const MultiCreate = (props) => {
           ) : (
             <Back onClick={props.prevStep}>Back</Back>
           )}
-          {!props.loading && props.selectedCreate ? (
+
+          {!props.loading && props.selectedRestore ? (
             <div>
               <Submit onClick={props.nextStep} disabled={props.disabled}>
-                {(props.step === 1 && "Create") ||
+                {(props.step === 1 && "Restore") ||
                   (props.step === 2 && "Next") ||
                   (props.step === 3 && "Next") ||
                   (props.step === 4 && "Submit")}
@@ -68,4 +69,4 @@ const MultiCreate = (props) => {
   );
 };
 
-export default MultiCreate;
+export default MultiRestore;

@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 
 // Relative Imports
-import { Information } from "../../../../assets/styles/type.js";
+
 import Seed from "../../_inputs/seed";
 
 class VerifySeed extends Component {
@@ -44,13 +44,6 @@ class VerifySeed extends Component {
           action={action}
           actionEvent={onClick}
         />
-
-        <Information>
-          Please verify the seed phrase you were provided on the previous step.
-          This will ensure that you've saved it correctly and will enable you to
-          restore the vault and all of its funds. Do not share this with anyone
-          as it provides full access to your vault and all of its assets.
-        </Information>
       </>
     );
   }
