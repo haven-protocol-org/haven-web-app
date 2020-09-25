@@ -47,9 +47,10 @@ const MultiCreate = (props) => {
           {!props.loading ? (
             <div>
               <Submit onClick={props.nextStep} disabled={props.disabled}>
-                {(props.step === 1 && "Next") ||
-                  (props.step === 2 && "Verify") ||
-                  (props.step === 3 && "Confirm")}
+                {(props.step === 1 && "Create") ||
+                  (props.step === 2 && "Next") ||
+                  (props.step === 3 && "Next") ||
+                  (props.step === 4 && "Submit")}
               </Submit>
             </div>
           ) : (

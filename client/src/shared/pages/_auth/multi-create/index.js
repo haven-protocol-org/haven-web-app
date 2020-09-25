@@ -7,7 +7,7 @@ import Input from "../../../components/_inputs/input";
 import Toggle from "../../../components/_inputs/toggle";
 import { Information } from "../../../../assets/styles/type.js";
 
-import Placeholder from "../../../components/_create/placeholder";
+import VaultFile from "../../../components/_create/vault_file";
 import CreateSeed from "../../../components/_create/create_seed";
 import VerifySeed from "../../../components/_create/verify_seed";
 import { Container } from "./styles";
@@ -29,6 +29,7 @@ export class CreateWebComponent extends Component {
     // Create Vault
     create_vault_name: "",
     create_vault_password: "",
+    keyStoreFile: "",
   };
 
   componentDidMount() {
@@ -45,14 +46,13 @@ export class CreateWebComponent extends Component {
 
   nextStep = () => {
     const { step } = this.state;
-    const stepThree = step === 3;
 
     // Until step three incremennt the steps
-    if (step < 3) {
+    if (step < 4) {
       this.setState({ step: step + 1 });
     }
     // On step three, if seed is invalid display error messsage for 2s
-    else if (stepThree) {
+    else if (step === 4) {
       const { mnemonicString, verify_seed } = this.state;
 
       const validationSucceed = verify_seed === mnemonicString;
@@ -82,9 +82,16 @@ export class CreateWebComponent extends Component {
   };
 
   showPassword = () => {
-    alert("ALET");
     this.setState({
       reveal: !this.state.reveal,
+    });
+  };
+
+  handleFileChange = (event) => {
+    alert("HERE");
+    const fileUploaded = event.target.files[0];
+    this.setState({
+      keyStoreFile: fileUploaded.name,
     });
   };
 
@@ -128,14 +135,18 @@ export class CreateWebComponent extends Component {
       case 2:
         return (
           <>
-            <CreateSeed
-              value={this.state.mnemonicString}
-              rows={windowWidth < 600 ? "6" : "4"}
-              readOnly={true}
-            />
+            <VaultFile onChange={this.handleFileChange} />;
           </>
         );
       case 3:
+        return (
+          <CreateSeed
+            value={this.state.mnemonicString}
+            rows={windowWidth < 600 ? "6" : "4"}
+            readOnly={true}
+          />
+        );
+      case 4:
         return (
           <VerifySeed
             label="Verify Seed Phrase"
@@ -175,7 +186,7 @@ export class CreateWebComponent extends Component {
 
   render() {
     const { step, verify_seed } = this.state;
-    const disabled = step === 3 && verify_seed === "";
+    const disabled = step === 4 && verify_seed === "";
 
     return (
       <Container>
@@ -195,7 +206,7 @@ export class CreateWebComponent extends Component {
           selectedCreate={this.state.selectedCreate}
           selectedRestore={this.state.selectedRestore}
         >
-          <>{this.handleSwitch()}</>
+          {this.state.selectedCreate ? this.handleSwitch() : <div />}
         </MultiCreate>
       </Container>
     );

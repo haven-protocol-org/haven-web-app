@@ -72,7 +72,6 @@ export default class Login extends Component {
 
   handleFileChange = (event) => {
     const fileUploaded = event.target.files[0];
-    console.log("fileUploaded", fileUploaded);
     this.setState({
       keyStoreFile: fileUploaded.name,
     });

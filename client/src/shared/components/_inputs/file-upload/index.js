@@ -11,12 +11,7 @@ const FileUpload = ({ onChange, handleClick, keyStoreFile }) => {
         {keyStoreFile === ""
           ? `Click here to choose your Keystore`
           : `You uploaded ${keyStoreFile}. Click to change`}
-        <Button
-          id="file-upload"
-          onClick={handleClick}
-          type="file"
-          onChange={onChange}
-        />
+        <Button id="file-upload" type="file" onChange={onChange} />
       </Label>
     </Container>
   );
