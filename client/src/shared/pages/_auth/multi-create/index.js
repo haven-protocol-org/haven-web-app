@@ -13,7 +13,6 @@ import VerifySeed from "../../../components/_create/verify_seed";
 import { Container } from "./styles";
 import { decrypt } from "../../../../utility/utility-encrypt";
 import PropTypes from "prop-types";
-import { readText } from "../../../../vendor/clipboard/clipboard-polyfill";
 
 export class CreateWebComponent extends Component {
   state = {
@@ -133,11 +132,7 @@ export class CreateWebComponent extends Component {
           </>
         );
       case 2:
-        return (
-          <>
-            <VaultFile onChange={this.handleFileChange} />;
-          </>
-        );
+        return <VaultFile onChange={this.handleFileChange} />;
       case 3:
         return (
           <CreateSeed
@@ -206,7 +201,11 @@ export class CreateWebComponent extends Component {
           selectedCreate={this.state.selectedCreate}
           selectedRestore={this.state.selectedRestore}
         >
-          {this.state.selectedCreate ? this.handleSwitch() : <div />}
+          {this.state.selectedCreate ? (
+            this.handleSwitch()
+          ) : (
+            <VaultFile onChange={this.handleFileChange} />
+          )}
         </MultiCreate>
       </Container>
     );

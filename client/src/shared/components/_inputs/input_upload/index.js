@@ -2,42 +2,48 @@
 import React from "react";
 
 // Relative Imports
-import { Container, Field, Labels, Wrapped, Button, Labeled } from "./styles";
-import { Label, Error } from "../../../../assets/styles/type.js";
+import {
+  Container,
+  Field,
+  Labels,
+  Wrapped,
+  Upload,
+  Download,
+  Labeled,
+} from "./styles";
+import { Label } from "../../../../assets/styles/type.js";
+
+// NOTE: This is a non input, that looks like an input for consistency purposes
 
 const InputUpload = ({
   type,
-  placeholder,
   label,
-  error,
-  onChange,
   name,
   value,
   width,
-  readOnly,
   button,
   onClick,
+  action,
 }) => {
   return (
     <Container width={width}>
-      'heere'
       <Labels>
         <Label>{label}</Label>
-        <Error>{error}</Error>
       </Labels>
       <Wrapped>
-        <Field
-          value={value}
-          name={name}
-          onChange={onChange}
-          placeholder={placeholder}
-          readOnly={readOnly}
-        />
-        <Labeled htmlfor="file-upload">
-          <Button id="file-upload" type="file" onChange={onChange}>
-            {button}
-          </Button>
-        </Labeled>
+        <Field>{value}</Field>
+        {action === "download" && (
+          <Labeled>
+            <Download href={value} download>
+              {button}
+            </Download>
+          </Labeled>
+        )}
+        {action === "upload" && (
+          <Labeled>
+            <Upload>{button}</Upload>
+          </Labeled>
+        )}
       </Wrapped>
     </Container>
   );

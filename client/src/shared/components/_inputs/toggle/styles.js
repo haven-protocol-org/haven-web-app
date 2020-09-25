@@ -29,7 +29,8 @@ export const Button = styled.div`
   background: #7289da;
   margin-right: 20px;
   margin-left: 20px;
-  padding: 4px 12px;
+  padding: 8px 16px;
+  width: 64px;
   border-radius: 2px;
   font-size: 11px;
   color: #fff;
@@ -37,6 +38,7 @@ export const Button = styled.div`
   text-transform: uppercase;
   display: flex;
   align-items: center;
+  justify-content: center;
 
   &:hover {
     cursor: pointer;

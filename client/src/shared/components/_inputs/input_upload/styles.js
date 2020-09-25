@@ -25,19 +25,41 @@ export const Wrapped = styled.div`
   -webkit-appearance: none;
 `;
 
-export const Button = styled.input`
+export const Download = styled.a`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 8px 16px;
+  padding: 8px 12px;
   width: 64px;
   background: ${(props) => props.theme.button.primary};
   color: white;
-  margin-right: 16px;
+  margin-right: 4px;
   border-radius: 2px;
   font-size: 12px;
-
   text-transform: uppercase;
+  text-decoration: none;
+  transition: 500ms;
+  font-family: Inter-Regular;
+
+  &:hover {
+    background: ${(props) => props.theme.button.primary_hover};
+    cursor: pointer;
+    transition: 500ms;
+  }
+`;
+export const Upload = styled.input`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  width: 64px;
+  background: ${(props) => props.theme.button.primary};
+  color: white;
+  margin-right: 4px;
+  border-radius: 2px;
+  font-size: 12px;
+  text-transform: uppercase;
+  text-decoration: none;
   transition: 500ms;
   font-family: Inter-Regular;
 
@@ -89,5 +111,5 @@ export const Labeled = styled.label`
   height: 80%;
   width: 90 %;
   font-size: 14px;
-  background: red;
+  text-decoration: none;
 `;
