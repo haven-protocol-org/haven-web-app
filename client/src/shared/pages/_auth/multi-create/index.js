@@ -138,7 +138,6 @@ export class CreateWebComponent extends Component {
               onChange={this.handleChange}
             />
             <Toggle
-              // @ts-ignore
               label="Vault Password"
               placeholder="Create a Vault password"
               name="create_vault_password"
@@ -243,7 +242,7 @@ export class CreateWebComponent extends Component {
               label="Vault Password"
               placeholder="Create a Vault password"
               name="create_vault_password"
-              button="SHOW"
+              button="show"
               type={this.state.reveal === true ? "text" : "password"}
               reveal={this.state.reveal}
               value={this.state.create_vault_password}
@@ -278,17 +277,25 @@ export class CreateWebComponent extends Component {
         );
       case 4:
         return (
-          <VerifySeed
-            label="Enter Seed Phrase"
-            name="verify_seed"
-            placeholder="Enter your 24 word seed phrase"
-            value={verify_seed}
-            error={error}
-            rows={windowWidth < 600 ? "6" : "4"}
-            action={this.state.action}
-            onChange={this.handleChange}
-            onClick={this.handlePaste}
-          />
+          <>
+            <Toggle
+              label="Vault Password"
+              placeholder="Create a Vault password"
+              name="create_vault_password"
+              button="show"
+              type={this.state.reveal === true ? "text" : "password"}
+              reveal={this.state.reveal}
+              value={this.state.create_vault_password}
+              onChange={this.handleChange}
+              onClick={this.showPassword}
+            />
+            <Information>
+              Please enter your password to confirm you have saved it correctly.
+              Before clicking Submit please ensure that you have saved your
+              Vault File in a safe and secure place as you will need it when you
+              login next.
+            </Information>
+          </>
         );
       default:
     }
@@ -326,7 +333,6 @@ export class CreateWebComponent extends Component {
             link="/"
             route="Sign In!"
             label="Have a Vault?"
-            submit="Generate"
             step={step}
             nextStep={this.nextCreateStep}
             prevStep={this.prevCreateStep}
@@ -343,14 +349,12 @@ export class CreateWebComponent extends Component {
           <MultiRestore
             title="Create a Vault"
             link="/"
-            route="Sign In!"
+            route="Sigin"
             label="Have a Vault?"
-            submit="Generate"
             step={step}
-            nextStep={this.nextCreateStep}
-            prevStep={this.prevCreateStep}
+            nextStep={this.nextRestoreStep}
+            prevStep={this.prevRestoreStep}
             disabled={disabled}
-            loading={this.props.isRequestingLogin}
             selectCreate={this.selectCreate}
             selectRestore={this.selectRestore}
             selectedCreate={this.state.selectedCreate}

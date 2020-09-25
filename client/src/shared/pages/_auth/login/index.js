@@ -84,7 +84,7 @@ export default class Login extends Component {
           title="Vault Login"
           link="/create"
           route="Create or Restore a Vault"
-          label="Don’t have a Vault?"
+          label="Need a Vault?"
           disable={seed_phrase === "" ? true : this.props.isRequestingLogin}
           onClick={() => this.handleLogin()}
           loading={this.props.isRequestingLogin}

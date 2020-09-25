@@ -28,7 +28,7 @@ export const Wrapper = styled.div`
 export const Button = styled.div`
   background: ${(props) => props.theme.button.primary};
   margin-right: 16px;
-  margin-left: 20px;
+  margin-left: 16px;
   padding: 8px 12px;
   width: 64px;
   border-radius: 2px;
