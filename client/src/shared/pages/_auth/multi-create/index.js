@@ -331,7 +331,7 @@ export class CreateWebComponent extends Component {
           <MultiCreate
             title="Create a Vault"
             link="/"
-            route="Sign In!"
+            route="Sign In"
             label="Have a Vault?"
             step={step}
             nextStep={this.nextCreateStep}
@@ -349,7 +349,7 @@ export class CreateWebComponent extends Component {
           <MultiRestore
             title="Create a Vault"
             link="/"
-            route="Sigin"
+            route="Sign In"
             label="Have a Vault?"
             step={step}
             nextStep={this.nextRestoreStep}

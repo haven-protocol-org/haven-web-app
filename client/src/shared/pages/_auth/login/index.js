@@ -118,7 +118,7 @@ export default class Login extends Component {
             <>
               <Toggle
                 label="Vault Password"
-                placeholder="Enter vault password"
+                placeholder="Enter Vault password"
                 name="vault_file"
                 value={vault_file}
                 error={error}
