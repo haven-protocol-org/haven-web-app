@@ -13,6 +13,8 @@ import VerifySeed from "../../../components/_create/verify_seed";
 import { Container } from "./styles";
 import { decrypt } from "../../../../utility/utility-encrypt";
 import PropTypes from "prop-types";
+import InputDownload from "../../../components/_inputs/input_download";
+import testFile from "../../../../assets/whitepapers/wp_english.png";
 
 export class CreateWebComponent extends Component {
   state = {
@@ -87,8 +89,8 @@ export class CreateWebComponent extends Component {
   };
 
   handleFileChange = (event) => {
-    alert("HERE");
     const fileUploaded = event.target.files[0];
+    console.log("fileUploaded", fileUploaded);
     this.setState({
       keyStoreFile: fileUploaded.name,
     });
@@ -132,7 +134,11 @@ export class CreateWebComponent extends Component {
           </>
         );
       case 2:
-        return <VaultFile onChange={this.handleFileChange} />;
+        return (
+          <>
+            <InputDownload vaule={testFile} onChange={this.handleFileChange} />
+          </>
+        );
       case 3:
         return (
           <CreateSeed
@@ -204,7 +210,11 @@ export class CreateWebComponent extends Component {
           {this.state.selectedCreate ? (
             this.handleSwitch()
           ) : (
-            <VaultFile onChange={this.handleFileChange} />
+            <InputDownload
+              value={testFile}
+              action="download"
+              onChange={this.handleFileChange}
+            />
           )}
         </MultiCreate>
       </Container>

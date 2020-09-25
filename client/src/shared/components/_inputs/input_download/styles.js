@@ -33,7 +33,6 @@ export const Wrapped = styled.div`
 //   position: absolute;
 //   z-index: -1;
 // `;
-
 export const Download = styled.a`
   display: flex;
   align-items: center;
@@ -57,14 +56,14 @@ export const Download = styled.a`
   }
 `;
 
-export const Upload = styled.input`
-  width: 68px;
-  height: auto;
-  opacity: 0;
-  overflow: hidden;
-  position: absolute;
-  z-index: -1;
-`;
+// export const Upload = styled.input`
+//   width: 68px;
+//   height: auto;
+//   opacity: 0;
+//   overflow: hidden;
+//   position: absolute;
+//   z-index: -1;
+// `;
 // export const Upload = styled.input`
 //   display: flex;
 //   align-items: center;

@@ -2,12 +2,12 @@
 import React from "react";
 
 // Relative Imports
-import { Container, Field, Labels, Wrapped, Upload, Labeled } from "./styles";
+import { Container, Field, Labels, Wrapped, Download, Labeled } from "./styles";
 import { Label } from "../../../../assets/styles/type.js";
 
 // NOTE: This is a non input, that looks like an input for consistency purposes
 
-const InputUpload = ({
+const InputDownload = ({
   type,
   label,
   name,
@@ -25,13 +25,14 @@ const InputUpload = ({
       </Labels>
       <Wrapped>
         <Field>{value}</Field>
-        <Labeled htmlfor="file-upload">
-          Upload
-          <Upload id="file-upload" type="file" onChange={onChange} />
+        <Labeled>
+          <Download href={value} download>
+            Save
+          </Download>
         </Labeled>
       </Wrapped>
     </Container>
   );
 };
 
-export default InputUpload;
+export default InputDownload;

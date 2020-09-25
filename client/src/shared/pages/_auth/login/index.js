@@ -8,7 +8,8 @@ import FileUpload from "../../../components/_inputs/file-upload";
 import Toggle from "../../../components/_inputs/toggle";
 import Seed from "../../../components/_inputs/seed";
 import { Information } from "../../../../assets/styles/type.js";
-import { readText } from "../../../../vendor/clipboard/clipboard-polyfill";
+import VaultFile from "../../../components/_create/vault_file/index.js";
+import InputUpload from "../../../components/_inputs/input_upload/index.js";
 
 export default class Login extends Component {
   state = {
@@ -46,28 +47,6 @@ export default class Login extends Component {
     // Deconstruct state
     const { seed_phrase } = this.state;
     this.props.login(seed_phrase, "secret");
-  };
-
-  handlePaste = () => {
-    readText()
-      .then((response) => {
-        this.setState({
-          seed_phrase: response,
-          action: "Pasted from Clipboard",
-        });
-      })
-      .then(
-        setTimeout(() => {
-          this.setState({
-            action: "Paste from Clipboard",
-          });
-        }, 1000)
-      )
-      .catch((error) => {
-        this.setState({
-          error: "Clipboard is empty",
-        });
-      });
   };
 
   handleFileChange = (event) => {
@@ -149,8 +128,16 @@ export default class Login extends Component {
                 onClick={this.showPassword}
                 reveal={this.state.reveal}
               />
-              <FileUpload
-                title="Upload a file"
+              <InputUpload
+                label="Vault File"
+                value={
+                  this.state.keyStoreFile === ""
+                    ? "Select Vault File"
+                    : this.state.keyStoreFile
+                }
+                button="Select"
+                type="file"
+                action="upload"
                 onChange={this.handleFileChange}
                 keyStoreFile={this.state.keyStoreFile}
               />

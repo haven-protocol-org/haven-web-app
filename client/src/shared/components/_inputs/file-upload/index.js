@@ -4,7 +4,7 @@ import React from "react";
 // Relative Imports
 import { Container, Label, Button } from "./styles";
 
-const FileUpload = ({ onChange, handleClick, keyStoreFile }) => {
+const FileUpload = ({ onChange, keyStoreFile }) => {
   return (
     <Container>
       <Label htmlfor="file-upload">
