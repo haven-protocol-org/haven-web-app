@@ -136,7 +136,11 @@ export class CreateWebComponent extends Component {
       case 2:
         return (
           <>
-            <InputDownload vaule={testFile} onChange={this.handleFileChange} />
+            <InputDownload
+              label="Vault File"
+              value={testFile}
+              onChange={this.handleFileChange}
+            />
           </>
         );
       case 3:
@@ -211,6 +215,7 @@ export class CreateWebComponent extends Component {
             this.handleSwitch()
           ) : (
             <InputDownload
+              label="Vault File"
               value={testFile}
               action="download"
               onChange={this.handleFileChange}

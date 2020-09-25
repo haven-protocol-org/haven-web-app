@@ -25,11 +25,9 @@ const InputDownload = ({
       </Labels>
       <Wrapped>
         <Field>{value}</Field>
-        <Labeled>
-          <Download href={value} download>
-            Save
-          </Download>
-        </Labeled>
+        <Download href={value} download>
+          Save
+        </Download>
       </Wrapped>
     </Container>
   );

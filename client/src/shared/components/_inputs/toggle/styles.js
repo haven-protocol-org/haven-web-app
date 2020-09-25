@@ -26,10 +26,10 @@ export const Wrapper = styled.div`
 `;
 
 export const Button = styled.div`
-  background: #7289da;
-  margin-right: 20px;
+  background: ${(props) => props.theme.button.primary};
+  margin-right: 16px;
   margin-left: 20px;
-  padding: 8px 16px;
+  padding: 8px 12px;
   width: 64px;
   border-radius: 2px;
   font-size: 11px;
@@ -39,9 +39,12 @@ export const Button = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: 500ms;
 
   &:hover {
+    transition: 500ms;
     cursor: pointer;
+    background: ${(props) => props.theme.button.primary_hover};
   }
 `;
 

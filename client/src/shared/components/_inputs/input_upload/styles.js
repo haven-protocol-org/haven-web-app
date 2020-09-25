@@ -25,15 +25,6 @@ export const Wrapped = styled.div`
   -webkit-appearance: none;
 `;
 
-// export const Download = styled.a`
-//   width: 68px;
-//   height: auto;
-//   opacity: 0;
-//   overflow: hidden;
-//   position: absolute;
-//   z-index: -1;
-// `;
-
 export const Download = styled.a`
   display: flex;
   align-items: center;
@@ -65,28 +56,6 @@ export const Upload = styled.input`
   position: absolute;
   z-index: -1;
 `;
-// export const Upload = styled.input`
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   padding: 8px 12px;
-//   width: 64px;
-//   background: ${(props) => props.theme.button.primary};
-//   color: white;
-//   margin-right: 4px;
-//   border-radius: 2px;
-//   font-size: 12px;
-//   text-transform: uppercase;
-//   text-decoration: none;
-//   transition: 500ms;
-//   font-family: Inter-Regular;
-//
-//   &:hover {
-//     background: ${(props) => props.theme.button.primary_hover};
-//     cursor: pointer;
-//     transition: 500ms;
-//   }
-// `;
 
 export const Field = styled.div`
   border: none;
@@ -132,4 +101,11 @@ export const Labeled = styled.label`
   border-radius: 2px;
   font-size: 11px;
   text-transform: uppercase;
+  transition: 500ms;
+
+  &:hover {
+    transition: 500ms;
+    cursor: pointer;
+    background: ${(props) => props.theme.button.primary_hover};
+  }
 `;

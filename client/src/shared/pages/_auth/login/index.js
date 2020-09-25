@@ -4,11 +4,9 @@ import PropTypes from "prop-types";
 // Relative Imports
 import { Container } from "./styles";
 import Auth from "../../../components/_auth/login";
-import FileUpload from "../../../components/_inputs/file-upload";
 import Toggle from "../../../components/_inputs/toggle";
 import Seed from "../../../components/_inputs/seed";
 import { Information } from "../../../../assets/styles/type.js";
-import VaultFile from "../../../components/_create/vault_file/index.js";
 import InputUpload from "../../../components/_inputs/input_upload/index.js";
 
 export default class Login extends Component {
