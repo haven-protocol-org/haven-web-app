@@ -65,7 +65,10 @@ export const Field = styled.div`
   padding: 16px;
   font-family: Inter-Regular;
   font-size: 16px;
-  color: ${(props) => props.theme.input.input_value}
+  color: ${(props) =>
+    props.value === "Select Vault File"
+      ? props.theme.input.input_placeholder
+      : props.theme.input.input_value}
   line-height: 26px;
   outline: none;
   transition: 500ms;
