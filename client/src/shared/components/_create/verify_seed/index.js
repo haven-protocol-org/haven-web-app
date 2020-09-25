@@ -6,12 +6,12 @@ import { Information } from "../../../../assets/styles/type.js";
 import Seed from "../../_inputs/seed";
 
 class VerifySeed extends Component {
-  handleChange = event => {
+  handleChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
 
     this.setState({
-      [name]: value
+      [name]: value,
     });
   };
 
@@ -46,11 +46,10 @@ class VerifySeed extends Component {
         />
 
         <Information>
-          Please verify your Seed Phrase this will ensure that your Seed Phrase
-          has been correctly backed up.{" "}
-          <strong>
-            Store your seed in a safe location and do not share this with anyone
-          </strong>
+          Please verify the seed phrase you were provided on the previous step.
+          This will ensure that you've saved it correctly and will enable you to
+          restore the vault and all of its funds. Do not share this with anyone
+          as it provides full access to your vault and all of its assets.
         </Information>
       </>
     );

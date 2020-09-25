@@ -2,7 +2,11 @@
 import React, { Component } from "react";
 
 // Relative Imports
-import Auth from "../../../components/_auth/multi-create";
+import MultiCreate from "../../../components/_auth/multi-create";
+import Input from "../../../components/_inputs/input";
+import Toggle from "../../../components/_inputs/toggle";
+import { Information } from "../../../../assets/styles/type.js";
+
 import Placeholder from "../../../components/_create/placeholder";
 import CreateSeed from "../../../components/_create/create_seed";
 import VerifySeed from "../../../components/_create/verify_seed";
@@ -18,8 +22,13 @@ export class CreateWebComponent extends Component {
     verify_seed: "",
     mnemonicString: "",
     action: "Paste Seed",
-    selectCreate: true,
-    selectRestore: false,
+    selectedCreate: true,
+    selectedRestore: false,
+    vault_name: "",
+    reveal: false,
+    // Create Vault
+    create_vault_name: "",
+    create_vault_password: "",
   };
 
   componentDidMount() {
@@ -72,26 +81,11 @@ export class CreateWebComponent extends Component {
     });
   };
 
-  handlePaste = () => {
-    readText()
-      .then((response) => {
-        this.setState({
-          verify_seed: response,
-          action: "Seed Pasted",
-        });
-      })
-      .then(
-        setTimeout(() => {
-          this.setState({
-            action: "Paste Seed",
-          });
-        }, 1000)
-      )
-      .catch((error) => {
-        this.setState({
-          error: "Clipboard is empty",
-        });
-      });
+  showPassword = () => {
+    alert("ALET");
+    this.setState({
+      reveal: !this.state.reveal,
+    });
   };
 
   handleSwitch = () => {
@@ -100,14 +94,46 @@ export class CreateWebComponent extends Component {
 
     switch (step) {
       case 1:
-        return <Placeholder platform={"web"} />;
+        return (
+          <>
+            <Input
+              label="Vault Name"
+              placeholder="Create a Vault name"
+              name="create_vault_name"
+              value={this.state.create_vault_name}
+              onChange={this.handleChange}
+            />
+            <Toggle
+              // @ts-ignore
+              label="Vault Password"
+              placeholder="Create a Vault password"
+              name="create_vault_password"
+              button="SHOW"
+              type={this.state.reveal === true ? "text" : "password"}
+              reveal={this.state.reveal}
+              value={this.state.create_vault_password}
+              onChange={this.handleChange}
+              onClick={this.showPassword}
+            />
+            <Information>
+              A Vault name and password are used to generate a secure Vault
+              File. Additionally, you'll also receive a seed phrase so you can
+              recover your funds if you lose your Vault File. If you lose your
+              Vault File and Seed then your funds are lost forever and
+              impossible to recover. Please store them in a safe location when
+              prompted to do so.
+            </Information>
+          </>
+        );
       case 2:
         return (
-          <CreateSeed
-            value={this.state.mnemonicString}
-            rows={windowWidth < 600 ? "6" : "4"}
-            readOnly={true}
-          />
+          <>
+            <CreateSeed
+              value={this.state.mnemonicString}
+              rows={windowWidth < 600 ? "6" : "4"}
+              readOnly={true}
+            />
+          </>
         );
       case 3:
         return (
@@ -129,15 +155,15 @@ export class CreateWebComponent extends Component {
 
   selectCreate = () => {
     this.setState({
-      selectCreate: true,
-      selectRestore: false,
+      selectedCreate: true,
+      selectedRestore: false,
     });
   };
 
   selectRestore = () => {
     this.setState({
-      selectCreate: false,
-      selectRestore: true,
+      selectedCreate: false,
+      selectedRestore: true,
     });
   };
 
@@ -153,7 +179,7 @@ export class CreateWebComponent extends Component {
 
     return (
       <Container>
-        <Auth
+        <MultiCreate
           title="Create a Vault"
           link="/"
           route="Sign In!"
@@ -164,13 +190,13 @@ export class CreateWebComponent extends Component {
           prevStep={this.prevStep}
           disabled={disabled}
           loading={this.props.isRequestingLogin}
-          selectCreate={this.selectcreate}
+          selectCreate={this.selectCreate}
           selectRestore={this.selectRestore}
-          selectedCreate={this.state.selectcreate}
-          selectedRestore={this.state.selectRestore}
+          selectedCreate={this.state.selectedCreate}
+          selectedRestore={this.state.selectedRestore}
         >
           <>{this.handleSwitch()}</>
-        </Auth>
+        </MultiCreate>
       </Container>
     );
   }
