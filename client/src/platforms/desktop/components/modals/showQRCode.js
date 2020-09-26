@@ -1,6 +1,5 @@
 import React from "react";
 import { Modal } from "shared/components/modal";
-import { hideModal } from "shared/actions/modal";
 import QrCode from "../../../../shared/components/qrCode/index.js";
 
 class ShowQRCodeModal extends React {
@@ -14,8 +13,9 @@ class ShowQRCodeModal extends React {
           rightButton="Confirm"
           onConfirm={() => this.onCancel()}
           onCancel={() => this.onCancel()}
-        />
-        <QrCode address={"adddress_goes_here"} />
+        >
+          <QrCode address={"adddress_goes_here"} />
+        </Modal>
       </>
     );
   }
