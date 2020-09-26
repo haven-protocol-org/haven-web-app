@@ -8,6 +8,7 @@ import Body from "../../../components/_layout/body";
 import Header from "../../../components/_layout/header";
 import { SendFunds } from "./send";
 import { AddressEntry } from "shared/reducers/address";
+
 // Relative Imports
 
 interface TransferOwnProps {
