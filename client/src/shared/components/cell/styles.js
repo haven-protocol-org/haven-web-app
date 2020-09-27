@@ -3,12 +3,6 @@ import { Link } from "react-router-dom";
 import media from "../../../assets/styles/media.js";
 import { ReactComponent as ChevronIcon } from "../../../assets/icons/chevron.svg";
 
-// const appear = keyframes`
-//   0% { transform: translateY(-20px);  }
-//   50% { transform: translateY(10px);  }
-//   100% {transform: translateY(0px);   }
-// `;
-
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -148,7 +142,7 @@ export const Ticker = styled.div`
   color: ${(props) => props.theme.type.secondary};
   letter-spacing: 0;
   line-height: 30px;
-  padding-left: 12px;
+  padding-left: 8px;
 
   ${media.mobile`
     padding-left: 0px;
