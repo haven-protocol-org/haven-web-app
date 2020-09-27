@@ -26,15 +26,6 @@ export const Container = styled.div`
   `};
 `;
 
-export const Wrapper = styled.div`
-  height: auto;
-  width: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
-
 export const Value = styled.div`
   width: auto;
   height: 100%;
