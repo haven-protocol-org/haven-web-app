@@ -13,7 +13,6 @@ import Input from "../../../components/_inputs/input";
 
 import { Container } from "./styles";
 import TransferSummary from "shared/components/_summaries/transfer-summary";
-import { isDesktop } from "constants/env";
 // Relative Imports
 
 const xhvOption = { name: "Haven", ticker: Ticker.XHV };

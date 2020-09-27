@@ -9,7 +9,7 @@ import {
 } from "../../platforms/desktop/actions/types";
 import { AnyAction } from "redux";
 import { RPCError } from "shared/reducers/walletSession";
-import { DesktopAppState, HavenAppState } from "platforms/desktop/reducers/index";
+import { HavenAppState } from "platforms/desktop/reducers/index";
 
 export interface WalletCreation {
   isCreated: boolean;
@@ -50,9 +50,7 @@ export const walletCreation = (
 };
 
 export const selectisRequestingWalletCreation = (state: HavenAppState) => {
-  
   return state.walletCreation.isFetching;
-
 };
 
 export const selectErrorMessage = (state: HavenAppState) => {

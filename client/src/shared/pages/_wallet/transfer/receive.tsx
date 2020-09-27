@@ -10,7 +10,6 @@ import { Container } from "./styles";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { AddressEntry } from "shared/reducers/address";
 import { writeText } from "vendor/clipboard/clipboard-polyfill";
-import QrCode from "../../../components/qrCode";
 
 interface OwnAddressState {
   selected: AddressEntry;

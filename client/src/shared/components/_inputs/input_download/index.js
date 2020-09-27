@@ -2,7 +2,7 @@
 import React from "react";
 
 // Relative Imports
-import { Container, Field, Labels, Wrapped, Download, Labeled } from "./styles";
+import { Container, Field, Labels, Wrapped, Download } from "./styles";
 import { Label } from "../../../../assets/styles/type.js";
 
 // NOTE: This is a non input, that looks like an input for consistency purposes

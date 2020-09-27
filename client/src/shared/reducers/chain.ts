@@ -8,7 +8,6 @@ import {
   DesktopAppState,
   HavenAppState,
 } from "platforms/desktop/reducers/index";
-import { selectisLocalNode } from "platforms/desktop/reducers/havenNode";
 import { isDesktop } from "constants/env";
 
 export interface Chain {

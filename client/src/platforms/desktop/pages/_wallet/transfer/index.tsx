@@ -6,14 +6,10 @@ import { Ticker } from "shared/reducers/types";
 import { resetTransferProcess } from "../../../actions";
 import { transferSucceed } from "../../../../../shared/reducers/transferProcess";
 import { createTransfer } from "shared/actions/transfer";
-import { selectPrimaryAddress } from "shared/reducers/address";
 
 class Container extends Component<any, any> {
-
   private sendTicker: Ticker = Ticker.XHV;
-  componentDidMount(): void {
- 
-  }
+  componentDidMount(): void {}
 
   componentDidUpdate(
     prevProps: Readonly<any>,
@@ -21,8 +17,6 @@ class Container extends Component<any, any> {
     snapshot?: any
   ): void {
     if (this.props.transferSucceed) {
-      console.log("ROUTE", this.props.tx.fromTicker);
-
       this.props.resetTransferProcess();
       this.props.history.push("/wallet/assets/" + this.sendTicker);
     }
@@ -58,5 +52,5 @@ export const mapStateToProps = (state: HavenAppState) => ({
 
 export const HavenTransfer = connect(mapStateToProps, {
   createTransfer,
-  resetTransferProcess
+  resetTransferProcess,
 })(Container);

@@ -1,27 +1,4 @@
-import { getTransferRPC } from "../ipc/rpc/rpc";
-
-import { Ticker } from "shared/reducers/types";
-import {
-  GET_TRANSFERS_FAILED,
-  GET_TRANSFERS_FETCHING,
-  GET_TRANSFERS_SUCCEED,
-} from "shared/actions/types";
-
-export const getTransfers = () => {
-
-};
-
-const getTransfersFetching = () => ({
-  type: GET_TRANSFERS_FETCHING,
-  payload: { isFetching: true },
-});
-
-
-
-const getTransfersFailed = (error: any) => ({
-  type: GET_TRANSFERS_FAILED,
-  payload: error,
-});
+export const getTransfers = () => {};
 
 const filterForDoubleEntries = (entries: any[] | undefined) => {
   if (entries === undefined) {
@@ -38,9 +15,6 @@ const filterForDoubleEntries = (entries: any[] | undefined) => {
     );
   });
 };
-
-
-
 
 export const mergeAndSort = (result: {
   [key: string]: any | undefined[];
