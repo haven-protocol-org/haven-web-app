@@ -17,10 +17,12 @@ export const Container = styled.div`
   ${media.laptop`
     order: 3;
     height: 58px;
-    width: 100%;
+    width: auto;
     padding-top: 0px;
     flex-direction: row;
     bottom: 0;
+    right: 0;
+    left: 0;
     position: fixed;
     z-index: 5000;
   `};
@@ -79,7 +81,7 @@ export const Item = styled(NavLink).attrs({
   }
 
   ${media.laptop`
-    width: calc(100vw / 3);
+    width: calc(100vw / 4);
     height: auto;
     font-size: 13px;
     padding: 20px 8px;
