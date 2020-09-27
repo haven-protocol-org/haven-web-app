@@ -8,7 +8,6 @@ import {
 import { INITAL_FETCHING_STATE, XFetching } from "./types";
 import { HavenAppState } from "../../platforms/desktop/reducers";
 import MoneroTxWallet from "haven-wallet-core/src/main/js/wallet/model/MoneroTxWallet";
-import { TransactionProps } from "shared/components/tx-history/component";
 import MoneroIncomingTransfer from "haven-wallet-core/src/main/js/wallet/model/MoneroIncomingTransfer";
 import { TxEntry } from "shared/components/tx-history/container";
 import { bigIntegerToBigInt } from "utility/utility";

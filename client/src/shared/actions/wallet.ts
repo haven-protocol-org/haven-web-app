@@ -1,19 +1,42 @@
-import { IOpenWallet, IMonerRPCConnection, ICreateWallet } from "typings"
-import { getNetworkByName } from "constants/env"
-import { OPEN_WALLET_FETCHING, OPEN_WALLET_FAILED, OPEN_WALLET_SUCCEED, CREATE_WALLET_FAILED, CREATE_WALLET_SUCCEED, CREATE_WALLET_FETCHING, QUERY_MNEMONIC_FOR_WALLET_GENERATION_SUCCEED, VALIDATE_MNEMONIC_SUCCEED, VALIDATE_MNEMONIC_FAILED, RESTORE_WALLET_BY_SEED_FETCHING, RESTORE_WALLET_BY_SEED_SUCCEED, RESTORE_WALLET_BY_SEED_FAILED } from "platforms/desktop/actions/types"
-import { createWallet as createWalletCore, openWallet as openWalletCore, getMnemonic, addWalletListener, getOffshoreBalance, syncWallet, isWalletSynced, getNodeHeight, syncAtOnce, isWalletConnected, getWalletHeight, getChainHeight } from "../core/wallet"
-import { addErrorNotification, addNotificationByMessage } from "./notification"
-import { NotificationType } from "constants/notificationList"
-import { getXHVBalance, getXUSDBalance } from "./balance"
-import { getPrimaryAddress } from "./address"
-import { webWalletConnection } from "platforms/web/nodes"
-import { createDaemonConnection } from "./havend"
-import { updateHavenFeatures } from "./havenFeature"
-import { SET_WALLET_CONNECTION_STATE } from "./types"
-import { Chain } from "shared/reducers/chain"
-import { onWalletSyncUpdateSucceed } from "./chain"
-import { HavenAppState } from "platforms/desktop/reducers"
-import { getAllTransfers } from "./transferHistory"
+import { IOpenWallet, ICreateWallet } from "typings";
+import { getNetworkByName } from "constants/env";
+import {
+  OPEN_WALLET_FETCHING,
+  OPEN_WALLET_FAILED,
+  OPEN_WALLET_SUCCEED,
+  CREATE_WALLET_FAILED,
+  CREATE_WALLET_SUCCEED,
+  CREATE_WALLET_FETCHING,
+  QUERY_MNEMONIC_FOR_WALLET_GENERATION_SUCCEED,
+  VALIDATE_MNEMONIC_SUCCEED,
+  VALIDATE_MNEMONIC_FAILED,
+  RESTORE_WALLET_BY_SEED_FETCHING,
+  RESTORE_WALLET_BY_SEED_SUCCEED,
+  RESTORE_WALLET_BY_SEED_FAILED,
+} from "platforms/desktop/actions/types";
+import {
+  createWallet as createWalletCore,
+  openWallet as openWalletCore,
+  getMnemonic,
+  addWalletListener,
+  syncWallet,
+  getNodeHeight,
+  isWalletConnected,
+  getWalletHeight,
+  getChainHeight,
+} from "../core/wallet";
+import { addNotificationByMessage } from "./notification";
+import { NotificationType } from "constants/notificationList";
+import { getXHVBalance, getXUSDBalance } from "./balance";
+import { getPrimaryAddress } from "./address";
+import { webWalletConnection } from "platforms/web/nodes";
+import { createDaemonConnection } from "./havend";
+import { updateHavenFeatures } from "./havenFeature";
+import { SET_WALLET_CONNECTION_STATE } from "./types";
+import { Chain } from "shared/reducers/chain";
+import { onWalletSyncUpdateSucceed } from "./chain";
+import { HavenAppState } from "platforms/desktop/reducers";
+import { getAllTransfers } from "./transferHistory";
 
 /** collection of actions to open, create and store wallet */
 
@@ -193,35 +216,29 @@ const startWalletSession = () => {
 // init some basic data before wallet listener
 // will be responsible for data updates
 const initReduxWallet = () => {
+  return async (dispatch: any) => {
+    dispatch(getXHVBalance());
+    dispatch(getXUSDBalance());
+    dispatch(getAllTransfers());
+    dispatch(getPrimaryAddress());
+    const isConnected = await isWalletConnected();
+    dispatch(setWalletConnectionState(isConnected));
+    const chainHeight = await getChainHeight();
+    const nodeHeight = await getNodeHeight();
+    const walletHeight = await getWalletHeight();
 
+    const chainHeights: Partial<Chain> = {
+      walletHeight,
+      nodeHeight,
+      chainHeight,
+    } as Partial<Chain>;
 
-    return async(dispatch: any) => {
+    dispatch(onWalletSyncUpdateSucceed(chainHeights));
+    dispatch(updateHavenFeatures(nodeHeight));
 
-        dispatch(getXHVBalance());
-        dispatch(getXUSDBalance());
-        dispatch(getAllTransfers());
-        dispatch(getPrimaryAddress());
-        const isConnected = await isWalletConnected();
-        dispatch(setWalletConnectionState(isConnected));
-        const chainHeight = await getChainHeight();
-        const nodeHeight = await getNodeHeight();
-        const walletHeight = await getWalletHeight();
-
-        const chainHeights: Partial<Chain> = {
-            walletHeight, nodeHeight, chainHeight
-        } as Partial<Chain>
-        
-        dispatch(onWalletSyncUpdateSucceed(chainHeights))
-        dispatch(updateHavenFeatures(nodeHeight));
-
-        return;
-
-
-
-    }
-        
-
-}
+    return;
+  };
+};
 
 const openWalletFetching = () => {
   return { type: OPEN_WALLET_FETCHING };

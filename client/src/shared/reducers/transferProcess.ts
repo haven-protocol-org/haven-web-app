@@ -8,7 +8,7 @@ import {
   TRANSFER_SUCCEED,
 } from "platforms/desktop/actions/types";
 import { AnyAction } from "redux";
-import { DesktopAppState, HavenAppState } from "../../platforms/desktop/reducers/index";
+import { HavenAppState } from "../../platforms/desktop/reducers/index";
 import { Ticker } from "shared/reducers/types";
 
 export interface TxProcessInfo {
