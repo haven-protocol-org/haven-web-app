@@ -83,7 +83,7 @@ export default class Login extends Component {
         <Auth
           title="Vault Login"
           link="/create"
-          route="Create or Restore a Vault"
+          route="Create or Restore"
           label="Need a Vault?"
           disable={seed_phrase === "" ? true : this.props.isRequestingLogin}
           onClick={() => this.handleLogin()}
