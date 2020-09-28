@@ -14,7 +14,7 @@ import {
   SELECT_FROM_TICKER,
   SELECT_TO_TICKER,
 } from "../../platforms/desktop/actions/types";
-import { transfer as transferCore } from "shared/core/wallet";
+import { transfer as transferCore, relayTxs } from "shared/core/wallet";
 import { DesktopAppState } from "../../platforms/desktop/reducers";
 import { Ticker } from "shared/reducers/types";
 import { showModal } from "shared/actions/modal";
@@ -149,6 +149,7 @@ export const confirmExchange = (metaList: Array<string>) => {
     dispatch(onExchangeFetch());
 
     try {
+      const hashes = await relayTxs(metaList);
       dispatch(onExchangeSucceed());
       const {
         fromAmount,
