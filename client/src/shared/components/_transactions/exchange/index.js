@@ -47,28 +47,28 @@ const Transaction = ({
         <Row>
           {(function () {
             switch (priority) {
-              case 1:
+              case 0:
                 return (
                   <>
                     <Key>Normal Priority</Key>
                     <Value>Unlocks ~7d</Value>
                   </>
                 );
-              case 2:
+              case 1:
                 return (
                   <>
                     <Key>Low Priority</Key>
                     <Value>Unlocks ~48hr</Value>
                   </>
                 );
-              case 3:
+              case 2:
                 return (
                   <>
                     <Key>Medium Priority</Key>
                     <Value>Unlocks ~24hr</Value>
                   </>
                 );
-              case 4:
+              case 3:
                 return (
                   <>
                     <Key>High Priority</Key>
