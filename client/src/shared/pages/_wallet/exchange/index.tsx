@@ -83,10 +83,10 @@ const assetOptions: AssetOption[] = [
 ];
 
 const exchangePrioOptions: ExchangePrioOption[] = [
-  { name: "Default", ticker: "Unlocks ~7d", percent: "0.2%", prio: 1 },
-  { name: "Low", ticker: "Unlocks ~48hr", percent: "5%", prio: 2 },
-  { name: "Medium", ticker: "Unlocks ~24hr", percent: "10%", prio: 3 },
-  { name: "High", ticker: "Unlocks ~6hr", percent: "20%", prio: 4 },
+  { name: "Default", ticker: "Unlocks ~7d", percent: "0.2%", prio: 0 },
+  { name: "Low", ticker: "Unlocks ~48hr", percent: "5%", prio: 1 },
+  { name: "Medium", ticker: "Unlocks ~24hr", percent: "10%", prio: 2 },
+  { name: "High", ticker: "Unlocks ~6hr", percent: "20%", prio: 3 },
 ];
 
 const INITIAL_STATE: ExchangeState = {
@@ -309,13 +309,13 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     const { selectedPrio, fromAmount } = this.state;
     const { prio } = selectedPrio;
     const amount = Number(fromAmount);
-    if (prio === 1) {
+    if (prio === 0) {
       return amount * 0.002;
-    } else if (prio === 2) {
+    } else if (prio === 1) {
       return amount * 0.05;
-    } else if (prio === 3) {
+    } else if (prio === 2) {
       return amount * 0.1;
-    } else if (prio === 4) {
+    } else if (prio === 3) {
       return amount * 0.2;
     } else {
       return null;
