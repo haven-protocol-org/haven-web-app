@@ -42,7 +42,7 @@ const Cell = ({
             <Column>
               <Row>
                 <Asset>
-                  <Title>{tokenName}:</Title>
+                  <Title>{tokenName}</Title>
                   <Ticker>{ticker}</Ticker>
                 </Asset>
                 <Balance>${balance.toFixed(4)}</Balance>

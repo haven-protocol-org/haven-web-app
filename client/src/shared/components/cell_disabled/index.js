@@ -20,7 +20,7 @@ const CellDisabled = ({ tokenName, ticker, price, balance, fullwidth }) => {
     <Container fullwidth={fullwidth}>
       <Column>
         <Row>
-          <Title>{tokenName}:</Title>
+          <Title>{tokenName}</Title>
           <Ticker>{ticker}</Ticker>
         </Row>
         <Subtitle left>{price}</Subtitle>
