@@ -155,10 +155,6 @@ class Navigation extends Component<NavigationProps, any> {
                 <Label>{node.location}</Label>
               </OptionsDoubleRow>
               <OptionsDoubleRow>
-                <Body>Wallet</Body>
-                <Label>{wallet.isRunning ? "Online" : "Offline"}</Label>
-              </OptionsDoubleRow>
-              <OptionsDoubleRow>
                 <Body>Block</Body>
                 <Label>{height}</Label>
               </OptionsDoubleRow>
