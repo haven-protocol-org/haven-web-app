@@ -105,6 +105,7 @@ class Navigation extends Component<NavigationProps, any> {
     const auth = this.props.isLoggedIn;
     const { current_network } = this.state;
     const { wallet, node, isLocalNode, height } = this.props;
+    console.log("VERSION", window.havenProcess.appVersion);
 
     return (
       <Container>
