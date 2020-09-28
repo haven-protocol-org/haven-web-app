@@ -44,8 +44,6 @@ class AssetsPage extends Component<AssetsProps, any> {
   }
 
   renderEnabledTokens = () => {
-
-
     const enabledTokens = AssetList.filter((asset: any) =>
       Enabled_TICKER.includes(("x" + asset.ticker) as Ticker)
     );
@@ -85,9 +83,8 @@ class AssetsPage extends Component<AssetsProps, any> {
 
   renderDisabledTokens = () => {
     const disabledTokens = AssetList.filter(
-          (asset: any) =>
-            !Enabled_TICKER.includes(("x" + asset.ticker) as Ticker)
-            );
+      (asset: any) => !Enabled_TICKER.includes(("x" + asset.ticker) as Ticker)
+    );
 
     return disabledTokens.map((data) => {
       const { token, ticker, symbol } = data;
@@ -127,7 +124,7 @@ class AssetsPage extends Component<AssetsProps, any> {
         <Overview />
         <Header
           title="Available Assets"
-          description="Overview of all available Haven Assets"
+          description="Overview of all available Haven assets"
         />
         <Cell
           //@ts-ignore
@@ -144,7 +141,7 @@ class AssetsPage extends Component<AssetsProps, any> {
         {this.renderEnabledTokens()}
         <Header
           title="Coming Soon"
-          description="Overview of Haven Assets coming soon"
+          description="Upcoming Haven asset integrations"
         />
         {this.renderDisabledTokens()}
       </Body>

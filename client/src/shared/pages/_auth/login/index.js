@@ -4,20 +4,19 @@ import PropTypes from "prop-types";
 // Relative Imports
 import { Container } from "./styles";
 import Auth from "../../../components/_auth/login";
-import FileUpload from "../../../components/_inputs/file-upload";
 import Toggle from "../../../components/_inputs/toggle";
 import Seed from "../../../components/_inputs/seed";
 import { Information } from "../../../../assets/styles/type.js";
-import { readText } from "../../../../vendor/clipboard/clipboard-polyfill";
+import InputUpload from "../../../components/_inputs/input_upload/index.js";
 
 export default class Login extends Component {
   state = {
     seed_phrase: "",
     error: "",
     action: "Paste from Clipboard",
-    key_store: "",
-    selectSeed: true,
-    selectKeystore: false,
+    vault_file: "",
+    selectSeed: false,
+    selectKeystore: true,
     keyStoreFile: "",
     reveal: false,
   };
@@ -48,31 +47,8 @@ export default class Login extends Component {
     this.props.login(seed_phrase, "secret");
   };
 
-  handlePaste = () => {
-    readText()
-      .then((response) => {
-        this.setState({
-          seed_phrase: response,
-          action: "Pasted from Clipboard",
-        });
-      })
-      .then(
-        setTimeout(() => {
-          this.setState({
-            action: "Paste from Clipboard",
-          });
-        }, 1000)
-      )
-      .catch((error) => {
-        this.setState({
-          error: "Clipboard is empty",
-        });
-      });
-  };
-
   handleFileChange = (event) => {
     const fileUploaded = event.target.files[0];
-    console.log("fileUploaded", fileUploaded);
     this.setState({
       keyStoreFile: fileUploaded.name,
     });
@@ -100,15 +76,15 @@ export default class Login extends Component {
 
   render() {
     const windowWidth = window.innerWidth;
-    const { seed_phrase, error, action, selectSeed, key_store } = this.state;
+    const { seed_phrase, error, action, selectSeed, vault_file } = this.state;
 
     return (
       <Container>
         <Auth
           title="Vault Login"
           link="/create"
-          route="Create or Restore a Vault"
-          label="Don’t have a Vault?"
+          route="Create or Restore"
+          label="Need a Vault?"
           disable={seed_phrase === "" ? true : this.props.isRequestingLogin}
           onClick={() => this.handleLogin()}
           loading={this.props.isRequestingLogin}
@@ -121,8 +97,8 @@ export default class Login extends Component {
           {selectSeed ? (
             <>
               <Seed
-                label="Seed Phrase or Private Spend Key"
-                placeholder="Enter your 25 word seed phrase or Private Spend Key..."
+                label="Seed Phrase"
+                placeholder="Enter your 25 word seed phrase.."
                 name="seed_phrase"
                 value={seed_phrase}
                 error={error}
@@ -132,32 +108,43 @@ export default class Login extends Component {
                 onChange={(event) => this.handleChange(event)}
               />
               <Information>
-                <strong>Disclaimer:</strong> Your seed is used to generate an
-                encrypted signature on your device and unlock your account. This
-                ensures the security of your seed or keys, as they're never
-                submitted to a server or sent across the internet.
+                Haven recommends logging in with a Vault File, not a Seed Phrase
+                as it's more secure. While your Seed is <strong>never</strong>{" "}
+                sent across the internet, your Vault will need to resync every
+                time you login, providing a degraded experience.
               </Information>
             </>
           ) : (
             <>
               <Toggle
-                label="Keystore Password"
-                placeholder="Enter keystore password"
-                name="key_store"
-                value={key_store}
+                label="Vault Password"
+                placeholder="Enter Vault password"
+                name="vault_file"
+                value={vault_file}
                 error={error}
                 onChange={(event) => this.handleChange(event)}
                 onClick={this.showPassword}
                 reveal={this.state.reveal}
               />
-              <FileUpload
-                title="Upload a file"
+              <InputUpload
+                label="Vault File"
+                value={
+                  this.state.keyStoreFile === ""
+                    ? "Select Vault File"
+                    : this.state.keyStoreFile
+                }
+                button="Select"
+                type="file"
+                action="upload"
                 onChange={this.handleFileChange}
                 keyStoreFile={this.state.keyStoreFile}
               />
               <Information>
-                Before entering your Keystore Password please ensure you're not
-                on a public wifi and no one is looking at your screen.
+                A Vault File is more secure then a Seed Phrase because it's an
+                encrypted file that requires a password. In addition, it
+                prevents your wallet from resyncing every login, providing a
+                smoother experience. If you don't have Vault File please restore
+                a vault with your seed to generate one.
               </Information>
             </>
           )}

@@ -2,10 +2,12 @@ import {
   GET_BLOCK_INFO_SUCEED,
   GET_WALLET_HEIGHT_SUCCEED,
 } from "../../platforms/desktop/actions/types";
-import {AnyAction} from "redux";
-import {SyncState} from "shared/types/types";
-import {DesktopAppState, HavenAppState} from "platforms/desktop/reducers/index";
-import {selectisLocalNode} from "platforms/desktop/reducers/havenNode";
+import { AnyAction } from "redux";
+import { SyncState } from "shared/types/types";
+import {
+  DesktopAppState,
+  HavenAppState,
+} from "platforms/desktop/reducers/index";
 import { isDesktop } from "constants/env";
 
 export interface Chain {
@@ -39,8 +41,6 @@ export const selectNodeHeight = (state: HavenAppState) => {
 };
 
 export const selectSyncState = (state: HavenAppState): SyncState => {
-
-
   // if wallet is not connected at all, we are not syncing
   const isWalletConnected = state.walletSession.isConnectedToDaemon === true;
 
@@ -48,13 +48,10 @@ export const selectSyncState = (state: HavenAppState): SyncState => {
   let scannedHeight: number;
   let isSyncing: boolean;
 
-
   //we must distinguish between multiple cases
   // 1. local syncing node -> show progress of node
   //when we use a local node syncing of wallet itself is super fast, so just show the sync state of the node
   if (isDesktop()) {
-
-    const isLocalNode = selectisLocalNode((state as DesktopAppState).havenNode);
     isSyncing = state.chain.chainHeight > state.chain.nodeHeight + 3;
     scannedHeight = state.chain.nodeHeight;
   }
@@ -65,11 +62,8 @@ export const selectSyncState = (state: HavenAppState): SyncState => {
   }
 
   if (!isWalletConnected) {
-    return {isSyncing:false, blockHeight, scannedHeight};
+    return { isSyncing: false, blockHeight, scannedHeight };
   }
-
-
-
 
   return { isSyncing, blockHeight, scannedHeight };
 };
@@ -77,7 +71,6 @@ export const selectSyncState = (state: HavenAppState): SyncState => {
 export const selectWalletHeight = (state: DesktopAppState) => {
   return state.chain.walletHeight;
 };
-
 
 export const isWalletSynced = (state: DesktopAppState): boolean => {
   if (state.chain.walletHeight === 0) {

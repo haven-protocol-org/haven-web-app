@@ -56,6 +56,10 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
     }, 1000);
   };
 
+  showQRCodeModal = () => {
+    alert("QR CODE");
+  };
+
   render() {
     const windowWidth = window.innerWidth;
 
@@ -63,7 +67,7 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
       return null;
     }
 
-    const qrEnabled = false;
+    const qrEnabled = true;
 
     return (
       <Fragment>
@@ -103,7 +107,7 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
               leftLabel={"Show QR"}
               leftDisabled={false}
               leftLoading={false}
-              leftOnClick={() => {}}
+              leftOnClick={this.showQRCodeModal}
               rightLabel={this.state.copyButtonState}
               rightDisabled={false}
               rightLoading={false}

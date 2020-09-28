@@ -14,58 +14,52 @@ export const Container = styled.div`
   `};
 `;
 
-export const Wrapper = styled.div`
+export const Wrapped = styled.div`
   width: auto;
-  background: pink;
-  display: flex;
   background: ${(props) => props.theme.input.input_background};
   border: 1px solid ${(props) => props.theme.input.input_border};
-  border-radius: 4px;
+  display: flex;
+  border: 1px solid ${(props) => props.theme.input.input_border};
   align-items: center;
-  word-wrap: break-word;
+  border-radius: 4px;
+  -webkit-appearance: none;
 `;
 
-export const Button = styled.div`
-  background: ${(props) => props.theme.button.primary};
-  margin-right: 16px;
-  margin-left: 16px;
-  padding: 8px 12px;
-  width: 64px;
-  border-radius: 2px;
-  font-size: 11px;
-  color: #fff;
-  font-family: Inter-Regular;
-  text-transform: uppercase;
+export const Download = styled.a`
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 8px 12px;
+  width: 64px;
+  background: ${(props) => props.theme.button.primary};
+  color: white;
+  margin-right: 12px;
+  border-radius: 2px;
+  font-size: 11px;
+  text-transform: uppercase;
+  text-decoration: none;
   transition: 500ms;
+  font-family: Inter-Regular;
 
   &:hover {
-    transition: 500ms;
-    cursor: pointer;
     background: ${(props) => props.theme.button.primary_hover};
+    cursor: pointer;
+    transition: 500ms;
   }
 `;
 
-export const Field = styled.input`
-  padding-top: 16px;
-  padding-bottom: 16px;
-  padding-left: 16px;
-  padding-right: 16px;
-  font-family: Inter-Regular;
+export const Field = styled.div`
+  border: none;
+  background: ${(props) => props.theme.input.input_background};
+  border-radius: 4px 0px 0px 4px;
   width: 100%;
-  height: auto;
-
+  padding: 16px;
+  font-family: Inter-Regular;
   font-size: 16px;
-  color: ${(props) => props.theme.input.input_value};
+  color: ${(props) => props.theme.input.input_value}
   line-height: 26px;
-
   outline: none;
   transition: 500ms;
-  border: none;
-  border-radius: 4px;
-  background: ${(props) => props.theme.input.input_background};
   -webkit-appearance: none;
 
   &::placeholder {
@@ -82,4 +76,20 @@ export const Labels = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 4px;
+`;
+
+export const Labeled = styled.label`
+  color: ${(props) => props.theme.input.input_value}
+  display: inline-block;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: ${(props) => props.theme.button.primary};
+  padding: 8px 12px;
+  width: 64px;
+  margin-right: 16px;
+  border-radius: 2px;
+  font-size: 11px;
+  text-transform: uppercase;
 `;

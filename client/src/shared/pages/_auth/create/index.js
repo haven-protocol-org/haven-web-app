@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 
 // Relative Imports
-import Auth from "../../../components/_auth/create/index.js";
+import Auth from "../../../components/_auth/multi-create";
 import Placeholder from "../../../components/_create/placeholder";
 import CreateSeed from "../../../components/_create/create_seed";
 import VerifySeed from "../../../components/_create/verify_seed";
@@ -18,11 +18,13 @@ export class CreateWebComponent extends Component {
     verify_seed: "",
     mnemonicString: "",
     action: "Paste Seed",
+    selectCreate: true,
+    selectRestore: false,
   };
 
   componentDidMount() {
     window.scrollTo(0, 0);
-    this.props.getSeed(undefined, 'secret');
+    this.props.getSeed(undefined, "secret");
   }
 
   async componentDidUpdate(prevProps, prevState) {
@@ -125,6 +127,26 @@ export class CreateWebComponent extends Component {
     }
   };
 
+  selectCreate = () => {
+    this.setState({
+      selectCreate: true,
+      selectRestore: false,
+    });
+  };
+
+  selectRestore = () => {
+    this.setState({
+      selectCreate: false,
+      selectRestore: true,
+    });
+  };
+
+  showPassword = () => {
+    this.setState({
+      reveal: !this.state.reveal,
+    });
+  };
+
   render() {
     const { step, verify_seed } = this.state;
     const disabled = step === 3 && verify_seed === "";
@@ -133,7 +155,7 @@ export class CreateWebComponent extends Component {
       <Container>
         <Auth
           title="Create a Vault"
-          link="/login"
+          link="/"
           route="Sign In!"
           label="Have a Vault?"
           submit="Generate"
@@ -142,6 +164,10 @@ export class CreateWebComponent extends Component {
           prevStep={this.prevStep}
           disabled={disabled}
           loading={this.props.isRequestingLogin}
+          selectCreate={this.selectcreate}
+          selectRestore={this.selectRestore}
+          selectedCreate={this.state.selectcreate}
+          selectedRestore={this.state.selectRestore}
         >
           <>{this.handleSwitch()}</>
         </Auth>

@@ -10,14 +10,16 @@
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="theme-color" content="#26282c" />
 
-
     <!--
     add a CSP for Desktop version
     -->
-    <% if (process.env.REACT_APP_PLATFORM == 'desktop' && process.env.NODE_ENV !== "development") { %>
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self'; font-src https://fonts.googleapis.com 'self'; connect-src https://network-api.havenprotocol.org https://api.coingecko.com; media-src 'none'; object-src 'none'; prefetch-src 'none'; child-src 'none'; frame-src 'self'; worker-src 'none'; form-action 'none'; upgrade-insecure-requests; block-all-mixed-content;">
+    <% if (process.env.REACT_APP_PLATFORM == 'desktop' && process.env.NODE_ENV
+    !== "development") { %>
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self'; font-src https://fonts.googleapis.com 'self'; connect-src https://network-api.havenprotocol.org https://api.coingecko.com; media-src 'none'; object-src 'none'; prefetch-src 'none'; child-src 'none'; frame-src 'self'; worker-src 'none'; form-action 'none'; upgrade-insecure-requests; block-all-mixed-content;"
+    />
     <% } %>
-
 
     <style type="text/css" media="screen, print"></style>
     <link
@@ -40,9 +42,7 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>Haven Protocol – Private DeFi</title>
-
-
+    <title>Haven Protocol – Private Money</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

@@ -8,13 +8,10 @@ import {
 import { INITAL_FETCHING_STATE, XFetching } from "./types";
 import { HavenAppState } from "../../platforms/desktop/reducers";
 import MoneroTxWallet from "haven-wallet-core/src/main/js/wallet/model/MoneroTxWallet";
-import { TransactionProps } from "shared/components/tx-history/component";
 import MoneroIncomingTransfer from "haven-wallet-core/src/main/js/wallet/model/MoneroIncomingTransfer";
 import { TxEntry } from "shared/components/tx-history/container";
 import { bigIntegerToBigInt } from "utility/utility";
 import MoneroOutgoingTransfer from "haven-wallet-core/src/main/js/wallet/model/MoneroOutgoingTransfer";
-
-
 
 const INITAL_STATE: MoneroTxWallet[] = [];
 
@@ -50,62 +47,56 @@ export const selectTransferListByTicker = (
   state: HavenAppState,
   tickerId: Ticker
 ): TxEntry[] => {
-  
-
   const walletTxs = state.xTransferList;
-  const txEntries: TxEntry[] = walletTxs.list.reduce( (list:TxEntry[], walletTx: MoneroTxWallet) => {
+  const txEntries: TxEntry[] = walletTxs.list.reduce(
+    (list: TxEntry[], walletTx: MoneroTxWallet) => {
+      // const props: Partial<TransactionProps> = {};
 
+      const incomings:
+        | undefined
+        | MoneroIncomingTransfer[] = walletTx.getIncomingTransfers();
+      const outgoing:
+        | undefined
+        | MoneroOutgoingTransfer = walletTx.getOutgoingTransfer();
 
-    
-   // const props: Partial<TransactionProps> = {};
+      if (incomings !== undefined && incomings[0].getCurrency() === tickerId) {
+        const txEntry: Partial<TxEntry> = {};
+        txEntry.hash = walletTx.getHash();
+        txEntry.amount = bigIntegerToBigInt(walletTx.getIncomingAmount());
+        txEntry.fee = bigIntegerToBigInt(walletTx.getFee());
+        txEntry.height = walletTx.getHeight();
+        txEntry.unlockHeight = walletTx.getUnlockHeight();
+        txEntry.mempool = walletTx.inTxPool();
+        txEntry.isIncoming = true;
+        txEntry.isConfirmed = walletTx.isConfirmed();
+        txEntry.isMinerTx = walletTx.isMinerTx();
+        txEntry.timestamp = walletTx.isConfirmed()
+          ? walletTx.getBlock().getTimestamp()
+          : walletTx.getReceivedTimestamp();
+        list.push(txEntry as TxEntry);
+      }
 
-    const incomings: undefined | MoneroIncomingTransfer [] = walletTx.getIncomingTransfers();
-    const outgoing: undefined | MoneroOutgoingTransfer = walletTx.getOutgoingTransfer();
-    if (incomings !== undefined && incomings[0].getCurrency()  === tickerId) {
+      if (outgoing !== undefined && outgoing.getCurrency() === tickerId) {
+        const txEntry: Partial<TxEntry> = {};
+        txEntry.hash = walletTx.getHash();
+        txEntry.amount = bigIntegerToBigInt(walletTx.getOutgoingAmount());
+        txEntry.fee = bigIntegerToBigInt(walletTx.getFee());
+        txEntry.height = walletTx.getHeight();
+        txEntry.unlockHeight = walletTx.getUnlockHeight();
+        txEntry.isIncoming = false;
+        txEntry.mempool = walletTx.inTxPool();
+        txEntry.isConfirmed = walletTx.isConfirmed();
+        txEntry.isMinerTx = walletTx.isMinerTx();
+        txEntry.timestamp = walletTx.isConfirmed()
+          ? walletTx.getBlock().getTimestamp()
+          : walletTx.getLastRelayedTimestamp();
+        list.push(txEntry as TxEntry);
+      }
 
-
-      const txEntry: Partial<TxEntry> = {};
-      txEntry.hash = walletTx.getHash();
-      txEntry.amount =  bigIntegerToBigInt(walletTx.getIncomingAmount());
-      txEntry.fee = bigIntegerToBigInt(walletTx.getFee());
-      txEntry.height = walletTx.getHeight();
-      txEntry.unlockHeight = walletTx.getUnlockHeight();
-      txEntry.mempool = walletTx.inTxPool();
-      txEntry.isIncoming = true;
-      txEntry.isConfirmed = walletTx.isConfirmed();
-      txEntry.isMinerTx = walletTx.isMinerTx();
-      txEntry.timestamp = walletTx.isConfirmed() ? walletTx.getBlock().getTimestamp() :  walletTx.getReceivedTimestamp();
-      list.push(txEntry as TxEntry);
-
-
-    }
-
-    if (outgoing !== undefined && outgoing.getCurrency()  === tickerId) {
-
-      const txEntry: Partial<TxEntry> = {};
-      txEntry.hash = walletTx.getHash();
-      txEntry.amount =  bigIntegerToBigInt(walletTx.getOutgoingAmount());
-      txEntry.fee = bigIntegerToBigInt(walletTx.getFee());
-      txEntry.height = walletTx.getHeight();
-      txEntry.unlockHeight = walletTx.getUnlockHeight();
-      txEntry.isIncoming = false;
-      txEntry.mempool = walletTx.inTxPool();
-      txEntry.isConfirmed = walletTx.isConfirmed();
-      txEntry.isMinerTx = walletTx.isMinerTx();
-      txEntry.timestamp = walletTx.isConfirmed() ? walletTx.getBlock().getTimestamp() :  walletTx.getLastRelayedTimestamp();
-      list.push(txEntry as TxEntry);
-
-
-    }
-
-    return list;
-
-
-
-  }, []) 
+      return list;
+    },
+    []
+  );
 
   return txEntries;
-
 };
-
-

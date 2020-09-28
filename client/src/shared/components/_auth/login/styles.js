@@ -190,6 +190,8 @@ export const Route = styled(Link)`
   color: #fff;
   text-decoration: none;
   margin-left: 8px;
+  width: 100%;
+  text-align: left;
 `;
 
 export const Label = styled.div`
@@ -197,4 +199,6 @@ export const Label = styled.div`
   font-size: 14px;
   color: #8a8d90;
   text-decoration: none;
+  width: 100%;
+  text-align: right;
 `;

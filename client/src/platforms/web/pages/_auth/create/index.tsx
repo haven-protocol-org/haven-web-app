@@ -1,38 +1,32 @@
-import {
-  selectIsLoggedIn,
-  selectIsRequestingLogin
-} from "shared/reducers/walletSession";
+import { selectIsLoggedIn } from "shared/reducers/walletSession";
 import { connect } from "react-redux";
 import {
   createNewWallet,
   mnenomicVerificationSucceed,
-  mneomicVerifcationFailed
+  mneomicVerifcationFailed,
 } from "shared/actions/wallet";
 import { Component } from "react";
 import React from "react";
 import { Redirect } from "react-router";
-import { CreateWebComponent } from "../../../../../shared/pages/_auth/create";
+import { CreateWebComponent } from "../../../../../shared/pages/_auth/multi-create";
 import { WebAppState } from "platforms/web/reducers";
 import { selectisRequestingWalletCreation } from "shared/reducers/walletCreation";
 
 interface CreateWebProps {
-  mnenomicVerificationSucceed: (fileName: string) => void,
-  mneomicVerifcationFailed:() => void,
-  isLoggedIn: boolean,
-  mnemonicString: string,
-  getSeed:(fileName: string, password: string) => void,
-  isRequestingLogin: boolean
+  mnenomicVerificationSucceed: (fileName: string) => void;
+  mneomicVerifcationFailed: () => void;
+  isLoggedIn: boolean;
+  mnemonicString: string;
+  getSeed: (fileName: string, password: string) => void;
+  isRequestingLogin: boolean;
 }
 
-
-class CreateWebContainer extends Component<CreateWebProps,{}> {
-
-
+class CreateWebContainer extends Component<CreateWebProps, {}> {
   verifySeed = (verified: boolean) => {
     verified
-      ? this.props.mnenomicVerificationSucceed('placeholder')
+      ? this.props.mnenomicVerificationSucceed("placeholder")
       : this.props.mneomicVerifcationFailed();
-  }
+  };
 
   render() {
     if (this.props.isLoggedIn) {
@@ -50,17 +44,14 @@ class CreateWebContainer extends Component<CreateWebProps,{}> {
   }
 }
 
-const mapStateToProps = (state: WebAppState ) => ({
+const mapStateToProps = (state: WebAppState) => ({
   mnemonicString: state.walletCreation.mnemonicKey,
   isLoggedIn: selectIsLoggedIn(state),
-  isRequestingLogin: selectisRequestingWalletCreation(state)
+  isRequestingLogin: selectisRequestingWalletCreation(state),
 });
 
-export const CreateWeb = connect(
-  mapStateToProps,
-  {
-    getSeed: createNewWallet,
-    mnenomicVerificationSucceed,
-    mneomicVerifcationFailed
-  }
-)(CreateWebContainer);
+export const CreateWeb = connect(mapStateToProps, {
+  getSeed: createNewWallet,
+  mnenomicVerificationSucceed,
+  mneomicVerifcationFailed,
+})(CreateWebContainer);
