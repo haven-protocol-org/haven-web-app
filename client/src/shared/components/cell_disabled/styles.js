@@ -58,7 +58,7 @@ export const Ticker = styled.div`
   color: ${(props) => props.theme.type.secondary};
   letter-spacing: 0;
   line-height: 30px;
-  padding-left: 12px;
+  padding-left: 8px;
 
   ${media.mobile`
     padding-left: 0px;
