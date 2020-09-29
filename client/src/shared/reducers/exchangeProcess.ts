@@ -21,7 +21,7 @@ export enum ExchangeType {
 export interface ExchangeProcessInfo extends TxProcessInfo {
   exchangeType: ExchangeType | null;
   toTicker: Ticker | null;
-  toAmount: number | null | bigint;
+  toAmount: number | null | bigint | bigInt.BigInteger;
 }
 
 const INITIAL_STATE: ExchangeProcessInfo = {

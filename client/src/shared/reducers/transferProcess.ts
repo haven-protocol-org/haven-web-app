@@ -13,8 +13,8 @@ import { Ticker } from "shared/reducers/types";
 
 export interface TxProcessInfo {
   address: string;
-  fromAmount: number | null | bigint;
-  fee: bigint | null;
+  fromAmount: number | null | bigint | bigInt.BigInteger;
+  fee: bigint | null | bigInt.BigInteger;
   isFetching: boolean;
   info: string;
   error: string;

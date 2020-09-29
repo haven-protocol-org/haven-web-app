@@ -29,6 +29,7 @@ import { ITxConfig } from "typings";
 import MoneroDestination from "haven-wallet-core/src/main/js/wallet/model/MoneroDestination";
 import { HavenTxType } from "haven-wallet-core";
 import MoneroTxWallet from "haven-wallet-core/src/main/js/wallet/model/MoneroTxWallet";
+import bigInt from "big-integer";
 
 interface RPCExchangeResponse {
   amount_list: Array<number>;
@@ -80,7 +81,7 @@ export function createExchange(
       return;
     }
 
-    const amount = BigInt(Math.round(xhvAnmount * 10000) * 1e8);
+    const amount = bigInt(Math.round(xhvAnmount * 10000) * 1e8);
     dispatch(
       onExchangeCreationFetch({ priority, exchangeType, address } as Partial<
         ExchangeProcessInfo
@@ -118,25 +119,25 @@ const parseExchangeResonse = (
   txList: MoneroTxWallet[],
   exchangeType: ExchangeType
 ): Partial<ExchangeProcessInfo> => {
-  let fromAmount: bigint;
-  let toAmount: bigint;
-  let fee: bigint;
+  let fromAmount: bigInt.BigInteger;
+  let toAmount: bigInt.BigInteger;
+  let fee: bigInt.BigInteger;
 
   //@ts-ignore
   toAmount = txList.reduce(
-    (acc: bigint, tx: MoneroTxWallet) =>
+    (acc: bigInt.BigInteger, tx: MoneroTxWallet) =>
       //@ts-ignore
-      acc + BigInt(tx.getIncomingAmount().toString()),
-    BigInt(0)
+      acc + bigInt(tx.getIncomingAmount().toString()),
+      bigInt(0)
   );
   fromAmount = txList.reduce(
-    (acc: bigint, tx: MoneroTxWallet) =>
-      acc + BigInt(tx.getOutgoingAmount().toString()),
-    BigInt(0)
+    (acc: bigInt.BigInteger, tx: MoneroTxWallet) =>
+      acc.add(bigInt(tx.getOutgoingAmount().toString())),
+      bigInt(0)
   );
   fee = txList.reduce(
-    (acc: bigint, tx: MoneroTxWallet) => acc + BigInt(tx.getFee().toString()),
-    BigInt(0)
+    (acc: bigInt.BigInteger, tx: MoneroTxWallet) => acc.add(bigInt(tx.getFee().toString())),
+    bigInt(0)
   );
   const metaList: Array<string> = txList.map((tx: MoneroTxWallet) =>
     tx.getMetadata()
