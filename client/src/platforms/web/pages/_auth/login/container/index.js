@@ -4,8 +4,8 @@ import {
   selectIsRequestingLogin
 } from "shared/reducers/walletSession";
 import { connect } from "react-redux";
-import { restoreWalletByMnemomic } from "shared/actions/wallet";
-import Login from "../../../../../shared/pages/_auth/login";
+import { restoreWalletByMnemomic, openWalletByData } from "shared/actions/wallet";
+import Login from "../component";
 import { Redirect } from "react-router";
 import React, { Component } from "react";
 
@@ -19,7 +19,8 @@ class LoginWebContainer extends Component {
       <Login
         isRequestingLogin={this.props.isRequestingLogin}
         errorMessage={this.props.errorMessage}
-        login={this.props.login}
+        loginByMnemomic={this.props.loginByMnemomic}
+        loginByKeysData={this.props.loginByKeysData}
       />
     );
   }
@@ -33,5 +34,5 @@ const mapStateToProps = state => ({
 
 export const LoginWeb = connect(
   mapStateToProps,
-  { login: restoreWalletByMnemomic }
+  { loginByMnemomic: restoreWalletByMnemomic, loginByKeysData: openWalletByData }
 )(LoginWebContainer);

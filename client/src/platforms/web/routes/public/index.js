@@ -5,7 +5,7 @@ import { Route } from "react-router-dom";
 
 import Loader from "../../../../shared/components/loader";
 import { CreateWeb } from "../../pages/_auth/create";
-import { LoginWeb } from "../../pages/_auth/login";
+import { LoginWeb } from "../../pages/_auth/login/container";
 
 class PublicRoutesWeb extends Component {
   render() {

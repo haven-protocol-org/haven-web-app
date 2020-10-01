@@ -24,6 +24,7 @@ import {
   isWalletConnected,
   getWalletHeight,
   getChainHeight,
+  syncAtOnce,
 } from "../core/wallet";
 import { addNotificationByMessage } from "./notification";
 import { NotificationType } from "constants/notificationList";
@@ -45,7 +46,7 @@ export const openWalletByData = (
   keysData: Uint8Array,
   cacheData: Uint8Array,
   password: string,
-  path: string
+  path: string = ""
 ) => {
   const walletData: IOpenWallet = {
     keysData,

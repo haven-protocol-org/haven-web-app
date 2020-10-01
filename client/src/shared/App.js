@@ -5,11 +5,11 @@ import { Route } from "react-router";
 import { history } from "../utility/history";
 import { NavigationDesktop } from "../platforms/desktop/components/navigation";
 import { PublicRoutesDesktop } from "../platforms/desktop/routes/public";
-import { PrivateRoutesDesktop } from "../platforms/desktop/routes/private";
+import { PrivateRoutes } from "../platforms/desktop/routes/private";
 import { StatusComponent } from "./components/_layout/status";
 import { HashRouter } from "react-router-dom";
 import { ModalContainerDesktop } from "../platforms/desktop/components/modalContainer";
-import {FixedStatus} from "../platforms/desktop/components/fixedStatusContainer";
+import { FixedStatus } from "../platforms/desktop/components/fixedStatusContainer";
 import { isDesktop } from "constants/env";
 import { NavigationWeb } from "platforms/web/components/navigation";
 import PublicRoutesWeb from "platforms/web/routes/public";
@@ -19,12 +19,12 @@ class App extends Component {
     return (
       <ThemeProvider theme={this.props.theme}>
         <HashRouter history={history}>
-          {isDesktop()? (<NavigationDesktop />) : (<NavigationWeb/>) }
+          {isDesktop() ? <NavigationDesktop /> : <NavigationWeb />}
           <ModalContainerDesktop />
-          {isDesktop() && <FixedStatus/>}
+          {isDesktop() && <FixedStatus />}
           <StatusComponent />
-          {isDesktop() ? <PublicRoutesDesktop /> : <PublicRoutesWeb/> }
-          <Route path="/wallet" component={PrivateRoutesDesktop} />
+          {isDesktop() ? <PublicRoutesDesktop /> : <PublicRoutesWeb />}
+          <Route path="/wallet" component={PrivateRoutes} />
         </HashRouter>
       </ThemeProvider>
     );
