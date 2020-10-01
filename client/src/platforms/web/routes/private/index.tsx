@@ -8,7 +8,7 @@ import { AssetsWeb } from "../../pages/_wallet/assets";
 import { DetailsWeb } from "../../pages/_wallet/details";
 import { connect } from "react-redux";
 import { selectIsLoggedIn } from "shared/reducers/walletSession";
-import Idle from "../../../../shared/components/idle";
+import Idle from "shared/components/idle";
 import { SettingsWeb } from "../../pages/_wallet/settings";
 
 import Menu from "shared/components/_layout/menu";
@@ -80,6 +80,4 @@ export const mapStateToProps = (state: DesktopAppState) => ({
   isLoggedIn: selectIsLoggedIn(state),
 });
 
-export default connect(mapStateToProps, {
- 
-})(PrivateRoutes);
+export default connect(mapStateToProps, {})(PrivateRoutes);

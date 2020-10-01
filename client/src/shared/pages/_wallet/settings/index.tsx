@@ -2,9 +2,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { selectTheme } from "../../../actions";
-
-import PropTypes from "prop-types";
-
 // Relative Imports
 import Body from "../../../components/_layout/body";
 import Header from "../../../components/_layout/header";
@@ -17,14 +14,30 @@ import Footer from "../../../components/_inputs/footer";
 import { Container } from "./styles";
 
 import { dark, light } from "../../../../assets/styles/themes.js";
+import { HavenAppState } from "platforms/desktop/reducers";
+import { IKeys } from "typings";
 
 const options = [
   { theme: "dark", value: "Dark Theme" },
   { theme: "light", value: "Light Theme" },
 ];
 
-class SettingsPage extends Component {
-  state = {
+interface SettingsProps extends IKeys {
+  theme: any;
+  selectTheme: (theme: any) => void;
+}
+
+interface SettingsState {
+  status: boolean;
+  value: string;
+  reveal: boolean;
+  validated: boolean;
+  psk: string;
+  seed: string;
+}
+
+class SettingsPage extends Component<SettingsProps, SettingsState> {
+  state: SettingsState = {
     status: false,
     value: "",
     reveal: false,
@@ -40,7 +53,7 @@ class SettingsPage extends Component {
     });
   }
 
-  handleClick = ({ theme, value }) => {
+  handleClick = ({ theme, value }: { theme: string; value: string }) => {
     if (theme === "light") {
       this.props.selectTheme(light);
       this.setState({
@@ -64,7 +77,7 @@ class SettingsPage extends Component {
 
   render() {
     const { value, reveal } = this.state;
-    const seed = this.props.seed;
+    const seed = this.props.mnemonic;
     let truncated = "";
     if (seed.length > 0) {
       const first = seed.substring(0, 32);
@@ -80,7 +93,7 @@ class SettingsPage extends Component {
           title="Theme "
           description="Choose between light and dark themes"
         />
-        <Form span="true">
+        <Form>
           <Theme
             label="Select Theme"
             placeholder="Dark Theme"
@@ -95,45 +108,45 @@ class SettingsPage extends Component {
           title="Private Keys"
           description="Manage your wallets private keys"
         />
-        <Form span="true">
+        <Form>
           {reveal ? (
             <>
               <Description
                 label="Seed Phrase"
-                width="true"
-                value={this.props.seed}
+                width={true}
+                value={this.props.mnemonic}
                 readOnly
                 type={reveal ? "type" : "password"}
                 rows={windowWidth < 600 && "6"}
               />
               <Description
                 label="Public View Key"
-                width="true"
-                value={this.props.pub_viewKey_string}
+                width={true}
+                value={this.props.publicView}
                 readOnly
                 type={reveal ? "type" : "password"}
                 rows={windowWidth < 600 && "2"}
               />
               <Description
                 label="Private View Key"
-                width="true"
-                value={this.props.sec_viewKey_string}
+                width={true}
+                value={this.props.privateView}
                 readOnly
                 type={reveal ? "type" : "password"}
                 rows={windowWidth < 600 && "2"}
               />
               <Description
                 label="Private Spend Key"
-                width="true"
-                value={this.props.psk}
+                width={true}
+                value={this.props.privateSpend}
                 readOnly
                 type={reveal ? "type" : "password"}
                 rows={windowWidth < 600 && "2"}
               />
               <Description
                 label="Public Spend Key"
-                width="true"
-                value={this.props.pub_spendKey_string}
+                width={true}
+                value={this.props.publicSpend}
                 readOnly
                 type={reveal ? "type" : "password"}
                 rows={windowWidth < 600 && "2"}
@@ -142,37 +155,47 @@ class SettingsPage extends Component {
           ) : (
             <>
               <Input
+                name="seed"
+                placeholder=""
                 label="Seed Phrase"
-                width="true"
+                width={true}
                 value={truncated}
                 readOnly
                 type={"password"}
               />
               <Input
+                name="Public View Key"
+                placeholder=""
                 label="Public View Key"
-                width="true"
-                value={this.props.pub_viewKey_string}
+                width={true}
+                value={this.props.publicView}
                 readOnly
                 type={reveal ? "type" : "password"}
               />
               <Input
+                name="Private View Key"
+                placeholder=""
                 label="Private View Key"
-                width="true"
-                value={this.props.sec_viewKey_string}
+                width={true}
+                value={this.props.privateView}
                 readOnly
                 type={reveal ? "type" : "password"}
               />
               <Input
+                name="Private Spend Key"
+                placeholder=""
                 label="Private Spend Key"
-                width="true"
-                value={this.props.psk}
+                width={true}
+                value={this.props.privateSpend}
                 readOnly
                 type={reveal ? "type" : "password"}
               />
               <Input
+                name="Public Spend Key"
+                placeholder=""
                 label="Public Spend Key"
-                width="true"
-                value={this.props.pub_spendKey_string}
+                width={true}
+                value={this.props.publicSpend}
                 readOnly
                 type={reveal ? "type" : "password"}
               />
@@ -183,7 +206,8 @@ class SettingsPage extends Component {
           <Footer
             onClick={this.toggleVisibility}
             label={this.state.reveal ? "Hide Keys" : "Show Keys"}
-            validated={this.state.validated}
+            disabled={false}
+            loading={false}
           />
         </Container>
       </Body>
@@ -191,16 +215,8 @@ class SettingsPage extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: HavenAppState) => ({
   theme: state.theme,
 });
 
 export const Settings = connect(mapStateToProps, { selectTheme })(SettingsPage);
-
-Settings.propTypes = {
-  psk: PropTypes.string.isRequired,
-  seed: PropTypes.string.isRequired,
-  sec_viewKey_string: PropTypes.string.isRequired,
-  pub_spendKey_string: PropTypes.string.isRequired,
-  pub_viewKey_string: PropTypes.string.isRequired,
-};

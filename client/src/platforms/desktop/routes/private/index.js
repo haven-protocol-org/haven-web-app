@@ -13,15 +13,14 @@ import { connect } from "react-redux";
 import { selectIsLoggedIn } from "../../../../shared/reducers/walletSession";
 import Page from "../../../../shared/components/_layout/page";
 import Menu from "../../../../shared/components/_layout/menu";
+import { isDesktop } from "constants/env";
+import { SettingsWeb } from "platforms/web/pages/_wallet/settings";
 
 /**
  *root component for private wallet
  */
-class PrivateRoutes extends Component {
-  componentDidMount() {
-      
-  }
-
+class PrivateRoutesContainer extends Component {
+  componentDidMount() {}
 
   render() {
     const { match } = this.props;
@@ -48,7 +47,7 @@ class PrivateRoutes extends Component {
           <Route
             path={`${match.url}/settings`}
             exact
-            component={SettingsDesktop}
+            component={isDesktop() ? SettingsDesktop : SettingsWeb}
           />
           <Route
             path={`${match.url}/exchange`}
@@ -61,11 +60,11 @@ class PrivateRoutes extends Component {
   }
 }
 
-export const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isLoggedIn: selectIsLoggedIn(state),
 });
 
-export const PrivateRoutesDesktop = connect(
+export const PrivateRoutes = connect(
   mapStateToProps,
-  {  }
-)(PrivateRoutes);
+  {}
+)(PrivateRoutesContainer);

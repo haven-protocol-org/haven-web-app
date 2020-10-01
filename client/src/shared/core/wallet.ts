@@ -1,7 +1,7 @@
 import * as core from "haven-wallet-core";
 import MoneroWalletWasm from "haven-wallet-core/src/main/js/wallet/MoneroWalletWasm";
 import BigInteger from "haven-wallet-core/src/main/js/common/biginteger";
-import { ICreateWallet, IOpenWallet, ITxConfig } from "typings";
+import { ICreateWallet, IOpenWallet, ITxConfig, IKeys } from "typings";
 import { HavenWalletListener } from "shared/actions/walletListener";
 import { bigIntegerToBigInt } from "utility/utility";
 import MoneroTxWallet from "haven-wallet-core/src/main/js/wallet/model/MoneroTxWallet";
@@ -150,6 +150,22 @@ export const isWalletConnected = async (): Promise<boolean> => {
 
 export const relayTxs = async (metaDataList: string[]) => {
   return wallet.relayTxs(metaDataList);
+};
+
+export const getKeys = async (): Promise<IKeys> => {
+  const publicSpend = await wallet.getPublicSpendKey();
+  const privateSpend = await wallet.getPrivateSpendKey();
+  const publicView = await wallet.getPublicViewKey();
+  const privateView = await wallet.getPrivateViewKey();
+  const mnemonic = await wallet.getMnemonic();
+
+  return {
+    publicSpend,
+    privateSpend,
+    publicView,
+    privateView,
+    mnemonic,
+  };
 };
 
 export const addWalletListener = (
