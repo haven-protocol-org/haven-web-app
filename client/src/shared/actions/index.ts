@@ -10,6 +10,7 @@ export const getAddressSucceed = (payload: AddressEntry[]) => ({
   payload,
 });
 
+// TODO close core wallet
 export const closeWallet = () => {
   return { type: CLOSE_WALLET };
 };
