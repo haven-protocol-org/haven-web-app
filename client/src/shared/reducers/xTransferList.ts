@@ -72,7 +72,7 @@ export const selectTransferListByTicker = (
         txEntry.isMinerTx = walletTx.isMinerTx();
         txEntry.timestamp = walletTx.isConfirmed()
           ? walletTx.getBlock().getTimestamp()
-          : walletTx.getReceivedTimestamp();
+          : Date.now() / 1000;
         list.push(txEntry as TxEntry);
       }
 
@@ -89,7 +89,7 @@ export const selectTransferListByTicker = (
         txEntry.isMinerTx = walletTx.isMinerTx();
         txEntry.timestamp = walletTx.isConfirmed()
           ? walletTx.getBlock().getTimestamp()
-          : walletTx.getLastRelayedTimestamp();
+          : Date.now() / 1000;
         list.push(txEntry as TxEntry);
       }
 
@@ -97,6 +97,8 @@ export const selectTransferListByTicker = (
     },
     []
   );
+
+  txEntries.sort((a: TxEntry, b: TxEntry) => b.timestamp - a.timestamp);
 
   return txEntries;
 };
