@@ -9,10 +9,18 @@ import { closeWallet } from "shared/actions";
 import { selectIsLoggedIn } from "shared/reducers/walletSession";
 import { APP_VERSION, NET_TYPE_NAME } from "constants/env";
 import { WebAppState } from "platforms/web/reducers/index.js";
+import {
+  storeKeyFileToDisk,
+  storeWalletInDB,
+  getStoredWallets,
+} from "platforms/web/actions/storage";
 
 interface NavigationProps {
   isLoggedIn: boolean;
   logout: () => void;
+  storeKeyFileToDisk: () => void;
+  storeWalletInDB: () => void;
+  getStoredWallets: () => void;
 }
 
 class Navigation extends Component<NavigationProps, {}> {
@@ -32,6 +40,19 @@ class Navigation extends Component<NavigationProps, {}> {
             v{APP_VERSION} {NET_TYPE_NAME}
           </Tag>
         </Brand>
+        {auth === true && (
+          <>
+            <Logout onClick={(e: any) => this.props.storeKeyFileToDisk()}>
+              Save Keystore File
+            </Logout>
+            <Logout onClick={(e: any) => this.props.storeWalletInDB()}>
+              Save Wallet Cache in DB
+            </Logout>
+            <Logout onClick={(e: any) => this.props.getStoredWallets()}>
+              Get Wallets from DB
+            </Logout>
+          </>
+        )}
         {auth === true && <Logout onClick={this.handleLogout}>Logout</Logout>}
       </Container>
     );
@@ -42,6 +63,9 @@ const mapStateToProps = (state: WebAppState) => ({
   isLoggedIn: selectIsLoggedIn(state),
 });
 
-export const NavigationWeb = connect(mapStateToProps, { logout: closeWallet })(
-  Navigation
-);
+export const NavigationWeb = connect(mapStateToProps, {
+  logout: closeWallet,
+  storeKeyFileToDisk,
+  storeWalletInDB,
+  getStoredWallets,
+})(Navigation);

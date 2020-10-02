@@ -93,6 +93,10 @@ export const getUnlockedOffshoreBalance = async (
   return bigIntegerToBigInt(balance);
 };
 
+export const getWalletData = async (): Promise<DataView[]> => {
+  return wallet.getData();
+};
+
 export const getMnemonic = () => {
   return wallet.getMnemonic();
 };
