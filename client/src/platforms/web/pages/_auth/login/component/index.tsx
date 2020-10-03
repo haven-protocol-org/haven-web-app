@@ -165,7 +165,7 @@ export default class Login extends Component<LoginProps, LoginState> {
         >
           {selectSeed ? (
             <>
-              {/* @ts-ignore */}.
+              {/* @ts-ignore */}
               <Seed
                 label="Seed Phrase"
                 placeholder="Enter your 25 word seed phrase.."
@@ -188,7 +188,7 @@ export default class Login extends Component<LoginProps, LoginState> {
             </>
           ) : (
             <>
-              {/* @ts-ignore */}.
+              {/* @ts-ignore */}
               <Toggle
                 label="Vault Password"
                 placeholder="Enter Vault password"
