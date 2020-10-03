@@ -1,6 +1,5 @@
 // Library Imports
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 // Relative Imports
 import { Container } from "./styles";
 import Auth from "../../../../../../shared/components/_auth/login";
