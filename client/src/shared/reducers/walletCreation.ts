@@ -17,6 +17,7 @@ export interface WalletCreation {
   isVerified: boolean;
   error: RPCError | null;
   isFetching: boolean;
+  name: string;
 }
 
 const INITIAL_STATE: WalletCreation = {
@@ -25,6 +26,7 @@ const INITIAL_STATE: WalletCreation = {
   isVerified: false,
   error: null,
   isFetching: false,
+  name: "",
 };
 
 export const walletCreation = (
@@ -39,9 +41,13 @@ export const walletCreation = (
     case QUERY_MNEMONIC_FOR_WALLET_GENERATION_SUCCEED:
       return { ...state, mnemonicKey: action.payload };
     case CREATE_WALLET_FETCHING:
-      return { ...state, isFetching: true };
+      return { ...state, isFetching: true, name: action.payload };
     case CREATE_WALLET_SUCCEED:
-      return { ...state, isFetching: false, isCreated: true };
+      return {
+        ...state,
+        isFetching: false,
+        isCreated: true,
+      };
     case CREATE_WALLET_FAILED:
       return { ...state, error: action.payload, isFetching: false };
     default:

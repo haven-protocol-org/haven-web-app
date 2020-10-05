@@ -24,7 +24,6 @@ import {
   isWalletConnected,
   getWalletHeight,
   getChainHeight,
-  syncAtOnce,
 } from "../core/wallet";
 import { addNotificationByMessage } from "./notification";
 import { NotificationType } from "constants/notificationList";
@@ -38,22 +37,23 @@ import { Chain } from "shared/reducers/chain";
 import { onWalletSyncUpdateSucceed } from "./chain";
 import { HavenAppState } from "platforms/desktop/reducers";
 import { getAllTransfers } from "./transferHistory";
+import { getWalletCacheByName } from "platforms/web/actions/storage";
 
 /** collection of actions to open, create and store wallet */
 
 /** used by browser */
-export const openWalletByData = (
+export const openWalletByData = async (
   keysData: Uint8Array,
-  cacheData: Uint8Array,
   password: string,
   path: string = ""
 ) => {
+  const cacheData = await getWalletCacheByName(path);
   const walletData: IOpenWallet = {
     keysData,
-    cacheData,
+    cacheData: new Uint8Array(cacheData),
     password,
     networkType: getNetworkByName(),
-    server: webWalletConnection,
+    server: webWalletConnection(),
   };
 
   return (dispatch: any) => {
@@ -67,7 +67,7 @@ export const openWalletByFile = (path: string, password: string) => {
     path,
     password,
     networkType: getNetworkByName(),
-    server: webWalletConnection,
+    server: webWalletConnection(),
   };
 
   return (dispatch: any) => {
@@ -98,16 +98,20 @@ const openWallet = (walletData: IOpenWallet, path: string) => {
 /** store wallet data as file */
 export const storeWalletData = () => {};
 
-export const createNewWallet = (path: string, password: string) => {
+export const createNewWallet = (
+  path: string | undefined,
+  password: string,
+  walletName: string
+) => {
   const walletData: ICreateWallet = {
     path,
     password,
-    server: webWalletConnection,
+    server: webWalletConnection(),
     networkType: getNetworkByName(),
   };
 
   return async (dispatch: any) => {
-    dispatch(createWalletFetch());
+    dispatch(createWalletFetch(walletName));
     const successOrError: boolean | object = await createWalletCore(walletData);
 
     if (successOrError === true) {
@@ -125,12 +129,17 @@ export const createNewWallet = (path: string, password: string) => {
   };
 };
 
-export const restoreWalletByMnemomic = (mnemonic: string, password: string) => {
+export const restoreWalletByMnemomic = (
+  path: string | undefined,
+  mnemonic: string,
+  password: string
+) => {
   const walletData: ICreateWallet = {
+    path,
     mnemonic,
     password,
     networkType: getNetworkByName(),
-    server: webWalletConnection,
+    server: webWalletConnection(),
   };
 
   return async (dispatch: any) => {
@@ -138,7 +147,7 @@ export const restoreWalletByMnemomic = (mnemonic: string, password: string) => {
     const successOrError: boolean | object = await createWalletCore(walletData);
 
     if (successOrError === true) {
-      dispatch(restoreWalletSucceed());
+      dispatch(restoreWalletSucceed(path));
       addNotificationByMessage(
         NotificationType.SUCCESS,
         "Restored vault with Mnemomic"
@@ -155,23 +164,26 @@ export const restoreWalletByMnemomic = (mnemonic: string, password: string) => {
 };
 
 export const restoreWalletByKeys = (
+  path: string | undefined,
   primaryAddress: string,
   privateSpendKey: string,
   privateVieKey: string,
-  password: string
+  password: string,
+  walletName: string
 ) => {
   const walletData: ICreateWallet = {
+    path,
     networkType: getNetworkByName(),
-    server: webWalletConnection,
+    server: webWalletConnection(),
     password,
   };
 
   return async (dispatch: any) => {
-    dispatch(createWalletFetch());
+    dispatch(createWalletFetch(walletName));
     const successOrError: boolean | object = await createWalletCore(walletData);
 
     if (successOrError === true) {
-      dispatch(restoreWalletSucceed());
+      dispatch(restoreWalletSucceed(path));
       addNotificationByMessage(
         NotificationType.SUCCESS,
         "Restored vault with Keystore"
@@ -253,7 +265,10 @@ const openWalletFailed = (error: object) => {
   return { type: OPEN_WALLET_FAILED, payload: error };
 };
 
-const createWalletFetch = () => ({ type: CREATE_WALLET_FETCHING });
+const createWalletFetch = (walletName: string) => ({
+  type: CREATE_WALLET_FETCHING,
+  payload: walletName,
+});
 
 const createWalletSucceed = () => ({
   type: CREATE_WALLET_SUCCEED,
@@ -273,8 +288,9 @@ const setWalletConnectionState = (isConnected: boolean) => {
 };
 
 const restoreWalletFetching = () => ({ type: RESTORE_WALLET_BY_SEED_FETCHING });
-const restoreWalletSucceed = () => ({
+const restoreWalletSucceed = (name: string | undefined) => ({
   type: RESTORE_WALLET_BY_SEED_SUCCEED,
+  payload: name,
 });
 const restoreWalletFailed = (error: any) => ({
   type: RESTORE_WALLET_BY_SEED_FAILED,

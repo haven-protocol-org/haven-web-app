@@ -10,10 +10,10 @@ import { Information } from "../../../../assets/styles/type.js";
 import CreateSeed from "../../../components/_create/create_seed";
 import VerifySeed from "../../../components/_create/verify_seed";
 import { Container } from "./styles";
-import { decrypt } from "../../../../utility/utility-encrypt";
 import PropTypes from "prop-types";
 import InputDownload from "../../../components/_inputs/input_download";
-import testFile from "../../../../assets/whitepapers/wp_english.png";
+import InputButton from "shared/components/_inputs/input_button";
+import { storeKeyFileToDisk } from "platforms/web/actions/storage";
 
 export class CreateWebComponent extends Component {
   state = {
@@ -29,28 +29,37 @@ export class CreateWebComponent extends Component {
     // Create Vault
     create_vault_name: "",
     create_vault_password: "",
-    keyStoreFile: testFile,
   };
 
   componentDidMount() {
     window.scrollTo(0, 0);
-    this.props.getSeed(undefined, "secret");
   }
 
   async componentDidUpdate(prevProps, prevState) {
     if (this.props.createdSeed !== "" && this.state.mnemonicString === "") {
-      const seed = await decrypt(this.props.createdSeed);
-      this.setState({ mnemonicString: seed });
+      const seed = this.props.createdSeed;
+      //TODO none will understand this, needs to be refactored once
+      this.setState({ mnemonicString: seed, step: 2 });
     }
   }
 
   nextCreateStep = () => {
     const { step } = this.state;
 
+    if (step === 1) {
+      this.props.createNewWallet(
+        undefined,
+        this.state.create_vault_password,
+        this.state.create_vault_name
+      );
+      return;
+    }
+
     // Until step three incremennt the steps
     if (step < 4) {
       this.setState({ step: step + 1 });
     }
+
     // On step three, if seed is invalid display error messsage for 2s
     else if (step === 4) {
       const { mnemonicString, verify_seed } = this.state;
@@ -115,11 +124,8 @@ export class CreateWebComponent extends Component {
     });
   };
 
-  handleFileChange = (event) => {
-    const fileUploaded = event.target.files[0];
-    this.setState({
-      keyStoreFile: fileUploaded.name,
-    });
+  onDownLoad = (event) => {
+    this.props.storeKeyFile(this.props.walletName);
   };
 
   handleCreateFlow = () => {
@@ -161,10 +167,12 @@ export class CreateWebComponent extends Component {
       case 2:
         return (
           <>
-            <InputDownload
+            <InputButton
               label="Vault File"
-              value={this.state.keyStoreFile}
-              onChange={this.handleFileChange}
+              value={this.props.walletName}
+              button={"Save"}
+              readOnly={true}
+              onClick={this.onDownLoad}
             />
             <Information>
               This is your Vault File and it contains your private keys, seed
@@ -369,8 +377,10 @@ export class CreateWebComponent extends Component {
 }
 
 CreateWebComponent.propTypes = {
-  getSeed: PropTypes.func.isRequired,
+  createNewWallet: PropTypes.func.isRequired,
   isRequestingLogin: PropTypes.bool,
   verifySeed: PropTypes.func.isRequired,
   createdSeed: PropTypes.any.isRequired,
+  walletName: PropTypes.string.isRequired,
+  storeKeyFile: PropTypes.func.isRequired,
 };
