@@ -29,7 +29,7 @@ interface WalletSession {
 
 const INITIAL_STATE: WalletSession = {
   activeWallet: null,
-  savedWallets: null,
+  savedWallets: [],
   isFetching: false,
   isWalletOpen: false,
   error: null,

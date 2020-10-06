@@ -4,8 +4,7 @@ import { DAEMON_CONECTION_CREATED } from "./types";
 
 export const createDaemonConnection = () => {
   return (dispatch: any) => {
-    createDaemonConnectionCore(webWalletConnection);
-
+    createDaemonConnectionCore(webWalletConnection());
     dispatch({ type: DAEMON_CONECTION_CREATED });
   };
 };

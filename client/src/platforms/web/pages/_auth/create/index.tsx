@@ -5,26 +5,34 @@ import {
   mnenomicVerificationSucceed,
   mneomicVerifcationFailed,
 } from "shared/actions/wallet";
+
 import { Component } from "react";
 import React from "react";
 import { Redirect } from "react-router";
 import { CreateWebComponent } from "../../../../../shared/pages/_auth/multi-create";
 import { WebAppState } from "platforms/web/reducers";
 import { selectisRequestingWalletCreation } from "shared/reducers/walletCreation";
+import { storeKeyFileToDisk } from "platforms/web/actions/storage";
 
 interface CreateWebProps {
   mnenomicVerificationSucceed: (fileName: string) => void;
   mneomicVerifcationFailed: () => void;
   isLoggedIn: boolean;
   mnemonicString: string;
-  getSeed: (fileName: string, password: string) => void;
+  storeKeyFileToDisk: (fileName: string) => void;
+  createNewWallet: (
+    path: string | undefined,
+    password: string,
+    walletName: string
+  ) => void;
   isRequestingLogin: boolean;
+  walletName: string;
 }
 
 class CreateWebContainer extends Component<CreateWebProps, {}> {
   verifySeed = (verified: boolean) => {
     verified
-      ? this.props.mnenomicVerificationSucceed("placeholder")
+      ? this.props.mnenomicVerificationSucceed(this.props.walletName)
       : this.props.mneomicVerifcationFailed();
   };
 
@@ -37,8 +45,10 @@ class CreateWebContainer extends Component<CreateWebProps, {}> {
       <CreateWebComponent
         verifySeed={this.verifySeed}
         isRequestingLogin={this.props.isRequestingLogin}
-        getSeed={this.props.getSeed}
+        createNewWallet={this.props.createNewWallet}
         createdSeed={this.props.mnemonicString}
+        walletName={this.props.walletName}
+        storeKeyFile={this.props.storeKeyFileToDisk}
       />
     );
   }
@@ -46,12 +56,14 @@ class CreateWebContainer extends Component<CreateWebProps, {}> {
 
 const mapStateToProps = (state: WebAppState) => ({
   mnemonicString: state.walletCreation.mnemonicKey,
+  walletName: state.walletCreation.name,
   isLoggedIn: selectIsLoggedIn(state),
   isRequestingLogin: selectisRequestingWalletCreation(state),
 });
 
 export const CreateWeb = connect(mapStateToProps, {
-  getSeed: createNewWallet,
+  createNewWallet,
+  storeKeyFileToDisk,
   mnenomicVerificationSucceed,
   mneomicVerifcationFailed,
 })(CreateWebContainer);

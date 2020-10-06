@@ -21,7 +21,7 @@ export const createWallet = async (walletData: ICreateWallet) => {
 
 export const openWallet = async (walletData: IOpenWallet) => {
   try {
-    wallet = await core.openWalletWasm();
+    wallet = await core.openWalletWasm(walletData);
     return true;
   } catch (e) {
     return e;

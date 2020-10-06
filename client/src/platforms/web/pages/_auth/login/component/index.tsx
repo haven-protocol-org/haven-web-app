@@ -1,6 +1,5 @@
 // Library Imports
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 // Relative Imports
 import { Container } from "./styles";
 import Auth from "../../../../../../shared/components/_auth/login";
@@ -8,15 +7,12 @@ import Toggle from "../../../../../../shared/components/_inputs/toggle";
 import Seed from "../../../../../../shared/components/_inputs/seed";
 import { Information } from "../../../../../../assets/styles/type.js";
 import InputUpload from "../../../../../../shared/components/_inputs/input_upload/index.js";
+import { generatePW } from "utility/utility-encrypt";
 
 interface LoginProps {
   errorMessage: string;
   loginByMnemomic: (seed: string, pw: string) => void;
-  loginByKeysData: (
-    keysData: Uint8Array,
-    walletData: Uint8Array,
-    pw: string
-  ) => void;
+  loginByKeysData: (keysData: Uint8Array, pw: string) => void;
   isRequestingLogin: boolean;
 }
 
@@ -79,9 +75,11 @@ export default class Login extends Component<LoginProps, LoginState> {
       selectKeystore,
     } = this.state;
     if (selectKeystore) {
-      this.props.loginByKeysData(keyData, walletCache, password);
+      this.props.loginByKeysData(keyData, password);
     } else {
-      this.props.loginByMnemomic(seed_phrase, "secret");
+      // const randomPW = generatePW(54);
+      // console.log(randomPW);
+      this.props.loginByMnemomic(seed_phrase, "dakookaoksaos");
     }
   };
 

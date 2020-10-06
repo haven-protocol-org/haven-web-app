@@ -1,17 +1,14 @@
 import { getWalletData } from "shared/core/wallet";
-import {
-  addErrorNotification,
-  addNotificationByMessage,
-} from "shared/actions/notification";
+import { addNotificationByMessage } from "shared/actions/notification";
 import { NotificationType } from "constants/notificationList";
 import { saveAs } from "file-saver";
 
-export const storeKeyFileToDisk = () => {
+export const storeKeyFileToDisk = (name: string) => {
   return async (dispatch: any) => {
     const walletData = await getWalletData();
     const keysData = walletData[0];
     const blob = new Blob([keysData.buffer]);
-    saveAs(blob, "Haven-Vault.keys");
+    saveAs(blob, name + ".keys");
 
     dispatch(
       addNotificationByMessage(
@@ -22,16 +19,15 @@ export const storeKeyFileToDisk = () => {
   };
 };
 
-export const storeWalletInDB = () => {
+export const storeWalletInDB = (name: string) => {
   return async (dispatch: any) => {
     const walletData = await getWalletData();
     const wallet = walletData[1];
 
     const openRequest: IDBOpenDBRequest = indexedDB.open("haven");
+
     openRequest.onsuccess = function (this: IDBRequest<IDBDatabase>) {
       const db = this.result;
-
-      db.createObjectStore("wallet");
       const transaction = db.transaction("wallet", "readwrite");
       transaction.objectStore("wallet").put(wallet, "vault");
 
@@ -41,6 +37,11 @@ export const storeWalletInDB = () => {
           "Keystore has been stored on hard disk"
         )
       );
+    };
+
+    openRequest.onupgradeneeded = function (this: IDBRequest<IDBDatabase>) {
+      const db = this.result;
+      db.createObjectStore("wallet");
     };
   };
 };
@@ -52,11 +53,18 @@ export const getStoredWallets = () => {
   };
 };
 
-export const getWalletCacheByName = (name: string) => {
-  return async (dispatch: any) => {
-    const walletCache: ArrayBuffer = await fetchValueByKey(name);
-    console.log(walletCache);
-  };
+export const getWalletCacheByName = (name: string): Promise<ArrayBuffer> => {
+  return new Promise((resolutionFunc, rejectionFunc) => {
+    return async (dispatch: any) => {
+      try {
+        const walletCache: ArrayBuffer = await fetchValueByKey(name);
+        resolutionFunc(walletCache);
+      } catch (e) {
+        // if wallet not exist just return an empty one
+        resolutionFunc(new Uint8Array());
+      }
+    };
+  });
 };
 
 const fetchValueByKey = (name: string): Promise<ArrayBuffer> => {
@@ -69,6 +77,9 @@ const fetchValueByKey = (name: string): Promise<ArrayBuffer> => {
       keyRequest.onsuccess = function (this: IDBRequest<any>) {
         const walletCache = this.result as ArrayBuffer;
         resolutionFunc(walletCache);
+      };
+      keyRequest.onerror = function (error: any) {
+        rejectionFunc(error);
       };
     };
   });

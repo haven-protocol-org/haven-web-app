@@ -6,7 +6,7 @@ import { applyMiddleware, createStore } from "redux";
 import reduxThunk from "redux-thunk";
 import reducers from "./reducers";
 import { logger } from "../../vendor/clipboard/dev-helper";
-import {HavenApp} from "shared/App"
+import { HavenApp } from "shared/App";
 
 let store = null;
 
@@ -17,11 +17,11 @@ export const startWebApp = () => {
 };
 
 export const startWebAppInDevMode = () => {
-  const createStoreWithMiddleware = applyMiddleware(reduxThunk, logger)(
-    createStore
-  );
+  const createStoreWithMiddleware = applyMiddleware(
+    reduxThunk,
+    logger
+  )(createStore);
   store = createStoreWithMiddleware(reducers);
-
 
   render();
 };

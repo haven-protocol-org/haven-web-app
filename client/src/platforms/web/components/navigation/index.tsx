@@ -18,8 +18,8 @@ import {
 interface NavigationProps {
   isLoggedIn: boolean;
   logout: () => void;
-  storeKeyFileToDisk: () => void;
-  storeWalletInDB: () => void;
+  storeKeyFileToDisk: (name: string) => void;
+  storeWalletInDB: (name: string) => void;
   getStoredWallets: () => void;
 }
 
@@ -42,10 +42,12 @@ class Navigation extends Component<NavigationProps, {}> {
         </Brand>
         {auth === true && (
           <>
-            <Logout onClick={(e: any) => this.props.storeKeyFileToDisk()}>
+            <Logout
+              onClick={(e: any) => this.props.storeKeyFileToDisk("vault")}
+            >
               Save Keystore File
             </Logout>
-            <Logout onClick={(e: any) => this.props.storeWalletInDB()}>
+            <Logout onClick={(e: any) => this.props.storeWalletInDB("vault")}>
               Save Wallet Cache in DB
             </Logout>
             <Logout onClick={(e: any) => this.props.getStoredWallets()}>
