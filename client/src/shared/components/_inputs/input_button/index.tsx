@@ -5,7 +5,23 @@ import React from "react";
 import { Container, Field, Labels, Wrapped, Button } from "./styles";
 import { Label, Error } from "../../../../assets/styles/type.js";
 
-const InputButton = React.forwardRef(
+type Ref = HTMLInputElement;
+type Props = {
+  type: string;
+  placeholder: string;
+  label: string;
+  error?: string;
+  onChange?: Function;
+  name: string;
+  value: any;
+  button: string;
+  width?: boolean;
+  readOnly?: boolean;
+  disabled?: boolean;
+  onClick?: (e: any) => void;
+};
+
+const InputButton = React.forwardRef<Ref, Props>(
   (
     {
       type,
@@ -18,7 +34,7 @@ const InputButton = React.forwardRef(
       width,
       readOnly,
       button,
-      onClick
+      onClick,
     },
     ref
   ) => {

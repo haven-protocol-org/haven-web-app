@@ -1,4 +1,4 @@
-import {keyframes} from "styled-components";
+import { keyframes } from "styled-components";
 import styled from "styled-components";
 import media from "../../../../assets/styles/media";
 
@@ -16,13 +16,13 @@ const ticker = keyframes`
 
 export const Scroller = styled.div`
   height: 200px;
-  margin-bottom:10px;
+  margin-bottom: 10px;
   width: 98vw;
-  position:relative;
+  position: relative;
   //margin-top:auto;
   display: flex;
   -webkit-backface-visibility: hidden;
-  overflow:hidden;
+  overflow: hidden;
 
   &::-webkit-scrollbar {
     display: none;
@@ -31,11 +31,10 @@ export const Scroller = styled.div`
 
 export const Wrapper = styled.div`
   display: flex;
-   position:absolute;
-  bottom:0;
-  width:9000px;
-  justify-content:space-between;
-  
+  position: absolute;
+  bottom: 0;
+  width: 9000px;
+  justify-content: space-between;
 
   animation: ${ticker} 50s linear infinite;
 
@@ -49,8 +48,6 @@ export const Wrapper = styled.div`
 `;
 
 export const Cards = styled.div`
-
-
   min-width: 480px;
   background: #2b2e32;
   border: 1px solid #3a4048;
@@ -62,11 +59,11 @@ export const Cards = styled.div`
   border: 1px solid #3a4048;
   box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.15);
   transition: 500ms;
-  order:${props => props.ticker === 'XHV'? 1 : props.ticker === 'BTC'? 2:3};
+  order: ${(props) =>
+    props.ticker === "XHV" ? 1 : props.ticker === "BTC" ? 2 : 3};
 
   &:hover {
     cursor: pointer;
     box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.15);
   }
 `;
-

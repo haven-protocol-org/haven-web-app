@@ -45,8 +45,8 @@ export const Tab = styled.div`
   align-items: center;
   justify-content: center;
   font-size: 13px;
-  color:  ${props => (props.active ? "#fff" : "#8a8d90")};
-  background: ${props => (props.active ? "#36393f" : "#313339")};
+  color:  ${(props) => (props.active ? "#fff" : "#8a8d90")};
+  background: ${(props) => (props.active ? "#36393f" : "#313339")};
 
 
   border-top: none;
@@ -92,7 +92,7 @@ export const Progress = styled.div`
 `;
 
 export const Step = styled.div`
-  width: ${props =>
+  width: ${(props) =>
     (props.width === 1 ? "10%" : null) ||
     (props.width === 2 ? "50%" : null) ||
     (props.width === 3 ? "100%" : null)}

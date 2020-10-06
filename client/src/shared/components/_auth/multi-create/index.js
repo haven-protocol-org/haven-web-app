@@ -23,19 +23,7 @@ import { Spinner } from "../../spinner";
 
 const MultiCreate = (props) => {
   return (
-    <Container>
-      <Header>
-        <Title>{props.title} </Title>
-        <Description>{props.description}</Description>
-      </Header>
-      <Tabs>
-        <Tab active={props.selectedCreate} onClick={props.selectCreate}>
-          Create
-        </Tab>
-        <Tab active={props.selectedRestore} onClick={props.selectRestore}>
-          Restore
-        </Tab>
-      </Tabs>
+    <>
       <Main>
         <Body>{props.children}</Body>
         <Buttons>
@@ -44,7 +32,7 @@ const MultiCreate = (props) => {
           ) : (
             <Back onClick={props.prevStep}>Back</Back>
           )}
-          {!props.loading && props.selectedCreate ? (
+          {!props.loading ? (
             <div>
               <Submit onClick={props.nextStep} disabled={props.disabled}>
                 {(props.step === 1 && "Create") ||
@@ -64,7 +52,7 @@ const MultiCreate = (props) => {
         <Label>{props.label}</Label>
         <Route to={props.link}>{props.route}</Route>
       </Footer>
-    </Container>
+    </>
   );
 };
 

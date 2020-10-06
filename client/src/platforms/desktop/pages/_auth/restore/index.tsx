@@ -14,7 +14,7 @@ import { Spinner } from "shared/components/spinner";
 import { Body, Wrapper } from "./styles";
 import Input from "shared/components/_inputs/input";
 import { DesktopAppState } from "../../../reducers";
-import InputButton from "shared/components/_inputs/input_button/index.js";
+import InputButton from "shared/components/_inputs/input_button";
 
 interface RestoreProps {
   restoreWallet: (seed: string, name: string, pw: string) => void;

@@ -4,8 +4,8 @@ import media from "../../../../assets/styles/media.js";
 export const Container = styled.div`
   height: auto;
   width: auto;
-  background: ${props => props.theme.body.foreground};
-  border: 1px solid ${props => props.theme.body.border};
+  background: ${(props) => props.theme.body.foreground};
+  border: 1px solid ${(props) => props.theme.body.border};
   border-radius: 4px;
   display: none;
   padding: 20px;
@@ -27,7 +27,7 @@ export const Pending = styled.div`
   align-items: center;
   justify-content: center;
   font-size: 12px;
-  color: ${props => props.theme.type.secondary};
+  color: ${(props) => props.theme.type.secondary};
   font-family: Inter-Regular;
   margin-top: 12px;
   text-align: center;
@@ -46,7 +46,7 @@ export const Amount = styled.div`
   align-items: center;
   justify-content: center;
   font-size: 36px;
-  color: ${props => props.theme.type.primary};
+  color: ${(props) => props.theme.type.primary};
   font-family: Inter-Bold;
 `;
 
@@ -57,7 +57,7 @@ export const Value = styled.div`
   align-items: center;
   justify-content: center;
   font-size: 14px;
-  color: ${props => props.theme.type.secondary};
+  color: ${(props) => props.theme.type.secondary};
   font-family: Inter-Regular;
   margin-top: 12px;
 `;

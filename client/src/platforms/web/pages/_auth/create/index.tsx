@@ -9,10 +9,10 @@ import {
 import { Component } from "react";
 import React from "react";
 import { Redirect } from "react-router";
-import { CreateWebComponent } from "../../../../../shared/pages/_auth/multi-create";
 import { WebAppState } from "platforms/web/reducers";
 import { selectisRequestingWalletCreation } from "shared/reducers/walletCreation";
 import { storeKeyFileToDisk } from "platforms/web/actions/storage";
+import { CreateWebComponent } from "platforms/web/pages/_auth/create/multi-create";
 
 interface CreateWebProps {
   mnenomicVerificationSucceed: (fileName: string) => void;
@@ -30,20 +30,9 @@ interface CreateWebProps {
 }
 
 class CreateWebContainer extends Component<CreateWebProps, {}> {
-  verifySeed = (verified: boolean) => {
-    verified
-      ? this.props.mnenomicVerificationSucceed(this.props.walletName)
-      : this.props.mneomicVerifcationFailed();
-  };
-
   render() {
-    if (this.props.isLoggedIn) {
-      return <Redirect to="/wallet/assets" />;
-    }
-
     return (
       <CreateWebComponent
-        verifySeed={this.verifySeed}
         isRequestingLogin={this.props.isRequestingLogin}
         createNewWallet={this.props.createNewWallet}
         createdSeed={this.props.mnemonicString}

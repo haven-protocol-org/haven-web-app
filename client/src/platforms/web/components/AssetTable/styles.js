@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 export const Cards = styled(Link)`
   border-bottom: 1px solid #4a4d52;
   width: auto;
-  order: ${props =>
+  order: ${(props) =>
     props.ticker === "XHV" ? 1 : props.ticker === "BTC" ? 2 : 3};
   text-decoration: none;
 `;
@@ -59,7 +59,7 @@ export const Title = styled.div`
   font-family: Inter-Bold;
   font-size: 17px;
   color: white;
-  text-align: ${props => (props.right ? "right" : "left")};
+  text-align: ${(props) => (props.right ? "right" : "left")};
   letter-spacing: 0;
   line-height: 30px;
 `;
@@ -68,7 +68,7 @@ export const TableTitle = styled.div`
   font-family: Inter-Bold;
   font-size: 19px;
   color: white;
-  text-align: ${props => (props.right ? "right" : "left")};
+  text-align: ${(props) => (props.right ? "right" : "left")};
 
   letter-spacing: 0;
   line-height: 36px;
@@ -80,7 +80,7 @@ export const Subtitle = styled.div`
   color: #8a8d90;
   letter-spacing: 0;
   line-height: 24px;
-  text-align: ${props => (props.right ? "right" : "left")};
+  text-align: ${(props) => (props.right ? "right" : "left")};
 `;
 
 export const Table = styled.div`
@@ -116,7 +116,7 @@ export const CellTitle = styled.div`
   color: #fafafa;
   letter-spacing: 0;
   line-height: 36px;
-  text-align: ${props => (props.left ? "left" : "right")};
+  text-align: ${(props) => (props.left ? "left" : "right")};
 `;
 
 export const CellSubtitle = styled.div`

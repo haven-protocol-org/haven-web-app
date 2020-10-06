@@ -115,7 +115,7 @@ export const createNewWallet = (
     const successOrError: boolean | object = await createWalletCore(walletData);
 
     if (successOrError === true) {
-      const mnemomic = getMnemonic();
+      const mnemomic = await getMnemonic();
       dispatch(queryMnemonicForWalletGenerationSucceed(mnemomic));
       dispatch(createWalletSucceed());
       addNotificationByMessage(NotificationType.SUCCESS, "Vault is open");
@@ -129,10 +129,18 @@ export const createNewWallet = (
   };
 };
 
+/**
+ * restores/creates a wallet by seed, path is defined for nodejs-wallets and undefined for web wallets
+ * @param path
+ * @param mnemonic
+ * @param password
+ * @param walletName
+ */
 export const restoreWalletByMnemomic = (
   path: string | undefined,
   mnemonic: string,
-  password: string
+  password: string,
+  walletName: string | undefined
 ) => {
   const walletData: ICreateWallet = {
     path,
@@ -147,7 +155,7 @@ export const restoreWalletByMnemomic = (
     const successOrError: boolean | object = await createWalletCore(walletData);
 
     if (successOrError === true) {
-      dispatch(restoreWalletSucceed(path));
+      dispatch(restoreWalletSucceed(walletName));
       addNotificationByMessage(
         NotificationType.SUCCESS,
         "Restored vault with Mnemomic"

@@ -1,9 +1,7 @@
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 import media from "../../../../../../assets/styles/media.js";
-import {
-  background,
-} from "../../../../../../assets/styles/colors.js";
+import { background } from "../../../../../../assets/styles/colors.js";
 
 export const Container = styled.div`
   min-height: 100vh;
@@ -18,8 +16,6 @@ export const Container = styled.div`
     padding-top: 70px;
   `}
 `;
-
-
 
 export const Image = styled.img`
   height: auto;
@@ -41,8 +37,6 @@ export const Image = styled.img`
    margin-left: -100px;
  `};
 `;
-
-
 
 export const Heading = styled.div`
   font-size: 48px;

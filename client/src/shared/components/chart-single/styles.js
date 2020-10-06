@@ -6,6 +6,6 @@ export const Container = styled.div`
   width: 100%;
   border-radius: 4px;
   padding: 1px;
-  background: ${props => props.theme.body.foreground};
-  border: 1px solid ${props => props.theme.body.border};
+  background: ${(props) => props.theme.body.foreground};
+  border: 1px solid ${(props) => props.theme.body.border};
 `;

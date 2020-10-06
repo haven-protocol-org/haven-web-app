@@ -7,8 +7,8 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: ${props => props.theme.body.foreground};
-  border: 1px solid ${props => props.theme.body.border};
+  background: ${(props) => props.theme.body.foreground};
+  border: 1px solid ${(props) => props.theme.body.border};
   border-radius: 4px;
   padding: 16px;
 `;
@@ -16,7 +16,7 @@ export const Container = styled.div`
 export const Title = styled.div`
   font-family: Inter-SemiBold;
   font-size: 16px;
-  color: ${props => props.theme.type.primary};
+  color: ${(props) => props.theme.type.primary};
   letter-spacing: 0;
   line-height: 28px;
 `;
@@ -24,5 +24,5 @@ export const Title = styled.div`
 export const Description = styled.div`
   font-family: Inter-Regular;
   font-size: 14px;
-  color: ${props => props.theme.type.secondary};
+  color: ${(props) => props.theme.type.secondary};
 `;

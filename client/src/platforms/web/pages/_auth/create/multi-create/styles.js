@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
-import media from "../../../../assets/styles/media.js";
-import { background } from "../../../../assets/styles/colors.js";
+import media from "../../../../../../assets/styles/media.js";
+import { background } from "../../../../../../assets/styles/colors.js";
 
 export const Container = styled.div`
   min-height: 100vh;
@@ -15,6 +15,60 @@ export const Container = styled.div`
   ${media.mobile`
     padding-top: 50px;
   `}
+`;
+
+export const SubContainer = styled.div`
+  height: auto;
+  width: 624px;
+  flex-direction: column;
+  margin: 20px;
+  border: 1px solid #3a4048;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.05);
+`;
+
+export const Header = styled.div`
+  height: auto;
+  width: auto;
+  padding: 20px;
+  background: #36393f;
+  border-bottom: 1px solid #3a4048;
+`;
+
+export const Tabs = styled.div`
+  height: 40px;
+  width: 100%;
+  background: red;
+  display: flex;
+`;
+
+export const Tab = styled.div`
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  background: ${(props) => (props.active ? "#36393F" : "#2B2E32")};
+  color: ${(props) => (props.active ? "#ffffff" : "#8a8d90")};
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+export const Title = styled.div`
+  font-family: Inter-SemiBold;
+  font-size: 20px;
+  color: #fff;
+  letter-spacing: 0;
+  line-height: 30px;
+`;
+
+export const SubDescription = styled.div`
+  font-family: Inter-Regular;
+  font-size: 14px;
+  color: #8a8d90;
+  line-height: 24px;
 `;
 
 export const Image = styled.img`
@@ -37,7 +91,6 @@ export const Image = styled.img`
    margin-left: -100px;
  `};
 `;
-
 
 export const Heading = styled.div`
   font-size: 48px;

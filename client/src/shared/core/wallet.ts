@@ -97,7 +97,7 @@ export const getWalletData = async (): Promise<DataView[]> => {
   return wallet.getData();
 };
 
-export const getMnemonic = () => {
+export const getMnemonic = async () => {
   return wallet.getMnemonic();
 };
 

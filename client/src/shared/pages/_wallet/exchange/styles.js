@@ -11,7 +11,7 @@ export const Failed = styled.div`
   width: auto;
   font-size: 13px;
   padding: 6px 12px;
-  background: ${props => props.theme.states.error};
+  background: ${(props) => props.theme.states.error};
   border-radius: 3px;
   text-align: center;
   grid-column: 1 / 3;

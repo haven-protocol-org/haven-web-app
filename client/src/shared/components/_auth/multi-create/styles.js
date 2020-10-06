@@ -18,50 +18,6 @@ export const Main = styled.div`
   padding: 10px;
 `;
 
-export const Header = styled.div`
-  height: auto;
-  width: auto;
-  padding: 20px;
-  background: #36393f;
-  border-bottom: 1px solid #3a4048;
-`;
-
-export const Tabs = styled.div`
-  height: 40px;
-  wdith: 100%;
-  background: red;
-  display: flex;
-`;
-
-export const Tab = styled.div`
-  width: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  background: ${(props) => (props.active ? "#36393F" : "#2B2E32")};
-  color: ${(props) => (props.active ? "#ffffff" : "#8a8d90")};
-
-  &:hover {
-    cursor: pointer;
-  }
-`;
-
-export const Title = styled.div`
-  font-family: Inter-SemiBold;
-  font-size: 20px;
-  color: #fff;
-  letter-spacing: 0;
-  line-height: 30px;
-`;
-
-export const Description = styled.div`
-  font-family: Inter-Regular;
-  font-size: 14px;
-  color: #8a8d90;
-  line-height: 24px;
-`;
-
 export const Progress = styled.div`
   display: grid;
   background: #2b2e34;

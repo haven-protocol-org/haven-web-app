@@ -42,7 +42,6 @@ export const walletSession = function (
 ): WalletSession {
   switch (action.type) {
     case OPEN_WALLET_FAILED:
-    case RESTORE_WALLET_BY_SEED_FAILED:
       return {
         ...state,
         error: action.payload,
@@ -60,7 +59,6 @@ export const walletSession = function (
       };
     case SET_WALLET_CONNECTION_STATE:
       return { ...state, isConnectedToDaemon: action.payload };
-    case RESTORE_WALLET_BY_SEED_SUCCEED:
     case VALIDATE_MNEMONIC_SUCCEED:
       return {
         ...state,
@@ -73,7 +71,6 @@ export const walletSession = function (
           : [action.payload],
       };
     case OPEN_WALLET_FETCHING:
-    case RESTORE_WALLET_BY_SEED_FETCHING:
       return { ...state, error: null, isFetching: true };
     case UPDATE_SAVED_WALLETS:
       return { ...state, savedWallets: action.payload };

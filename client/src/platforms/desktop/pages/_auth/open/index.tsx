@@ -14,7 +14,7 @@ import {
 } from "../../../../../shared/reducers/walletSession";
 import { WalletSelection } from "shared/components/_inputs/wallet-selection";
 import Dropdown from "../../../../../shared/components/_inputs/dropdown";
-import InputButton from "../../../../../shared/components/_inputs/input_button/index.js";
+import InputButton from "shared/components/_inputs/input_button";
 
 import { openWallet } from "../../../actions/walletSession";
 import { DesktopAppState } from "platforms/desktop/reducers";
