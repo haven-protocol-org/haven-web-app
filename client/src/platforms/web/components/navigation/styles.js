@@ -10,6 +10,7 @@ export const Container = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border-bottom: 1px solid #3a4048;
 `;
 
 export const Logo = styled.img`

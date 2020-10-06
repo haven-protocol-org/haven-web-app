@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import media from "../../../../assets/styles/media.js";
 
 export const Container = styled.header`
   height: 64px;
@@ -11,6 +10,7 @@ export const Container = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border-bottom: 1px solid #3a4048;
 `;
 
 export const Logo = styled.img`
