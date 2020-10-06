@@ -354,7 +354,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       <Fragment>
         <Body>
           <Header
-            title="Exchange "
+            title="Convert "
             description="Swap between all available Haven assets"
           />
           <Tab
