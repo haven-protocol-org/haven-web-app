@@ -62,7 +62,7 @@ export const getWalletCacheByName = async (
     return walletCache;
   } catch (e) {
     // if wallet not exist just return an empty one
-    return new Uint8Array();
+    return new ArrayBuffer(0);
   }
 };
 
