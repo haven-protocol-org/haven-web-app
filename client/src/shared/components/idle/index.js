@@ -1,6 +1,6 @@
 import { Component } from "react";
 import { connect } from "react-redux";
-import { closeWallet } from "../../actions";
+import { closeWallet } from "../../closeWallet";
 import {selectWebSyncState} from "../../../platforms/web/reducers/chain";
 
 const ACTIVITY_EVENTS = [

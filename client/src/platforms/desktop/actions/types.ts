@@ -24,6 +24,9 @@ export const OPEN_WALLET_FETCHING = "open_wallet_fetching";
 export const OPEN_WALLET_SUCCEED = "open_wallet_succeed";
 export const OPEN_WALLET_FAILED = "open_wallet_failed";
 
+export const START_WALLET_SESSION = "start_wallet_session";
+export const STOP_WALLET_SESSION = "stop_wallet_session";
+
 /*
 TRANSFER
  */

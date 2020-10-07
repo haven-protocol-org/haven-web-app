@@ -28,9 +28,9 @@ export const openWallet = async (walletData: IOpenWallet) => {
   }
 };
 
-export const closeWallet = async () => {
+export const closeWallet = async (save: boolean) => {
   //@ts-ignore
-  return wallet.close();
+  return wallet.close(save);
 };
 
 export const getBalance = async (
@@ -122,9 +122,13 @@ export const syncWallet = (): Promise<void> => {
   return wallet.startSyncing();
 };
 
-export const syncAtOnce = () => {
+export const stopSyncing = (): Promise<void> => {
+  return wallet.stopSyncing();
+};
+
+export const syncAtOnce = (startHeight: number) => {
   //@ts-ignore
-  return wallet.sync();
+  return wallet.sync(startHeight);
 };
 
 export const transfer = async (

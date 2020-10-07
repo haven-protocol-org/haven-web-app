@@ -18,9 +18,10 @@ import { exchangeProcess } from "../../../shared/reducers/exchangeProcess";
 import { havenNode } from "./havenNode";
 import { walletRPC } from "./walletRPC";
 import { mining } from "./mining";
-import {havenFeature} from "shared/reducers/havenFeature";
+import { havenFeature } from "shared/reducers/havenFeature";
 import modal from "shared/reducers/modal";
 import { WebAppState } from "platforms/web/reducers";
+import { START_WALLET_SESSION, STOP_WALLET_SESSION } from "../actions/types";
 
 const appReducer = combineReducers({
   theme,
@@ -45,10 +46,9 @@ const appReducer = combineReducers({
 });
 
 const rootReducer = (state: any, action: AnyAction) => {
-  if (action.type === CLOSE_WALLET) {
-
-    const {notification, havenNode, walletRPC} = state;
-    state = {notification, havenNode, walletRPC};
+  if (action.type === STOP_WALLET_SESSION) {
+    const { notification, havenNode, walletRPC } = state;
+    state = { notification };
   }
 
   return appReducer(state, action);

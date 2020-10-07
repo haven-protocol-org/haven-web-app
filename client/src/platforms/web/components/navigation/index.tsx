@@ -5,19 +5,14 @@ import { connect } from "react-redux";
 // Relative Imports
 import { Container, Haven, Logo, Brand, Logout, Tag } from "./styles.js";
 import Icon from "../../../../assets/haven.svg";
-import { closeWallet } from "shared/actions";
+import { closeWallet } from "shared/actions/closeWallet";
 import { selectIsLoggedIn } from "shared/reducers/walletSession";
 import { APP_VERSION, NET_TYPE_NAME } from "constants/env";
 import { WebAppState } from "platforms/web/reducers/index.js";
-import {
-  storeKeyFileToDisk,
-  storeWalletInDB,
-  getStoredWallets,
-} from "platforms/web/actions/storage";
 
 interface NavigationProps {
   isLoggedIn: boolean;
-  logout: () => void;
+  logout: (isWeb: boolean) => void;
   storeKeyFileToDisk: (name: string) => void;
   storeWalletInDB: (name: string) => void;
   getStoredWallets: () => void;
@@ -25,7 +20,7 @@ interface NavigationProps {
 
 class Navigation extends Component<NavigationProps, {}> {
   handleLogout = () => {
-    this.props.logout();
+    this.props.logout(true);
   };
 
   render() {
@@ -40,21 +35,6 @@ class Navigation extends Component<NavigationProps, {}> {
             v{APP_VERSION} {NET_TYPE_NAME}
           </Tag>
         </Brand>
-        {auth === true && (
-          <>
-            <Logout
-              onClick={(e: any) => this.props.storeKeyFileToDisk("vault")}
-            >
-              Save Keystore File
-            </Logout>
-            <Logout onClick={(e: any) => this.props.storeWalletInDB("vault")}>
-              Save Wallet Cache in DB
-            </Logout>
-            <Logout onClick={(e: any) => this.props.getStoredWallets()}>
-              Get Wallets from DB
-            </Logout>
-          </>
-        )}
         {auth === true && <Logout onClick={this.handleLogout}>Logout</Logout>}
       </Container>
     );
@@ -67,7 +47,4 @@ const mapStateToProps = (state: WebAppState) => ({
 
 export const NavigationWeb = connect(mapStateToProps, {
   logout: closeWallet,
-  storeKeyFileToDisk,
-  storeWalletInDB,
-  getStoredWallets,
 })(Navigation);

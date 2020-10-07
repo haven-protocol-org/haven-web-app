@@ -1,4 +1,4 @@
-import { CLOSE_WALLET, GET_ADDRESS_SUCCEED } from "./types";
+import { GET_ADDRESS_SUCCEED } from "./types";
 import { AddressEntry } from "../reducers/address";
 
 export * from "./prices";
@@ -10,7 +10,4 @@ export const getAddressSucceed = (payload: AddressEntry[]) => ({
   payload,
 });
 
-// TODO close core wallet
-export const closeWallet = () => {
-  return { type: CLOSE_WALLET };
-};
+

@@ -13,7 +13,7 @@ import {
   Tag,
 } from "./styles.js";
 import Icon from "../../../../assets/haven.svg";
-import { closeWallet } from "../../../actions";
+import { closeWallet } from "../../../closeWallet";
 import { selectIsLoggedIn } from "shared/reducers/walletSession";
 import { APP_VERSION, NET_TYPE_NAME } from "../../../../constants/env";
 

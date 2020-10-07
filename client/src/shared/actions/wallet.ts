@@ -8,11 +8,10 @@ import {
   CREATE_WALLET_SUCCEED,
   CREATE_WALLET_FETCHING,
   QUERY_MNEMONIC_FOR_WALLET_GENERATION_SUCCEED,
-  VALIDATE_MNEMONIC_SUCCEED,
-  VALIDATE_MNEMONIC_FAILED,
   RESTORE_WALLET_BY_SEED_FETCHING,
   RESTORE_WALLET_BY_SEED_SUCCEED,
   RESTORE_WALLET_BY_SEED_FAILED,
+  START_WALLET_SESSION,
 } from "platforms/desktop/actions/types";
 import {
   createWallet as createWalletCore,
@@ -24,6 +23,7 @@ import {
   isWalletConnected,
   getWalletHeight,
   getChainHeight,
+  syncAtOnce,
 } from "../core/wallet";
 import { addNotificationByMessage } from "./notification";
 import { NotificationType } from "constants/notificationList";
@@ -42,22 +42,23 @@ import { getWalletCacheByName } from "platforms/web/actions/storage";
 /** collection of actions to open, create and store wallet */
 
 /** used by browser */
-export const openWalletByData = async (
+export const openWalletByData = (
   keysData: Uint8Array,
   password: string,
-  path: string = ""
+  walletName: string
 ) => {
-  const cacheData = await getWalletCacheByName(path);
-  const walletData: IOpenWallet = {
-    keysData,
-    cacheData: new Uint8Array(cacheData),
-    password,
-    networkType: getNetworkByName(),
-    server: webWalletConnection(),
-  };
+  return async (dispatch: any) => {
+    const cacheData = await getWalletCacheByName(walletName);
+    const walletData: IOpenWallet = {
+      keysData,
+      //@ts-ignore
+      cacheData: new Uint8Array(cacheData),
+      password,
+      networkType: getNetworkByName(),
+      server: webWalletConnection(),
+    };
 
-  return (dispatch: any) => {
-    dispatch(openWallet(walletData, path));
+    dispatch(openWallet(walletData, walletName));
   };
 };
 
@@ -77,14 +78,16 @@ export const openWalletByFile = (path: string, password: string) => {
 
 const openWallet = (walletData: IOpenWallet, path: string) => {
   return async (dispatch: any) => {
-    dispatch(openWalletFetching);
+    dispatch(openWalletFetching());
 
     const successOrError: boolean | object = await openWalletCore(walletData);
 
     if (successOrError === true) {
       dispatch(openWalletSucceed(path));
-      addNotificationByMessage(NotificationType.SUCCESS, "Vault is open");
-      dispatch(startWalletSession());
+      dispatch(
+        addNotificationByMessage(NotificationType.SUCCESS, "Vault is open")
+      );
+      dispatch(startWalletSession(path));
     } else {
       addNotificationByMessage(
         NotificationType.ERROR,
@@ -94,9 +97,6 @@ const openWallet = (walletData: IOpenWallet, path: string) => {
     }
   };
 };
-
-/** store wallet data as file */
-export const storeWalletData = () => {};
 
 export const createNewWallet = (
   path: string | undefined,
@@ -160,7 +160,6 @@ export const restoreWalletByMnemomic = (
         NotificationType.SUCCESS,
         "Restored vault with Mnemomic"
       );
-      dispatch(startWalletSession());
     } else {
       addNotificationByMessage(
         NotificationType.ERROR,
@@ -196,7 +195,6 @@ export const restoreWalletByKeys = (
         NotificationType.SUCCESS,
         "Restored vault with Keystore"
       );
-      dispatch(startWalletSession());
     } else {
       addNotificationByMessage(
         NotificationType.ERROR,
@@ -207,30 +205,20 @@ export const restoreWalletByKeys = (
   };
 };
 
-export const mnenomicVerificationSucceed = (fileName: string) => {
-  return (dispatch: any) => {
-    dispatch({
-      type: VALIDATE_MNEMONIC_SUCCEED,
-      payload: fileName,
-    });
-
-    dispatch(startWalletSession());
-  };
-};
-export const mneomicVerifcationFailed = () => ({
-  type: VALIDATE_MNEMONIC_FAILED,
-});
-
-const startWalletSession = () => {
+export const startWalletSession = (
+  walletName: string | undefined = undefined
+) => {
   return async (dispatch: any, getStore: () => HavenAppState) => {
     // initialize own connection to daemon ( needed for fetching block headers )
+    dispatch({ type: START_WALLET_SESSION, payload: walletName });
     dispatch(createDaemonConnection());
 
     await dispatch(initReduxWallet());
 
     // start wallet listeners
     addWalletListener(dispatch, getStore);
-    syncWallet();
+    //syncWallet();
+    syncAtOnce(1);
   };
 };
 

@@ -14,17 +14,12 @@ import { connect } from "react-redux";
 import { selectisRequestingWalletCreation } from "shared/reducers/walletCreation";
 import { WebAppState } from "platforms/web/reducers";
 import { storeKeyFileToDisk } from "platforms/web/actions/storage";
-import {
-  createNewWallet,
-  mnenomicVerificationSucceed,
-  mneomicVerifcationFailed,
-} from "shared/actions/wallet";
+import { createNewWallet, startWalletSession } from "shared/actions/wallet";
 import { selectIsLoggedIn } from "shared/reducers/walletSession";
 import { Redirect } from "react-router";
 
 interface CreateProps {
-  mnenomicVerificationSucceed: (fileName: string) => void;
-  mneomicVerifcationFailed: () => void;
+  startWalletSession: (fileName: string | undefined) => void;
   isLoggedIn: boolean;
   mnemonicString: string;
   storeKeyFileToDisk: (fileName: string) => void;
@@ -92,11 +87,9 @@ class CreateWalletWeb extends Component<CreateProps, CreateState> {
 
       const validationSucceed = verify_seed === mnemonicString;
 
-      validationSucceed
-        ? this.props.mnenomicVerificationSucceed(this.props.walletName)
-        : this.props.mneomicVerifcationFailed();
-
-      if (!validationSucceed) {
+      if (validationSucceed) {
+        this.props.startWalletSession(this.props.walletName);
+      } else {
         this.setState({ error: "Sorry, that seed is incorrect" });
         setTimeout(() => {
           this.setState({ error: "" });
@@ -249,6 +242,5 @@ const mapStateToProps = (state: WebAppState) => ({
 export const CreateWalletWebComponent = connect(mapStateToProps, {
   createNewWallet,
   storeKeyFileToDisk,
-  mnenomicVerificationSucceed,
-  mneomicVerifcationFailed,
+  startWalletSession,
 })(CreateWalletWeb);

@@ -15,8 +15,7 @@ import { WebAppState } from "platforms/web/reducers";
 import { storeKeyFileToDisk } from "platforms/web/actions/storage";
 import {
   restoreWalletByMnemomic,
-  mnenomicVerificationSucceed,
-  mneomicVerifcationFailed,
+  startWalletSession,
 } from "shared/actions/wallet";
 import { Redirect } from "react-router";
 import { selectIsLoggedIn } from "shared/reducers/walletSession";
@@ -26,8 +25,7 @@ interface RestoreProps {
   isRequestingLogin: boolean;
   walletIsCreated: boolean;
   isLoggedIn: boolean;
-  mnenomicVerificationSucceed: (fileName: string) => void;
-  mneomicVerifcationFailed: () => void;
+  startWalletSession: (fileName: string | undefined) => void;
   storeKeyFileToDisk: (walletname: string) => void;
   restoreWalletByMnemomic: (
     path: string | undefined,
@@ -95,11 +93,9 @@ class RestoreWeb extends Component<RestoreProps, RestoreState> {
       const validationSucceed =
         check_vault_password.trim() === create_vault_password.trim();
 
-      validationSucceed
-        ? this.props.mnenomicVerificationSucceed(this.props.walletName)
-        : this.props.mneomicVerifcationFailed();
-
-      if (!validationSucceed) {
+      if (validationSucceed) {
+        this.props.startWalletSession(this.props.walletName);
+      } else {
         this.setState({ error: "Sorry, that password is incorrect" });
         setTimeout(() => {
           this.setState({ error: "" });
@@ -273,6 +269,5 @@ const mapStateToProps = (state: WebAppState) => ({
 export const RestoreWebComponent = connect(mapStateToProps, {
   restoreWalletByMnemomic,
   storeKeyFileToDisk,
-  mnenomicVerificationSucceed,
-  mneomicVerifcationFailed,
+  startWalletSession,
 })(RestoreWeb);

@@ -19,6 +19,7 @@ import {havenFeature} from "shared/reducers/havenFeature";
 import {walletSession} from "shared/reducers/walletSession"
 import {walletCreation} from "shared/reducers/walletCreation"
 import modal from "shared/reducers/modal";
+import { STOP_WALLET_SESSION } from "platforms/desktop/actions/types";
 
 const appReducer = combineReducers({
   theme,
@@ -40,7 +41,7 @@ const appReducer = combineReducers({
 });
 
 const rootReducer = (state: any, action: AnyAction) => {
-  if (action.type === CLOSE_WALLET) {
+  if (action.type === STOP_WALLET_SESSION) {
     state = undefined;
   }
 

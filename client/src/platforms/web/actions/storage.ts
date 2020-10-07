@@ -3,6 +3,9 @@ import { addNotificationByMessage } from "shared/actions/notification";
 import { NotificationType } from "constants/notificationList";
 import { saveAs } from "file-saver";
 
+const HAVEN_DB = "haven";
+const WALLET_STORE = "wallet";
+
 export const storeKeyFileToDisk = (name: string) => {
   return async (dispatch: any) => {
     const walletData = await getWalletData();
@@ -19,84 +22,85 @@ export const storeKeyFileToDisk = (name: string) => {
   };
 };
 
-export const storeWalletInDB = (name: string) => {
-  return async (dispatch: any) => {
+export const storeWalletInDB = async (name: string): Promise<any> => {
+  return new Promise(async (resolutionFunc, rejectionFunc) => {
     const walletData = await getWalletData();
     const wallet = walletData[1];
-
-    const openRequest: IDBOpenDBRequest = indexedDB.open("haven");
-
-    openRequest.onsuccess = function (this: IDBRequest<IDBDatabase>) {
-      const db = this.result;
-      const transaction = db.transaction("wallet", "readwrite");
-      transaction.objectStore("wallet").put(wallet, "vault");
-
-      dispatch(
-        addNotificationByMessage(
-          NotificationType.SUCCESS,
-          "Keystore has been stored on hard disk"
-        )
-      );
-    };
+    const openRequest: IDBOpenDBRequest = indexedDB.open(HAVEN_DB);
 
     openRequest.onupgradeneeded = function (this: IDBRequest<IDBDatabase>) {
       const db = this.result;
-      db.createObjectStore("wallet");
+      db.createObjectStore(WALLET_STORE);
     };
-  };
+
+    openRequest.onerror = function (error: any) {
+      rejectionFunc();
+    };
+
+    openRequest.onsuccess = function (this: IDBRequest<IDBDatabase>) {
+      const db = this.result;
+      const transaction = db.transaction(WALLET_STORE, "readwrite");
+      const putRequest: IDBRequest<IDBValidKey> = transaction
+        .objectStore(WALLET_STORE)
+        .put(wallet.buffer, name);
+
+      putRequest.onsuccess = function (this: IDBRequest<IDBValidKey>) {
+        resolutionFunc();
+      };
+      putRequest.onerror = function (this: IDBRequest<IDBValidKey>) {
+        rejectionFunc();
+      };
+    };
+  });
 };
 
-export const getStoredWallets = () => {
-  return async (dispatch: any) => {
-    const walletNames: string[] = await fetchKeysFromDB();
-    console.log(walletNames);
-  };
+export const getWalletCacheByName = async (
+  name: string
+): Promise<ArrayBuffer> => {
+  try {
+    const walletCache: ArrayBuffer = await fetchValueByKey(name);
+    return walletCache;
+  } catch (e) {
+    // if wallet not exist just return an empty one
+    return new Uint8Array();
+  }
 };
 
-export const getWalletCacheByName = (name: string): Promise<ArrayBuffer> => {
+const fetchValueByKey = (name: string): Promise<ArrayBuffer> => {
   return new Promise((resolutionFunc, rejectionFunc) => {
-    return async (dispatch: any) => {
-      try {
-        const walletCache: ArrayBuffer = await fetchValueByKey(name);
-        resolutionFunc(walletCache);
-      } catch (e) {
-        // if wallet not exist just return an empty one
-        resolutionFunc(new Uint8Array());
+    const openRequest: IDBOpenDBRequest = indexedDB.open(HAVEN_DB);
+    openRequest.onupgradeneeded = function (this: IDBRequest<IDBDatabase>) {
+      const db = this.result;
+      db.createObjectStore(WALLET_STORE);
+    };
+    openRequest.onsuccess = function (this: IDBRequest<IDBDatabase>) {
+      const db = this.result;
+      if (db.objectStoreNames.contains(WALLET_STORE)) {
+        const transaction = db.transaction(WALLET_STORE, "readonly");
+        const keyRequest = transaction.objectStore(WALLET_STORE).get(name);
+        keyRequest.onsuccess = function (this: IDBRequest<any>) {
+          const walletCache = this.result as ArrayBuffer;
+          resolutionFunc(walletCache);
+        };
+        keyRequest.onerror = function (error: any) {
+          rejectionFunc(error);
+        };
+      } else {
+        rejectionFunc(`${WALLET_STORE} does not exis as object sore yet`);
       }
     };
   });
 };
 
-const fetchValueByKey = (name: string): Promise<ArrayBuffer> => {
-  return new Promise((resolutionFunc, rejectionFunc) => {
-    const openRequest: IDBOpenDBRequest = indexedDB.open("haven");
-    openRequest.onsuccess = function (this: IDBRequest<IDBDatabase>) {
-      const db = this.result;
-      const transaction = db.transaction("wallet", "readonly");
-      const keyRequest = transaction.objectStore("wallet").get(name);
-      keyRequest.onsuccess = function (this: IDBRequest<any>) {
-        const walletCache = this.result as ArrayBuffer;
-        resolutionFunc(walletCache);
-      };
-      keyRequest.onerror = function (error: any) {
-        rejectionFunc(error);
-      };
+const fetchKeysFromDB = () => {
+  let keys: string[] = [];
+  const openRequest: IDBOpenDBRequest = indexedDB.open("haven");
+  openRequest.onsuccess = function (this: IDBRequest<IDBDatabase>) {
+    const db = this.result;
+    const transaction = db.transaction("wallet", "readonly");
+    const keyRequest = transaction.objectStore("wallet").getAllKeys();
+    keyRequest.onsuccess = function (this: IDBRequest<IDBValidKey[]>) {
+      keys = this.result as string[];
     };
-  });
-};
-
-const fetchKeysFromDB = (): Promise<string[]> => {
-  return new Promise((resolutionFunc, rejectionFunc) => {
-    let keys: string[] = [];
-    const openRequest: IDBOpenDBRequest = indexedDB.open("haven");
-    openRequest.onsuccess = function (this: IDBRequest<IDBDatabase>) {
-      const db = this.result;
-      const transaction = db.transaction("wallet", "readonly");
-      const keyRequest = transaction.objectStore("wallet").getAllKeys();
-      keyRequest.onsuccess = function (this: IDBRequest<IDBValidKey[]>) {
-        keys = this.result as string[];
-        resolutionFunc(keys);
-      };
-    };
-  });
+  };
 };

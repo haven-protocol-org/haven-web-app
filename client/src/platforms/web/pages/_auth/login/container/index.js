@@ -1,13 +1,21 @@
 import {
   selectErrorMessageForLogin,
   selectIsLoggedIn,
-  selectIsRequestingLogin
+  selectIsRequestingLogin,
 } from "shared/reducers/walletSession";
 import { connect } from "react-redux";
-import { restoreWalletByMnemomic, openWalletByData } from "shared/actions/wallet";
+import {
+  restoreWalletByMnemomic,
+  openWalletByData,
+  startWalletSession,
+} from "shared/actions/wallet";
 import Login from "../component";
 import { Redirect } from "react-router";
 import React, { Component } from "react";
+import {
+  selectisRequestingWalletCreation,
+  selectIsWalletCreated,
+} from "shared/reducers/walletCreation";
 
 class LoginWebContainer extends Component {
   render() {
@@ -18,21 +26,27 @@ class LoginWebContainer extends Component {
     return (
       <Login
         isRequestingLogin={this.props.isRequestingLogin}
+        isRequestingWalletCreation={this.props.isRequestingWalletCreation}
+        isWalletCreated={this.props.isWalletCreated}
         errorMessage={this.props.errorMessage}
         loginByMnemomic={this.props.loginByMnemomic}
         loginByKeysData={this.props.loginByKeysData}
+        startWalletSession={this.props.startWalletSession}
       />
     );
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
+  isWalletCreated: selectIsWalletCreated(state),
   isRequestingLogin: selectIsRequestingLogin(state),
+  isRequestingWalletCreation: selectisRequestingWalletCreation(state),
   isLoggedIn: selectIsLoggedIn(state),
-  errorMessage: selectErrorMessageForLogin(state)
+  errorMessage: selectErrorMessageForLogin(state),
 });
 
-export const LoginWeb = connect(
-  mapStateToProps,
-  { loginByMnemomic: restoreWalletByMnemomic, loginByKeysData: openWalletByData }
-)(LoginWebContainer);
+export const LoginWeb = connect(mapStateToProps, {
+  loginByMnemomic: restoreWalletByMnemomic,
+  loginByKeysData: openWalletByData,
+  startWalletSession,
+})(LoginWebContainer);

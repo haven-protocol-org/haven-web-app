@@ -11,8 +11,16 @@ import { generatePW } from "utility/utility-encrypt";
 
 interface LoginProps {
   errorMessage: string;
-  loginByMnemomic: (seed: string, pw: string) => void;
-  loginByKeysData: (keysData: Uint8Array, pw: string) => void;
+  isWalletCreated: boolean;
+  isRequestingWalletCreation: boolean;
+  loginByMnemomic: (
+    path: string | undefined,
+    seed: string,
+    pw: string,
+    walletName: string | undefined
+  ) => void;
+  loginByKeysData: (keysData: Uint8Array, pw: string, fileName: string) => void;
+  startWalletSession: (fileName: string | undefined) => void;
   isRequestingLogin: boolean;
 }
 
@@ -47,10 +55,18 @@ export default class Login extends Component<LoginProps, LoginState> {
     window.scrollTo(0, 0);
   }
 
-  componentDidUpdate(nextProps: { errorMessage: any }, nextContext: any) {
-    if (nextProps.errorMessage) {
-      this.setState({ error: nextProps.errorMessage });
+  componentDidUpdate(
+    prevProps: Readonly<LoginProps>,
+    prevState: Readonly<LoginState>,
+    snapshot?: any
+  ): void {
+    if (prevProps.errorMessage === "" && this.props.errorMessage) {
+      this.setState({ error: prevProps.errorMessage });
       setTimeout(() => this.setState({ error: "" }), 2000);
+    }
+
+    if (prevProps.isWalletCreated === false && this.props.isWalletCreated) {
+      this.props.startWalletSession(undefined);
     }
   }
 
@@ -70,16 +86,15 @@ export default class Login extends Component<LoginProps, LoginState> {
     const {
       seed_phrase,
       keyData,
-      walletCache,
+      fileName,
       password,
       selectKeystore,
     } = this.state;
     if (selectKeystore) {
-      this.props.loginByKeysData(keyData, password);
+      this.props.loginByKeysData(keyData, password, fileName);
     } else {
-      // const randomPW = generatePW(54);
-      // console.log(randomPW);
-      this.props.loginByMnemomic(seed_phrase, "dakookaoksaos");
+      const randomPW = generatePW(54);
+      this.props.loginByMnemomic(undefined, seed_phrase, randomPW, undefined);
     }
   };
 
@@ -98,9 +113,13 @@ export default class Login extends Component<LoginProps, LoginState> {
           const keyFileArrayBuffer: ArrayBuffer = ev.target
             ?.result as ArrayBuffer;
           keyFileData = new Uint8Array(keyFileArrayBuffer);
+
+          let fileName: string = filesUploaded[0].name;
+          fileName = fileName.replace(".keys", "");
+
           this.setState({
             keyData: keyFileData,
-            fileName: filesUploaded[0].name,
+            fileName,
           });
         }
       };
@@ -142,6 +161,7 @@ export default class Login extends Component<LoginProps, LoginState> {
 
     const isLoginDisabled =
       this.props.isRequestingLogin ||
+      this.props.isRequestingWalletCreation ||
       (selectSeed && seed_phrase === "") ||
       (selectKeystore && (fileName === "" || password === ""));
 
@@ -154,7 +174,10 @@ export default class Login extends Component<LoginProps, LoginState> {
           label="Need a Vault?"
           disable={isLoginDisabled}
           onClick={() => this.handleLogin()}
-          loading={this.props.isRequestingLogin}
+          loading={
+            this.props.isRequestingLogin ||
+            this.props.isRequestingWalletCreation
+          }
           submit="Submit"
           selectSeed={this.selectSeed}
           selectKeystore={this.selectKeystore}

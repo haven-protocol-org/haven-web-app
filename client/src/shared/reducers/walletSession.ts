@@ -2,11 +2,10 @@ import {
   OPEN_WALLET_FAILED,
   OPEN_WALLET_FETCHING,
   OPEN_WALLET_SUCCEED,
-  RESTORE_WALLET_BY_SEED_FAILED,
-  RESTORE_WALLET_BY_SEED_FETCHING,
-  RESTORE_WALLET_BY_SEED_SUCCEED,
   UPDATE_SAVED_WALLETS,
-  VALIDATE_MNEMONIC_SUCCEED,
+  START_WALLET_SESSION,
+  CREATE_WALLET_FAILED,
+  CREATE_WALLET_FETCHING,
 } from "platforms/desktop/actions/types";
 import { AnyAction } from "redux";
 import { HavenAppState } from "platforms/desktop/reducers/index";
@@ -19,19 +18,19 @@ export type RPCError = {
 };
 
 interface WalletSession {
-  activeWallet: string | null;
+  activeWallet: string | undefined;
   savedWallets: string[] | null;
   isFetching: boolean;
-  isWalletOpen: boolean;
+  isSessionStarted: boolean;
   error: RPCError | null;
   isConnectedToDaemon: boolean;
 }
 
 const INITIAL_STATE: WalletSession = {
-  activeWallet: null,
+  activeWallet: undefined,
   savedWallets: [],
   isFetching: false,
-  isWalletOpen: false,
+  isSessionStarted: false,
   error: null,
   isConnectedToDaemon: false,
 };
@@ -45,9 +44,9 @@ export const walletSession = function (
       return {
         ...state,
         error: action.payload,
-        activeWallet: null,
+        activeWallet: undefined,
         isFetching: false,
-        isWalletOpen: false,
+        isSessionStarted: false,
       };
     case OPEN_WALLET_SUCCEED:
       return {
@@ -55,21 +54,23 @@ export const walletSession = function (
         error: null,
         isFetching: false,
         activeWallet: action.payload,
-        isWalletOpen: true,
+        isSessionStarted: true,
       };
     case SET_WALLET_CONNECTION_STATE:
       return { ...state, isConnectedToDaemon: action.payload };
-    case VALIDATE_MNEMONIC_SUCCEED:
+    case START_WALLET_SESSION:
       return {
         ...state,
         error: null,
         isFetching: false,
+        isSessionStarted: true,
         activeWallet: action.payload,
-        isWalletOpen: true,
         savedWallets: state.savedWallets
           ? [...state.savedWallets, action.payload]
           : [action.payload],
       };
+    case CREATE_WALLET_FETCHING:
+      return { ...state, activeWallet: action.payload };
     case OPEN_WALLET_FETCHING:
       return { ...state, error: null, isFetching: true };
     case UPDATE_SAVED_WALLETS:
@@ -80,7 +81,7 @@ export const walletSession = function (
 };
 
 export const selectIsLoggedIn = (state: HavenAppState) => {
-  return state.walletSession.isWalletOpen;
+  return state.walletSession.isSessionStarted;
 };
 
 export const selectErrorMessageForLogin = (state: HavenAppState) => {
