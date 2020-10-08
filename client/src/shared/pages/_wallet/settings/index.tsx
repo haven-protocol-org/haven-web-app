@@ -36,6 +36,7 @@ interface SettingsState {
   validated: boolean;
   psk: string;
   seed: string;
+  synced: boolean;
 }
 
 class SettingsPage extends Component<SettingsProps, SettingsState> {
@@ -46,6 +47,7 @@ class SettingsPage extends Component<SettingsProps, SettingsState> {
     validated: true,
     psk: "",
     seed: "",
+    synced: true,
   };
 
   componentDidMount() {
@@ -97,6 +99,11 @@ class SettingsPage extends Component<SettingsProps, SettingsState> {
     }
 
     const windowWidth = window.innerWidth;
+    const { nodeHeight, walletHeight } = this.props.chain;
+    // console.log("#######################");
+    // console.log("nodeHeight", nodeHeight);
+    // console.log("walletHeight", walletHeight);
+    // console.log(walletHeight === nodeHeight ? "TRUE" : "FALSE");
 
     return (
       <Body>
@@ -215,12 +222,12 @@ class SettingsPage extends Component<SettingsProps, SettingsState> {
         </Form>
         <Container>
           <DoubleFooter
-            leftLabel={"Download"}
-            leftDisabled={false}
+            leftLabel={"Download Vault File"}
+            leftDisabled={walletHeight !== nodeHeight ? true : false}
             leftLoading={false}
             leftOnClick={this.downloadKeystore}
             rightLabel={this.state.reveal ? "Hide Keys" : "Show Keys"}
-            rightDisabled={false}
+            rightDisabled={walletHeight !== nodeHeight ? true : false}
             rightLoading={false}
             rightOnClick={this.toggleVisibility}
           />
@@ -232,6 +239,7 @@ class SettingsPage extends Component<SettingsProps, SettingsState> {
 
 const mapStateToProps = (state: HavenAppState) => ({
   theme: state.theme,
+  chain: state.chain,
 });
 
 export const Settings = connect(mapStateToProps, { selectTheme })(SettingsPage);

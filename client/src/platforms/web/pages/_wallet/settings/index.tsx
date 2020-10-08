@@ -5,11 +5,11 @@ import { getKeys } from "shared/core/wallet";
 
 export class SettingsWeb extends Component<{}, IKeys> {
   state: IKeys = {
-    privateSpend: "",
-    publicSpend: "",
-    privateView: "",
-    publicView: "",
-    mnemonic: "",
+    privateSpend: "*****",
+    publicSpend: "*****",
+    privateView: "*****",
+    publicView: "*****",
+    mnemonic: "*****",
   };
 
   componentDidMount() {
