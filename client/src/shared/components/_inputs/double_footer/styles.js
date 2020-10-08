@@ -37,7 +37,7 @@ export const Fill = styled.button`
 
   &:hover {
     cursor: pointer;
-    background: background: ${(props) => props.theme.button.primary_hover};
+    background: ${(props) => props.theme.button.primary_hover};
     transition: 500ms;
   }
 `;
