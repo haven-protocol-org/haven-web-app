@@ -5,7 +5,7 @@ import { getKeys } from "shared/core/wallet";
 
 export class SettingsWeb extends Component<{}, IKeys> {
   state: IKeys = {
-    privateSpend: "Waiting for wallet to sync",
+    privateSpend: "",
     publicSpend: "",
     privateView: "",
     publicView: "",

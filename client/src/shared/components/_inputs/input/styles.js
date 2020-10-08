@@ -27,6 +27,7 @@ export const Field = styled.input`
   width: auto;
   transition: 500ms;
   -webkit-appearance: none;
+  -moz-appearance: textfield;
 
   ::-webkit-inner-spin-button {
     -webkit-appearance: none;
