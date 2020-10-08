@@ -209,19 +209,6 @@ export default class Login extends Component<LoginProps, LoginState> {
             </>
           ) : (
             <>
-              {/* @ts-ignore */}
-              <Toggle
-                label="Vault Password"
-                placeholder="Enter Vault password"
-                name="password"
-                value={password}
-                error={error}
-                onChange={(event: React.FormEvent<HTMLInputElement>) =>
-                  this.handleChange(event)
-                }
-                onClick={this.showPassword}
-                reveal={this.state.reveal}
-              />
               <InputUpload
                 label="Vault File"
                 value={
@@ -236,6 +223,19 @@ export default class Login extends Component<LoginProps, LoginState> {
                 /*
                   // @ts-ignore */
                 keyStoreFile={this.state.fileName}
+              />
+              {/* @ts-ignore */}
+              <Toggle
+                label="Vault Password"
+                placeholder="Enter Vault password"
+                name="password"
+                value={password}
+                error={error}
+                onChange={(event: React.FormEvent<HTMLInputElement>) =>
+                  this.handleChange(event)
+                }
+                onClick={this.showPassword}
+                reveal={this.state.reveal}
               />
               <Information>
                 A Vault File is more secure then a Seed Phrase because it's an
