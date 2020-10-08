@@ -5,6 +5,7 @@ import { hideModal } from "shared/actions/modal";
 import { MODAL_TYPE } from "shared/reducers/modal";
 import { ConfirmTxModalDesktop } from "platforms/desktop/components/modals/confirmTxModal";
 import { ConfirmExchangeModalDesktop } from "platforms/desktop/components/modals/confirmExchangeModal";
+import ShowQRCodeModal from "../modals/showQRCode.js";
 
 class ModalContainer extends React.Component<any, any> {
   render() {
@@ -16,6 +17,8 @@ class ModalContainer extends React.Component<any, any> {
       case MODAL_TYPE.ConfirmExchange:
         return <ConfirmExchangeModalDesktop />;
       case MODAL_TYPE.ConfirmTx:
+        return <ConfirmTxModalDesktop />;
+      case MODAL_TYPE.ShowQRCode:
         return <ConfirmTxModalDesktop />;
     }
     return null;
