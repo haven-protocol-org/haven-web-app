@@ -100,10 +100,6 @@ class SettingsPage extends Component<SettingsProps, SettingsState> {
 
     const windowWidth = window.innerWidth;
     const { nodeHeight, walletHeight } = this.props.chain;
-    // console.log("#######################");
-    // console.log("nodeHeight", nodeHeight);
-    // console.log("walletHeight", walletHeight);
-    // console.log(walletHeight === nodeHeight ? "TRUE" : "FALSE");
 
     return (
       <Body>
