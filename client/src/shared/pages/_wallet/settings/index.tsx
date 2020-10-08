@@ -10,6 +10,7 @@ import Description from "../../../components/_inputs/description";
 import Form from "../../../components/_inputs/form";
 import Theme from "../../../components/_inputs/theme";
 import Footer from "../../../components/_inputs/footer";
+import DoubleFooter from "../../../components/_inputs/double_footer";
 
 import { Container } from "./styles";
 
@@ -73,6 +74,10 @@ class SettingsPage extends Component<SettingsProps, SettingsState> {
     this.setState({
       reveal: !this.state.reveal,
     });
+  };
+
+  downloadKeystore = () => {
+    alert("Download the Keystore");
   };
 
   render() {
@@ -203,11 +208,16 @@ class SettingsPage extends Component<SettingsProps, SettingsState> {
           )}
         </Form>
         <Container>
-          <Footer
-            onClick={this.toggleVisibility}
-            label={this.state.reveal ? "Hide Keys" : "Show Keys"}
-            disabled={false}
-            loading={false}
+          <DoubleFooter
+            leftLabel={"Download"}
+            leftDisabled={false}
+            leftLoading={false}
+            leftOnClick={this.downloadKeystore}
+            rightLabel={this.state.reveal ? "Hide Keys" : "Show Keys"}
+            rightDisabled={false}
+            rightLoading={false}
+            rightOnClick={this.toggleVisibility}
+            onClick={() => {}}
           />
         </Container>
       </Body>
