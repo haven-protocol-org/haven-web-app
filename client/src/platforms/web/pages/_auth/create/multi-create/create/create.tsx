@@ -207,7 +207,7 @@ class CreateWalletWeb extends Component<CreateProps, CreateState> {
             <Information>
               Please verify your seed phrase that you received on the previous
               step. This seed phrase can be used to restore your Vault on any
-              Haven Wallet. It's crucial that you save this in a safw location
+              Haven Wallet. It's crucial that you save this in a safe location
               and do not share it with anyone.
             </Information>
           </>
