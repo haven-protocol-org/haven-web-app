@@ -25,7 +25,7 @@ export const Spacing = styled.div`
   grid-column: 1 / 3;
 
   ${media.mobile`
-    height: 200px;
+    height: 80px;
   `};
 `;
 
