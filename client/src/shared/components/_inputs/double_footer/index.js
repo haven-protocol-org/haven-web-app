@@ -14,7 +14,6 @@ const DoubleFooter = ({
   rightDisabled,
   rightLoading,
   rightOnClick,
-  onClick,
 }) => {
   return (
     <Container>

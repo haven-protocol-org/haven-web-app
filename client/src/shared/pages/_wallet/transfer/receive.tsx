@@ -112,7 +112,6 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
               rightDisabled={false}
               rightLoading={false}
               rightOnClick={this.clipboardAddress}
-              onClick={() => {}}
             />
           ) : (
             <Footer

@@ -217,7 +217,6 @@ class SettingsPage extends Component<SettingsProps, SettingsState> {
             rightDisabled={false}
             rightLoading={false}
             rightOnClick={this.toggleVisibility}
-            onClick={() => {}}
           />
         </Container>
       </Body>

@@ -23,7 +23,7 @@ export enum NodeSelectionType {
 }
 
 export interface NodeOption {
-  trusted:boolean;
+  trusted: boolean;
   name: string;
   location: NodeLocation;
   address: string;
@@ -214,15 +214,13 @@ class NodeSettingComponent extends React.Component<
                   : this.props.isConnected === ThreeState.Unset
                   ? "Vault is trying to connect to "
                   : "Vault is not connected to "}
-                <strong>{this.state.selectedNodeOption.name}</strong>.
-                Change nodes by clicking <strong>Disconnect</strong>, then
-                select a new node from the dropdown, then click{" "}
-                <strong>Connect</strong>.
+                <strong>{this.state.selectedNodeOption.name}</strong>. Change
+                nodes by clicking <strong>Disconnect</strong>, then select a new
+                node from the dropdown, then click <strong>Connect</strong>.
               </Information>
             </Intstructions>
             <DoubleFooter
               // Left section
-              onClick={() => {}}
               leftLabel={"Disconnect"}
               leftDisabled={!locked}
               leftOnClick={this.onDisconnect}
