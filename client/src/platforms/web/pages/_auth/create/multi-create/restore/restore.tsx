@@ -251,7 +251,7 @@ class RestoreWeb extends Component<RestoreProps, RestoreState> {
         step={step}
         nextStep={this.nextRestoreStep}
         prevStep={this.prevRestoreStep}
-        disabled={this.props.isRequestingLogin}
+        loading={this.props.isRequestingLogin}
       >
         {this.handleRestoreFlow()}
       </MultiRestore>

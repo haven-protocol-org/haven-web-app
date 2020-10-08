@@ -151,7 +151,7 @@ export const restoreWalletByMnemomic = (
   };
 
   return async (dispatch: any) => {
-    dispatch(restoreWalletFetching());
+    dispatch(restoreWalletFetching(walletName));
     const successOrError: boolean | object = await createWalletCore(walletData);
 
     if (successOrError === true) {
@@ -283,7 +283,10 @@ const setWalletConnectionState = (isConnected: boolean) => {
   return { type: SET_WALLET_CONNECTION_STATE, payload: isConnected };
 };
 
-const restoreWalletFetching = () => ({ type: RESTORE_WALLET_BY_SEED_FETCHING });
+const restoreWalletFetching = (walletName: string | undefined) => ({
+  type: RESTORE_WALLET_BY_SEED_FETCHING,
+  payload: walletName,
+});
 const restoreWalletSucceed = (name: string | undefined) => ({
   type: RESTORE_WALLET_BY_SEED_SUCCEED,
   payload: name,
