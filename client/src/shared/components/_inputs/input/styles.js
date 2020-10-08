@@ -32,6 +32,7 @@ export const Field = styled.input`
     -webkit-appearance: none;
     margin: 0;
   }
+
   ::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
