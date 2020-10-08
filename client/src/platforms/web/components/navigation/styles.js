@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { ReactComponent as HavenIcon } from "../../../../assets/haven.svg";
+import { ReactComponent as HavenIcon } from "../../../../assets/icons/haven.svg";
 
 export const Container = styled.header`
   height: 64px;
