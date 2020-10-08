@@ -19,7 +19,7 @@ class ModalContainer extends React.Component<any, any> {
       case MODAL_TYPE.ConfirmTx:
         return <ConfirmTxModalDesktop />;
       case MODAL_TYPE.ShowQRCode:
-        return <ConfirmTxModalDesktop />;
+        return <ShowQRCodeModal />;
     }
     return null;
   }
