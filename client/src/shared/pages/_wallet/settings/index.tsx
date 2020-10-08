@@ -14,13 +14,14 @@ import DoubleFooter from "../../../components/_inputs/double_footer";
 
 import { Container } from "./styles";
 
-import { dark, light } from "../../../../assets/styles/themes.js";
+import { dark, light, sepia } from "../../../../assets/styles/themes.js";
 import { HavenAppState } from "platforms/desktop/reducers";
 import { IKeys } from "typings";
 
 const options = [
   { theme: "dark", value: "Dark Theme" },
   { theme: "light", value: "Light Theme" },
+  { theme: "sepia", value: "Sepia Theme" },
 ];
 
 interface SettingsProps extends IKeys {
@@ -62,6 +63,11 @@ class SettingsPage extends Component<SettingsProps, SettingsState> {
       });
     } else if (theme === "dark") {
       this.props.selectTheme(dark);
+      this.setState({
+        value: value,
+      });
+    } else if (theme === "sepia") {
+      this.props.selectTheme(sepia);
       this.setState({
         value: value,
       });
