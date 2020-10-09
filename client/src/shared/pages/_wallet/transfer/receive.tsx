@@ -10,6 +10,8 @@ import { Container } from "./styles";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { AddressEntry } from "shared/reducers/address";
 import { writeText } from "vendor/clipboard/clipboard-polyfill";
+import { showModal } from "shared/actions/modal";
+import { MODAL_TYPE } from "shared/reducers/modal";
 
 interface OwnAddressState {
   selected: AddressEntry;
@@ -19,6 +21,7 @@ interface OwnAddressState {
 
 interface OwnAddressProps {
   addresses: AddressEntry[];
+  showModal: (modalType: MODAL_TYPE) => void;
 }
 
 class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
@@ -57,7 +60,7 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
   };
 
   showQRCodeModal = () => {
-    alert("SHOW QR CODE");
+    this.props.showModal(MODAL_TYPE.ShowQRCode);
   };
 
   render() {
@@ -127,6 +130,6 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
   }
 }
 
-const mapStateToProps = (state: DesktopAppState) => ({});
+const mapStateToProps = (state: DesktopAppState) => ({ showModal });
 
 export const OwnAddress = connect(mapStateToProps, {})(OwnAddressContainer);
