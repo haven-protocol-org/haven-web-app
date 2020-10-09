@@ -2,12 +2,17 @@
 import React from "react";
 import QRCode from "react-qr-code";
 // Relative Imports
-import { Container } from "./styles";
+import { Container, Value, Wrapper, Inner } from "./styles";
 
 const QrCode = ({ address }) => {
   return (
     <Container>
-      <QRCode value={address} />
+      <Wrapper>
+        <QRCode value={address} />
+      </Wrapper>
+      <Inner>
+        <Value>{address}</Value>
+      </Inner>
     </Container>
   );
 };

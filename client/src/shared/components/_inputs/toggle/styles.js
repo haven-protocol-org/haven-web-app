@@ -49,18 +49,13 @@ export const Button = styled.div`
 `;
 
 export const Field = styled.input`
-  padding-top: 16px;
-  padding-bottom: 16px;
-  padding-left: 16px;
-  padding-right: 16px;
+  padding: 16px;
   font-family: Inter-Regular;
   width: 100%;
   height: auto;
-
   font-size: 16px;
   color: ${(props) => props.theme.input.input_value};
   line-height: 26px;
-
   outline: none;
   transition: 500ms;
   border: none;
@@ -74,6 +69,10 @@ export const Field = styled.input`
     color: ${(props) => props.theme.input.input_placeholder};
     line-height: 26px;
   }
+
+  ${media.mobile`
+    width: 60%;
+  `};
 `;
 
 export const Labels = styled.div`
