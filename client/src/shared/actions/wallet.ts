@@ -57,7 +57,6 @@ export const openWalletByData = (
       networkType: getNetworkByName(),
       server: webWalletConnection(),
     };
-
     dispatch(openWallet(walletData, walletName));
   };
 };
