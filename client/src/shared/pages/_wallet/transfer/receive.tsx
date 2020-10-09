@@ -21,7 +21,7 @@ interface OwnAddressState {
 
 interface OwnAddressProps {
   addresses: AddressEntry[];
-  showModal: (modalTyoe: MODAL_TYPE) => void;
+  showModal: (modalType: MODAL_TYPE) => void;
 }
 
 class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
@@ -121,7 +121,7 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
   }
 }
 
-const mapStateToProps = (state: DesktopAppState) => ({});
+const mapStateToProps = (state: DesktopAppState) => ({ showModal });
 
 export const OwnAddress = connect(mapStateToProps, { showModal })(
   OwnAddressContainer
