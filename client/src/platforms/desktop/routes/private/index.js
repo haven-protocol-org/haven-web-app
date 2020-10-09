@@ -49,11 +49,7 @@ class PrivateRoutesContainer extends Component {
             exact
             component={isDesktop() ? SettingsDesktop : SettingsWeb}
           />
-          <Route
-            path={`${match.url}/exchange`}
-            exact
-            component={ExchangePage}
-          />
+          <Route path={`${match.url}/convert`} exact component={ExchangePage} />
         </Page>
       </div>
     );

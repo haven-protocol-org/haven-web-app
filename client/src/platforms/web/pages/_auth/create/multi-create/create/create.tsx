@@ -193,16 +193,24 @@ class CreateWalletWeb extends Component<CreateProps, CreateState> {
         );
       case 4:
         return (
-          <VerifySeed
-            label="Verify Seed Phrase"
-            name="verify_seed"
-            placeholder="Enter your seed"
-            value={verify_seed}
-            error={error}
-            rows={windowWidth < 600 ? "6" : "4"}
-            action={this.state.action}
-            onChange={this.handleChange}
-          />
+          <>
+            <VerifySeed
+              label="Verify Seed Phrase"
+              name="verify_seed"
+              placeholder="Enter your seed"
+              value={verify_seed}
+              error={error}
+              rows={windowWidth < 600 ? "6" : "4"}
+              action={this.state.action}
+              onChange={this.handleChange}
+            />
+            <Information>
+              Please verify your seed phrase that you received on the previous
+              step. This seed phrase can be used to restore your Vault on any
+              Haven Wallet. It's crucial that you save this in a safe location
+              and do not share it with anyone.
+            </Information>
+          </>
         );
       default:
     }

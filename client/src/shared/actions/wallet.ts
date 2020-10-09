@@ -84,7 +84,10 @@ const openWallet = (walletData: IOpenWallet, path: string) => {
     if (successOrError === true) {
       dispatch(openWalletSucceed(path));
       dispatch(
-        addNotificationByMessage(NotificationType.SUCCESS, "Vault is open")
+        addNotificationByMessage(
+          NotificationType.SUCCESS,
+          "Vault was successfully unlocked"
+        )
       );
       dispatch(startWalletSession(path));
     } else {

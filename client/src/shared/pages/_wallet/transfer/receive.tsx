@@ -57,7 +57,7 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
   };
 
   showQRCodeModal = () => {
-    alert("QR CODE");
+    alert("SHOW QR CODE");
   };
 
   render() {
@@ -112,7 +112,6 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
               rightDisabled={false}
               rightLoading={false}
               rightOnClick={this.clipboardAddress}
-              onClick={() => {}}
             />
           ) : (
             <Footer
@@ -130,4 +129,4 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
 
 const mapStateToProps = (state: DesktopAppState) => ({});
 
-export const OwnAddress = connect(mapStateToProps, null)(OwnAddressContainer);
+export const OwnAddress = connect(mapStateToProps, {})(OwnAddressContainer);

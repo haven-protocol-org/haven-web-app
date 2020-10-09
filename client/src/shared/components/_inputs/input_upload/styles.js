@@ -77,7 +77,7 @@ export const Field = styled.div`
   &::placeholder {
     font-family: Inter-Regular;
     font-size: 16px;
-    color: ${(props) => props.theme.input.input_placeholder};
+    color: ${(props) => props.theme.input.input_placeholder}
     line-height: 26px;
   }
 `;

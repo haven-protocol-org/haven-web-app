@@ -10,16 +10,18 @@ import Description from "../../../components/_inputs/description";
 import Form from "../../../components/_inputs/form";
 import Theme from "../../../components/_inputs/theme";
 import Footer from "../../../components/_inputs/footer";
+import DoubleFooter from "../../../components/_inputs/double_footer";
 
 import { Container } from "./styles";
 
-import { dark, light } from "../../../../assets/styles/themes.js";
+import { dark, light, sepia } from "../../../../assets/styles/themes.js";
 import { HavenAppState } from "platforms/desktop/reducers";
 import { IKeys } from "typings";
 
 const options = [
   { theme: "dark", value: "Dark Theme" },
   { theme: "light", value: "Light Theme" },
+  { theme: "sepia", value: "Sepia Theme" },
 ];
 
 interface SettingsProps extends IKeys {
@@ -34,6 +36,7 @@ interface SettingsState {
   validated: boolean;
   psk: string;
   seed: string;
+  synced: boolean;
 }
 
 class SettingsPage extends Component<SettingsProps, SettingsState> {
@@ -44,6 +47,7 @@ class SettingsPage extends Component<SettingsProps, SettingsState> {
     validated: true,
     psk: "",
     seed: "",
+    synced: true,
   };
 
   componentDidMount() {
@@ -64,6 +68,11 @@ class SettingsPage extends Component<SettingsProps, SettingsState> {
       this.setState({
         value: value,
       });
+    } else if (theme === "sepia") {
+      this.props.selectTheme(sepia);
+      this.setState({
+        value: value,
+      });
     } else {
       return null;
     }
@@ -73,6 +82,10 @@ class SettingsPage extends Component<SettingsProps, SettingsState> {
     this.setState({
       reveal: !this.state.reveal,
     });
+  };
+
+  downloadKeystore = () => {
+    alert("Download the Keystore");
   };
 
   render() {
@@ -86,6 +99,7 @@ class SettingsPage extends Component<SettingsProps, SettingsState> {
     }
 
     const windowWidth = window.innerWidth;
+    const { nodeHeight, walletHeight } = this.props.chain;
 
     return (
       <Body>
@@ -203,11 +217,15 @@ class SettingsPage extends Component<SettingsProps, SettingsState> {
           )}
         </Form>
         <Container>
-          <Footer
-            onClick={this.toggleVisibility}
-            label={this.state.reveal ? "Hide Keys" : "Show Keys"}
-            disabled={false}
-            loading={false}
+          <DoubleFooter
+            leftLabel={"Download Vault File"}
+            leftDisabled={walletHeight !== nodeHeight ? true : false}
+            leftLoading={false}
+            leftOnClick={this.downloadKeystore}
+            rightLabel={this.state.reveal ? "Hide Keys" : "Show Keys"}
+            rightDisabled={walletHeight !== nodeHeight ? true : false}
+            rightLoading={false}
+            rightOnClick={this.toggleVisibility}
           />
         </Container>
       </Body>
@@ -217,6 +235,7 @@ class SettingsPage extends Component<SettingsProps, SettingsState> {
 
 const mapStateToProps = (state: HavenAppState) => ({
   theme: state.theme,
+  chain: state.chain,
 });
 
 export const Settings = connect(mapStateToProps, { selectTheme })(SettingsPage);

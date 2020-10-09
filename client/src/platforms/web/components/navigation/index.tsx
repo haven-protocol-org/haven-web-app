@@ -3,8 +3,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 // Relative Imports
-import { Container, Haven, Logo, Brand, Logout, Tag } from "./styles.js";
-import Icon from "../../../../assets/haven.svg";
+import { Container, Haven, Brand, Logout, Tag, Icon } from "./styles.js";
+
 import { closeWallet } from "shared/actions/closeWallet";
 import { selectIsLoggedIn } from "shared/reducers/walletSession";
 import { APP_VERSION, NET_TYPE_NAME } from "constants/env";
@@ -29,7 +29,7 @@ class Navigation extends Component<NavigationProps, {}> {
     return (
       <Container>
         <Brand to={auth === true ? "/wallet/assets" : "/"}>
-          <Logo src={Icon} />
+          <Icon />
           <Haven>HAVEN </Haven>
           <Tag>
             v{APP_VERSION} {NET_TYPE_NAME}
