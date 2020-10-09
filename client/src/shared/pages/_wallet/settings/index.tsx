@@ -27,6 +27,7 @@ const options = [
 interface SettingsProps extends IKeys {
   theme: any;
   selectTheme: (theme: any) => void;
+  chain: any;
 }
 
 interface SettingsState {

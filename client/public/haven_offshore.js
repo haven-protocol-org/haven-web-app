@@ -1478,11 +1478,11 @@ function updateGlobalBufferAndViews(buf) {
 }
 
 var STATIC_BASE = 1024,
-    STACK_BASE = 6619264,
+    STACK_BASE = 6619296,
     STACKTOP = STACK_BASE,
-    STACK_MAX = 1376384,
-    DYNAMIC_BASE = 6619264,
-    DYNAMICTOP_PTR = 1376208;
+    STACK_MAX = 1376416,
+    DYNAMIC_BASE = 6619296,
+    DYNAMICTOP_PTR = 1376240;
 
 assert(STACK_BASE % 16 === 0, 'stack must start aligned');
 assert(DYNAMIC_BASE % 16 === 0, 'heap must start aligned');
@@ -2063,7 +2063,7 @@ function js_send_json_request(uri,username,password,reject_unauthorized_fn_id,me
 
 
 
-// STATICTOP = STATIC_BASE + 1375360;
+// STATICTOP = STATIC_BASE + 1375392;
 /* global initializers */  __ATINIT__.push({ func: function() { ___wasm_call_ctors() } });
 
 
@@ -2494,6 +2494,7 @@ function js_send_json_request(uri,username,password,reject_unauthorized_fn_id,me
   var exceptionCaught= [];
   
   function exception_addRef(ptr) {
+      err('addref ' + ptr);
       if (!ptr) return;
       var info = exceptionInfos[ptr];
       info.refcount++;
@@ -2507,10 +2508,12 @@ function js_send_json_request(uri,username,password,reject_unauthorized_fn_id,me
         var len = adj.length;
         for (var i = 0; i < len; i++) {
           if (adj[i] === adjusted) {
+            err('de-adjusted exception ptr ' + adjusted + ' to ' + ptr);
             return ptr;
           }
         }
       }
+      err('no de-adjustment for unknown exception ptr ' + adjusted);
       return adjusted;
     }function ___cxa_begin_catch(ptr) {
       var info = exceptionInfos[ptr];
@@ -2520,6 +2523,7 @@ function js_send_json_request(uri,username,password,reject_unauthorized_fn_id,me
       }
       if (info) info.rethrown = false;
       exceptionCaught.push(ptr);
+      err('cxa_begin_catch ' + [ptr, 'stack', exceptionCaught]);
       exception_addRef(exception_deAdjust(ptr));
       return ptr;
     }
@@ -2532,7 +2536,10 @@ function js_send_json_request(uri,username,password,reject_unauthorized_fn_id,me
       } catch(e) {
         err('exception during cxa_free_exception: ' + e);
       }
-    }function exception_decRef(ptr) {
+    }
+  
+  var exceptionLast=0;function exception_decRef(ptr) {
+      err('decref ' + ptr);
       if (!ptr) return;
       var info = exceptionInfos[ptr];
       assert(info.refcount > 0);
@@ -2547,17 +2554,18 @@ function js_send_json_request(uri,username,password,reject_unauthorized_fn_id,me
         }
         delete exceptionInfos[ptr];
         ___cxa_free_exception(ptr);
+        err('decref freeing exception ' + [ptr, exceptionLast, 'stack', exceptionCaught]);
       }
     }function ___cxa_decrement_exception_refcount(ptr) {
       exception_decRef(exception_deAdjust(ptr));
     }
 
-  
-  var exceptionLast=0;function ___cxa_end_catch() {
+  function ___cxa_end_catch() {
       // Clear state flag.
       _setThrew(0);
       // Call destructor if one is registered then clear it.
       var ptr = exceptionCaught.pop();
+      err('cxa_end_catch popped ' + [ptr, exceptionLast, 'stack', exceptionCaught]);
       if (ptr) {
         exception_decRef(exception_deAdjust(ptr));
         exceptionLast = 0; // XXX in decRef?
@@ -2580,7 +2588,8 @@ function js_send_json_request(uri,username,password,reject_unauthorized_fn_id,me
   
       var pointer = ___cxa_is_pointer_type(throwntype);
       // can_catch receives a **, add indirection
-      var buffer = 1376368;
+      out("can_catch on " + [thrown]);
+      var buffer = 1376400;
       HEAP32[((buffer)>>2)]=thrown;
       thrown = buffer;
       // The different catch blocks are denoted by different types.
@@ -2591,6 +2600,7 @@ function js_send_json_request(uri,username,password,reject_unauthorized_fn_id,me
         if (typeArray[i] && ___cxa_can_catch(typeArray[i], throwntype, thrown)) {
           thrown = HEAP32[((thrown)>>2)]; // undo indirection
           info.adjusted.push(thrown);
+          out("  can_catch found " + [thrown, typeArray[i]]);
           return ((setTempRet0(typeArray[i]),thrown)|0);
         }
       }
@@ -2617,7 +2627,8 @@ function js_send_json_request(uri,username,password,reject_unauthorized_fn_id,me
   
       var pointer = ___cxa_is_pointer_type(throwntype);
       // can_catch receives a **, add indirection
-      var buffer = 1376368;
+      out("can_catch on " + [thrown]);
+      var buffer = 1376400;
       HEAP32[((buffer)>>2)]=thrown;
       thrown = buffer;
       // The different catch blocks are denoted by different types.
@@ -2628,6 +2639,7 @@ function js_send_json_request(uri,username,password,reject_unauthorized_fn_id,me
         if (typeArray[i] && ___cxa_can_catch(typeArray[i], throwntype, thrown)) {
           thrown = HEAP32[((thrown)>>2)]; // undo indirection
           info.adjusted.push(thrown);
+          out("  can_catch found " + [thrown, typeArray[i]]);
           return ((setTempRet0(typeArray[i]),thrown)|0);
         }
       }
@@ -2651,6 +2663,7 @@ function js_send_json_request(uri,username,password,reject_unauthorized_fn_id,me
         exceptionCaught.push(ptr);
         exceptionInfos[ptr].rethrown = true;
       }
+      err('Compiled code RE-throwing an exception, popped ' + [ptr, exceptionLast, 'stack', exceptionCaught]);
       exceptionLast = ptr;
       throw ptr;
     }
@@ -2664,6 +2677,7 @@ function js_send_json_request(uri,username,password,reject_unauthorized_fn_id,me
     }
 
   function ___cxa_throw(ptr, type, destructor) {
+      err('Compiled code throwing an exception, ' + [ptr,type,destructor]);
       exceptionInfos[ptr] = {
         ptr: ptr,
         adjusted: [ptr],
@@ -2700,6 +2714,7 @@ function js_send_json_request(uri,username,password,reject_unauthorized_fn_id,me
     }
 
   function ___resumeException(ptr) {
+      out("Resuming exception " + [ptr, exceptionLast]);
       if (!exceptionLast) { exceptionLast = ptr; }
       throw ptr;
     }
@@ -7685,7 +7700,7 @@ function js_send_json_request(uri,username,password,reject_unauthorized_fn_id,me
     }
 
   function _emscripten_get_sbrk_ptr() {
-      return 1376208;
+      return 1376240;
     }
 
   function _emscripten_memcpy_big(dest, src, num) {
@@ -7895,7 +7910,7 @@ function js_send_json_request(uri,username,password,reject_unauthorized_fn_id,me
     }
 
   
-  var ___tm_timezone=(stringToUTF8("GMT", 1376272, 4), 1376272);function _gmtime_r(time, tmPtr) {
+  var ___tm_timezone=(stringToUTF8("GMT", 1376304, 4), 1376304);function _gmtime_r(time, tmPtr) {
       var date = new Date(HEAP32[((time)>>2)]*1000);
       HEAP32[((tmPtr)>>2)]=date.getUTCSeconds();
       HEAP32[(((tmPtr)+(4))>>2)]=date.getUTCMinutes();
