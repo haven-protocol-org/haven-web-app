@@ -10,8 +10,8 @@ import { Container } from "./styles";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { AddressEntry } from "shared/reducers/address";
 import { writeText } from "vendor/clipboard/clipboard-polyfill";
-import { showModal } from "shared/actions/modal";
-import { MODAL_TYPE } from "shared/reducers/modal";
+import { showModal } from "../../../actions/modal";
+import { MODAL_TYPE } from "../../../reducers/modal";
 
 interface OwnAddressState {
   selected: AddressEntry;
@@ -123,4 +123,6 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
 
 const mapStateToProps = (state: DesktopAppState) => ({ showModal });
 
-export const OwnAddress = connect(mapStateToProps, {})(OwnAddressContainer);
+export const OwnAddress = connect(mapStateToProps, { showModal })(
+  OwnAddressContainer
+);
