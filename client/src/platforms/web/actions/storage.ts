@@ -79,8 +79,12 @@ const fetchValueByKey = (name: string): Promise<ArrayBuffer> => {
         const transaction = db.transaction(WALLET_STORE, "readonly");
         const keyRequest = transaction.objectStore(WALLET_STORE).get(name);
         keyRequest.onsuccess = function (this: IDBRequest<any>) {
-          const walletCache = this.result as ArrayBuffer;
-          resolutionFunc(walletCache);
+          if (this.result === undefined) {
+            rejectionFunc("does not exist or is undefined");
+          } else {
+            const walletCache = this.result as ArrayBuffer;
+            resolutionFunc(walletCache);
+          }
         };
         keyRequest.onerror = function (error: any) {
           rejectionFunc(error);
