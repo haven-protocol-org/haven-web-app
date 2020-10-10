@@ -86,7 +86,7 @@ const fetchValueByKey = (name: string): Promise<ArrayBuffer> => {
           rejectionFunc(error);
         };
       } else {
-        rejectionFunc(`${WALLET_STORE} does not exis as object sore yet`);
+        rejectionFunc(`${WALLET_STORE} does not exist as object store yet`);
       }
     };
   });

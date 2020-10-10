@@ -219,8 +219,8 @@ export const startWalletSession = (
 
     // start wallet listeners
     addWalletListener(dispatch, getStore);
-    //syncWallet();
-    syncAtOnce(1);
+    syncWallet();
+    //syncAtOnce(1);
   };
 };
 
