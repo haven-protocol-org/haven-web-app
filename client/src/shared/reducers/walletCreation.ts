@@ -8,10 +8,12 @@ import {
   VALIDATE_MNEMONIC_SUCCEED,
   RESTORE_WALLET_BY_SEED_FETCHING,
   START_WALLET_SESSION,
+  RESTORE_WALLET_BY_SEED_FAILED,
 } from "../../platforms/desktop/actions/types";
 import { AnyAction } from "redux";
 import { RPCError } from "shared/reducers/walletSession";
 import { HavenAppState } from "platforms/desktop/reducers/index";
+import { getMessageOfError } from "utility/utility";
 
 export interface WalletCreation {
   isCreated: boolean;
@@ -42,14 +44,16 @@ export const walletCreation = (
       return { ...state, mnemonicKey: action.payload };
     case RESTORE_WALLET_BY_SEED_FETCHING:
     case CREATE_WALLET_FETCHING:
-      return { ...state, isFetching: true, name: action.payload };
+      return { ...state, isFetching: true, name: action.payload, error: null };
     case RESTORE_WALLET_BY_SEED_SUCCEED:
     case CREATE_WALLET_SUCCEED:
       return {
         ...state,
+        error: null,
         isFetching: false,
         isCreated: true,
       };
+    case RESTORE_WALLET_BY_SEED_FAILED:
     case CREATE_WALLET_FAILED:
       return { ...state, error: action.payload, isFetching: false };
     default:
@@ -65,11 +69,13 @@ export const selectIsWalletCreated = (state: HavenAppState) => {
   return state.walletCreation.isCreated;
 };
 
-export const selectErrorMessage = (state: HavenAppState) => {
+export const selectErrorMessageForWalletCreation = (state: HavenAppState) => {
   const error = state.walletCreation.error;
 
   if (error) {
-    return error.message;
+    const message = getMessageOfError(error);
+    return message || error.message;
   }
-  return error;
+
+  return "";
 };

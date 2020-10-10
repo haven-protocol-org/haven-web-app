@@ -70,7 +70,7 @@ export const walletSession = function (
           : [action.payload],
       };
     case CREATE_WALLET_FETCHING:
-      return { ...state, activeWallet: action.payload };
+      return { ...state, activeWallet: action.payload, error: null };
     case OPEN_WALLET_FETCHING:
       return { ...state, error: null, isFetching: true };
     case UPDATE_SAVED_WALLETS:
@@ -88,7 +88,7 @@ export const selectErrorMessageForLogin = (state: HavenAppState) => {
   const error = state.walletSession.error;
 
   if (error) {
-    const message = getMessageOfError(state.walletSession.error);
+    const message = getMessageOfError(error);
     return message || error.message;
   }
 

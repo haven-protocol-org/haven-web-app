@@ -10,7 +10,7 @@ import { createWallet } from "platforms/desktop/actions";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { connect } from "react-redux";
 import {
-  selectErrorMessage,
+  selectErrorMessageForWalletCreation,
   WalletCreation,
 } from "shared/reducers/walletCreation";
 import { Spinner } from "shared/components/spinner";
@@ -310,7 +310,7 @@ class CreateDesktopContainer extends Component<
 const mapStateToProps = (state: DesktopAppState) => ({
   walletCreation: state.walletCreation,
   loading: selectIsRequestingLogin(state),
-  errorMessage: selectErrorMessage(state),
+  errorMessage: selectErrorMessageForWalletCreation(state),
 });
 
 export const CreateDesktop = connect(mapStateToProps, {
