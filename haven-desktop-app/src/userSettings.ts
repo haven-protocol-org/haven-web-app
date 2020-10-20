@@ -2,6 +2,7 @@ import * as fs from "fs";
 import { config } from "./daemons/config/config";
 
 export const getAvailableWallets = (): string[] => {
+  //TODO use wallet paths
   const walletPath: string = config().wallet.args["wallet-dir"] as string;
   let availableWallets: string[];
 

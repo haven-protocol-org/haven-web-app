@@ -28,8 +28,8 @@
     "axios": "^0.19.2",
     "electron-squirrel-startup": "^1.0.0",
     "haven-wallet-core": "^1.0.6",
-    "keccakjs": "^0.2.3",
-    "rxjs": "^6.6.0"
+    "rxjs": "^6.6.0",
+    "wallet-core": "file:../"
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.52",

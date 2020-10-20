@@ -10,7 +10,8 @@ import InputUpload from "../../../../../../shared/components/_inputs/input_uploa
 import { generatePW } from "utility/utility-encrypt";
 
 interface LoginProps {
-  errorMessage: string;
+  errorMessageLogin: string;
+  errorMessageCreation: string;
   isWalletCreated: boolean;
   isRequestingWalletCreation: boolean;
   loginByMnemomic: (
@@ -60,8 +61,15 @@ export default class Login extends Component<LoginProps, LoginState> {
     prevState: Readonly<LoginState>,
     snapshot?: any
   ): void {
-    if (prevProps.errorMessage === "" && this.props.errorMessage) {
-      this.setState({ error: prevProps.errorMessage });
+    if (prevProps.errorMessageLogin === "" && this.props.errorMessageLogin) {
+      this.setState({ error: this.props.errorMessageLogin });
+      setTimeout(() => this.setState({ error: "" }), 2000);
+    }
+    if (
+      prevProps.errorMessageCreation === "" &&
+      this.props.errorMessageCreation
+    ) {
+      this.setState({ error: this.props.errorMessageCreation });
       setTimeout(() => this.setState({ error: "" }), 2000);
     }
 

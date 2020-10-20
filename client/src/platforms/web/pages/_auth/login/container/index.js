@@ -15,6 +15,7 @@ import React, { Component } from "react";
 import {
   selectisRequestingWalletCreation,
   selectIsWalletCreated,
+  selectErrorMessageForWalletCreation,
 } from "shared/reducers/walletCreation";
 
 class LoginWebContainer extends Component {
@@ -28,7 +29,8 @@ class LoginWebContainer extends Component {
         isRequestingLogin={this.props.isRequestingLogin}
         isRequestingWalletCreation={this.props.isRequestingWalletCreation}
         isWalletCreated={this.props.isWalletCreated}
-        errorMessage={this.props.errorMessage}
+        errorMessageLogin={this.props.errorMessageLogin}
+        errorMessageCreation={this.props.errorMessageCreation}
         loginByMnemomic={this.props.loginByMnemomic}
         loginByKeysData={this.props.loginByKeysData}
         startWalletSession={this.props.startWalletSession}
@@ -42,7 +44,8 @@ const mapStateToProps = (state) => ({
   isRequestingLogin: selectIsRequestingLogin(state),
   isRequestingWalletCreation: selectisRequestingWalletCreation(state),
   isLoggedIn: selectIsLoggedIn(state),
-  errorMessage: selectErrorMessageForLogin(state),
+  errorMessageLogin: selectErrorMessageForLogin(state),
+  errorMessageCreation: selectErrorMessageForWalletCreation(state),
 });
 
 export const LoginWeb = connect(mapStateToProps, {

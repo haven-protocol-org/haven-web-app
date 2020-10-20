@@ -12,19 +12,10 @@ import {
   RESTORE_WALLET_BY_SEED_SUCCEED,
   RESTORE_WALLET_BY_SEED_FAILED,
   START_WALLET_SESSION,
+  STOP_WALLET_SESSION,
+  GET_WALLET_HEIGHT_SUCCEED,
 } from "platforms/desktop/actions/types";
-import {
-  createWallet as createWalletCore,
-  openWallet as openWalletCore,
-  getMnemonic,
-  addWalletListener,
-  syncWallet,
-  getNodeHeight,
-  isWalletConnected,
-  getWalletHeight,
-  getChainHeight,
-  syncAtOnce,
-} from "../core/wallet";
+import { walletProxy } from "../core/proxy";
 import { addNotificationByMessage } from "./notification";
 import { NotificationType } from "constants/notificationList";
 import { getXHVBalance, getXUSDBalance } from "./balance";
@@ -34,10 +25,12 @@ import { createDaemonConnection } from "./havend";
 import { updateHavenFeatures } from "./havenFeature";
 import { SET_WALLET_CONNECTION_STATE } from "./types";
 import { Chain } from "shared/reducers/chain";
-import { onWalletSyncUpdateSucceed } from "./chain";
 import { HavenAppState } from "platforms/desktop/reducers";
 import { getAllTransfers } from "./transferHistory";
-import { getWalletCacheByName } from "platforms/web/actions/storage";
+import {
+  getWalletCacheByName,
+  storeWalletInDB,
+} from "platforms/web/actions/storage";
 
 /** collection of actions to open, create and store wallet */
 
@@ -79,7 +72,9 @@ const openWallet = (walletData: IOpenWallet, path: string) => {
   return async (dispatch: any) => {
     dispatch(openWalletFetching());
 
-    const successOrError: boolean | object = await openWalletCore(walletData);
+    const successOrError: boolean | object = await walletProxy.openWallet(
+      walletData
+    );
 
     if (successOrError === true) {
       dispatch(openWalletSucceed(path));
@@ -114,10 +109,12 @@ export const createNewWallet = (
 
   return async (dispatch: any) => {
     dispatch(createWalletFetch(walletName));
-    const successOrError: boolean | object = await createWalletCore(walletData);
+    const successOrError: boolean | object = await walletProxy.createWallet(
+      walletData
+    );
 
     if (successOrError === true) {
-      const mnemomic = await getMnemonic();
+      const mnemomic = await walletProxy.getMnemonic();
       dispatch(queryMnemonicForWalletGenerationSucceed(mnemomic));
       dispatch(createWalletSucceed());
       addNotificationByMessage(NotificationType.SUCCESS, "Vault is open");
@@ -154,7 +151,9 @@ export const restoreWalletByMnemomic = (
 
   return async (dispatch: any) => {
     dispatch(restoreWalletFetching(walletName));
-    const successOrError: boolean | object = await createWalletCore(walletData);
+    const successOrError: boolean | object = await walletProxy.createWallet(
+      walletData
+    );
 
     if (successOrError === true) {
       dispatch(restoreWalletSucceed(walletName));
@@ -189,7 +188,9 @@ export const restoreWalletByKeys = (
 
   return async (dispatch: any) => {
     dispatch(createWalletFetch(walletName));
-    const successOrError: boolean | object = await createWalletCore(walletData);
+    const successOrError: boolean | object = await walletProxy.createWallet(
+      walletData
+    );
 
     if (successOrError === true) {
       dispatch(restoreWalletSucceed(path));
@@ -218,9 +219,29 @@ export const startWalletSession = (
     await dispatch(initReduxWallet());
 
     // start wallet listeners
-    addWalletListener(dispatch, getStore);
-    //syncWallet();
-    syncAtOnce(1);
+    walletProxy.addWalletListener(dispatch, getStore);
+    walletProxy.syncWallet();
+    //core.syncAtOnce(1);
+  };
+};
+
+export const closeWallet = (isWeb: boolean) => {
+  return async (dispatch: any, getState: () => HavenAppState) => {
+    // closing wallet is handled differently for web and desktop
+    if (isWeb) {
+      // if its a temporary wallet ( just login via seed ) we don't store the wallet in any way
+      const activeWallet = getState().walletSession.activeWallet;
+
+      if (activeWallet !== undefined) {
+        await storeWalletInDB(activeWallet);
+      }
+      await walletProxy.stopSyncing();
+      await walletProxy.closeWallet(false);
+    } else {
+      await walletProxy.closeWallet(true);
+    }
+
+    dispatch({ type: STOP_WALLET_SESSION });
   };
 };
 
@@ -232,11 +253,11 @@ const initReduxWallet = () => {
     dispatch(getXUSDBalance());
     dispatch(getAllTransfers());
     dispatch(getPrimaryAddress());
-    const isConnected = await isWalletConnected();
+    const isConnected = await walletProxy.isWalletConnected();
     dispatch(setWalletConnectionState(isConnected));
-    const chainHeight = await getChainHeight();
-    const nodeHeight = await getNodeHeight();
-    const walletHeight = await getWalletHeight();
+    const chainHeight = await walletProxy.getChainHeight();
+    const nodeHeight = await walletProxy.getNodeHeight();
+    const walletHeight = await walletProxy.getWalletHeight();
 
     const chainHeights: Partial<Chain> = {
       walletHeight,
@@ -249,6 +270,10 @@ const initReduxWallet = () => {
 
     return;
   };
+};
+
+export const onWalletSyncUpdateSucceed = (heights: Partial<Chain>) => {
+  return { type: GET_WALLET_HEIGHT_SUCCEED, payload: heights };
 };
 
 const openWalletFetching = () => {
@@ -297,3 +322,7 @@ const restoreWalletFailed = (error: any) => ({
   type: RESTORE_WALLET_BY_SEED_FAILED,
   payload: error,
 });
+
+export const rescanBlockchain = async () => {
+  return walletProxy.rescanBlockchain();
+};

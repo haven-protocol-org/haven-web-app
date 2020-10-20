@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 // Relative Imports
 import { Container, Haven, Brand, Logout, Tag, Icon } from "./styles.js";
 
-import { closeWallet } from "shared/actions/closeWallet";
+import { closeWallet } from "shared/actions/wallet";
 import { selectIsLoggedIn } from "shared/reducers/walletSession";
 import { APP_VERSION, NET_TYPE_NAME } from "constants/env";
 import { WebAppState } from "platforms/web/reducers/index.js";

@@ -10,7 +10,10 @@ import VerifySeed from "shared/components/_create/verify_seed";
 import { Container } from "../styles";
 import InputButton from "shared/components/_inputs/input_button";
 import { connect } from "react-redux";
-import { selectisRequestingWalletCreation } from "shared/reducers/walletCreation";
+import {
+  selectisRequestingWalletCreation,
+  selectErrorMessageForWalletCreation,
+} from "shared/reducers/walletCreation";
 import { WebAppState } from "platforms/web/reducers";
 import { storeKeyFileToDisk } from "platforms/web/actions/storage";
 import {
@@ -19,12 +22,14 @@ import {
 } from "shared/actions/wallet";
 import { Redirect } from "react-router";
 import { selectIsLoggedIn } from "shared/reducers/walletSession";
+import { MoneroUtils } from "haven-wallet-core";
 
 interface RestoreProps {
   walletName: string;
   isRequestingLogin: boolean;
   walletIsCreated: boolean;
   isLoggedIn: boolean;
+  errorMessage: string;
   startWalletSession: (fileName: string | undefined) => void;
   storeKeyFileToDisk: (walletname: string) => void;
   restoreWalletByMnemomic: (
@@ -62,14 +67,31 @@ class RestoreWeb extends Component<RestoreProps, RestoreState> {
     validationSucceed: false,
   };
 
-  componentDidUpdate(prevProps: any, prevState: any) {
+  componentDidUpdate(prevProps: RestoreProps, prevState: RestoreState) {
     if (this.props.walletIsCreated && this.state.step === 2) {
       this.setState({ step: 3 });
+    }
+
+    if (prevProps.errorMessage === "" && this.props.errorMessage) {
+      this.setState({ error: this.props.errorMessage });
+      setTimeout(() => this.setState({ error: "" }), 2000);
     }
   }
 
   nextRestoreStep = () => {
     const { step } = this.state;
+
+    if (step === 1) {
+      try {
+        MoneroUtils.validateMnemonic(this.state.mnemomic);
+      } catch (e) {
+        this.setState({ error: e.message });
+        setTimeout(() => {
+          this.setState({ error: "" });
+        }, 2000);
+        return;
+      }
+    }
 
     if (step === 2) {
       this.props.restoreWalletByMnemomic(
@@ -175,7 +197,7 @@ class RestoreWeb extends Component<RestoreProps, RestoreState> {
               onChange={this.handleChange}
               onClick={this.showPassword}
               readOnly={false}
-              error=""
+              error={error}
               width={false}
             />
             <Information>
@@ -221,7 +243,7 @@ class RestoreWeb extends Component<RestoreProps, RestoreState> {
               value={this.state.check_vault_password}
               onChange={this.handleChange}
               onClick={this.showPassword}
-              error=""
+              error={error}
               width={false}
               readOnly={false}
             />
@@ -264,6 +286,7 @@ const mapStateToProps = (state: WebAppState) => ({
   isRequestingLogin: selectisRequestingWalletCreation(state),
   walletIsCreated: state.walletCreation.isCreated,
   isLoggedIn: selectIsLoggedIn(state),
+  errorMessage: selectErrorMessageForWalletCreation(state),
 });
 
 export const RestoreWebComponent = connect(mapStateToProps, {

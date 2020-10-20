@@ -9,7 +9,7 @@ import {
 import { Container, Main, Header, Footer, Route, Label } from "./styles";
 import { DesktopAppState } from "../../../reducers";
 import { connect } from "react-redux";
-import { getSavedWallets } from "../../../actions/walletSession";
+import { getSavedWallets } from "../../../actions/storedWallets";
 import { selectIsLoggedIn } from "../../../../../shared/reducers/walletSession";
 import { Redirect } from "react-router";
 import { OpenWalletDesktop } from "../open";

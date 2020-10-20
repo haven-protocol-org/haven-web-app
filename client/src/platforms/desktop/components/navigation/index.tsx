@@ -12,34 +12,29 @@ import {
   Icon,
   Logout,
   Menu,
-  NetworkStatus,
   Options,
   OptionsDoubleRow,
   OptionsIcon,
   OptionsList,
-  State,
   OptionsSVG,
 } from "./styles";
 
 import { Body, Label } from "assets/styles/type";
-import { closeWallet } from "../../actions";
+import { closeWallet } from "shared/actions/wallet";
 import { selectIsLoggedIn } from "../../../../shared/reducers/walletSession";
 import { getNetworkByName, isDevMode, NET_TYPE_NAME } from "constants/env";
 import { DesktopAppState } from "../../reducers";
 import { NodeState } from "platforms/desktop/types";
-import { WalletState } from "platforms/desktop/ipc/ipc-types";
 import { selectisLocalNode } from "platforms/desktop/reducers/havenNode";
-import { ThreeState } from "shared/types/types";
 import { selectBlockHeight } from "shared/reducers/chain";
 
 interface NavigationProps {
-  wallet: WalletState;
   node: NodeState;
   isLoggedIn: boolean;
   height: number;
   isLocalNode: boolean;
   show_networks: boolean;
-  logout: () => void;
+  logout: (isWeb: boolean) => void;
 }
 
 class Navigation extends Component<NavigationProps, any> {
@@ -92,7 +87,7 @@ class Navigation extends Component<NavigationProps, any> {
   };
 
   handleLogout = () => {
-    this.props.logout();
+    this.props.logout(false);
   };
 
   showOptions = () => {
@@ -104,27 +99,13 @@ class Navigation extends Component<NavigationProps, any> {
   render() {
     const auth = this.props.isLoggedIn;
     const { current_network } = this.state;
-    const { wallet, node, isLocalNode, height } = this.props;
+    const { node, height } = this.props;
 
     return (
       <Container>
         <Brand>
           <Icon />
           <Haven>HAVEN</Haven>
-          <NetworkStatus>
-            {isDevMode() &&
-              wallet.isRunning &&
-              wallet.isConnectedToDaemon === ThreeState.False && (
-                <State isActive={false}>Wallet not connected to a daemon</State>
-              )}
-            {isDevMode() &&
-              wallet.isRunning &&
-              wallet.isConnectedToDaemon === ThreeState.True && (
-                <State isActive={true}>
-                  Wallet connected {isLocalNode ? "local" : "remote"} daemon
-                </State>
-              )}
-          </NetworkStatus>
         </Brand>
 
         <Menu>
@@ -155,10 +136,6 @@ class Navigation extends Component<NavigationProps, any> {
                 <Label>{node.location}</Label>
               </OptionsDoubleRow>
               <OptionsDoubleRow>
-                <Body>Wallet</Body>
-                <Label>{wallet.isRunning ? "Online" : "Offline"}</Label>
-              </OptionsDoubleRow>
-              <OptionsDoubleRow>
                 <Body>Block</Body>
                 <Label>{height}</Label>
               </OptionsDoubleRow>
@@ -176,7 +153,6 @@ class Navigation extends Component<NavigationProps, any> {
 
 const mapStateToProps = (state: DesktopAppState) => ({
   isLoggedIn: selectIsLoggedIn(state),
-  wallet: state.walletRPC,
   node: state.havenNode,
   isLocalNode: selectisLocalNode(state.havenNode),
   height: selectBlockHeight(state),
