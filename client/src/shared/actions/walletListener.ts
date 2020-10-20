@@ -4,7 +4,7 @@ import BigInteger from "haven-wallet-core/src/main/js/common/biginteger";
 import { Balance } from "shared/reducers/xBalance";
 import { getBalancesSucceed } from "./balance";
 import { Chain, selectSyncState } from "shared/reducers/chain";
-import { onWalletSyncUpdateSucceed } from "shared/actions/chain";
+import { onWalletSyncUpdateSucceed } from "shared/actions/wallet";
 import { getLastBlockHeader } from "./blockHeaderExchangeRate";
 import { updateHavenFeatures } from "./havenFeature";
 import { HavenAppState } from "platforms/desktop/reducers";
@@ -37,6 +37,13 @@ export class HavenWalletListener extends MoneroWalletListener {
     percentDone: number,
     message: string
   ): void {
+    if (height === 1) {
+      console.time();
+    }
+    if (percentDone === 1) {
+      console.timeEnd();
+    }
+
     if (
       height <= startHeight + 2 ||
       (height + 1000 < endHeight && height % 100 === 0) ||
@@ -49,6 +56,8 @@ export class HavenWalletListener extends MoneroWalletListener {
       };
       this.dispatch(onWalletSyncUpdateSucceed(chain));
     }
+
+    console.log(height, startHeight, endHeight, percentDone);
   }
   /**
    * Invoked when a new block is added to the chain.
@@ -71,6 +80,8 @@ export class HavenWalletListener extends MoneroWalletListener {
         this.dispatch(onWalletSyncUpdateSucceed({ nodeHeight: height }));
       }
     }
+
+    console.log("onNewBlock", height);
   }
   /**
    * Invoked when the wallet's balances change.
