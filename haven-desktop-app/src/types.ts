@@ -26,13 +26,10 @@ export interface ProcessState {
 }
 
 export interface IDaemonConfig {
-
   port: number;
   args: { [key: string]: string | number };
   daemonUrl: string;
-
 }
-
 
 export enum NodeLocation {
   Local = "Local",
@@ -51,21 +48,18 @@ export enum NET {
   Stagenet = 2,
 }
 
-export type IDaemonNetConfig = { [key in  NET]: {[key in DaemonType]: IDaemonConfig} };
+export type IDaemonNetConfig = {
+  [key in NET]: { [key in DaemonType]: IDaemonConfig };
+};
 
-export type AppConfig = IDaemonNetConfig & {version: string};
+export type AppConfig = IDaemonNetConfig & { version: string };
 
-
-export enum DaemonType  {
-  havend= "havend",
- wallet= "wallet",
+export enum DaemonType {
+  havend = "havend",
 }
 
-
-
-
 export enum NetTypeName {
-  mainnet= "mainnet",
-  testnet= "testnet",
-  stagenet= "stagenet",
+  mainnet = "mainnet",
+  testnet = "testnet",
+  stagenet = "stagenet",
 }

@@ -1,5 +1,5 @@
 import bigInt from "big-integer";
-import { transfer as transferCore } from "shared/core/wallet";
+import { walletProxy } from "shared/core/proxy";
 import {
   addErrorNotification,
   addNotificationByKey,
@@ -62,7 +62,7 @@ export const createTransfer = (
     } as Partial<ITxConfig>;
 
     try {
-      const txList: MoneroTxWallet[] = await transferCore(txConfig);
+      const txList: MoneroTxWallet[] = await walletProxy.transfer(txConfig);
 
       const reduxParams = {
         fee: txList.reduce(

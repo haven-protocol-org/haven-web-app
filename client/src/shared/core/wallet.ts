@@ -1,11 +1,18 @@
 import * as core from "haven-wallet-core";
 import MoneroWalletWasm from "haven-wallet-core/src/main/js/wallet/MoneroWalletWasm";
 import BigInteger from "haven-wallet-core/src/main/js/common/biginteger";
-import { ICreateWallet, IOpenWallet, ITxConfig, IKeys } from "typings";
+import {
+  ICreateWallet,
+  IOpenWallet,
+  ITxConfig,
+  IKeys,
+  IMonerRPCConnection,
+} from "typings";
 import { HavenWalletListener } from "shared/actions/walletListener";
 import { bigIntegerToBigInt } from "utility/utility";
 import MoneroTxWallet from "haven-wallet-core/src/main/js/wallet/model/MoneroTxWallet";
 import { HavenAppState } from "platforms/desktop/reducers";
+import MoneroRpcConnection from "haven-wallet-core/src/main/js/common/MoneroRpcConnection";
 //const core = require("haven-wallet-core");
 
 let wallet: MoneroWalletWasm;
@@ -160,6 +167,11 @@ export const relayTxs = async (metaDataList: string[]) => {
   return wallet.relayTxs(metaDataList);
 };
 
+export const setDaemonConnection = async (connection: IMonerRPCConnection) => {
+  //@ts-ignore
+  return wallet.setDaemonConnection(connection);
+};
+
 export const getKeys = async (): Promise<IKeys> => {
   const publicSpend = await wallet.getPublicSpendKey();
   const privateSpend = await wallet.getPrivateSpendKey();
@@ -183,4 +195,22 @@ export const addWalletListener = (
   const listener = new HavenWalletListener(dispatch, getStore);
   // @ts-ignore
   wallet.addListener(listener);
+};
+
+export const getSubAddresses = async () => {
+  //@ts-ignore
+  return wallet.getSubaddresses(0);
+};
+
+export const createSubAddress = async (label: string) => {
+  //@ts-ignore
+  return wallet.createSubaddress(label);
+};
+
+export const labelAddress = async (label: string, addressIndex: number) => {
+  throw "not implemented yet";
+};
+
+export const rescanBlockchain = async () => {
+  return wallet.rescanBlockchain();
 };

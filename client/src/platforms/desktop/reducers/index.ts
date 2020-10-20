@@ -16,7 +16,6 @@ import { xBalance } from "shared/reducers/xBalance";
 import { xTransferList } from "shared/reducers/xTransferList";
 import { exchangeProcess } from "../../../shared/reducers/exchangeProcess";
 import { havenNode } from "./havenNode";
-import { walletRPC } from "./walletRPC";
 import { mining } from "./mining";
 import { havenFeature } from "shared/reducers/havenFeature";
 import modal from "shared/reducers/modal";
@@ -37,7 +36,6 @@ const appReducer = combineReducers({
   notification,
   walletSession,
   havenNode,
-  walletRPC,
   priceHistory,
   chain,
   simplePrice,

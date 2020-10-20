@@ -6,7 +6,7 @@ import Placeholder from "shared/components/_create/placeholder";
 
 import { Body, Buttons, Submit } from "../multi_login/styles";
 import CreateSeed from "shared/components/_create/create_seed";
-import { createWallet } from "platforms/desktop/actions";
+import { createNewWallet, startWalletSession } from "shared/actions/wallet";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { connect } from "react-redux";
 import {
@@ -18,13 +18,16 @@ import { Information } from "assets/styles/type";
 import Description from "shared/components/_inputs/description";
 import Input from "shared/components/_inputs/input";
 import InputButton from "shared/components/_inputs/input_button";
-import { mnenomicVerificationSucceed } from "platforms/desktop/actions";
 import { selectIsRequestingLogin } from "shared/reducers/walletSession";
 
 interface CreateDesktopProps {
-  createWallet: (name: string, pw: string) => void;
+  createNewWallet: (
+    path: string | undefined,
+    password: string,
+    walletName: string
+  ) => void;
+  startWalletSession: (walletName: string) => void;
   walletCreation: WalletCreation;
-  mnenomicVerificationSucceed: (fileName: string) => void;
   loading: boolean;
   errorMessage: string | null;
 }
@@ -127,7 +130,11 @@ class CreateDesktopContainer extends Component<
     const { step } = this.state;
 
     if (step === CREATION_STEPS.Credentials) {
-      this.props.createWallet(this.state.fileName, this.state.pw);
+      this.props.createNewWallet(
+        this.state.fileName,
+        this.state.pw,
+        this.state.fileName
+      );
       return;
     }
 
@@ -147,9 +154,7 @@ class CreateDesktopContainer extends Component<
       }
 
       if (validationSucceed) {
-        this.props.mnenomicVerificationSucceed(this.state.fileName);
-      } else {
-        return null;
+        this.props.startWalletSession(this.state.fileName);
       }
     }
   };
@@ -314,6 +319,6 @@ const mapStateToProps = (state: DesktopAppState) => ({
 });
 
 export const CreateDesktop = connect(mapStateToProps, {
-  createWallet,
-  mnenomicVerificationSucceed,
+  createNewWallet,
+  startWalletSession,
 })(CreateDesktopContainer);

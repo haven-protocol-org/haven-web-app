@@ -9,7 +9,6 @@
 import { dialog } from "electron";
 import { config } from "./daemons/config/config";
 import { RPCHRequestHandler } from "./rpc/RPCHRequestHandler";
-import { decode_address } from "./xmr-core/addressUtils";
 
 export enum KeyType {
   PRIVATE_VIEW,

@@ -16,7 +16,7 @@ import { WalletSelection } from "shared/components/_inputs/wallet-selection";
 import Dropdown from "../../../../../shared/components/_inputs/dropdown";
 import InputButton from "shared/components/_inputs/input_button";
 
-import { openWallet } from "../../../actions/walletSession";
+import { openWalletByFile } from "shared/actions/wallet";
 import { DesktopAppState } from "platforms/desktop/reducers";
 
 interface OpenWalletState {
@@ -29,7 +29,7 @@ interface OpenWalletState {
 
 interface OpenWalletProps {
   wallets: string[] | null;
-  openWallet: (filename: string, password: string) => void;
+  openWalletByFile: (filename: string, password: string) => void;
   loading: boolean;
   errorMessage: string;
 }
@@ -48,7 +48,10 @@ class OpenWalletDesktopContainer extends Component<
 
   onOpenWallet = () => {
     if (this.state.selectedWallet !== null) {
-      this.props.openWallet(this.state.selectedWallet, this.state.password);
+      this.props.openWalletByFile(
+        this.state.selectedWallet,
+        this.state.password
+      );
     }
   };
 
@@ -168,6 +171,6 @@ const mapStateToProps = (state: DesktopAppState) => ({
   errorMessage: selectErrorMessageForLogin(state),
 });
 
-export const OpenWalletDesktop = connect(mapStateToProps, { openWallet })(
+export const OpenWalletDesktop = connect(mapStateToProps, { openWalletByFile })(
   OpenWalletDesktopContainer
 );

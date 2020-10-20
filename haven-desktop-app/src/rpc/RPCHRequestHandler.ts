@@ -39,35 +39,32 @@ export class RPCHRequestHandler {
   }
 
   public sendRequest(requestObject: RPCRequestObject): Promise<any> {
-
-
     const timeLessMethods = [
       "stop_mining",
       "start_mining",
-        "mining_status",
+      "mining_status",
       "get_info",
       "get_last_block_header",
       "get_block_count",
       "get_block_header_by_height",
-      "close_wallet",
-      "restore_deterministic_wallet",
-      "create_wallet",
-      "onshore",
-      "offshore",
       "relay_tx",
-      "offshore_transfer",
-      "transfer_split"];
+    ];
 
-    const timeout = timeLessMethods.some((method ) => method === requestObject.method) ? 0 : 4000;
+    const timeout = timeLessMethods.some(
+      (method) => method === requestObject.method
+    )
+      ? 0
+      : 4000;
 
     logInDevMode("send request to : " + this._fullUrl);
 
     if (requestObject.method === "mining_status") {
       return axios.post(
         `${this._host}:${this._port}/${requestObject.method}`,
-        requestObject.params, {timeout},
+        requestObject.params,
+        { timeout }
       );
     }
-    return axios.post(`${this._fullUrl}/json_rpc`, requestObject, {timeout});
+    return axios.post(`${this._fullUrl}/json_rpc`, requestObject, { timeout });
   }
 }

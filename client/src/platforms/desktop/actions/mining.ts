@@ -1,4 +1,3 @@
-import { miningStatusRPC, startMiningRPC, stopMiningRPC } from "../ipc/rpc/rpc";
 import {
   MINING_STATUS_RESPONSE,
   MINING_STATUS_RESPONSE_FAILED,
@@ -6,6 +5,8 @@ import {
   REQUEST_MINING_STATUS,
   REQUEST_MINING_STOP,
 } from "./types";
+
+import * as daemon from "shared/core/havend";
 
 export const startMining = () => {
   const threads_count = 1;
@@ -16,7 +17,8 @@ export const startMining = () => {
   return (dispatch: any) => {
     dispatch({ type: REQUEST_MINING_START });
 
-    startMiningRPC(params)
+    daemon
+      .startMining(params)
       .then((res: any) => setTimeout(() => dispatch(miningStatus()), 2000))
       .catch((err: any) => setTimeout(() => dispatch(miningStatus()), 2000));
   };
@@ -26,7 +28,8 @@ export const stopMining = () => {
   return (dispatch: any) => {
     dispatch({ type: REQUEST_MINING_STOP });
 
-    stopMiningRPC()
+    daemon
+      .stopMining()
       .then((res: any) => setTimeout(() => dispatch(miningStatus()), 2000))
       .catch((err: any) => setTimeout(() => dispatch(miningStatus()), 2000));
   };
@@ -36,9 +39,10 @@ export const miningStatus = () => {
   return (dispatch: any) => {
     dispatch({ type: REQUEST_MINING_STATUS });
 
-    miningStatusRPC()
-      .then((res) => dispatch(getMiningStatusSucceed(res)))
-      .catch((err) => dispatch(getMiningStatusFailed(err)));
+    daemon
+      .getMiningStatus()
+      .then((res: any) => dispatch(getMiningStatusSucceed(res)))
+      .catch((err: any) => dispatch(getMiningStatusFailed(err)));
   };
 };
 

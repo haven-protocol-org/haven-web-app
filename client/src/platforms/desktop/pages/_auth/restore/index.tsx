@@ -4,7 +4,7 @@ import {
   selectIsRequestingLogin,
 } from "../../../../../shared/reducers/walletSession";
 import { connect } from "react-redux";
-import { restoreWallet } from "../../../actions";
+import { restoreWalletByMnemomic } from "shared/actions/wallet";
 import { Redirect } from "react-router";
 import React, { Component } from "react";
 import { Information } from "assets/styles/type";
@@ -17,7 +17,12 @@ import { DesktopAppState } from "../../../reducers";
 import InputButton from "shared/components/_inputs/input_button";
 
 interface RestoreProps {
-  restoreWallet: (seed: string, name: string, pw: string) => void;
+  restoreWalletByMnemomic: (
+    path: string | undefined,
+    seed: string,
+    pw: string,
+    walletName: string | undefined
+  ) => void;
   isLoggedIn: boolean;
   isRequestingLogin: boolean;
   errorMessage: string;
@@ -66,7 +71,7 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
 
     this.validateNameAndPW();
 
-    this.props.restoreWallet(seed, name, pw);
+    this.props.restoreWalletByMnemomic(name, seed, pw, name);
   };
 
   onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -186,6 +191,6 @@ const mapStateToProps = (state: DesktopAppState) => ({
 });
 
 // @ts-ignore
-export const RestoreDesktop = connect(mapStateToProps, { restoreWallet })(
-  RestoreDesktopContainer
-);
+export const RestoreDesktop = connect(mapStateToProps, {
+  restoreWalletByMnemomic,
+})(RestoreDesktopContainer);

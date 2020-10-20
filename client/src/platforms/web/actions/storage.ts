@@ -108,3 +108,5 @@ const fetchKeysFromDB = () => {
     };
   };
 };
+
+//if ((use_fs && (!boost::filesystem::exists(m_wallet_file, e) || e)) || (!use_fs && cache_buf.empty()))

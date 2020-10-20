@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Transfer } from "shared/pages/_wallet/transfer";
 import { Ticker } from "shared/reducers/types";
-import { resetTransferProcess } from "../../../actions";
+import { resetTransferProcess } from "shared/actions/transfer";
 import { transferSucceed } from "../../../../../shared/reducers/transferProcess";
 import { createTransfer } from "shared/actions/transfer";
 

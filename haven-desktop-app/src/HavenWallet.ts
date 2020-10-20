@@ -69,12 +69,6 @@ export class HavenWallet {
     this.quit();
   }
 
-  private addNetworkSwitchHandling() {
-    ipcMain.handle(CommunicationChannel.SWITCH_NET, (event, args) =>
-      this.onSwitchNetwork(args),
-    );
-  }
-
   /**
    * display shut down window and once stop event is emitted destroys the window
    */
@@ -93,7 +87,7 @@ export class HavenWallet {
     };
     this.shutDownWindow = new BrowserWindow(shutDownConctruction);
     this.shutDownWindow.loadURL(
-      path.join(`file://${__dirname}`, "../sites/shutdown/index.html"),
+      path.join(`file://${__dirname}`, "../sites/shutdown/index.html")
     );
 
     this.shutDownWindow.on("ready-to-show", () => {
@@ -101,7 +95,7 @@ export class HavenWallet {
     });
 
     appEventBus.once(DAEMONS_STOPPED_EVENT, () =>
-      this.shutDownWindow.destroy(),
+      this.shutDownWindow.destroy()
     );
   }
 }

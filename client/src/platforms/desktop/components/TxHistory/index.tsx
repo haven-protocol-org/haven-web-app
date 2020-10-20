@@ -11,9 +11,12 @@ import {
   createRemainingTimeString,
 } from "utility/utility";
 import React, { Component } from "react";
-import { getTransfers } from "../../actions";
+import { getAllTransfers } from "shared/actions/transferHistory";
 import { connect } from "react-redux";
-import { Transaction, TransactionProps } from "shared/components/tx-history/component";
+import {
+  Transaction,
+  TransactionProps,
+} from "shared/components/tx-history/component";
 import Header from "shared/components/_layout/header/index.js";
 import { selectBlockHeight } from "../../../../shared/reducers/chain";
 import { selectTransferListByTicker } from "shared/reducers/xTransferList";
@@ -30,7 +33,7 @@ interface TxHistoryProps {
   height: number;
   rates: BlockHeaderRate[];
   assetId: Ticker;
-  getTransfers: () => void;
+  getAllTransfers: () => void;
 }
 
 class TxHistoryContainer extends Component<TxHistoryProps, any> {
@@ -77,9 +80,9 @@ class TxHistoryContainer extends Component<TxHistoryProps, any> {
                   status: transaction.direction,
                   block: transaction.height,
                   tx: transaction.txid,
-                   fee: convertBalanceForReading(transaction.fee),
+                  fee: convertBalanceForReading(transaction.fee),
                   // this is a quick fix to avoid showing wrong fee values
-                //  fee: 0,
+                  //  fee: 0,
                 } as TransactionProps;
 
                 return <Transaction {...txProps} key={index} />;
@@ -109,7 +112,7 @@ const mapStateToProps = (state: DesktopAppState, props: any) => ({
 });
 
 export const TxHistoryDesktop = withRouter(
-  connect(mapStateToProps, { getTransfers })(TxHistoryContainer)
+  connect(mapStateToProps, { getAllTransfers })(TxHistoryContainer)
 );
 
 const prepareTxInfo = (

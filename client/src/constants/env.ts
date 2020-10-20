@@ -9,10 +9,12 @@ export const PLATFORM = process.env.REACT_APP_PLATFORM;
 export const DEV_MODE = "development";
 export const PRODUCTION_MODE = "production";
 
-
-
 export const isMainnet = () => {
   return NET_TYPE_ID === NetworkType.mainnet;
+};
+
+export const isTestnet = () => {
+  return NET_TYPE_ID === NetworkType.testnet;
 };
 
 export const isDevMode = () => {
@@ -25,6 +27,10 @@ export const isWeb = () => {
 
 export const isDesktop = () => {
   return PLATFORM === "desktop";
+};
+
+export const getPort = () => {
+  return isMainnet() ? 17750 : isTestnet() ? 27750 : 37750;
 };
 
 let apiUrl;
