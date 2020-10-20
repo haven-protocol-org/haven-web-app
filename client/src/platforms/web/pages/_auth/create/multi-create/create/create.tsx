@@ -17,6 +17,7 @@ import { storeKeyFileToDisk } from "platforms/web/actions/storage";
 import { createNewWallet, startWalletSession } from "shared/actions/wallet";
 import { selectIsLoggedIn } from "shared/reducers/walletSession";
 import { Redirect } from "react-router";
+import Checkbox from "../../../../../../../shared/components/checkbox";
 
 interface CreateProps {
   startWalletSession: (fileName: string | undefined) => void;
@@ -41,6 +42,7 @@ interface CreateState {
   create_vault_password: string;
   reveal: boolean;
   action: string;
+  checked: boolean;
 }
 
 class CreateWalletWeb extends Component<CreateProps, CreateState> {
@@ -51,6 +53,7 @@ class CreateWalletWeb extends Component<CreateProps, CreateState> {
     mnemonicString: "",
     action: "Paste Seed",
     reveal: false,
+    checked: false,
     // Create Vault
     create_vault_name: "",
     create_vault_password: "",
@@ -118,6 +121,12 @@ class CreateWalletWeb extends Component<CreateProps, CreateState> {
     });
   };
 
+  downloadedFile = () => {
+    this.setState({
+      checked: !this.state.checked,
+    });
+  };
+
   onDownLoad = (event: any) => {
     this.props.storeKeyFileToDisk(this.props.walletName);
   };
@@ -151,6 +160,11 @@ class CreateWalletWeb extends Component<CreateProps, CreateState> {
               error=""
               width={false}
             />
+            <Checkbox
+              label="I have downloaded my Vault Key"
+              checked={this.state.checked}
+              onChange={this.downloadedFile}
+            />
             <Information>
               A Vault name and password are used to generate a secure Vault
               File. Additionally, you'll also receive a seed phrase so you can
@@ -174,6 +188,7 @@ class CreateWalletWeb extends Component<CreateProps, CreateState> {
               readOnly={true}
               onClick={this.onDownLoad}
             />
+
             <Information>
               This is your Vault File and it contains your private keys, seed
               phrase, assets and is encrypted with your password. Using this
