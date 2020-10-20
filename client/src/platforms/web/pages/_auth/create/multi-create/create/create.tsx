@@ -40,6 +40,8 @@ interface CreateState {
   verify_seed: string;
   create_vault_name: string;
   create_vault_password: string;
+  confirm_vault_password: string;
+  confirm_vault_error: string;
   reveal: boolean;
   action: string;
   checked: boolean;
@@ -59,6 +61,8 @@ class CreateWalletWeb extends Component<CreateProps, CreateState> {
     // Create Vault
     create_vault_name: "",
     create_vault_password: "",
+    confirm_vault_password: "",
+    confirm_vault_error: "",
   };
 
   componentDidUpdate(prevProps: any, prevState: any) {
@@ -70,36 +74,44 @@ class CreateWalletWeb extends Component<CreateProps, CreateState> {
   }
 
   nextCreateStep = () => {
-    const { step } = this.state;
+    const {
+      step,
+      mnemonicString,
+      verify_seed,
+      confirm_vault_password,
+      create_vault_password,
+    } = this.state;
+    const validationSucceed = verify_seed === mnemonicString;
+    const passwordConfirmed = confirm_vault_password === create_vault_password;
 
-    if (step === 1) {
-      this.props.createNewWallet(
-        undefined,
-        this.state.create_vault_password,
-        this.state.create_vault_name
-      );
-      return;
-    }
-
-    // Until step three incremennt the steps
-    if (step < 4) {
-      this.setState({ step: step + 1 });
-    }
-
-    // On step three, if seed is invalid display error messsage for 2s
-    else if (step === 4) {
-      const { mnemonicString, verify_seed } = this.state;
-
-      const validationSucceed = verify_seed === mnemonicString;
-
-      if (validationSucceed) {
-        this.props.startWalletSession(this.props.walletName);
-      } else {
-        this.setState({ error: "Sorry, that seed is incorrect" });
-        setTimeout(() => {
-          this.setState({ error: "" });
-        }, 2000);
-      }
+    switch (step) {
+      case 1:
+        return this.props.createNewWallet(
+          undefined,
+          this.state.create_vault_password,
+          this.state.create_vault_name
+        );
+        break;
+      case 2:
+        return this.setState({ step: step + 1 });
+        break;
+      case 3:
+        return this.setState({ step: step + 1 });
+        break;
+      case 4:
+        return !validationSucceed
+          ? this.setState({ error: "Sorry, that seed is incorrect" })
+          : this.setState({ step: step + 1 });
+        break;
+      case 5:
+        return passwordConfirmed
+          ? this.props.startWalletSession(this.props.walletName)
+          : this.setState({
+              confirm_vault_error: "Sorry, your password is incorrect",
+            });
+        break;
+      default:
+        break;
     }
   };
 
@@ -227,6 +239,30 @@ class CreateWalletWeb extends Component<CreateProps, CreateState> {
               step. This seed phrase can be used to restore your Vault on any
               Haven Wallet. It's crucial that you save this in a safe location
               and do not share it with anyone.
+            </Information>
+          </>
+        );
+      case 5:
+        return (
+          <>
+            <Toggle
+              label="Confirm Vault Password"
+              placeholder="Confirm your Vault password"
+              name="confirm_vault_password"
+              type={this.state.reveal === true ? "text" : "password"}
+              reveal={this.state.reveal}
+              value={this.state.confirm_vault_password}
+              onChange={this.handleChange}
+              onClick={this.showPassword}
+              readOnly={false}
+              error={this.state.confirm_vault_error}
+              width={false}
+            />
+            <Information>
+              Please enter your password to confirm you have saved it correctly.
+              Before clicking Submit please ensure that you have saved your
+              Vault File in a safe and secure place as you will need it when you
+              login next.
             </Information>
           </>
         );
