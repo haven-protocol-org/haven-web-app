@@ -12,7 +12,7 @@ class ShowQRCodeModal extends React.Component<any, any> {
       <>
         <Modal
           title="QR Code"
-          description="Sharable and scanable address"
+          description="Scan and share your address"
           leftButton="Cancel"
           rightButton="Confirm"
           disabled={false}
