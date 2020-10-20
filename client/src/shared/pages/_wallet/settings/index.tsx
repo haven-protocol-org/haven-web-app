@@ -13,7 +13,7 @@ import Footer from "../../../components/_inputs/footer";
 import DoubleFooter from "../../../components/_inputs/double_footer";
 
 import { Container } from "./styles";
-
+import { storeKeyFileToDisk } from "platforms/web/actions/storage";
 import { dark, light, sepia } from "../../../../assets/styles/themes.js";
 import { HavenAppState } from "platforms/desktop/reducers";
 import { IKeys } from "typings";
@@ -28,6 +28,8 @@ interface SettingsProps extends IKeys {
   theme: any;
   selectTheme: (theme: any) => void;
   chain: any;
+  wallet: any;
+  storeKeyFileToDisk: (walletname: string) => void;
 }
 
 interface SettingsState {
@@ -86,7 +88,7 @@ class SettingsPage extends Component<SettingsProps, SettingsState> {
   };
 
   downloadKeystore = () => {
-    alert("Download the Keystore");
+    this.props.storeKeyFileToDisk(this.props.wallet.activeWallet);
   };
 
   render() {
@@ -237,6 +239,10 @@ class SettingsPage extends Component<SettingsProps, SettingsState> {
 const mapStateToProps = (state: HavenAppState) => ({
   theme: state.theme,
   chain: state.chain,
+  wallet: state.walletSession,
 });
 
-export const Settings = connect(mapStateToProps, { selectTheme })(SettingsPage);
+export const Settings = connect(mapStateToProps, {
+  selectTheme,
+  storeKeyFileToDisk,
+})(SettingsPage);
