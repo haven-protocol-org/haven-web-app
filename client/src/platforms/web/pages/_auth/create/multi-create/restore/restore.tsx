@@ -23,6 +23,7 @@ import {
 import { Redirect } from "react-router";
 import { selectIsLoggedIn } from "shared/reducers/walletSession";
 import { MoneroUtils } from "haven-wallet-core";
+import Checkbox from "../../../../../../../shared/components/checkbox";
 
 interface RestoreProps {
   walletName: string;
@@ -51,7 +52,10 @@ interface RestoreState {
   create_vault_password: string;
   check_vault_password: string;
   validationSucceed: boolean;
+  checked: boolean;
+  disabled: boolean;
 }
+
 class RestoreWeb extends Component<RestoreProps, RestoreState> {
   state: RestoreState = {
     step: 1,
@@ -65,6 +69,8 @@ class RestoreWeb extends Component<RestoreProps, RestoreState> {
     create_vault_password: "",
     check_vault_password: "",
     validationSucceed: false,
+    checked: false,
+    disabled: false,
   };
 
   componentDidUpdate(prevProps: RestoreProps, prevState: RestoreState) {
@@ -146,6 +152,12 @@ class RestoreWeb extends Component<RestoreProps, RestoreState> {
     });
   };
 
+  downloadedFile = () => {
+    this.setState({
+      checked: !this.state.checked,
+    });
+  };
+
   onDownLoad = (event: any) => {
     this.props.storeKeyFileToDisk(this.props.walletName);
   };
@@ -222,6 +234,11 @@ class RestoreWeb extends Component<RestoreProps, RestoreState> {
               readOnly={true}
               onClick={this.onDownLoad}
             />
+            <Checkbox
+              label="I have downloaded my Vault Key"
+              checked={this.state.checked}
+              onChange={this.downloadedFile}
+            />
             <Information>
               This is your Vault File and it contains your private keys, seed
               phrase, assets and is encrypted with your password. Using this
@@ -274,6 +291,7 @@ class RestoreWeb extends Component<RestoreProps, RestoreState> {
         nextStep={this.nextRestoreStep}
         prevStep={this.prevRestoreStep}
         loading={this.props.isRequestingLogin}
+        disabled={step === 3 && !this.state.checked}
       >
         {this.handleRestoreFlow()}
       </MultiRestore>
