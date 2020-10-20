@@ -8,10 +8,6 @@ export const getHavendStateIPC = () => {
   return ipcRender.invoke(CommunicationChannel.HAVEND);
 };
 
-export const getWalletStateIPC = () => {
-  return ipcRender.invoke(CommunicationChannel.WALLET_RPC);
-};
-
 export const requestSavedWalletsIPC = () => {
   return ipcRender.invoke(CommunicationChannel.STORED_WALLETS);
 };

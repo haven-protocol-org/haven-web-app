@@ -13,6 +13,8 @@ export class HavenWalletListener extends MoneroWalletListener {
   // we keep a dispatch and getStore instance in the walletlistener
   // - not sure if its a good praxis
 
+  [key: string]: any;
+
   private getStore: () => HavenAppState;
   private dispatch: any;
   constructor(dispatch: any, getStore: () => HavenAppState) {

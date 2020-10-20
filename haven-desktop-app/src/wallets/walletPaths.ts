@@ -7,15 +7,15 @@ const TESTNET_WALLET_PATH = "/wallet/test";
 const STAGENET_WALLET_PATH = "/wallet/stage";
 export const WALLET_PATH_TESTNET: string = path.join(
   APP_DATA_PATH,
-  TESTNET_WALLET_PATH,
+  TESTNET_WALLET_PATH
 );
 export const WALLET_PATH_MAINNET: string = path.join(
   APP_DATA_PATH,
-  MAINNET_WALLET_PATH,
+  MAINNET_WALLET_PATH
 );
 export const WALLET_PATH_STAGENET: string = path.join(
   APP_DATA_PATH,
-  STAGENET_WALLET_PATH,
+  STAGENET_WALLET_PATH
 );
 export const checkAndCreateWalletDir = () => {
   if (isMainnet()) {
@@ -33,4 +33,12 @@ export const checkAndCreateWalletDir = () => {
       fs.mkdirSync(WALLET_PATH_STAGENET, { recursive: true });
     }
   }
+};
+
+export const getWalletPath = () => {
+  return isMainnet()
+    ? WALLET_PATH_MAINNET
+    : isTestnet()
+    ? WALLET_PATH_TESTNET
+    : WALLET_PATH_STAGENET;
 };

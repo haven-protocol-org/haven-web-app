@@ -7,11 +7,8 @@ import {
   ITxConfig,
   IKeys,
   IMonerRPCConnection,
-} from "typings";
-import { HavenWalletListener } from "shared/actions/walletListener";
-import { bigIntegerToBigInt } from "utility/utility";
+} from "../../typings";
 import MoneroTxWallet from "haven-wallet-core/src/main/js/wallet/model/MoneroTxWallet";
-import { HavenAppState } from "platforms/desktop/reducers";
 
 let wallet: MoneroWalletWasm;
 
@@ -50,7 +47,7 @@ export const getBalance = async (
     accountIdx,
     subaddressIdx
   );
-  return bigIntegerToBigInt(balance);
+  return balance;
 };
 
 export const getOffshoreBalance = async (
@@ -65,7 +62,7 @@ export const getOffshoreBalance = async (
     accountIdx,
     subaddressIdx
   );
-  return bigIntegerToBigInt(balance);
+  return balance;
 };
 
 export const getUnlockedBalance = async (
@@ -80,7 +77,7 @@ export const getUnlockedBalance = async (
     accountIdx,
     subaddressIdx
   );
-  return bigIntegerToBigInt(balance);
+  return balance;
 };
 
 export const getUnlockedOffshoreBalance = async (
@@ -95,7 +92,7 @@ export const getUnlockedOffshoreBalance = async (
     accountIdx,
     subaddressIdx
   );
-  return bigIntegerToBigInt(balance);
+  return balance;
 };
 
 export const getWalletData = async (): Promise<DataView[]> => {
@@ -186,11 +183,7 @@ export const getKeys = async (): Promise<IKeys> => {
   };
 };
 
-export const addWalletListener = (
-  dispatch: any,
-  getStore: () => HavenAppState
-) => {
-  const listener = new HavenWalletListener(dispatch, getStore);
+export const addWalletListener = (listener: any) => {
   // @ts-ignore
   wallet.addListener(listener);
 };

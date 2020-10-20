@@ -1,9 +1,9 @@
 import * as fs from "fs";
 import { config } from "./daemons/config/config";
+import { getWalletPath } from "./wallets/walletPaths";
 
 export const getAvailableWallets = (): string[] => {
-  //TODO use wallet paths
-  const walletPath: string = config().wallet.args["wallet-dir"] as string;
+  const walletPath: string = getWalletPath();
   let availableWallets: string[];
 
   const files = fs.readdirSync(walletPath);
