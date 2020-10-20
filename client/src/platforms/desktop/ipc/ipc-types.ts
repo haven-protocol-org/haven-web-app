@@ -3,10 +3,9 @@ import { ThreeState } from "shared/types/types";
 
 export enum CommunicationChannel {
   HAVEND = "havend",
-  WALLET_RPC = "wallet-rpc",
+  WALLET = "wallet",
   RPC = "rpc",
   STORED_WALLETS = "wallets",
-  SWITCH_NET = "switch_net",
 }
 
 export interface DAEMON_STATUS {

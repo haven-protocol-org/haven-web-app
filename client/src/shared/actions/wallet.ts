@@ -31,6 +31,7 @@ import {
   getWalletCacheByName,
   storeWalletInDB,
 } from "platforms/web/actions/storage";
+import { HavenWalletListener } from "shared/actions/walletListener";
 
 /** collection of actions to open, create and store wallet */
 
@@ -219,7 +220,8 @@ export const startWalletSession = (
     await dispatch(initReduxWallet());
 
     // start wallet listeners
-    walletProxy.addWalletListener(dispatch, getStore);
+    const listener = new HavenWalletListener(dispatch, getStore);
+    walletProxy.addWalletListener(listener);
     walletProxy.syncWallet();
     //core.syncAtOnce(1);
   };

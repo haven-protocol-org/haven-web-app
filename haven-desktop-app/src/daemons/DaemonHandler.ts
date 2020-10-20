@@ -5,7 +5,6 @@ import { RPCRequestObject } from "../rpc/RPCHRequestHandler";
 import { CommunicationChannel, DaemonType } from "../types";
 import { HavendProcess } from "./havend/HavendProcess";
 import { IDaemonManager } from "./IDaemonManager";
-import { WalletRPCProcess } from "./wallet-rpc/WalletRPCProcess";
 
 export class DaemonHandler {
   private havend: IDaemonManager;
@@ -16,16 +15,15 @@ export class DaemonHandler {
    */
   public startDaemons(): void {
     this.havend = new HavendProcess(DaemonType.havend);
-    this.rpcWallet = new WalletRPCProcess(DaemonType.wallet);
 
     ipcMain.handle(CommunicationChannel.HAVEND, (event, args) =>
-      this.havend.getState(),
+      this.havend.getState()
     );
     ipcMain.handle(CommunicationChannel.WALLET_RPC, (event, args) =>
-      this.rpcWallet.getState(),
+      this.rpcWallet.getState()
     );
     ipcMain.handle(CommunicationChannel.RPC, (event, args) =>
-      this.requestHandler(args),
+      this.requestHandler(args)
     );
   }
 
@@ -39,10 +37,6 @@ export class DaemonHandler {
 
     if (this.havend.isRunning()) {
       this.havend.killDaemon();
-    }
-
-    if (this.rpcWallet.isRunning()) {
-      this.rpcWallet.killDaemon();
     }
 
     this.checkIfDaemonsQuit();
@@ -63,7 +57,7 @@ export class DaemonHandler {
    */
   private requestHandler(requestObject: RPCRequestObject): Promise<any> {
     const isWalletMethod = WALLET_METHODS.some(
-      (walletMethod: string) => walletMethod === requestObject.method,
+      (walletMethod: string) => walletMethod === requestObject.method
     );
 
     if (isWalletMethod) {
@@ -71,7 +65,7 @@ export class DaemonHandler {
     }
 
     const isHavendMethod = DAEMON_METHODS.some(
-      (havendMethod: string) => havendMethod === requestObject.method,
+      (havendMethod: string) => havendMethod === requestObject.method
     );
 
     if (isHavendMethod) {
