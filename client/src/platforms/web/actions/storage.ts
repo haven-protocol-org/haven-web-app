@@ -1,4 +1,4 @@
-import { getWalletData } from "shared/core/wallet";
+import { walletProxy } from "shared/core/proxy";
 import { addNotificationByMessage } from "shared/actions/notification";
 import { NotificationType } from "constants/notificationList";
 import { saveAs } from "file-saver";
@@ -8,7 +8,7 @@ const WALLET_STORE = "wallet";
 
 export const storeKeyFileToDisk = (name: string) => {
   return async (dispatch: any) => {
-    const walletData = await getWalletData();
+    const walletData = await walletProxy.getWalletData();
     const keysData = walletData[0];
     const blob = new Blob([keysData.buffer]);
     saveAs(blob, name + ".keys");
@@ -24,7 +24,7 @@ export const storeKeyFileToDisk = (name: string) => {
 
 export const storeWalletInDB = async (name: string): Promise<any> => {
   return new Promise(async (resolutionFunc, rejectionFunc) => {
-    const walletData = await getWalletData();
+    const walletData = await walletProxy.getWalletData();
     const wallet = walletData[1];
     const openRequest: IDBOpenDBRequest = indexedDB.open(HAVEN_DB);
 

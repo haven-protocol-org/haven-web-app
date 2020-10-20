@@ -1,4 +1,4 @@
-import { getTxs as getTxsCore } from "shared/core/wallet";
+import { walletProxy } from "shared/core/proxy";
 import { addErrorNotification } from "./notification";
 import MoneroTxWallet from "haven-wallet-core/src/main/js/wallet/model/MoneroTxWallet";
 import {
@@ -12,7 +12,7 @@ export const getAllTransfers = () => {
     dispatch(getTransfersFetching());
 
     try {
-      const transfers: MoneroTxWallet[] = await getTxsCore();
+      const transfers: MoneroTxWallet[] = await walletProxy.getTxs();
       dispatch(getTransfersSucceed(transfers));
     } catch (e) {
       dispatch(addErrorNotification(e));

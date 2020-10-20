@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Settings } from "../../../../../shared/pages/_wallet/settings";
 import { IKeys } from "typings";
-import { getKeys } from "shared/core/wallet";
+import { walletProxy } from "shared/core/proxy";
 
 export class SettingsWeb extends Component<{}, IKeys> {
   state: IKeys = {
@@ -13,7 +13,7 @@ export class SettingsWeb extends Component<{}, IKeys> {
   };
 
   componentDidMount() {
-    getKeys().then((keys: IKeys) => {
+    walletProxy.getKeys().then((keys: IKeys) => {
       this.setState({ ...keys });
     });
   }
