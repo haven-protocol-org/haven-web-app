@@ -161,7 +161,7 @@ class RestoreWeb extends Component<RestoreProps, RestoreState> {
             <VerifySeed
               label="Enter Seed Phrase"
               name="mnemomic"
-              placeholder="Enter your 24 word seed phrase"
+              placeholder="Enter your 25 word seed phrase"
               value={mnemomic}
               error={error}
               rows={windowWidth < 600 ? "6" : "4"}
@@ -170,7 +170,7 @@ class RestoreWeb extends Component<RestoreProps, RestoreState> {
             />
             <Information>
               Please enter the seed phrase you have from a Vault you created
-              previously. This is a 24 word phrase that will be used to restore
+              previously. This is a 25 word phrase that will be used to restore
               your wallet and generate a more secure Vault File that you can use
               to login with in the future.
             </Information>
