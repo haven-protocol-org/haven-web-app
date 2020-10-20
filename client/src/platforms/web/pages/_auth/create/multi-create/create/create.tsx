@@ -43,6 +43,7 @@ interface CreateState {
   reveal: boolean;
   action: string;
   checked: boolean;
+  disabled: boolean;
 }
 
 class CreateWalletWeb extends Component<CreateProps, CreateState> {
@@ -54,6 +55,7 @@ class CreateWalletWeb extends Component<CreateProps, CreateState> {
     action: "Paste Seed",
     reveal: false,
     checked: false,
+    disabled: false,
     // Create Vault
     create_vault_name: "",
     create_vault_password: "",
@@ -160,11 +162,7 @@ class CreateWalletWeb extends Component<CreateProps, CreateState> {
               error=""
               width={false}
             />
-            <Checkbox
-              label="I have downloaded my Vault Key"
-              checked={this.state.checked}
-              onChange={this.downloadedFile}
-            />
+
             <Information>
               A Vault name and password are used to generate a secure Vault
               File. Additionally, you'll also receive a seed phrase so you can
@@ -187,6 +185,11 @@ class CreateWalletWeb extends Component<CreateProps, CreateState> {
               type="text"
               readOnly={true}
               onClick={this.onDownLoad}
+            />
+            <Checkbox
+              label="I have downloaded my Vault Key"
+              checked={this.state.checked}
+              onChange={this.downloadedFile}
             />
 
             <Information>
@@ -237,7 +240,10 @@ class CreateWalletWeb extends Component<CreateProps, CreateState> {
     }
 
     const { step, verify_seed } = this.state;
-    const disabled = step === 4 && verify_seed === "";
+
+    // Simple method to force the user to confirm they downloaded the seed
+    const disabled =
+      (step === 4 && verify_seed === "") || (step === 2 && !this.state.checked);
     return (
       <MultiCreate
         link="/"
