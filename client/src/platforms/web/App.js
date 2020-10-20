@@ -8,7 +8,7 @@ import { history } from "../../utility/history.js";
 // Relative Imports
 import Navigation from "../../shared/components/_layout/navigation/index.js";
 import { Route } from "react-router";
-import {StatusComponent} from "../../shared/components/_layout/status";
+import { StatusComponent } from "../../shared/components/_layout/status";
 import Loader from "../../shared/components/loader";
 import PublicRoutesWeb from "./routes/public";
 const PrivateRoutesWeb = lazy(() => import("./routes/private"));

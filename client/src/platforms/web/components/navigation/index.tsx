@@ -3,8 +3,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 // Relative Imports
-import { Container, Haven, Brand, Logout, Tag, Icon } from "./styles.js";
-
+import { Container, Haven, Brand, Logout, Tag, Icon, Auth } from "./styles.js";
+import Buttons from "./buttons/index.js";
 import { closeWallet } from "shared/actions/wallet";
 import { selectIsLoggedIn } from "shared/reducers/walletSession";
 import { APP_VERSION, NET_TYPE_NAME } from "constants/env";
@@ -12,6 +12,7 @@ import { WebAppState } from "platforms/web/reducers/index.js";
 
 interface NavigationProps {
   isLoggedIn: boolean;
+  auth: boolean;
   logout: (isWeb: boolean) => void;
   storeKeyFileToDisk: (name: string) => void;
   storeWalletInDB: (name: string) => void;
@@ -28,14 +29,14 @@ class Navigation extends Component<NavigationProps, {}> {
 
     return (
       <Container>
-        <Brand to={auth === true ? "/wallet/assets" : "/"}>
+        <Brand to={auth ? "/wallet/assets" : "/"}>
           <Icon />
-          <Haven>HAVEN </Haven>
+          <Haven>HAVEN</Haven>
           <Tag>
             v{APP_VERSION} {NET_TYPE_NAME}
           </Tag>
         </Brand>
-        {auth === true && <Logout onClick={this.handleLogout}>Logout</Logout>}
+        <Buttons auth={this.props.isLoggedIn} onClick={this.handleLogout} />
       </Container>
     );
   }
