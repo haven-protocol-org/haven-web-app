@@ -3,9 +3,7 @@ import React from "react";
 
 // Relative Imports
 import {
-  Container,
   Main,
-  Header,
   Buttons,
   Submit,
   Footer,
@@ -14,10 +12,6 @@ import {
   Route,
   Label,
   Back,
-  Title,
-  Description,
-  Tabs,
-  Tab,
 } from "./styles";
 import { Spinner } from "../../spinner";
 
@@ -38,7 +32,8 @@ const MultiCreate = (props) => {
                 {(props.step === 1 && "Create") ||
                   (props.step === 2 && "Next") ||
                   (props.step === 3 && "Next") ||
-                  (props.step === 4 && "Submit")}
+                  (props.step === 4 && "Confirm") ||
+                  (props.step === 5 && "Submit")}
               </Submit>
             </div>
           ) : (
