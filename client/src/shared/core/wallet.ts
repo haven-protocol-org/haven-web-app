@@ -12,8 +12,6 @@ import { HavenWalletListener } from "shared/actions/walletListener";
 import { bigIntegerToBigInt } from "utility/utility";
 import MoneroTxWallet from "haven-wallet-core/src/main/js/wallet/model/MoneroTxWallet";
 import { HavenAppState } from "platforms/desktop/reducers";
-import MoneroRpcConnection from "haven-wallet-core/src/main/js/common/MoneroRpcConnection";
-//const core = require("haven-wallet-core");
 
 let wallet: MoneroWalletWasm;
 

@@ -14,7 +14,7 @@ import {
   SELECT_FROM_TICKER,
   SELECT_TO_TICKER,
 } from "../../platforms/desktop/actions/types";
-import { transfer as transferCore, relayTxs } from "shared/core/wallet";
+import { walletProxy } from "shared/core/proxy";
 import { DesktopAppState } from "../../platforms/desktop/reducers";
 import { Ticker } from "shared/reducers/types";
 import { showModal } from "shared/actions/modal";
@@ -103,7 +103,7 @@ export function createExchange(
     } as Partial<ITxConfig>;
 
     try {
-      const createdTx: MoneroTxWallet[] = await transferCore(txConfig);
+      const createdTx: MoneroTxWallet[] = await walletProxy.transfer(txConfig);
 
       const exchangeInfo = parseExchangeResonse(createdTx, exchangeType);
       dispatch(onExchangeCreationSucceed(exchangeInfo));
@@ -128,15 +128,16 @@ const parseExchangeResonse = (
     (acc: bigInt.BigInteger, tx: MoneroTxWallet) =>
       //@ts-ignore
       acc + bigInt(tx.getIncomingAmount().toString()),
-      bigInt(0)
+    bigInt(0)
   );
   fromAmount = txList.reduce(
     (acc: bigInt.BigInteger, tx: MoneroTxWallet) =>
       acc.add(bigInt(tx.getOutgoingAmount().toString())),
-      bigInt(0)
+    bigInt(0)
   );
   fee = txList.reduce(
-    (acc: bigInt.BigInteger, tx: MoneroTxWallet) => acc.add(bigInt(tx.getFee().toString())),
+    (acc: bigInt.BigInteger, tx: MoneroTxWallet) =>
+      acc.add(bigInt(tx.getFee().toString())),
     bigInt(0)
   );
   const metaList: Array<string> = txList.map((tx: MoneroTxWallet) =>
@@ -150,7 +151,7 @@ export const confirmExchange = (metaList: Array<string>) => {
     dispatch(onExchangeFetch());
 
     try {
-      const hashes = await relayTxs(metaList);
+      const hashes = await walletProxy.relayTxs(metaList);
       dispatch(onExchangeSucceed());
       const {
         fromAmount,

@@ -1,22 +1,17 @@
-import {
-  getBalance as getBalanceCore,
-  getUnlockedBalance as getUnlockedBalanceCore,
-  getUnlockedOffshoreBalance,
-} from "../core/wallet";
+import { walletProxy } from "shared/core/proxy";
 import { Balance, XBalance } from "shared/reducers/xBalance";
 import {
   GET_BALANCES_SUCCEED,
   GET_BALANCES_FETCHING,
   GET_BALANCES_FAILED,
 } from "./types";
-import bigInt from "big-integer";
 
 export const getXHVBalance = () => {
   return async (dispatch: any) => {
     dispatch(getBalancesFetching());
     try {
-      const balance = await getBalanceCore();
-      const unlockedBalance = await getUnlockedBalanceCore();
+      const balance = await walletProxy.getBalance();
+      const unlockedBalance = await walletProxy.getUnlockedBalance();
       const xhvBalance: Balance = {
         unlockedBalance,
         balance,
@@ -35,8 +30,8 @@ export const getXUSDBalance = () => {
   return async (dispatch: any) => {
     dispatch(getBalancesFetching());
     try {
-      const balance = bigInt(0); //await getOffshoreBalanceCore();
-      const unlockedBalance = await getUnlockedOffshoreBalance();
+      const balance = await walletProxy.getOffshoreBalance();
+      const unlockedBalance = await walletProxy.getUnlockedOffshoreBalance();
       const xUSDBalance: Balance = {
         unlockedBalance,
         balance,
