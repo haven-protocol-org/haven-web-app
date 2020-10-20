@@ -6,8 +6,6 @@ export const getPrimaryAddress = () => {
   return async (dispatch: any) => {
     const address = await walletProxy.getPrimaryAddress();
 
-    console.log(address);
-
     const addressEntry: AddressEntry = {
       label: "Primary Address",
       address,
