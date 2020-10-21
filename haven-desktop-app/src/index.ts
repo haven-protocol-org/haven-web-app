@@ -1,7 +1,7 @@
 import { app, BrowserWindow, Menu, shell } from "electron";
 import { BrowserWindowConstructorOptions } from "electron";
 import * as path from "path";
-import { devServerStarted } from "./dev";
+import { startInDevMode } from "./dev";
 import { isDevMode } from "./env";
 import { appEventBus, DAEMONS_STOPPED_EVENT } from "./EventBus";
 import { HavenWallet } from "./HavenWallet";
@@ -13,7 +13,6 @@ app.enableSandbox();
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 // tslint:disable-next-line: no-var-requires
 if (require("electron-squirrel-startup")) {
-
   app.quit();
 }
 
@@ -44,25 +43,12 @@ const startApp = (): void => {
 
   if (isDevMode) {
     // Open the DevTools.
-    mainWindow.webContents.openDevTools();
-
-    devServerStarted.subscribe((hasStarted) => {
-      console.log("hasStarted : ", hasStarted);
-      if (hasStarted) {
-        mainWindow.loadURL("http://localhost:3000");
-      } else {
-        mainWindow.loadURL(
-          path.join(`file://${__dirname}`, "../sites/dev/index.html"),
-        );
-      }
-    });
+    startInDevMode(mainWindow);
   } else {
     // and load the index.html of the app.
     mainWindow.loadURL(
-      path.join(`file://${__dirname}`, "../client/index.html"),
+      path.join(`file://${__dirname}`, "../client/index.html")
     );
-
-    // mainWindow.maximize();
   }
 
   // start the app
@@ -84,7 +70,6 @@ const startApp = (): void => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on("ready", startApp);
-
 
 let willQuit = false;
 
