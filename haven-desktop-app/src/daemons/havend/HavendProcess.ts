@@ -78,9 +78,6 @@ export class HavendProcess extends DaemonProcess {
 
   protected onHavendLocationChanged(address: string): void {
     super.onHavendLocationChanged(address);
-    // in havend we must set the rpc handler again
-    this.setRPCHandler();
-
     // and start or stop the local process
     this.checkHavendLocationToggle();
   }

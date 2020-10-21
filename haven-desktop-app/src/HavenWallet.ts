@@ -2,14 +2,12 @@
  * responsible to wire everything together
  */
 
-import { BrowserWindow, ipcMain } from "electron";
+import { BrowserWindow } from "electron";
 import BrowserWindowConstructorOptions = Electron.BrowserWindowConstructorOptions;
 import * as path from "path";
 import { checkAndCreateDaemonConfig } from "./daemons/config/config";
 import { DaemonHandler } from "./daemons/DaemonHandler";
-import { getNetTypeId, setNetType } from "./env";
 import { appEventBus, DAEMONS_STOPPED_EVENT } from "./EventBus";
-import { CommunicationChannel, NET } from "./types";
 import { WalletHandler } from "./wallets/WalletHandler";
 import { checkAndCreateWalletDir } from "./wallets/walletPaths";
 
@@ -19,9 +17,8 @@ export class HavenWallet {
   private walletHandler: WalletHandler = new WalletHandler();
   private daemonHandler: DaemonHandler = new DaemonHandler();
 
-  private isSwitchingNet: boolean = false;
-  private requestShutDown: boolean = false;
   private shutDownWindow: BrowserWindow;
+  private requestShutDown: boolean = false;
 
   /**
    * Initializes the wallet by creating wallet dir, starting the Daemon, and initializing wallet handlers
@@ -46,27 +43,6 @@ export class HavenWallet {
     this.daemonHandler.stopDaemons();
     this.walletHandler.quit();
     this._isRunning = false;
-  }
-
-  private onSwitchNetwork(netType: NET) {
-    if (!(netType in NET)) {
-      return;
-    }
-
-    // for the case clients is doing dumb stuff
-    if (this.isSwitchingNet) {
-      return;
-    }
-
-    // no need to switch
-    if (netType === getNetTypeId()) {
-      return;
-    }
-
-    this.isSwitchingNet = true;
-    setNetType(netType);
-    appEventBus.once(DAEMONS_STOPPED_EVENT, () => this.start());
-    this.quit();
   }
 
   /**

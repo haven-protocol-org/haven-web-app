@@ -1,14 +1,11 @@
-import { BrowserWindow, ipcMain } from "electron";
-import { DAEMON_METHODS, WALLET_METHODS } from "../daemons/enum";
+import { ipcMain } from "electron";
 import { appEventBus, DAEMONS_STOPPED_EVENT } from "../EventBus";
-import { RPCRequestObject } from "../rpc/RPCHRequestHandler";
 import { CommunicationChannel, DaemonType } from "../types";
 import { HavendProcess } from "./havend/HavendProcess";
 import { IDaemonManager } from "./IDaemonManager";
 
 export class DaemonHandler {
   private havend: IDaemonManager;
-  private rpcWallet: IDaemonManager;
 
   /**
    * Starts the HavenD, WalletRPC processes, and adds ipc handlers
@@ -19,12 +16,6 @@ export class DaemonHandler {
     ipcMain.handle(CommunicationChannel.HAVEND, (event, args) =>
       this.havend.getState()
     );
-    ipcMain.handle(CommunicationChannel.WALLET_RPC, (event, args) =>
-      this.rpcWallet.getState()
-    );
-    ipcMain.handle(CommunicationChannel.RPC, (event, args) =>
-      this.requestHandler(args)
-    );
   }
 
   /**
@@ -32,8 +23,6 @@ export class DaemonHandler {
    */
   public stopDaemons(): void {
     ipcMain.removeHandler(CommunicationChannel.HAVEND);
-    ipcMain.removeHandler(CommunicationChannel.WALLET_RPC);
-    ipcMain.removeHandler(CommunicationChannel.RPC);
 
     if (this.havend.isRunning()) {
       this.havend.killDaemon();
@@ -50,37 +39,11 @@ export class DaemonHandler {
 
     this.addDaemonsQuitChecker();
   }
-
-  /**
-   * Takes in a request and delegates it to the appropriate handler
-   * @param requestObject
-   */
-  private requestHandler(requestObject: RPCRequestObject): Promise<any> {
-    const isWalletMethod = WALLET_METHODS.some(
-      (walletMethod: string) => walletMethod === requestObject.method
-    );
-
-    if (isWalletMethod) {
-      return this.rpcWallet.requestHandler(requestObject);
-    }
-
-    const isHavendMethod = DAEMON_METHODS.some(
-      (havendMethod: string) => havendMethod === requestObject.method
-    );
-
-    if (isHavendMethod) {
-      return this.havend.requestHandler(requestObject);
-    }
-    return { data: { error: "method not found" } } as any;
-  }
-
   /**
    * Checks if daemons have been killed
    */
   private daemonsKilled(): boolean {
-    return (
-      this.rpcWallet.isRunning() === false && this.havend.isRunning() === false
-    );
+    return this.havend.isRunning() === false;
   }
 
   /**

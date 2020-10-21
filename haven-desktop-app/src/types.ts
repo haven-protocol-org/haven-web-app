@@ -1,9 +1,7 @@
 export enum CommunicationChannel {
   HAVEND = "havend",
-  WALLET_RPC = "wallet-rpc",
-  RPC = "rpc",
+  WALLET = "wallet",
   STORED_WALLETS = "wallets",
-  SWITCH_NET = "switch_net",
 }
 
 export interface WalletState extends ProcessState {
