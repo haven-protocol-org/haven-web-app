@@ -7,8 +7,6 @@ import { appEventBus, DAEMONS_STOPPED_EVENT } from "./EventBus";
 import { HavenWallet } from "./HavenWallet";
 import { havenMenu } from "./menu";
 
-const wallet = new HavenWallet();
-
 app.enableSandbox();
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 // tslint:disable-next-line: no-var-requires
@@ -19,6 +17,7 @@ if (require("electron-squirrel-startup")) {
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow: Electron.BrowserWindow;
+const wallet = new HavenWallet();
 
 const menu = Menu.buildFromTemplate(havenMenu);
 Menu.setApplicationMenu(menu);
@@ -102,3 +101,5 @@ const onAppQuit = () => {
 
   wallet.quit();
 };
+
+export { mainWindow };

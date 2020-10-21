@@ -8,7 +8,7 @@ export class DaemonHandler {
   private havend: IDaemonManager;
 
   /**
-   * Starts the HavenD, WalletRPC processes, and adds ipc handlers
+   * Starts the Havend, WalletRPC processes, and adds ipc handlers
    */
   public startDaemons(): void {
     this.havend = new HavendProcess(DaemonType.havend);
@@ -19,7 +19,7 @@ export class DaemonHandler {
   }
 
   /**
-   * Terminates the daemons and removes handlers
+   * Terminates the daemon and removes handler
    */
   public stopDaemons(): void {
     ipcMain.removeHandler(CommunicationChannel.HAVEND);
