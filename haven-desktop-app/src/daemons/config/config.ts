@@ -50,12 +50,6 @@ export const updateDaemonUrlInConfig = (daemonUrl: string) => {
 
   daemonConfigNet.havend.daemonUrl = daemonUrl;
 
-  /*if (isLocal) {
-    delete daemonConfigNet.wallet.args["daemon-address"];
-  } else {
-    daemonConfigNet.wallet.args["daemon-address"] = daemonUrl;
-  }*/
-
   const configJson = JSON.stringify(storedConfig);
 
   fs.writeFileSync(configFilePath, configJson, "utf8");

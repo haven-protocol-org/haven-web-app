@@ -7,10 +7,6 @@ import {
 } from "../daemons/config/config";
 import { isDevMode } from "../env";
 import { appEventBus, HAVEND_LOCATION_CHANGED } from "../EventBus";
-import {
-  RPCHRequestHandler,
-  RPCRequestObject,
-} from "../rpc/RPCHRequestHandler";
 import { DaemonType, IDaemonConfig } from "../types";
 import { IDaemonManager } from "./IDaemonManager";
 
@@ -20,7 +16,6 @@ export abstract class DaemonProcess implements IDaemonManager {
   protected startArgs: object;
   protected port: number;
   protected daemonProcess: ChildProcess;
-  protected rpcHandler: RPCHRequestHandler = new RPCHRequestHandler();
   protected _isRunning: boolean = false;
   protected _isHavendLocal: boolean;
   protected _shutDownRequested: boolean = false;
@@ -29,14 +24,11 @@ export abstract class DaemonProcess implements IDaemonManager {
     this._isHavendLocal = isLocalDaemon(this.getConfig().daemonUrl);
     this.type = type;
     appEventBus.on(HAVEND_LOCATION_CHANGED, (havendLocation: string) =>
-      this.onHavendLocationChanged(havendLocation),
+      this.onHavendLocationChanged(havendLocation)
     );
-    this.init();
   }
 
   public abstract getConfig(): IDaemonConfig;
-  public abstract requestHandler(requestObject: RPCRequestObject): Promise<any>;
-  public abstract setRPCHandler(): void;
 
   public killDaemon(): void {
     if (isDevMode) {
@@ -53,12 +45,7 @@ export abstract class DaemonProcess implements IDaemonManager {
     return this._isRunning;
   }
 
-  public getState(): void {
-  }
-
-  protected init() {
-    this.setRPCHandler();
-  }
+  public getState(): void {}
 
   protected startLocalProcess(): void {
     const config = this.getConfig();
@@ -69,7 +56,7 @@ export abstract class DaemonProcess implements IDaemonManager {
     const args: ReadonlyArray<string> = Object.entries(this.startArgs).map(
       ([key, value]) => {
         return "--" + key + (value !== "" ? "=" + value : "");
-      },
+      }
     );
     if (isDevMode) {
       console.log(args);
@@ -77,13 +64,10 @@ export abstract class DaemonProcess implements IDaemonManager {
     }
     this._isRunning = true;
     this.daemonProcess = spawn(this.filePath, args);
-
-    this.daemonProcess.stdout.on("data", (chunk) => this.onstdoutData(chunk));
-    this.daemonProcess.stderr.on("data", (chunk) => this.onstderrData(chunk));
     this.daemonProcess.on(
       "exit",
       (code: number | null, signal: string | null) =>
-        this.onDaemonExit(code, signal),
+        this.onDaemonExit(code, signal)
     );
     this.daemonProcess.on("error", (error: Error) => this.onDaemonError(error));
   }
@@ -94,23 +78,19 @@ export abstract class DaemonProcess implements IDaemonManager {
     }
   }
 
-  protected onstdoutData(chunk: any): void {
-  }
-
   protected onHavendLocationChanged(address: string): void {
     this._isHavendLocal = isLocalDaemon(address);
     updateDaemonUrlInConfig(address);
   }
 
-  protected onstderrData(chunk: any): void {
-  }
-
   protected onDaemonExit(code: number | null, signal: string | null): void {
     this._isRunning = false;
 
-
     if (code !== 0 && code !== null) {
-      dialog.showErrorBox(`${this.type} not running`, "Process was stopped or did not even start");
+      dialog.showErrorBox(
+        `${this.type} not running`,
+        "Process was stopped or did not even start"
+      );
     }
 
     if (isDevMode) {

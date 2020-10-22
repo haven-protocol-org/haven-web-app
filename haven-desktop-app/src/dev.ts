@@ -1,12 +1,14 @@
+import { BrowserWindow } from "electron";
 import * as net from "net";
 import { BehaviorSubject } from "rxjs";
 import { isDevMode } from "./env";
+import * as path from "path";
 
 const devServerStartedObservable: BehaviorSubject<boolean> = new BehaviorSubject<
   boolean
 >(false);
 
-export const devServerStarted = devServerStartedObservable.asObservable();
+const devServerStarted = devServerStartedObservable.asObservable();
 
 const client = new net.Socket();
 const tryConnection = (): void => {
@@ -21,15 +23,27 @@ client.on("error", (error) => {
   setTimeout(tryConnection, 1000);
 });
 
-
 export const destroySocket = (): void => {
   client.destroy();
 };
 
 export const logInDevMode = (mes: string): void => {
-
   if (isDevMode) {
     console.log(mes);
   }
+};
 
+export const startInDevMode = (mainWindow: BrowserWindow) => {
+  mainWindow.webContents.openDevTools();
+
+  devServerStarted.subscribe((hasStarted) => {
+    console.log("hasStarted : ", hasStarted);
+    if (hasStarted) {
+      mainWindow.loadURL("http://localhost:3000");
+    } else {
+      mainWindow.loadURL(
+        path.join(`file://${__dirname}`, "../sites/dev/index.html")
+      );
+    }
+  });
 };

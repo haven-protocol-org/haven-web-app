@@ -7,8 +7,6 @@
 // modified 2017 for some CN functions by luigi1111
 
 import { dialog } from "electron";
-import { config } from "./daemons/config/config";
-import { RPCHRequestHandler } from "./rpc/RPCHRequestHandler";
 
 export enum KeyType {
   PRIVATE_VIEW,
