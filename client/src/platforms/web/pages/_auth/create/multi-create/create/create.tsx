@@ -107,7 +107,7 @@ class CreateWalletWeb extends Component<CreateProps, CreateState> {
         return passwordConfirmed
           ? this.props.startWalletSession(this.props.walletName)
           : this.setState({
-              confirm_vault_error: "Sorry, your password is incorrect",
+              confirm_vault_error: "Password doesn't match",
             });
         break;
       default:
@@ -176,12 +176,11 @@ class CreateWalletWeb extends Component<CreateProps, CreateState> {
             />
 
             <Information>
-              A Vault name and password are used to generate a secure Vault
-              File. Additionally, you'll also receive a seed phrase so you can
-              recover your funds if you lose your Vault File. If you lose your
-              Vault File and Seed then your funds are lost forever and
-              impossible to recover. Please store them in a safe location when
-              prompted to do so.
+              To create a new Vault, choose a Vault name and password. This will
+              generate a dowloadable Vault File, which can be used with your
+              password to login. In addition, a seed (list of 25 words) will be
+              generated. This back-up login method enables a Vault File and
+              password restored, if required.
             </Information>
           </>
         );
