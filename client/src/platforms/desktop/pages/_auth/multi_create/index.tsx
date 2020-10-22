@@ -97,7 +97,7 @@ class MultiLoginPage extends Component<MultiLoginProps, MultiloginState> {
         </Main>
         <Footer>
           <Label>Have a Vault?</Label>
-          <Route to={"/"}>Sign In</Route>
+          <Route to={"/"}>Login</Route>
         </Footer>
       </Container>
     );
