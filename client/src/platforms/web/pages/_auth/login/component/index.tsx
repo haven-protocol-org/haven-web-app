@@ -176,7 +176,8 @@ export default class Login extends Component<LoginProps, LoginState> {
     return (
       <Container>
         <Auth
-          title="Vault Login"
+          title={this.state.selectKeystore ? "Vault Login" : "Seed Login"}
+          description={"Privately store, exchange and transfer assets"}
           link="/create"
           route="Create or Restore"
           label="Need a Vault?"
