@@ -156,7 +156,7 @@ export class CreateWebComponent extends Component {
         <Auth
           title="Create a Vault"
           link="/"
-          route="Sign In!"
+          route="Login"
           label="Have a Vault?"
           submit="Generate"
           step={step}

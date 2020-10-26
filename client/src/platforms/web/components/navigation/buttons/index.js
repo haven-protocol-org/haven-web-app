@@ -11,7 +11,7 @@ const Buttons = ({ auth, onClick }) => {
   return (
     <>
       {!auth && location.pathname === "/" && <Auth to="/create">Create</Auth>}
-      {!auth && location.pathname === "/create" && <Auth to="/">Sign In</Auth>}
+      {!auth && location.pathname === "/create" && <Auth to="/">Login</Auth>}
       {auth && <Logout onClick={onClick}>Logout</Logout>}
     </>
   );

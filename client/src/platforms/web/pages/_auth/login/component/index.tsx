@@ -176,7 +176,8 @@ export default class Login extends Component<LoginProps, LoginState> {
     return (
       <Container>
         <Auth
-          title="Vault Login"
+          title={this.state.selectKeystore ? "Vault Login" : "Seed Login"}
+          description={"Privately store, exchange and transfer assets"}
           link="/create"
           route="Create or Restore"
           label="Need a Vault?"
@@ -210,9 +211,9 @@ export default class Login extends Component<LoginProps, LoginState> {
               />
               <Information>
                 Haven recommends logging in with a Vault File, not a Seed Phrase
-                as it's more secure. While your Seed is <strong>never</strong>{" "}
-                sent across the internet, your Vault will need to resync every
-                time you login, providing a degraded experience.
+                as it's more secure. While your Seed is never sent across the
+                internet, your Vault will need to resync every time you login,
+                providing a degraded experience.
               </Information>
             </>
           ) : (

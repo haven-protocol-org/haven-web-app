@@ -16,7 +16,7 @@ export const storeKeyFileToDisk = (name: string) => {
     dispatch(
       addNotificationByMessage(
         NotificationType.SUCCESS,
-        "Keystore has been stored on hard disk"
+        "Vault File download was successful"
       )
     );
   };

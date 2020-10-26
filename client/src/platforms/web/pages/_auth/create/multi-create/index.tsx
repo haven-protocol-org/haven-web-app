@@ -48,8 +48,12 @@ export class CreateWebComponent extends Component<any, CreateWebState> {
       <Container>
         <SubContainer>
           <Header>
-            <Title>{"Create a Vault"}</Title>
-            <SubDescription>{""}</SubDescription>
+            <Title>
+              {this.state.selectedCreate ? "Create a Vault" : "Restore a Vault"}
+            </Title>
+            <SubDescription>
+              {"Privately store, exchange and transfer assets"}
+            </SubDescription>
           </Header>
           <Tabs>
             <Tab active={this.state.selectedCreate} onClick={this.selectCreate}>

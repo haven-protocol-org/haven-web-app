@@ -125,9 +125,6 @@ class RestoreWeb extends Component<RestoreProps, RestoreState> {
         this.props.startWalletSession(this.props.walletName);
       } else {
         this.setState({ error: "Sorry, that password is incorrect" });
-        setTimeout(() => {
-          this.setState({ error: "" });
-        }, 2000);
       }
     }
   };
@@ -285,7 +282,7 @@ class RestoreWeb extends Component<RestoreProps, RestoreState> {
       <MultiRestore
         title="Create a Vault"
         link="/"
-        route="Sign In"
+        route="Login"
         label="Have a Vault?"
         step={step}
         nextStep={this.nextRestoreStep}
