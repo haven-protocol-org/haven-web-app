@@ -2,7 +2,10 @@ import * as fs from "fs";
 import { config } from "./daemons/config/config";
 import { getWalletPath } from "./wallets/walletPaths";
 
-export const getAvailableWallets = (): string[] => {
+export const getAvailableWallets = (): {
+  storePath: string;
+  wallets: string[];
+} => {
   const walletPath: string = getWalletPath();
   let availableWallets: string[];
 
@@ -16,5 +19,8 @@ export const getAvailableWallets = (): string[] => {
       return walletName;
     });
 
-  return availableWallets;
+  return {
+    storePath: walletPath,
+    wallets: availableWallets,
+  };
 };

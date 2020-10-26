@@ -4,11 +4,16 @@ import { requestSavedWalletsIPC } from "../ipc/misc";
 export const getSavedWallets = () => {
   return (dispatch: any) => {
     requestSavedWalletsIPC()
-      .then((wallets: string[]) => dispatch(updateSavedWallets(wallets)))
+      .then((savedWallets: { wallets: string[]; storePath: string }) =>
+        dispatch(updateSavedWallets(savedWallets))
+      )
       .catch((err) => console.log(err));
   };
 };
 
-const updateSavedWallets = (savedWallets: string[]) => {
+const updateSavedWallets = (savedWallets: {
+  wallets: string[];
+  storePath: string;
+}) => {
   return { type: UPDATE_SAVED_WALLETS, payload: savedWallets };
 };

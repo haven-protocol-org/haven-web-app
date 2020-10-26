@@ -65,7 +65,7 @@ class MultiLoginPage extends Component<MultiLoginProps, MultiloginState> {
 }
 
 const mapStateToProps = (state: DesktopAppState) => ({
-  wallets: state.walletSession.savedWallets,
+  wallets: state.walletSession.wallets,
   isLoggedIn: selectIsLoggedIn(state),
 });
 

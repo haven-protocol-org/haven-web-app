@@ -6,8 +6,10 @@ import * as havendCore from "./havend";
 const walletHandler: ProxyHandler<typeof walletCore> = {
   get: (target: typeof walletCore, name: string, receiver: any) => {
     if (isDesktop()) {
-      return function (...args: any[]) {
-        return callWallet(name, args);
+      return async function (...args: any[]) {
+        const response = await callWallet(name, args);
+        console.log(response);
+        return response;
       };
     }
     return Reflect.get(target, name, receiver);
@@ -18,7 +20,7 @@ const havendHandler: ProxyHandler<typeof havendCore> = {
   get: (target: typeof havendCore, name: string, receiver: any) => {
     if (isDesktop()) {
       return function (...args: any[]) {
-        return callWallet(name, args);
+        //  return callWallet(name, args);
       };
     }
     return Reflect.get(target, name, receiver);

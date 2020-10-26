@@ -19,7 +19,6 @@ import {
 import { RestoreDesktop } from "../restore";
 import { DesktopAppState } from "../../../reducers";
 import { connect } from "react-redux";
-import { getSavedWallets } from "../../../actions/storedWallets";
 import { selectIsLoggedIn } from "../../../../../shared/reducers/walletSession";
 import { Redirect } from "react-router";
 import { CreateDesktop } from "platforms/desktop/pages/_auth/create";
@@ -29,8 +28,6 @@ interface MultiloginState {
 }
 
 interface MultiLoginProps {
-  getSavedWallets: () => void;
-  wallets: string[] | null;
   isLoggedIn: boolean;
 }
 
@@ -44,12 +41,6 @@ class MultiLoginPage extends Component<MultiLoginProps, MultiloginState> {
   state: MultiloginState = {
     loginType: LOGIN_TYPE.Create,
   };
-
-  componentDidMount(): void {
-    if (this.props.wallets === null) {
-      this.props.getSavedWallets();
-    }
-  }
 
   selectRestore = () => {
     this.setState({
@@ -105,10 +96,7 @@ class MultiLoginPage extends Component<MultiLoginProps, MultiloginState> {
 }
 
 const mapStateToProps = (state: DesktopAppState) => ({
-  wallets: state.walletSession.savedWallets,
   isLoggedIn: selectIsLoggedIn(state),
 });
 
-export const MultiCreateDesktop = connect(mapStateToProps, { getSavedWallets })(
-  MultiLoginPage
-);
+export const MultiCreateDesktop = connect(mapStateToProps)(MultiLoginPage);

@@ -25,7 +25,7 @@ import { createDaemonConnection } from "./havend";
 import { updateHavenFeatures } from "./havenFeature";
 import { SET_WALLET_CONNECTION_STATE } from "./types";
 import { Chain } from "shared/reducers/chain";
-import { HavenAppState } from "platforms/desktop/reducers";
+import { DesktopAppState, HavenAppState } from "platforms/desktop/reducers";
 import { getAllTransfers } from "./transferHistory";
 import {
   getWalletCacheByName,
@@ -56,16 +56,18 @@ export const openWalletByData = (
 };
 
 /** used by nodejs env */
-export const openWalletByFile = (path: string, password: string) => {
-  const walletData: IOpenWallet = {
-    path,
-    password,
-    networkType: getNetworkByName(),
-    server: webWalletConnection(),
-  };
+export const openWalletByFile = (filename: string, password: string) => {
+  return (dispatch: any, getStore: () => DesktopAppState) => {
+    const path = getStore().walletSession.storePath + "/" + filename;
 
-  return (dispatch: any) => {
-    dispatch(openWallet(walletData, path));
+    const walletData: IOpenWallet = {
+      path,
+      password,
+      networkType: getNetworkByName(),
+      server: webWalletConnection(),
+    };
+
+    dispatch(openWallet(walletData, filename));
   };
 };
 

@@ -7,7 +7,6 @@ import { Ticker } from "shared/reducers/types";
 import bigInt from "big-integer";
 import BigInteger from "haven-wallet-core/src/main/js/common/biginteger";
 
-
 export const convertTimestampToDateString = (timestamp: any) =>
   new Date(timestamp).toLocaleDateString();
 
@@ -56,7 +55,6 @@ export const convertBalanceForReading = (balance: any) => {
   return readableBalance;
 };
 
-
 export const convertToMoney = (atomicMoney: any) => {
   if (atomicMoney === NO_BALANCE) return 0;
 
@@ -67,7 +65,7 @@ export const convertToMoney = (atomicMoney: any) => {
     return readableBalance / 10000;
   }
 
-  readableBalance = (atomicMoney / Math.pow(10, 12));
+  readableBalance = atomicMoney / Math.pow(10, 12);
 
   if (readableBalance % 1 === 0) return Math.round(readableBalance);
   return Number(readableBalance.toFixed(4));
@@ -137,12 +135,16 @@ export const createRemainingTimeString = (remainingTimeInMinutes: number) => {
   return timeString;
 };
 
-
-// haven wallet core uses its own implementation of BigInteger, and we need to convert to adapt the apps 
+// haven wallet core uses its own implementation of BigInteger, and we need to convert to adapt the apps
 //implementaion of bigInts
 
-export const bigIntegerToBigInt = (value: BigInteger):bigInt.BigInteger => {
+export const bigIntegerToBigInt = (value: BigInteger): bigInt.BigInteger => {
+  if (value instanceof BigInteger) {
+    return bigInt(value.toString(10));
+  }
 
-  return  bigInt(value.toString(10));
+  //@ts-ignore
+  const convertedBigInteger = BigInteger._construct(value._d, value._s);
 
-}
+  return bigInt(convertedBigInteger.toString(10));
+};

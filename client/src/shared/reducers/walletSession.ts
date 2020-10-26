@@ -19,7 +19,8 @@ export type RPCError = {
 
 interface WalletSession {
   activeWallet: string | undefined;
-  savedWallets: string[] | null;
+  wallets: string[] | null;
+  storePath: string | null;
   isFetching: boolean;
   isSessionStarted: boolean;
   error: RPCError | null;
@@ -28,11 +29,12 @@ interface WalletSession {
 
 const INITIAL_STATE: WalletSession = {
   activeWallet: undefined,
-  savedWallets: [],
+  wallets: [],
   isFetching: false,
   isSessionStarted: false,
   error: null,
   isConnectedToDaemon: false,
+  storePath: null,
 };
 
 export const walletSession = function (
@@ -65,8 +67,8 @@ export const walletSession = function (
         isFetching: false,
         isSessionStarted: true,
         activeWallet: action.payload,
-        savedWallets: state.savedWallets
-          ? [...state.savedWallets, action.payload]
+        wallets: state.wallets
+          ? [...state.wallets, action.payload]
           : [action.payload],
       };
     case CREATE_WALLET_FETCHING:
@@ -74,7 +76,7 @@ export const walletSession = function (
     case OPEN_WALLET_FETCHING:
       return { ...state, error: null, isFetching: true };
     case UPDATE_SAVED_WALLETS:
-      return { ...state, savedWallets: action.payload };
+      return { ...state, ...action.payload };
     default:
       return state;
   }
