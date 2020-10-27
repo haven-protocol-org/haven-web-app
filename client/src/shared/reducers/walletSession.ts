@@ -4,7 +4,6 @@ import {
   OPEN_WALLET_SUCCEED,
   UPDATE_SAVED_WALLETS,
   START_WALLET_SESSION,
-  CREATE_WALLET_FAILED,
   CREATE_WALLET_FETCHING,
 } from "platforms/desktop/actions/types";
 import { AnyAction } from "redux";
@@ -99,4 +98,8 @@ export const selectErrorMessageForLogin = (state: HavenAppState) => {
 
 export const selectIsRequestingLogin = (state: HavenAppState) => {
   return state.walletSession.isFetching;
+};
+
+export const selectStorePath = (state: HavenAppState) => {
+  return state.walletSession.storePath;
 };

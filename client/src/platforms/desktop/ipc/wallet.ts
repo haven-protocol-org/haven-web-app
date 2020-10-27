@@ -30,7 +30,7 @@ export const initDesktopWalletListener = (listener: HavenWalletListener) => {
       const methodName = walletUpdate.methodName;
       const params: any[] = walletUpdate.params;
 
-      listener[methodName](params);
+      listener[methodName](...params);
     }
   );
 };

@@ -8,7 +8,6 @@ import Toggle from "shared/components/_inputs/toggle";
 import { Information } from "assets/styles/type.js";
 import CreateSeed from "shared/components/_create/create_seed";
 import VerifySeed from "shared/components/_create/verify_seed";
-import { Container } from "../styles";
 import InputButton from "shared/components/_inputs/input_button";
 import { connect } from "react-redux";
 import { selectisRequestingWalletCreation } from "shared/reducers/walletCreation";

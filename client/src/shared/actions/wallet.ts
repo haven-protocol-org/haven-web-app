@@ -1,5 +1,5 @@
 import { IOpenWallet, ICreateWallet } from "typings";
-import { getNetworkByName } from "constants/env";
+import { getNetworkByName, isWeb } from "constants/env";
 import {
   OPEN_WALLET_FETCHING,
   OPEN_WALLET_FAILED,
@@ -25,13 +25,15 @@ import { createDaemonConnection } from "./havend";
 import { updateHavenFeatures } from "./havenFeature";
 import { SET_WALLET_CONNECTION_STATE } from "./types";
 import { Chain } from "shared/reducers/chain";
-import { DesktopAppState, HavenAppState } from "platforms/desktop/reducers";
+import { HavenAppState } from "platforms/desktop/reducers";
 import { getAllTransfers } from "./transferHistory";
 import {
   getWalletCacheByName,
   storeWalletInDB,
 } from "platforms/web/actions/storage";
 import { HavenWalletListener } from "shared/actions/walletListener";
+import { selectStorePath } from "shared/reducers/walletSession";
+import { initDesktopWalletListener } from "platforms/desktop/ipc/wallet";
 
 /** collection of actions to open, create and store wallet */
 
@@ -57,8 +59,8 @@ export const openWalletByData = (
 
 /** used by nodejs env */
 export const openWalletByFile = (filename: string, password: string) => {
-  return (dispatch: any, getStore: () => DesktopAppState) => {
-    const path = getStore().walletSession.storePath + "/" + filename;
+  return (dispatch: any, getStore: () => HavenAppState) => {
+    const path = createStorePath(getStore, filename);
 
     const walletData: IOpenWallet = {
       path,
@@ -103,15 +105,16 @@ export const createNewWallet = (
   password: string,
   walletName: string
 ) => {
-  const walletData: ICreateWallet = {
-    path,
-    password,
-    server: webWalletConnection(),
-    networkType: getNetworkByName(),
-  };
-
-  return async (dispatch: any) => {
+  return async (dispatch: any, getStore: () => HavenAppState) => {
     dispatch(createWalletFetch(walletName));
+
+    const storePath = createStorePath(getStore, path);
+    const walletData: ICreateWallet = {
+      path: storePath,
+      password,
+      server: webWalletConnection(),
+      networkType: getNetworkByName(),
+    };
     const successOrError: boolean | object = await walletProxy.createWallet(
       walletData
     );
@@ -144,15 +147,16 @@ export const restoreWalletByMnemomic = (
   password: string,
   walletName: string | undefined
 ) => {
-  const walletData: ICreateWallet = {
-    path,
-    mnemonic,
-    password,
-    networkType: getNetworkByName(),
-    server: webWalletConnection(),
-  };
+  return async (dispatch: any, getStore: () => HavenAppState) => {
+    const storePath = createStorePath(getStore, path);
+    const walletData: ICreateWallet = {
+      path: storePath,
+      mnemonic,
+      password,
+      networkType: getNetworkByName(),
+      server: webWalletConnection(),
+    };
 
-  return async (dispatch: any) => {
     dispatch(restoreWalletFetching(walletName));
     const successOrError: boolean | object = await walletProxy.createWallet(
       walletData
@@ -223,8 +227,14 @@ export const startWalletSession = (
 
     // start wallet listeners
     const listener = new HavenWalletListener(dispatch, getStore);
-    walletProxy.addWalletListener(listener);
+    if (isWeb()) {
+      walletProxy.addWalletListener(listener);
+    } else {
+      walletProxy.addWalletListener();
+      initDesktopWalletListener(listener);
+    }
     walletProxy.syncWallet();
+
     //core.syncAtOnce(1);
   };
 };
@@ -329,4 +339,20 @@ const restoreWalletFailed = (error: any) => ({
 
 export const rescanBlockchain = async () => {
   return walletProxy.rescanBlockchain();
+};
+
+const createStorePath = (
+  getStore: () => HavenAppState,
+  filename: string | undefined
+) => {
+  if (filename === undefined) {
+    return filename;
+  }
+
+  const storePath = selectStorePath(getStore());
+
+  if (storePath) {
+    return storePath + "/" + filename;
+  }
+  return filename;
 };

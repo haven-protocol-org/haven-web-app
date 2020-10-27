@@ -183,7 +183,7 @@ export const getKeys = async (): Promise<IKeys> => {
   };
 };
 
-export const addWalletListener = (listener: any) => {
+export const addWalletListener = (listener?: any) => {
   // @ts-ignore
   wallet.addListener(listener);
 };
