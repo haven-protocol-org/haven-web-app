@@ -5,6 +5,7 @@ import { mainWindow } from "../index";
 import { CommunicationChannel } from "../types";
 import { getAvailableWallets } from "../userSettings";
 import { HavenWalletListener } from "./HavenWalletListener";
+import MoneroTxWallet = require("haven-wallet-core/src/main/js/wallet/model/MoneroTxWallet");
 
 export interface WalletRequest {
   methodName: string;
@@ -39,7 +40,7 @@ export class WalletHandler {
     ipcMain.removeHandler(CommunicationChannel.WALLET);
   }
 
-  private handleWalletCoreRequest = (request: WalletRequest) => {
+  private handleWalletCoreRequest = async (request: WalletRequest) => {
     console.log(request);
     const methodName: keyof typeof core = request.methodName as keyof typeof core;
     const params = request.params;
@@ -47,6 +48,12 @@ export class WalletHandler {
     if (methodName === "addWalletListener") {
       addWalletListener();
       return;
+    }
+
+    if (methodName === "getTxs") {
+      let txs = await core[methodName].call(null, ...params);
+      txs = txs.map((tx: MoneroTxWallet) => tx.toJson());
+      return txs;
     }
 
     return core[methodName].call(null, ...params);

@@ -6,13 +6,19 @@ import {
   GET_TRANSFERS_FETCHING,
   GET_TRANSFERS_FAILED,
 } from "./types";
+import { isDesktop } from "constants/env";
 
 export const getAllTransfers = () => {
   return async (dispatch: any) => {
     dispatch(getTransfersFetching());
 
     try {
-      const transfers: MoneroTxWallet[] = await walletProxy.getTxs();
+      let transfers: MoneroTxWallet[] = await walletProxy.getTxs();
+      //Desktop is always handling serialized objects from wallets so we need to create the according instances of it
+
+      if (isDesktop()) {
+        transfers = transfers.map((state: any) => new MoneroTxWallet(state));
+      }
       dispatch(getTransfersSucceed(transfers));
     } catch (e) {
       dispatch(addErrorNotification(e));
