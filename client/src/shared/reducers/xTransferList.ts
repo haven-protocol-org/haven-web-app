@@ -15,21 +15,10 @@ import MoneroOutgoingTransfer from "haven-wallet-core/src/main/js/wallet/model/M
 
 const INITAL_STATE: MoneroTxWallet[] = [];
 
-const fetching = (
-  state = INITAL_FETCHING_STATE,
+export const xTransferList = (
+  state = INITAL_STATE,
   action: AnyAction
-): XFetching => {
-  switch (action.type) {
-    case GET_TRANSFERS_SUCCEED:
-    case GET_TRANSFERS_FAILED:
-    case GET_TRANSFERS_FETCHING:
-      return { ...state, ...action.payload };
-    default:
-      return state;
-  }
-};
-
-const list = (state = INITAL_STATE, action: AnyAction): MoneroTxWallet[] => {
+): MoneroTxWallet[] => {
   switch (action.type) {
     case GET_TRANSFERS_SUCCEED:
       return action.payload;
@@ -38,17 +27,12 @@ const list = (state = INITAL_STATE, action: AnyAction): MoneroTxWallet[] => {
   }
 };
 
-export const xTransferList = combineReducers({
-  list,
-  fetching,
-});
-
 export const selectTransferListByTicker = (
   state: HavenAppState,
   tickerId: Ticker
 ): TxEntry[] => {
   const walletTxs = state.xTransferList;
-  const txEntries: TxEntry[] = walletTxs.list.reduce(
+  const txEntries: TxEntry[] = walletTxs.reduce(
     (list: TxEntry[], walletTx: MoneroTxWallet) => {
       // const props: Partial<TransactionProps> = {};
 

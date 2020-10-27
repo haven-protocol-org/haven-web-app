@@ -7,6 +7,7 @@ import {
   GET_TRANSFERS_FAILED,
 } from "./types";
 import { isDesktop } from "constants/env";
+import { MoneroBlock } from "haven-wallet-core";
 
 export const getAllTransfers = () => {
   return async (dispatch: any) => {
@@ -17,7 +18,14 @@ export const getAllTransfers = () => {
       //Desktop is always handling serialized objects from wallets so we need to create the according instances of it
 
       if (isDesktop()) {
-        transfers = transfers.map((state: any) => new MoneroTxWallet(state));
+        transfers = transfers.map((state: any) => {
+          //@ts-ignore
+          //workaround to pull in block info into the core lib architecture
+          const block = new MoneroBlock(state.block);
+          const txWallet = new MoneroTxWallet(state);
+          txWallet.setBlock(block);
+          return txWallet;
+        });
       }
       dispatch(getTransfersSucceed(transfers));
     } catch (e) {

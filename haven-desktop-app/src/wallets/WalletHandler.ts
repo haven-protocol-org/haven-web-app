@@ -51,9 +51,16 @@ export class WalletHandler {
     }
 
     if (methodName === "getTxs") {
-      let txs = await core[methodName].call(null, ...params);
-      txs = txs.map((tx: MoneroTxWallet) => tx.toJson());
-      return txs;
+      const txClassObjects = await core[methodName].call(null, ...params);
+      const txJsonObjects = txClassObjects.map((tx: MoneroTxWallet) => {
+        // little workaround to preserve block data ( height, timestamp ) in tx
+        const block = tx.getBlock().toJson();
+        delete block.txs;
+        const txJson = tx.toJson();
+        txJson.block = block;
+        return txJson;
+      });
+      return txJsonObjects;
     }
 
     return core[methodName].call(null, ...params);
