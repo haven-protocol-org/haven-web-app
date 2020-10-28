@@ -252,6 +252,7 @@ export const closeWallet = (isWeb: boolean) => {
       await walletProxy.stopSyncing();
       await walletProxy.closeWallet(false);
     } else {
+      await walletProxy.stopSyncing();
       await walletProxy.closeWallet(true);
     }
 

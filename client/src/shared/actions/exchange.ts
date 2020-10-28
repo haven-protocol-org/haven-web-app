@@ -87,7 +87,9 @@ export function createExchange(
         ExchangeProcessInfo
       >)
     );
-    const destinations = [new MoneroDestination(address, amount.toString())];
+    const destinations = [
+      new MoneroDestination(address, amount.toString()).toJson(),
+    ];
     const txType =
       exchangeType === ExchangeType.Onshore
         ? HavenTxType.ONSHORE

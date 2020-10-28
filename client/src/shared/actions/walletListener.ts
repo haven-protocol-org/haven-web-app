@@ -39,13 +39,6 @@ export class HavenWalletListener extends MoneroWalletListener {
     percentDone: number,
     message: string
   ): void {
-    if (height === 1) {
-      console.time();
-    }
-    if (percentDone === 1) {
-      console.timeEnd();
-    }
-
     if (
       height <= startHeight + 2 ||
       (height + 1000 < endHeight && height % 100 === 0) ||
@@ -58,8 +51,6 @@ export class HavenWalletListener extends MoneroWalletListener {
       };
       this.dispatch(onWalletSyncUpdateSucceed(chain));
     }
-
-    console.log(height, startHeight, endHeight, percentDone);
   }
   /**
    * Invoked when a new block is added to the chain.
@@ -82,8 +73,6 @@ export class HavenWalletListener extends MoneroWalletListener {
         this.dispatch(onWalletSyncUpdateSucceed({ nodeHeight: height }));
       }
     }
-
-    console.log("onNewBlock", height);
   }
   /**
    * Invoked when the wallet's balances change.
@@ -132,7 +121,7 @@ export class HavenWalletListener extends MoneroWalletListener {
    * @param {MoneroOutputWallet} output - the received output
    */
   onOutputReceived(output: any): void {
-    console.log("Hey you received some money");
+    // console.log("Hey you received some money");
   }
   /**
    * Invoked when the wallet spends an output.
@@ -140,6 +129,6 @@ export class HavenWalletListener extends MoneroWalletListener {
    * @param {MoneroOutputWallet} output - the spent output
    */
   onOutputSpent(output: any): void {
-    console.log("Hey you sent some money");
+    //   console.log("Hey you sent some money");
   }
 }

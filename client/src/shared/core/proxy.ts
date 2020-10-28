@@ -2,13 +2,29 @@ import { isDesktop } from "constants/env";
 import { callWallet } from "platforms/desktop/ipc/wallet";
 import * as walletCore from "./wallet";
 import * as havendCore from "./havend";
+import MoneroTxWallet from "haven-wallet-core/src/main/js/wallet/model/MoneroTxWallet";
 
 const walletHandler: ProxyHandler<typeof walletCore> = {
-  get: (target: typeof walletCore, name: string, receiver: any) => {
+  get: (
+    target: typeof walletCore,
+    name: keyof typeof walletCore,
+    receiver: any
+  ) => {
     if (isDesktop()) {
       return async function (...args: any[]) {
+        // we need to handle serialization of data as ipcrenderer cannot transport classes, only raw objects
+
         const response = await callWallet(name, args);
         console.log(response);
+
+        if (name === "transfer") {
+          const txs: MoneroTxWallet[] = response.map(
+            (jsonTx: any) => new MoneroTxWallet(jsonTx)
+          );
+
+          return txs;
+        }
+
         return response;
       };
     }
