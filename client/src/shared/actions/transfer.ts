@@ -35,7 +35,9 @@ export const createTransfer = (
   const amountInt = bigInt(amount).multiply(bigInt(1e12));
 
   return async (dispatch: any) => {
-    const destinations = [new MoneroDestination(address, amountInt.toString())];
+    const destinations = [
+      new MoneroDestination(address, amountInt.toString()).toJson(),
+    ];
     const priority = MoneroTxPriority.NORMAL;
     const txType =
       fromTicker === Ticker.XHV
@@ -93,6 +95,7 @@ export const confirmTransfer = (metaList: Array<string>) => {
     dispatch(transferFetch());
 
     try {
+      const hashes = await walletProxy.relayTxs(metaList);
       dispatch(transferSucceed());
       dispatch(addNotificationByKey(TRANSFER_SUCCEED_MESSAGE));
     } catch (e) {
