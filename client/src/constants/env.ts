@@ -4,7 +4,6 @@ export const NET_TYPE_ID = parseInt(process.env.REACT_APP_NET_TYPE_ID!);
 export const APP_VERSION = process.env.REACT_APP_VERSION;
 export const NET_TYPE_NAME = process.env.REACT_APP_NET_TYPE_NAME;
 export const MODE = process.env.NODE_ENV;
-export const PLATFORM = process.env.REACT_APP_PLATFORM;
 
 export const DEV_MODE = "development";
 export const PRODUCTION_MODE = "production";
@@ -22,11 +21,11 @@ export const isDevMode = () => {
 };
 
 export const isWeb = () => {
-  return PLATFORM === "web";
+  return process.env.REACT_APP_PLATFORM === "web";
 };
 
 export const isDesktop = () => {
-  return PLATFORM === "desktop";
+  return process.env.REACT_APP_PLATFORM === "desktop";
 };
 
 export const getPort = () => {

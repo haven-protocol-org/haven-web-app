@@ -23,7 +23,7 @@ import {
   TRANSFER_CREATION_SUCCEED,
   TRANSFER_CREATION_FAILED,
   TRANSFER_RESET,
-} from "platforms/desktop/actions/types";
+} from "./types";
 import MoneroTxWallet from "haven-wallet-core/src/main/js/wallet/model/MoneroTxWallet";
 
 export const createTransfer = (

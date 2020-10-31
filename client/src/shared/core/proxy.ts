@@ -1,8 +1,9 @@
 import { isDesktop } from "constants/env";
-import { callWallet } from "platforms/desktop/ipc/wallet";
+import { callWalletBackend } from "platforms/desktop/ipc/wallet";
 import * as walletCore from "./wallet";
 import * as havendCore from "./havend";
 import MoneroTxWallet from "haven-wallet-core/src/main/js/wallet/model/MoneroTxWallet";
+import { CommunicationChannel } from "platforms/desktop/ipc/ipc-types";
 
 const walletHandler: ProxyHandler<typeof walletCore> = {
   get: (
@@ -14,8 +15,11 @@ const walletHandler: ProxyHandler<typeof walletCore> = {
       return async function (...args: any[]) {
         // we need to handle serialization of data as ipcrenderer cannot transport classes, only raw objects
 
-        const response = await callWallet(name, args);
-        console.log(response);
+        const response = await callWalletBackend(
+          name,
+          args,
+          CommunicationChannel.WALLET
+        );
 
         if (name === "transfer") {
           const txs: MoneroTxWallet[] = response.map(
@@ -35,8 +39,12 @@ const walletHandler: ProxyHandler<typeof walletCore> = {
 const havendHandler: ProxyHandler<typeof havendCore> = {
   get: (target: typeof havendCore, name: string, receiver: any) => {
     if (isDesktop()) {
-      return function (...args: any[]) {
-        //  return callWallet(name, args);
+      return async function (...args: any[]) {
+        const response = await callWalletBackend(
+          name,
+          args,
+          CommunicationChannel.HAVEND
+        );
       };
     }
     return Reflect.get(target, name, receiver);

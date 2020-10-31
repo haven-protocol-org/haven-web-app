@@ -8,7 +8,11 @@ import { HavenWalletListener } from "shared/actions/walletListener";
 // @ts-ignore
 const ipcRender: typeof ipcRenderer = window.havenProcess;
 
-export const callWallet = async (methodName: string, params: any[]) => {
+export const callWalletBackend = async (
+  methodName: string,
+  params: any[],
+  channel: CommunicationChannel
+) => {
   // const rpcUrl = process.env.REACT_APP_RPC_URL;
 
   const requestObject: WalletRequest = {
@@ -16,10 +20,7 @@ export const callWallet = async (methodName: string, params: any[]) => {
     params,
   };
 
-  const response = await ipcRender.invoke(
-    CommunicationChannel.WALLET,
-    requestObject
-  );
+  const response = await ipcRender.invoke(channel, requestObject);
   return response;
 };
 
@@ -33,4 +34,8 @@ export const initDesktopWalletListener = (listener: HavenWalletListener) => {
       listener[methodName](...params);
     }
   );
+};
+
+export const removeDesktopListener = () => {
+  ipcRender.removeAllListeners(CommunicationChannel.WALLET);
 };

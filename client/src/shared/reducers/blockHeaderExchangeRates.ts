@@ -1,5 +1,5 @@
 import { AnyAction } from "redux";
-import { GET_BLOCK_HEADER_EXCHANGE_RATE_SUCCEED } from "../../platforms/desktop/actions/types";
+import { GET_BLOCK_HEADER_EXCHANGE_RATE_SUCCEED } from "shared/actions/types";
 import { DesktopAppState } from "../../platforms/desktop/reducers";
 import { Ticker } from "shared/reducers/types";
 import bigInt from "big-integer";

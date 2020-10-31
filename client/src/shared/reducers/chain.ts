@@ -1,7 +1,7 @@
 import {
   GET_BLOCK_INFO_SUCEED,
   GET_WALLET_HEIGHT_SUCCEED,
-} from "../../platforms/desktop/actions/types";
+} from "shared/actions/types";
 import { AnyAction } from "redux";
 import { SyncState } from "shared/types/types";
 import {

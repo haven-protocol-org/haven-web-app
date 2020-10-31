@@ -4,12 +4,10 @@ import {
   CREATE_WALLET_SUCCEED,
   QUERY_MNEMONIC_FOR_WALLET_GENERATION_SUCCEED,
   RESTORE_WALLET_BY_SEED_SUCCEED,
-  VALIDATE_MNEMONIC_FAILED,
-  VALIDATE_MNEMONIC_SUCCEED,
   RESTORE_WALLET_BY_SEED_FETCHING,
   START_WALLET_SESSION,
   RESTORE_WALLET_BY_SEED_FAILED,
-} from "../../platforms/desktop/actions/types";
+} from "shared/actions/types";
 import { AnyAction } from "redux";
 import { RPCError } from "shared/reducers/walletSession";
 import { HavenAppState } from "platforms/desktop/reducers/index";

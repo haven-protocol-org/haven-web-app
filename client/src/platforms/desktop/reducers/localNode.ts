@@ -15,7 +15,7 @@ const INITAL_STATE: NodeState = {
   port: "",
 };
 
-export const havenNode = (
+export const localNode = (
   state = INITAL_STATE,
   action: AnyAction
 ): NodeState => {
@@ -30,7 +30,7 @@ export const havenNode = (
 };
 
 export const selectIsDaemonSet = (state: DesktopAppState): boolean => {
-  return state.havenNode.location !== NodeLocation.None;
+  return state.localNode.location !== NodeLocation.None;
 };
 
 export const selectisLocalNode = (node: NodeState) => {

@@ -13,7 +13,7 @@ import {
   EXCHANGE_SUCCEED,
   SELECT_FROM_TICKER,
   SELECT_TO_TICKER,
-} from "../../platforms/desktop/actions/types";
+} from "./types";
 import { walletProxy } from "shared/core/proxy";
 import { DesktopAppState } from "../../platforms/desktop/reducers";
 import { Ticker } from "shared/reducers/types";

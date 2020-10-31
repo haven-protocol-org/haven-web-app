@@ -10,7 +10,7 @@ import {
   GET_BALANCES_FETCHING,
   GET_BALANCES_SUCCEED,
 } from "shared/actions/types";
-import { GET_OFFSHORE_BALANCE_SUCCEED } from "platforms/desktop/actions/types";
+import { GET_OFFSHORE_BALANCE_SUCCEED } from "shared/actions/types";
 
 export const NO_BALANCE = bigInt.zero;
 

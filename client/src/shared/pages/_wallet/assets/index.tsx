@@ -1,7 +1,6 @@
 // Library Imports
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getForex, getSimplePrice } from "shared/actions";
 // Relative Imports
 import Body from "../../../components/_layout/body";
 import Header from "../../../components/_layout/header";
@@ -155,6 +154,4 @@ export const mapStateToProps = (state: DesktopAppState | WebAppState) => ({
   balances: state.xBalance,
 });
 
-export const Assets = connect(mapStateToProps, { getForex, getSimplePrice })(
-  AssetsPage
-);
+export const Assets = connect(mapStateToProps, {})(AssetsPage);

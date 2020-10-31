@@ -6,36 +6,35 @@ import { transferProcess } from "../../../shared/reducers/transferProcess";
 import { priceHistory } from "shared/reducers/priceHistory";
 import notification from "shared/reducers/notification";
 import { walletCreation } from "../../../shared/reducers/walletCreation";
-import { CLOSE_WALLET } from "shared/actions/types";
+import { STOP_WALLET_SESSION } from "shared/actions/types";
 import { chain } from "../../../shared/reducers/chain";
 import { simplePrice } from "shared/reducers/simplePrice";
 import { walletSession } from "../../../shared/reducers/walletSession";
-import forex from "../../../shared/reducers/forex";
 import { blockHeaderExchangeRate } from "shared/reducers/blockHeaderExchangeRates";
 import { xBalance } from "shared/reducers/xBalance";
 import { xTransferList } from "shared/reducers/xTransferList";
 import { exchangeProcess } from "../../../shared/reducers/exchangeProcess";
-import { havenNode } from "./havenNode";
-import { mining } from "./mining";
+import { localNode } from "./localNode";
+import { mining } from "./localMining";
 import { havenFeature } from "shared/reducers/havenFeature";
 import modal from "shared/reducers/modal";
 import { WebAppState } from "platforms/web/reducers";
-import { START_WALLET_SESSION, STOP_WALLET_SESSION } from "../actions/types";
+import { storedWallets } from "./storedWallets";
 
 const appReducer = combineReducers({
   theme,
   address,
   xBalance,
+  storedWallets,
   transferProcess,
   xTransferList,
-  forex,
   havenFeature,
   blockHeaderExchangeRate,
   walletCreation,
   exchangeProcess,
   notification,
   walletSession,
-  havenNode,
+  localNode,
   priceHistory,
   chain,
   simplePrice,

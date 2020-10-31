@@ -2,10 +2,9 @@ import {
   OPEN_WALLET_FAILED,
   OPEN_WALLET_FETCHING,
   OPEN_WALLET_SUCCEED,
-  UPDATE_SAVED_WALLETS,
   START_WALLET_SESSION,
   CREATE_WALLET_FETCHING,
-} from "platforms/desktop/actions/types";
+} from "shared/actions/types";
 import { AnyAction } from "redux";
 import { HavenAppState } from "platforms/desktop/reducers/index";
 import { getMessageOfError } from "utility/utility";
@@ -18,8 +17,6 @@ export type RPCError = {
 
 interface WalletSession {
   activeWallet: string | undefined;
-  wallets: string[] | null;
-  storePath: string | null;
   isFetching: boolean;
   isSessionStarted: boolean;
   error: RPCError | null;
@@ -28,12 +25,10 @@ interface WalletSession {
 
 const INITIAL_STATE: WalletSession = {
   activeWallet: undefined,
-  wallets: [],
   isFetching: false,
   isSessionStarted: false,
   error: null,
   isConnectedToDaemon: false,
-  storePath: null,
 };
 
 export const walletSession = function (
@@ -66,16 +61,11 @@ export const walletSession = function (
         isFetching: false,
         isSessionStarted: true,
         activeWallet: action.payload,
-        wallets: state.wallets
-          ? [...state.wallets, action.payload]
-          : [action.payload],
       };
     case CREATE_WALLET_FETCHING:
       return { ...state, activeWallet: action.payload, error: null };
     case OPEN_WALLET_FETCHING:
       return { ...state, error: null, isFetching: true };
-    case UPDATE_SAVED_WALLETS:
-      return { ...state, ...action.payload };
     default:
       return state;
   }
@@ -98,8 +88,4 @@ export const selectErrorMessageForLogin = (state: HavenAppState) => {
 
 export const selectIsRequestingLogin = (state: HavenAppState) => {
   return state.walletSession.isFetching;
-};
-
-export const selectStorePath = (state: HavenAppState) => {
-  return state.walletSession.storePath;
 };

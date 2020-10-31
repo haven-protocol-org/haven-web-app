@@ -1,5 +1,6 @@
 import { ipcMain } from "electron";
 import * as core from "../shared/wallet";
+import * as daemon from "../shared/havend";
 import { logInDevMode } from "../dev";
 import { mainWindow } from "../index";
 import { CommunicationChannel } from "../types";
@@ -32,6 +33,9 @@ export class WalletHandler {
     ipcMain.handle(CommunicationChannel.WALLET, (event, args) =>
       this.handleWalletCoreRequest(args as WalletRequest)
     );
+    ipcMain.handle(CommunicationChannel.HAVEND, (event, args) =>
+      this.handleDaemonCoreRequest(args as WalletRequest)
+    );
   }
 
   private removeHandlers() {
@@ -41,7 +45,6 @@ export class WalletHandler {
   }
 
   private handleWalletCoreRequest = async (request: WalletRequest) => {
-    console.log(request);
     const methodName: keyof typeof core = request.methodName as keyof typeof core;
     const params = request.params;
 
@@ -73,6 +76,13 @@ export class WalletHandler {
     }
 
     return core[methodName].call(null, ...params);
+  };
+
+  private handleDaemonCoreRequest = async (request: WalletRequest) => {
+    const methodName: keyof typeof daemon = request.methodName as keyof typeof daemon;
+    const params = request.params;
+
+    return daemon[methodName].call(null, ...params);
   };
 }
 

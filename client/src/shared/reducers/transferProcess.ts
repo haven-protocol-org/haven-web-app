@@ -6,7 +6,7 @@ import {
   TRANSFER_FETCHING,
   TRANSFER_RESET,
   TRANSFER_SUCCEED,
-} from "platforms/desktop/actions/types";
+} from "shared/actions/types";
 import { AnyAction } from "redux";
 import { HavenAppState } from "../../platforms/desktop/reducers/index";
 import { Ticker } from "shared/reducers/types";
