@@ -210,10 +210,11 @@ export default class Login extends Component<LoginProps, LoginState> {
                 }
               />
               <Information>
-                Haven recommends logging in with a Vault File, not a Seed Phrase
-                as it's more secure. While your Seed is never sent across the
-                internet, your Vault will need to resync every time you login,
-                providing a degraded experience.
+                You can login here with your seed phrase, however Haven
+                recommends using a vault file, as it’s encrypted and requires a
+                password. The seed phrase is intended as a backup, for when you
+                no longer possess a vault file. If you need a new vault file,
+                click the “Restore” button below.
               </Information>
             </>
           ) : (
@@ -247,11 +248,10 @@ export default class Login extends Component<LoginProps, LoginState> {
                 reveal={this.state.reveal}
               />
               <Information>
-                A Vault File is more secure then a Seed Phrase because it's an
-                encrypted file that requires a password. In addition, it
-                prevents your wallet from resyncing every login, providing a
-                smoother experience. If you don't have Vault File please restore
-                a vault with your seed to generate one.
+                Select your vault file and enter your password. If you are new
+                to Haven and want to start storing, sending and converting
+                assets in complete privacy, then click the "Create" button to
+                get started.
               </Information>
             </>
           )}
