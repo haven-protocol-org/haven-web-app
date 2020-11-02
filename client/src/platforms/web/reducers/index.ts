@@ -6,7 +6,6 @@ import address from "shared/reducers/address";
 import { xTransferList } from "shared/reducers/xTransferList";
 import { priceHistory } from "shared/reducers/priceHistory";
 import notification from "shared/reducers/notification";
-import { simplePrice } from "shared/reducers/simplePrice";
 import { chain } from "shared/reducers/chain";
 import { transferProcess } from "shared/reducers/transferProcess";
 import { exchangeProcess } from "shared/reducers/exchangeProcess";
@@ -28,7 +27,6 @@ const appReducer = combineReducers({
   xTransferList,
   priceHistory,
   notification,
-  simplePrice,
   transferProcess,
   exchangeProcess,
   xhvVsCurrencies,

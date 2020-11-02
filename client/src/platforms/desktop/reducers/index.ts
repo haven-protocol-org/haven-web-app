@@ -8,7 +8,6 @@ import notification from "shared/reducers/notification";
 import { walletCreation } from "../../../shared/reducers/walletCreation";
 import { STOP_WALLET_SESSION } from "shared/actions/types";
 import { chain } from "../../../shared/reducers/chain";
-import { simplePrice } from "shared/reducers/simplePrice";
 import { walletSession } from "../../../shared/reducers/walletSession";
 import { blockHeaderExchangeRate } from "shared/reducers/blockHeaderExchangeRates";
 import { xBalance } from "shared/reducers/xBalance";
@@ -37,7 +36,6 @@ const appReducer = combineReducers({
   localNode,
   priceHistory,
   chain,
-  simplePrice,
   mining,
   modal,
 });
