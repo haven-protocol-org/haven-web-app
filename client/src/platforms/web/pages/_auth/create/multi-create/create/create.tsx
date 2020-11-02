@@ -175,11 +175,10 @@ class CreateWalletWeb extends Component<CreateProps, CreateState> {
             />
 
             <Information>
-              To create a new Vault, choose a Vault name and password. This will
-              generate a dowloadable Vault File, which can be used with your
-              password to login. In addition, a seed (list of 25 words) will be
-              generated. This back-up login method enables a Vault File and
-              password restored, if required.
+              Enter a unique name and strong password to create a vault. You
+              will be asked to confirm this password on the final step. This
+              process will generate an encrypted vault file that enables you to
+              store, send and convert assets in complete privacy.
             </Information>
           </>
         );
@@ -197,27 +196,35 @@ class CreateWalletWeb extends Component<CreateProps, CreateState> {
               onClick={this.onDownLoad}
             />
             <Checkbox
-              label="I have downloaded my Vault Key"
+              label="I have saved my vault file to my device"
               checked={this.state.checked}
               onChange={this.downloadedFile}
             />
 
             <Information>
-              This is your Vault File and it contains your private keys, seed
-              phrase, assets and is encrypted with your password. Using this
-              Vault File to login is safer and also prevents you from having to
-              resync your vault each time you login. Click Save to store it in a
-              safe location.
+              A vault file uses military grade encryption to secure your assets.
+              Store this file in a safe location. To avoid permanent loss of
+              assets, never share your seed phrase, vault file or password with
+              anyone.
             </Information>
           </>
         );
       case 3:
         return (
-          <CreateSeed
-            value={this.state.mnemonicString}
-            rows={windowWidth < 600 ? "6" : "4"}
-            readOnly={true}
-          />
+          <>
+            <CreateSeed
+              value={this.state.mnemonicString}
+              rows={windowWidth < 600 ? "6" : "4"}
+              readOnly={true}
+            />
+            <Information>
+              A seed phrase provides full access to your account. It can be used
+              to generate new vault files or login directly. If you lose this
+              seed phrase then it’s impossible to recover your funds. Store it
+              in a reputable password manager or on a piece of paper. Do not
+              share it with anyone.
+            </Information>
+          </>
         );
       case 4:
         return (
@@ -233,10 +240,10 @@ class CreateWalletWeb extends Component<CreateProps, CreateState> {
               onChange={this.handleChange}
             />
             <Information>
-              Please verify your seed phrase that you received on the previous
-              step. This seed phrase can be used to restore your Vault on any
-              Haven Wallet. It's crucial that you save this in a safe location
-              and do not share it with anyone.
+              Re-enter the seed phrase that was provided on the previous step.
+              As a reminder, if you lose both your vault file and password or
+              seed phrase then your funds are lost forever with no possibility
+              of being recovered. Store them in a safe and secure location.
             </Information>
           </>
         );
@@ -257,10 +264,9 @@ class CreateWalletWeb extends Component<CreateProps, CreateState> {
               width={false}
             />
             <Information>
-              Please enter your password to confirm you have saved it correctly.
-              Before clicking Submit please ensure that you have saved your
-              Vault File in a safe and secure place as you will need it when you
-              login next.
+              Re-enter the password you used to create this vault file. If you
+              have forgotten it, please start again. Access to a vault requires
+              both the vault file and valid password.
             </Information>
           </>
         );

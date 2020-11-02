@@ -230,7 +230,7 @@ class RestoreWeb extends Component<RestoreProps, RestoreState> {
               onClick={this.onDownLoad}
             />
             <Checkbox
-              label="I have saved my vault file to my device."
+              label="I have saved my vault file to my device"
               checked={this.state.checked}
               onChange={this.downloadedFile}
             />
@@ -261,7 +261,7 @@ class RestoreWeb extends Component<RestoreProps, RestoreState> {
             <Information>
               Re-enter the password you used to create this vault file. If you
               have forgotten it, please start again. A vault requires both the
-              vault file and password to access.
+              vault file and valid password to access.
             </Information>
           </>
         );

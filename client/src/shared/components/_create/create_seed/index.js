@@ -33,6 +33,7 @@ class CreateSeed extends Component {
       action,
       actionEvent,
       readOnly,
+      children,
       ...rest
     } = this.props;
     return (
@@ -48,12 +49,7 @@ class CreateSeed extends Component {
           actionEvent={this.copySeed}
           rest={rest}
         />
-        <Information>
-          Your seed phrase was cryptographically generated in a safe and secure
-          manner. Now is a good time to save it to a safe location such as a
-          reputable password manager or with a pen and pad. On the next step you
-          will be asked to verify the seed to ensure you've backed it up.
-        </Information>
+        {children}
       </>
     );
   }
