@@ -5,8 +5,8 @@ import {
   daemonConfigMainnet,
   daemonConfigStagenet,
   daemonConfigTestnet,
-} from "../../daemons/config/default";
-import { LOCAL_DAEMON_MAP } from "../../daemons/config/enum";
+} from "./default";
+import { LOCAL_DAEMON_MAP } from "./enum";
 import { logInDevMode } from "../../dev";
 import { APP_DATA_PATH, getNetTypeId, isDevMode } from "../../env";
 import { AppConfig, NET } from "../../types";

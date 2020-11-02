@@ -1,5 +1,5 @@
 import * as fs from "fs";
-import { config } from "./daemons/config/config";
+import { config } from "./localNode/config/config";
 import { getWalletPath } from "./wallets/walletPaths";
 
 export const getAvailableWallets = (): {

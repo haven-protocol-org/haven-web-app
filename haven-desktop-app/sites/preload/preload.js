@@ -5,7 +5,7 @@ const { app, contextBridge, ipcRenderer } = require("electron");
 contextBridge.exposeInMainWorld("havenProcess", {
   invoke: (channel, data) => {
     // whitelist channels
-    let validChannels = ["havend", "wallet", "wallets"];
+    let validChannels = ["localNode", "wallet", "config"];
     if (validChannels.includes(channel)) {
       return ipcRenderer.invoke(channel, data);
     }

@@ -1,22 +1,9 @@
 export enum CommunicationChannel {
-  HAVEND = "havend",
+  LocalNode = "localNode",
   WALLET = "wallet",
-  STORED_WALLETS = "wallets",
+  DAEMON = "daemon",
+  CONFIG = "config",
 }
-
-export interface WalletState extends ProcessState {
-  isConnectedToDaemon: ThreeState;
-  isSyncing: boolean;
-  syncHeight: number;
-  isReachable: boolean;
-}
-
-export interface HavendState extends ProcessState {
-  isReachable: boolean;
-  location: NodeLocation;
-  address: string;
-}
-
 export interface ProcessState {
   isRunning: boolean;
   code?: number;
@@ -29,17 +16,6 @@ export interface IDaemonConfig {
   daemonUrl: string;
 }
 
-export enum NodeLocation {
-  Local = "Local",
-  Remote = "Remote",
-  None = "None",
-}
-
-export enum ThreeState {
-  True,
-  False,
-  Unset,
-}
 export enum NET {
   Mainnet = 0,
   Testnet = 1,

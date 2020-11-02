@@ -3,7 +3,7 @@ import { BrowserWindowConstructorOptions } from "electron";
 import * as path from "path";
 import { startInDevMode } from "./dev";
 import { isDevMode } from "./env";
-import { appEventBus, DAEMONS_STOPPED_EVENT } from "./EventBus";
+import { appEventBus, LOCAL_NODE_STOPPED_EVENT } from "./EventBus";
 import { HavenWallet } from "./HavenWallet";
 import { havenMenu } from "./menu";
 
@@ -95,7 +95,7 @@ app.on("web-contents-created", (event, contents) => {
 const onAppQuit = () => {
   console.log("on App quit called");
 
-  appEventBus.once(DAEMONS_STOPPED_EVENT, () => {
+  appEventBus.once(LOCAL_NODE_STOPPED_EVENT, () => {
     app.quit();
   });
 

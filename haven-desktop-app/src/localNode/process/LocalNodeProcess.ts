@@ -1,38 +1,48 @@
 import { ChildProcess, spawn } from "child_process";
 import { dialog } from "electron";
-import { getLocalDaemonPath } from "../daemonPaths";
-import {
-  isLocalDaemon,
-  updateDaemonUrlInConfig,
-} from "../daemons/config/config";
-import { isDevMode } from "../env";
-import { appEventBus, HAVEND_LOCATION_CHANGED } from "../EventBus";
-import { DaemonType, IDaemonConfig } from "../types";
-import { IDaemonManager } from "./IDaemonManager";
+import { getLocalDaemonPath } from "../localNodePaths";
+import { isDevMode } from "../../env";
+import { IDaemonConfig, ProcessState } from "../../types";
+import { DEFAULT_CONFIG } from "haven-wallet-core/src/main/js/common/MoneroRpcConnection";
 
-export abstract class DaemonProcess implements IDaemonManager {
-  protected type: DaemonType;
+export abstract class DaemonProcess {
   protected filePath: string;
   protected startArgs: object;
   protected port: number;
   protected daemonProcess: ChildProcess;
   protected _isRunning: boolean = false;
-  protected _isHavendLocal: boolean;
   protected _shutDownRequested: boolean = false;
+  private config: IDaemonConfig;
 
-  constructor(type: DaemonType) {
-    this._isHavendLocal = isLocalDaemon(this.getConfig().daemonUrl);
-    this.type = type;
-    appEventBus.on(HAVEND_LOCATION_CHANGED, (havendLocation: string) =>
-      this.onHavendLocationChanged(havendLocation)
-    );
+  public getConfig(): IDaemonConfig {
+    return this.config;
   }
 
-  public abstract getConfig(): IDaemonConfig;
+  public setConfig(config: IDaemonConfig): void {
+    this.config = config;
+  }
+
+  public getState(): ProcessState {
+    return {
+      isRunning: this._isRunning,
+    };
+  }
+
+  public onstderrData(chunk: any): void {
+    if (isDevMode) {
+      console.error("havend stderr : " + chunk.toString());
+    }
+  }
+
+  public onstdoutData(chunk: any): void {
+    if (isDevMode) {
+      console.error("havend stdout : " + chunk.toString());
+    }
+  }
 
   public killDaemon(): void {
     if (isDevMode) {
-      console.log(`try to kill ${this.type}`);
+      console.log(`try to kill havend`);
     }
     this._shutDownRequested = true;
     this.daemonProcess.kill();
@@ -45,11 +55,9 @@ export abstract class DaemonProcess implements IDaemonManager {
     return this._isRunning;
   }
 
-  public getState(): void {}
-
-  protected startLocalProcess(): void {
+  private startLocalProcess(): void {
     const config = this.getConfig();
-    this.filePath = getLocalDaemonPath(this.type);
+    this.filePath = getLocalDaemonPath();
     this.startArgs = config.args;
     this.port = config.port;
 
@@ -64,6 +72,8 @@ export abstract class DaemonProcess implements IDaemonManager {
     }
     this._isRunning = true;
     this.daemonProcess = spawn(this.filePath, args);
+    this.daemonProcess.stdout.on("data", (chunk) => this.onstdoutData(chunk));
+    this.daemonProcess.stderr.on("data", (chunk) => this.onstderrData(chunk));
     this.daemonProcess.on(
       "exit",
       (code: number | null, signal: string | null) =>
@@ -72,29 +82,24 @@ export abstract class DaemonProcess implements IDaemonManager {
     this.daemonProcess.on("error", (error: Error) => this.onDaemonError(error));
   }
 
-  protected onDaemonError(error: Error): void {
+  private onDaemonError(error: Error): void {
     if (isDevMode) {
       console.error("daemon error : " + error);
     }
   }
 
-  protected onHavendLocationChanged(address: string): void {
-    this._isHavendLocal = isLocalDaemon(address);
-    updateDaemonUrlInConfig(address);
-  }
-
-  protected onDaemonExit(code: number | null, signal: string | null): void {
+  private onDaemonExit(code: number | null, signal: string | null): void {
     this._isRunning = false;
 
     if (code !== 0 && code !== null) {
       dialog.showErrorBox(
-        `${this.type} not running`,
+        `havend not running`,
         "Process was stopped or did not even start"
       );
     }
 
     if (isDevMode) {
-      console.log(`${this.type} exit with code ${code} and signal ${signal}`);
+      console.log(`havend exit with code ${code} and signal ${signal}`);
     }
   }
 
