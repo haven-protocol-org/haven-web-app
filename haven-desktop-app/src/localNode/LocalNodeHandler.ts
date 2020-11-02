@@ -1,8 +1,8 @@
 import { ipcMain } from "electron";
-import { appEventBus, DAEMONS_STOPPED_EVENT } from "../EventBus";
+import { appEventBus, LOCAL_NODE_STOPPED_EVENT } from "../EventBus";
 import { CommunicationChannel, DaemonType } from "../types";
-import { HavendProcess } from "./havend/HavendProcess";
-import { IDaemonManager } from "./IDaemonManager";
+import { HavendProcess } from "./process/LocalNodeProcess";
+import { IDaemonManager } from "./process/IDaemonManager";
 
 export class DaemonHandler {
   private havend: IDaemonManager;
@@ -11,9 +11,9 @@ export class DaemonHandler {
    * Starts the Havend, WalletRPC processes, and adds ipc handlers
    */
   public startDaemons(): void {
-    this.havend = new HavendProcess(DaemonType.havend);
+    this.havend = new HavendProcess();
 
-    ipcMain.handle(CommunicationChannel.HAVEND, (event, args) =>
+    ipcMain.handle(CommunicationChannel.LocalNode, (event, args) =>
       this.havend.getState()
     );
   }
@@ -22,7 +22,7 @@ export class DaemonHandler {
    * Terminates the daemon and removes handler
    */
   public stopDaemons(): void {
-    ipcMain.removeHandler(CommunicationChannel.HAVEND);
+    ipcMain.removeHandler(CommunicationChannel.LocalNode);
 
     if (this.havend.isRunning()) {
       this.havend.killDaemon();
@@ -33,7 +33,7 @@ export class DaemonHandler {
 
   public checkIfDaemonsQuit(): void {
     if (this.daemonsKilled()) {
-      appEventBus.emit(DAEMONS_STOPPED_EVENT);
+      appEventBus.emit(LOCAL_NODE_STOPPED_EVENT);
       return;
     }
 
@@ -53,7 +53,7 @@ export class DaemonHandler {
     const i = setInterval(() => {
       if (this.daemonsKilled()) {
         clearInterval(i);
-        appEventBus.emit(DAEMONS_STOPPED_EVENT);
+        appEventBus.emit(LOCAL_NODE_STOPPED_EVENT);
       }
     }, 500);
   }
