@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import media from "../../../assets/styles/media.js";
 
 export const Container = styled.div`
   height: auto;
@@ -6,6 +7,7 @@ export const Container = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 12px;
 `;
 
 export const Message = styled.div`
@@ -14,6 +16,7 @@ export const Message = styled.div`
   align-self: center;
   color: ${(props) => props.theme.type.primary};
   margin-top: 4px;
+  line-height: 1.5em;
 `;
 
 export const Row = styled.div`

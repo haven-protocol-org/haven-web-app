@@ -178,10 +178,9 @@ class RestoreWeb extends Component<RestoreProps, RestoreState> {
               onChange={this.handleChange}
             />
             <Information>
-              Please enter the seed phrase you have from a Vault you created
-              previously. This is a 25 word phrase that will be used to restore
-              your wallet and generate a more secure Vault File that you can use
-              to login with in the future.
+              Enter your 25 word seed phrase to generate a new vault file. This
+              is an encrypted file, with a unique name and password. This file
+              will allow you to log into your vault on any device.
             </Information>
           </>
         );
@@ -210,11 +209,10 @@ class RestoreWeb extends Component<RestoreProps, RestoreState> {
               width={false}
             />
             <Information>
-              A Vault name and password, in addtion to the seed you entered on
-              the previous step are used to generate a secure Vault File. If you
-              lose your Vault File and Seed then your funds are lost forever and
-              impossible to recover. Please store them in a safe location when
-              prompted to do so on the next step.
+              Create a unique name and strong password for your vault file. You
+              will be asked to confirm this password on the final step. If you
+              lose your vault file you can always restore it with the 25 word
+              seed phrase you entered on the previous step.
             </Information>
           </>
         );
@@ -232,16 +230,15 @@ class RestoreWeb extends Component<RestoreProps, RestoreState> {
               onClick={this.onDownLoad}
             />
             <Checkbox
-              label="I have downloaded my Vault Key"
+              label="I have saved my vault file to my device."
               checked={this.state.checked}
               onChange={this.downloadedFile}
             />
             <Information>
-              This is your Vault File and it contains your private keys, seed
-              phrase, assets and is encrypted with your password. Using this
-              Vault File to login is safer and also prevents you from having to
-              resync your vault each time you login. Click Save to store it in a
-              safe location.
+              A vault file uses military grade encryption to secure your assets.
+              Store this file in a safe location. To avoid permanent loss of
+              assets, never share your seed phrase, vault file or password with
+              anyone.
             </Information>
           </>
         );
@@ -262,10 +259,9 @@ class RestoreWeb extends Component<RestoreProps, RestoreState> {
               readOnly={false}
             />
             <Information>
-              Please enter your password to confirm you have saved it correctly.
-              Before clicking Submit please ensure that you have saved your
-              Vault File in a safe and secure place as you will need it when you
-              login next.
+              Re-enter the password you used to create this vault file. If you
+              have forgotten it, please start again. A vault requires both the
+              vault file and password to access.
             </Information>
           </>
         );
