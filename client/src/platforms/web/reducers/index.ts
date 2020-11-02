@@ -10,7 +10,6 @@ import { chain } from "shared/reducers/chain";
 import { transferProcess } from "shared/reducers/transferProcess";
 import { exchangeProcess } from "shared/reducers/exchangeProcess";
 import { xBalance } from "shared/reducers/xBalance";
-import { xhvVsCurrencies } from "platforms/web/reducers/xhvVsCurrencies";
 import { blockHeaderExchangeRate } from "shared/reducers/blockHeaderExchangeRates";
 import { havenFeature } from "shared/reducers/havenFeature";
 import { walletSession } from "shared/reducers/walletSession";
@@ -29,7 +28,6 @@ const appReducer = combineReducers({
   notification,
   transferProcess,
   exchangeProcess,
-  xhvVsCurrencies,
   blockHeaderExchangeRate,
   walletSession,
   walletCreation,
