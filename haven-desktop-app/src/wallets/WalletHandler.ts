@@ -27,20 +27,20 @@ export class WalletHandler {
 
   private addHandlers() {
     logInDevMode("handlers added");
-    ipcMain.handle(CommunicationChannel.STORED_WALLETS, (event, args) =>
+    ipcMain.handle(CommunicationChannel.CONFIG, (event, args) =>
       getAvailableWallets()
     );
     ipcMain.handle(CommunicationChannel.WALLET, (event, args) =>
       this.handleWalletCoreRequest(args as WalletRequest)
     );
-    ipcMain.handle(CommunicationChannel.HAVEND, (event, args) =>
+    ipcMain.handle(CommunicationChannel.LocalNode, (event, args) =>
       this.handleDaemonCoreRequest(args as WalletRequest)
     );
   }
 
   private removeHandlers() {
     logInDevMode("handlers removed");
-    ipcMain.removeHandler(CommunicationChannel.STORED_WALLETS);
+    ipcMain.removeHandler(CommunicationChannel.CONFIG);
     ipcMain.removeHandler(CommunicationChannel.WALLET);
   }
 

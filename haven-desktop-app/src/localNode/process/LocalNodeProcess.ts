@@ -5,7 +5,7 @@ import { isDevMode } from "../../env";
 import { IDaemonConfig, ProcessState } from "../../types";
 import { DEFAULT_CONFIG } from "haven-wallet-core/src/main/js/common/MoneroRpcConnection";
 
-export abstract class DaemonProcess {
+export class LocalNodeProcess {
   protected filePath: string;
   protected startArgs: object;
   protected port: number;
@@ -55,7 +55,7 @@ export abstract class DaemonProcess {
     return this._isRunning;
   }
 
-  private startLocalProcess(): void {
+  public startLocalProcess(): void {
     const config = this.getConfig();
     this.filePath = getLocalDaemonPath();
     this.startArgs = config.args;

@@ -18,23 +18,12 @@ export const setNodeForWallet = (
   return (dispatch: any, getState: () => DesktopAppState) => {
     dispatch(setNodeForWalletRequested());
 
-    let trusted: boolean;
     let address: string;
-
-    // if using local node, keep address empty
-    if (selectedNodeOption.location === NodeLocation.Local) {
-      trusted = true;
-      address = "";
-    } else {
-      trusted = false;
-      address = nodeAddress + ":" + nodePort;
-      const protocolPattern = /^((http|https):\/\/)/;
-      if (!protocolPattern.test(address)) {
-        address = "http://" + nodeAddress;
-      }
+    address = nodeAddress + ":" + nodePort;
+    const protocolPattern = /^((http|https):\/\/)/;
+    if (!protocolPattern.test(address)) {
+      address = "http://" + nodeAddress;
     }
-
-    const params = { address: address, trusted };
 
     const connection: IMonerRPCConnection = {
       username: selectedNodeOption.username,

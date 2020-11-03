@@ -6,7 +6,7 @@ import { BrowserWindow } from "electron";
 import BrowserWindowConstructorOptions = Electron.BrowserWindowConstructorOptions;
 import * as path from "path";
 import { checkAndCreateDaemonConfig } from "./localNode/config/config";
-import { DaemonHandler } from "./localNode/LocalNodeHandler";
+import { LocalNodeHandler } from "./localNode/LocalNodeHandler";
 import { appEventBus, LOCAL_NODE_STOPPED_EVENT } from "./EventBus";
 import { WalletHandler } from "./wallets/WalletHandler";
 import { checkAndCreateWalletDir } from "./wallets/walletPaths";
@@ -15,7 +15,7 @@ export class HavenWallet {
   private _isRunning: boolean = false;
 
   private walletHandler: WalletHandler = new WalletHandler();
-  private daemonHandler: DaemonHandler = new DaemonHandler();
+  private localNodeHandler: LocalNodeHandler = new LocalNodeHandler();
 
   private shutDownWindow: BrowserWindow;
   private requestShutDown: boolean = false;
@@ -32,15 +32,13 @@ export class HavenWallet {
 
     checkAndCreateWalletDir();
     checkAndCreateDaemonConfig();
-
-    this.daemonHandler.startDaemons();
     this.walletHandler.start();
   }
 
   public quit() {
     this.requestShutDown = true;
     this.showShutDownWindow();
-    this.daemonHandler.stopDaemons();
+    this.localNodeHandler.stop();
     this.walletHandler.quit();
     this._isRunning = false;
   }

@@ -23,14 +23,12 @@ export enum NET {
 }
 
 export type IDaemonNetConfig = {
-  [key in NET]: { [key in DaemonType]: IDaemonConfig };
+  [key in NET]: IDaemonConfig;
 };
 
 export type AppConfig = IDaemonNetConfig & { version: string };
 
-export enum DaemonType {
-  havend = "havend",
-}
+export type LocalNodeRequest = "state" | "start" | "stop";
 
 export enum NetTypeName {
   mainnet = "mainnet",
