@@ -9,7 +9,7 @@ import Header from "shared/components/_layout/header";
 import Form from "shared/components/_inputs/form";
 import Theme from "shared/components/_inputs/theme";
 // For the miner
-import { selectisLocalNode } from "platforms/desktop/reducers/localNode";
+import { selectisLocalNode } from "platforms/desktop/reducers/selectedNode";
 import { dark, light, sepia } from "assets/styles/themes.js";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import {
@@ -177,7 +177,7 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
 const mapStateToProps = (state: DesktopAppState) => ({
   theme: state.theme,
   mining: state.mining,
-  localNode: selectisLocalNode(state.localNode),
+  localNode: selectisLocalNode(state.selectedNode),
 });
 
 export const SettingsDesktop = connect(mapStateToProps, {

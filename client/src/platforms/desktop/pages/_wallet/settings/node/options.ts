@@ -1,11 +1,11 @@
-import { NodeLocation, NodeState } from "platforms/desktop/types";
+import { NodeLocation, LocalNode, SelectedNode } from "platforms/desktop/types";
 import { REMOTE_NODES } from "platforms/desktop/nodes";
 import {
   NodeOption,
   NodeSelectionType,
 } from "platforms/desktop/pages/_wallet/settings/node/nodeSetting";
 
-export const createNodeOptions = (havendState: NodeState): NodeOption[] => {
+export const createNodeOptions = (havendState: SelectedNode): NodeOption[] => {
   const remoteNodes: NodeOption[] = REMOTE_NODES.map((node) => {
     return {
       location: NodeLocation.Remote,
@@ -22,7 +22,7 @@ export const createNodeOptions = (havendState: NodeState): NodeOption[] => {
     location: NodeLocation.Local,
     address: "",
     port: "",
-    trusted:true,
+    trusted: true,
     name: "Local Node",
     selectionType: NodeSelectionType.local,
   };
@@ -34,7 +34,7 @@ export const createNodeOptions = (havendState: NodeState): NodeOption[] => {
         port: havendState.port,
         name: createCustomNodeName(havendState),
         selectionType: NodeSelectionType.custom,
-        trusted:false
+        trusted: false,
       }
     : {
         location: NodeLocation.Remote,
@@ -42,7 +42,7 @@ export const createNodeOptions = (havendState: NodeState): NodeOption[] => {
         port: "",
         name: "Custom Node",
         selectionType: NodeSelectionType.custom,
-        trusted:false
+        trusted: false,
       };
 
   //quick check to omit local node option for macOS for first
@@ -53,7 +53,7 @@ export const createNodeOptions = (havendState: NodeState): NodeOption[] => {
   return [localNode, ...remoteNodes, customNode];
 };
 
-const createCustomNodeName = (havendState: NodeState) => {
+const createCustomNodeName = (havendState: SelectedNode) => {
   try {
     return `Custom Node ( ${new URL(havendState.address).host} )`;
   } catch (e) {
@@ -61,7 +61,7 @@ const createCustomNodeName = (havendState: NodeState) => {
   }
 };
 
-const isCustomNode = (havendState: NodeState): boolean => {
+const isCustomNode = (havendState: SelectedNode): boolean => {
   return (
     havendState.location === NodeLocation.Remote &&
     !REMOTE_NODES.some(

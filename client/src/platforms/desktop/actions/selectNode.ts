@@ -7,7 +7,7 @@ import { NodeLocation } from "platforms/desktop/types";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { addErrorNotification } from "shared/actions/notification";
 import { NodeOption } from "../pages/_wallet/settings/node/nodeSetting";
-import { walletProxy } from "shared/core/proxy";
+import { walletProxy, havendProxy } from "shared/core/proxy";
 import { IMonerRPCConnection } from "typings";
 import { setWalletConnectionState } from "shared/actions/wallet";
 
@@ -81,7 +81,9 @@ const setNodeForWalletFailed = (error: any) => {
 
 export const updateConnectionState = () => {
   return async (dispatch: any) => {
-    const isConnected: boolean = await walletProxy.isWalletConnected();
-    dispatch(setWalletConnectionState(isConnected));
+    const isWalletConnected: boolean = await walletProxy.isWalletConnected();
+    dispatch(setWalletConnectionState(isWalletConnected));
+    const isAppConnected: boolean = await havendProxy.isConnected();
+    
   };
 };
