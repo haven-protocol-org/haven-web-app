@@ -9,6 +9,7 @@ import { addErrorNotification } from "shared/actions/notification";
 import { NodeOption } from "../pages/_wallet/settings/node/nodeSetting";
 import { walletProxy } from "shared/core/proxy";
 import { IMonerRPCConnection } from "typings";
+import { setWalletConnectionState } from "shared/actions/wallet";
 
 export const setNodeForWallet = (
   selectedNodeOption: NodeOption,
@@ -75,5 +76,12 @@ const setNodeForWalletFailed = (error: any) => {
     dispatch(
       addErrorNotification("Changing node is not possible in the moment")
     );
+  };
+};
+
+export const updateConnectionState = () => {
+  return async (dispatch: any) => {
+    const isConnected: boolean = await walletProxy.isWalletConnected();
+    dispatch(setWalletConnectionState(isConnected));
   };
 };

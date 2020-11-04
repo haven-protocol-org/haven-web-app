@@ -336,7 +336,7 @@ const queryMnemonicForWalletGenerationSucceed = (key: string) => ({
   payload: key,
 });
 
-const setWalletConnectionState = (isConnected: boolean) => {
+export const setWalletConnectionState = (isConnected: boolean) => {
   return { type: SET_WALLET_CONNECTION_STATE, payload: isConnected };
 };
 
