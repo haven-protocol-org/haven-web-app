@@ -1,9 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import {
-  confirmExchange,
-  resetExchangeProcess,
-} from "shared/actions/exchange";
+import { confirmExchange, resetExchangeProcess } from "shared/actions/exchange";
 import { Modal } from "shared/components/modal";
 import { ExchangeProcessInfo } from "shared/reducers/exchangeProcess";
 import { hideModal } from "shared/actions/modal";
@@ -54,7 +51,7 @@ class ConfirmExchangeModal extends React.Component<
 
     return (
       <Modal
-        title="Exchange Confirmation"
+        title="Conversion Confirmation"
         description="Please review and confirm your transaction"
         leftButton="Cancel"
         rightButton="Confirm"
@@ -82,7 +79,7 @@ class ConfirmExchangeModal extends React.Component<
 
   onCancel() {
     this.props.hideModal();
-   // this.props.resetExchangeProcess();
+    // this.props.resetExchangeProcess();
   }
 
   onConfirm() {
@@ -111,5 +108,5 @@ const mapStateToProps = (state: HavenAppState) => ({
 export const ConfirmExchangeModalDesktop = connect(mapStateToProps, {
   confirmExchange,
   hideModal,
-  resetExchangeProcess
+  resetExchangeProcess,
 })(ConfirmExchangeModal);
