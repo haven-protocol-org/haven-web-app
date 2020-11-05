@@ -1,12 +1,12 @@
 {
   "name": "haven_web_wallet",
-  "version": "1.46.0",
+  "version": "1.46.1",
   "private": true,
   "dependencies": {
     "big-integer": "^1.6.48",
     "chart.js": "^2.9.4",
     "file-saver": "^2.0.2",
-    "haven-wallet-core": "^1.0.20",
+    "haven-wallet-core": "^1.0.21",
     "react": "^16.14.0",
     "react-chartjs-2": "^2.10.0",
     "react-dom": "^16.14.0",
