@@ -68,14 +68,14 @@ export const createTransfer = (
 
       const reduxParams = {
         fee: txList.reduce(
-          (acc: bigint, tx: MoneroTxWallet) =>
-            acc + BigInt(tx.getFee().toString()),
-          BigInt(0)
+          (acc: bigInt.BigInteger, tx: MoneroTxWallet) =>
+            acc.add(bigInt(tx.getFee().toString())),
+          bigInt(0)
         ),
         fromAmount: txList.reduce(
-          (acc: bigint, tx: MoneroTxWallet) =>
-            acc + BigInt(tx.getOutgoingAmount().toString()),
-          BigInt(0)
+          (acc: bigInt.BigInteger, tx: MoneroTxWallet) =>
+            acc.add(bigInt(tx.getOutgoingAmount().toString())),
+          bigInt(0)
         ),
         metaList: txList.map((tx: MoneroTxWallet) => tx.getMetadata()),
       } as Partial<TxProcessInfo>;

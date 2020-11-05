@@ -129,7 +129,7 @@ const parseExchangeResonse = (
   toAmount = txList.reduce(
     (acc: bigInt.BigInteger, tx: MoneroTxWallet) =>
       //@ts-ignore
-      acc + bigInt(tx.getIncomingAmount().toString()),
+      acc.add(bigInt(tx.getIncomingAmount().toString())),
     bigInt(0)
   );
   fromAmount = txList.reduce(
