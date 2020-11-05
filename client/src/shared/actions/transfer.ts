@@ -32,7 +32,7 @@ export const createTransfer = (
   paymentId: string,
   fromTicker: Ticker
 ) => {
-  const amountInt = bigInt(amount).multiply(bigInt(1e12));
+  const amountInt = bigInt(amount * 1e12);
 
   return async (dispatch: any) => {
     const destinations = [
