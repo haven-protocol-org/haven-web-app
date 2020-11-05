@@ -2,6 +2,10 @@
 export const SET_NODE_FOR_WALLET_REQUESTED = "SET_NODE_FOR_WALLET_REQUESTED";
 export const SET_NODE_FOR_WALLET_SUCCESS = "SET_NODE_FOR_WALLET_SUCCESS";
 export const SET_NODE_FOR_WALLET_FAILED = "SET_NODE_FOR_WALLET_FAILED";
+export const APP_TO_DAEMON_CONNECTION_STATE = "APP_TO_DAEMON_CONNECTION_STATE";
+
+// get info about locals node connection state ( ins and outs )
+export const DAEMONS_CONNECTIONS_TO_NETWORK = "DAEMONS_CONNECTIONS_TO_NETWORK";
 
 // local mining
 export const REQUEST_MINING_START = "request_mining_start";

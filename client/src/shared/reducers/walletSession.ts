@@ -89,3 +89,7 @@ export const selectErrorMessageForLogin = (state: HavenAppState) => {
 export const selectIsRequestingLogin = (state: HavenAppState) => {
   return state.walletSession.isFetching;
 };
+
+export const isTemporaryWallet = (state: HavenAppState) => {
+  return state.walletSession.activeWallet === undefined;
+};

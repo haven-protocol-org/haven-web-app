@@ -17,6 +17,7 @@ import { storeKeyFileToDisk } from "platforms/web/actions/storage";
 import { dark, light, sepia } from "../../../../assets/styles/themes.js";
 import { HavenAppState } from "platforms/desktop/reducers";
 import { IKeys } from "typings";
+import { isTemporaryWallet as selectIsTemporaryWallet } from "shared/reducers/walletSession";
 
 const options = [
   { theme: "dark", value: "Dark Theme" },
@@ -30,6 +31,7 @@ interface SettingsProps extends IKeys {
   chain: any;
   wallet: any;
   storeKeyFileToDisk: (walletname: string) => void;
+  tempWallet: boolean;
 }
 
 interface SettingsState {
@@ -222,7 +224,7 @@ class SettingsPage extends Component<SettingsProps, SettingsState> {
         <Container>
           <DoubleFooter
             leftLabel={"Download Vault File"}
-            leftDisabled={walletHeight !== nodeHeight ? true : false}
+            leftDisabled={walletHeight !== nodeHeight || this.props.tempWallet}
             leftLoading={false}
             leftOnClick={this.downloadKeystore}
             rightLabel={this.state.reveal ? "Hide Keys" : "Show Keys"}
@@ -240,6 +242,7 @@ const mapStateToProps = (state: HavenAppState) => ({
   theme: state.theme,
   chain: state.chain,
   wallet: state.walletSession,
+  tempWallet: selectIsTemporaryWallet(state),
 });
 
 export const Settings = connect(mapStateToProps, {

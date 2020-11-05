@@ -12,7 +12,7 @@ export const getLastBlockHeader = () => {
   return daemon.getLastBlockHeader();
 };
 
-export const isDaemonConnected = () => {
+export const isConnected = () => {
   return daemon.isConnected();
 };
 
@@ -33,4 +33,8 @@ export const getMiningStatus = () => {
 
 export const stopMining = () => {
   return daemon.stopMining();
+};
+
+export const getConnections = () => {
+  return daemon.getConnections();
 };

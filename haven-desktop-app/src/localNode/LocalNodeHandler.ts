@@ -1,31 +1,33 @@
 import { ipcMain } from "electron";
+import { getWhitespaceTokens } from "haven-wallet-core/src/main/js/common/GenUtils";
 import { appEventBus, LOCAL_NODE_STOPPED_EVENT } from "../EventBus";
-import { CommunicationChannel, DaemonType } from "../types";
-import { HavendProcess } from "./process/LocalNodeProcess";
-import { IDaemonManager } from "./process/IDaemonManager";
+import { CommunicationChannel, LocalNodeRequest, ProcessState } from "../types";
+import { LocalNodeProcess } from "./process/LocalNodeProcess";
 
-export class DaemonHandler {
-  private havend: IDaemonManager;
+export class LocalNodeHandler {
+  private localNode: LocalNodeProcess;
 
-  /**
-   * Starts the Havend, WalletRPC processes, and adds ipc handlers
-   */
-  public startDaemons(): void {
-    this.havend = new HavendProcess();
-
+  constructor() {
     ipcMain.handle(CommunicationChannel.LocalNode, (event, args) =>
-      this.havend.getState()
+      this.handleRequest(args)
     );
   }
 
   /**
-   * Terminates the daemon and removes handler
+   * Starts local node process
    */
-  public stopDaemons(): void {
+  public start(): void {
+    this.localNode = new LocalNodeProcess();
+  }
+
+  /**
+   * Terminates local node and removes handler
+   */
+  public stop(): void {
     ipcMain.removeHandler(CommunicationChannel.LocalNode);
 
-    if (this.havend.isRunning()) {
-      this.havend.killDaemon();
+    if (this.localNode.isRunning()) {
+      this.localNode.killDaemon();
     }
 
     this.checkIfDaemonsQuit();
@@ -39,11 +41,28 @@ export class DaemonHandler {
 
     this.addDaemonsQuitChecker();
   }
+
+  private handleRequest(typeOfRequest: LocalNodeRequest) {
+    switch (typeOfRequest) {
+      case "start":
+        this.start();
+        return true;
+      case "stop":
+        this.stop();
+        return true;
+      case "state":
+        return this.getLocalNodeState();
+    }
+  }
+
+  private getLocalNodeState(): ProcessState {
+    return this.localNode.getState();
+  }
   /**
    * Checks if daemons have been killed
    */
   private daemonsKilled(): boolean {
-    return this.havend.isRunning() === false;
+    return this.localNode.isRunning() === false;
   }
 
   /**

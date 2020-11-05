@@ -13,6 +13,7 @@ import { blockHeaderExchangeRate } from "shared/reducers/blockHeaderExchangeRate
 import { xBalance } from "shared/reducers/xBalance";
 import { xTransferList } from "shared/reducers/xTransferList";
 import { exchangeProcess } from "../../../shared/reducers/exchangeProcess";
+import { selectedNode } from "./selectedNode";
 import { localNode } from "./localNode";
 import { mining } from "./localMining";
 import { havenFeature } from "shared/reducers/havenFeature";
@@ -38,6 +39,7 @@ const appReducer = combineReducers({
   chain,
   mining,
   modal,
+  selectedNode,
 });
 
 const rootReducer = (state: any, action: AnyAction) => {

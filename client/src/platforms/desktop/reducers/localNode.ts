@@ -1,43 +1,26 @@
 import { AnyAction } from "redux";
-import { NodeLocation, NodeState } from "platforms/desktop/types";
-import { DesktopAppState } from "platforms/desktop/reducers/index";
-import {
-  GET_HAVEND_STATE_SUCCEED,
-  SET_NODE_FOR_WALLET_SUCCESS,
-} from "platforms/desktop/actions/types";
+import { LocalNode } from "platforms/desktop/types";
+import { GET_HAVEND_STATE_SUCCEED } from "platforms/desktop/actions/types";
 
-const INITAL_STATE: NodeState = {
+const INITAL_STATE: LocalNode = {
   isRunning: false,
   isMining: false,
   connections: { in: 0, out: 0 },
-  address: "",
-  location: NodeLocation.None,
-  port: "",
 };
 
 export const localNode = (
   state = INITAL_STATE,
   action: AnyAction
-): NodeState => {
+): LocalNode => {
   switch (action.type) {
     case GET_HAVEND_STATE_SUCCEED:
       return { ...action.payload };
-    case SET_NODE_FOR_WALLET_SUCCESS:
-      return { ...state, ...action.payload };
     default:
       return state;
   }
 };
 
-export const selectIsDaemonSet = (state: DesktopAppState): boolean => {
-  return state.localNode.location !== NodeLocation.None;
-};
-
-export const selectisLocalNode = (node: NodeState) => {
-  return node.location === NodeLocation.Local;
-};
-
 /** is only from interest when we deal with local node */
-export const isConnected = (node: NodeState) => {
+export const isConnected = (node: LocalNode) => {
   return node.connections.out > 0 || node.connections.in > 0;
 };
