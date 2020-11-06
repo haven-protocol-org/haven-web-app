@@ -3,7 +3,24 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 // Relative Imports
-import { Container, Haven, Brand, Logout, Tag, Icon, Auth } from "./styles.js";
+import {
+  Container,
+  Haven,
+  Brand,
+  Logout,
+  Tag,
+  Icon,
+  Auth,
+  Menu,
+  Options,
+  OptionsDoubleRow,
+  OptionsIcon,
+  OptionsList,
+  OptionsSVG,
+  Arr,
+  Arrow,
+} from "./styles.js";
+import { Body, Label } from "assets/styles/type";
 import Buttons from "./buttons/index.js";
 import { closeWallet } from "shared/actions/wallet";
 import { selectIsLoggedIn } from "shared/reducers/walletSession";
@@ -20,8 +37,26 @@ interface NavigationProps {
 }
 
 class Navigation extends Component<NavigationProps, {}> {
+  state = {
+    showOptions: false,
+    showNotifications: false,
+  };
+
   handleLogout = () => {
     this.props.logout(true);
+  };
+
+  showDropdownMenu = (event: any) => {
+    event.preventDefault();
+    this.setState({ showOptions: true }, () => {
+      document.addEventListener("click", this.hideDropdownMenu);
+    });
+  };
+
+  hideDropdownMenu = () => {
+    this.setState({ showOptions: false }, () => {
+      document.removeEventListener("click", this.hideDropdownMenu);
+    });
   };
 
   render() {
@@ -36,7 +71,39 @@ class Navigation extends Component<NavigationProps, {}> {
             v{APP_VERSION} {NET_TYPE_NAME}
           </Tag>
         </Brand>
-        <Buttons auth={this.props.isLoggedIn} onClick={this.handleLogout} />
+        <Menu>
+          <Buttons auth={this.props.isLoggedIn} onClick={this.handleLogout} />
+          <Options onClick={this.showDropdownMenu}>
+            <OptionsIcon>
+              <OptionsSVG />
+            </OptionsIcon>
+          </Options>
+        </Menu>
+        {this.state.showOptions && (
+          <>
+            <OptionsList>
+              <Arrow>
+                <Arr />
+              </Arrow>
+              <OptionsDoubleRow>
+                <Body>Network</Body>
+                <Label>{"test"}</Label>
+              </OptionsDoubleRow>
+              <OptionsDoubleRow>
+                <Body>Type</Body>
+                <Label>{"test"}</Label>
+              </OptionsDoubleRow>
+              <OptionsDoubleRow>
+                <Body>Block</Body>
+                <Label>{"test"}</Label>
+              </OptionsDoubleRow>
+              <OptionsDoubleRow>
+                <Body>Version</Body>
+                <Label>v{"test"}</Label>
+              </OptionsDoubleRow>
+            </OptionsList>
+          </>
+        )}
       </Container>
     );
   }
