@@ -44,15 +44,27 @@ class AddressDropdown extends React.Component {
       const truncated = first + "...." + last;
 
       return (
-        <Item key={address} onClick={() => onClick({ address, label })}>
-          <Row>
-            <Block>
-              <Name>{label}</Name>
-              <Address>{truncated}</Address>
-            </Block>
-            {this.props.editable ? <Edit>Edit</Edit> : null}
-          </Row>
-        </Item>
+        <>
+          <Item key={address} onClick={() => onClick({ address, label })}>
+            <Row>
+              <Block>
+                <Name>{label}</Name>
+                <Address>{truncated}</Address>
+              </Block>
+            </Row>
+          </Item>
+          <Item>
+            <Row>
+              <Block>
+                <Name>{"Add new subaddress"}</Name>
+                <Address>{""}</Address>
+              </Block>
+              {this.props.editable && (
+                <Edit onClick={this.props.editAddress}>Add New</Edit>
+              )}
+            </Row>
+          </Item>
+        </>
       );
     });
   };

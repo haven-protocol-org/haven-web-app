@@ -90,7 +90,8 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
             value={this.props.addresses[0].label}
             options={this.props.addresses}
             onClick={this.selectAddress}
-            editable={false}
+            editable={true}
+            editAddress={this.showAddressModal}
           />
           {windowWidth < 1380 ? (
             <Description
@@ -113,7 +114,6 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
             />
           )}
         </Form>
-        <button onClick={this.showAddressModal}>Address</button>
         <Container>
           <DoubleFooter
             leftLabel={"Show QR"}
