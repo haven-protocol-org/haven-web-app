@@ -14,7 +14,7 @@ export const convertTimestampToDateString = (timestamp: any) =>
 export const decreasePricePoints = (priceData: any) => {
   const prices = priceData.prices;
   const decreasedPrices = [];
-  const maxVal = 30;
+  const maxVal = 500;
   const delta = Math.round(prices.length / maxVal);
   let i;
   for (i = 0; i < prices.length; i += delta) {

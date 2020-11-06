@@ -145,6 +145,11 @@ class Chart extends Component {
               hover: {
                 mode: "index",
               },
+              elements: {
+                point: {
+                  radius: 0,
+                },
+              },
 
               responsive: true,
               maintainAspectRatio: false,
@@ -158,7 +163,9 @@ class Chart extends Component {
                     gridLines: {
                       display: false,
                     },
-                    ticks: { callback: (value, index, values) => "$" + value },
+                    ticks: {
+                      callback: (value, index, values) => "$" + value,
+                    },
                   },
                 ],
                 xAxes: [{ display: false }],
@@ -174,7 +181,7 @@ class Chart extends Component {
               labels: this.props.labels,
               datasets: [
                 {
-                  backgroundColor: `${this.props.theme.charts.background}`,
+                  backgroundColor: `${this.props.theme.body.foreground}`,
                   borderColor: `${this.props.theme.charts.border}`,
                   pointBackgroundColor: `${this.props.theme.charts.border}`,
                   data: this.props.prices,
