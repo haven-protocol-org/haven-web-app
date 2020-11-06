@@ -33,13 +33,14 @@ class CreateSeed extends Component {
       action,
       actionEvent,
       readOnly,
+      label,
       children,
       ...rest
     } = this.props;
     return (
       <>
         <Seed
-          label="Seed Phrase"
+          label={label}
           value={value}
           placeholder=""
           name={name}

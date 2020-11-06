@@ -11,7 +11,7 @@ export const getAddress = () => {
   };
 };
 
-export const createAdress = (label: string) => {
+export const createAddress = (label: string) => {
   return (dispatch: any) => {
     walletProxy
       .createSubAddress(label)

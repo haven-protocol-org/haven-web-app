@@ -213,6 +213,7 @@ class CreateWalletWeb extends Component<CreateProps, CreateState> {
         return (
           <>
             <CreateSeed
+              label="Seed Phrase"
               value={this.state.mnemonicString}
               rows={windowWidth < 600 ? "6" : "4"}
               readOnly={true}

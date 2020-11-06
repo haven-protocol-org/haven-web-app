@@ -9,7 +9,6 @@ const Seed = ({
   label,
   error,
   width,
-  onClick,
   ref,
   type,
   actionEvent,

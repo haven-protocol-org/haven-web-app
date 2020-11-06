@@ -1,4 +1,5 @@
-import { Description } from "assets/styles/type";
+import CreateSeed from "../../../../shared/components/_create/create_seed/index.js";
+
 import * as React from "react";
 import { Modal } from "shared/components/modal";
 import { Confirm } from "shared/components/modal/styles";
@@ -7,13 +8,29 @@ import Input from "shared/components/_inputs/input";
 
 interface ManageAdressState {
   checked: boolean;
+  disabled: boolean;
+  manage_name: string;
+  full_address: string;
 }
 
 interface ManageAdressProps {}
 
 export class ManageAddressModal extends React.Component<any, any> {
-  handleChange: any;
+  state = {
+    manage_name: "",
+    full_address:
+      "hvtaeLT9QfHS6FG8o6gR1AgPXRtje9DyGNGBLidjrmaLcw9rJFWdRwg9g9a57wA77vE31RtobBS37Pja8n3L5MsEf4jxdiAv2oU",
+  };
+
+  handleChange = (event: any) => {
+    const name = event.target.name;
+    const value = event.target.value;
+
+    this.setState({ [name]: value });
+  };
+
   handleCheck: any;
+
   render() {
     return (
       <>
@@ -25,7 +42,7 @@ export class ManageAddressModal extends React.Component<any, any> {
           leftButton="Cancel"
           rightButton="Save"
           isLoading={false}
-          disabled={!this.state.checked}
+          disabled={false}
         >
           <ManageAddresses>
             <Input
@@ -34,24 +51,14 @@ export class ManageAddressModal extends React.Component<any, any> {
               placeholder="Name of address"
               type="text"
               name="manage_name"
-              value={"test"}
+              value={this.state.manage_name}
               onChange={this.handleChange}
             />
-            <Description
-              width={true}
-              label="Full Address"
-              placeholder="Mining Status"
-              type="text"
+            <CreateSeed
+              label="Address"
+              value={this.state.full_address}
+              rows={4}
               readOnly={true}
-              name="selected_address"
-              value={"test"}
-            />
-
-            <Confirm
-              checked={this.state.checked}
-              onChange={this.handleCheck}
-              label="I accept and agree"
-              description={`I understand that I cannot recieve funds to my Address Name only the Full Address and any funds recieved to the Address Name will be lost.`}
             />
           </ManageAddresses>
         </Modal>
@@ -59,11 +66,14 @@ export class ManageAddressModal extends React.Component<any, any> {
     );
   }
 
-  onCancel() {
-    // this.props.resetTransferProcess();
-  }
+  onCancel() {}
 
-  onConfirm() {
-    // this.props.confirmTransfer(metaData);
-  }
+  onConfirm() {}
 }
+
+// <Confirm
+//   checked={this.state.checked}
+//   onChange={this.handleCheck}
+//   label="I accept and agree"
+//   description={`I understand that I cannot recieve funds to my Address Name only the Full Address and any funds recieved to the Address Name will be lost.`}
+// />

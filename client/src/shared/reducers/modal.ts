@@ -7,6 +7,7 @@ export enum MODAL_TYPE {
   ConfirmExchange,
   EditAddress,
   ShowQRCode,
+  ShowAddressModal,
 }
 
 const INITIAL_STATE: MODAL_TYPE = MODAL_TYPE.None;
