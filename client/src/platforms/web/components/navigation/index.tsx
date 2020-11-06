@@ -61,6 +61,12 @@ class Navigation extends Component<NavigationProps, {}> {
 
   render() {
     const auth = this.props.isLoggedIn;
+    // @ts-ignore
+    const { chainHeight, walletHeight } = this.props.chain;
+    // @ts-ignore
+    const { connected } = this.props;
+    const syncStarted = chainHeight !== 0;
+    const syncedFinished = syncStarted && chainHeight === walletHeight;
 
     return (
       <Container>
@@ -87,19 +93,30 @@ class Navigation extends Component<NavigationProps, {}> {
               </Arrow>
               <OptionsDoubleRow>
                 <Body>Network</Body>
-                <Label>{"test"}</Label>
+                <Label>{NET_TYPE_NAME}</Label>
               </OptionsDoubleRow>
               <OptionsDoubleRow>
-                <Body>Type</Body>
-                <Label>{"test"}</Label>
+                <Body>Vault Status</Body>
+                <Label>{connected ? "Connected" : "Disconnected"}</Label>
               </OptionsDoubleRow>
               <OptionsDoubleRow>
-                <Body>Block</Body>
-                <Label>{"test"}</Label>
+                <Body>Block Height</Body>
+                <Label>{chainHeight}</Label>
               </OptionsDoubleRow>
+              {syncedFinished ? (
+                <OptionsDoubleRow>
+                  <Body>Wallet Synced</Body>
+                  <Label>{"Yes"}</Label>
+                </OptionsDoubleRow>
+              ) : (
+                <OptionsDoubleRow>
+                  <Body>Vault Height</Body>
+                  <Label>{walletHeight}</Label>
+                </OptionsDoubleRow>
+              )}
               <OptionsDoubleRow>
                 <Body>Version</Body>
-                <Label>v{"test"}</Label>
+                <Label>v{APP_VERSION}</Label>
               </OptionsDoubleRow>
             </OptionsList>
           </>
@@ -111,6 +128,8 @@ class Navigation extends Component<NavigationProps, {}> {
 
 const mapStateToProps = (state: WebAppState) => ({
   isLoggedIn: selectIsLoggedIn(state),
+  chain: state.chain,
+  connected: state.walletSession.isConnectedToDaemon,
 });
 
 export const NavigationWeb = connect(mapStateToProps, {
