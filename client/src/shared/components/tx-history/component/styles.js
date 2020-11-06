@@ -63,7 +63,7 @@ export const State = styled.div`
         return `${props.theme.states.default}`;
       case "Exchange":
         return `${props.theme.states.alert}`;
-      case "pending":
+      case "Pending":
         return `${props.theme.states.warning}`;
       default:
     }

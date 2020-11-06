@@ -32,7 +32,7 @@ export const createTransfer = (
   paymentId: string,
   fromTicker: Ticker
 ) => {
-  const amountInt = bigInt(amount).multiply(bigInt(1e12));
+  const amountInt = bigInt(amount * 1e12);
 
   return async (dispatch: any) => {
     const destinations = [
@@ -68,14 +68,14 @@ export const createTransfer = (
 
       const reduxParams = {
         fee: txList.reduce(
-          (acc: bigint, tx: MoneroTxWallet) =>
-            acc + BigInt(tx.getFee().toString()),
-          BigInt(0)
+          (acc: bigInt.BigInteger, tx: MoneroTxWallet) =>
+            acc.add(bigInt(tx.getFee().toString())),
+          bigInt(0)
         ),
         fromAmount: txList.reduce(
-          (acc: bigint, tx: MoneroTxWallet) =>
-            acc + BigInt(tx.getOutgoingAmount().toString()),
-          BigInt(0)
+          (acc: bigInt.BigInteger, tx: MoneroTxWallet) =>
+            acc.add(bigInt(tx.getOutgoingAmount().toString())),
+          bigInt(0)
         ),
         metaList: txList.map((tx: MoneroTxWallet) => tx.getMetadata()),
       } as Partial<TxProcessInfo>;
