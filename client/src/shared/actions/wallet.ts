@@ -19,7 +19,6 @@ import { walletProxy } from "../core/proxy";
 import { addNotificationByMessage } from "./notification";
 import { NotificationType } from "constants/notificationList";
 import { getXHVBalance, getXUSDBalance } from "./balance";
-import { getPrimaryAddress } from "./address";
 import { webWalletConnection } from "platforms/web/nodes";
 import { createDaemonConnection } from "./havend";
 import { updateHavenFeatures } from "./havenFeature";
@@ -37,7 +36,7 @@ import {
   initDesktopWalletListener,
   removeDesktopListener,
 } from "platforms/desktop/ipc/wallet";
-import { WebAppState } from "platforms/web/reducers";
+import { getAddresses } from "./address";
 
 /** collection of actions to open, create and store wallet */
 
@@ -282,7 +281,7 @@ const initReduxWallet = () => {
     dispatch(getXHVBalance());
     dispatch(getXUSDBalance());
     dispatch(getAllTransfers());
-    dispatch(getPrimaryAddress());
+    dispatch(getAddresses());
     const isConnected = await walletProxy.isWalletConnected();
     dispatch(setWalletConnectionState(isConnected));
     const chainHeight = await walletProxy.getChainHeight();

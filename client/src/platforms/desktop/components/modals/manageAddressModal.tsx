@@ -1,32 +1,41 @@
 import CreateSeed from "../../../../shared/components/_create/create_seed/index.js";
-
+import { hideModal } from "shared/actions/modal";
 import * as React from "react";
 import { Modal } from "shared/components/modal";
-import { Confirm } from "shared/components/modal/styles";
 import ManageAddresses from "shared/components/modal_children/manage_addresses";
 import Input from "shared/components/_inputs/input";
+import { HavenAppState } from "platforms/desktop/reducers/index.js";
+import { connect } from "react-redux";
+import { createAddress } from "shared/actions/address";
 
 interface ManageAdressState {
   checked: boolean;
   disabled: boolean;
   manage_name: string;
-  full_address: string;
+  full_address: string | null;
 }
 
-interface ManageAdressProps {}
+interface ManageAdressProps {
+  hideModal: () => void;
+  createAddress: (label: string) => void;
+}
 
-export class ManageAddressModal extends React.Component<any, any> {
-  state = {
+export class ManageAddress extends React.Component<
+  ManageAdressProps,
+  ManageAdressState
+> {
+  state: ManageAdressState = {
     manage_name: "",
-    full_address:
-      "hvtaeLT9QfHS6FG8o6gR1AgPXRtje9DyGNGBLidjrmaLcw9rJFWdRwg9g9a57wA77vE31RtobBS37Pja8n3L5MsEf4jxdiAv2oU",
+    full_address: null,
+    disabled: false,
+    checked: false,
   };
 
   handleChange = (event: any) => {
     const name = event.target.name;
     const value = event.target.value;
 
-    this.setState({ [name]: value });
+    this.setState<never>({ [name]: value });
   };
 
   handleCheck: any;
@@ -66,9 +75,13 @@ export class ManageAddressModal extends React.Component<any, any> {
     );
   }
 
-  onCancel() {}
+  onCancel() {
+    this.props.hideModal();
+  }
 
-  onConfirm() {}
+  onConfirm() {
+    this.props.createAddress(this.state.manage_name);
+  }
 }
 
 // <Confirm
@@ -77,3 +90,12 @@ export class ManageAddressModal extends React.Component<any, any> {
 //   label="I accept and agree"
 //   description={`I understand that I cannot recieve funds to my Address Name only the Full Address and any funds recieved to the Address Name will be lost.`}
 // />
+
+const mapStateToProps = (state: HavenAppState) => ({
+  transfer: state.transferProcess,
+});
+
+export const ManageAddressModal = connect(mapStateToProps, {
+  hideModal,
+  createAddress,
+})(ManageAddress);

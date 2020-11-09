@@ -2,7 +2,6 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import AddressDropdown from "../../../components/_inputs/addresses_dropdown/index.js";
 import Description from "../../../components/_inputs/description";
-import Footer from "../../../components/_inputs/footer";
 import DoubleFooter from "../../../components/_inputs/double_footer";
 import Form from "../../../components/_inputs/form";
 import Input from "../../../components/_inputs/input";
@@ -12,11 +11,7 @@ import { AddressEntry } from "shared/reducers/address";
 import { writeText } from "vendor/clipboard/clipboard-polyfill";
 import { showModal } from "../../../actions/modal";
 import { MODAL_TYPE } from "../../../reducers/modal";
-import {
-  getAddress,
-  createAddress,
-  labelAddress,
-} from "../../../actions/subadresses";
+import { getAddresses, createAddress } from "../../../actions/address";
 
 interface OwnAddressState {
   selected: AddressEntry;
@@ -135,7 +130,6 @@ const mapStateToProps = (state: DesktopAppState) => ({ showModal });
 
 export const OwnAddress = connect(mapStateToProps, {
   showModal,
-  getAddress,
+  getAddress: getAddresses,
   createAddress,
-  labelAddress,
 })(OwnAddressContainer);

@@ -4,10 +4,7 @@ import { Transaction } from "shared/components/_transactions/transfer";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { connect } from "react-redux";
 import { hideModal } from "shared/actions/modal";
-import {
-  confirmTransfer,
-  resetTransferProcess,
-} from "shared/actions/transfer";
+import { confirmTransfer, resetTransferProcess } from "shared/actions/transfer";
 import { TxProcessInfo } from "shared/reducers/transferProcess";
 import { convertToMoney } from "utility/utility";
 
