@@ -97,7 +97,7 @@ class Navigation extends Component<NavigationProps, {}> {
               </OptionsDoubleRow>
               <OptionsDoubleRow>
                 <Body>Vault Status</Body>
-                <Label>{connected ? "Connected" : "Disconnected"}</Label>
+                <Label>{connected ? "Online" : "Offline"}</Label>
               </OptionsDoubleRow>
               <OptionsDoubleRow>
                 <Body>Block Height</Body>
