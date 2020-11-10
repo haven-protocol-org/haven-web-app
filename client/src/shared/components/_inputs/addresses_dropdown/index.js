@@ -53,17 +53,6 @@ class AddressDropdown extends React.Component {
               </Block>
             </Row>
           </Item>
-          <Item>
-            <Row>
-              <Block>
-                <Name>{"Add new subaddress"}</Name>
-                <Address>{""}</Address>
-              </Block>
-              {this.props.editable && (
-                <Edit onClick={this.props.editAddress}>Add New</Edit>
-              )}
-            </Row>
-          </Item>
         </>
       );
     });
@@ -85,7 +74,22 @@ class AddressDropdown extends React.Component {
               <Name>{!value ? placeholder : value}</Name>
             </Row>
           </Button>
-          {displayMenu && <Wrapper>{this.renderOptions()}</Wrapper>}
+          {displayMenu && (
+            <Wrapper>
+              {this.renderOptions()}
+              <Item>
+                <Row>
+                  <Block>
+                    <Name>{"Add new subaddress"}</Name>
+                    <Address>{""}</Address>
+                  </Block>
+                  {this.props.editable && (
+                    <Edit onClick={this.props.editAddress}>Add New</Edit>
+                  )}
+                </Row>
+              </Item>
+            </Wrapper>
+          )}
         </Select>
       </Container>
     );
