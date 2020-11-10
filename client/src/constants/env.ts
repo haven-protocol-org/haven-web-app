@@ -29,7 +29,10 @@ export const isDesktop = () => {
 };
 
 export const getPort = () => {
-  return isMainnet() ? 443 : isTestnet() ? 443 : 443;
+  if (isDevMode()) {
+    return isMainnet() ? 17750 : isTestnet() ? 27750 : 37750;
+  }
+  return 443;
 };
 
 let apiUrl;
