@@ -20,7 +20,7 @@ class ShowQRCodeModal extends React.Component<any, any> {
           onConfirm={() => this.onCancel()}
           onCancel={() => this.onCancel()}
         >
-          <QrCode address={this.props.address} />
+          <QrCode address={this.props.current.address} />
         </Modal>
       </>
     );

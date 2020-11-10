@@ -11,6 +11,7 @@ import { AddressEntry } from "shared/reducers/address";
 import { writeText } from "vendor/clipboard/clipboard-polyfill";
 import { showModal } from "../../../actions/modal";
 import { MODAL_TYPE } from "../../../reducers/modal";
+import { selectAddressByIndex } from "../../../reducers/address";
 
 interface OwnAddressState {
   selected: AddressEntry;
@@ -45,6 +46,8 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
       selected,
       index: selected.index,
     });
+
+    selectAddressByIndex(this.props.addresses, selected.index);
   };
 
   clipboardAddress = () => {
@@ -128,7 +131,9 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
   }
 }
 
-const mapStateToProps = (state: DesktopAppState) => ({ showModal });
+const mapStateToProps = (state: DesktopAppState) => ({
+  showModal,
+});
 
 export const OwnAddress = connect(mapStateToProps, {
   showModal,
