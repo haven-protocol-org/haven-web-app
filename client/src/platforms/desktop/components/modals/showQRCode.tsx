@@ -9,20 +9,18 @@ import { selectPrimaryAddress } from "shared/reducers/address";
 class ShowQRCodeModal extends React.Component<any, any> {
   render() {
     return (
-      <>
-        <Modal
-          title="QR Code"
-          description="Scan and share your address"
-          leftButton="Cancel"
-          rightButton="Finish"
-          disabled={false}
-          isLoading={false}
-          onConfirm={() => this.onCancel()}
-          onCancel={() => this.onCancel()}
-        >
-          <QrCode address={this.props.address} />
-        </Modal>
-      </>
+      <Modal
+        title="QR Code"
+        description="Scan and share your address"
+        leftButton="Cancel"
+        rightButton="Finish"
+        disabled={false}
+        isLoading={false}
+        onConfirm={() => this.onCancel()}
+        onCancel={() => this.onCancel()}
+      >
+        <QrCode address={this.props.address} />
+      </Modal>
     );
   }
 
