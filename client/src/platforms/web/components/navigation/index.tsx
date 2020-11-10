@@ -105,7 +105,7 @@ class Navigation extends Component<NavigationProps, {}> {
               </OptionsDoubleRow>
               {syncedFinished ? (
                 <OptionsDoubleRow>
-                  <Body>Wallet Synced</Body>
+                  <Body>Vault Synced</Body>
                   <Label>{"Yes"}</Label>
                 </OptionsDoubleRow>
               ) : (
