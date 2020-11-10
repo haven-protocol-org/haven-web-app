@@ -26,7 +26,7 @@ const InputUpload = ({
       <Wrapped>
         <Field value={value}>{value}</Field>
         <Labeled htmlfor="file-upload">
-          Upload
+          {button}
           <Upload id="file-upload" type="file" onChange={onChange} />
         </Labeled>
       </Wrapped>
