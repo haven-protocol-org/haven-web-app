@@ -11,7 +11,6 @@ import { AddressEntry } from "shared/reducers/address";
 import { writeText } from "vendor/clipboard/clipboard-polyfill";
 import { showModal } from "../../../actions/modal";
 import { MODAL_TYPE } from "../../../reducers/modal";
-import { getAddresses, createAddress } from "../../../actions/address";
 
 interface OwnAddressState {
   selected: AddressEntry;
@@ -130,6 +129,4 @@ const mapStateToProps = (state: DesktopAppState) => ({ showModal });
 
 export const OwnAddress = connect(mapStateToProps, {
   showModal,
-  getAddress: getAddresses,
-  createAddress,
 })(OwnAddressContainer);

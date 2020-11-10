@@ -7,17 +7,24 @@ import Input from "shared/components/_inputs/input";
 import { HavenAppState } from "platforms/desktop/reducers/index.js";
 import { connect } from "react-redux";
 import { createAddress } from "shared/actions/address";
+import {
+  AddressEntry,
+  selectAddressByIndex,
+  selectAddressCount,
+} from "shared/reducers/address";
 
 interface ManageAdressState {
   checked: boolean;
   disabled: boolean;
-  manage_name: string;
-  full_address: string | null;
+  manageName: string;
+  expectedIndexOfCreatedAddress: number;
 }
 
 interface ManageAdressProps {
   hideModal: () => void;
   createAddress: (label: string) => void;
+  countOfAddresses: number;
+  addresses: AddressEntry[];
 }
 
 export class ManageAddress extends React.Component<
@@ -25,10 +32,10 @@ export class ManageAddress extends React.Component<
   ManageAdressState
 > {
   state: ManageAdressState = {
-    manage_name: "",
-    full_address: null,
+    manageName: "",
     disabled: false,
     checked: false,
+    expectedIndexOfCreatedAddress: this.props.countOfAddresses,
   };
 
   handleChange = (event: any) => {
@@ -41,6 +48,11 @@ export class ManageAddress extends React.Component<
   handleCheck: any;
 
   render() {
+    const createdAddressEntry = selectAddressByIndex(
+      this.props.addresses,
+      this.state.expectedIndexOfCreatedAddress
+    );
+
     return (
       <>
         <Modal
@@ -59,13 +71,17 @@ export class ManageAddress extends React.Component<
               label="Address Name"
               placeholder="Name of address"
               type="text"
-              name="manage_name"
-              value={this.state.manage_name}
+              name="manageName"
+              value={
+                createdAddressEntry
+                  ? createdAddressEntry.label
+                  : this.state.manageName
+              }
               onChange={this.handleChange}
             />
             <CreateSeed
               label="Address"
-              value={this.state.full_address}
+              value={createdAddressEntry ? createdAddressEntry.address : ""}
               rows={4}
               readOnly={true}
             />
@@ -80,7 +96,7 @@ export class ManageAddress extends React.Component<
   }
 
   onConfirm() {
-    this.props.createAddress(this.state.manage_name);
+    this.props.createAddress(this.state.manageName);
   }
 }
 
@@ -93,6 +109,8 @@ export class ManageAddress extends React.Component<
 
 const mapStateToProps = (state: HavenAppState) => ({
   transfer: state.transferProcess,
+  countOfAddresses: selectAddressCount(state),
+  addresses: state.address,
 });
 
 export const ManageAddressModal = connect(mapStateToProps, {

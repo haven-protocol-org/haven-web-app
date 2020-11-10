@@ -31,10 +31,10 @@ export const selectAddressCount = (state: HavenAppState) =>
   state.address.length;
 
 export const selectAddressByIndex = (
-  state: HavenAppState,
+  address: AddressEntry[],
   addIndex: number
 ) => {
-  const addressEntry = state.address.find(
+  const addressEntry = address.find(
     (entry: AddressEntry) => entry.index === addIndex
   );
 
