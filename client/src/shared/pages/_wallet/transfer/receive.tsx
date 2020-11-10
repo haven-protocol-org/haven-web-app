@@ -16,6 +16,7 @@ interface OwnAddressState {
   selected: AddressEntry;
   copyButtonState: string;
   secondTabLabel: string;
+  index: number;
 }
 
 interface OwnAddressProps {
@@ -30,6 +31,7 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
     selected: this.props.addresses[0],
     copyButtonState: "Copy",
     secondTabLabel: "",
+    index: 0,
   };
 
   componentDidMount() {
@@ -37,8 +39,11 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
   }
 
   selectAddress = (selected: AddressEntry) => {
+    console.log("INDEX", selected.index);
+
     this.setState({
       selected,
+      index: selected.index,
     });
   };
 
@@ -73,15 +78,13 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
       return null;
     }
 
-    const qrEnabled = true;
-
     return (
       <Fragment>
         <Form>
           <AddressDropdown
             label="Select Vault"
             readOnly={true}
-            value={this.props.addresses[0].label}
+            value={this.props.addresses[this.state.index].label}
             options={this.props.addresses}
             onClick={this.selectAddress}
             editable={true}

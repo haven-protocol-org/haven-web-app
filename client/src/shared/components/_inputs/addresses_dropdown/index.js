@@ -37,7 +37,7 @@ class AddressDropdown extends React.Component {
   renderOptions = () => {
     const { onClick, options } = this.props;
     return options.map((option) => {
-      const { address, label } = option;
+      const { address, label, index } = option;
 
       const first = address.substring(0, 4);
       const last = address.substring(address.length - 4);
@@ -45,7 +45,10 @@ class AddressDropdown extends React.Component {
 
       return (
         <>
-          <Item key={address} onClick={() => onClick({ address, label })}>
+          <Item
+            key={address}
+            onClick={() => onClick({ address, label, index })}
+          >
             <Row>
               <Block>
                 <Name>{label}</Name>
@@ -77,14 +80,14 @@ class AddressDropdown extends React.Component {
           {displayMenu && (
             <Wrapper>
               {this.renderOptions()}
-              <Item>
+              <Item key="addAddress">
                 <Row>
                   <Block>
-                    <Name>{"Add new subaddress"}</Name>
+                    <Name>{"Create address"}</Name>
                     <Address>{""}</Address>
                   </Block>
                   {this.props.editable && (
-                    <Edit onClick={this.props.editAddress}>Add New</Edit>
+                    <Edit onClick={this.props.editAddress}>Create</Edit>
                   )}
                 </Row>
               </Item>

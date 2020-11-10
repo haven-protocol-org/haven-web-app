@@ -7,6 +7,8 @@ import Input from "shared/components/_inputs/input";
 import { HavenAppState } from "platforms/desktop/reducers/index.js";
 import { connect } from "react-redux";
 import { createAddress } from "shared/actions/address";
+import { Information } from "../../../../assets/styles/type.js";
+
 import {
   AddressEntry,
   selectAddressByIndex,
@@ -18,6 +20,7 @@ interface ManageAdressState {
   disabled: boolean;
   manageName: string;
   expectedIndexOfCreatedAddress: number;
+  isLoading: boolean;
 }
 
 interface ManageAdressProps {
@@ -35,6 +38,7 @@ export class ManageAddress extends React.Component<
     manageName: "",
     disabled: false,
     checked: false,
+    isLoading: false,
     expectedIndexOfCreatedAddress: this.props.countOfAddresses,
   };
 
@@ -57,12 +61,12 @@ export class ManageAddress extends React.Component<
       <>
         <Modal
           title="Manage Address"
-          description="Name your vault addresses for easier recognition"
+          description="Create and name your vault addresses"
           onConfirm={() => this.onConfirm()}
           onCancel={() => this.onCancel()}
           leftButton="Cancel"
           rightButton="Save"
-          isLoading={false}
+          isLoading={this.state.isLoading}
           disabled={false}
         >
           <ManageAddresses>
@@ -79,13 +83,13 @@ export class ManageAddress extends React.Component<
               }
               onChange={this.handleChange}
             />
-            <CreateSeed
-              label="Address"
-              value={createdAddressEntry ? createdAddressEntry.address : ""}
-              rows={4}
-              readOnly={true}
-            />
           </ManageAddresses>
+          <Information>
+            Sub addresses let you receive assets to multiple addresses within
+            your primary account, without having to create a new vault. The
+            address label can't be edited, for now, so ensure you create a name
+            with this limitation in mind.
+          </Information>
         </Modal>
       </>
     );
@@ -97,15 +101,19 @@ export class ManageAddress extends React.Component<
 
   onConfirm() {
     this.props.createAddress(this.state.manageName);
+    this.setState({
+      isLoading: true,
+    });
+
+    setTimeout(() => {
+      this.setState({
+        isLoading: false,
+      });
+
+      this.props.hideModal();
+    }, 2000);
   }
 }
-
-// <Confirm
-//   checked={this.state.checked}
-//   onChange={this.handleCheck}
-//   label="I accept and agree"
-//   description={`I understand that I cannot recieve funds to my Address Name only the Full Address and any funds recieved to the Address Name will be lost.`}
-// />
 
 const mapStateToProps = (state: HavenAppState) => ({
   transfer: state.transferProcess,
