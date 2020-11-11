@@ -8,15 +8,18 @@ export const Container = styled.div`
 `;
 
 export const Auth = styled(Link)`
-  padding: 12px 26px;
   background: ${(props) => props.theme.button.primary};
   border: none;
   margin-right: 16px;
-  height: auto;
   color: #fff;
   font-size: 14px;
   border-radius: 4px;
   text-decoration: none;
+  height: 42px;
+  min-width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   transition: 500ms;
 
@@ -28,15 +31,18 @@ export const Auth = styled(Link)`
 `;
 
 export const Logout = styled.div`
-  padding: 12px 26px;
   background: ${(props) => props.theme.button.primary};
   border: none;
   margin-right: 16px;
-  height: auto;
   color: #fff;
   font-size: 14px;
   border-radius: 4px;
   text-decoration: none;
+  height: 42px;
+  min-width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   transition: 500ms;
 

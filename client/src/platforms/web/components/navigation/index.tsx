@@ -29,6 +29,7 @@ import { WebAppState } from "platforms/web/reducers/index.js";
 
 interface NavigationProps {
   isLoggedIn: boolean;
+  isLoading: boolean;
   auth: boolean;
   logout: (isWeb: boolean) => void;
   storeKeyFileToDisk: (name: string) => void;
@@ -40,9 +41,14 @@ class Navigation extends Component<NavigationProps, {}> {
   state = {
     showOptions: false,
     showNotifications: false,
+    isLoading: false,
   };
 
   handleLogout = () => {
+    this.setState({
+      isLoading: true,
+    });
+
     this.props.logout(true);
   };
 
@@ -73,12 +79,13 @@ class Navigation extends Component<NavigationProps, {}> {
         <Brand to={auth ? "/wallet/assets" : "/"}>
           <Icon />
           <Haven>HAVEN</Haven>
-          <Tag>
-            v{APP_VERSION} {NET_TYPE_NAME}
-          </Tag>
         </Brand>
         <Menu>
-          <Buttons auth={this.props.isLoggedIn} onClick={this.handleLogout} />
+          <Buttons
+            isLoading={this.state.isLoading}
+            auth={this.props.isLoggedIn}
+            onClick={this.handleLogout}
+          />
           <Options onClick={this.showDropdownMenu}>
             <OptionsIcon>
               <OptionsSVG />
