@@ -101,6 +101,13 @@ export const Menu = styled.div`
   align-items: center;
 `;
 
+export const Tab = styled.div`
+  height: 32px;
+  background: pink;
+  padding: 12px;
+  border-bottom: 1px solid ${(props) => props.theme.body.border};
+`;
+
 export const OptionsSVG = styled(OptionIcon)`
   .bg {
     fill: ${(props) => props.theme.type.secondary};

@@ -24,7 +24,6 @@ interface OwnAddressProps {
   showModal: (modalType: MODAL_TYPE) => void;
   setSelectedAddress: (addressIndex: number) => void;
   selected: AddressEntry | undefined;
-
 }
 
 class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
@@ -126,10 +125,10 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
 
 const mapStateToProps = (state: DesktopAppState) => ({
   selected: selectSelectedAddress(state),
-  addresses: state.address.entrys
+  addresses: state.address.entrys,
 });
 
 export const OwnAddress = connect(mapStateToProps, {
   showModal,
-  setSelectedAddress
+  setSelectedAddress,
 })(OwnAddressContainer);

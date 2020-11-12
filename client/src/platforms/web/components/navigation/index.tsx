@@ -18,6 +18,7 @@ import {
   OptionsList,
   OptionsSVG,
   Arr,
+  Tab,
   Arrow,
 } from "./styles.js";
 import { Body, Label } from "assets/styles/type";
@@ -42,6 +43,7 @@ class Navigation extends Component<NavigationProps, {}> {
     showOptions: false,
     showNotifications: false,
     isLoading: false,
+    mouseIsHovering: false,
   };
 
   handleLogout = () => {
@@ -54,14 +56,29 @@ class Navigation extends Component<NavigationProps, {}> {
 
   showDropdownMenu = (event: any) => {
     event.preventDefault();
+
     this.setState({ showOptions: true }, () => {
       document.addEventListener("click", this.hideDropdownMenu);
     });
   };
 
   hideDropdownMenu = () => {
-    this.setState({ showOptions: false }, () => {
-      document.removeEventListener("click", this.hideDropdownMenu);
+    if (!this.state.mouseIsHovering) {
+      this.setState({ showOptions: false }, () => {
+        document.removeEventListener("click", this.hideDropdownMenu);
+      });
+    }
+  };
+
+  handleMouseEnter = () => {
+    this.setState({
+      mouseIsHovering: true,
+    });
+  };
+
+  handleMouseLeave = () => {
+    this.setState({
+      mouseIsHovering: false,
     });
   };
 
@@ -94,7 +111,10 @@ class Navigation extends Component<NavigationProps, {}> {
         </Menu>
         {this.state.showOptions && (
           <>
-            <OptionsList>
+            <OptionsList
+              onMouseEnter={this.handleMouseEnter}
+              onMouseLeave={this.handleMouseLeave}
+            >
               <Arrow>
                 <Arr />
               </Arrow>
