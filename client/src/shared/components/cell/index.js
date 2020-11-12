@@ -32,6 +32,7 @@ const Cell = ({
 }) => {
   const [open, openBalance] = useState(false);
   const balance = totalBalance * price;
+  console.log("balance", balance);
 
   return (
     <>

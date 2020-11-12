@@ -8,10 +8,12 @@ import { selectPrimaryAddress } from "shared/reducers/address";
 
 class ShowQRCodeModal extends React.Component<any, any> {
   render() {
+    const { addresses, selected } = this.props;
+
     return (
       <Modal
         title="QR Code"
-        description="Scan and share your address"
+        description={`Scan and share your ${addresses[selected].label} address`}
         leftButton="Cancel"
         rightButton="Finish"
         disabled={false}
@@ -19,7 +21,7 @@ class ShowQRCodeModal extends React.Component<any, any> {
         onConfirm={() => this.onCancel()}
         onCancel={() => this.onCancel()}
       >
-        <QrCode address={this.props.address} />
+        <QrCode address={addresses[selected].address} />
       </Modal>
     );
   }
@@ -30,7 +32,8 @@ class ShowQRCodeModal extends React.Component<any, any> {
 }
 
 const mapStateToProps = (state: HavenAppState) => ({
-  address: selectPrimaryAddress(state.address.entrys),
+  selected: state.address.selected,
+  addresses: state.address.entrys,
 });
 
 export const QRCodeModal = connect(mapStateToProps, { hideModal })(
