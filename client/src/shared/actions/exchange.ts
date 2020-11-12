@@ -66,7 +66,7 @@ export function createExchange(
     const address =
       externAddress.trim() !== ""
         ? externAddress
-        : selectPrimaryAddress(getState().address);
+        : selectPrimaryAddress(getState().address.entrys);
 
     const xhvAnmount =
       exchangeType === ExchangeType.Offshore ? fromAmount : toAmount;

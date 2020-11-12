@@ -116,9 +116,8 @@ export class ManageAddress extends React.Component<
 }
 
 const mapStateToProps = (state: HavenAppState) => ({
-  transfer: state.transferProcess,
   countOfAddresses: selectAddressCount(state),
-  addresses: state.address,
+  addresses: state.address.entrys,
 });
 
 export const ManageAddressModal = connect(mapStateToProps, {

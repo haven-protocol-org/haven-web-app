@@ -2,6 +2,7 @@ import { walletProxy } from "shared/core/proxy";
 import { addNotificationByMessage } from "shared/actions/notification";
 import { NotificationType } from "constants/notificationList";
 import { saveAs } from "file-saver";
+import { HavenAppState } from "platforms/desktop/reducers";
 
 const HAVEN_DB = "haven";
 const WALLET_STORE = "wallet";
@@ -22,37 +23,23 @@ export const storeKeyFileToDisk = (name: string) => {
   };
 };
 
-export const storeWalletInDB = async (name: string): Promise<any> => {
-  return new Promise(async (resolutionFunc, rejectionFunc) => {
-    const walletData = await walletProxy.getWalletData();
-    const wallet = walletData[1];
-    const openRequest: IDBOpenDBRequest = indexedDB.open(HAVEN_DB);
+export const storeWalletInDB = async (): Promise<any> => {
 
-    openRequest.onupgradeneeded = function (this: IDBRequest<IDBDatabase>) {
-      const db = this.result;
-      db.createObjectStore(WALLET_STORE);
-    };
+  return async(dispatch: any, getState: () => HavenAppState) => {
+    
+    const walletName = getState().walletSession.activeWallet;
 
-    openRequest.onerror = function (error: any) {
-      rejectionFunc();
-    };
+     // if its a temporary wallet ( just login via seed ) we don't store the wallet in any way
+    
+    if (walletName !== undefined) {
+      await storeWalletDataInIndexedDB(walletName);
+    }
 
-    openRequest.onsuccess = function (this: IDBRequest<IDBDatabase>) {
-      const db = this.result;
-      const transaction = db.transaction(WALLET_STORE, "readwrite");
-      const putRequest: IDBRequest<IDBValidKey> = transaction
-        .objectStore(WALLET_STORE)
-        .put(wallet.buffer, name);
+    return;
 
-      putRequest.onsuccess = function (this: IDBRequest<IDBValidKey>) {
-        resolutionFunc();
-      };
-      putRequest.onerror = function (this: IDBRequest<IDBValidKey>) {
-        rejectionFunc();
-      };
-    };
-  });
+    }
 };
+
 
 export const getWalletCacheByName = async (
   name: string
@@ -109,4 +96,40 @@ const fetchKeysFromDB = () => {
   };
 };
 
-//if ((use_fs && (!boost::filesystem::exists(m_wallet_file, e) || e)) || (!use_fs && cache_buf.empty()))
+const storeWalletDataInIndexedDB = async (name: string):Promise<any>  => {
+  
+  return new Promise(async (resolutionFunc, rejectionFunc) => {
+    const walletData = await walletProxy.getWalletData();
+    const wallet = walletData[1];
+    const openRequest: IDBOpenDBRequest = indexedDB.open(HAVEN_DB);
+
+    openRequest.onupgradeneeded = function (this: IDBRequest<IDBDatabase>) {
+      const db = this.result;
+      db.createObjectStore(WALLET_STORE);
+    };
+
+    openRequest.onerror = function (error: any) {
+      rejectionFunc();
+    };
+
+    openRequest.onsuccess = function (this: IDBRequest<IDBDatabase>) {
+      const db = this.result;
+      const transaction = db.transaction(WALLET_STORE, "readwrite");
+      const putRequest: IDBRequest<IDBValidKey> = transaction
+        .objectStore(WALLET_STORE)
+        .put(wallet.buffer, name);
+
+      putRequest.onsuccess = function (this: IDBRequest<IDBValidKey>) {
+        resolutionFunc();
+      };
+      putRequest.onerror = function (this: IDBRequest<IDBValidKey>) {
+        rejectionFunc();
+      };
+    };
+  });
+
+
+
+
+}
+ 

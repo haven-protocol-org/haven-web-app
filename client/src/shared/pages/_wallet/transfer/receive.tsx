@@ -11,28 +11,28 @@ import { AddressEntry } from "shared/reducers/address";
 import { writeText } from "vendor/clipboard/clipboard-polyfill";
 import { showModal } from "../../../actions/modal";
 import { MODAL_TYPE } from "../../../reducers/modal";
-import { selectAddressByIndex } from "../../../reducers/address";
+import { selectSelectedAddress } from "../../../reducers/address";
+import { setSelectedAddress } from "shared/actions/address";
 
 interface OwnAddressState {
-  selected: AddressEntry;
   copyButtonState: string;
   secondTabLabel: string;
-  index: number;
 }
 
 interface OwnAddressProps {
   addresses: AddressEntry[];
   showModal: (modalType: MODAL_TYPE) => void;
+  setSelectedAddress: (addressIndex: number) => void;
+  selected: AddressEntry | undefined;
+
 }
 
 class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
   private addressValue: any = React.createRef();
 
   state: OwnAddressState = {
-    selected: this.props.addresses[0],
     copyButtonState: "Copy",
     secondTabLabel: "",
-    index: 0,
   };
 
   componentDidMount() {
@@ -40,18 +40,11 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
   }
 
   selectAddress = (selected: AddressEntry) => {
-    console.log("INDEX", selected.index);
-
-    this.setState({
-      selected,
-      index: selected.index,
-    });
-
-    selectAddressByIndex(this.props.addresses, selected.index);
+    this.props.setSelectedAddress(selected.index);
   };
 
   clipboardAddress = () => {
-    const { address } = this.state.selected;
+    const { address } = this.props.selected!;
 
     this.setState({
       copyButtonState: "Copied...",
@@ -87,7 +80,7 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
           <AddressDropdown
             label="Select Vault"
             readOnly={true}
-            value={this.props.addresses[this.state.index].label}
+            value={this.props.selected!.label}
             options={this.props.addresses}
             onClick={this.selectAddress}
             editable={true}
@@ -97,7 +90,7 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
             <Description
               label="Selected Vault Address"
               width={true}
-              value={this.state.selected.address}
+              value={this.props.selected!.address}
               readOnly={true}
               rows={windowWidth < 600 ? "3" : "2"}
             />
@@ -109,7 +102,7 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
               width={true}
               type={"text"}
               name="address"
-              value={this.state.selected.address}
+              value={this.props.selected!.address}
               readOnly={true}
             />
           )}
@@ -132,9 +125,11 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
 }
 
 const mapStateToProps = (state: DesktopAppState) => ({
-  showModal,
+  selected: selectSelectedAddress(state),
+  addresses: state.address.entrys
 });
 
 export const OwnAddress = connect(mapStateToProps, {
   showModal,
+  setSelectedAddress
 })(OwnAddressContainer);

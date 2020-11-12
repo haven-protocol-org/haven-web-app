@@ -86,7 +86,7 @@ export class Transfer extends Component<TransferProps, TransferState> {
               isProcessing={this.props.isProcessing}
             />
           ) : (
-            <OwnAddress addresses={this.props.addresses} />
+            <OwnAddress />
           )}
         </Body>
       </Fragment>

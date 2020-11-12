@@ -1,6 +1,6 @@
 import { walletProxy } from "shared/core/proxy";
-import { GET_ADDRESS_SUCCEED } from "./types";
-import address, { AddressEntry } from "shared/reducers/address";
+import { GET_ADDRESS_SUCCEED, SET_SELECTED_ADDRESS } from "./types";
+import { AddressEntry } from "shared/reducers/address";
 import { addErrorNotification } from "./notification";
 import MoneroSubaddress from "haven-wallet-core/src/main/js/wallet/model/MoneroSubaddress";
 
@@ -38,3 +38,10 @@ const parseAddress = (moneroAddress: MoneroSubaddress): AddressEntry => ({
   address: moneroAddress.getAddress(),
   used: moneroAddress.isUsed(),
 });
+
+
+export const setSelectedAddress = (selectedAddressIndex: number) => {
+  return (dispatch: any) => {
+    dispatch({type: SET_SELECTED_ADDRESS, payload: selectedAddressIndex})
+  }
+}

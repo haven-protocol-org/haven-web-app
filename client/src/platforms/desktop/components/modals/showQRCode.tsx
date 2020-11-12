@@ -30,7 +30,7 @@ class ShowQRCodeModal extends React.Component<any, any> {
 }
 
 const mapStateToProps = (state: HavenAppState) => ({
-  address: selectPrimaryAddress(state.address),
+  address: selectPrimaryAddress(state.address.entrys),
 });
 
 export const QRCodeModal = connect(mapStateToProps, { hideModal })(

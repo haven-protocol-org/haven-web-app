@@ -102,7 +102,7 @@ class ConfirmExchangeModal extends React.Component<
 const mapStateToProps = (state: HavenAppState) => ({
   exchange: state.exchangeProcess,
   isOwnAddress:
-    selectPrimaryAddress(state.address) === state.exchangeProcess.address,
+    selectPrimaryAddress(state.address.entrys) === state.exchangeProcess.address,
 });
 
 export const ConfirmExchangeModalDesktop = connect(mapStateToProps, {

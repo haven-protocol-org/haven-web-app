@@ -256,12 +256,7 @@ export const closeWallet = (isWeb: boolean) => {
   return async (dispatch: any, getState: () => HavenAppState) => {
     // closing wallet is handled differently for web and desktop
     if (isWeb) {
-      // if its a temporary wallet ( just login via seed ) we don't store the wallet in any way
-      const activeWallet = getState().walletSession.activeWallet;
-
-      if (activeWallet !== undefined) {
-        await storeWalletInDB(activeWallet);
-      }
+      await dispatch(storeWalletInDB());
       await walletProxy.stopSyncing();
       await walletProxy.closeWallet(false);
     } else {
