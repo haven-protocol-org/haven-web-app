@@ -1,8 +1,13 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { Link } from "react-router-dom";
 import media from "../../../assets/styles/media.js";
 import { ReactComponent as ChevronIcon } from "../../../assets/icons/chevron.svg";
 
+const shimmer = keyframes`
+   animation : shimmer 2s infinite;
+   background: linear-gradient(to right, #eff1f3 4%, #e2e2e2 25%, #eff1f3 36%);
+   background-size: 1000px 100%;
+`;
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -44,6 +49,7 @@ export const Unlocked = styled(Link)`
   height: auto;
   display: flex;
   justify-content: space-between;
+  animation: ${shimmer} 0.5s forwards cubic-bezier(0.25, 0.46, 0.45, 0.94);
 `;
 
 export const Route = styled.div`
@@ -80,7 +86,7 @@ export const PendingWrapper = styled.div`
 `;
 
 export const PendingSpacer = styled.div`
-  height: 4px;
+  height: 8px;
   background: ${(props) => props.theme.body.foreground};
   border-right: 1px solid ${(props) => props.theme.body.border};
   border-left: 1px solid ${(props) => props.theme.body.border};
@@ -122,10 +128,6 @@ export const Title = styled.div`
   color: ${(props) => props.theme.type.primary};
   letter-spacing: 0;
   line-height: 30px;
-
-  ${media.mobile`
-    display: none;
-  `}
 `;
 
 export const Balance = styled.div`

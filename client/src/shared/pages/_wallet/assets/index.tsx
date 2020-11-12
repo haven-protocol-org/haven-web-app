@@ -70,7 +70,7 @@ class AssetsPage extends Component<AssetsProps, any> {
           key={token}
           tokenName={token}
           ticker={xTicker}
-          price={xRate.toFixed(2)}
+          price={xRate}
           value={value}
           totalBalance={totalBalance}
           lockedBalance={lockedBalance}

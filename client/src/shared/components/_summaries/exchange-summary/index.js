@@ -2,16 +2,7 @@
 import React from "react";
 
 // Relative Imports
-import {
-  Wrapper,
-  Container,
-  Row,
-  Key,
-  Value,
-  FeeRow,
-  FeePadding,
-  Tag,
-} from "./styles";
+import { Wrapper, Container, Row, Key, Value } from "./styles";
 import { Error } from "../../../../assets/styles/type.js";
 
 export const ExchangeSummary = ({
@@ -28,7 +19,7 @@ export const ExchangeSummary = ({
     <Wrapper>
       <Container>
         <Row>
-          <Key>Exchange Rate</Key>
+          <Key>Conversion Rate</Key>
           <Value active={true}>
             {!hasLatestXRate ? (
               <Error>Checking lastest rates...</Error>

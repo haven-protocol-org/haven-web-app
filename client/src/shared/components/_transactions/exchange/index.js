@@ -27,20 +27,20 @@ const Transaction = ({
     <Fragment>
       <Container>
         <Row>
-          <Key>Exchange From</Key>
+          <Key>Convert From</Key>
           <Value>
             {fromAmount.toFixed(4)} {fromTicker}
           </Value>
         </Row>
         <Row>
-          <Key>Exchange To</Key>
+          <Key>Convert To</Key>
           <Value>
             {toAmount.toFixed(4)} {toTicker}
           </Value>
         </Row>
         {isOwnAddress ? null : (
           <Row>
-            <Key>Exchange To</Key>
+            <Key>Convert To</Key>
             <Value>{truncatedAddress}</Value>
           </Row>
         )}
@@ -81,7 +81,7 @@ const Transaction = ({
           })()}
         </Row>
         <Row>
-          <Key>Final Exchange Fee</Key>
+          <Key>Final Conversion Fee</Key>
           <Tag priority={priority}>
             <Value>
               {fee} {fromTicker}

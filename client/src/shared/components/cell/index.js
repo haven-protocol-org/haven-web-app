@@ -1,5 +1,5 @@
 // Library Imports
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 // Relative Imports
 import {
@@ -7,7 +7,6 @@ import {
   Column,
   Title,
   Subtitle,
-  Ticker,
   Locked,
   Unlocked,
   Row,
@@ -20,7 +19,6 @@ import {
   Balance,
   Arrow,
 } from "./styles";
-// import chevron from "../../../assets/icons/chevron.svg";
 
 const Cell = ({
   tokenName,
@@ -34,6 +32,7 @@ const Cell = ({
 }) => {
   const [open, openBalance] = useState(false);
   const balance = totalBalance * price;
+
   return (
     <>
       {lockedBalance === 0 ? (
@@ -43,13 +42,14 @@ const Cell = ({
               <Row>
                 <Asset>
                   <Title>{tokenName}</Title>
-                  <Ticker>{ticker}</Ticker>
                 </Asset>
-                <Balance>${balance.toFixed(4)}</Balance>
+                <Balance>{"$" + balance.toFixed(4)}</Balance>
               </Row>
               <Row>
-                <Subtitle>${price}</Subtitle>
-                <Subtitle>{totalBalance}</Subtitle>
+                <Subtitle>
+                  {ticker} {totalBalance}
+                </Subtitle>
+                <Subtitle>{"$" + price.toFixed(4)}</Subtitle>
               </Row>
             </Column>
             <Route>
@@ -63,13 +63,15 @@ const Cell = ({
             <Column>
               <Row>
                 <Asset>
-                  <Title>{tokenName} </Title> <Ticker>{ticker}</Ticker>
+                  <Title>{tokenName}</Title>
                 </Asset>
-                <Balance>${balance.toFixed(4)}</Balance>
+                <Balance>{"$" + balance.toFixed(4)}</Balance>
               </Row>
               <Row>
-                <Subtitle>${price}</Subtitle>
-                <Subtitle>{totalBalance}</Subtitle>
+                <Subtitle>
+                  {ticker} {totalBalance}
+                </Subtitle>
+                <Subtitle>{"$" + price.toFixed(4)}</Subtitle>
               </Row>
             </Column>
             <Route>
@@ -91,7 +93,6 @@ const Cell = ({
                 <Subtitle>Unlocked Balance</Subtitle>
                 <Subtitle>{unlockedBalance}</Subtitle>
               </Pending>
-
               <PendingSpacer />
             </PendingWrapper>
           )}

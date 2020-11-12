@@ -1,18 +1,21 @@
 // Library Imports
 import React from "react";
 import { useLocation } from "react-router-dom";
+import { Spinner } from "../../../../../shared/components/spinner/index.js";
 
 // Relative Imports
 import { Auth, Logout } from "./styles";
 
-const Buttons = ({ auth, onClick }) => {
+const Buttons = ({ auth, onClick, isLoading }) => {
   const location = useLocation();
 
   return (
     <>
       {!auth && location.pathname === "/" && <Auth to="/create">Create</Auth>}
       {!auth && location.pathname === "/create" && <Auth to="/">Login</Auth>}
-      {auth && <Logout onClick={onClick}>Logout</Logout>}
+      {auth && (
+        <Logout onClick={onClick}>{isLoading ? <Spinner /> : "Logout"}</Logout>
+      )}
     </>
   );
 };
