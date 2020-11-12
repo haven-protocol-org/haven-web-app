@@ -32,7 +32,6 @@ const Cell = ({
 }) => {
   const [open, openBalance] = useState(false);
   const balance = totalBalance * price;
-  console.log("balance", balance);
 
   return (
     <>
@@ -44,13 +43,13 @@ const Cell = ({
                 <Asset>
                   <Title>{tokenName}</Title>
                 </Asset>
-                <Balance>{"$" + balance.toFixed(4)}</Balance>
+                <Balance>{"$" + balance.toFixed(2)}</Balance>
               </Row>
               <Row>
                 <Subtitle>
-                  {ticker} {totalBalance}
+                  {ticker} {totalBalance.toFixed(2)}
                 </Subtitle>
-                <Subtitle>{"$" + price.toFixed(4)}</Subtitle>
+                <Subtitle>{"$" + price.toFixed(2)}</Subtitle>
               </Row>
             </Column>
             <Route>
@@ -66,13 +65,13 @@ const Cell = ({
                 <Asset>
                   <Title>{tokenName}</Title>
                 </Asset>
-                <Balance>{"$" + balance.toFixed(4)}</Balance>
+                <Balance>{"$" + balance.toFixed(2)}</Balance>
               </Row>
               <Row>
                 <Subtitle>
                   {ticker} {totalBalance}
                 </Subtitle>
-                <Subtitle>{"$" + price.toFixed(4)}</Subtitle>
+                <Subtitle>{"$" + price.toFixed(2)}</Subtitle>
               </Row>
             </Column>
             <Route>

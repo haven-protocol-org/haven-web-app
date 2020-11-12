@@ -65,7 +65,7 @@ class Balances extends Component<BalanceProps, BalanceState> {
 
     const { balance } = this.props.balances[ticker];
 
-    const totalBalance = prefix + balance.toFixed(4) + suffix;
+    const totalBalance = prefix + balance.toFixed(2) + suffix;
 
     const { isSyncing, blockHeight, scannedHeight } = this.props.syncState;
 
@@ -91,6 +91,6 @@ class Balances extends Component<BalanceProps, BalanceState> {
 
 const mapStateToProps = (state: HavenAppState) => ({
   balances: selectTotalBalances(state),
-  syncState: selectSyncState(state)
+  syncState: selectSyncState(state),
 });
 export const MultiBalance = connect(mapStateToProps, null)(Balances);

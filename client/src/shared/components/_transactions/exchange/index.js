@@ -29,13 +29,13 @@ const Transaction = ({
         <Row>
           <Key>Convert From</Key>
           <Value>
-            {fromAmount.toFixed(4)} {fromTicker}
+            {fromAmount.toFixed(2)} {fromTicker}
           </Value>
         </Row>
         <Row>
           <Key>Convert To</Key>
           <Value>
-            {toAmount.toFixed(4)} {toTicker}
+            {toAmount.toFixed(2)} {toTicker}
           </Value>
         </Row>
         {isOwnAddress ? null : (
@@ -84,7 +84,7 @@ const Transaction = ({
           <Key>Final Conversion Fee</Key>
           <Tag priority={priority}>
             <Value>
-              {fee} {fromTicker}
+              {fee.toFixed(2)} {fromTicker}
             </Value>
           </Tag>
         </Row>

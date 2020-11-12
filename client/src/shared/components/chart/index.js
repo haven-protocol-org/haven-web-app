@@ -59,7 +59,7 @@ class Chart extends Component {
     this.setState((prev) => ({
       ...prev,
       hoveredLabel: label,
-      hoveredValue: "$" + value.toFixed(4),
+      hoveredValue: "$" + value.toFixed(2),
       currentlyHovering: true,
     }));
   }
@@ -168,7 +168,15 @@ class Chart extends Component {
                     },
                   },
                 ],
-                xAxes: [{ display: false }],
+                xAxes: [
+                  {
+                    display: false,
+                    gridLines: {
+                      display: false,
+                    },
+                    labelAngle: 0,
+                  },
+                ],
               },
               tooltips: {
                 enabled: false,

@@ -29,7 +29,7 @@ export const Transaction = ({
         <Row>
           <Key>Transfer Asset</Key>
           <Value>
-            {transferAmount.toFixed(4)} {ticker}
+            {transferAmount.toFixed(2)} {ticker}
           </Value>
         </Row>
 
@@ -44,11 +44,11 @@ export const Transaction = ({
           </Row>
         ) : null}
         <Row>
-          <Key>Final Transfer Fee </Key>
+          <Key>Final Transfer Fee</Key>
           <Tag>
             {" "}
             <Value>
-              {fee} {ticker}
+              {fee.toFixed(2)} {ticker}
             </Value>
           </Tag>
         </Row>

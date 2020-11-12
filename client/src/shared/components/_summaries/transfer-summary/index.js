@@ -2,7 +2,7 @@
 import React from "react";
 
 // Relative Imports
-import { Container, Row, Key, Value, FeePadding, FeeRow, Tag } from "./styles";
+import { Container, Row, Key, Value } from "./styles";
 // import Confirm from "../../confirm/index.js";
 
 const TransferSummary = ({
@@ -24,7 +24,12 @@ const TransferSummary = ({
       <Row>
         <Key>Transfer Asset</Key>
         <Value>
-          {transferAmount === "--" ? "0" : transferAmount} {transferAsset}
+          {transferAmount === "--"
+            ? "0"
+            : transferAmount && !isNaN(transferAmount)
+            ? parseFloat(transferAmount).toFixed(2)
+            : "0"}{" "}
+          {transferAsset}
         </Value>
       </Row>
       <Row>

@@ -382,12 +382,13 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 label={
                   "From Amount " +
                   (availBalance !== NO_BALANCE
-                    ? `(Avail: ${availBalance})`
+                    ? `(Avail: ${availBalance.toFixed(2)})`
                     : "")
                 }
                 placeholder="Enter amount"
                 type="number"
                 name="fromAmount"
+                // @ts-ignore
                 value={fromAmount}
                 onChange={this.onEnterFromAmount}
                 error={this.fromAmountIsValid(availBalance)}
@@ -406,7 +407,9 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 // @ts-ignore
                 label={
                   "To Amount " +
-                  (toBalance !== NO_BALANCE ? `(Avail: ${toBalance})` : "")
+                  (toBalance !== NO_BALANCE
+                    ? `(Avail: ${toBalance.toFixed(2)})`
+                    : "")
                 }
                 placeholder="Enter amount"
                 name="toAmount"

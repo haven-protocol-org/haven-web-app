@@ -208,13 +208,13 @@ class TransferContainer extends Component<TransferProps, TransferState> {
             // @ts-ignore
             label={
               availableBalance
-                ? `Amount (Avail. ${availableBalance})`
+                ? `Amount (Avail. ${availableBalance.toFixed(2)})`
                 : "Amount"
             }
             placeholder="Enter amount"
             type="number"
             // @ts-ignore
-            error={this.amountIsValid(availableBalance)}
+            error={this.amountIsValid(availableBalance.toFixed(2))}
             name="send_amount"
             value={send_amount}
             onChange={this.handleChange}
