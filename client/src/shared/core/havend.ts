@@ -6,6 +6,7 @@ let daemon: MoneroDaemonRpc;
 export const createDaemonConnection = (rpcConnection: IMonerRPCConnection) => {
   //@ts-ignore
   daemon = new MoneroDaemonRpc(rpcConnection);
+  return true
 };
 
 export const getLastBlockHeader = () => {

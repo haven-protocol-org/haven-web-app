@@ -16,7 +16,7 @@ export const setNodeForWallet = (
   nodeAddress: string,
   nodePort: string
 ) => {
-  return (dispatch: any, getState: () => DesktopAppState) => {
+  return async(dispatch: any, getState: () => DesktopAppState) => {
     dispatch(setNodeForWalletRequested());
 
     let address: string;
@@ -27,27 +27,31 @@ export const setNodeForWallet = (
     }
 
     const connection: IMonerRPCConnection = {
-      username: selectedNodeOption.username,
-      password: selectedNodeOption.password,
       uri: address,
     };
 
-    walletProxy
-      .setDaemonConnection(connection)
-      .then((res: any) => {
-        console.log(res);
-        dispatch(
+    try {
+      
+      await walletProxy.setDaemonConnection(connection)
+      await havendProxy.createDaemonConnection(connection)
+
+       dispatch(
           setNodeForWalletSucceed(
             nodeAddress,
             nodePort,
             selectedNodeOption.location
-          )
-        );
-      })
-      .catch((error: any) => {
+          ))
+
+    }
+    catch (error)
+    {
         dispatch(setNodeForWalletFailed(error));
-      });
+    };
+    
   };
+
+
+
 };
 
 const setNodeForWalletRequested = () => {
@@ -78,6 +82,7 @@ const setNodeForWalletFailed = (error: any) => {
     );
   };
 };
+
 
 export const updateConnectionState = () => {
   return async (dispatch: any) => {

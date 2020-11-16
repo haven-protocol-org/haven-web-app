@@ -1,6 +1,5 @@
 import { ipcMain } from "electron";
-import { getWhitespaceTokens } from "haven-wallet-core/src/main/js/common/GenUtils";
-import { appEventBus, LOCAL_NODE_STOPPED_EVENT } from "../EventBus";
+ import { appEventBus, LOCAL_NODE_STOPPED_EVENT } from "../EventBus";
 import { CommunicationChannel, LocalNodeRequest, ProcessState } from "../types";
 import { LocalNodeProcess } from "./process/LocalNodeProcess";
 
@@ -8,7 +7,7 @@ export class LocalNodeHandler {
   private localNode: LocalNodeProcess;
 
   constructor() {
-    ipcMain.handle(CommunicationChannel.LocalNode, (event, args) =>
+    ipcMain.handle(CommunicationChannel.LOCALNODE, (event, args) =>
       this.handleRequest(args)
     );
   }
@@ -24,7 +23,7 @@ export class LocalNodeHandler {
    * Terminates local node and removes handler
    */
   public stop(): void {
-    ipcMain.removeHandler(CommunicationChannel.LocalNode);
+    ipcMain.removeHandler(CommunicationChannel.LOCALNODE);
 
     if (this.localNode.isRunning()) {
       this.localNode.killDaemon();

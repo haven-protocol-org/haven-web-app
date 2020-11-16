@@ -1,7 +1,8 @@
 export enum CommunicationChannel {
-  LocalNode = "localNode",
+  LOCALNODE = "localNode",
   WALLET = "wallet",
   DAEMON = "daemon",
+  STORED_WALLETS="stored_wallets",
   CONFIG = "config",
 }
 export interface ProcessState {
