@@ -59,13 +59,10 @@ export const Transaction = ({
         />
       </Container>
       <Information>
-        <strong>Terms:</strong> You accept any and all responsibility for your
-        Transfer including the verification of Recipient Addresses, Payment
-        ID's, Amounts and Fees. Upon clicking <strong>Confirm</strong> a portion
-        of your balance may be locked for ~20 mins until the transaction is
-        complete. The Vault will indicate any pending balances which can be seen
-        by clicking the <strong>Show Pending Balances</strong> button in the
-        Assets page.
+        I have reviewed my transfer details and accept all responsibility for
+        this transaction. Once I click confirm, I understand that a portion of
+        my total balance may be temporarily locked for ~20 mins until the
+        transfer is confirmed.
       </Information>
     </Fragment>
   );
