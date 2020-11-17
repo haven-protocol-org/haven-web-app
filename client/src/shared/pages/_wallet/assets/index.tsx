@@ -133,9 +133,9 @@ class AssetsPage extends Component<AssetsProps, any> {
           price={xRate}
           value={xhvInUSD}
           fullwidth="fullwidth"
-          totalBalance={totalBalance}
-          lockedBalance={lockedBalance}
-          unlockedBalance={unlockedBalance}
+          totalBalance={totalBalance.toFixed(2)}
+          lockedBalance={lockedBalance.toFixed(2)}
+          unlockedBalance={unlockedBalance.toFixed(2)}
         />
         {this.renderEnabledTokens()}
         <Header
