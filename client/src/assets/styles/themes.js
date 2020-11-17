@@ -17,6 +17,7 @@ export const dark = {
   type: {
     primary: "#ffffff",
     secondary: "#8A8D90",
+    inverse: "#fff",
   },
   input: {
     input_border: "#4a4d52",
@@ -63,6 +64,7 @@ export const light = {
   type: {
     primary: "#1d1d1f",
     secondary: "#79797a",
+    inverse: "#fff",
   },
   input: {
     input_border: "#e0e0e0",
@@ -109,6 +111,7 @@ export const sepia = {
   type: {
     primary: "#43280c",
     secondary: "#7e552c",
+    inverse: "#fff",
   },
   input: {
     input_border: "#b8a18a",
