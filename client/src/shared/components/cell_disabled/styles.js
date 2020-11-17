@@ -95,10 +95,6 @@ export const Title = styled.div`
   letter-spacing: 0;
   line-height: 30px;
   text-align: ${(props) => (props.left ? "left" : "right")};
-
-  ${media.mobile`
-      display: none;
-    `}
 `;
 
 export const Subtitle = styled.div`

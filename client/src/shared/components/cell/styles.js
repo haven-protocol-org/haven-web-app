@@ -3,84 +3,11 @@ import { Link } from "react-router-dom";
 import media from "../../../assets/styles/media.js";
 import { ReactComponent as ChevronIcon } from "../../../assets/icons/chevron.svg";
 
-// const shimmer = keyframes`
-//    animation : shimmer 2s infinite;
-//    background: linear-gradient(to right, #eff1f3 4%, #e2e2e2 25%, #eff1f3 36%);
-//    background-size: 1000px 100%;
-// `;
-//
-// const fade = keyframes`
-// 0% { opacity: 0; }
-// 50% { opacity: 1; }
-// 100% { opacity: 0; }
-// `;
-//
-// const dots = keyframes`
-// 0%, 20% {
-//    color: rgba(0,0,0,0);
-//    text-shadow:
-//      .25em 0 0 rgba(0,0,0,0),
-//      .5em 0 0 rgba(0,0,0,0);}
-//  40% {
-//    color: ${(props) => props.theme.type.primary};
-//    text-shadow:
-//      .25em 0 0 rgba(0,0,0,0),
-//      .5em 0 0 rgba(0,0,0,0);}
-//  60% {
-//    text-shadow:
-//      .25em 0 0 rgba(0,0,0,0),
-//      .5em 0 0 rgba(0,0,0,0);}
-//  80%, 100% {
-//     color: ${(props) => props.theme.type.primary};
-//    text-shadow:
-//      .25em 0 0 rgba(0,0,0,0),
-//      .5em 0 0 rgba(0,0,0,0);
-//     }
-//   }
-//
-// `;
-
-// export const Dots = styled.div`
-//   display: flex;
-//   flex-direction: row;
-// `;
-//
-// export const Dot = styled.div`
-//   width: 4px;
-//   height: 4px;
-//   border-radius: 4px;
-//   color: ${(props) => props.theme.type.primary};
-//   animation: ${fade} 2s ease infinite;
-//   opacity: 0;
-//
-//   &:nth-child(1) {
-//     left: 0;
-//   }
-//
-//   &:nth-child(2) {
-//     left: 12px;
-//     animation-delay: 0.2s;
-//   }
-//
-//   &:nth-child(3) {
-//     left: 20px;
-//     animation-delay: 0.5s;
-//   }
-// `;
-
 export const ShortRow = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
 `;
-//
-// export const Loading = styled.div`
-//   ::after {
-//     content: " .";
-//     animation: ${dots} 1s steps(5, end) infinite;
-//     margin-right: 8px;
-//   }
-// `;
 
 export const Container = styled.div`
   display: flex;
