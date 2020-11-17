@@ -12,7 +12,8 @@ import { SettingsDesktop } from "../../pages/_wallet/settings";
 import { connect } from "react-redux";
 import { selectIsLoggedIn } from "../../../../shared/reducers/walletSession";
 import Page from "../../../../shared/components/_layout/page";
-import Menu from "../../../../shared/components/_layout/menu";
+import Menu from "../../../../shared/components/_layout/menu/thick";
+
 import { isDesktop, isWeb } from "constants/env";
 import { SettingsWeb } from "platforms/web/pages/_wallet/settings";
 import { storeWalletInDB } from "platforms/web/actions/storage";
@@ -21,26 +22,21 @@ import { storeWalletInDB } from "platforms/web/actions/storage";
  *root component for private wallet
  */
 class PrivateRoutesContainer extends Component {
-
-
   componentDidMount() {
-
     if (isWeb()) {
-      window.addEventListener('beforeunload', this.storeWalletBeforeUnload);
+      window.addEventListener("beforeunload", this.storeWalletBeforeUnload);
     }
   }
 
-
-  async storeWalletBeforeUnload(e){
-      await storeWalletInDB();
-      delete e['returnValue'];
-    }
+  async storeWalletBeforeUnload(e) {
+    await storeWalletInDB();
+    delete e["returnValue"];
+  }
 
   componentWillUnmount() {
     if (isWeb()) {
       window.removeEventListener("beforeunload", this.storeWalletBeforeUnload);
     }
-  
   }
 
   render() {
@@ -81,7 +77,6 @@ const mapStateToProps = (state) => ({
   isLoggedIn: selectIsLoggedIn(state),
 });
 
-export const PrivateRoutes = connect(
-  mapStateToProps,
-  {storeWalletInDB}
-)(PrivateRoutesContainer);
+export const PrivateRoutes = connect(mapStateToProps, { storeWalletInDB })(
+  PrivateRoutesContainer
+);
