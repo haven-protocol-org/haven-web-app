@@ -1,6 +1,5 @@
 // Library Imports
 import React, { Component } from "react";
-import party from "party-js";
 
 // Relative Imports
 import { Container } from "./styles";

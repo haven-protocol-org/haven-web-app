@@ -48,10 +48,7 @@ export class CreateWebComponent extends Component<any, CreateWebState> {
   render() {
     return (
       <Container>
-        <SubContainer
-          animate={this.state.animate}
-          onMouseOver={this.handleMouse}
-        >
+        <SubContainer>
           <Header>
             <Title>
               {this.state.selectedCreate ? "Create a Vault" : "Restore a Vault"}
