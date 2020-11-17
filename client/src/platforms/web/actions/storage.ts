@@ -23,19 +23,19 @@ export const storeKeyFileToDisk = (name: string) => {
   };
 };
 
-export const storeWalletInDB = async (): Promise<any> => {
+export const storeWalletInDB = (): any => {
 
   return async(dispatch: any, getState: () => HavenAppState) => {
     
     const walletName = getState().walletSession.activeWallet;
-
+    const currentHeight = getState().chain.walletHeight;
      // if its a temporary wallet ( just login via seed ) we don't store the wallet in any way
     
     if (walletName !== undefined) {
       await storeWalletDataInIndexedDB(walletName);
     }
-
-    return;
+  //  dispatch({ type: SET_STORED_HEIGHT, payload: 0 });
+    return true;
 
     }
 };

@@ -1,4 +1,4 @@
-import { getHavendStateIPC } from "../ipc/misc";
+import { getLocalNodeStateIPC } from "../ipc/misc";
 import { GET_HAVEND_STATE_FAILED, GET_HAVEND_STATE_SUCCEED } from "./types";
 import { ProcessState } from "platforms/desktop/ipc/ipc-types";
 import { DesktopAppState } from "platforms/desktop/reducers";
@@ -7,7 +7,7 @@ import { NotificationType } from "constants/notificationList";
 
 export function getLocalNodeState() {
   return (dispatch: any, getState: () => DesktopAppState) => {
-    getHavendStateIPC()
+    getLocalNodeStateIPC()
       .then((res: ProcessState) => {
         if (!getState().localNode.isRunning && res.isRunning) {
           dispatch(
@@ -24,18 +24,18 @@ export function getLocalNodeState() {
             )
           );
         }
-        dispatch(updatehavenNodeState(res));
+        dispatch(updateLocalNodeState(res));
       })
-      .catch((err) => dispatch(updatehavenNodeStateFailed(err)));
+      .catch((err) => dispatch(updateLocalNodeStateFailed(err)));
   };
 }
 
-const updatehavenNodeState = (processState: ProcessState) => {
+const updateLocalNodeState = (processState: ProcessState) => {
   return {
     type: GET_HAVEND_STATE_SUCCEED,
     payload: { ...processState },
   };
 };
-const updatehavenNodeStateFailed = (err: any) => {
+const updateLocalNodeStateFailed = (err: any) => {
   return { type: GET_HAVEND_STATE_FAILED, payload: err };
 };

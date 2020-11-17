@@ -2,10 +2,11 @@ import { NodeLocation } from "platforms/desktop/types";
 import { ThreeState } from "shared/types/types";
 
 export enum CommunicationChannel {
-  HAVEND = "havend",
+  LOCALNODE = "localNode",
   WALLET = "wallet",
-  RPC = "rpc",
-  STORED_WALLETS = "wallets",
+  DAEMON = "daemon",
+  STORED_WALLETS="stored_wallets",
+  CONFIG = "config",
 }
 
 export interface DAEMON_STATUS {

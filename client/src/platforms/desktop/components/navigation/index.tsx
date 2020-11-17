@@ -25,7 +25,7 @@ import { selectIsLoggedIn } from "../../../../shared/reducers/walletSession";
 import { getNetworkByName, isDevMode, NET_TYPE_NAME } from "constants/env";
 import { DesktopAppState } from "../../reducers";
 import { LocalNode, SelectedNode } from "platforms/desktop/types";
-import { selectisLocalNode } from "platforms/desktop/reducers/selectedNode";
+import { selectisLocalNode } from "platforms/desktop/reducers/connectedNode";
 import { selectBlockHeight } from "shared/reducers/chain";
 
 interface NavigationProps {
@@ -153,8 +153,8 @@ class Navigation extends Component<NavigationProps, any> {
 
 const mapStateToProps = (state: DesktopAppState) => ({
   isLoggedIn: selectIsLoggedIn(state),
-  node: state.selectedNode,
-  isLocalNode: selectisLocalNode(state.selectedNode),
+  node: state.connectedNode,
+  isLocalNode: selectisLocalNode(state.connectedNode),
   height: selectBlockHeight(state),
 });
 

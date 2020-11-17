@@ -30,7 +30,6 @@ export class HavenWallet {
 
     this._isRunning = true;
 
-    checkAndCreateWalletDir();
     checkAndCreateDaemonConfig();
     this.walletHandler.start();
   }

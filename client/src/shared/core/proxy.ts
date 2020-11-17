@@ -43,7 +43,7 @@ const havendHandler: ProxyHandler<typeof havendCore> = {
         const response = await callWalletBackend(
           name,
           args,
-          CommunicationChannel.HAVEND
+          CommunicationChannel.DAEMON
         );
       };
     }

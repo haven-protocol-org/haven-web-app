@@ -3,8 +3,8 @@ import * as core from "../shared/wallet";
 import * as daemon from "../shared/havend";
 import { logInDevMode } from "../dev";
 import { mainWindow } from "../index";
-import { CommunicationChannel } from "../types";
-import { getAvailableWallets } from "../userSettings";
+import { CommunicationChannel, NET } from "../types";
+import { getAvailableWallets } from "./walletPaths";
 import { HavenWalletListener } from "./HavenWalletListener";
 import MoneroTxWallet = require("haven-wallet-core/src/main/js/wallet/model/MoneroTxWallet");
 
@@ -28,13 +28,16 @@ export class WalletHandler {
   private addHandlers() {
     logInDevMode("handlers added");
     ipcMain.handle(CommunicationChannel.CONFIG, (event, args) =>
-      getAvailableWallets()
+      this.getConfig(),
+    );
+    ipcMain.handle(CommunicationChannel.STORED_WALLETS, (event, netTypeID: NET) =>
+      getAvailableWallets(netTypeID),
     );
     ipcMain.handle(CommunicationChannel.WALLET, (event, args) =>
-      this.handleWalletCoreRequest(args as WalletRequest)
+      this.handleWalletCoreRequest(args as WalletRequest),
     );
-    ipcMain.handle(CommunicationChannel.LocalNode, (event, args) =>
-      this.handleDaemonCoreRequest(args as WalletRequest)
+    ipcMain.handle(CommunicationChannel.DAEMON, (event, args) =>
+      this.handleDaemonCoreRequest(args as WalletRequest),
     );
   }
 
@@ -42,6 +45,8 @@ export class WalletHandler {
     logInDevMode("handlers removed");
     ipcMain.removeHandler(CommunicationChannel.CONFIG);
     ipcMain.removeHandler(CommunicationChannel.WALLET);
+    ipcMain.removeHandler(CommunicationChannel.DAEMON);
+    ipcMain.removeHandler(CommunicationChannel.STORED_WALLETS);
   }
 
   private handleWalletCoreRequest = async (request: WalletRequest) => {
@@ -77,6 +82,10 @@ export class WalletHandler {
 
     return core[methodName].call(null, ...params);
   };
+
+  private getConfig = () => {
+    // return config();
+  }
 
   private handleDaemonCoreRequest = async (request: WalletRequest) => {
     const methodName: keyof typeof daemon = request.methodName as keyof typeof daemon;

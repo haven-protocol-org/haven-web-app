@@ -1,9 +1,8 @@
 import { ChildProcess, spawn } from "child_process";
 import { dialog } from "electron";
-import { getLocalDaemonPath } from "../localNodePaths";
+import { getLocalDaemonPath } from "../localNodeSettings";
 import { isDevMode } from "../../env";
-import { IDaemonConfig, ProcessState } from "../../types";
-import { DEFAULT_CONFIG } from "haven-wallet-core/src/main/js/common/MoneroRpcConnection";
+import { IDaemonConfig, NET, ProcessState } from "../../types";
 
 export class LocalNodeProcess {
   protected filePath: string;
@@ -12,7 +11,17 @@ export class LocalNodeProcess {
   protected daemonProcess: ChildProcess;
   protected _isRunning: boolean = false;
   protected _shutDownRequested: boolean = false;
+  private _netTypeId: NET;
   private config: IDaemonConfig;
+
+  public setNetypId(value: NET) {
+    this._netTypeId = value;
+  }
+
+  public getNetypId() {
+    return this._netTypeId;
+  }
+
 
   public getConfig(): IDaemonConfig {
     return this.config;
@@ -57,7 +66,7 @@ export class LocalNodeProcess {
 
   public startLocalProcess(): void {
     const config = this.getConfig();
-    this.filePath = getLocalDaemonPath();
+    this.filePath = getLocalDaemonPath(this._netTypeId);
     this.startArgs = config.args;
     this.port = config.port;
 

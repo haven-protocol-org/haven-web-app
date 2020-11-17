@@ -54,6 +54,9 @@ export const DAEMON_CONECTION_CREATED = "daemon_conection_created";
 // WALLET CONNECTION TO DAEMON
 export const SET_WALLET_CONNECTION_STATE = "set_wallet_connection_state";
 
+export const START_WALLET_STORAGE = "start_wallet_storage";
+export const WALLET_STORAGE_SUCCEED = "wallet_storage_succeed";
+
 export const RESTORE_WALLET_BY_SEED_FETCHING =
   "restore_wallet_by_seed_fetching";
 export const RESTORE_WALLET_BY_SEED_SUCCEED = "restore_wallet_by_seed_succeed";

@@ -21,6 +21,8 @@ interface WalletSession {
   isSessionStarted: boolean;
   error: RPCError | null;
   isConnectedToDaemon: boolean;
+  lastStoredHeight: number;
+  isStoringWallet: boolean;
 }
 
 const INITIAL_STATE: WalletSession = {
@@ -29,6 +31,8 @@ const INITIAL_STATE: WalletSession = {
   isSessionStarted: false,
   error: null,
   isConnectedToDaemon: false,
+  lastStoredHeight: -1,
+  isStoringWallet: false,
 };
 
 export const walletSession = function (
