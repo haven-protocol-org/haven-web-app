@@ -72,6 +72,7 @@ export const Item = styled(NavLink).attrs({
   &:hover {
     color: ${(props) => props.theme.type.primary};
     transition: 500ms;
+    cursor: pointer;
   }
 
   &.${activeClassName} {
