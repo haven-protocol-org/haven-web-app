@@ -12,7 +12,8 @@ import { SettingsDesktop } from "../../pages/_wallet/settings";
 import { connect } from "react-redux";
 import { selectIsLoggedIn } from "../../../../shared/reducers/walletSession";
 import Page from "../../../../shared/components/_layout/page";
-import Menu from "../../../../shared/components/_layout/menu";
+import { Menu } from "../../components/_layout/menu/thin/index.js";
+
 import { isDesktop } from "constants/env";
 import { SettingsWeb } from "platforms/web/pages/_wallet/settings";
 
@@ -30,7 +31,7 @@ class PrivateRoutesContainer extends Component {
     }
 
     return (
-      <div>
+      <>
         <Page>
           <Menu />
           <Route path={`${match.url}/assets`} exact component={AssetsDesktop} />
@@ -51,7 +52,7 @@ class PrivateRoutesContainer extends Component {
           />
           <Route path={`${match.url}/convert`} exact component={ExchangePage} />
         </Page>
-      </div>
+      </>
     );
   }
 }
