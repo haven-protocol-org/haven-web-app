@@ -31,6 +31,7 @@ export const Button = styled.div`
   justify-content: center;
   padding: 8px 16px;
   width: 64px;
+  max-width: 64px;
   background: ${(props) => props.theme.button.primary};
   color: white;
   margin-right: 16px;
