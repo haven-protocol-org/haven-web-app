@@ -1,5 +1,5 @@
 // Library Imports
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 // Relative Imports
 import {
@@ -18,7 +18,9 @@ import {
   PendingSpacer,
   Balance,
   Arrow,
+  ShortRow,
 } from "./styles";
+import Dots from "../_animations/dots/index.js";
 
 const Cell = ({
   tokenName,
@@ -43,13 +45,29 @@ const Cell = ({
                 <Asset>
                   <Title>{tokenName}</Title>
                 </Asset>
-                <Balance>{"$" + balance.toFixed(2)}</Balance>
+                <Balance>
+                  {price === 0 ? (
+                    <ShortRow>
+                      $ <Dots />
+                    </ShortRow>
+                  ) : (
+                    `${"$" + balance.toFixed(2)}`
+                  )}
+                </Balance>
               </Row>
               <Row>
                 <Subtitle>
                   {ticker} {totalBalance.toFixed(2)}
                 </Subtitle>
-                <Subtitle>{"$" + price.toFixed(2)}</Subtitle>
+                <Subtitle>
+                  {price === 0 ? (
+                    <Row>
+                      $ <Dots />
+                    </Row>
+                  ) : (
+                    `${"$" + price.toFixed(2)}`
+                  )}
+                </Subtitle>
               </Row>
             </Column>
             <Route>

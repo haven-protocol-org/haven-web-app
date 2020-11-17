@@ -95,13 +95,10 @@ const Transaction = ({
         />
       </Container>
       <Information>
-        <strong>Terms:</strong> You accept any and all responsibility for your
-        Conversion including the verification of Recipient Addresses, Amounts
-        and Fees. Upon clicking <strong>Confirm</strong> a portion of your
-        balance may be locked for the entirety of your Priority Unlock Time,
-        until the transaction is complete. The Vault will indicate any pending
-        balances which can be seen by clicking the{" "}
-        <strong>Show Pending Balances</strong> button in the Assets page.
+        I have reviewed my conversion details and accept all responsibility for
+        this transaction. Once I click confirm, I understand that a portion of
+        my balance may be locked for the entirety of the `{priority}` unlock
+        priority time.
       </Information>
     </Fragment>
   );
