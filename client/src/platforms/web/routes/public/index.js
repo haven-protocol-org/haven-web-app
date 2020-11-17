@@ -10,12 +10,10 @@ import { LoginWeb } from "../../pages/_auth/login/container";
 class PublicRoutesWeb extends Component {
   render() {
     return (
-      <div>
-        <Suspense fallback={<Loader />}>
-          <Route path="/" exact component={LoginWeb} />
-          <Route path="/create" exact component={CreateWeb} />
-        </Suspense>
-      </div>
+      <Suspense fallback={<Loader />}>
+        <Route path="/" exact component={LoginWeb} />
+        <Route path="/create" exact component={CreateWeb} />
+      </Suspense>
     );
   }
 }
