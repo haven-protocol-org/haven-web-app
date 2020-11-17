@@ -7,8 +7,6 @@ export const Container = styled.div`
   border-bottom: none;
   margin-top: 20px;
   background: ${(props) => props.theme.body.foreground};
-  padding-bottom: 4px;
-  border-bottom: 1px solid ${(props) => props.theme.input.input_border};
 `;
 
 export const Row = styled.div`

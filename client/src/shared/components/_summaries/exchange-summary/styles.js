@@ -8,11 +8,11 @@ export const Wrapper = styled.div`
 export const Container = styled.div`
   height: auto;
   width: 100%;
-  border-radius: 4px;
+  border-radius: 4px 4px 0px 0px;
   margin-top: 4px;
   background: ${(props) => props.theme.body.foreground};
   border: 1px solid ${(props) => props.theme.input.input_border};
-  border-bottom: 1px solid ${(props) => props.theme.input.input_border};
+  border-bottom: none;
   padding-top: 4px;
   padding-bottom: 4px;
 `;
