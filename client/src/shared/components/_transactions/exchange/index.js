@@ -23,6 +23,17 @@ const Transaction = ({
   const last = externAddress.substring(externAddress.length - 4);
   const truncatedAddress = first + "...." + last;
 
+  const priorityInfo =
+    priority === 0
+      ? "~7d"
+      : priority === 1
+      ? "~48d"
+      : priority === 2
+      ? "~24d"
+      : priority === 3
+      ? "~6h"
+      : null;
+
   return (
     <Fragment>
       <Container>
@@ -84,7 +95,7 @@ const Transaction = ({
           <Key>Final Conversion Fee</Key>
           <Tag priority={priority}>
             <Value>
-              {fee.toFixed(2)} {fromTicker}
+              {fee.toFixed(4)} {fromTicker}
             </Value>
           </Tag>
         </Row>
@@ -97,7 +108,7 @@ const Transaction = ({
       <Information>
         I have reviewed my conversion details and accept all responsibility for
         this transaction. Once I click confirm, I understand that a portion of
-        my balance may be locked for the entirety of the `{priority}` unlock
+        my balance may be locked for the entirety of your {priorityInfo} unlock
         priority time.
       </Information>
     </Fragment>
