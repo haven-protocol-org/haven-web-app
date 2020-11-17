@@ -51,21 +51,21 @@ const Transaction = ({
                 return (
                   <>
                     <Key>Normal Priority</Key>
-                    <Value>Unlocks ~10d</Value>
+                    <Value>Unlocks ~7d</Value>
                   </>
                 );
               case 1:
                 return (
                   <>
                     <Key>Low Priority</Key>
-                    <Value>Unlocks ~5d</Value>
+                    <Value>Unlocks ~48d</Value>
                   </>
                 );
               case 2:
                 return (
                   <>
                     <Key>Medium Priority</Key>
-                    <Value>Unlocks ~48hr</Value>
+                    <Value>Unlocks ~24hr</Value>
                   </>
                 );
               case 3:
