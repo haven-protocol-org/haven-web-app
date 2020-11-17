@@ -17,12 +17,14 @@ import { CreateWalletWebComponent } from "./create/create";
 interface CreateWebState {
   selectedCreate: boolean;
   selectedRestore: boolean;
+  animate: boolean;
 }
 
 export class CreateWebComponent extends Component<any, CreateWebState> {
   state = {
     selectedCreate: true,
     selectedRestore: false,
+    animate: true,
   };
 
   componentDidMount() {
@@ -46,7 +48,10 @@ export class CreateWebComponent extends Component<any, CreateWebState> {
   render() {
     return (
       <Container>
-        <SubContainer>
+        <SubContainer
+          animate={this.state.animate}
+          onMouseOver={this.handleMouse}
+        >
           <Header>
             <Title>
               {this.state.selectedCreate ? "Create a Vault" : "Restore a Vault"}

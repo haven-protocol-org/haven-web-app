@@ -154,7 +154,7 @@ class CreateWalletWeb extends Component<CreateProps, CreateState> {
           <>
             <Input
               label="Vault Name"
-              placeholder="Create a Vault name"
+              placeholder="Create a vault name"
               name="create_vault_name"
               type="text"
               value={this.state.create_vault_name}
@@ -162,7 +162,7 @@ class CreateWalletWeb extends Component<CreateProps, CreateState> {
             />
             <Toggle
               label="Vault Password"
-              placeholder="Create a Vault password"
+              placeholder="Enter a password"
               name="create_vault_password"
               type={this.state.reveal === true ? "text" : "password"}
               reveal={this.state.reveal}
@@ -253,7 +253,7 @@ class CreateWalletWeb extends Component<CreateProps, CreateState> {
           <>
             <Toggle
               label="Confirm Vault Password"
-              placeholder="Confirm your Vault password"
+              placeholder="Confirm password"
               name="confirm_vault_password"
               type={this.state.reveal === true ? "text" : "password"}
               reveal={this.state.reveal}

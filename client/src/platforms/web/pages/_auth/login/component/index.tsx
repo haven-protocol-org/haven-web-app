@@ -1,5 +1,7 @@
 // Library Imports
 import React, { Component } from "react";
+import party from "party-js";
+
 // Relative Imports
 import { Container } from "./styles";
 import Auth from "../../../../../../shared/components/_auth/login";
@@ -223,7 +225,7 @@ export default class Login extends Component<LoginProps, LoginState> {
                 label="Vault File"
                 value={
                   this.state.fileName === ""
-                    ? "Select Vault File"
+                    ? "Select vault file"
                     : this.state.fileName
                 }
                 button="Select"
@@ -237,7 +239,7 @@ export default class Login extends Component<LoginProps, LoginState> {
               {/* @ts-ignore */}
               <Toggle
                 label="Vault Password"
-                placeholder="Enter Vault password"
+                placeholder="Enter password"
                 name="password"
                 value={password}
                 error={error}

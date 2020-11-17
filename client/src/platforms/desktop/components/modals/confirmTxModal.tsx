@@ -71,6 +71,8 @@ class ConfirmTxModal extends React.Component<ConfirmTxModalProps, any> {
 
   onConfirm() {
     const { metaList } = this.props.transfer;
+    confetti.start(1000);
+
     this.setState({
       loading: true,
     });

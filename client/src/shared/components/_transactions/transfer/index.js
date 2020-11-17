@@ -48,7 +48,7 @@ export const Transaction = ({
           <Tag>
             {" "}
             <Value>
-              {fee.toFixed(2)} {ticker}
+              {fee.toFixed(4)} {ticker}
             </Value>
           </Tag>
         </Row>

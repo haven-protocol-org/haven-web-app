@@ -87,6 +87,7 @@ class ConfirmExchangeModal extends React.Component<
     this.setState({
       loading: true,
     });
+    confetti.start(1000);
     setTimeout(() => {
       this.props.confirmExchange(metaList);
     }, 3000);
@@ -102,7 +103,8 @@ class ConfirmExchangeModal extends React.Component<
 const mapStateToProps = (state: HavenAppState) => ({
   exchange: state.exchangeProcess,
   isOwnAddress:
-    selectPrimaryAddress(state.address.entrys) === state.exchangeProcess.address,
+    selectPrimaryAddress(state.address.entrys) ===
+    state.exchangeProcess.address,
 });
 
 export const ConfirmExchangeModalDesktop = connect(mapStateToProps, {

@@ -1,7 +1,15 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { NavLink } from "react-router-dom";
 import media from "../../../../../../assets/styles/media.js";
 import { background } from "../../../../../../assets/styles/colors.js";
+
+const appear = keyframes`
+  0% { transform: translateY(0px);  }
+  25% { transform: translateY(4px);  }
+  50% { transform: translateY(8px);  }
+  75% { transform: translateY(4px);  }
+  100% {transform: translateY(0px);   }
+`;
 
 export const Container = styled.div`
   min-height: 100vh;
@@ -25,6 +33,10 @@ export const SubContainer = styled.div`
   border: 1px solid #3a4048;
   border-radius: 4px;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.05);
+
+  ${media.laptop`
+    animation: none;
+  `};
 `;
 
 export const Header = styled.div`
