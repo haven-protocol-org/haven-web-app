@@ -8,7 +8,7 @@ import DoubleFooter from "shared/components/_inputs/double_footer/index.js";
 import React, { SyntheticEvent } from "react";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { connect } from "react-redux";
-import { selectisLocalNode } from "platforms/desktop/reducers/selectedNode";
+import { selectisLocalNode } from "platforms/desktop/reducers/connectedNode";
 import { setNodeForWallet } from "platforms/desktop/actions/selectNode";
 import { NodeLocation, LocalNode, SelectedNode } from "platforms/desktop/types";
 import { Information } from "assets/styles/type.js";
@@ -239,12 +239,12 @@ class NodeSettingComponent extends React.Component<
 }
 
 const mapStateToProps = (state: DesktopAppState) => ({
-  node: state.selectedNode,
+  node: state.connectedNode,
   isRemoteSyncing: false,
   isConnected: state.walletSession.isConnectedToDaemon,
   isRequestingSwitch: false,
-  localNode: selectisLocalNode(state.selectedNode),
-  nodeOptions: createNodeOptions(state.selectedNode),
+  localNode: selectisLocalNode(state.connectedNode),
+  nodeOptions: createNodeOptions(state.connectedNode),
 });
 
 export const HavenNodeSetting = connect(mapStateToProps, {

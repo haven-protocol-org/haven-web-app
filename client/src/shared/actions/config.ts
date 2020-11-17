@@ -1,6 +1,6 @@
 import { selectTheme } from "shared/actions";
-import { getConfigIPC, updateConfigIPC } from "../ipc/misc"
-import { setNodeForWallet } from "./selectNode";
+import { getConfigIPC, updateConfigIPC } from "../../platforms/desktop/ipc/misc"
+import { setNodeForWallet } from "../../platforms/desktop/actions/selectNode";
 
 
 

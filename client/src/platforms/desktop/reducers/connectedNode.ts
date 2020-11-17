@@ -13,7 +13,7 @@ const INITAL_STATE: SelectedNode = {
   appIsConnected: false,
 };
 
-export const selectedNode = (
+export const connectedNode = (
   state = INITAL_STATE,
   action: AnyAction
 ): SelectedNode => {
@@ -28,7 +28,7 @@ export const selectedNode = (
 };
 
 export const selectIsDaemonSet = (state: DesktopAppState): boolean => {
-  return state.selectedNode.location !== NodeLocation.None;
+  return state.connectedNode.location !== NodeLocation.None;
 };
 
 export const selectisLocalNode = (node: SelectedNode) => {

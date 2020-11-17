@@ -136,7 +136,7 @@ const mapStateToProps = (state: DesktopAppState) => ({
   isLoggedIn: selectIsLoggedIn(state),
   isSyncing: selectSyncState(state).isSyncing,
   isWalletConnected: state.walletSession.isConnectedToDaemon,
-  daemonUrl: state.selectedNode.address,
+  daemonUrl: state.connectedNode.address,
 });
 
 export const FixedStatus = connect(mapStateToProps, {
