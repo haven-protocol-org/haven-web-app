@@ -51,14 +51,6 @@ export const ExchangeSummary = ({
           <Value>{selectedPrio.ticker}</Value>
         </Row>
       </Container>
-      <FeeRow>
-        <FeePadding>
-          <Key>Minimum Fee ({selectedPrio.percent})</Key>
-          <Tag priority={selectedPrio.prio}>
-            <Value>{fee === "" ? "" : `${fee.toFixed(4)} ${fromTicker}`}</Value>
-          </Tag>
-        </FeePadding>
-      </FeeRow>
     </Wrapper>
   );
 };

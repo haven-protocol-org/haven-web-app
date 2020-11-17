@@ -10,7 +10,6 @@ const TransferSummary = ({
   transferAmount,
   paymentId,
   recipientAddress,
-
   onChange,
 }) => {
   const first = recipientAddress.substring(0, 4);
@@ -41,14 +40,6 @@ const TransferSummary = ({
         <Key>Payment ID</Key>
         <Value>{paymentId === "--" ? "--" : paymentIdTruncated}</Value>
       </Row>
-      <FeeRow>
-        <FeePadding>
-          <Key>Minimum Fee</Key>
-          <Tag>
-            <Value>0.0005 {transferAsset}</Value>
-          </Tag>
-        </FeePadding>
-      </FeeRow>
     </Container>
   );
 };
