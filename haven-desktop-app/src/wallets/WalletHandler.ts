@@ -3,11 +3,10 @@ import * as core from "../shared/wallet";
 import * as daemon from "../shared/havend";
 import { logInDevMode } from "../dev";
 import { mainWindow } from "../index";
-import { CommunicationChannel } from "../types";
-import { getAvailableWallets } from "../userSettings";
+import { CommunicationChannel, NET } from "../types";
+import { getAvailableWallets } from "./walletPaths";
 import { HavenWalletListener } from "./HavenWalletListener";
 import MoneroTxWallet = require("haven-wallet-core/src/main/js/wallet/model/MoneroTxWallet");
-import { config } from "../localNode/config/config";
 
 export interface WalletRequest {
   methodName: string;
@@ -31,8 +30,8 @@ export class WalletHandler {
     ipcMain.handle(CommunicationChannel.CONFIG, (event, args) =>
       this.getConfig(),
     );
-    ipcMain.handle(CommunicationChannel.STORED_WALLETS, (event, args) =>
-      getAvailableWallets(),
+    ipcMain.handle(CommunicationChannel.STORED_WALLETS, (event, netTypeID: NET) =>
+      getAvailableWallets(netTypeID),
     );
     ipcMain.handle(CommunicationChannel.WALLET, (event, args) =>
       this.handleWalletCoreRequest(args as WalletRequest),
@@ -85,7 +84,7 @@ export class WalletHandler {
   };
 
   private getConfig = () => {
-    return config();
+    // return config();
   }
 
   private handleDaemonCoreRequest = async (request: WalletRequest) => {

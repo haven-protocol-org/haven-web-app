@@ -1,5 +1,5 @@
 import * as path from "path";
-import { getNetTypeId, getNetTypeName } from "../env";
+import { getNetTypeName } from "../env";
 import { NET } from "../types";
 
 const PLATFORM = process.platform;
@@ -11,19 +11,19 @@ export function checkForUnpackedPath(pathName: string): string {
   return pathName;
 }
 
-export const getLocalDaemonPath = (): string => {
+export const getLocalDaemonPath = (netTypeID: NET): string => {
   return checkForUnpackedPath(
     path.resolve(
       __dirname,
-      `../haven-node/${PLATFORM}/${getNetTypeName()}/havend`
+      `../haven-node/${PLATFORM}/${getNetTypeName(netTypeID)}/havend`
     )
   );
 };
 
 
-export const getLocalNodeArguments = (): object => {
+export const getLocalNodeArguments = (netTypeId: NET): object => {
 
-  switch (getNetTypeId()) {
+  switch (netTypeId) {
     case NET.Mainnet:
       return {};
     case NET.Testnet:

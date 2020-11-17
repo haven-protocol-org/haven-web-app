@@ -1,6 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
-import { APP_DATA_PATH, isMainnet, isStagenet, isTestnet } from "../env";
+import { APP_DATA_PATH } from "../env";
+import { NET } from "../types";
 
 const MAINNET_WALLET_PATH = "/wallet/main";
 const TESTNET_WALLET_PATH = "/wallet/test";
@@ -17,28 +18,40 @@ export const WALLET_PATH_STAGENET: string = path.join(
   APP_DATA_PATH,
   STAGENET_WALLET_PATH
 );
-export const checkAndCreateWalletDir = () => {
-  if (isMainnet()) {
-    if (!fs.existsSync(WALLET_PATH_MAINNET)) {
+const checkAndCreateWalletDir = (path: string) => {
+
+    if (!fs.existsSync(path)) {
       fs.mkdirSync(WALLET_PATH_MAINNET, { recursive: true });
     }
-  }
-  if (isTestnet()) {
-    if (!fs.existsSync(WALLET_PATH_TESTNET)) {
-      fs.mkdirSync(WALLET_PATH_TESTNET, { recursive: true });
-    }
-  }
-  if (isStagenet()) {
-    if (!fs.existsSync(WALLET_PATH_STAGENET)) {
-      fs.mkdirSync(WALLET_PATH_STAGENET, { recursive: true });
-    }
-  }
 };
 
-export const getWalletPath = () => {
-  return isMainnet()
-    ? WALLET_PATH_MAINNET
-    : isTestnet()
-    ? WALLET_PATH_TESTNET
-    : WALLET_PATH_STAGENET;
+const getWalletPath = (netTypeId: NET) => {
+  const path = [WALLET_PATH_MAINNET, WALLET_PATH_TESTNET, WALLET_PATH_STAGENET][netTypeId];
+  checkAndCreateWalletDir(path);
+  return path;
+
+};
+
+
+export const getAvailableWallets = (netTypeId: NET): {
+  storePath: string;
+  wallets: string[];
+} => {
+  const walletPath: string = getWalletPath(netTypeId);
+  let availableWallets: string[];
+
+  const files = fs.readdirSync(walletPath);
+
+  availableWallets = files
+    .filter((file) => file.endsWith(".keys"))
+
+    .map((walletName) => {
+      walletName = walletName.replace(".keys", "");
+      return walletName;
+    });
+
+  return {
+    storePath: walletPath,
+    wallets: availableWallets,
+  };
 };
