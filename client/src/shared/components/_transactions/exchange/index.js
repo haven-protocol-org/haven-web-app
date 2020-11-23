@@ -27,9 +27,9 @@ const Transaction = ({
     priority === 0
       ? "~7d"
       : priority === 1
-      ? "~48d"
+      ? "~48h"
       : priority === 2
-      ? "~24d"
+      ? "~24h"
       : priority === 3
       ? "~6h"
       : null;
