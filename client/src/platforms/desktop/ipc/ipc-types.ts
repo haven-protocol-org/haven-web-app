@@ -35,3 +35,5 @@ export interface WalletRequest {
   methodName: string;
   params: any[];
 }
+
+export type LocalNodeRequest = "state" | "start" | "stop";
