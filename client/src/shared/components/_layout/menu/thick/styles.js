@@ -49,7 +49,7 @@ export const Overview = styled.div`
   justify-content: center;
   border-bottom: 1px solid ${(props) => props.theme.body.border};
   margin-top: 68px;
-  margin-bottom: 6px;
+  margin-bottom: 7px;
 
   ${media.laptop`
     display: none;
