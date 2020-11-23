@@ -37,6 +37,7 @@ import {
   removeDesktopListener,
 } from "platforms/desktop/ipc/wallet";
 import { getAddresses } from "./address";
+import { getLastBlockHeader } from "./blockHeaderExchangeRate";
 
 /** collection of actions to open, create and store wallet */
 
@@ -235,7 +236,8 @@ export const startWalletSession = (
     // initialize own connection to daemon ( needed for fetching block headers )
     dispatch({ type: START_WALLET_SESSION, payload: walletName });
     dispatch(createDaemonConnection());
-
+    // fetch latest prices once at start
+    dispatch(getLastBlockHeader());
     await dispatch(initReduxWallet());
 
     // start wallet listeners
