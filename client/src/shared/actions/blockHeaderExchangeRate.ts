@@ -5,14 +5,14 @@ import {
 } from "./types";
 import { BlockHeaderRate } from "shared/reducers/blockHeaderExchangeRates";
 import bigInt from "big-integer";
-import { getLastBlockHeader as getLastBlockHeaderCore } from "shared/core/havend";
+import { havendProxy } from "shared/core/proxy";
 import MoneroBlockHeader from "haven-wallet-core/src/main/js/daemon/model/MoneroBlockHeader";
 
 export const getLastBlockHeader = () => {
   return async (dispatch: any) => {
     dispatch({ type: GET_BLOCK_HEADER_EXCHANGE_RATE_FETCH });
 
-    const rawHeader: MoneroBlockHeader = await getLastBlockHeaderCore();
+    const rawHeader: MoneroBlockHeader = await havendProxy.getLastBlockHeader();
 
     const recordEntry = createRecordEntry(rawHeader);
     dispatch(getLastBlockerHeaderSucceed(recordEntry));
