@@ -205,3 +205,8 @@ export const labelAddress = async (label: string, addressIndex: number) => {
 export const rescanBlockchain = async () => {
   return wallet.rescanBlockchain();
 };
+
+export const getIntegratedAddress = async(paymentId?: string) => {
+  //@ts-ignore
+  return wallet.getIntegratedAddress(paymentId)
+}
