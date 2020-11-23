@@ -125,7 +125,7 @@ class SettingsPage extends Component<SettingsProps, SettingsState> {
 
         <Header
           title="Private Keys"
-          description="Manage your wallets private keys"
+          description="Manage your vault's private keys"
         />
         <Form>
           {reveal ? (
