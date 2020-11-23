@@ -10,6 +10,7 @@ const DoubleFooter = ({
   leftLabel,
   leftDisabled,
   leftLoading,
+  leftVisible,
   rightLabel,
   rightDisabled,
   rightLoading,
@@ -17,9 +18,14 @@ const DoubleFooter = ({
 }) => {
   return (
     <Container>
-      <Outline onClick={leftOnClick} disabled={leftDisabled}>
+      <Outline
+        onClick={leftOnClick}
+        disabled={leftDisabled}
+        leftVisible={leftVisible}
+      >
         {leftLabel}
       </Outline>
+
       <Fill disabled={rightDisabled} onClick={rightOnClick}>
         {rightLabel === "Loading" ? <Spinner /> : rightLabel}
       </Fill>

@@ -223,10 +223,13 @@ class SettingsPage extends Component<SettingsProps, SettingsState> {
         </Form>
         <Container>
           <DoubleFooter
+            // Left section
             leftLabel={"Download Vault File"}
             leftDisabled={walletHeight !== nodeHeight || this.props.tempWallet}
             leftLoading={false}
             leftOnClick={this.downloadKeystore}
+            leftVisible={!this.props.tempWallet}
+            // Right section
             rightLabel={this.state.reveal ? "Hide Keys" : "Show Keys"}
             rightDisabled={walletHeight !== nodeHeight ? true : false}
             rightLoading={false}
