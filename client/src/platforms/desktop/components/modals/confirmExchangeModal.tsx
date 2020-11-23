@@ -87,8 +87,7 @@ class ConfirmExchangeModal extends React.Component<
     this.setState({
       loading: true,
     });
-    // @ts-ignore
-    confetti.start(1000);
+
     setTimeout(() => {
       this.props.confirmExchange(metaList);
     }, 3000);

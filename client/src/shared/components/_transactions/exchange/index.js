@@ -27,9 +27,9 @@ const Transaction = ({
     priority === 0
       ? "~7d"
       : priority === 1
-      ? "~48d"
+      ? "~48h"
       : priority === 2
-      ? "~24d"
+      ? "~24h"
       : priority === 3
       ? "~6h"
       : null;
@@ -69,21 +69,21 @@ const Transaction = ({
                 return (
                   <>
                     <Key>Low Priority</Key>
-                    <Value>Unlocks ~48d</Value>
+                    <Value>Unlocks ~48h</Value>
                   </>
                 );
               case 2:
                 return (
                   <>
                     <Key>Medium Priority</Key>
-                    <Value>Unlocks ~24hr</Value>
+                    <Value>Unlocks ~24h</Value>
                   </>
                 );
               case 3:
                 return (
                   <>
                     <Key>High Priority</Key>
-                    <Value>Unlocks ~6hr</Value>
+                    <Value>Unlocks ~6h</Value>
                   </>
                 );
 

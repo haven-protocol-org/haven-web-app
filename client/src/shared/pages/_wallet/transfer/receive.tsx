@@ -108,10 +108,13 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
         </Form>
         <Container>
           <DoubleFooter
+            // Left Section
             leftLabel={"Show QR"}
             leftDisabled={false}
             leftLoading={false}
             leftOnClick={this.showQRCodeModal}
+            leftVisible={true}
+            // Right Section
             rightLabel={this.state.copyButtonState}
             rightDisabled={false}
             rightLoading={false}

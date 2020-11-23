@@ -57,7 +57,7 @@ const Cell = ({
               </Row>
               <Row>
                 <Subtitle>
-                  {ticker} {totalBalance.toFixed(2)}
+                  {ticker} {totalBalance === 0 ? "0.00" : totalBalance}
                 </Subtitle>
                 <Subtitle>
                   {price === 0 ? (
@@ -105,11 +105,11 @@ const Cell = ({
               </Pending>
               <Pending>
                 <Subtitle>Locked Balance</Subtitle>
-                <Subtitle>{lockedBalance}</Subtitle>
+                <Subtitle>{lockedBalance.toFixed(2)}</Subtitle>
               </Pending>
               <Pending>
                 <Subtitle>Unlocked Balance</Subtitle>
-                <Subtitle>{unlockedBalance}</Subtitle>
+                <Subtitle>{unlockedBalance.toFixed(2)}</Subtitle>
               </Pending>
               <PendingSpacer />
             </PendingWrapper>

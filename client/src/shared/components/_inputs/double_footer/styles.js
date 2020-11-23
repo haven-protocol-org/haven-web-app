@@ -43,6 +43,7 @@ export const Fill = styled.button`
 `;
 
 export const Outline = styled.button`
+  visibility: ${(props) => (props.leftVisible ? "visible" : "hidden")}
   background: ${(props) => props.theme.body.foreground};
   border: 1px solid ${(props) => props.theme.body.border};
   width: auto;

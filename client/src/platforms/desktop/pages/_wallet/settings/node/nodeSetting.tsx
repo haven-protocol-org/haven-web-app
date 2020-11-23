@@ -225,6 +225,7 @@ class NodeSettingComponent extends React.Component<
               leftDisabled={!locked}
               leftOnClick={this.onDisconnect}
               leftLoading={false}
+              leftVisible={true}
               // Right section
               rightOnClick={this.onConnect}
               rightDisabled={locked}
