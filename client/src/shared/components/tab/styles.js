@@ -5,7 +5,6 @@ export const Container = styled.div`
   align-items: center;
   height: 42px;
   grid-column: 1 / 3;
-  background: red;
   border-radius: 4px;
   overflow: hidden;
   border: 1px solid ${(props) => props.theme.body.border};
