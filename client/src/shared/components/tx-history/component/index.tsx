@@ -86,7 +86,7 @@ export const Transaction = ({
         <Row>
           {fee !== 0 ? (
             <Data>
-              <Value alignment="left">{fee.toFixed(2)}</Value>
+              <Value alignment="left">{fee.toFixed(4)}</Value>
               <Label alignment="left">Fee</Label>
             </Data>
           ) : (
