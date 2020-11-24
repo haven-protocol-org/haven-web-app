@@ -4,10 +4,6 @@ import { CommunicationChannel } from "./ipc-types";
 // @ts-ignore
 const ipcRender: typeof ipcRenderer = window.havenProcess;
 
-export const getLocalNodeStateIPC = () => {
-  return ipcRender.invoke(CommunicationChannel.LOCALNODE);
-};
-
 export const requestSavedWalletsIPC = () => {
   return ipcRender.invoke(CommunicationChannel.STORED_WALLETS);
 };

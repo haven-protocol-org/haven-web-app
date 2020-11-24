@@ -26,7 +26,6 @@ export class WalletHandler {
   }
 
   private addHandlers() {
-    logInDevMode("handlers added");
     ipcMain.handle(CommunicationChannel.CONFIG, (event, args) =>
       this.getConfig(),
     );

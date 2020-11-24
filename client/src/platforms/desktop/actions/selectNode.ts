@@ -10,6 +10,7 @@ import { NodeOption } from "../pages/_wallet/settings/node/nodeSetting";
 import { walletProxy, havendProxy } from "shared/core/proxy";
 import { IMonerRPCConnection } from "typings";
 import { setWalletConnectionState } from "shared/actions/wallet";
+import { startLocalNode, stopLocalNode } from "./localNode";
 
 export const setNodeForWallet = (
   selectedNodeOption: NodeOption,
@@ -19,16 +20,21 @@ export const setNodeForWallet = (
   return async(dispatch: any, getState: () => DesktopAppState) => {
     dispatch(setNodeForWalletRequested());
 
-    let address: string;
-    address = nodeAddress + ":" + nodePort;
-    const protocolPattern = /^((http|https):\/\/)/;
-    if (!protocolPattern.test(address)) {
-      address = "http://" + nodeAddress;
-    }
+    let address: string = createFullAddress(nodeAddress, nodePort);
+
 
     const connection: IMonerRPCConnection = {
       uri: address,
     };
+
+    // start local node when we select it
+    if (selectedNodeOption.location === NodeLocation.Local && !getState().localNode.isRunning) {
+      dispatch(startLocalNode());
+    }
+    // stop local node when we deselect it
+    if (getState().connectedNode.location === NodeLocation.Local && getState().localNode.isRunning) {
+      dispatch(stopLocalNode());
+    }
 
     try {
       
@@ -49,10 +55,22 @@ export const setNodeForWallet = (
     };
     
   };
-
-
-
 };
+
+
+
+const createFullAddress = (nodeAddress: string, nodePort: string) => {
+
+  let address = nodeAddress + ":" + nodePort;
+  
+    // if someone omits the protocol for custom nodes
+    const protocolPattern = /^((http|https):\/\/)/;
+    if (!protocolPattern.test(address)) {
+      address = "http://" + address;
+    }
+
+  return address;
+}
 
 const setNodeForWalletRequested = () => {
   return (dispatch: any) => {

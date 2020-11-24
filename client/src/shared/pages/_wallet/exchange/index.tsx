@@ -119,6 +119,15 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
 
       this.props.history.push("/wallet/assets/" + this.sendTicker);
     }
+
+
+    if (this.props.toTicker !== nextProps.toTicker) {
+      this.calcConversion();
+    }
+     if (this.props.fromTicker !== nextProps.fromTicker) {
+      this.calcConversion();
+    }
+
   }
 
   onEnterFromAmount = (event: any) => {
