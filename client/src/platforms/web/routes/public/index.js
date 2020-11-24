@@ -11,8 +11,8 @@ class PublicRoutesWeb extends Component {
   render() {
     return (
       <Suspense fallback={<Loader />}>
-        <Route path="/" exact component={LoginWeb} />
-        <Route path="/create" exact component={CreateWeb} />
+        <Route path="/" exact component={CreateWeb} />
+        <Route path="/login" exact component={LoginWeb} />
       </Suspense>
     );
   }

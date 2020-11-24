@@ -280,14 +280,22 @@ class CreateWalletWeb extends Component<CreateProps, CreateState> {
       return <Redirect to="/wallet/assets" />;
     }
 
-    const { step, verify_seed } = this.state;
+    const {
+      step,
+      verify_seed,
+      create_vault_name,
+      create_vault_password,
+    } = this.state;
 
     // Simple method to force the user to confirm they downloaded the seed
     const disabled =
-      (step === 4 && verify_seed === "") || (step === 2 && !this.state.checked);
+      (step === 1 && create_vault_name === "") ||
+      create_vault_password === "" ||
+      (step === 2 && !this.state.checked) ||
+      (step === 4 && verify_seed === "");
     return (
       <MultiCreate
-        link="/"
+        link="/login"
         route="Login"
         label="Have a Vault?"
         step={step}
