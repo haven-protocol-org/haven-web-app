@@ -77,6 +77,7 @@ export const Item = styled(NavLink).attrs({
   font-size: 16px;
   margin: 4px 12px;
   padding: 20px;
+  border-radius: 8px;
   transition: 250ms;
 
   &:hover {
@@ -88,7 +89,6 @@ export const Item = styled(NavLink).attrs({
   &.${activeClassName} {
     margin: 4px 12px;
     padding: 20px;
-    border-radius: 8px;
     color: ${(props) => props.theme.button.primary_label};
     background: ${(props) => props.theme.button.primary};
     transition: 250ms;
