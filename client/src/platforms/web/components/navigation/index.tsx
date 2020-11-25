@@ -156,7 +156,7 @@ class Navigation extends Component<NavigationProps, {}> {
 const mapStateToProps = (state: WebAppState) => ({
   isLoggedIn: selectIsLoggedIn(state),
   chain: state.chain,
-  connected: state.walletSession.isConnectedToDaemon,
+  connected: state.walletSession.isWalletConectedToDaemon,
 });
 
 export const NavigationWeb = connect(mapStateToProps, {

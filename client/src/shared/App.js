@@ -5,7 +5,7 @@ import { Route } from "react-router";
 import { history } from "../utility/history";
 import { NavigationDesktop } from "../platforms/desktop/components/navigation";
 import { PublicRoutesDesktop } from "../platforms/desktop/routes/public";
-import { PrivateRoutes } from "../platforms/desktop/routes/private";
+import { PrivateRoutes } from "./routes/private";
 import { StatusComponent } from "./components/_layout/status";
 import { HashRouter } from "react-router-dom";
 import { ModalContainerDesktop } from "../platforms/desktop/components/modalContainer";

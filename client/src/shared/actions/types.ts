@@ -53,6 +53,7 @@ export const DAEMON_CONECTION_CREATED = "daemon_conection_created";
 
 // WALLET CONNECTION TO DAEMON
 export const SET_WALLET_CONNECTION_STATE = "set_wallet_connection_state";
+export const SET_APP_TO_DAEMON_CONNECTION_STATE = "set_app_to_daemon_connection_state"
 
 export const START_WALLET_STORAGE = "start_wallet_storage";
 export const WALLET_STORAGE_SUCCEED = "wallet_storage_succeed";

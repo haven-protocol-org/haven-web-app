@@ -42,7 +42,7 @@ export const selectNodeHeight = (state: HavenAppState) => {
 
 export const selectSyncState = (state: HavenAppState): SyncState => {
   // if wallet is not connected at all, we are not syncing
-  const isWalletConnected = state.walletSession.isConnectedToDaemon === true;
+  const isWalletConnected = state.walletSession.isWalletConectedToDaemon === true;
 
   const blockHeight = state.chain.nodeHeight;
   let scannedHeight: number;

@@ -4,6 +4,7 @@ import {
   OPEN_WALLET_SUCCEED,
   START_WALLET_SESSION,
   CREATE_WALLET_FETCHING,
+  SET_APP_TO_DAEMON_CONNECTION_STATE,
 } from "shared/actions/types";
 import { AnyAction } from "redux";
 import { HavenAppState } from "platforms/desktop/reducers/index";
@@ -20,7 +21,8 @@ interface WalletSession {
   isFetching: boolean;
   isSessionStarted: boolean;
   error: RPCError | null;
-  isConnectedToDaemon: boolean;
+  isWalletConectedToDaemon: boolean;
+  isAppConnectedToDaemon: boolean;
   lastStoredHeight: number;
   isStoringWallet: boolean;
 }
@@ -30,7 +32,8 @@ const INITIAL_STATE: WalletSession = {
   isFetching: false,
   isSessionStarted: false,
   error: null,
-  isConnectedToDaemon: false,
+  isWalletConectedToDaemon: false,
+  isAppConnectedToDaemon: false,
   lastStoredHeight: -1,
   isStoringWallet: false,
 };
@@ -57,7 +60,9 @@ export const walletSession = function (
         isSessionStarted: true,
       };
     case SET_WALLET_CONNECTION_STATE:
-      return { ...state, isConnectedToDaemon: action.payload };
+      return { ...state, isWalletConectedToDaemon: action.payload };
+    case SET_APP_TO_DAEMON_CONNECTION_STATE:
+       return { ...state, isAppConnectedToDaemon: action.payload };
     case START_WALLET_SESSION:
       return {
         ...state,

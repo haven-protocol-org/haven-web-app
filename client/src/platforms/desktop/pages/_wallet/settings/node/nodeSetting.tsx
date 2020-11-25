@@ -242,7 +242,7 @@ class NodeSettingComponent extends React.Component<
 const mapStateToProps = (state: DesktopAppState) => ({
   node: state.connectedNode,
   isRemoteSyncing: false,
-  isConnected: state.walletSession.isConnectedToDaemon,
+  isConnected: state.walletSession.isWalletConectedToDaemon,
   isRequestingSwitch: false,
   localNode: selectisLocalNode(state.connectedNode),
   nodeOptions: createNodeOptions(state.connectedNode),

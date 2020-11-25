@@ -1,10 +1,10 @@
-import { createDaemonConnection as createDaemonConnectionCore } from "shared/core/havend";
 import { webWalletConnection } from "platforms/web/nodes";
+import { createDaemonConnection } from "shared/core/havend";
 import { DAEMON_CONECTION_CREATED } from "./types";
 
-export const createDaemonConnection = () => {
+export const connectAppToDaemon = () => {
   return (dispatch: any) => {
-    createDaemonConnectionCore(webWalletConnection());
+    createDaemonConnection(webWalletConnection());
     dispatch({ type: DAEMON_CONECTION_CREATED });
   };
 };
