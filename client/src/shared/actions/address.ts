@@ -3,6 +3,7 @@ import { GET_ADDRESS_SUCCEED, SET_SELECTED_ADDRESS } from "./types";
 import { AddressEntry } from "shared/reducers/address";
 import { addErrorNotification } from "./notification";
 import MoneroSubaddress from "haven-wallet-core/src/main/js/wallet/model/MoneroSubaddress";
+import { storeWalletInDB } from "platforms/web/actions/storage";
 
 export const getAddresses = () => {
   return (dispatch: any) => {
@@ -20,8 +21,10 @@ export const createAddress = (label: string) => {
   return (dispatch: any) => {
     walletProxy
       .createSubAddress(label)
-      .then((moneroAddress: MoneroSubaddress) =>
+      .then((moneroAddress: MoneroSubaddress) => {
         dispatch(getAddressSucceed([parseAddress(moneroAddress)]))
+        dispatch(storeWalletInDB())
+      }
       )
       .catch((e: any) => addErrorNotification(e));
   };
