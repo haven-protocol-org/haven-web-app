@@ -30,27 +30,20 @@ import { WebAppState } from "platforms/web/reducers/index.js";
 
 interface NavigationProps {
   isLoggedIn: boolean;
-  isLoading: boolean;
   auth: boolean;
   logout: (isWeb: boolean) => void;
-  storeKeyFileToDisk: (name: string) => void;
-  storeWalletInDB: (name: string) => void;
   getStoredWallets: () => void;
+  isClosingSession: boolean;
 }
 
 class Navigation extends Component<NavigationProps, {}> {
   state = {
     showOptions: false,
     showNotifications: false,
-    isLoading: false,
     mouseIsHovering: false,
   };
 
   handleLogout = () => {
-    this.setState({
-      isLoading: true,
-    });
-
     this.props.logout(true);
   };
 
@@ -99,7 +92,7 @@ class Navigation extends Component<NavigationProps, {}> {
         </Brand>
         <Menu>
           <Buttons
-            isLoading={this.state.isLoading}
+            isLoading={this.props.isClosingSession}
             auth={this.props.isLoggedIn}
             onClick={this.handleLogout}
           />
@@ -157,6 +150,7 @@ const mapStateToProps = (state: WebAppState) => ({
   isLoggedIn: selectIsLoggedIn(state),
   chain: state.chain,
   connected: state.walletSession.isWalletConectedToDaemon,
+  isClosingSession: state.walletSession.isClosingSession,
 });
 
 export const NavigationWeb = connect(mapStateToProps, {
