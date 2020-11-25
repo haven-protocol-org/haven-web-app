@@ -7,6 +7,8 @@ import Body from "../../../components/_layout/body";
 import Header from "../../../components/_layout/header";
 import Input from "../../../components/_inputs/input";
 import Description from "../../../components/_inputs/description";
+import RevealSeed from "../../../components/_inputs/revealSeed";
+
 import Form from "../../../components/_inputs/form";
 import Theme from "../../../components/_inputs/theme";
 import Footer from "../../../components/_inputs/footer";
@@ -103,6 +105,8 @@ class SettingsPage extends Component<SettingsProps, SettingsState> {
       truncated = first + last;
     }
 
+    console.log(" PROPS", this.props);
+
     const windowWidth = window.innerWidth;
     const { nodeHeight, walletHeight } = this.props.chain;
 
@@ -128,98 +132,63 @@ class SettingsPage extends Component<SettingsProps, SettingsState> {
           description="Manage your vault's private keys"
         />
         <Form>
-          {reveal ? (
-            <>
-              <Description
+          <>
+            {reveal ? (
+              <RevealSeed
+                label="Seed Phrase"
+                name="Seed Phrase"
+                error=""
+                value={this.props.mnemonic}
+                readOnly
+              />
+            ) : (
+              <Input
+                name="Seed Phrase"
+                placeholder=""
                 label="Seed Phrase"
                 width={true}
                 value={this.props.mnemonic}
                 readOnly
                 type={reveal ? "type" : "password"}
-                rows={windowWidth < 600 && "6"}
               />
-              <Description
-                label="Public View Key"
-                width={true}
-                value={this.props.publicView}
-                readOnly
-                type={reveal ? "type" : "password"}
-                rows={windowWidth < 600 && "2"}
-              />
-              <Description
-                label="Private View Key"
-                width={true}
-                value={this.props.privateView}
-                readOnly
-                type={reveal ? "type" : "password"}
-                rows={windowWidth < 600 && "2"}
-              />
-              <Description
-                label="Private Spend Key"
-                width={true}
-                value={this.props.privateSpend}
-                readOnly
-                type={reveal ? "type" : "password"}
-                rows={windowWidth < 600 && "2"}
-              />
-              <Description
-                label="Public Spend Key"
-                width={true}
-                value={this.props.publicSpend}
-                readOnly
-                type={reveal ? "type" : "password"}
-                rows={windowWidth < 600 && "2"}
-              />
-            </>
-          ) : (
-            <>
-              <Input
-                name="seed"
-                placeholder=""
-                label="Seed Phrase"
-                width={true}
-                value={truncated}
-                readOnly
-                type={"password"}
-              />
-              <Input
-                name="Public View Key"
-                placeholder=""
-                label="Public View Key"
-                width={true}
-                value={this.props.publicView}
-                readOnly
-                type={reveal ? "type" : "password"}
-              />
-              <Input
-                name="Private View Key"
-                placeholder=""
-                label="Private View Key"
-                width={true}
-                value={this.props.privateView}
-                readOnly
-                type={reveal ? "type" : "password"}
-              />
-              <Input
-                name="Private Spend Key"
-                placeholder=""
-                label="Private Spend Key"
-                width={true}
-                value={this.props.privateSpend}
-                readOnly
-                type={reveal ? "type" : "password"}
-              />
-              <Input
-                name="Public Spend Key"
-                placeholder=""
-                label="Public Spend Key"
-                width={true}
-                value={this.props.publicSpend}
-                readOnly
-                type={reveal ? "type" : "password"}
-              />
-            </>
-          )}
+            )}
+            <Input
+              name="Public View Key"
+              placeholder=""
+              label="Public View Key"
+              width={true}
+              value={this.props.publicView}
+              readOnly
+              type={reveal ? "type" : "password"}
+            />
+            <Input
+              name="Private View Key"
+              placeholder=""
+              label="Private View Key"
+              width={true}
+              value={this.props.privateView}
+              readOnly
+              type={reveal ? "type" : "password"}
+            />
+            <Input
+              name="Private Spend Key"
+              placeholder=""
+              label="Private Spend Key"
+              width={true}
+              value={this.props.privateSpend}
+              readOnly
+              type={reveal ? "type" : "password"}
+            />
+            <Input
+              name="Public Spend Key"
+              placeholder=""
+              label="Public Spend Key"
+              width={true}
+              value={this.props.publicSpend}
+              readOnly
+              type={reveal ? "type" : "password"}
+            />
+          </>
         </Form>
         <Container>
           <DoubleFooter

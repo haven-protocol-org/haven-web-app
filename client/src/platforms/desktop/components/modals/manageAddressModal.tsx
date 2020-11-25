@@ -60,8 +60,8 @@ export class ManageAddress extends React.Component<
     return (
       <>
         <Modal
-          title="Manage Address"
-          description="Create and name your vault addresses"
+          title="Create Address"
+          description="Create and name a new address"
           onConfirm={() => this.onConfirm()}
           onCancel={() => this.onCancel()}
           leftButton="Cancel"
@@ -85,10 +85,10 @@ export class ManageAddress extends React.Component<
             />
           </ManageAddresses>
           <Information>
-            Sub addresses let you receive assets to multiple addresses within
-            your primary account, without having to create a new vault. The
-            address label can't be edited, for now, so ensure you create a name
-            with this limitation in mind.
+            You can create unlimited amounts of addresses. This lets you receive
+            assets to multiple addresses within one account, without having to
+            create a new vault. This preserves your privacy more than receiving
+            all assets to a single address.
           </Information>
         </Modal>
       </>

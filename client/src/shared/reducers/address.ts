@@ -1,6 +1,9 @@
 import { HavenAppState } from "platforms/desktop/reducers";
 import { bindActionCreators, combineReducers } from "redux";
-import { GET_ADDRESS_SUCCEED, SET_SELECTED_ADDRESS } from "shared/actions/types";
+import {
+  GET_ADDRESS_SUCCEED,
+  SET_SELECTED_ADDRESS,
+} from "shared/actions/types";
 
 export type AddressEntry = {
   label: string;
@@ -8,9 +11,6 @@ export type AddressEntry = {
   address: string;
   index: number;
 };
-
-
-
 
 const INITIAL_STATE: AddressEntry[] = [];
 
@@ -21,20 +21,18 @@ const entrys = (state = INITIAL_STATE, action: any): AddressEntry[] => {
     default:
       return state;
   }
-}
+};
 
 const selected = (state = 0, action: any): number => {
-
   switch (action.type) {
     case SET_SELECTED_ADDRESS:
       return action.payload;
-     default:
+    default:
       return state;
   }
+};
 
-} 
-
-export const address = combineReducers({selected, entrys})
+export const address = combineReducers({ selected, entrys });
 
 export const selectPrimaryAddress = (adresses: AddressEntry[]): string => {
   const primaryAddress = adresses.find(
@@ -58,9 +56,7 @@ export const selectAddressByIndex = (
   return addressEntry;
 };
 
-
 export const selectSelectedAddress = (state: HavenAppState) => {
-
   const selectedAddressIndex = state.address.selected;
   return selectAddressByIndex(state.address.entrys, selectedAddressIndex);
-}
+};

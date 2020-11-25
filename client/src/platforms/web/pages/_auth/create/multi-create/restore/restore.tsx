@@ -277,7 +277,7 @@ class RestoreWeb extends Component<RestoreProps, RestoreState> {
     return (
       <MultiRestore
         title="Create a Vault"
-        link="/"
+        link="/login"
         route="Login"
         label="Have a Vault?"
         step={step}

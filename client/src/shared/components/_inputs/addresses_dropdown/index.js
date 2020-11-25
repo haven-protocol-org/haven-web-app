@@ -43,6 +43,8 @@ class AddressDropdown extends React.Component {
       const last = address.substring(address.length - 4);
       const truncated = first + "...." + last;
 
+      // const handleLabel = label === undefined ? `Address ${index}` : label;
+
       return (
         <>
           <Item
@@ -51,7 +53,7 @@ class AddressDropdown extends React.Component {
           >
             <Row>
               <Block>
-                <Name>{label}</Name>
+                <Name>{label === undefined ? `Address ${index}` : label} </Name>
                 <Address>{truncated}</Address>
               </Block>
             </Row>
@@ -63,7 +65,14 @@ class AddressDropdown extends React.Component {
 
   render() {
     const { displayMenu } = this.state;
-    const { label, error, value, placeholder } = this.props;
+    const {
+      label,
+      error,
+      value,
+      placeholder,
+      editAddress,
+      editable,
+    } = this.props;
 
     return (
       <Container>
@@ -80,15 +89,13 @@ class AddressDropdown extends React.Component {
           {displayMenu && (
             <Wrapper>
               {this.renderOptions()}
-              <Item key="addAddress">
+              <Item key="addAddress" onClick={editAddress}>
                 <Row>
                   <Block>
                     <Name>{"Create address"}</Name>
                     <Address>{""}</Address>
                   </Block>
-                  {this.props.editable && (
-                    <Edit onClick={this.props.editAddress}>Create</Edit>
-                  )}
+                  {editable && <Edit onClick={editAddress}>Create</Edit>}
                 </Row>
               </Item>
             </Wrapper>

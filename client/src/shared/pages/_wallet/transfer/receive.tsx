@@ -39,6 +39,8 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
   }
 
   selectAddress = (selected: AddressEntry) => {
+    console.log("selected", selected);
+
     this.props.setSelectedAddress(selected.index);
   };
 
@@ -73,35 +75,41 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
       return null;
     }
 
+    const { selected, addresses } = this.props;
+
     return (
       <Fragment>
         <Form>
           <AddressDropdown
-            label="Select Vault"
+            label="Select or Create Address"
             readOnly={true}
-            value={this.props.selected!.label}
-            options={this.props.addresses}
+            value={
+              selected!.label === undefined
+                ? `Address ${selected!.index}`
+                : selected!.label
+            }
+            options={addresses}
             onClick={this.selectAddress}
             editable={true}
             editAddress={this.showAddressModal}
           />
           {windowWidth < 1380 ? (
             <Description
-              label="Selected Vault Address"
+              label="Vault Address"
               width={true}
-              value={this.props.selected!.address}
+              value={selected!.address}
               readOnly={true}
               rows={windowWidth < 600 ? "3" : "2"}
             />
           ) : (
             <Input
               ref={(textarea) => (this.addressValue = textarea)}
-              label="Selected Vault Address"
+              label="Vault Address"
               placeholder="Select an address"
               width={true}
               type={"text"}
               name="address"
-              value={this.props.selected!.address}
+              value={selected!.address}
               readOnly={true}
             />
           )}

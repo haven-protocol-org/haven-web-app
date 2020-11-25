@@ -42,9 +42,8 @@ const parseAddress = (moneroAddress: MoneroSubaddress): AddressEntry => ({
   used: moneroAddress.isUsed(),
 });
 
-
 export const setSelectedAddress = (selectedAddressIndex: number) => {
   return (dispatch: any) => {
-    dispatch({type: SET_SELECTED_ADDRESS, payload: selectedAddressIndex})
-  }
-}
+    dispatch({ type: SET_SELECTED_ADDRESS, payload: selectedAddressIndex });
+  };
+};

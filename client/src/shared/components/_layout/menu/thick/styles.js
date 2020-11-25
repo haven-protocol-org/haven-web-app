@@ -59,11 +59,18 @@ export const Overview = styled.div`
 
 export const Wrapper = styled.div`
   width: 100%;
-  background ${(props) => props.theme.body.foreground}
+  background ${(props) => props.theme.body.foreground};
+
 
   ${media.laptop`
     width: 25%;
   `};
+`;
+
+export const Icon = styled.img`
+  height: 24px;
+  width: 24px;
+  background: white;
 `;
 
 export const Item = styled(NavLink).attrs({
@@ -77,6 +84,7 @@ export const Item = styled(NavLink).attrs({
   font-size: 16px;
   margin: 4px 12px;
   padding: 20px;
+  border-radius: 8px;
   transition: 250ms;
 
   &:hover {
@@ -88,10 +96,10 @@ export const Item = styled(NavLink).attrs({
   &.${activeClassName} {
     margin: 4px 12px;
     padding: 20px;
-    border-radius: 8px;
     color: ${(props) => props.theme.button.primary_label};
     background: ${(props) => props.theme.button.primary};
     transition: 250ms;
+    border-radius: 8px;
 
     &:hover {
       background: ${(props) => props.theme.button.primary_hover};
@@ -107,6 +115,7 @@ export const Item = styled(NavLink).attrs({
     background: none;
     z-index: 5000;
     margin: 0px
+    border-radius: 0px;
     border-top: 1px solid ${(props) => props.theme.body.border};
     border-right: 1px solid ${(props) => props.theme.body.border};
 

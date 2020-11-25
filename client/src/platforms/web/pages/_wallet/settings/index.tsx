@@ -5,11 +5,16 @@ import { walletProxy } from "shared/core/proxy";
 
 export class SettingsWeb extends Component<{}, IKeys> {
   state: IKeys = {
-    privateSpend: "**********",
-    publicSpend: "**********",
-    privateView: "**********",
-    publicView: "**********",
-    mnemonic: "**********",
+    privateSpend:
+      "****************************************************************",
+    publicSpend:
+      "****************************************************************",
+    privateView:
+      "****************************************************************",
+    publicView:
+      "****************************************************************",
+    mnemonic:
+      "****************************************************************",
   };
 
   componentDidMount() {
