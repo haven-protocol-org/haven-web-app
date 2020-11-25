@@ -14,6 +14,7 @@ import {
   START_WALLET_SESSION,
   STOP_WALLET_SESSION,
   GET_WALLET_HEIGHT_SUCCEED,
+  CLOSE_WALLET_SESSION,
 } from "./types";
 import { walletProxy } from "../core/proxy";
 import { addNotificationByMessage } from "./notification";
@@ -258,6 +259,8 @@ export const startWalletSession = (
 export const closeWallet = (isWeb: boolean) => {
   return async (dispatch: any, getState: () => HavenAppState) => {
     // closing wallet is handled differently for web and desktop
+
+    dispatch({type: CLOSE_WALLET_SESSION})
     if (isWeb) {
       await dispatch(storeWalletInDB());
       await walletProxy.stopSyncing();

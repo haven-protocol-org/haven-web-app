@@ -76,6 +76,7 @@ export const OPEN_WALLET_FAILED = "open_wallet_failed";
 
 export const START_WALLET_SESSION = "start_wallet_session";
 export const STOP_WALLET_SESSION = "stop_wallet_session";
+export const CLOSE_WALLET_SESSION = "close_wallet_session";
 
 /*
 TRANSFER
