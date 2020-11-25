@@ -120,14 +120,12 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       this.props.history.push("/wallet/assets/" + this.sendTicker);
     }
 
-
     if (this.props.toTicker !== nextProps.toTicker) {
       this.calcConversion();
     }
-     if (this.props.fromTicker !== nextProps.fromTicker) {
+    if (this.props.fromTicker !== nextProps.fromTicker) {
       this.calcConversion();
     }
-
   }
 
   onEnterFromAmount = (event: any) => {
@@ -181,13 +179,13 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     }
 
     if (fromAmount !== undefined && setToAmount) {
-      this.setState({ toAmount: (parseFloat(fromAmount) * xRate).toFixed(4) });
+      this.setState({ toAmount: (parseFloat(fromAmount) * xRate).toFixed(2) });
       return;
     }
 
     if (toAmount !== undefined && !setToAmount) {
       this.setState({
-        fromAmount: (parseFloat(toAmount) * (1 / xRate)).toFixed(4),
+        fromAmount: (parseFloat(toAmount) * (1 / xRate)).toFixed(2),
       });
     }
   }
@@ -283,15 +281,20 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
 
   toAmountIsValid = (availableBalance: any) => {
     const { toAmount } = this.state;
+
     //@ts-ignore
-    if (toAmount > availableBalance) {
+    if (convertToNum > convertBalance) {
       return "Not enough funds";
     }
   };
 
   fromAmountIsValid = (availableBalance: any) => {
     const { fromAmount } = this.state;
+
     const availableBalanceString = availableBalance.toString();
+
+    // const convertToNum = parseFloat(fromAmount);
+    // const convertBalance = parseFloat(availableBalance);
 
     //@ts-ignore
     if (fromAmount > availableBalance) {
