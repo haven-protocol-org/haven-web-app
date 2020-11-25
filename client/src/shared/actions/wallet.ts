@@ -40,6 +40,8 @@ import { getAddresses } from "./address";
 import { getLastBlockHeader } from "./blockHeaderExchangeRate";
 import { getWalletConnectionState } from "./connection";
 import { refresh } from "./refresh";
+import { setWebConfig } from "platforms/web/actions/config";
+import { setDesktopConfig } from "platforms/desktop/actions/config";
 
 /** collection of actions to open, create and store wallet */
 
@@ -235,6 +237,14 @@ export const startWalletSession = (
   walletName: string | undefined = undefined
 ) => {
   return async (dispatch: any, getStore: () => HavenAppState) => {
+
+    if (isWeb()) {
+      dispatch(setWebConfig());
+    } else {
+      dispatch(setDesktopConfig());
+    }
+
+
     // initialize own connection to daemon ( needed for fetching block headers )
     dispatch({ type: START_WALLET_SESSION, payload: walletName });
     dispatch(connectAppToDaemon());

@@ -53,6 +53,8 @@ export const getWalletCacheByName = async (
   }
 };
 
+
+
 const fetchValueByKey = (name: string): Promise<ArrayBuffer> => {
   return new Promise((resolutionFunc, rejectionFunc) => {
     const openRequest: IDBOpenDBRequest = indexedDB.open(HAVEN_DB);

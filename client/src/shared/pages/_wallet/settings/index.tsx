@@ -11,7 +11,6 @@ import RevealSeed from "../../../components/_inputs/revealSeed";
 
 import Form from "../../../components/_inputs/form";
 import Theme from "../../../components/_inputs/theme";
-import Footer from "../../../components/_inputs/footer";
 import DoubleFooter from "../../../components/_inputs/double_footer";
 
 import { Container } from "./styles";

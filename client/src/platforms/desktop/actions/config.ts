@@ -2,10 +2,9 @@ import { selectTheme } from "shared/actions";
 import {
   getConfigIPC,
   updateConfigIPC,
-} from "../../platforms/desktop/ipc/misc";
-import { setNodeForWallet } from "../../platforms/desktop/actions/selectNode";
+} from "../ipc/misc";
 
-export const getConfig = () => {
+export const setDesktopConfig = () => {
   return async (dispatch: any) => {
     const config: any = await getConfigIPC();
     //  dispatch(setNodeForWallet())
@@ -16,6 +15,6 @@ export const getConfig = () => {
   };
 };
 
-export const updateConfig = (config: any) => {
-  updateConfigIPC(config);
+export const updateDesktopConfig = () => {
+//  updateConfigIPC(config);
 };
