@@ -68,11 +68,11 @@ export const selectSyncState = (state: HavenAppState): SyncState => {
   return { isSyncing, blockHeight, scannedHeight };
 };
 
-export const selectWalletHeight = (state: DesktopAppState) => {
+export const selectWalletHeight = (state: HavenAppState) => {
   return state.chain.walletHeight;
 };
 
-export const isWalletSynced = (state: DesktopAppState): boolean => {
+export const isWalletSynced = (state: HavenAppState): boolean => {
   if (state.chain.walletHeight === 0) {
     return false;
   }
