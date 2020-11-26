@@ -4,7 +4,6 @@ trap "kill 0" EXIT
 
 #electron envs
 export HAVEN_DESKTOP_DEVELOPMENT=true
-export NET_TYPE_ID=2
 export BROWSER=none
 export NODE_INSTALLER=npm
 
