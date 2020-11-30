@@ -18,6 +18,7 @@ import { isDesktop, isWeb } from "constants/env";
 import { SettingsWeb } from "platforms/web/pages/_wallet/settings";
 import { storeWalletInDB } from "platforms/web/actions/storage";
 import { refresh } from "shared/actions/refresh";
+import { isWalletSynced } from "shared/reducers/chain";
 
 /**
  *root component for private wallet
@@ -35,8 +36,12 @@ class PrivateRoutesContainer extends Component {
 
   storeWalletBeforeUnload = (event) => {
 
+    if (this.props.isSyncing) {
       event.preventDefault();
       event.returnValue = 'Use Logout Button';
+    }
+
+  
   }
 
   componentWillUnmount() {
@@ -82,6 +87,7 @@ class PrivateRoutesContainer extends Component {
 
 const mapStateToProps = (state) => ({
   isLoggedIn: selectIsLoggedIn(state),
+  isSyncing: !isWalletSynced(state)
 });
 
 export const PrivateRoutes = connect(mapStateToProps, { storeWalletInDB, refresh })(
