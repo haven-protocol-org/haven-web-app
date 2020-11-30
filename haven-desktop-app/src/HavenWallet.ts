@@ -5,11 +5,9 @@
 import { BrowserWindow } from "electron";
 import BrowserWindowConstructorOptions = Electron.BrowserWindowConstructorOptions;
 import * as path from "path";
-import { checkAndCreateDaemonConfig } from "./localNode/config/config";
 import { LocalNodeHandler } from "./localNode/LocalNodeHandler";
 import { appEventBus, LOCAL_NODE_STOPPED_EVENT } from "./EventBus";
 import { WalletHandler } from "./wallets/WalletHandler";
-import { checkAndCreateWalletDir } from "./wallets/walletPaths";
 
 export class HavenWallet {
   private _isRunning: boolean = false;
@@ -30,7 +28,6 @@ export class HavenWallet {
 
     this._isRunning = true;
 
-    checkAndCreateDaemonConfig();
     this.walletHandler.start();
   }
 
