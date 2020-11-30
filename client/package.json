@@ -1,6 +1,6 @@
 {
   "name": "haven_web_wallet",
-  "version": "1.46.2",
+  "version": "1.46.4",
   "private": true,
   "dependencies": {
     "big-integer": "^1.6.48",
@@ -17,22 +17,15 @@
     "react-scripts": "^3.4.4",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
+    "redux-watch": "^1.2.0",
     "styled-components": "^4.4.0"
   },
   "scripts": {
     "postinstall": "npm run copy-haven-core",
-    "start:web:mainnet": "sh -ac '. ./env/.env.mainnet; . ./env/.env.web; react-scripts start'",
-    "start:web:testnet": "sh -ac '. ./env/.env.testnet; . ./env/.env.web; react-scripts start'",
-    "start:web:stagenet": "sh -ac '. ./env/.env.stagenet; . ./env/.env.web; react-scripts start'",
-    "build:web:testnet": "sh -ac '. ./env/.env.testnet; . ./env/.env.web; npm version patch; react-scripts build'",
-    "build:web:mainnet": "sh -ac '. ./env/.env.mainnet; . ./env/.env.web; npm version minor; react-scripts build'",
-    "build:web:stagenet": "sh -ac '. ./env/.env.stagenet; . ./env/.env.web; npm version minor; react-scripts build'",
-    "start:desktop:mainnet": "sh -ac '. ./env/.env.mainnet; . ./env/.env.desktop; react-scripts start'",
-    "start:desktop:testnet": "sh -ac '. ./env/.env.testnet; . ./env/.env.desktop; react-scripts start'",
-    "start:desktop:stagenet": "sh -ac '. ./env/.env.stagenet; . ./env/.env.desktop; react-scripts start'",
-    "build:desktop:mainnet": "sh -ac '. ./env/.env.mainnet; . ./env/.env.desktop; . ./env/.env.desktop.build;  react-scripts build'",
-    "build:desktop:testnet": "sh -ac '. ./env/.env.testnet; . ./env/.env.desktop; . ./env/.env.desktop.build;  react-scripts build'",
-    "build:desktop:stagenet": "sh -ac '. ./env/.env.stagenet; . ./env/.env.desktop; . ./env/.env.desktop.build;  react-scripts build'",
+    "start:web": "sh -ac '. ./env/.net; . ./env/.env.web; react-scripts start'",
+    "build:web": "sh -ac '. ./env/.net; . ./env/.env.web; npm version patch; react-scripts build'",
+    "start:desktop": "sh -ac '. ./env/.net; . ./env/.env.desktop; react-scripts start'",
+    "build:desktop": "sh -ac '. ./env/.net; . ./env/.env.desktop; . ./env/.env.desktop.build;  react-scripts build'",
     "copy-build": "rm -rf ../haven-desktop-app/client && rm -rf ./build/libs && cp -rf ./build ../haven-desktop-app/client",
     "copy-haven-core": "cp ./node_modules/haven-wallet-core/dist/{MoneroWebWorker.dist.js,haven_offshore.js,haven_offshore.wasm} ./public",
     "test": "react-scripts test",
@@ -57,6 +50,7 @@
     "@types/react-redux": "^7.1.11",
     "@types/react-router": "^5.1.8",
     "@types/react-router-dom": "^5.1.6",
+    "@types/redux-watch": "^1.1.0",
     "typescript": "^3.9.7"
   }
 }
