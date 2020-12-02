@@ -15,7 +15,6 @@ interface TransferOwnProps {
   sendFunds: (
     address: string,
     amount: number,
-    paymentId: string,
     ticker: Ticker,
     sweepAll: boolean
   ) => void;

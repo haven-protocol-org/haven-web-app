@@ -18,6 +18,7 @@ import {
   OptionsList,
   OptionsSVG,
   Arr,
+  Legal,
   Tab,
   Arrow,
 } from "./styles.js";
@@ -137,6 +138,12 @@ class Navigation extends Component<NavigationProps, {}> {
               <OptionsDoubleRow>
                 <Body>Version</Body>
                 <Label>v{APP_VERSION}</Label>
+              </OptionsDoubleRow>
+              <OptionsDoubleRow>
+                <Body>Legal</Body>
+                <Legal target="_blank" href="https://havenprotocol.org/legal/">
+                  <Label>Terms & Conditions</Label>
+                </Legal>
               </OptionsDoubleRow>
             </OptionsList>
           </>

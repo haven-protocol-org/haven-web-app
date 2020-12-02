@@ -8,7 +8,6 @@ import { Container, Row, Key, Value } from "./styles";
 const TransferSummary = ({
   transferAsset,
   transferAmount,
-  paymentId,
   recipientAddress,
   onChange,
 }) => {
@@ -16,9 +15,6 @@ const TransferSummary = ({
   const last = recipientAddress.substring(recipientAddress.length - 4);
   const truncated = first + "...." + last;
 
-  const paymentIdFirstFour = paymentId.substring(0, 4);
-  const paymentIdLastFour = paymentId.substring(paymentId.length - 4);
-  const paymentIdTruncated = paymentIdFirstFour + "...." + paymentIdLastFour;
   return (
     <Container>
       <Row>
@@ -35,10 +31,6 @@ const TransferSummary = ({
       <Row>
         <Key>Recipient Address</Key>
         <Value>{recipientAddress === "--" ? "--" : truncated}</Value>
-      </Row>
-      <Row>
-        <Key>Payment ID</Key>
-        <Value>{paymentId === "--" ? "--" : paymentIdTruncated}</Value>
       </Row>
     </Container>
   );
