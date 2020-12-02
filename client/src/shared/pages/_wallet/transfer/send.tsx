@@ -10,6 +10,7 @@ import Dropdown from "../../../components/_inputs/dropdown";
 import Footer from "../../../components/_inputs/footer";
 import Form from "../../../components/_inputs/form";
 import Input from "../../../components/_inputs/input";
+import InputButton from "../../../components/_inputs/input_button";
 
 import { Container } from "./styles";
 import TransferSummary from "shared/components/_summaries/transfer-summary";
@@ -97,6 +98,8 @@ class TransferContainer extends Component<TransferProps, TransferState> {
   };
 
   setMaxAmount = () => {
+    alert("SEND MAX");
+
     const { selectedAsset } = this.state;
 
     let availableBalance = null;
@@ -176,7 +179,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
             options={this.props.options}
             onClick={this.setSendAsset}
           />
-          <Input
+          <InputButton
             // @ts-ignore
             label={
               availableBalance
@@ -190,6 +193,8 @@ class TransferContainer extends Component<TransferProps, TransferState> {
             name="send_amount"
             value={send_amount}
             onChange={this.handleChange}
+            button={"max"}
+            onClick={this.setMaxAmount}
           />
           {windowWidth < 1380 ? (
             <Description
