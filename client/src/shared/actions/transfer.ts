@@ -29,23 +29,24 @@ import MoneroTxWallet from "haven-wallet-core/src/main/js/wallet/model/MoneroTxW
 export const createTransfer = (
   address: string,
   amount: number,
-  paymentId: string,
-  fromTicker: Ticker
+  fromTicker: Ticker,
+  sweepAll: boolean
 ) => {
   const amountInt = bigInt(amount * 1e12);
 
   return async (dispatch: any) => {
-    const destinations = [
-      new MoneroDestination(address, amountInt.toString()).toJson(),
-    ];
+
+    const destinations = [new MoneroDestination(address, amountInt.toString()).toJson(),]
+  
+
     const priority = MoneroTxPriority.NORMAL;
     const txType =
       fromTicker === Ticker.XHV
         ? HavenTxType.CLASSIC
         : HavenTxType.OFFSHORE_TO_OFFSHORE;
+    
     dispatch(
       transferCreationFetch({
-        paymentId,
         address,
         fromTicker,
         fromAmount: amount,
@@ -55,16 +56,22 @@ export const createTransfer = (
 
     const txConfig: Partial<ITxConfig> = {
       canSplit: true,
-      paymentId,
-      destinations,
       accountIndex: 0,
       relay: false,
       txType,
       priority,
     } as Partial<ITxConfig>;
 
+
+    if (sweepAll) {
+      txConfig.address = address;
+    } else {
+      txConfig.destinations = destinations;
+    }
+  
+
     try {
-      const txList: MoneroTxWallet[] = await walletProxy.transfer(txConfig);
+      const txList: MoneroTxWallet[] = sweepAll? await walletProxy.sweep(txConfig) :  await walletProxy.transfer(txConfig);
 
       const reduxParams = {
         fee: txList.reduce(

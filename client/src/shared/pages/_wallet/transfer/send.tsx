@@ -25,7 +25,12 @@ interface TransferOption {
 }
 
 interface TransferOwnProps {
-  sendFunds: (address: string, amount: number, ticker: Ticker) => void;
+  sendFunds: (
+    address: string,
+    amount: number,
+    ticker: Ticker,
+    sweepAll: boolean
+  ) => void;
   isProcessing: boolean;
 }
 
@@ -40,6 +45,7 @@ interface TransferState {
   recipient_address: string;
   amountError: string;
   reviewed: boolean;
+  sweep_all: boolean;
 }
 
 type TransferProps = TransferOwnProps & TransferReduxProps;
@@ -51,6 +57,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
     recipient_address: "",
     amountError: "",
     reviewed: false,
+    sweep_all: false,
   };
 
   componentDidMount() {
@@ -92,7 +99,8 @@ class TransferContainer extends Component<TransferProps, TransferState> {
       this.props.sendFunds(
         recipient_address,
         Number(send_amount),
-        selectedAsset.ticker
+        selectedAsset.ticker,
+        this.state.sweep_all
       );
     }
   };
@@ -110,8 +118,9 @@ class TransferContainer extends Component<TransferProps, TransferState> {
     }
 
     if (availableBalance != null) {
+
       this.setState({
-        send_amount: availableBalance,
+        send_amount: availableBalance,sweep_all: true
       });
     } else {
       this.setState({
