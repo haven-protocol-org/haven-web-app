@@ -106,8 +106,6 @@ class TransferContainer extends Component<TransferProps, TransferState> {
   };
 
   setMaxAmount = () => {
-    alert("SEND MAX");
-
     const { selectedAsset } = this.state;
 
     let availableBalance = null;
@@ -118,9 +116,9 @@ class TransferContainer extends Component<TransferProps, TransferState> {
     }
 
     if (availableBalance != null) {
-
       this.setState({
-        send_amount: availableBalance,sweep_all: true
+        send_amount: availableBalance,
+        sweep_all: true,
       });
     } else {
       this.setState({
