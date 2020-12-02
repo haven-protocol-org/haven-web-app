@@ -38,7 +38,6 @@ import {
 } from "platforms/desktop/ipc/wallet";
 import { getAddresses } from "./address";
 import { getLastBlockHeader } from "./blockHeaderExchangeRate";
-import { getWalletConnectionState } from "./connection";
 import { refresh } from "./refresh";
 import { setWebConfig } from "platforms/web/actions/config";
 import { setDesktopConfig } from "platforms/desktop/actions/config";

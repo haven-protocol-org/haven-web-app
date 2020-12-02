@@ -1,7 +1,9 @@
 import { Component } from "react";
 import { connect } from "react-redux";
-import { closeWallet } from "../../closeWallet";
-import {selectWebSyncState} from "../../../platforms/web/reducers/chain";
+import { isWalletSynced } from "shared/reducers/chain"
+import { closeWallet } from "shared/actions/wallet";
+import { isWeb } from "constants/env";
+
 
 const ACTIVITY_EVENTS = [
   "mousemove",
@@ -19,7 +21,7 @@ const ACTIVITY_EVENTS = [
 // set a limit of 10 minutes inactivity
 const IDLE_TIME = 10 * 60 * 1000;
 
-class Idle extends Component {
+class IdleComponent extends Component {
   idleTimer = null;
 
   componentDidMount() {
@@ -85,14 +87,14 @@ class Idle extends Component {
   }
 
 
-  startTimer(){
+  startTimer() {
     this.idleTimer = setTimeout(this.onIdle, IDLE_TIME);
   }
 
   onIdle = event => {
 
     this.clearTimer();
-    this.props.closeWallet();
+    this.props.closeWallet(isWeb());
   };
 
   render() {
@@ -102,10 +104,10 @@ class Idle extends Component {
 
 
 const mapStateToProps = state => ({
-    isInSyncProcess: selectWebSyncState(state).isSyncing
+    isInSyncProcess: isWalletSynced(state)
 });
 
-export default connect(
+export const Idle =  connect(
     mapStateToProps,
   { closeWallet }
-)(Idle);
+)(IdleComponent);
