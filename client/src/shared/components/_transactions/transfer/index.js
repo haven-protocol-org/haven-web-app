@@ -9,7 +9,6 @@ import { Information } from "../../../../assets/styles/type.js";
 export const Transaction = ({
   checked,
   onChange,
-  paymentId,
   recipientAddress,
   ticker,
   transferAmount,
@@ -18,10 +17,6 @@ export const Transaction = ({
   const first = recipientAddress.substring(0, 4);
   const last = recipientAddress.substring(recipientAddress.length - 4);
   const truncated = first + "...." + last;
-
-  const paymentIdFirstFour = paymentId.substring(0, 4);
-  const paymentIdLastFour = paymentId.substring(paymentId.length - 4);
-  const paymentIdTruncated = paymentIdFirstFour + "...." + paymentIdLastFour;
 
   return (
     <Fragment>
@@ -37,12 +32,7 @@ export const Transaction = ({
           <Key>Recipient Address</Key>
           <Value>{truncated}</Value>
         </Row>
-        {paymentId.length > 63 ? (
-          <Row>
-            <Key>Payment ID</Key>
-            <Value>{paymentIdTruncated}</Value>
-          </Row>
-        ) : null}
+
         <Row>
           <Key>Final Transfer Fee</Key>
           <Tag>

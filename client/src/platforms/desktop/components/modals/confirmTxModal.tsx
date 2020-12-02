@@ -28,13 +28,7 @@ class ConfirmTxModal extends React.Component<ConfirmTxModalProps, any> {
   };
 
   render() {
-    const {
-      paymentId,
-      fromTicker,
-      fromAmount,
-      address,
-      fee,
-    } = this.props.transfer;
+    const { fromTicker, fromAmount, address, fee } = this.props.transfer;
     const { checked } = this.state;
 
     const readableFee = convertToMoney(fee);
@@ -54,7 +48,6 @@ class ConfirmTxModal extends React.Component<ConfirmTxModalProps, any> {
         <Transaction
           onChange={this.approveTransfer}
           checked={this.state.checked}
-          paymentId={paymentId === "" ? "--" : paymentId}
           recipientAddress={address}
           ticker={fromTicker}
           transferAmount={readableAmount}

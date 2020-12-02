@@ -12,12 +12,7 @@ import { AddressEntry } from "shared/reducers/address";
 // Relative Imports
 
 interface TransferOwnProps {
-  sendFunds: (
-    address: string,
-    amount: number,
-    paymentId: string,
-    ticker: Ticker
-  ) => void;
+  sendFunds: (address: string, amount: number, ticker: Ticker) => void;
   addresses: AddressEntry[];
   isProcessing: boolean;
 }

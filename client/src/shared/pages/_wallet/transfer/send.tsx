@@ -24,12 +24,7 @@ interface TransferOption {
 }
 
 interface TransferOwnProps {
-  sendFunds: (
-    address: string,
-    amount: number,
-    paymentId: string,
-    ticker: Ticker
-  ) => void;
+  sendFunds: (address: string, amount: number, ticker: Ticker) => void;
   isProcessing: boolean;
 }
 
@@ -42,7 +37,6 @@ interface TransferState {
   selectedAsset: AssetOption | null;
   send_amount: string;
   recipient_address: string;
-  payment_id: string;
   amountError: string;
   reviewed: boolean;
 }
@@ -54,7 +48,6 @@ class TransferContainer extends Component<TransferProps, TransferState> {
     selectedAsset: this.props.options[0],
     send_amount: "",
     recipient_address: "",
-    payment_id: "",
     amountError: "",
     reviewed: false,
   };
@@ -88,12 +81,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
   };
 
   handleSubmit = () => {
-    const {
-      payment_id,
-      send_amount,
-      recipient_address,
-      selectedAsset,
-    } = this.state;
+    const { send_amount, recipient_address, selectedAsset } = this.state;
 
     if (send_amount.length === 0 && recipient_address.length === 0) {
       return;
@@ -103,7 +91,6 @@ class TransferContainer extends Component<TransferProps, TransferState> {
       this.props.sendFunds(
         recipient_address,
         Number(send_amount),
-        payment_id,
         selectedAsset.ticker
       );
     }
@@ -127,21 +114,6 @@ class TransferContainer extends Component<TransferProps, TransferState> {
       this.setState({
         amountError: "Select an asset",
       });
-    }
-  };
-
-  paymentIdIsValid = () => {
-    const regexp = new RegExp(/^[0-9a-fA-F]+$/);
-
-    const { payment_id } = this.state;
-
-    if (
-      (regexp.test(payment_id) && payment_id.length === 64) ||
-      payment_id === ""
-    ) {
-      return "";
-    } else {
-      return "Enter a valid Payment ID";
     }
   };
 
@@ -176,12 +148,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
   };
 
   render() {
-    const {
-      selectedAsset,
-      send_amount,
-      recipient_address,
-      payment_id,
-    } = this.state;
+    const { selectedAsset, send_amount, recipient_address } = this.state;
 
     const windowWidth = window.innerWidth;
 
@@ -225,28 +192,16 @@ class TransferContainer extends Component<TransferProps, TransferState> {
             onChange={this.handleChange}
           />
           {windowWidth < 1380 ? (
-            <Fragment>
-              <Description
-                label="Recipient"
-                placeholder="Enter recipient's address"
-                name="recipient_address"
-                value={recipient_address}
-                width={true}
-                rows={windowWidth < 600 ? "3" : "2"}
-                onChange={this.handleChange}
-                error={this.recipientIsValid()}
-              />
-              <Input
-                label="Payment ID (Optional)"
-                placeholder="Enter an optional payment ID"
-                type={"text"}
-                name="payment_id"
-                width={true}
-                value={payment_id}
-                onChange={this.handleChange}
-                error={this.paymentIdIsValid()}
-              />
-            </Fragment>
+            <Description
+              label="Recipient"
+              placeholder="Enter recipient's address"
+              name="recipient_address"
+              value={recipient_address}
+              width={true}
+              rows={windowWidth < 600 ? "3" : "2"}
+              onChange={this.handleChange}
+              error={this.recipientIsValid()}
+            />
           ) : (
             <Fragment>
               <Input
@@ -264,7 +219,6 @@ class TransferContainer extends Component<TransferProps, TransferState> {
         </Form>
         <Container>
           <TransferSummary
-            paymentId={payment_id === "" ? "--" : payment_id}
             recipientAddress={
               recipient_address === "" ? "--" : recipient_address
             }
