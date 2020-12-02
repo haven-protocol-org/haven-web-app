@@ -29,7 +29,6 @@ import MoneroTxWallet from "haven-wallet-core/src/main/js/wallet/model/MoneroTxW
 export const createTransfer = (
   address: string,
   amount: number,
-  paymentId: string,
   fromTicker: Ticker,
   sweepAll: boolean
 ) => {
@@ -48,7 +47,6 @@ export const createTransfer = (
     
     dispatch(
       transferCreationFetch({
-        paymentId,
         address,
         fromTicker,
         fromAmount: amount,
