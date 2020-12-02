@@ -259,16 +259,6 @@ class TransferContainer extends Component<TransferProps, TransferState> {
                 onChange={this.handleChange}
                 error={this.recipientIsValid()}
               />
-              <Input
-                label="Payment ID (Optional) "
-                placeholder="Enter an optional payment ID"
-                type={"text"}
-                width={true}
-                name="payment_id"
-                value={payment_id}
-                onChange={this.handleChange}
-                error={this.paymentIdIsValid()}
-              />
             </Fragment>
           )}
         </Form>

@@ -39,8 +39,6 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
   }
 
   selectAddress = (selected: AddressEntry) => {
-    console.log("selected", selected);
-
     this.props.setSelectedAddress(selected.index);
   };
 
@@ -76,7 +74,6 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
     }
 
     const { selected, addresses } = this.props;
-    console.log("selected", selected);
 
     const handleLabel =
       selected!.label === undefined
