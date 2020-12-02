@@ -31,6 +31,10 @@ export const Icon = styled(HavenIcon)`
   }
 `;
 
+export const Legal = styled.a`
+  text-decoration: none;
+`;
+
 export const Tag = styled.div`
   padding: 4px 8px;
   background: #34d8ac;
