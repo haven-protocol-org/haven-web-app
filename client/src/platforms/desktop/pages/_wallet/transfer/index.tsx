@@ -26,10 +26,10 @@ class Container extends Component<any, any> {
     address: string,
     amount: number,
     paymentId: string,
-    ticker: Ticker = Ticker.XHV
+    ticker: Ticker = Ticker.XHV, sweepAll: boolean
   ) => {
     this.sendTicker = ticker;
-    this.props.createTransfer(address, amount, paymentId, ticker);
+    this.props.createTransfer(address, amount, paymentId, ticker, sweepAll);
   };
 
   render() {

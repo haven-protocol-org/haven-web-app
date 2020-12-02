@@ -16,7 +16,8 @@ interface TransferOwnProps {
     address: string,
     amount: number,
     paymentId: string,
-    ticker: Ticker
+    ticker: Ticker,
+    sweepAll: boolean
   ) => void;
   addresses: AddressEntry[];
   isProcessing: boolean;
