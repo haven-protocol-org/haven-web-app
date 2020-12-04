@@ -5,7 +5,7 @@ import { Modal } from "shared/components/modal";
 import { ExchangeProcessInfo } from "shared/reducers/exchangeProcess";
 import { hideModal } from "shared/actions/modal";
 import Transaction from "shared/components/_transactions/exchange";
-import { convertToMoney } from "utility/utility";
+import { convertBalanceToMoney } from "utility/utility";
 import { selectPrimaryAddress } from "shared/reducers/address";
 import { HavenAppState } from "platforms/desktop/reducers";
 
@@ -45,9 +45,9 @@ class ConfirmExchangeModal extends React.Component<
 
     const isOwnAddress = this.props.isOwnAddress;
 
-    const readableToAmout = convertToMoney(toAmount);
-    const readAbleFromAmount = convertToMoney(fromAmount);
-    const readAbleFeeAmount = convertToMoney(fee);
+    const readableToAmout = convertBalanceToMoney(toAmount!);
+    const readAbleFromAmount = convertBalanceToMoney(fromAmount!);
+    const readAbleFeeAmount = convertBalanceToMoney(fee!);
 
     return (
       <Modal

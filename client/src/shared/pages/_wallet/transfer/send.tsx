@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { AssetOption } from "shared/pages/_wallet/exchange";
 import { Ticker } from "shared/reducers/types";
 import { XBalances } from "shared/reducers/xBalance";
-import { convertBalanceForReading } from "utility/utility";
+import { convertBalanceToMoney } from "utility/utility";
 import Description from "../../../components/_inputs/description";
 import Dropdown from "../../../components/_inputs/dropdown";
 import Footer from "../../../components/_inputs/footer";
@@ -82,19 +82,25 @@ class TransferContainer extends Component<TransferProps, TransferState> {
     });
   };
 
+
+    handleSendAmountChange = (event: any) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    this.setState<never>({
+      [name]: value,sweep_all: false,
+    });
+  };
+
   setSendAsset = (asset: AssetOption) => {
     this.setState({
-      selectedAsset: asset,
+      selectedAsset: asset, sweep_all: false
     });
   };
 
   handleSubmit = () => {
     const { send_amount, recipient_address, selectedAsset } = this.state;
 
-    if (send_amount.length === 0 && recipient_address.length === 0) {
-      return;
-    }
-
+ 
     if (selectedAsset !== null) {
       this.props.sendFunds(
         recipient_address,
@@ -110,14 +116,14 @@ class TransferContainer extends Component<TransferProps, TransferState> {
 
     let availableBalance = null;
     if (selectedAsset) {
-      availableBalance = convertBalanceForReading(
+      availableBalance = convertBalanceToMoney(
         this.props.xBalances[selectedAsset.ticker].unlockedBalance
       );
     }
 
     if (availableBalance != null) {
       this.setState({
-        send_amount: availableBalance,
+        send_amount: availableBalance.toFixed(2),
         sweep_all: true,
       });
     } else {
@@ -127,22 +133,17 @@ class TransferContainer extends Component<TransferProps, TransferState> {
     }
   };
 
-  amountIsValid = (availableBalance: any) => {
+  amountIsValid = (availableBalance: number): string | true => {
     const { send_amount } = this.state;
-    const availableBalanceString = availableBalance.toString();
 
     const convertToNum = parseFloat(send_amount);
-    const convertBalance = parseFloat(availableBalance);
 
     //@ts-ignore
-    if (convertToNum > convertBalance) {
+    if (convertToNum > availableBalance) {
       return "Not enough funds";
     }
 
-    //@ts-ignore
-    if (send_amount === availableBalanceString) {
-      return "Save some for fees";
-    }
+    return true
   };
 
   // @ts-ignore
@@ -157,14 +158,17 @@ class TransferContainer extends Component<TransferProps, TransferState> {
     }
   };
 
+
+  
+
   render() {
     const { selectedAsset, send_amount, recipient_address } = this.state;
 
     const windowWidth = window.innerWidth;
 
-    let availableBalance = null;
+    let availableBalance = 0;
     if (selectedAsset) {
-      availableBalance = convertBalanceForReading(
+      availableBalance = convertBalanceToMoney(
         this.props.xBalances[selectedAsset.ticker].unlockedBalance
       );
     }
@@ -172,7 +176,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
     const checkValidation =
       send_amount.length > 0 &&
       recipient_address.length > 97 &&
-      send_amount < availableBalance;
+      this.amountIsValid(availableBalance) === true
 
     return (
       <Fragment>
@@ -199,7 +203,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
             error={this.amountIsValid(availableBalance.toFixed(2))}
             name="send_amount"
             value={send_amount}
-            onChange={this.handleChange}
+            onChange={this.handleSendAmountChange}
             button={"max"}
             onClick={this.setMaxAmount}
           />

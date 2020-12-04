@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Details } from "shared/pages/_wallet/details";
 import { Ticker } from "shared/reducers/types";
-import { convertToMoney } from "utility/utility";
+import { convertBalanceToMoney } from "utility/utility";
 import { TxHistoryDesktop } from "shared/components/tx-history/container";
 import { XBalances } from "shared/reducers/xBalance";
 import {
@@ -32,7 +32,7 @@ DetailsProps & RouteComponentProps<RouteProps>,
   render() {
     const ticker = this.props.match.params.id;
     const xRate = selectXRate(this.props.rates, ticker, Ticker.xUSD);
-    let amount: number = convertToMoney(
+    let amount: number = convertBalanceToMoney(
       this.props.balances[ticker].unlockedBalance
     );
     let value = amount * xRate;

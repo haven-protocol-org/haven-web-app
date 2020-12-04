@@ -16,7 +16,7 @@ import { storeKeyFileToDisk } from "platforms/web/actions/storage";
 import { createNewWallet, startWalletSession } from "shared/actions/wallet";
 import { selectIsLoggedIn } from "shared/reducers/walletSession";
 import { Redirect } from "react-router";
-import Checkbox from "../../../../../../../shared/components/checkbox";
+import Checkbox from "shared/components/checkbox";
 
 interface CreateProps {
   startWalletSession: (fileName: string | undefined) => void;
@@ -171,7 +171,7 @@ class CreateWalletWeb extends Component<CreateProps, CreateState> {
               onClick={this.showPassword}
               readOnly={false}
               error=""
-              width={false}
+              width={undefined}
             />
 
             <Information>

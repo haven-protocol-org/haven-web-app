@@ -7,7 +7,7 @@ import {
 } from "shared/pages/_wallet/details/styles";
 import { Spinner } from "shared/components/spinner";
 import {
-  convertBalanceForReading,
+  convertBalanceToMoney,
   createRemainingTimeString,
 } from "utility/utility";
 import React, { Component } from "react";
@@ -138,7 +138,7 @@ const prepareTxInfo = (
     tx.timestamp * 1000
   ).toLocaleDateString();
   const mempool = tx.mempool;
-  const readableAmount = convertBalanceForReading(tx.amount);
+  const readableAmount = convertBalanceToMoney(tx.amount);
   const currentValueInUSD = readableAmount * xRate;
 
   const txType = TxHistoryContainer.getTransactionType(
@@ -172,7 +172,7 @@ const prepareTxInfo = (
     date: transactionDate,
     amount: readableAmount,
     hash: tx.hash,
-    fee: convertBalanceForReading(tx.fee),
+    fee: convertBalanceToMoney(tx.fee),
     block: tx.height
   };
 };

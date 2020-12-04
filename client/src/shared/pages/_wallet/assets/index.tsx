@@ -9,7 +9,7 @@ import Cell from "../../../components/cell";
 import CellDisabled from "../../../components/cell_disabled";
 
 import { AssetList } from "constants/assets";
-import { convertToMoney } from "utility/utility";
+import { convertBalanceToMoney } from "utility/utility";
 import { Ticker } from "shared/reducers/types";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import {
@@ -51,13 +51,13 @@ class AssetsPage extends Component<AssetsProps, any> {
 
       const xTicker = ("x" + ticker) as Ticker;
 
-      const unlockedBalance = convertToMoney(
+      const unlockedBalance = convertBalanceToMoney(
         this.props.balances[xTicker].unlockedBalance
       );
 
-      const totalBalance = convertToMoney(this.props.balances[xTicker].balance);
+      const totalBalance = convertBalanceToMoney(this.props.balances[xTicker].balance);
 
-      const lockedBalance = convertToMoney(
+      const lockedBalance = convertBalanceToMoney(
         this.props.balances[xTicker].lockedBalance
       );
 
@@ -107,13 +107,13 @@ class AssetsPage extends Component<AssetsProps, any> {
   };
 
   render() {
-    const unlockedBalance = convertToMoney(
+    const unlockedBalance = convertBalanceToMoney(
       this.props.balances.XHV.unlockedBalance
     );
 
-    const totalBalance = convertToMoney(this.props.balances.XHV.balance);
+    const totalBalance = convertBalanceToMoney(this.props.balances.XHV.balance);
 
-    const lockedBalance = convertToMoney(this.props.balances.XHV.lockedBalance);
+    const lockedBalance = convertBalanceToMoney(this.props.balances.XHV.lockedBalance);
 
     const xhvInUSD = this.props.assetsInUSD.XHV!.unlockedBalance;
     const xRate = selectXRate(this.props.rates, Ticker.XHV, Ticker.xUSD);

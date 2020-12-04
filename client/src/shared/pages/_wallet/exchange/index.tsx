@@ -30,7 +30,7 @@ import {
 } from "shared/reducers/exchangeProcess";
 import { setFromTicker, setToTicker } from "shared/actions/exchange";
 import { NO_BALANCE, XBalances } from "shared/reducers/xBalance";
-import { convertBalanceForReading } from "utility/utility";
+import { convertBalanceToMoney } from "utility/utility";
 import { showModal } from "shared/actions/modal";
 import { MODAL_TYPE } from "shared/reducers/modal";
 import { ExchangeSummary } from "shared/components/_summaries/exchange-summary";
@@ -240,12 +240,12 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     const { fromTicker } = this.props;
 
     const availBalance = fromTicker
-      ? convertBalanceForReading(
+      ? convertBalanceToMoney(
           this.props.balances[fromTicker].unlockedBalance
         )
       : NO_BALANCE;
 
-    this.setState({ ...this.state, fromAmount: availBalance }, () => {
+    this.setState({ ...this.state, fromAmount: availBalance.toString() }, () => {
       this.calcConversion(true);
     });
   };
@@ -254,10 +254,10 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     const { toTicker } = this.props;
 
     const availBalance = toTicker
-      ? convertBalanceForReading(this.props.balances[toTicker].unlockedBalance)
+      ? convertBalanceToMoney(this.props.balances[toTicker].unlockedBalance)
       : NO_BALANCE;
 
-    this.setState({ ...this.state, toAmount: availBalance }, () => {
+    this.setState({ ...this.state, toAmount: availBalance.toString() }, () => {
       this.calcConversion(false);
     });
   };
@@ -347,7 +347,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     const { hasLatestXRate } = this.props;
 
     const availBalance = fromTicker
-      ? convertBalanceForReading(
+      ? convertBalanceToMoney(
           this.props.balances[fromTicker].unlockedBalance
         )
       : NO_BALANCE;
@@ -359,7 +359,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     const toAsset = assetOptions.find((option) => option.ticker === toTicker);
 
     const toBalance = toTicker
-      ? convertBalanceForReading(this.props.balances[toTicker].unlockedBalance)
+      ? convertBalanceToMoney(this.props.balances[toTicker].unlockedBalance)
       : NO_BALANCE;
 
     return (
@@ -394,7 +394,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 label={
                   "From Amount " +
                   (availBalance !== NO_BALANCE
-                    ? `(Avail: ${availBalance.toFixed(2)})`
+                    ? `(Avail: ${availBalance})`
                     : "")
                 }
                 placeholder="Enter amount"
@@ -420,7 +420,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 label={
                   "To Amount " +
                   (toBalance !== NO_BALANCE
-                    ? `(Avail: ${toBalance.toFixed(2)})`
+                    ? `(Avail: ${toBalance})`
                     : "")
                 }
                 placeholder="Enter amount"

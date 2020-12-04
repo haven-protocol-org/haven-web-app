@@ -25,6 +25,7 @@ import {
   TRANSFER_RESET,
 } from "./types";
 import MoneroTxWallet from "haven-wallet-core/src/main/js/wallet/model/MoneroTxWallet";
+import { convertMoneyToBalance } from "utility/utility";
 
 export const createTransfer = (
   address: string,
@@ -32,11 +33,12 @@ export const createTransfer = (
   fromTicker: Ticker,
   sweepAll: boolean
 ) => {
-  const amountInt = bigInt(amount * 1e12);
+
+
+
 
   return async (dispatch: any) => {
 
-    const destinations = [new MoneroDestination(address, amountInt.toString()).toJson(),]
   
 
     const priority = MoneroTxPriority.NORMAL;
@@ -49,7 +51,6 @@ export const createTransfer = (
       transferCreationFetch({
         address,
         fromTicker,
-        fromAmount: amount,
         priority,
       })
     );
@@ -66,6 +67,8 @@ export const createTransfer = (
     if (sweepAll) {
       txConfig.address = address;
     } else {
+      const amountInt = convertMoneyToBalance(amount);
+      const destinations = [new MoneroDestination(address, amountInt.toString()).toJson(),]
       txConfig.destinations = destinations;
     }
   
