@@ -32,7 +32,12 @@ export const storeWalletInDB = (): any => {
      // if its a temporary wallet ( just login via seed ) we don't store the wallet in any way
     
     if (walletName !== undefined) {
-      await storeWalletDataInIndexedDB(walletName);
+      try {
+        await storeWalletDataInIndexedDB(walletName);
+      }
+      catch (e) {
+        return false;
+      }
     }
   //  dispatch({ type: SET_STORED_HEIGHT, payload: 0 });
     return true;
@@ -61,6 +66,12 @@ const fetchValueByKey = (name: string): Promise<ArrayBuffer> => {
     openRequest.onupgradeneeded = function (this: IDBRequest<IDBDatabase>) {
       const db = this.result;
       db.createObjectStore(WALLET_STORE);
+    };
+
+    openRequest.onerror = function (this: IDBRequest<IDBDatabase>) {
+
+      rejectionFunc("we cannot open indexedDB")
+        
     };
     openRequest.onsuccess = function (this: IDBRequest<IDBDatabase>) {
       const db = this.result;
