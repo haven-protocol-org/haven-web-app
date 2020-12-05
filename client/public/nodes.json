@@ -1,0 +1,35 @@
+[
+  {
+    "testnet":[ {
+     "address": "http://vault-testnet.havenprotocol.org/",
+     "provider": "Testnet - Vault",
+     "port": "443",
+     "trusted": true,
+   }],
+    "stagenet":[ {
+     "address": "http://remote.eu.havenprotocol.org/",
+     "provider": "Stagenet - Haven European Node",
+     "port": "37750",
+     "trusted": true,
+   } ],
+    "mainnet":[{
+    "address": "http://remote.haven.miner.rocks/",
+    "provider": "Haven Miner Rocks",
+    "port": "17750",
+    "trusted": true,
+  },
+  {
+    "address": "http://nodes.hashvault.pro/",
+    "provider": "Hash Vault",
+    "port": "17750",
+    "trusted": true,
+  },
+   {
+     "address": "http://remote.eu.havenprotocol.org/",
+     "provider": "Haven European Node",
+     "port": "17750",
+     "trusted": true,
+   }
+   ]
+   }
+]
