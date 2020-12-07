@@ -186,14 +186,12 @@ export default class Login extends Component<LoginProps, LoginState> {
           link="/"
           route="Create or Restore"
           label="Need a Vault?"
-          hideTabs={false} // hide the seed login
           disable={isLoginDisabled}
           onClick={() => this.handleLogin()}
           loading={
             this.props.isRequestingLogin ||
             this.props.isRequestingWalletCreation
           }
-          // T
           submit="Submit"
           selectSeed={this.selectSeed}
           selectKeystore={this.selectKeystore}
@@ -238,7 +236,7 @@ export default class Login extends Component<LoginProps, LoginState> {
                 action="upload"
                 onChange={this.handleFileChange}
                 /*
-                // @ts-ignore */
+                  // @ts-ignore */
                 keyStoreFile={this.state.fileName}
               />
               {/* @ts-ignore */}
