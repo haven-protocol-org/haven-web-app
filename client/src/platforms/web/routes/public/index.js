@@ -2,12 +2,20 @@
 import React, { Component, Suspense } from "react";
 //@ts-ignore
 import { Route } from "react-router-dom";
-
-import Loader from "../../../../shared/components/loader";
+import { connect } from "react-redux";
+import Loader from "shared/components/loader";
 import { CreateWeb } from "../../pages/_auth/create";
 import { LoginWeb } from "../../pages/_auth/login/container";
+import { showModal } from "shared/actions/modal";
+import { MODAL_TYPE } from "shared/reducers/modal"
 
-class PublicRoutesWeb extends Component {
+class PublicRoutes extends Component {
+
+  componentDidMount() {
+    this.props.showModal(MODAL_TYPE.LoginOnboarding);
+  }
+
+
   render() {
     return (
       <Suspense fallback={<Loader />}>
@@ -18,4 +26,6 @@ class PublicRoutesWeb extends Component {
   }
 }
 
-export default PublicRoutesWeb;
+export default connect( null, { showModal })(
+  PublicRoutes
+);
