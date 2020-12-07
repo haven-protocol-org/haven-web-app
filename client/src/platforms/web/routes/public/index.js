@@ -12,7 +12,12 @@ import { MODAL_TYPE } from "shared/reducers/modal"
 class PublicRoutes extends Component {
 
   componentDidMount() {
-    this.props.showModal(MODAL_TYPE.LoginOnboarding);
+
+    if (localStorage.getItem("onboard") === null) {
+      this.props.showModal(MODAL_TYPE.LoginOnboarding);
+      localStorage.setItem("onboard", true);
+    } 
+
   }
 
 

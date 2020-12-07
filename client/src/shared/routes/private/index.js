@@ -55,7 +55,7 @@ class PrivateRoutesContainer extends Component {
 
     return (
       <div>
-        <Idle />
+        {/* <Idle /> */}
         <Page>
           <Menu />
           <Route path={`${match.url}/assets`} exact component={AssetsDesktop} />
