@@ -137,7 +137,6 @@ class Navigation extends Component<NavigationProps, {}> {
                   <Label>{walletHeight}</Label>
                 </OptionsDoubleRow>
               )}
-
               <OptionsDoubleRow>
                 <Body>Help</Body>
                 <Legal
