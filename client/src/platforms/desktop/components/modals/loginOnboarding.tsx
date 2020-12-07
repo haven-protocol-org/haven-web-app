@@ -16,7 +16,9 @@ class LoginOnboarding extends React.Component<any, any> {
         disabled={false}
         isLoading={false}
         onConfirm={() => this.onCancel()}
-        onCancel={() => window.open("https://havenprotocol.org/knowledge/")}
+        onCancel={() =>
+          window.open("https://havenprotocol.org/knowledge/quick-start-guide")
+        }
       >
         <LoginTutorial />
       </Modal>
