@@ -186,7 +186,7 @@ export default class Login extends Component<LoginProps, LoginState> {
           link="/"
           route="Create or Restore"
           label="Need a Vault?"
-          hideTabs={false} // hide the seed login
+          hideTabs={true} // hide the seed login
           disable={isLoginDisabled}
           onClick={() => this.handleLogin()}
           loading={
