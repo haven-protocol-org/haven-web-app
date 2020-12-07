@@ -5,6 +5,7 @@ import { hideModal } from "shared/actions/modal";
 import { MODAL_TYPE } from "shared/reducers/modal";
 import { ConfirmTxModalDesktop } from "platforms/desktop/components/modals/confirmTxModal";
 import { ConfirmExchangeModalDesktop } from "platforms/desktop/components/modals/confirmExchangeModal";
+import { LoginOnboardingModal } from "platforms/desktop/components/modals/loginOnboarding";
 import { QRCodeModal } from "../modals/showQRCode";
 import { ManageAddressModal } from "../modals/manageAddressModal";
 
@@ -22,7 +23,7 @@ class ModalContainer extends React.Component<any, any> {
       case MODAL_TYPE.ShowQRCode:
         return <QRCodeModal />;
       case MODAL_TYPE.ShowAddressModal:
-        return <ManageAddressModal />;
+        return <LoginOnboardingModal />;
     }
     return null;
   }

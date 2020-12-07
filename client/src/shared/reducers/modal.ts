@@ -8,6 +8,7 @@ export enum MODAL_TYPE {
   EditAddress,
   ShowQRCode,
   ShowAddressModal,
+  LoginOnboarding,
 }
 
 const INITIAL_STATE: MODAL_TYPE = MODAL_TYPE.None;
