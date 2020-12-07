@@ -63,6 +63,7 @@ export const Field = styled.input`
   transition: 500ms;
   -webkit-appearance: none;
   -moz-appearance: none;
+  -moz-appearance: textfield;
 
   &::placeholder {
     font-family: Inter-Regular;
