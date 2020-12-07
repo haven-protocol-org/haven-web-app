@@ -25,9 +25,6 @@ import { Idle } from "shared/components/idle";
  *root component for private wallet
  */
 class PrivateRoutesContainer extends Component {
-
-
-
   componentDidMount() {
     if (isWeb()) {
       window.addEventListener("beforeunload", this.storeWalletBeforeUnload);
@@ -36,14 +33,11 @@ class PrivateRoutesContainer extends Component {
   }
 
   storeWalletBeforeUnload = (event) => {
-
     if (this.props.isSyncing) {
       event.preventDefault();
-      event.returnValue = 'Use Logout Button';
+      event.returnValue = "Use Logout Button";
     }
-
-  
-  }
+  };
 
   componentWillUnmount() {
     if (isWeb()) {
@@ -61,7 +55,7 @@ class PrivateRoutesContainer extends Component {
 
     return (
       <div>
-        <Idle/>
+        <Idle />
         <Page>
           <Menu />
           <Route path={`${match.url}/assets`} exact component={AssetsDesktop} />
@@ -89,9 +83,10 @@ class PrivateRoutesContainer extends Component {
 
 const mapStateToProps = (state) => ({
   isLoggedIn: selectIsLoggedIn(state),
-  isSyncing: !isWalletSynced(state)
+  isSyncing: !isWalletSynced(state),
 });
 
-export const PrivateRoutes = connect(mapStateToProps, { storeWalletInDB, refresh })(
-  PrivateRoutesContainer
-);
+export const PrivateRoutes = connect(mapStateToProps, {
+  storeWalletInDB,
+  refresh,
+})(PrivateRoutesContainer);
