@@ -139,7 +139,7 @@ class Navigation extends Component<NavigationProps, {}> {
               )}
 
               <OptionsDoubleRow>
-                <Body>Get Help</Body>
+                <Body>Help</Body>
                 <Legal
                   target="_blank"
                   href="https://havenprotocol.org/knowledge/"
