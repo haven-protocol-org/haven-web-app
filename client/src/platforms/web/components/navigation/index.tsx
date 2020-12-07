@@ -114,7 +114,9 @@ class Navigation extends Component<NavigationProps, {}> {
               </Arrow>
               <OptionsDoubleRow>
                 <Body>Network</Body>
-                <Label>{NET_TYPE_NAME}</Label>
+                <Label>
+                  {NET_TYPE_NAME} v{APP_VERSION}
+                </Label>
               </OptionsDoubleRow>
               <OptionsDoubleRow>
                 <Body>Vault Status</Body>
@@ -127,7 +129,7 @@ class Navigation extends Component<NavigationProps, {}> {
               {syncedFinished ? (
                 <OptionsDoubleRow>
                   <Body>Vault Synced</Body>
-                  <Label>{"Yes"}</Label>
+                  <Label>Yes</Label>
                 </OptionsDoubleRow>
               ) : (
                 <OptionsDoubleRow>
@@ -136,8 +138,13 @@ class Navigation extends Component<NavigationProps, {}> {
                 </OptionsDoubleRow>
               )}
               <OptionsDoubleRow>
-                <Body>Version</Body>
-                <Label>v{APP_VERSION}</Label>
+                <Body>Help</Body>
+                <Legal
+                  target="_blank"
+                  href="https://havenprotocol.org/knowledge/"
+                >
+                  <Label>Knowledge Base</Label>
+                </Legal>
               </OptionsDoubleRow>
               <OptionsDoubleRow>
                 <Body>Legal</Body>

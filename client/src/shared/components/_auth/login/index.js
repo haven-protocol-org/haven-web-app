@@ -26,14 +26,16 @@ const Auth = ({ ...props }) => {
         <Title>{props.title}</Title>
         <Description>{props.description}</Description>
       </Header>
-      <Tabs>
-        <Tab active={!props.selectedSeed} onClick={props.selectKeystore}>
-          Vault File
-        </Tab>
-        <Tab active={props.selectedSeed} onClick={props.selectSeed}>
-          Seed Phrase
-        </Tab>
-      </Tabs>
+      {!props.hideTabs ? (
+        <Tabs>
+          <Tab active={!props.selectedSeed} onClick={props.selectKeystore}>
+            Vault File
+          </Tab>
+          <Tab active={props.selectedSeed} onClick={props.selectSeed}>
+            Seed Phrase
+          </Tab>
+        </Tabs>
+      ) : null}
       <Main>
         <Body>{props.children}</Body>
         <Buttons>
