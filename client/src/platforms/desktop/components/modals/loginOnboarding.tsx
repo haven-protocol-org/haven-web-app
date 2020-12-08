@@ -10,13 +10,15 @@ class LoginOnboarding extends React.Component<any, any> {
     return (
       <Modal
         title="Welcome to Haven"
-        description="Before you get started lets learn a few things"
-        leftButton="Cancel"
+        description="Take a few moments to learn about your vault"
+        leftButton="Learn More"
         rightButton="Ok, I got it"
         disabled={false}
         isLoading={false}
         onConfirm={() => this.onCancel()}
-        onCancel={() => this.onCancel()}
+        onCancel={() =>
+          window.open("https://havenprotocol.org/knowledge/quick-start-guide")
+        }
       >
         <LoginTutorial />
       </Modal>

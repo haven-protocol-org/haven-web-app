@@ -8,27 +8,25 @@ const LoginTutorial = () => {
   return (
     <Container>
       <>
-        <List>First Option</List>
+        <List>Data Requirements</List>
         <Item>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation
+          A vault needs to sync ~2gb of data to your device. This can be a slow
+          process depending on your connection speed and device.
         </Item>
       </>
       <>
-        <List>Second Option</List>
+        <List>Vault Persistance</List>
         <Item>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation
+          Avoid incognito mode or clearing your browsers history as this will
+          delete the vault data from your browser and require you to resync.
         </Item>
       </>
       <>
-        <List>Third Option</List>
+        <List>Optimal Experience</List>
         <Item>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation
+          The best way to get started is to create a new vault and transfer any
+          assets to it. This avoids any syncing delays and allows you to
+          privately store, exchange and transfer assets.
         </Item>
       </>
     </Container>
