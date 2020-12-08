@@ -71,6 +71,7 @@ export const walletSession = function (
         isFetching: false,
         isSessionStarted: true,
         activeWallet: action.payload,
+        isClosingSession: false,
       };
     case CLOSE_WALLET_SESSION:
       return {

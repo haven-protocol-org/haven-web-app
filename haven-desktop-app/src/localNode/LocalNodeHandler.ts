@@ -7,6 +7,7 @@ export class LocalNodeHandler {
   private localNode: LocalNodeProcess;
 
   constructor() {
+    this.localNode = new LocalNodeProcess();
     ipcMain.handle(CommunicationChannel.LOCALNODE, (event, typeOfRequest, netTypeId?) =>
       this.handleRequest(typeOfRequest,netTypeId),
     );
@@ -16,7 +17,6 @@ export class LocalNodeHandler {
    * Starts local node process
    */
   public start(netTypeId: NET): void {
-    this.localNode = new LocalNodeProcess();
     this.localNode.setNetypId(netTypeId);
     this.localNode.startLocalProcess();
   }

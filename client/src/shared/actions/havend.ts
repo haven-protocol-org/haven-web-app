@@ -1,10 +1,10 @@
 import { webWalletConnection } from "platforms/web/nodes";
-import { createDaemonConnection } from "shared/core/havend";
+import { havendProxy } from "shared/core/proxy";
 import { DAEMON_CONECTION_CREATED } from "./types";
 
 export const connectAppToDaemon = () => {
   return (dispatch: any) => {
-    createDaemonConnection(webWalletConnection());
+    havendProxy.createDaemonConnection(webWalletConnection());
     dispatch({ type: DAEMON_CONECTION_CREATED });
   };
 };
