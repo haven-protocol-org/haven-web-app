@@ -186,9 +186,10 @@ class RestoreWeb extends Component<RestoreProps, RestoreState> {
               Enter your 25 word seed phrase to generate a new vault file. This
               is an encrypted file, with a unique name and password.{" "}
               <strong style={styles}>
-                This restore requires a full chain sync and can take ~2.5hrs. We
-                recommend restoring your vault once, creating a new vault, and
-                then transferring your existing funds to the new vault.
+                A restore requires a full chain sync and can take ~2.5hrs. An
+                alternative approach is to create a new vault to use within the
+                web wallet, which is much quicker, and then transferring your
+                funds into that new vault.
               </strong>
             </Information>
           </>
