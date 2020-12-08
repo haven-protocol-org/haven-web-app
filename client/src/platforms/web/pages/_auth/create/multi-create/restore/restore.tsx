@@ -163,6 +163,11 @@ class RestoreWeb extends Component<RestoreProps, RestoreState> {
     const windowWidth = window.innerWidth;
     const { step, mnemomic, error } = this.state;
 
+    // Is the sole inline style because it's for a <strong /> tag
+    const styles = {
+      color: "#96989b",
+    };
+
     switch (step) {
       case 1:
         return (
@@ -179,8 +184,13 @@ class RestoreWeb extends Component<RestoreProps, RestoreState> {
             />
             <Information>
               Enter your 25 word seed phrase to generate a new vault file. This
-              is an encrypted file, with a unique name and password. This file
-              will allow you to log into your vault on any device.
+              is an encrypted file, with a unique name and password.{" "}
+              <strong style={styles}>
+                A restore requires a full chain sync and can take ~2.5hrs. An
+                alternative approach is to create a new vault to use within the
+                web wallet, which is much quicker, and then transferring your
+                funds into that new vault.
+              </strong>
             </Information>
           </>
         );
