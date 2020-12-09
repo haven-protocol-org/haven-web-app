@@ -45,6 +45,7 @@ interface CreateState {
   action: string;
   checked: boolean;
   disabled: boolean;
+  clickedSaveButton: boolean;
 }
 
 class CreateWalletWeb extends Component<CreateProps, CreateState> {
@@ -62,6 +63,7 @@ class CreateWalletWeb extends Component<CreateProps, CreateState> {
     create_vault_password: "",
     confirm_vault_password: "",
     confirm_vault_error: "",
+    clickedSaveButton: false,
   };
 
   componentDidUpdate(prevProps: any, prevState: any) {
@@ -141,6 +143,9 @@ class CreateWalletWeb extends Component<CreateProps, CreateState> {
   };
 
   onDownLoad = (event: any) => {
+    this.setState({
+      clickedSaveButton: true,
+    });
     this.props.storeKeyFileToDisk(this.props.walletName);
   };
 
@@ -285,13 +290,16 @@ class CreateWalletWeb extends Component<CreateProps, CreateState> {
       verify_seed,
       create_vault_name,
       create_vault_password,
+      checked,
+      clickedSaveButton,
     } = this.state;
 
     // Simple method to force the user to confirm they downloaded the seed
     const disabled =
       (step === 1 && create_vault_name === "") ||
       create_vault_password === "" ||
-      (step === 2 && !this.state.checked) ||
+      (step === 2 && !checked) ||
+      (step === 2 && !clickedSaveButton) ||
       (step === 4 && verify_seed === "");
 
     return (
