@@ -270,9 +270,10 @@ class CreateWalletWeb extends Component<CreateProps, CreateState> {
               width={false}
             />
             <Information>
-              Re-enter the password you used to create this vault file. If you
-              have forgotten it, please start again. Access to a vault requires
-              both the vault file and valid password.
+              Re-enter the password that you used to create this vault file. If
+              you have forgotten it, please start again. This step is
+              intentionally frictional and requires password revalidation to
+              ensure you can access your vault file next time you login.
             </Information>
           </>
         );
