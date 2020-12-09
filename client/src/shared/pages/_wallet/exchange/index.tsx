@@ -240,14 +240,15 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     const { fromTicker } = this.props;
 
     const availBalance = fromTicker
-      ? convertBalanceToMoney(
-          this.props.balances[fromTicker].unlockedBalance
-        )
+      ? convertBalanceToMoney(this.props.balances[fromTicker].unlockedBalance)
       : NO_BALANCE;
 
-    this.setState({ ...this.state, fromAmount: availBalance.toString() }, () => {
-      this.calcConversion(true);
-    });
+    this.setState(
+      { ...this.state, fromAmount: availBalance.toString() },
+      () => {
+        this.calcConversion(true);
+      }
+    );
   };
 
   setMaxToAmount = () => {
@@ -347,9 +348,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     const { hasLatestXRate } = this.props;
 
     const availBalance = fromTicker
-      ? convertBalanceToMoney(
-          this.props.balances[fromTicker].unlockedBalance
-        )
+      ? convertBalanceToMoney(this.props.balances[fromTicker].unlockedBalance)
       : NO_BALANCE;
 
     const fromAsset = assetOptions.find(
@@ -419,9 +418,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 // @ts-ignore
                 label={
                   "To Amount " +
-                  (toBalance !== NO_BALANCE
-                    ? `(Avail: ${toBalance})`
-                    : "")
+                  (toBalance !== NO_BALANCE ? `(Avail: ${toBalance})` : "")
                 }
                 placeholder="Enter amount"
                 name="toAmount"
@@ -465,7 +462,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 fromTicker={fromTicker}
                 selectedPrio={selectedPrio}
               />
-
               <Footer
                 onClick={() => this.handleSubmit()}
                 label="Preview"

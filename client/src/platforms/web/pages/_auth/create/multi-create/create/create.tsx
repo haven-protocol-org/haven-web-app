@@ -293,6 +293,7 @@ class CreateWalletWeb extends Component<CreateProps, CreateState> {
       create_vault_password === "" ||
       (step === 2 && !this.state.checked) ||
       (step === 4 && verify_seed === "");
+
     return (
       <MultiCreate
         link="/login"
