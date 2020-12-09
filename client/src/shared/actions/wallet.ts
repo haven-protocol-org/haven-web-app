@@ -271,8 +271,8 @@ export const closeWallet = (isWeb: boolean) => {
 
     dispatch({type: CLOSE_WALLET_SESSION})
     if (isWeb) {
-      await dispatch(storeWalletInDB());
       await walletProxy.stopSyncing();
+      await dispatch(storeWalletInDB());
       await walletProxy.closeWallet(false);
     } else {
       await walletProxy.stopSyncing();
