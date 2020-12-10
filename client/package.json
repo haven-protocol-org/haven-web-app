@@ -1,6 +1,6 @@
 {
   "name": "haven_web_wallet",
-  "version": "1.46.5",
+  "version": "1.46.7",
   "private": true,
   "dependencies": {
     "big-integer": "^1.6.48",
@@ -21,7 +21,6 @@
     "styled-components": "^4.4.0"
   },
   "scripts": {
-    "postinstall": "npm run copy-haven-core",
     "start:web": "bash -ac '. ./env/.net; . ./env/.env.web; react-scripts start'",
     "build:web": "bash -ac '. ./env/.net; . ./env/.env.web; npm version patch; react-scripts build'",
     "start:desktop": "bash -ac '. ./env/.net; . ./env/.env.desktop; react-scripts start'",
