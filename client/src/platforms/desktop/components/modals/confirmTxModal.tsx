@@ -31,7 +31,7 @@ class ConfirmTxModal extends React.Component<ConfirmTxModalProps, any> {
     const { fromTicker, fromAmount, address, fee } = this.props.transfer;
     const { checked } = this.state;
 
-    const readableFee = convertBalanceToMoney(fee!);
+    const readableFee = convertBalanceToMoney(fee!, 4);
     const readableAmount = convertBalanceToMoney(fromAmount!);
 
     return (
