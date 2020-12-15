@@ -9,12 +9,12 @@ export const setDesktopConfig = () => {
     const config: any = await getConfigIPC();
     //  dispatch(setNodeForWallet())
 
-    if (config.theme) {
+    if (config && config.theme) {
       dispatch(selectTheme(config.theme));
     }
   };
 };
 
-export const updateDesktopConfig = () => {
-//  updateConfigIPC(config);
+export const updateDesktopConfig = (config: any) => {
+     updateConfigIPC(config);
 };

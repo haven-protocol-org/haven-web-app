@@ -26,11 +26,9 @@ export class WalletHandler {
   }
 
   private addHandlers() {
-    ipcMain.handle(CommunicationChannel.CONFIG, (event, args) =>
-      this.getConfig(),
-    );
+
     ipcMain.handle(CommunicationChannel.STORED_WALLETS, (event, netTypeID: NET) =>
-      getAvailableWallets(netTypeID),
+       getAvailableWallets(netTypeID),
     );
     ipcMain.handle(CommunicationChannel.WALLET, (event, args) =>
       this.handleWalletCoreRequest(args as WalletRequest),
@@ -41,8 +39,6 @@ export class WalletHandler {
   }
 
   private removeHandlers() {
-    logInDevMode("handlers removed");
-    ipcMain.removeHandler(CommunicationChannel.CONFIG);
     ipcMain.removeHandler(CommunicationChannel.WALLET);
     ipcMain.removeHandler(CommunicationChannel.DAEMON);
     ipcMain.removeHandler(CommunicationChannel.STORED_WALLETS);
@@ -56,6 +52,8 @@ export class WalletHandler {
       addWalletListener();
       return;
     }
+
+    try {
 
     if (methodName === "getTxs") {
       const txClassObjects = await core[methodName].call(null, ...params);
@@ -80,17 +78,24 @@ export class WalletHandler {
     }
 
     return core[methodName].call(null, ...params);
-  };
-
-  private getConfig = () => {
-    // return config();
   }
+  catch(e) {
+    return e;
+  }
+
+  };
 
   private handleDaemonCoreRequest = async (request: WalletRequest) => {
     const methodName: keyof typeof daemon = request.methodName as keyof typeof daemon;
     const params = request.params;
+    try {
+       const response = await daemon[methodName].call(null, ...params);
+       return response;
+    }
+    catch (e) {
+      return e;
+    }
 
-    return daemon[methodName].call(null, ...params);
   };
 }
 
