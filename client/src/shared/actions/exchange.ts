@@ -30,6 +30,7 @@ import MoneroDestination from "haven-wallet-core/src/main/js/wallet/model/Monero
 import { HavenTxType } from "haven-wallet-core";
 import MoneroTxWallet from "haven-wallet-core/src/main/js/wallet/model/MoneroTxWallet";
 import bigInt from "big-integer";
+import { convertBalanceToMoney, convertMoneyToBalance } from "utility/utility";
 
 interface RPCExchangeResponse {
   amount_list: Array<number>;
@@ -71,17 +72,10 @@ export function createExchange(
     const xhvAnmount =
       exchangeType === ExchangeType.Offshore ? fromAmount : toAmount;
 
-    if (!sanityCheck(xhvAnmount)) {
-      dispatch(
-        addNotificationByMessage(
-          NotificationType.ERROR,
-          "Exchanges cannot exceed 4 decimals"
-        )
-      );
-      return;
-    }
-
-    const amount = bigInt(Math.round(xhvAnmount * 10000) * 1e8);
+    let amount = convertMoneyToBalance(xhvAnmount);
+    // we need to round the value as just for diigits are allowed for onshore/offshore
+    const roundingValue = bigInt(100000000);
+    amount = amount.divide(roundingValue).multiply(roundingValue);
     dispatch(
       onExchangeCreationFetch({ priority, exchangeType, address } as Partial<
         ExchangeProcessInfo
