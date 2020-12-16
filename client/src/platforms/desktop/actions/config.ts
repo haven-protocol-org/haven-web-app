@@ -1,4 +1,4 @@
-import { selectTheme } from "shared/actions";
+import { setTheme } from "shared/actions";
 import {
   getConfigIPC,
   updateConfigIPC,
@@ -10,7 +10,7 @@ export const setDesktopConfig = () => {
     //  dispatch(setNodeForWallet())
 
     if (config && config.theme) {
-      dispatch(selectTheme(config.theme));
+      dispatch(setTheme(config.theme));
     }
   };
 };

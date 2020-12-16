@@ -101,24 +101,10 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
   }
 
   handleClick = ({ theme, value }: ThemeOption) => {
-    if (theme === "light") {
-      this.props.selectTheme(light);
+      this.props.selectTheme(theme);
       this.setState({
         value: value,
       });
-    } else if (theme === "dark") {
-      this.props.selectTheme(dark);
-      this.setState({
-        value: value,
-      });
-    } else if (theme === "sepia") {
-      this.props.selectTheme(sepia);
-      this.setState({
-        value: value,
-      });
-    } else {
-      return null;
-    }
   };
 
   onMiningButtonClicked = () => {
