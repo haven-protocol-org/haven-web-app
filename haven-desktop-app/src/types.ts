@@ -36,3 +36,22 @@ export enum NetTypeName {
   testnet = "testnet",
   stagenet = "stagenet",
 }
+
+export interface DesktopConfig {
+  theme: string;
+  selectedNode: Partial<SelectedNode>;
+}
+
+
+export enum NodeLocation {
+  Local = "Local",
+  Remote = "Remote",
+  None = "None",
+}
+
+export interface SelectedNode {
+  address: string;
+  port: string;
+  location: NodeLocation;
+  appIsConnected: boolean;
+}
