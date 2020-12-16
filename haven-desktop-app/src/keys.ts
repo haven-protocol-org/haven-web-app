@@ -7,6 +7,7 @@
 // modified 2017 for some CN functions by luigi1111
 
 import { dialog } from "electron";
+import * as core from "./shared/wallet";
 
 export enum KeyType {
   PRIVATE_VIEW,
@@ -22,10 +23,10 @@ const PRIVATE_SPEND_KEY = "spend_key";
 const PUBLIC_VIEW_KEY = "public_view_key";
 const PUBLIC_SPEND_KEY = "public_spend_key";
 
-export const showKey = (key: KeyType) => {
+export const showKey = async (key: KeyType) => {
   switch (key) {
     case KeyType.MNEMONIC:
-      //  fetchKey("Seed", MNEMONIC);
+       showDialog("Seed", await core.getMnemonic())
       return;
     case KeyType.PRIVATE_VIEW:
       //  fetchKey("Private View Key", PRIVATE_VIEW_KEY);
