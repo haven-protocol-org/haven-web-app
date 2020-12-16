@@ -1,5 +1,5 @@
 import { ipcMain } from "electron";
-import { CommunicationChannel } from "../types";
+import { CommunicationChannel, DesktopConfig, NodeLocation } from "../types";
 import * as fs from "fs";
 import * as path from "path";
 import { APP_DATA_PATH } from "../env";
@@ -19,7 +19,7 @@ export const addConfigHandler = () => {
 }
 
 
-const getConfig = (update: any) => {
+const getConfig = (update:Partial<DesktopConfig> = undefined): DesktopConfig => {
 
   const fileBuffer = fs.readFileSync(configFilePath);
   const currentConfig =  JSON.parse(fileBuffer.toString());
@@ -44,10 +44,10 @@ const getConfig = (update: any) => {
 
 
     // we just create a simple default config
-    const defaultConfig = {
+    const defaultConfig: DesktopConfig = {
 
       selectedNode:{
-        location: "None"
+        location: NodeLocation.None
       },
       theme:"dark"
 
