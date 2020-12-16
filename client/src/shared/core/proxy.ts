@@ -4,6 +4,7 @@ import * as walletCore from "./wallet";
 import * as havendCore from "./havend";
 import MoneroTxWallet from "haven-wallet-core/src/main/js/wallet/model/MoneroTxWallet";
 import { CommunicationChannel } from "platforms/desktop/ipc/ipc-types";
+import MoneroBlockHeader from "haven-wallet-core/src/main/js/daemon/model/MoneroBlockHeader";
 
 const walletHandler: ProxyHandler<typeof walletCore> = {
   get: (
@@ -37,7 +38,7 @@ const walletHandler: ProxyHandler<typeof walletCore> = {
 };
 
 const havendHandler: ProxyHandler<typeof havendCore> = {
-  get: (target: typeof havendCore, name: string, receiver: any) => {
+  get: (target: typeof havendCore, name: keyof typeof havendCore, receiver: any) => {
     if (isDesktop()) {
       return async function (...args: any[]) {
         const response = await callWalletBackend(
@@ -45,6 +46,12 @@ const havendHandler: ProxyHandler<typeof havendCore> = {
           args,
           CommunicationChannel.DAEMON
         );
+
+        if (name==="getLastBlockHeader") {
+          const headerResponse: MoneroBlockHeader = new MoneroBlockHeader(response);
+          return headerResponse;
+        }
+        return response;
       };
     }
     return Reflect.get(target, name, receiver);

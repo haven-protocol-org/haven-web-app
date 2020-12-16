@@ -49,7 +49,7 @@ export class WalletHandler {
     const params = request.params;
 
     if (methodName === "addWalletListener") {
-      addWalletListener();
+      this.addWalletListener();
       return;
     }
 
@@ -76,7 +76,6 @@ export class WalletHandler {
       });
       return txJsonObjects;
     }
-
     return core[methodName].call(null, ...params);
   }
   catch(e) {
@@ -88,18 +87,35 @@ export class WalletHandler {
   private handleDaemonCoreRequest = async (request: WalletRequest) => {
     const methodName: keyof typeof daemon = request.methodName as keyof typeof daemon;
     const params = request.params;
+
+   logInDevMode(request);
+
     try {
        const response = await daemon[methodName].call(null, ...params);
+      if (response.toJson) {
+        logInDevMode('response will be serialzed');
+        const jsonResponse = response.toJson();
+        logInDevMode(jsonResponse);
+        return jsonResponse;
+      }
+
        return response;
     }
     catch (e) {
+      logInDevMode(e);
       return e;
     }
 
   };
+
+
+  addWalletListener = () => {
+
+    const listener = new HavenWalletListener(mainWindow.webContents);
+    core.addWalletListener(listener);
+  };
+
+
 }
 
-const addWalletListener = () => {
-  const listener = new HavenWalletListener(mainWindow.webContents);
-  core.addWalletListener(listener);
-};
+
