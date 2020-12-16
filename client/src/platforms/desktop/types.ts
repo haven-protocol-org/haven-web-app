@@ -22,3 +22,9 @@ export interface SelectedNode {
   location: NodeLocation;
   appIsConnected: boolean;
 }
+
+export interface DesktopConfig {
+  theme: string;
+  selectedNode: Partial<SelectedNode>;
+}
+

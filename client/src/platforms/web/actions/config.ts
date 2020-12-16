@@ -1,4 +1,4 @@
-import { selectTheme } from "shared/actions";
+import { selectTheme, setTheme } from "shared/actions";
 import { WebAppState } from "../reducers";
 
 export const setWebConfig = () => {
@@ -12,17 +12,17 @@ export const setWebConfig = () => {
     config = JSON.parse(config);
 
     if (config && config.theme) {
-      dispatch(selectTheme(config.theme));
+      dispatch(setTheme(config.theme));
     }
   };
 };
 
 export const updateWebConfig = () => {
   return async (dispatch: any, getState: () => WebAppState) => {
-    const selectedTheme = getState().theme;
+    const theme = getState().theme.name;
 
     let config: any = {
-      theme: selectedTheme,
+      theme,
     };
 
     config = JSON.stringify(config);
