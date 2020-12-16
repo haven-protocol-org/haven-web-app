@@ -1,6 +1,6 @@
 import { UPDATE_SAVED_WALLETS } from "./types";
 import { requestSavedWalletsIPC } from "../ipc/misc";
-import { getNetworkByName, NET_TYPE_ID } from "constants/env";
+import {  NET_TYPE_ID } from "constants/env";
 
 export const getSavedWallets = () => {
   return (dispatch: any) => {
