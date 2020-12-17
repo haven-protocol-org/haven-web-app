@@ -40,7 +40,6 @@ import { getAddresses } from "./address";
 import { getLastBlockHeader } from "./blockHeaderExchangeRate";
 import { refresh } from "./refresh";
 import { setWebConfig } from "platforms/web/actions/config";
-import { setDesktopConfig } from "platforms/desktop/actions/config";
 
 /** collection of actions to open, create and store wallet */
 
@@ -239,9 +238,7 @@ export const startWalletSession = (
 
     if (isWeb()) {
       dispatch(setWebConfig());
-    } else {
-      dispatch(setDesktopConfig());
-    }
+    } 
 
 
     // initialize own connection to daemon ( needed for fetching block headers )
