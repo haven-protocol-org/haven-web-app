@@ -65,6 +65,10 @@ export const Field = styled.input`
   -moz-appearance: none;
   -moz-appearance: textfield;
 
+  ${media.mobile`
+    width: 60%;
+  `}
+
   &::placeholder {
     font-family: Inter-Regular;
     font-size: 16px;
