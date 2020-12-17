@@ -1,6 +1,7 @@
 import { app, BrowserWindow, Menu, shell } from "electron";
 import { BrowserWindowConstructorOptions } from "electron";
 import * as path from "path";
+import { addConfigHandler } from "./config/appConfig";
 import { startInDevMode } from "./dev";
 import { isDevMode } from "./env";
 import { appEventBus, LOCAL_NODE_STOPPED_EVENT } from "./EventBus";
@@ -52,6 +53,8 @@ const startApp = (): void => {
 
   // start the app
   wallet.start();
+  //
+  addConfigHandler();
   // Emitted when the window is closed.
   mainWindow.on("closed", () => {
     // Dereference the window object, usually you would store windows

@@ -47,7 +47,7 @@ class ConfirmExchangeModal extends React.Component<
 
     const readableToAmout = convertBalanceToMoney(toAmount!);
     const readAbleFromAmount = convertBalanceToMoney(fromAmount!);
-    const readAbleFeeAmount = convertBalanceToMoney(fee!);
+    const readAbleFeeAmount = convertBalanceToMoney(fee!, 4);
 
     return (
       <Modal

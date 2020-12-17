@@ -3,7 +3,7 @@ import { updateDesktopConfig } from "platforms/desktop/actions/config";
 import { updateWebConfig } from "platforms/web/actions/config";
 import { THEME } from "./types";
 
-export const selectTheme = (theme: any) => {
+export const selectTheme = (theme: string) => {
   
   return (dispatch: any) => {
 
@@ -12,12 +12,17 @@ export const selectTheme = (theme: any) => {
     if (isWeb()) {
       dispatch(updateWebConfig());
     } else {
-      dispatch(updateDesktopConfig());
+      dispatch(updateDesktopConfig({theme}));
     }
 
   }
 }
 
+export const setTheme = (theme: string) => {
+  
+  return (dispatch: any) => {
+    dispatch(setThemeInApp(theme));
+  }
+}
 
-
-const setThemeInApp = (theme: any) => ({ type: THEME, payload: theme });
+const setThemeInApp = (theme: string) => ({ type: THEME, payload: theme });

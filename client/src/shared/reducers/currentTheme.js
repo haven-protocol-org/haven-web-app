@@ -1,10 +1,13 @@
 import { THEME } from "../actions/types.ts";
-import { dark } from "../../assets/styles/themes.js";
+import { dark, light, sepia } from "../../assets/styles/themes.js";
+
+
+const availableThemes = {dark, light, sepia};
 
 export default function (state = dark, action) {
   switch (action.type) {
     case THEME:
-      return action.payload;
+      return availableThemes[action.payload];
     default:
       return state;
   }
