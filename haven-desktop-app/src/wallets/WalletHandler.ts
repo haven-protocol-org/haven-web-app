@@ -7,6 +7,7 @@ import { CommunicationChannel, NET } from "../types";
 import { getAvailableWallets } from "./walletPaths";
 import { HavenWalletListener } from "./HavenWalletListener";
 import MoneroTxWallet = require("haven-wallet-core/src/main/js/wallet/model/MoneroTxWallet");
+import MoneroSubaddress = require("haven-wallet-core/src/main/js/wallet/model/MoneroSubaddress");
 
 export interface WalletRequest {
   methodName: string;
@@ -47,6 +48,7 @@ export class WalletHandler {
   private handleWalletCoreRequest = async (request: WalletRequest) => {
     const methodName: keyof typeof core = request.methodName as keyof typeof core;
     const params = request.params;
+    logInDevMode(request);
 
     if (methodName === "addWalletListener") {
       this.addWalletListener();
@@ -55,28 +57,45 @@ export class WalletHandler {
 
     try {
 
+    const response = await core[methodName].call(null, ...params);
+
     if (methodName === "getTxs") {
-      const txClassObjects = await core[methodName].call(null, ...params);
+      const txClassObjects = response;
       const txJsonObjects = txClassObjects.map((tx: MoneroTxWallet) => {
+        
+      const txJson = tx.toJson();
+
         // little workaround to preserve block data ( height, timestamp ) in tx
-        const block = tx.getBlock().toJson();
-        delete block.txs;
-        const txJson = tx.toJson();
-        txJson.block = block;
+        if (tx.getBlock()) {
+          const block = tx.getBlock().toJson();
+          delete block.txs;
+          txJson.block = block;
+        }
         return txJson;
       });
       return txJsonObjects;
     }
 
     if (methodName === "transfer") {
-      const txClassObjects = await core[methodName].call(null, ...params);
+      const txClassObjects = response
       const txJsonObjects = txClassObjects.map((tx: MoneroTxWallet) => {
         // serialize tx data
         return tx.toJson();
       });
       return txJsonObjects;
     }
-    return core[methodName].call(null, ...params);
+      
+      if (methodName === "getSubAddresses") {
+
+        const addressClassObjects = response
+        const addressJsonObjects = addressClassObjects.map((address: MoneroSubaddress) => {
+        // serialize address data
+        return address.toJson();
+      });
+      return addressJsonObjects;
+
+      }
+      return response;
   }
   catch(e) {
     return e;
@@ -88,14 +107,11 @@ export class WalletHandler {
     const methodName: keyof typeof daemon = request.methodName as keyof typeof daemon;
     const params = request.params;
 
-   logInDevMode(request);
 
     try {
        const response = await daemon[methodName].call(null, ...params);
       if (response.toJson) {
-        logInDevMode('response will be serialzed');
         const jsonResponse = response.toJson();
-        logInDevMode(jsonResponse);
         return jsonResponse;
       }
 

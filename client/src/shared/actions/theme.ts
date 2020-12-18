@@ -10,11 +10,11 @@ export const selectTheme = (theme: string) => {
     dispatch(setThemeInApp(theme));
 
     if (isWeb()) {
-      dispatch(updateWebConfig());
+      updateWebConfig(theme)
     } else {
-      dispatch(updateDesktopConfig({theme}));
+      updateDesktopConfig({ theme });
     }
-
+          
   }
 }
 

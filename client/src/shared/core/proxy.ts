@@ -5,6 +5,9 @@ import * as havendCore from "./havend";
 import MoneroTxWallet from "haven-wallet-core/src/main/js/wallet/model/MoneroTxWallet";
 import { CommunicationChannel } from "platforms/desktop/ipc/ipc-types";
 import MoneroBlockHeader from "haven-wallet-core/src/main/js/daemon/model/MoneroBlockHeader";
+import MoneroSubaddress from "haven-wallet-core/src/main/js/wallet/model/MoneroSubaddress";
+import { logM } from "utility/utility";
+import MoneroBlock from "haven-wallet-core/src/main/js/daemon/model/MoneroBlock";
 
 const walletHandler: ProxyHandler<typeof walletCore> = {
   get: (
@@ -22,12 +25,44 @@ const walletHandler: ProxyHandler<typeof walletCore> = {
           CommunicationChannel.WALLET
         );
 
+        logM(name);
+        logM(response);
+
         if (name === "transfer") {
           const txs: MoneroTxWallet[] = response.map(
             (jsonTx: any) => new MoneroTxWallet(jsonTx)
           );
 
           return txs;
+        }
+
+        if (name === "getTxs") {
+
+
+        const transfers: MoneroTxWallet[] = response.map((state: any) => {
+          //workaround to pull in block info into the core lib architecture
+          const txWallet = new MoneroTxWallet(state);
+          if (state.block) {
+            //@ts-ignore
+            const block = new MoneroBlock(state.block);
+            txWallet.setBlock(block);
+          }
+
+          return txWallet;
+        });
+          
+          return transfers
+
+
+        }
+
+        if (name === "getSubAddresses") {
+
+            const addresses: MoneroSubaddress[] = response.map(
+            (jsonAddress: any) => new MoneroSubaddress(jsonAddress)
+          );
+
+          return addresses;
         }
 
         return response;

@@ -9,6 +9,7 @@ import {
   HavenAppState,
 } from "platforms/desktop/reducers/index";
 import { isDesktop } from "constants/env";
+import { selectisLocalNode } from "platforms/desktop/reducers/connectedNode";
 
 export interface Chain {
   walletHeight: number;
@@ -51,8 +52,8 @@ export const selectSyncState = (state: HavenAppState): SyncState => {
   //we must distinguish between multiple cases
   // 1. local syncing node -> show progress of node
   //when we use a local node syncing of wallet itself is super fast, so just show the sync state of the node
-  if (isDesktop()) {
-    isSyncing = state.chain.chainHeight > state.chain.nodeHeight + 3;
+  if (isDesktop() &&  selectisLocalNode((state as DesktopAppState).connectedNode)) {
+    isSyncing = state.chain.chainHeight > state.chain.nodeHeight + 5;
     scannedHeight = state.chain.nodeHeight;
   }
   // when we use a remote node take the sync height from wallet

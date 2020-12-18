@@ -1,13 +1,18 @@
 import { WebContents } from "electron";
 import { MoneroWalletListener } from "haven-wallet-core";
+import { logInDevMode } from "../dev";
 import { CommunicationChannel } from "../types";
 import { WalletRequest } from "./WalletHandler";
 
 export class HavenWalletListener extends MoneroWalletListener {
   private webContent: WebContents;
+  private isSyncing: boolean = false;
+
   constructor(webContent: WebContents) {
     super();
     this.webContent = webContent;
+
+
   }
   onSyncProgress(
     height: number,
@@ -16,12 +21,27 @@ export class HavenWalletListener extends MoneroWalletListener {
     percentDone: number,
     message: string
   ): void {
-    const walletupdate: WalletRequest = {
+    
+    if (percentDone === 1) {
+      this.isSyncing = false;
+    } else {
+      this.isSyncing = true;
+    }
+    const syncDistance = endHeight - height;
+
+    let updateInterval = Math.pow(10, Math.floor(Math.log10(syncDistance)));
+    updateInterval = Math.min(5000, updateInterval);
+    updateInterval = Math.max(updateInterval, 1);
+  
+    if (syncDistance % updateInterval === 0 || height === startHeight) {
+    
+      const walletupdate: WalletRequest = {
       methodName: "onSyncProgress",
       params: [...arguments],
     };
 
-    this.webContent.send(CommunicationChannel.WALLET, walletupdate);
+      this.webContent.send(CommunicationChannel.WALLET, walletupdate);
+    }
   }
 
   onNewBlock(height: any): void {
@@ -30,7 +50,11 @@ export class HavenWalletListener extends MoneroWalletListener {
       params: [...arguments],
     };
 
-    this.webContent.send(CommunicationChannel.WALLET, walletupdate);
+    
+    if (!this.isSyncing) {
+
+      this.webContent.send(CommunicationChannel.WALLET, walletupdate);
+    }
   }
 
   // @ts-ignore

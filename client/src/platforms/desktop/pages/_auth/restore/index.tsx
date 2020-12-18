@@ -2,7 +2,8 @@ import {
   selectErrorMessageForLogin,
   selectIsLoggedIn,
   selectIsRequestingLogin,
-} from "../../../../../shared/reducers/walletSession";
+} from "shared/reducers/walletSession";
+import { selectIsWalletCreated } from "shared/reducers/walletCreation";
 import { connect } from "react-redux";
 import { restoreWalletByMnemomic } from "shared/actions/wallet";
 import { Redirect } from "react-router";
@@ -15,6 +16,7 @@ import { Body, Wrapper } from "./styles";
 import Input from "shared/components/_inputs/input";
 import { DesktopAppState } from "../../../reducers";
 import InputButton from "shared/components/_inputs/input_button";
+import { startWalletSession } from "shared/actions/wallet";
 
 interface RestoreProps {
   restoreWalletByMnemomic: (
@@ -26,6 +28,8 @@ interface RestoreProps {
   isLoggedIn: boolean;
   isRequestingLogin: boolean;
   errorMessage: string;
+  isWalletCreated: boolean;
+  startWalletSession: (walletName: string | undefined) => void;
 }
 
 enum RESTORE_STEP {
@@ -52,13 +56,19 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
     showPassword: false,
   };
 
-  componentWillReceiveProps(nextProps: RestoreProps, nextContext: any) {
-    if (nextProps.errorMessage) {
-      this.setState({
-        error: nextProps.errorMessage,
-        step: RESTORE_STEP.SEED_STEP,
-      });
+    componentDidUpdate(
+    prevProps: Readonly<RestoreProps>,
+    prevState: Readonly<RestoreState>,
+    snapshot?: any
+    ): void {
+      
+    if (prevProps.errorMessage === "" && this.props.errorMessage) {
+      this.setState({ error: this.props.errorMessage });
       setTimeout(() => this.setState({ error: "" }), 2000);
+    }
+
+    if (prevProps.isWalletCreated === false && this.props.isWalletCreated) {
+      this.props.startWalletSession(this.state.name);
     }
   }
 
@@ -188,9 +198,10 @@ const mapStateToProps = (state: DesktopAppState) => ({
   isRequestingLogin: selectIsRequestingLogin(state),
   isLoggedIn: selectIsLoggedIn(state),
   errorMessage: selectErrorMessageForLogin(state),
+  isWalletCreated: selectIsWalletCreated(state)
 });
 
 // @ts-ignore
 export const RestoreDesktop = connect(mapStateToProps, {
-  restoreWalletByMnemomic,
+  restoreWalletByMnemomic, startWalletSession
 })(RestoreDesktopContainer);
