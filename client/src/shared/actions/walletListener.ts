@@ -39,15 +39,17 @@ export class HavenWalletListener extends MoneroWalletListener {
     percentDone: number,
     message: string
   ): void {
-    if (
-      height <= startHeight + 2 ||
-      (height + 1000 < endHeight && height % 100 === 0) ||
-      (height + 30 < endHeight && height % 10 === 0) ||
-      height + 30 >= endHeight
-    ) {
+
+    const syncDistance = endHeight - height;
+
+    let updateInterval = Math.pow(10, Math.floor(Math.log10(syncDistance)));
+    updateInterval = Math.min(5000, updateInterval);
+    updateInterval = Math.max(updateInterval, 1);
+  
+    if (syncDistance % updateInterval === 0 || height === startHeight)  {
       const chain: Partial<Chain> = {
         walletHeight: height,
-        // chainHeight:endHeight
+        nodeHeight:endHeight
       };
       this.dispatch(onWalletSyncUpdateSucceed(chain));
     }
