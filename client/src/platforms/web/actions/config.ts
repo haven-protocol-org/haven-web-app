@@ -17,15 +17,11 @@ export const setWebConfig = () => {
   };
 };
 
-export const updateWebConfig = () => {
-  return async (dispatch: any, getState: () => WebAppState) => {
-    const theme = getState().theme.name;
-
+export const updateWebConfig = (theme: string) => {
     let config: any = {
       theme,
     };
-
     config = JSON.stringify(config);
     localStorage.setItem("config", config);
-  };
+
 };
