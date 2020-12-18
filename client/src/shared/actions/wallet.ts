@@ -294,10 +294,12 @@ const initReduxWallet = () => {
     const nodeHeight = await walletProxy.getNodeHeight();
     const walletHeight = await walletProxy.getWalletHeight();
 
+
+
     const chainHeights: Partial<Chain> = {
       walletHeight,
       nodeHeight,
-      chainHeight,
+      chainHeight: chainHeight < nodeHeight? nodeHeight : chainHeight,
     } as Partial<Chain>;
 
     dispatch(onWalletSyncUpdateSucceed(chainHeights));
