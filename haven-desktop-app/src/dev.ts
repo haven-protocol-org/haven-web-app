@@ -27,7 +27,7 @@ export const destroySocket = (): void => {
   client.destroy();
 };
 
-export const logInDevMode = (mes: string): void => {
+export const logInDevMode = (mes: any): void => {
   if (isDevMode) {
     console.log(mes);
   }

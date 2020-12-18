@@ -21,8 +21,7 @@ export class HavenWalletListener extends MoneroWalletListener {
     percentDone: number,
     message: string
   ): void {
-
-
+    
     if (percentDone === 1) {
       this.isSyncing = false;
     } else {
@@ -34,16 +33,12 @@ export class HavenWalletListener extends MoneroWalletListener {
     updateInterval = Math.min(5000, updateInterval);
     updateInterval = Math.max(updateInterval, 1);
   
-    logInDevMode(syncDistance);
-    logInDevMode(updateInterval);
-    if (syncDistance % updateInterval === 0) {
+    if (syncDistance % updateInterval === 0 || height === startHeight) {
     
       const walletupdate: WalletRequest = {
       methodName: "onSyncProgress",
       params: [...arguments],
     };
-       logInDevMode("onSyncProgress send to client")
-       logInDevMode(arguments);
 
       this.webContent.send(CommunicationChannel.WALLET, walletupdate);
     }
@@ -58,7 +53,6 @@ export class HavenWalletListener extends MoneroWalletListener {
     
     if (!this.isSyncing) {
 
-      logInDevMode("onNewBlock send to client: " + height)
       this.webContent.send(CommunicationChannel.WALLET, walletupdate);
     }
   }
