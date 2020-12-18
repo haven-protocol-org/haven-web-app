@@ -102,7 +102,7 @@ export const selectLastExchangeRates = (
 export const hasLatestXRate = (state: DesktopAppState) => {
   const chainHeight: number = state.chain.chainHeight;
   return state.blockHeaderExchangeRate.some(
-    (xRate) => xRate.height === chainHeight
+    (xRate) => xRate.height === chainHeight - 1
   );
 };
 
