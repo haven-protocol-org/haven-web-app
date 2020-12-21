@@ -1,10 +1,11 @@
 {
   "testnet": [
     {
-      "address": "https://vault-testnet.havenprotocol.org/",
+      "address": "https://vault-testnet.havenprotocol.org",
       "provider": "Testnet - Vault",
       "port": "443",
-      "trusted": true
+      "trusted": true,
+      "default": true
     }
   ],
   "stagenet": [
@@ -12,7 +13,8 @@
       "address": "http://remote.eu.havenprotocol.org/",
       "provider": "Stagenet - Haven European Node",
       "port": "37750",
-      "trusted": true
+      "trusted": true,
+      "default": true
     }
   ],
   "mainnet": [
