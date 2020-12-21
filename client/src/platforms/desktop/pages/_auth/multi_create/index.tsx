@@ -58,11 +58,15 @@ class MultiLoginPage extends Component<MultiLoginProps, MultiloginState> {
     if (this.props.isLoggedIn) {
       return <Redirect to="/wallet/assets" />;
     }
-    const loginType = this.state.loginType;
+
+    console.log("this.state.loginType", this.state.loginType);
+
+    const { loginType } = this.state;
+
     return (
       <Container>
         <Header>
-          <Title>Create a Vault</Title>
+          <Title>{loginType === 2 ? "Restore Vault" : "Create a Vault"}</Title>
           <Subtitle>Privately store, exchange and transfer assets.</Subtitle>
         </Header>
         <Tabs>
