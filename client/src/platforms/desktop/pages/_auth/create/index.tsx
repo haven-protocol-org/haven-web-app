@@ -191,7 +191,7 @@ class CreateDesktopContainer extends Component<
 
     switch (step) {
       case CREATION_STEPS.Info:
-        return <Placeholder platform={"desktop"} />;
+        return <Placeholder platform={"desktop"} />; // No longer needed. Delete
       case CREATION_STEPS.Credentials:
         return (
           <>

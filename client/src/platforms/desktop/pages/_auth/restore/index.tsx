@@ -56,12 +56,11 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
     showPassword: false,
   };
 
-    componentDidUpdate(
+  componentDidUpdate(
     prevProps: Readonly<RestoreProps>,
     prevState: Readonly<RestoreState>,
     snapshot?: any
-    ): void {
-      
+  ): void {
     if (prevProps.errorMessage === "" && this.props.errorMessage) {
       this.setState({ error: this.props.errorMessage });
       setTimeout(() => this.setState({ error: "" }), 2000);
@@ -133,10 +132,12 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
                 onChange={this.onChangeHandler}
               />
               <Information>
-                <strong>Disclaimer:</strong> Your seed is used to generate an
-                encrypted signature on your device and unlock your account. This
-                ensures the security of your seed or keys, as they're never
-                submitted to a server or sent across the internet.
+                Enter your 25 word seed phrase to generate a new vault file.
+                This is an encrypted file, with a unique name and password. A
+                restore requires a full chain sync and can take ~2.5hrs. An
+                alternative approach is to create a new vault to use within the
+                web wallet, which is much quicker, and then transferring your
+                funds into that new vault.
               </Information>
             </Body>
             <Buttons buttons="single">
@@ -198,10 +199,11 @@ const mapStateToProps = (state: DesktopAppState) => ({
   isRequestingLogin: selectIsRequestingLogin(state),
   isLoggedIn: selectIsLoggedIn(state),
   errorMessage: selectErrorMessageForLogin(state),
-  isWalletCreated: selectIsWalletCreated(state)
+  isWalletCreated: selectIsWalletCreated(state),
 });
 
 // @ts-ignore
 export const RestoreDesktop = connect(mapStateToProps, {
-  restoreWalletByMnemomic, startWalletSession
+  restoreWalletByMnemomic,
+  startWalletSession,
 })(RestoreDesktopContainer);
