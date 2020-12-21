@@ -63,10 +63,7 @@ class MultiLoginPage extends Component<MultiLoginProps, MultiloginState> {
       <Container>
         <Header>
           <Title>Create a Vault</Title>
-          <Subtitle>
-            To create a Vault please generate a new Vault or restore an existing
-            one.
-          </Subtitle>
+          <Subtitle>Privately store, exchange and transfer assets.</Subtitle>
         </Header>
         <Tabs>
           <Tab

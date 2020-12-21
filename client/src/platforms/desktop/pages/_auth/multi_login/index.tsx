@@ -48,9 +48,7 @@ class MultiLoginPage extends Component<MultiLoginProps, MultiloginState> {
       <Container>
         <Header>
           <Title>Vault Login</Title>
-          <Subtitle>
-            To access your Vault please select it and enter your password
-          </Subtitle>
+          <Subtitle>Privately store, exchange and transfer assets</Subtitle>
         </Header>
         <Main>
           <OpenWalletDesktop wallets={this.props.wallets} />
