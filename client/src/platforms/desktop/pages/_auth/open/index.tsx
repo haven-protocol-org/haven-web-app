@@ -91,7 +91,7 @@ class OpenWalletDesktopContainer extends Component<
 
     const noWallets = [
       {
-        name: "Please create a Haven Vault",
+        name: "No vaults found",
       },
     ];
 
@@ -116,40 +116,10 @@ class OpenWalletDesktopContainer extends Component<
           onChange={this.onChangeHandler}
         />
         <Information>
-          Select a Vault and enter the password. If you don't see a Vault, or
-          forgot your password, then please click the{" "}
-          <strong>Create a Vault</strong> link below.
+          Select your vault file and enter your password. If you are new to
+          Haven and want to start storing, sending and converting assets in
+          complete privacy, then click the "Create" button to get started.
         </Information>
-      </Body>
-    ) : (
-      <Wrapper>
-        <Body>
-          <WalletSelection
-            onClick={(wallet) => this.onSelectWallet(wallet)}
-            options={this.props.wallets}
-            placeholder={"Choose a Vault"}
-            label={"Select Vault"}
-            error={error}
-            value={selectedWallet}
-          />
-          <InputButton
-            // @ts-ignore
-            label="Vault Password"
-            placeholder="Enter your Vault password"
-            name="password"
-            type={showPassword ? "text" : "password"}
-            button={showPassword ? "hide" : "show"}
-            value={password}
-            onChange={this.onChangeHandler}
-            onClick={this.togglePassword}
-          />
-
-          <Information>
-            Select a Vault and enter the password. If you don't see a Vault, or
-            forgot your password, then please click the{" "}
-            <strong>Create a Vault</strong> link below.
-          </Information>
-        </Body>
         <Buttons buttons="single">
           {this.props.loading ? (
             <Submit>
@@ -157,11 +127,49 @@ class OpenWalletDesktopContainer extends Component<
             </Submit>
           ) : (
             <Submit disabled={!disabled} onClick={() => this.onOpenWallet()}>
-              Log In
+              Login
             </Submit>
           )}
         </Buttons>
-      </Wrapper>
+      </Body>
+    ) : (
+      <Body>
+        <WalletSelection
+          onClick={(wallet) => this.onSelectWallet(wallet)}
+          options={this.props.wallets}
+          placeholder={"Select vault"}
+          label={"Select Vault"}
+          error={error}
+          value={selectedWallet}
+        />
+        <InputButton
+          // @ts-ignore
+          label="Vault Password"
+          placeholder="Enter your Vault password"
+          name="password"
+          type={showPassword ? "text" : "password"}
+          button={showPassword ? "hide" : "show"}
+          value={password}
+          onChange={this.onChangeHandler}
+          onClick={this.togglePassword}
+        />
+        <Information>
+          Select your vault file and enter your password. If you are new to
+          Haven and want to start storing, sending and converting assets in
+          complete privacy, then click the "Create" button to get started.
+        </Information>
+        <Buttons buttons="single">
+          {this.props.loading ? (
+            <Submit>
+              <Spinner />
+            </Submit>
+          ) : (
+            <Submit disabled={!disabled} onClick={() => this.onOpenWallet()}>
+              Login
+            </Submit>
+          )}
+        </Buttons>
+      </Body>
     );
   }
 }

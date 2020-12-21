@@ -7,19 +7,15 @@ import Loader from "shared/components/loader";
 import { CreateWeb } from "../../pages/_auth/create";
 import { LoginWeb } from "../../pages/_auth/login/container";
 import { showModal } from "shared/actions/modal";
-import { MODAL_TYPE } from "shared/reducers/modal"
+import { MODAL_TYPE } from "shared/reducers/modal";
 
 class PublicRoutes extends Component {
-
   componentDidMount() {
-
     if (localStorage.getItem("onboard") === null) {
       this.props.showModal(MODAL_TYPE.LoginOnboarding);
       localStorage.setItem("onboard", true);
-    } 
-
+    }
   }
-
 
   render() {
     return (
@@ -31,6 +27,4 @@ class PublicRoutes extends Component {
   }
 }
 
-export default connect( null, { showModal })(
-  PublicRoutes
-);
+export default connect(null, { showModal })(PublicRoutes);

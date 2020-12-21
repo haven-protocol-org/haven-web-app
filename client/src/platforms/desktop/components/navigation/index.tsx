@@ -27,6 +27,7 @@ import { DesktopAppState } from "../../reducers";
 import { LocalNode, SelectedNode } from "platforms/desktop/types";
 import { selectisLocalNode } from "platforms/desktop/reducers/connectedNode";
 import { selectBlockHeight } from "shared/reducers/chain";
+import Buttons from "./buttons/index.js";
 
 interface NavigationProps {
   node: SelectedNode;
@@ -109,11 +110,7 @@ class Navigation extends Component<NavigationProps, any> {
         </Brand>
 
         <Menu>
-          {auth === false ? (
-            <Button to="/">Login</Button>
-          ) : (
-            <Logout onClick={this.handleLogout}>Logout</Logout>
-          )}
+          <Buttons isLoading={false} auth={auth} onClick={this.handleLogout} />
 
           <Options onClick={this.showDropdownMenu}>
             <OptionsIcon>
