@@ -141,7 +141,8 @@ class Navigation extends Component<NavigationProps, any> {
               <OptionsDoubleRow>
                 <Body>Network</Body>
                 <Label>
-                  {current_network} v{window.havenProcess.appVersion}
+                  {current_network === "testnet" ? "Testnet" : "Mainnet"}
+                  {` `} v{window.havenProcess.appVersion}
                 </Label>
               </OptionsDoubleRow>
               <OptionsDoubleRow>
