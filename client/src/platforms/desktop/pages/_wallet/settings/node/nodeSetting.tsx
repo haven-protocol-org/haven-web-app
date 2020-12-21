@@ -9,7 +9,7 @@ import React, { SyntheticEvent } from "react";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { connect } from "react-redux";
 import { selectisLocalNode } from "platforms/desktop/reducers/connectedNode";
-import { setNodeForWallet } from "platforms/desktop/actions/selectNode";
+import { changeNodeForWallet } from "platforms/desktop/actions/selectNode";
 import { NodeLocation, LocalNode, SelectedNode } from "platforms/desktop/types";
 import { Information } from "assets/styles/type.js";
 import { createNodeOptions } from "platforms/desktop/pages/_wallet/settings/node/options";
@@ -38,7 +38,7 @@ interface NodeSettingProps {
   isConnected: boolean;
   isRequestingSwitch: boolean;
   nodeOptions: NodeOption[];
-  setHavenNode: (
+  changeNodeForWallet: (
     selectedNodeOption: NodeOption,
     address: string,
     port: string
@@ -58,13 +58,13 @@ class NodeSettingComponent extends React.Component<
   NodeSettingState
 > {
   state = {
-    address: this.props.node.address,
+    address: this.props.node.address!,
     connected: this.props.isConnected,
     locked: this.props.isConnected !== false,
     selectedNodeOption: this.props.nodeOptions.find(
       (nodeOption) => nodeOption.address === this.props.node.address
     )!,
-    port: this.props.node.port,
+    port: this.props.node.port!,
   };
 
   onConnect = (e: SyntheticEvent) => {
@@ -80,7 +80,7 @@ class NodeSettingComponent extends React.Component<
       return;
     }
 
-    this.props.setHavenNode(selectedNodeOption, address, port);
+    this.props.changeNodeForWallet(selectedNodeOption, address, port);
   };
 
   selectLocation = (option: NodeOption) => {
@@ -249,5 +249,5 @@ const mapStateToProps = (state: DesktopAppState) => ({
 });
 
 export const HavenNodeSetting = connect(mapStateToProps, {
-  setHavenNode: setNodeForWallet,
+  changeNodeForWallet,
 })(NodeSettingComponent);

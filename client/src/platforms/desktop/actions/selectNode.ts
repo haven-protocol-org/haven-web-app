@@ -11,7 +11,7 @@ import { walletProxy, havendProxy } from "shared/core/proxy";
 import { IMonerRPCConnection } from "typings";
 import { startLocalNode, stopLocalNode } from "./localNode";
 
-export const setNodeForWallet = (
+export const changeNodeForWallet = (
   selectedNodeOption: NodeOption,
   nodeAddress: string,
   nodePort: string
@@ -79,7 +79,7 @@ const setNodeForWalletRequested = () => {
   };
 };
 
-const setNodeForWalletSucceed = (
+export const setNodeForWalletSucceed = (
   address: string,
   port: string,
   location: NodeLocation
@@ -99,6 +99,7 @@ const setNodeForWalletFailed = (error: any) => {
     );
   };
 };
+
 
 
 

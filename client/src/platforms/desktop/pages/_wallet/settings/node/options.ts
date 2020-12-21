@@ -30,8 +30,8 @@ export const createNodeOptions = (havendState: SelectedNode): NodeOption[] => {
   const customNode: NodeOption = isCustomNode(havendState)
     ? {
         location: NodeLocation.Remote,
-        address: havendState.address,
-        port: havendState.port,
+        address: havendState.address!,
+        port: havendState.port!,
         name: createCustomNodeName(havendState),
         selectionType: NodeSelectionType.custom,
         trusted: false,
@@ -55,7 +55,7 @@ export const createNodeOptions = (havendState: SelectedNode): NodeOption[] => {
 
 const createCustomNodeName = (havendState: SelectedNode) => {
   try {
-    return `Custom Node ( ${new URL(havendState.address).host} )`;
+    return `Custom Node ( ${new URL(havendState.address!).host} )`;
   } catch (e) {
     return "Custom Node";
   }

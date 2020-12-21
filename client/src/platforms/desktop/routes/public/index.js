@@ -9,7 +9,7 @@ import { LoginDesktop } from "../../pages/public/login";
 import { CreateDesktop } from "../../pages/public/create";
 import { withRouter } from "react-router";
 import { connect } from "react-redux";
-import { setDesktopConfig} from "platforms/desktop/actions/config";
+import { setDesktopConfig } from "platforms/desktop/actions/config";
 
 class PublicRoutes extends Component {
   componentDidMount() {

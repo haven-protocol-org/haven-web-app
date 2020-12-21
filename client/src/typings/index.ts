@@ -21,7 +21,7 @@ export interface IOpenWallet {
   networkType: string;
   keysData?: Uint8Array;
   cacheData?: Uint8Array;
-  server: IMonerRPCConnection;
+  server?: IMonerRPCConnection;
 }
 
 /** meant for either restoring a wallet ( either with mnemomic or keys )
@@ -33,7 +33,7 @@ export interface ICreateWallet {
   password: string;
   networkType: string;
   /** if not provided, create an offline wallet */
-  server: IMonerRPCConnection;
+  server?: IMonerRPCConnection;
   /** needed when restoring by mnemonic */
   mnemonic?: string;
   seedOffset?: string;

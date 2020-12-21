@@ -1,4 +1,4 @@
-import { IOpenWallet, ICreateWallet } from "typings";
+import { IOpenWallet, ICreateWallet, IMonerRPCConnection } from "typings";
 import { getNetworkByName, isDesktop, isWeb } from "constants/env";
 import {
   OPEN_WALLET_FETCHING,
@@ -40,6 +40,7 @@ import { getAddresses } from "./address";
 import { getLastBlockHeader } from "./blockHeaderExchangeRate";
 import { refresh } from "./refresh";
 import { setWebConfig } from "platforms/web/actions/config";
+import { NodeLocation } from "platforms/desktop/types";
 
 /** collection of actions to open, create and store wallet */
 
@@ -49,7 +50,7 @@ export const openWalletByData = (
   password: string,
   walletName: string
 ) => {
-  return async (dispatch: any) => {
+  return async (dispatch: any, getState: any) => {
     const cacheData = await getWalletCacheByName(walletName);
     const walletData: IOpenWallet = {
       keysData,
@@ -57,7 +58,7 @@ export const openWalletByData = (
       cacheData: new Uint8Array(cacheData),
       password,
       networkType: getNetworkByName(),
-      server: webWalletConnection(),
+      server: getNodeForWallet(getState),
     };
     dispatch(openWallet(walletData, walletName));
   };
@@ -72,7 +73,7 @@ export const openWalletByFile = (filename: string, password: string) => {
       path,
       password,
       networkType: getNetworkByName(),
-      server: webWalletConnection(),
+      server: getNodeForWallet(getStore),
     };
 
     dispatch(openWallet(walletData, filename));
@@ -123,7 +124,7 @@ export const createNewWallet = (
     const walletData: ICreateWallet = {
       path: storePath,
       password,
-      server: webWalletConnection(),
+      server: getNodeForWallet(getStore),
       networkType: getNetworkByName(),
     };
     const successOrError: boolean | object = await walletProxy.createWallet(
@@ -170,7 +171,7 @@ export const restoreWalletByMnemomic = (
       mnemonic,
       password,
       networkType: getNetworkByName(),
-      server: webWalletConnection(),
+      server: getNodeForWallet(getStore),
     };
 
     dispatch(restoreWalletFetching(walletName));
@@ -202,14 +203,18 @@ export const restoreWalletByKeys = (
   password: string,
   walletName: string
 ) => {
-  const walletData: ICreateWallet = {
+
+
+  return async (dispatch: any, getStore: any) => {
+
+
+      const walletData: ICreateWallet = {
     path,
     networkType: getNetworkByName(),
-    server: webWalletConnection(),
+    server: getNodeForWallet(getStore),
     password,
   };
 
-  return async (dispatch: any) => {
     dispatch(createWalletFetch(walletName));
     const successOrError: boolean | object = await walletProxy.createWallet(
       walletData
@@ -376,3 +381,22 @@ const createStorePath = (
   }
   return filename;
 };
+
+
+export const getNodeForWallet = (getState: () => HavenAppState): IMonerRPCConnection | undefined => {
+
+
+  if (isWeb()) {
+    return webWalletConnection();
+  }
+
+  const selectedNode = (getState() as DesktopAppState).connectedNode;
+
+  if (selectedNode.location === NodeLocation.None)
+  {
+    return undefined;
+  } 
+
+  return { uri: selectedNode.address! + ":" + selectedNode.port!, username: "super", password: "super" };
+
+}
