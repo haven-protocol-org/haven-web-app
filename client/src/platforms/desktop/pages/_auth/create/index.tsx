@@ -56,7 +56,7 @@ class CreateDesktopContainer extends Component<
   CreateDesktopState
 > {
   state: CreateDesktopState = {
-    step: CREATION_STEPS.Info,
+    step: CREATION_STEPS.Credentials,
     error: "",
     verify_seed: "",
     fileName: "",
@@ -218,24 +218,34 @@ class CreateDesktopContainer extends Component<
             />
 
             <Information>
-              Creating a new Vault with a name and password means you’ll be able
-              to log in without entering your seed phrase. This makes your
-              experience more secure, safe and efficient.
+              Enter a unique name and strong password to create a vault. You
+              will be asked to confirm this password on the final step. This
+              process will generate an encrypted vault file that enables you to
+              store, send and convert assets in complete privacy.
             </Information>
           </>
         );
       case CREATION_STEPS.Seed:
         return (
-          <CreateSeed
-            name={"name"}
-            value={this.props.walletCreation.mnemonicKey}
-            rows={windowWidth < 600 ? "6" : "4"}
-            readOnly={true}
-          />
+          <>
+            <CreateSeed
+              name={"name"}
+              value={this.props.walletCreation.mnemonicKey}
+              rows={windowWidth < 600 ? "6" : "4"}
+              readOnly={true}
+            />
+            <Information>
+              A seed phrase provides full access to your account. It can be used
+              to generate new vault files or login directly. If you lose this
+              seed phrase then it’s impossible to recover your funds. Store it
+              in a reputable password manager or on a piece of paper. Do not
+              share it with anyone.
+            </Information>
+          </>
         );
       case CREATION_STEPS.Verification:
         const labelString = (
-          <Fragment>
+          <>
             Enter seed words{" "}
             <span style={{ color: "#34d8ac" }}>
               {" "}
@@ -244,7 +254,7 @@ class CreateDesktopContainer extends Component<
                 .join(" ")}{" "}
             </span>{" "}
             seperated by blank space
-          </Fragment>
+          </>
         );
         return (
           <>
@@ -259,12 +269,11 @@ class CreateDesktopContainer extends Component<
             />
 
             <Information>
-              Please verify your Seed Phrase this will ensure that your Seed
-              Phrase has been correctly backed up.{" "}
-              <strong>
-                Store your seed in a safe location and do not share this with
-                anyone
-              </strong>
+              Re-enter the required words from the seed phrase that was provided
+              on the previous step. As a reminder, if you lose both your vault
+              file and password or seed phrase then your funds are lost forever
+              with no possibility of being recovered. Store them in a safe and
+              secure location.
             </Information>
           </>
         );

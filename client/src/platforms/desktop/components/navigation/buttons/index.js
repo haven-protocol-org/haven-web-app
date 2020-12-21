@@ -8,7 +8,6 @@ import { Auth, Logout } from "./styles";
 
 const Buttons = ({ auth, onClick, isLoading }) => {
   const location = useLocation();
-  console.log("LOCATION", location);
 
   return (
     <>

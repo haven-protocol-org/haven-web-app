@@ -43,6 +43,7 @@ class Navigation extends Component<NavigationProps, any> {
     current_network: getNetworkByName(),
     showOptions: false,
     showNotifications: false,
+    mouseIsHovering: false,
   };
 
   onComponentDidMount() {
@@ -59,9 +60,11 @@ class Navigation extends Component<NavigationProps, any> {
   };
 
   hideDropdownMenu = () => {
-    this.setState({ showOptions: false }, () => {
-      document.removeEventListener("click", this.hideDropdownMenu);
-    });
+    if (!this.state.mouseIsHovering) {
+      this.setState({ showOptions: false }, () => {
+        document.removeEventListener("click", this.hideDropdownMenu);
+      });
+    }
   };
 
   showNotifications = (event: any) => {
@@ -77,10 +80,6 @@ class Navigation extends Component<NavigationProps, any> {
     });
   };
 
-  userFocused = () => {
-    this.setState({ showNotifications: true });
-  };
-
   handleClick = () => {
     this.setState({ showNotifications: true }, () => {
       document.addEventListener("click", this.hideNotifications);
@@ -94,6 +93,18 @@ class Navigation extends Component<NavigationProps, any> {
   showOptions = () => {
     this.setState({
       showOptions: !this.state.showOptions,
+    });
+  };
+
+  handleMouseEnter = () => {
+    this.setState({
+      mouseIsHovering: true,
+    });
+  };
+
+  handleMouseLeave = () => {
+    this.setState({
+      mouseIsHovering: false,
     });
   };
 
@@ -120,25 +131,38 @@ class Navigation extends Component<NavigationProps, any> {
         </Menu>
         {this.state.showOptions && (
           <>
-            <OptionsList>
+            <OptionsList
+              onMouseEnter={this.handleMouseEnter}
+              onMouseLeave={this.handleMouseLeave}
+            >
               <Arrow>
                 <Arr />
               </Arrow>
               <OptionsDoubleRow>
                 <Body>Network</Body>
-                <Label>{current_network}</Label>
+                <Label>
+                  {current_network} v{window.havenProcess.appVersion}
+                </Label>
               </OptionsDoubleRow>
               <OptionsDoubleRow>
-                <Body>Type</Body>
+                <Body>Node Type</Body>
                 <Label>{node.location}</Label>
               </OptionsDoubleRow>
               <OptionsDoubleRow>
-                <Body>Block</Body>
+                <Body>Block Height</Body>
                 <Label>{height}</Label>
               </OptionsDoubleRow>
               <OptionsDoubleRow>
-                <Body>Version</Body>
-                <Label>v{window.havenProcess.appVersion}</Label>
+                <Body>Vault Height</Body>
+                <Label>...</Label>
+              </OptionsDoubleRow>
+              <OptionsDoubleRow>
+                <Body>Help</Body>
+                <Label>Knowledge Base</Label>
+              </OptionsDoubleRow>
+              <OptionsDoubleRow>
+                <Body>Legal</Body>
+                <Label>Terms & Conditions</Label>
               </OptionsDoubleRow>
             </OptionsList>
           </>
