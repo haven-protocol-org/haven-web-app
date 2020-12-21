@@ -1,7 +1,7 @@
 {
   "testnet": [
     {
-      "address": "http://vault-testnet.havenprotocol.org/",
+      "address": "https://vault-testnet.havenprotocol.org/",
       "provider": "Testnet - Vault",
       "port": "443",
       "trusted": true
@@ -29,10 +29,11 @@
       "trusted": true
     },
     {
-      "address": "http://remote.eu.havenprotocol.org/",
+      "address": "https://vault.havenprotocol.org/",
       "provider": "Haven European Node",
       "port": "17750",
-      "trusted": true
+      "trusted": true,
+      "default": true
     }
   ]
 }
