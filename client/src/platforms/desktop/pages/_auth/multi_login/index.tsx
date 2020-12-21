@@ -55,7 +55,7 @@ class MultiLoginPage extends Component<MultiLoginProps, MultiloginState> {
         </Main>
         <Footer>
           <Label>Need a Vault?</Label>
-          <Route to={"/create"}>Create or Restore a Vault</Route>
+          <Route to="/create">Create or Restore</Route>
         </Footer>
       </Container>
     );
