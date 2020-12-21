@@ -59,8 +59,6 @@ class MultiLoginPage extends Component<MultiLoginProps, MultiloginState> {
       return <Redirect to="/wallet/assets" />;
     }
 
-    console.log("this.state.loginType", this.state.loginType);
-
     const { loginType } = this.state;
 
     return (
