@@ -43,9 +43,9 @@ export const getAvailableWallets = (netTypeId: NET): {
   const files = fs.readdirSync(walletPath);
 
   availableWallets = files
-    .filter((file) => file.endsWith(".keys"))
+    .filter((file: string) => file.endsWith(".keys"))
 
-    .map((walletName) => {
+    .map((walletName: string) => {
       walletName = walletName.replace(".keys", "");
       return walletName;
     });
