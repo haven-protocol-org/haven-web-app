@@ -33,7 +33,7 @@ jobs:
     - name: Client Build for Desktop
       working-directory: client
       run: |
-          npm run build:desktop:mainnet
+          export NET=1 && npm run build:desktop 
     - name: Copy Build
       working-directory: client
       run: |
@@ -46,7 +46,7 @@ jobs:
 
     - name: Build Final App
       run: |
-          sh './sh/make_mainnet.sh'
+          sh './sh/make.sh'
 
     - if: matrix.os == 'macOS-latest'
       name: Upload macOS
