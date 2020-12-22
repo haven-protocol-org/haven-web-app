@@ -103,6 +103,23 @@ export const getMnemonic = async () => {
   return wallet.getMnemonic();
 };
 
+export const getPublicSpend = async (): Promise<string> => {
+  return wallet.getPublicSpendKey();
+  
+};
+
+export const getPrivateSpend = async (): Promise<string> => {
+  return wallet.getPrivateSpendKey();
+};
+
+export const getPublicView = async (): Promise<string> => {
+  return wallet.getPublicViewKey();
+};
+
+export const getPrivateView = async (): Promise<string> => {
+  return wallet.getPrivateViewKey();
+};
+
 export const getPrimaryAddress = async (): Promise<string> => {
   return wallet.getPrimaryAddress();
 };
