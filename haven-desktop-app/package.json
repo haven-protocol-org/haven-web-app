@@ -1,7 +1,7 @@
 {
   "name": "haven",
   "productName": "Haven",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "Desktop App for Haven Vault",
   "main": "dist/index.js",
   "scripts": {
@@ -40,13 +40,13 @@
     "@electron-forge/plugin-auto-unpack-natives": "^6.0.0-beta.52",
     "@electron-forge/publisher-github": "^6.0.0-beta.52",
     "@types/jest": "^26.0.10",
-    "electron": "^9.1.0",
+    "electron": "^9.2.0",
     "jest": "^26.4.0",
     "ncp": "^2.0.0",
     "ts-jest": "^26.2.0",
     "tslint": "^5.20.1",
-    "typescript": "^3.9.6",
-    "webpack": "^4.43.0"
+    "typescript": "^3.9.7",
+    "webpack": "^4.44.1"
   },
   "jest": {
     "verbose": true,
