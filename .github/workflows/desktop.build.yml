@@ -35,9 +35,9 @@ jobs:
 
     - name: Client Build for Desktop
       working-directory: client
+      shell: bash
       run: |
           npm run build:desktop 
-        shell: bash
     - name: Copy Build
       working-directory: client
       run: |
