@@ -13,8 +13,6 @@ on:
 
 jobs:
   build:
-    env:
-      NET: 1
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -36,6 +34,8 @@ jobs:
       working-directory: client
       run: |
           npm run build:desktop 
+      env:
+        NET: 1
     - name: Copy Build
       working-directory: client
       run: |
