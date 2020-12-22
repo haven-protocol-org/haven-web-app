@@ -3,10 +3,6 @@ import React, { Component } from "react";
 
 // Relative Imports
 import {
-  Title,
-  Description as Subtitle,
-} from "../../../../../assets/styles/type.js";
-import {
   Container,
   Main,
   Header,
@@ -15,6 +11,8 @@ import {
   Label,
   Tabs,
   Tab,
+  Title,
+  Description,
 } from "./styles";
 import { RestoreDesktop } from "../restore";
 import { DesktopAppState } from "../../../reducers";
@@ -65,7 +63,9 @@ class MultiLoginPage extends Component<MultiLoginProps, MultiloginState> {
       <Container>
         <Header>
           <Title>{loginType === 2 ? "Restore Vault" : "Create a Vault"}</Title>
-          <Subtitle>Privately store, exchange and transfer assets.</Subtitle>
+          <Description>
+            Privately store, exchange and transfer assets.
+          </Description>
         </Header>
         <Tabs>
           <Tab
