@@ -9,7 +9,8 @@ import { restoreWalletByMnemomic } from "shared/actions/wallet";
 import { Redirect } from "react-router";
 import React, { Component } from "react";
 import { Information } from "assets/styles/type";
-import Description from "shared/components/_inputs/description";
+// import Description from "shared/components/_inputs/description";
+import VerifySeed from "shared/components/_create/verify_seed";
 import { Buttons, Submit } from "../multi_login/styles";
 import { Spinner } from "shared/components/spinner";
 import { Body, Wrapper } from "./styles";
@@ -122,7 +123,7 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
         {step === RESTORE_STEP.SEED_STEP && (
           <Wrapper>
             <Body>
-              <Description
+              <VerifySeed
                 label="Seed Phrase"
                 placeholder="Enter your 25 word seed phrase..."
                 name="seed"
@@ -133,11 +134,7 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
               />
               <Information>
                 Enter your 25 word seed phrase to generate a new vault file.
-                This is an encrypted file, with a unique name and password. A
-                restore requires a full chain sync and can take ~2.5hrs. An
-                alternative approach is to create a new vault to use within the
-                web wallet, which is much quicker, and then transferring your
-                funds into that new vault.
+                This is an encrypted file, with a unique name and password.
               </Information>
             </Body>
             <Buttons buttons="single">
@@ -156,7 +153,7 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
             <Body>
               <Input
                 label="Vault Name"
-                placeholder="Create a Vault name"
+                placeholder="Create a vault name"
                 name="name"
                 type={"text"}
                 value={name}
@@ -165,7 +162,7 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
               <InputButton
                 // @ts-ignore
                 label="Vault Password"
-                placeholder="Enter your Vault password"
+                placeholder="Enter vault password"
                 name="pw"
                 type={this.state.showPassword === true ? "text" : "password"}
                 button={this.state.showPassword === true ? "hide" : "show"}
@@ -174,9 +171,10 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
                 onClick={this.togglePassword}
               />
               <Information>
-                Restoring a Vault with a name and password means you’ll be able
-                to log in without entering your seed phrase. This makes your
-                experience more secure, safe and efficient.
+                Create a unique name and strong password for your vault file. If
+                you lose your vault file you can always restore it with the 25
+                word seed phrase you entered on the previous step. Store your
+                password in a safe location such as a password manager.
               </Information>
             </Body>
             <Buttons buttons="single">

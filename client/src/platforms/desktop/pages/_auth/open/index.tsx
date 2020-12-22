@@ -8,6 +8,7 @@ import { Spinner } from "../../../../../shared/components/spinner";
 import { Body, Wrapper } from "./styles";
 import { Information } from "assets/styles/type";
 import Input from "shared/components/_inputs/input";
+import Toggle from "shared/components/_inputs/toggle";
 import {
   selectErrorMessageForLogin,
   selectIsRequestingLogin,
@@ -25,6 +26,7 @@ interface OpenWalletState {
   validated: boolean;
   showPassword: boolean;
   error: string;
+  reveal: boolean;
 }
 
 interface OpenWalletProps {
@@ -44,6 +46,7 @@ class OpenWalletDesktopContainer extends Component<
     validated: false,
     showPassword: false,
     error: "",
+    reveal: false,
   };
 
   onOpenWallet = () => {
@@ -79,7 +82,7 @@ class OpenWalletDesktopContainer extends Component<
 
   togglePassword = () => {
     this.setState({
-      showPassword: !this.state.showPassword,
+      reveal: !this.state.reveal,
     });
   };
 
@@ -100,20 +103,23 @@ class OpenWalletDesktopContainer extends Component<
         <Dropdown
           onClick={this.handleNoWallet}
           options={noWallets}
-          placeholder="Choose a Vault"
+          placeholder="Choose a vault"
           label={"Select Vault"}
           error={""}
-          value={"Choose a Vault"}
+          value={"Select a vault"}
         >
           {noWallets}
         </Dropdown>
-        <Input
+        {/* @ts-ignore */}
+        <Toggle
           label="Vault Password"
-          placeholder="Enter your Vault password"
+          placeholder="Enter vault password"
           name="password"
           type={"text"}
           value={password}
           onChange={this.onChangeHandler}
+          onClick={this.togglePassword}
+          reveal={this.state.reveal}
         />
         <Information>
           Select your vault file and enter your password. If you are new to
@@ -145,7 +151,7 @@ class OpenWalletDesktopContainer extends Component<
         <InputButton
           // @ts-ignore
           label="Vault Password"
-          placeholder="Enter your Vault password"
+          placeholder="Enter vault password"
           name="password"
           type={showPassword ? "text" : "password"}
           button={showPassword ? "hide" : "show"}
