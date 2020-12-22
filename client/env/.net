@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 
 REACT_APP_NET_TYPE_ID=$NET
 
