@@ -1,5 +1,5 @@
 
-REACT_APP_NET_TYPE_ID=$1
+REACT_APP_NET_TYPE_ID=$NET
 
 if [ -z "${REACT_APP_NET_TYPE_ID}" ]; then
     PS3="please select net type: "
