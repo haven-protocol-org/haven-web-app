@@ -1,5 +1,5 @@
 import React from "react";
-import { AppDesktop } from "./App";
+import { HavenApp } from "../../shared/App";
 
 import { applyMiddleware, createStore, Store } from "redux";
 import reduxThunk from "redux-thunk";
@@ -39,7 +39,7 @@ const render = () => {
   ReactDOM.render(
     <Provider store={store}>
       <GlobalStyle />
-      <AppDesktop />
+      <HavenApp />
     </Provider>,
     document.querySelector("#root")
   );

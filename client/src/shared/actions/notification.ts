@@ -52,8 +52,8 @@ export const addNotificationByMessage = (
 export const addExchangeSucceedMessage = (
   fromTicker: Ticker,
   toTicker: Ticker,
-  fromAmount: number | bigint,
-  toAmount: number | bigint
+  fromAmount: number | bigint | bigInt.BigInteger,
+  toAmount: number | bigint | bigInt.BigInteger
 ) => {
   const message = `Your exchange was successfully submitted`;
   return addNotificationByMessage(NotificationType.SUCCESS, message);

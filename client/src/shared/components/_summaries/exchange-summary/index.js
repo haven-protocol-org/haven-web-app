@@ -2,16 +2,7 @@
 import React from "react";
 
 // Relative Imports
-import {
-  Wrapper,
-  Container,
-  Row,
-  Key,
-  Value,
-  FeeRow,
-  FeePadding,
-  Tag,
-} from "./styles";
+import { Wrapper, Container, Row, Key, Value } from "./styles";
 import { Error } from "../../../../assets/styles/type.js";
 
 export const ExchangeSummary = ({
@@ -28,26 +19,30 @@ export const ExchangeSummary = ({
     <Wrapper>
       <Container>
         <Row>
-          <Key>Exchange Rate</Key>
+          <Key>Conversion Rate</Key>
           <Value active={true}>
             {!hasLatestXRate ? (
-              <Error>Checking lastest rates...</Error>
+              <Error>Awaiting lastest rates...</Error>
             ) : (
-              `1 ${fromTicker} : ${xRate.toFixed(4)} ${toTicker}`
+              `1 ${fromTicker} : ${xRate.toFixed(2)} ${toTicker}`
             )}
           </Value>
         </Row>
         <Row>
           <Key>Converting From</Key>
           <Value>
-            {fromAmount && !isNaN(fromAmount) ? fromAmount : "0"}{" "}
+            {fromAmount && !isNaN(fromAmount)
+              ? parseFloat(fromAmount).toFixed(2)
+              : "0"}{" "}
             {fromTicker ? fromTicker : "--"}
           </Value>
         </Row>
         <Row>
           <Key>Converting To</Key>
           <Value>
-            {toAmount && !isNaN(toAmount) ? toAmount : "0"}{" "}
+            {toAmount && !isNaN(toAmount)
+              ? parseFloat(toAmount).toFixed(2)
+              : "0"}{" "}
             {toTicker ? toTicker : "--"}
           </Value>
         </Row>
@@ -56,14 +51,6 @@ export const ExchangeSummary = ({
           <Value>{selectedPrio.ticker}</Value>
         </Row>
       </Container>
-      <FeeRow>
-        <FeePadding>
-          <Key>Minimum Fee ({selectedPrio.percent})</Key>
-          <Tag priority={selectedPrio.prio}>
-            <Value>{fee === "" ? "" : `${fee.toFixed(4)} ${fromTicker}`}</Value>
-          </Tag>
-        </FeePadding>
-      </FeeRow>
     </Wrapper>
   );
 };

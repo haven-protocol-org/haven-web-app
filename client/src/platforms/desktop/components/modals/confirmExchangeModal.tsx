@@ -1,16 +1,13 @@
 import * as React from "react";
-import { DesktopAppState } from "platforms/desktop/reducers";
 import { connect } from "react-redux";
-import {
-  confirmExchange,
-  resetExchangeProcess,
-} from "platforms/desktop/actions";
+import { confirmExchange, resetExchangeProcess } from "shared/actions/exchange";
 import { Modal } from "shared/components/modal";
-import { ExchangeProcessInfo } from "platforms/desktop/reducers/exchangeProcess";
+import { ExchangeProcessInfo } from "shared/reducers/exchangeProcess";
 import { hideModal } from "shared/actions/modal";
 import Transaction from "shared/components/_transactions/exchange";
-import { convertToMoney } from "utility/utility";
+import { convertBalanceToMoney } from "utility/utility";
 import { selectPrimaryAddress } from "shared/reducers/address";
+import { HavenAppState } from "platforms/desktop/reducers";
 
 interface ConfirmExchangeModalProps {
   exchange: ExchangeProcessInfo;
@@ -48,13 +45,13 @@ class ConfirmExchangeModal extends React.Component<
 
     const isOwnAddress = this.props.isOwnAddress;
 
-    const readableToAmout = convertToMoney(toAmount);
-    const readAbleFromAmount = convertToMoney(fromAmount);
-    const readAbleFeeAmount = convertToMoney(fee);
+    const readableToAmout = convertBalanceToMoney(toAmount!);
+    const readAbleFromAmount = convertBalanceToMoney(fromAmount!);
+    const readAbleFeeAmount = convertBalanceToMoney(fee!, 4);
 
     return (
       <Modal
-        title="Exchange Confirmation"
+        title="Conversion Confirmation"
         description="Please review and confirm your transaction"
         leftButton="Cancel"
         rightButton="Confirm"
@@ -82,7 +79,7 @@ class ConfirmExchangeModal extends React.Component<
 
   onCancel() {
     this.props.hideModal();
-   // this.props.resetExchangeProcess();
+    // this.props.resetExchangeProcess();
   }
 
   onConfirm() {
@@ -90,6 +87,7 @@ class ConfirmExchangeModal extends React.Component<
     this.setState({
       loading: true,
     });
+
     setTimeout(() => {
       this.props.confirmExchange(metaList);
     }, 3000);
@@ -102,14 +100,15 @@ class ConfirmExchangeModal extends React.Component<
   }
 }
 
-const mapStateToProps = (state: DesktopAppState) => ({
+const mapStateToProps = (state: HavenAppState) => ({
   exchange: state.exchangeProcess,
   isOwnAddress:
-    selectPrimaryAddress(state.address) === state.exchangeProcess.address,
+    selectPrimaryAddress(state.address.entrys) ===
+    state.exchangeProcess.address,
 });
 
 export const ConfirmExchangeModalDesktop = connect(mapStateToProps, {
   confirmExchange,
   hideModal,
-  resetExchangeProcess
+  resetExchangeProcess,
 })(ConfirmExchangeModal);

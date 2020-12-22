@@ -4,16 +4,16 @@ import { connect } from "react-redux";
 import { AssetOption } from "shared/pages/_wallet/exchange";
 import { Ticker } from "shared/reducers/types";
 import { XBalances } from "shared/reducers/xBalance";
-import { convertBalanceForReading } from "utility/utility";
+import { convertBalanceToMoney } from "utility/utility";
 import Description from "../../../components/_inputs/description";
 import Dropdown from "../../../components/_inputs/dropdown";
 import Footer from "../../../components/_inputs/footer";
 import Form from "../../../components/_inputs/form";
 import Input from "../../../components/_inputs/input";
+import InputButton from "../../../components/_inputs/input_button";
 
 import { Container } from "./styles";
 import TransferSummary from "shared/components/_summaries/transfer-summary";
-import { isDesktop } from "constants/env";
 // Relative Imports
 
 const xhvOption = { name: "Haven", ticker: Ticker.XHV };
@@ -28,8 +28,8 @@ interface TransferOwnProps {
   sendFunds: (
     address: string,
     amount: number,
-    paymentId: string,
-    ticker: Ticker
+    ticker: Ticker,
+    sweepAll: boolean
   ) => void;
   isProcessing: boolean;
 }
@@ -43,9 +43,9 @@ interface TransferState {
   selectedAsset: AssetOption | null;
   send_amount: string;
   recipient_address: string;
-  payment_id: string;
   amountError: string;
   reviewed: boolean;
+  sweep_all: boolean;
 }
 
 type TransferProps = TransferOwnProps & TransferReduxProps;
@@ -55,9 +55,9 @@ class TransferContainer extends Component<TransferProps, TransferState> {
     selectedAsset: this.props.options[0],
     send_amount: "",
     recipient_address: "",
-    payment_id: "",
     amountError: "",
     reviewed: false,
+    sweep_all: false,
   };
 
   componentDidMount() {
@@ -82,30 +82,31 @@ class TransferContainer extends Component<TransferProps, TransferState> {
     });
   };
 
+
+    handleSendAmountChange = (event: any) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    this.setState<never>({
+      [name]: value,sweep_all: false,
+    });
+  };
+
   setSendAsset = (asset: AssetOption) => {
     this.setState({
-      selectedAsset: asset,
+      selectedAsset: asset, sweep_all: false
     });
   };
 
   handleSubmit = () => {
-    const {
-      payment_id,
-      send_amount,
-      recipient_address,
-      selectedAsset,
-    } = this.state;
+    const { send_amount, recipient_address, selectedAsset } = this.state;
 
-    if (send_amount.length === 0 && recipient_address.length === 0) {
-      return;
-    }
-
+ 
     if (selectedAsset !== null) {
       this.props.sendFunds(
         recipient_address,
         Number(send_amount),
-        payment_id,
-        selectedAsset.ticker
+        selectedAsset.ticker,
+        this.state.sweep_all
       );
     }
   };
@@ -115,14 +116,15 @@ class TransferContainer extends Component<TransferProps, TransferState> {
 
     let availableBalance = null;
     if (selectedAsset) {
-      availableBalance = convertBalanceForReading(
+      availableBalance = convertBalanceToMoney(
         this.props.xBalances[selectedAsset.ticker].unlockedBalance
       );
     }
 
     if (availableBalance != null) {
       this.setState({
-        send_amount: availableBalance,
+        send_amount: availableBalance.toFixed(2),
+        sweep_all: true,
       });
     } else {
       this.setState({
@@ -131,32 +133,17 @@ class TransferContainer extends Component<TransferProps, TransferState> {
     }
   };
 
-  paymentIdIsValid = () => {
-    const regexp = new RegExp(/^[0-9a-fA-F]+$/);
-
-    const { payment_id } = this.state;
-
-    if (
-      (regexp.test(payment_id) && payment_id.length === 64) ||
-      payment_id === ""
-    ) {
-      return "";
-    } else {
-      return "Enter a valid Payment ID";
-    }
-  };
-
-  amountIsValid = (availableBalance: any) => {
+  amountIsValid = (availableBalance: number): string | true => {
     const { send_amount } = this.state;
-    const availableBalanceString = availableBalance.toString();
-    if (send_amount > availableBalance) {
+
+    const convertToNum = parseFloat(send_amount);
+
+    //@ts-ignore
+    if (convertToNum > availableBalance) {
       return "Not enough funds";
     }
 
-    //@ts-ignore
-    if (send_amount === availableBalanceString) {
-      return "Save some for fees";
-    }
+    return true
   };
 
   // @ts-ignore
@@ -171,19 +158,17 @@ class TransferContainer extends Component<TransferProps, TransferState> {
     }
   };
 
+
+  
+
   render() {
-    const {
-      selectedAsset,
-      send_amount,
-      recipient_address,
-      payment_id,
-    } = this.state;
+    const { selectedAsset, send_amount, recipient_address } = this.state;
 
     const windowWidth = window.innerWidth;
 
-    let availableBalance = null;
+    let availableBalance = 0;
     if (selectedAsset) {
-      availableBalance = convertBalanceForReading(
+      availableBalance = convertBalanceToMoney(
         this.props.xBalances[selectedAsset.ticker].unlockedBalance
       );
     }
@@ -191,7 +176,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
     const checkValidation =
       send_amount.length > 0 &&
       recipient_address.length > 97 &&
-      send_amount < availableBalance;
+      this.amountIsValid(availableBalance) === true
 
     return (
       <Fragment>
@@ -205,44 +190,34 @@ class TransferContainer extends Component<TransferProps, TransferState> {
             options={this.props.options}
             onClick={this.setSendAsset}
           />
-          <Input
+          <InputButton
             // @ts-ignore
             label={
               availableBalance
-                ? `Amount (Avail. ${availableBalance})`
+                ? `Amount (Avail. ${availableBalance.toFixed(2)})`
                 : "Amount"
             }
             placeholder="Enter amount"
             type="number"
             // @ts-ignore
-            error={this.amountIsValid(availableBalance)}
+            error={this.amountIsValid(availableBalance.toFixed(2))}
             name="send_amount"
             value={send_amount}
-            onChange={this.handleChange}
+            onChange={this.handleSendAmountChange}
+            button={"max"}
+            onClick={this.setMaxAmount}
           />
           {windowWidth < 1380 ? (
-            <Fragment>
-              <Description
-                label="Recipient"
-                placeholder="Enter recipient's address"
-                name="recipient_address"
-                value={recipient_address}
-                width={true}
-                rows={windowWidth < 600 ? "3" : "2"}
-                onChange={this.handleChange}
-                error={this.recipientIsValid()}
-              />
-              <Input
-                label="Payment ID (Optional)"
-                placeholder="Enter an optional payment ID"
-                type={"text"}
-                name="payment_id"
-                width={true}
-                value={payment_id}
-                onChange={this.handleChange}
-                error={this.paymentIdIsValid()}
-              />
-            </Fragment>
+            <Description
+              label="Recipient"
+              placeholder="Enter recipient's address"
+              name="recipient_address"
+              value={recipient_address}
+              width={true}
+              rows={windowWidth < 600 ? "3" : "2"}
+              onChange={this.handleChange}
+              error={this.recipientIsValid()}
+            />
           ) : (
             <Fragment>
               <Input
@@ -255,22 +230,11 @@ class TransferContainer extends Component<TransferProps, TransferState> {
                 onChange={this.handleChange}
                 error={this.recipientIsValid()}
               />
-              <Input
-                label="Payment ID (Optional) "
-                placeholder="Enter an optional payment ID"
-                type={"text"}
-                width={true}
-                name="payment_id"
-                value={payment_id}
-                onChange={this.handleChange}
-                error={this.paymentIdIsValid()}
-              />
             </Fragment>
           )}
         </Form>
         <Container>
           <TransferSummary
-            paymentId={payment_id === "" ? "--" : payment_id}
             recipientAddress={
               recipient_address === "" ? "--" : recipient_address
             }
@@ -281,7 +245,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
           <Footer
             onClick={() => this.handleSubmit()}
             loading={this.props.isProcessing}
-            label={isDesktop() ? "Preview" : "Transfer"}
+            label={"Preview"}
             disabled={!checkValidation}
           />
         </Container>

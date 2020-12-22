@@ -8,6 +8,8 @@ haven-wallet-rpc.log*
 /client/node_modules
 /keys
 /node_modules
+/client/deploy
+
 /.pnp
 .pnp.js
 
@@ -29,7 +31,6 @@ yarn-debug.log*
 yarn-error.log*
 
 newrelic_agent.log
-client/deploy/deploy.sh
 
 sh/team_deploy.sh
 sh/git_deploy.sh
@@ -38,4 +39,5 @@ sh/publish_mainnet.sh
 sh/publish_testnet.sh
 sh/publish_stagenet.sh
 .idea/
+
 

@@ -23,56 +23,67 @@ const Transaction = ({
   const last = externAddress.substring(externAddress.length - 4);
   const truncatedAddress = first + "...." + last;
 
+  const priorityInfo =
+    priority === 0
+      ? "~7d"
+      : priority === 1
+      ? "~48h"
+      : priority === 2
+      ? "~24h"
+      : priority === 3
+      ? "~6h"
+      : null;
+
   return (
     <Fragment>
       <Container>
         <Row>
-          <Key>Exchange From</Key>
+          <Key>Convert From</Key>
           <Value>
-            {fromAmount.toFixed(4)} {fromTicker}
+            {fromAmount.toFixed(2)} {fromTicker}
           </Value>
         </Row>
         <Row>
-          <Key>Exchange To</Key>
+          <Key>Convert To</Key>
           <Value>
-            {toAmount.toFixed(4)} {toTicker}
+            {toAmount.toFixed(2)} {toTicker}
           </Value>
         </Row>
         {isOwnAddress ? null : (
           <Row>
-            <Key>Exchange To</Key>
+            <Key>Convert To</Key>
             <Value>{truncatedAddress}</Value>
           </Row>
         )}
         <Row>
           {(function () {
             switch (priority) {
-              case 1:
+              case 0:
                 return (
                   <>
                     <Key>Normal Priority</Key>
                     <Value>Unlocks ~7d</Value>
                   </>
                 );
-              case 2:
+              case 1:
                 return (
                   <>
                     <Key>Low Priority</Key>
-                    <Value>Unlocks ~48hr</Value>
+                    <Value>Unlocks ~48h</Value>
+                  </>
+                );
+              case 2:
+                return (
+                  <>
+                    <Key>Medium Priority</Key>
+                    <Value>Unlocks ~24h</Value>
                   </>
                 );
               case 3:
                 return (
                   <>
-                    <Key>Medium Priority</Key>
-                    <Value>Unlocks ~24hr</Value>
-                  </>
-                );
-              case 4:
-                return (
-                  <>
                     <Key>High Priority</Key>
-                    <Value>Unlocks ~6hr</Value>
+                    <Value>Unlocks ~6h</Value>
                   </>
                 );
 
@@ -81,27 +92,24 @@ const Transaction = ({
           })()}
         </Row>
         <Row>
-          <Key>Final Exchange Fee</Key>
+          <Key>Final Conversion Fee</Key>
           <Tag priority={priority}>
             <Value>
-              {fee} {fromTicker}
+              {fee.toFixed(4)} {fromTicker}
             </Value>
           </Tag>
         </Row>
         <Confirm
-          description="I reviewed my Exchange details and I accept the Fees and Terms"
+          description="I reviewed the transaction and I accept the Fees and Terms"
           checked={checked}
           onChange={onChange}
         />
       </Container>
       <Information>
-        <strong>Terms:</strong> You accept any and all responsibility for your
-        Exchange including the verification of Recipient Addresses, Amounts and
-        Fees. Upon clicking <strong>Confirm</strong> a portion of your balance
-        may be locked for the entirety of your Priority Unlock Time, until the
-        transaction is complete. The Vault will indicate any pending balances
-        which can be seen by clicking the <strong>Show Pending Balances</strong>{" "}
-        button in the Assets page.
+        I have reviewed my conversion details and accept all responsibility for
+        this transaction. Once I click confirm, I understand that a portion of
+        my balance may be locked for the entirety of your {priorityInfo} unlock
+        priority time.
       </Information>
     </Fragment>
   );

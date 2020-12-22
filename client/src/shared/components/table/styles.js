@@ -33,7 +33,7 @@ export const Heading = styled.div`
   color: #ffffff;
   letter-spacing: 0;
   line-height: 27px;
-  text-align: ${props => (props.right ? "right" : "left")};
+  text-align: ${(props) => (props.right ? "right" : "left")};
 `;
 
 export const Label = styled.div`
@@ -41,7 +41,7 @@ export const Label = styled.div`
   font-size: 14px;
   color: #8a8d90;
   line-height: 24px;
-  text-align: ${props => (props.right ? "right" : "left")};
+  text-align: ${(props) => (props.right ? "right" : "left")};
 `;
 
 export const Column = styled.div`

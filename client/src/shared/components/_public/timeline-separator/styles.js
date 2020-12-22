@@ -17,7 +17,7 @@ export const Circle = styled.div`
   width: 24px;
   border-radius: 24px;
   border: 1px solid #2b2e34;
-  background: ${props =>
+  background: ${(props) =>
     props.complete === "complete" ? `${props.theme.states.success}` : null};
   margin-left: 20px;
   display: flex;

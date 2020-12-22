@@ -41,6 +41,27 @@ export const Description = styled.div`
   line-height: 24px;
 `;
 
+export const Tabs = styled.div`
+  height: 40px;
+  wdith: 100%;
+  background: red;
+  display: flex;
+`;
+
+export const Tab = styled.div`
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  background: ${(props) => (props.active ? "#36393F" : "#2B2E32")};
+  color: ${(props) => (props.active ? "#ffffff" : "#8a8d90")};
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
 export const Progress = styled.div`
   display: grid;
   background: #2b2e34;
@@ -50,7 +71,7 @@ export const Progress = styled.div`
 `;
 
 export const Step = styled.div`
-  width: ${props =>
+  width: ${(props) =>
     (props.width === 1 ? "10%" : null) ||
     (props.width === 2 ? "50%" : null) ||
     (props.width === 3 ? "100%" : null)}
@@ -169,6 +190,8 @@ export const Route = styled(Link)`
   color: #fff;
   text-decoration: none;
   margin-left: 8px;
+  width: 100%;
+  text-align: left;
 `;
 
 export const Label = styled.div`
@@ -176,4 +199,6 @@ export const Label = styled.div`
   font-size: 14px;
   color: #8a8d90;
   text-decoration: none;
+  width: 100%;
+  text-align: right;
 `;

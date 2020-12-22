@@ -37,29 +37,42 @@ class AddressDropdown extends React.Component {
   renderOptions = () => {
     const { onClick, options } = this.props;
     return options.map((option) => {
-      const { address, label } = option;
+      const { address, label, index } = option;
 
       const first = address.substring(0, 4);
       const last = address.substring(address.length - 4);
       const truncated = first + "...." + last;
 
+      // const handleLabel = label === undefined ? `Address ${index}` : label;
+
       return (
-        <Item key={address} onClick={() => onClick({ address, label })}>
-          <Row>
-            <Block>
-              <Name>{label}</Name>
-              <Address>{truncated}</Address>
-            </Block>
-            {this.props.editable ? <Edit>Edit</Edit> : null}
-          </Row>
-        </Item>
+        <>
+          <Item
+            key={address}
+            onClick={() => onClick({ address, label, index })}
+          >
+            <Row>
+              <Block>
+                <Name>{label === undefined ? `Address ${index}` : label} </Name>
+                <Address>{truncated}</Address>
+              </Block>
+            </Row>
+          </Item>
+        </>
       );
     });
   };
 
   render() {
     const { displayMenu } = this.state;
-    const { label, error, value, placeholder } = this.props;
+    const {
+      label,
+      error,
+      value,
+      placeholder,
+      editAddress,
+      editable,
+    } = this.props;
 
     return (
       <Container>
@@ -73,7 +86,20 @@ class AddressDropdown extends React.Component {
               <Name>{!value ? placeholder : value}</Name>
             </Row>
           </Button>
-          {displayMenu && <Wrapper>{this.renderOptions()}</Wrapper>}
+          {displayMenu && (
+            <Wrapper>
+              {this.renderOptions()}
+              <Item key="addAddress" onClick={editAddress}>
+                <Row>
+                  <Block>
+                    <Name>{"Create address"}</Name>
+                    <Address>{""}</Address>
+                  </Block>
+                  {editable && <Edit onClick={editAddress}>Create</Edit>}
+                </Row>
+              </Item>
+            </Wrapper>
+          )}
         </Select>
       </Container>
     );

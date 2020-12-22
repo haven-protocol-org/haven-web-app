@@ -59,14 +59,14 @@ class ChartWrapper extends Component<any, any> {
         <Chart
           prices={prices}
           labels={labels}
-          price={price.toFixed(4)}
+          price={price.toFixed(2)}
           onChangePriceRange={(args: number | string) =>
             this.selectPriceHistory(args)
           }
         />
         <Row>
-          <Statistic label="Amount" value={amount.toFixed(4)} />
-          <Statistic label="Price" value={`$` + price.toFixed(4)} />
+          <Statistic label="Amount" value={amount.toFixed(2)} />
+          <Statistic label="Price" value={`$` + price.toFixed(2)} />
           <Statistic
             label="Value"
             value={value.toLocaleString("en-US", {

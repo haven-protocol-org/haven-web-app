@@ -2,6 +2,7 @@
 
 export const dark = {
   value: "Dark Theme",
+  name:"dark",
   body: {
     navigation: "#26282C",
     background: "#36393F",
@@ -17,6 +18,7 @@ export const dark = {
   type: {
     primary: "#ffffff",
     secondary: "#8A8D90",
+    inverse: "#fff",
   },
   input: {
     input_border: "#4a4d52",
@@ -48,6 +50,7 @@ export const dark = {
 
 export const light = {
   value: "Light Theme",
+  name:"light",
   body: {
     navigation: "#e5e5e5",
     background: "#f5f5f5",
@@ -63,6 +66,7 @@ export const light = {
   type: {
     primary: "#1d1d1f",
     secondary: "#79797a",
+    inverse: "#fff",
   },
   input: {
     input_border: "#e0e0e0",
@@ -94,6 +98,7 @@ export const light = {
 
 export const sepia = {
   value: "Sepia Theme",
+  name:"sepia",
   body: {
     navigation: "#c6b3a1",
     background: "#e2d9d0",
@@ -109,6 +114,7 @@ export const sepia = {
   type: {
     primary: "#43280c",
     secondary: "#7e552c",
+    inverse: "#fff",
   },
   input: {
     input_border: "#b8a18a",

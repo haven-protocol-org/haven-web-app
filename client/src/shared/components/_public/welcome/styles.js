@@ -5,7 +5,7 @@ import media from "../../../../assets/styles/media.js";
 export const Wrapper = styled.div`
   width: 100%;
   height: auto;
-  background: ${props => (props.reverse ? "#2b2e34" : "#36393F")};
+  background: ${(props) => (props.reverse ? "#2b2e34" : "#36393F")};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -19,7 +19,7 @@ export const Container = styled.div`
   grid-gap: 20px;
   padding: 80px;
   max-width: 1400px;
-  background: ${props => (props.reverse ? "#2b2e34" : "#36393F")};
+  background: ${(props) => (props.reverse ? "#2b2e34" : "#36393F")};
   justify-content: center;
   align-items: center;
 
@@ -59,10 +59,10 @@ export const Test = styled.div`
   align-items: center;
   justify-content: center;
   align-items: center;
-  order: ${props => (props.reverse ? 2 : 1)};
+  order: ${(props) => (props.reverse ? 2 : 1)};
 
   ${media.laptop`
-    order: ${props => props.reverse || 2};
+    order: ${(props) => props.reverse || 2};
   `}
 `;
 
@@ -73,10 +73,10 @@ export const Words = styled.div`
   flex-direction: column;
   justify-content: center;
   padding: 20px;
-  order: ${props => (props.reverse ? 1 : 2)};
+  order: ${(props) => (props.reverse ? 1 : 2)};
 
   ${media.laptop`
-    order: ${props => props.reverse || 1};
+    order: ${(props) => props.reverse || 1};
     height: auto;
     justify-content: flex-start;
   `}

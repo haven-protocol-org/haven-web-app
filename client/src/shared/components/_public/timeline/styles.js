@@ -18,7 +18,7 @@ export const Container = styled.div`
   height: auto;
   grid-template-columns: 1fr;
   padding: 80px;
-  background: ${props => (props.reverse ? "#2b2e34" : "#36393F")};
+  background: ${(props) => (props.reverse ? "#2b2e34" : "#36393F")};
   justify-content: center;
   align-items: center;
 
@@ -60,9 +60,9 @@ export const Cell = styled.div`
   grid-template-columns: 16px 1fr;
   width: 100%;
   height: auto;
-  background: ${props => props.theme.body.foreground};
+  background: ${(props) => props.theme.body.foreground};
   border-radius: 4px;
-  border: 1px solid ${props => props.theme.body.border};
+  border: 1px solid ${(props) => props.theme.body.border};
   overflow: hidden;
   padding-right: 16px;
   margin-right: 20px;

@@ -1,12 +1,12 @@
 import { NodeLocation } from "platforms/desktop/types";
-import {ThreeState} from "shared/types/types";
+import { ThreeState } from "shared/types/types";
 
 export enum CommunicationChannel {
-  HAVEND = "havend",
-  WALLET_RPC = "wallet-rpc",
-  RPC = "rpc",
-  STORED_WALLETS = "wallets",
-  SWITCH_NET = "switch_net",
+  LOCALNODE = "localNode",
+  WALLET = "wallet",
+  DAEMON = "daemon",
+  STORED_WALLETS="stored_wallets",
+  CONFIG = "config",
 }
 
 export interface DAEMON_STATUS {
@@ -17,13 +17,6 @@ export interface DAEMON_STATUS {
 
 export interface AVAILABLE_WALLETS {
   wallets: { name: string; address: string }[];
-}
-
-export interface WalletState extends ProcessState {
-  isConnectedToDaemon: ThreeState;
-  isSyncing: boolean;
-  syncHeight: number;
-  isReachable: boolean;
 }
 
 export interface HavendState extends ProcessState {
@@ -37,3 +30,10 @@ export interface ProcessState {
   code?: number;
   signal?: string;
 }
+
+export interface WalletRequest {
+  methodName: string;
+  params: any[];
+}
+
+export type LocalNodeRequest = "state" | "start" | "stop";

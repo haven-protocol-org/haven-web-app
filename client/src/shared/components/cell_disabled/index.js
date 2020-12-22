@@ -10,7 +10,6 @@ import {
   Inner,
   Wrapper,
   Row,
-  Ticker,
   Balance,
   Arrow,
 } from "./styles";
@@ -21,14 +20,15 @@ const CellDisabled = ({ tokenName, ticker, price, balance, fullwidth }) => {
       <Column>
         <Row>
           <Title>{tokenName}</Title>
-          <Ticker>{ticker}</Ticker>
         </Row>
-        <Subtitle left>{price}</Subtitle>
+        <Subtitle left>
+          {ticker} {balance}
+        </Subtitle>
       </Column>
       <Wrapper>
         <Column>
           <Balance>$0.00</Balance>
-          <Subtitle>{balance}</Subtitle>
+          <Subtitle>{price}</Subtitle>
         </Column>
         <Inner>
           <Arrow />

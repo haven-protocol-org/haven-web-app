@@ -4,23 +4,23 @@ import React, { Component } from "react";
 // Relative Imports
 import { Information } from "../../../../assets/styles/type.js";
 import Seed from "../../_inputs/seed";
-import {writeText} from "../../../../vendor/clipboard/clipboard-polyfill";
+import { writeText } from "../../../../vendor/clipboard/clipboard-polyfill";
 
 class CreateSeed extends Component {
   state = {
-    action: "Copy Seed"
+    action: "Copy Seed",
   };
 
   copySeed = () => {
     const seed = this.props.value;
     this.setState({
-      action: "Seed Copied"
+      action: "Seed Copied",
     });
     writeText(seed);
 
     setTimeout(() => {
       this.setState({
-        action: "Copy Seed"
+        action: "Copy Seed",
       });
     }, 1000);
   };
@@ -33,12 +33,14 @@ class CreateSeed extends Component {
       action,
       actionEvent,
       readOnly,
+      label,
+      children,
       ...rest
     } = this.props;
     return (
       <>
         <Seed
-          label="Seed Phrase"
+          label={label}
           value={value}
           placeholder=""
           name={name}
@@ -48,14 +50,7 @@ class CreateSeed extends Component {
           actionEvent={this.copySeed}
           rest={rest}
         />
-        <Information>
-          A Seed Phrase is a algorithmically generated password and provides
-          full access to your account and assets.{" "}
-          <strong>
-            Store your seed in a safe location and do not share this with
-            anyone.
-          </strong>
-        </Information>
+        {children}
       </>
     );
   }

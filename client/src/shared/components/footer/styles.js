@@ -2,7 +2,7 @@ import styled from "styled-components";
 import {
   primary,
   secondary,
-  background
+  background,
 } from "../../../assets/styles/colors.js";
 import media from "../../../assets/styles/media.js";
 import { Link } from "react-router-dom";

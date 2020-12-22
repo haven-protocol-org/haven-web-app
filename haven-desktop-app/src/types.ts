@@ -1,24 +1,10 @@
 export enum CommunicationChannel {
-  HAVEND = "havend",
-  WALLET_RPC = "wallet-rpc",
-  RPC = "rpc",
-  STORED_WALLETS = "wallets",
-  SWITCH_NET = "switch_net",
+  LOCALNODE = "localNode",
+  WALLET = "wallet",
+  DAEMON = "daemon",
+  STORED_WALLETS="stored_wallets",
+  CONFIG = "config",
 }
-
-export interface WalletState extends ProcessState {
-  isConnectedToDaemon: ThreeState;
-  isSyncing: boolean;
-  syncHeight: number;
-  isReachable: boolean;
-}
-
-export interface HavendState extends ProcessState {
-  isReachable: boolean;
-  location: NodeLocation;
-  address: string;
-}
-
 export interface ProcessState {
   isRunning: boolean;
   code?: number;
@@ -26,11 +12,34 @@ export interface ProcessState {
 }
 
 export interface IDaemonConfig {
-
   port: number;
   args: { [key: string]: string | number };
   daemonUrl: string;
+}
 
+export enum NET {
+  Mainnet = 0,
+  Testnet = 1,
+  Stagenet = 2,
+}
+
+export type IDaemonNetConfig = {
+  [key in NET]: IDaemonConfig;
+};
+
+export type AppConfig = IDaemonNetConfig & { version: string };
+
+export type LocalNodeRequest = "state" | "start" | "stop";
+
+export enum NetTypeName {
+  mainnet = "mainnet",
+  testnet = "testnet",
+  stagenet = "stagenet",
+}
+
+export interface DesktopConfig {
+  theme: string;
+  selectedNode: Partial<SelectedNode>;
 }
 
 
@@ -40,32 +49,9 @@ export enum NodeLocation {
   None = "None",
 }
 
-export enum ThreeState {
-  True,
-  False,
-  Unset,
-}
-export enum NET {
-  Mainnet = 0,
-  Testnet = 1,
-  Stagenet = 2,
-}
-
-export type IDaemonNetConfig = { [key in  NET]: {[key in DaemonType]: IDaemonConfig} };
-
-export type AppConfig = IDaemonNetConfig & {version: string};
-
-
-export enum DaemonType  {
-  havend= "havend",
- wallet= "wallet",
-}
-
-
-
-
-export enum NetTypeName {
-  mainnet= "mainnet",
-  testnet= "testnet",
-  stagenet= "stagenet",
+export interface SelectedNode {
+  address: string;
+  port: string;
+  location: NodeLocation;
+  appIsConnected: boolean;
 }

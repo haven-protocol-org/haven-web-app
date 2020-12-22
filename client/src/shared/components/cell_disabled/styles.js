@@ -58,7 +58,7 @@ export const Ticker = styled.div`
   color: ${(props) => props.theme.type.secondary};
   letter-spacing: 0;
   line-height: 30px;
-  padding-left: 12px;
+  padding-left: 8px;
 
   ${media.mobile`
     padding-left: 0px;
@@ -95,10 +95,6 @@ export const Title = styled.div`
   letter-spacing: 0;
   line-height: 30px;
   text-align: ${(props) => (props.left ? "left" : "right")};
-
-  ${media.mobile`
-      display: none;
-    `}
 `;
 
 export const Subtitle = styled.div`

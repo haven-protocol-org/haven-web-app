@@ -3,9 +3,9 @@ import styled from "styled-components";
 export const Container = styled.div`
   width: 100vw;
   height: 100vh;
-  background: ${props => props.theme.body.foreground};
+  background: ${(props) => props.theme.body.foreground};
   font-size: 40px;
-  color: ${props => props.theme.type.secondary};
+  color: ${(props) => props.theme.type.secondary};
   display: flex;
   flex-direction: column;
   align-items: center;

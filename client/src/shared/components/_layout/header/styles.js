@@ -9,7 +9,7 @@ export const Container = styled.div`
   justify-content: center;
   align-items: flex-start;
   grid-column: 1 / 3;
-  border-bottom: 1px solid ${props => props.theme.body.border};
+  border-bottom: 1px solid ${(props) => props.theme.body.border};
 `;
 
 export const Nav = styled(Link)`
@@ -24,7 +24,7 @@ export const Row = styled.div`
 export const Back = styled(Link)`
   font-family: Inter-Regular;
   font-size: 20px;
-  color: ${props => props.theme.type.secondary};
+  color: ${(props) => props.theme.type.secondary};
   letter-spacing: 0;
   line-height: 30px;
   margin-right: 12px;

@@ -4,12 +4,9 @@ import { Transaction } from "shared/components/_transactions/transfer";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { connect } from "react-redux";
 import { hideModal } from "shared/actions/modal";
-import {
-  confirmTransfer,
-  resetTransferProcess,
-} from "platforms/desktop/actions/transfer";
-import { TxProcessInfo } from "platforms/desktop/reducers/transferProcess";
-import { convertToMoney } from "utility/utility";
+import { confirmTransfer, resetTransferProcess } from "shared/actions/transfer";
+import { TxProcessInfo } from "shared/reducers/transferProcess";
+import { convertBalanceToMoney } from "utility/utility";
 
 interface ConfirmTxModalProps {
   transfer: TxProcessInfo;
@@ -31,17 +28,11 @@ class ConfirmTxModal extends React.Component<ConfirmTxModalProps, any> {
   };
 
   render() {
-    const {
-      paymentId,
-      fromTicker,
-      fromAmount,
-      address,
-      fee,
-    } = this.props.transfer;
+    const { fromTicker, fromAmount, address, fee } = this.props.transfer;
     const { checked } = this.state;
 
-    const readableFee = convertToMoney(fee);
-    const readableAmount = convertToMoney(fromAmount);
+    const readableFee = convertBalanceToMoney(fee!, 4);
+    const readableAmount = convertBalanceToMoney(fromAmount!);
 
     return (
       <Modal
@@ -57,7 +48,6 @@ class ConfirmTxModal extends React.Component<ConfirmTxModalProps, any> {
         <Transaction
           onChange={this.approveTransfer}
           checked={this.state.checked}
-          paymentId={paymentId === "" ? "--" : paymentId}
           recipientAddress={address}
           ticker={fromTicker}
           transferAmount={readableAmount}
@@ -74,6 +64,7 @@ class ConfirmTxModal extends React.Component<ConfirmTxModalProps, any> {
 
   onConfirm() {
     const { metaList } = this.props.transfer;
+
     this.setState({
       loading: true,
     });

@@ -26,11 +26,14 @@ export const Field = styled.input`
   outline: none;
   width: auto;
   transition: 500ms;
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
 
   ::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
   }
+
   ::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;

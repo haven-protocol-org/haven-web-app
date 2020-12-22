@@ -18,7 +18,7 @@ export const Container = styled.div`
   grid-template-columns: 1fr;
   grid-gap: 20px;
   padding: 80px;
-  background: ${props => (props.reverse ? "#2b2e34" : "#36393F")};
+  background: ${(props) => (props.reverse ? "#2b2e34" : "#36393F")};
   max-width: 1400px;
 
   justify-content: center;

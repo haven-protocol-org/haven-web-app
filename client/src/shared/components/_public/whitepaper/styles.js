@@ -62,8 +62,8 @@ export const Cell = styled.div`
   transition: 500ms;
 
   &:hover {
-    background: ${props => props.theme.body.foreground};
-    border: 1px solid ${props => props.theme.body.border};
+    background: ${(props) => props.theme.body.foreground};
+    border: 1px solid ${(props) => props.theme.body.border};
     box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.15);
     border-radius: 4px;
     transition: 500ms;

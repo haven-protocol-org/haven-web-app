@@ -3,23 +3,21 @@ import React from "react";
 
 import { Icon } from "./styles";
 import { DesktopAppState } from "../../reducers";
-import { selectIsLoggedIn } from "../../reducers/walletSession";
 import { connect } from "react-redux";
-import { closeWallet, rescanBlockChain } from "../../actions";
-import { selectRefreshing } from "platforms/desktop/reducers/chain";
+import { rescanBlockchain } from "shared/actions/wallet";
 
 const RefreshIconComponent = (props: any) => {
   return (
     <Icon
-      onClick={(e: any) => props.isRefreshing || props.rescanBlockChain()}
+      onClick={(e: any) => props.isRefreshing || props.rescanBlockchain()}
     />
   );
 };
 
 const mapStateToProps = (state: DesktopAppState) => ({
-  isRefreshing: selectRefreshing(state),
+  isRefreshing: false,
 });
 
 export const Refresh = connect(mapStateToProps, {
-  rescanBlockChain,
+  rescanBlockchain,
 })(RefreshIconComponent);

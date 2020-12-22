@@ -9,10 +9,12 @@ import {
 import { Container, Main, Header, Footer, Route, Label } from "./styles";
 import { DesktopAppState } from "../../../reducers";
 import { connect } from "react-redux";
-import { getSavedWallets } from "../../../actions/walletSession";
-import { selectIsLoggedIn } from "../../../reducers/walletSession";
+import { getSavedWallets } from "platforms/desktop/actions/storedWallets";
+import { selectIsLoggedIn } from "shared/reducers/walletSession";
 import { Redirect } from "react-router";
 import { OpenWalletDesktop } from "../open";
+import { setDesktopConfig } from "platforms/desktop/actions/config";
+
 
 interface MultiloginState {
   loginType: LOGIN_TYPE;
@@ -20,6 +22,7 @@ interface MultiloginState {
 
 interface MultiLoginProps {
   getSavedWallets: () => void;
+  setDesktopConfig: () => void;
   wallets: string[] | null;
   isLoggedIn: boolean;
 }
@@ -37,6 +40,7 @@ class MultiLoginPage extends Component<MultiLoginProps, MultiloginState> {
 
   componentDidMount(): void {
     this.props.getSavedWallets();
+      this.props.setDesktopConfig();
   }
 
   render() {
@@ -48,16 +52,14 @@ class MultiLoginPage extends Component<MultiLoginProps, MultiloginState> {
       <Container>
         <Header>
           <Title>Vault Login</Title>
-          <Subtitle>
-            To access your Vault please select it and enter your password
-          </Subtitle>
+          <Subtitle>Privately store, exchange and transfer assets</Subtitle>
         </Header>
         <Main>
           <OpenWalletDesktop wallets={this.props.wallets} />
         </Main>
         <Footer>
           <Label>Need a Vault?</Label>
-          <Route to={"/create"}>Create or Restore a Vault</Route>
+          <Route to="/create">Create or Restore</Route>
         </Footer>
       </Container>
     );
@@ -65,10 +67,10 @@ class MultiLoginPage extends Component<MultiLoginProps, MultiloginState> {
 }
 
 const mapStateToProps = (state: DesktopAppState) => ({
-  wallets: state.walletSession.savedWallets,
+  wallets: state.storedWallets.wallets,
   isLoggedIn: selectIsLoggedIn(state),
 });
 
-export const MultiLoginDesktop = connect(mapStateToProps, { getSavedWallets })(
+export const MultiLoginDesktop = connect(mapStateToProps, { getSavedWallets, setDesktopConfig })(
   MultiLoginPage
 );

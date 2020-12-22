@@ -4,19 +4,34 @@ declare global {
   }
 }
 
-export const LocalNodeAddress = "";
-
 export enum NodeLocation {
   Local = "Local",
   Remote = "Remote",
   None = "None",
 }
 
-export interface NodeState {
+export interface BasicNode {
+
+  address?: string;
+  port?: string;
+  location: NodeLocation
+  default?: boolean;
+}
+
+export interface SelectedNode extends BasicNode {
+  appIsConnected: boolean;
+}
+
+export interface LocalNode {
   isRunning: boolean;
-  location: NodeLocation;
-  address: string;
-  port: string;
   isMining: boolean;
   connections: { in: number; out: number };
 }
+
+
+
+export interface DesktopConfig {
+  theme: string;
+  selectedNode: Partial<BasicNode>;
+}
+

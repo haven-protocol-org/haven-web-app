@@ -4,16 +4,13 @@ import React, { Component } from "react";
 // Relative Imports
 import { Value, Wrapper, Amount } from "./styles";
 import { connect } from "react-redux";
-import { selectWebSyncState } from "platforms/web/reducers/chain";
 import { Spinner } from "../../spinner";
 import { ProgressBar } from "../../progress-bar";
-import { DesktopAppState } from "platforms/desktop/reducers";
+import { HavenAppState } from "platforms/desktop/reducers";
 import { SyncState } from "shared/types/types";
-import { isDesktop } from "constants/env";
-import { selectDesktopSyncState } from "platforms/desktop/reducers/chain";
+import { selectSyncState } from "shared/reducers/chain";
 import { selectTotalBalances, XViewBalances } from "shared/reducers/xBalance";
 import { Ticker } from "shared/reducers/types";
-import { WebAppState } from "platforms/web/reducers";
 
 const OFFSHORE_TICKERS = [Ticker.xUSD, Ticker.xBTC, null];
 
@@ -68,7 +65,7 @@ class Balances extends Component<BalanceProps, BalanceState> {
 
     const { balance } = this.props.balances[ticker];
 
-    const totalBalance = prefix + balance.toFixed(4) + suffix;
+    const totalBalance = prefix + balance.toFixed(2) + suffix;
 
     const { isSyncing, blockHeight, scannedHeight } = this.props.syncState;
 
@@ -92,10 +89,8 @@ class Balances extends Component<BalanceProps, BalanceState> {
   }
 }
 
-const mapStateToProps = (state: DesktopAppState | WebAppState) => ({
+const mapStateToProps = (state: HavenAppState) => ({
   balances: selectTotalBalances(state),
-  syncState: isDesktop()
-    ? selectDesktopSyncState(state as DesktopAppState)
-    : selectWebSyncState(state),
+  syncState: selectSyncState(state),
 });
 export const MultiBalance = connect(mapStateToProps, null)(Balances);

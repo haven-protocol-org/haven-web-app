@@ -2,21 +2,20 @@ import { AnyAction, combineReducers } from "redux";
 
 // Reducers
 import theme from "shared/reducers/currentTheme.js";
-import address from "shared/reducers/address";
-import keys from "./keys";
-import { transferList } from "shared/reducers/transferList";
+import { address } from "shared/reducers/address";
+import { xTransferList } from "shared/reducers/xTransferList";
 import { priceHistory } from "shared/reducers/priceHistory";
 import notification from "shared/reducers/notification";
-import { CLOSE_WALLET } from "shared/actions/types";
-import { account } from "./account";
-import { simplePrice } from "shared/reducers/simplePrice";
-import { chain } from "./chain";
-import { transferProcess } from "./transferProcess";
-import forex from "shared/reducers/forex";
+import { chain } from "shared/reducers/chain";
+import { transferProcess } from "shared/reducers/transferProcess";
+import { exchangeProcess } from "shared/reducers/exchangeProcess";
 import { xBalance } from "shared/reducers/xBalance";
-import { xhvVsCurrencies } from "platforms/web/reducers/xhvVsCurrencies";
-import {blockHeaderExchangeRate} from "shared/reducers/blockHeaderExchangeRates";
-import {havenFeature} from "shared/reducers/havenFeature";
+import { blockHeaderExchangeRate } from "shared/reducers/blockHeaderExchangeRates";
+import { havenFeature } from "shared/reducers/havenFeature";
+import { walletSession } from "shared/reducers/walletSession";
+import { walletCreation } from "shared/reducers/walletCreation";
+import modal from "shared/reducers/modal";
+import { STOP_WALLET_SESSION } from "shared/actions/types";
 
 const appReducer = combineReducers({
   theme,
@@ -24,20 +23,19 @@ const appReducer = combineReducers({
   xBalance,
   havenFeature,
   chain,
-  keys,
-  transferList,
+  xTransferList,
   priceHistory,
   notification,
-  account,
-  simplePrice,
   transferProcess,
-  forex,
-  xhvVsCurrencies,
-  blockHeaderExchangeRate
+  exchangeProcess,
+  blockHeaderExchangeRate,
+  walletSession,
+  walletCreation,
+  modal,
 });
 
 const rootReducer = (state: any, action: AnyAction) => {
-  if (action.type === CLOSE_WALLET) {
+  if (action.type === STOP_WALLET_SESSION) {
     state = undefined;
   }
 

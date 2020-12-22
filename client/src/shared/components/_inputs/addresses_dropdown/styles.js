@@ -64,8 +64,8 @@ export const Edit = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2px 8px;
-  width: 52px;
+  padding: 2px 12px;
+  width: auto;
   background: ${(props) => props.theme.button.primary};
   color: white;
 

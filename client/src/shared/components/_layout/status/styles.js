@@ -19,14 +19,14 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  bottom: ${(props) => props.count * 50 + "px"};
+  bottom: 0;
   position: absolute;
   animation: ${load} 0.5s alternate;
 
   ${media.laptop`
-    order: 2;
-    margin-bottom: 60px;
-  `}
+     order: 2;
+     margin-bottom: 60px;
+   `}
 `;
 
 export const Content = styled.div`
@@ -40,3 +40,9 @@ export const Content = styled.div`
   text-align: center;
   background: ${(props) => props.theme.states[props.type]};
 `;
+
+/* bottom: ${(props) => props.count * 50 + "px"}; */
+// ${media.laptop`
+//   order: 2;
+//   margin-bottom: 60px;
+// `}

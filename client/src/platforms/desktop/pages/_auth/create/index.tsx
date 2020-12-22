@@ -6,25 +6,28 @@ import Placeholder from "shared/components/_create/placeholder";
 
 import { Body, Buttons, Submit } from "../multi_login/styles";
 import CreateSeed from "shared/components/_create/create_seed";
-import { createWallet } from "platforms/desktop/actions";
+import { createNewWallet, startWalletSession } from "shared/actions/wallet";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { connect } from "react-redux";
 import {
-  selectErrorMessage,
+  selectErrorMessageForWalletCreation,
   WalletCreation,
-} from "platforms/desktop/reducers/walletCreation";
+} from "shared/reducers/walletCreation";
 import { Spinner } from "shared/components/spinner";
 import { Information } from "assets/styles/type";
 import Description from "shared/components/_inputs/description";
 import Input from "shared/components/_inputs/input";
-import InputButton from "../../../../../shared/components/_inputs/input_button/index.js";
-import { mnenomicVerificationSucceed } from "platforms/desktop/actions";
-import { selectIsRequestingLogin } from "platforms/desktop/reducers/walletSession";
+import InputButton from "shared/components/_inputs/input_button";
+import { selectIsRequestingLogin } from "shared/reducers/walletSession";
 
 interface CreateDesktopProps {
-  createWallet: (name: string, pw: string) => void;
+  createNewWallet: (
+    path: string | undefined,
+    password: string,
+    walletName: string
+  ) => void;
+  startWalletSession: (walletName: string) => void;
   walletCreation: WalletCreation;
-  mnenomicVerificationSucceed: (fileName: string) => void;
   loading: boolean;
   errorMessage: string | null;
 }
@@ -53,7 +56,7 @@ class CreateDesktopContainer extends Component<
   CreateDesktopState
 > {
   state: CreateDesktopState = {
-    step: CREATION_STEPS.Info,
+    step: CREATION_STEPS.Credentials,
     error: "",
     verify_seed: "",
     fileName: "",
@@ -127,7 +130,11 @@ class CreateDesktopContainer extends Component<
     const { step } = this.state;
 
     if (step === CREATION_STEPS.Credentials) {
-      this.props.createWallet(this.state.fileName, this.state.pw);
+      this.props.createNewWallet(
+        this.state.fileName,
+        this.state.pw,
+        this.state.fileName
+      );
       return;
     }
 
@@ -147,9 +154,7 @@ class CreateDesktopContainer extends Component<
       }
 
       if (validationSucceed) {
-        this.props.mnenomicVerificationSucceed(this.state.fileName);
-      } else {
-        return null;
+        this.props.startWalletSession(this.state.fileName);
       }
     }
   };
@@ -186,7 +191,7 @@ class CreateDesktopContainer extends Component<
 
     switch (step) {
       case CREATION_STEPS.Info:
-        return <Placeholder platform={"desktop"} />;
+        return <Placeholder platform={"desktop"} />; // No longer needed. Delete
       case CREATION_STEPS.Credentials:
         return (
           <>
@@ -213,24 +218,34 @@ class CreateDesktopContainer extends Component<
             />
 
             <Information>
-              Creating a new Vault with a name and password means you’ll be able
-              to log in without entering your seed phrase. This makes your
-              experience more secure, safe and efficient.
+              Enter a unique name and strong password to create a vault. You
+              will be asked to confirm this password on the final step. This
+              process will generate an encrypted vault file that enables you to
+              store, send and convert assets in complete privacy.
             </Information>
           </>
         );
       case CREATION_STEPS.Seed:
         return (
-          <CreateSeed
-            name={"name"}
-            value={this.props.walletCreation.mnemonicKey}
-            rows={windowWidth < 600 ? "6" : "4"}
-            readOnly={true}
-          />
+          <>
+            <CreateSeed
+              name={"name"}
+              value={this.props.walletCreation.mnemonicKey}
+              rows={windowWidth < 600 ? "6" : "4"}
+              readOnly={true}
+            />
+            <Information>
+              A seed phrase provides full access to your account. It can be used
+              to generate new vault files or login directly. If you lose this
+              seed phrase then it’s impossible to recover your funds. Store it
+              in a reputable password manager or on a piece of paper. Do not
+              share it with anyone.
+            </Information>
+          </>
         );
       case CREATION_STEPS.Verification:
         const labelString = (
-          <Fragment>
+          <>
             Enter seed words{" "}
             <span style={{ color: "#34d8ac" }}>
               {" "}
@@ -239,7 +254,7 @@ class CreateDesktopContainer extends Component<
                 .join(" ")}{" "}
             </span>{" "}
             seperated by blank space
-          </Fragment>
+          </>
         );
         return (
           <>
@@ -254,12 +269,11 @@ class CreateDesktopContainer extends Component<
             />
 
             <Information>
-              Please verify your Seed Phrase this will ensure that your Seed
-              Phrase has been correctly backed up.{" "}
-              <strong>
-                Store your seed in a safe location and do not share this with
-                anyone
-              </strong>
+              Re-enter the required words from the seed phrase that was provided
+              on the previous step. As a reminder, if you lose both your vault
+              file and password or seed phrase then your funds are lost forever
+              with no possibility of being recovered. Store them in a safe and
+              secure location.
             </Information>
           </>
         );
@@ -310,10 +324,10 @@ class CreateDesktopContainer extends Component<
 const mapStateToProps = (state: DesktopAppState) => ({
   walletCreation: state.walletCreation,
   loading: selectIsRequestingLogin(state),
-  errorMessage: selectErrorMessage(state),
+  errorMessage: selectErrorMessageForWalletCreation(state),
 });
 
 export const CreateDesktop = connect(mapStateToProps, {
-  createWallet,
-  mnenomicVerificationSucceed,
+  createNewWallet,
+  startWalletSession,
 })(CreateDesktopContainer);

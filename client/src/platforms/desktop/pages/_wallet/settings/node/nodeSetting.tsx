@@ -8,13 +8,11 @@ import DoubleFooter from "shared/components/_inputs/double_footer/index.js";
 import React, { SyntheticEvent } from "react";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { connect } from "react-redux";
-import { selectisLocalNode } from "platforms/desktop/reducers/havenNode";
-import { setNodeForWallet } from "platforms/desktop/actions/walletRPC";
-import { NodeLocation, NodeState } from "platforms/desktop/types";
-import { selectIsWalletSyncingRemote } from "platforms/desktop/reducers/walletRPC";
+import { selectisLocalNode } from "platforms/desktop/reducers/connectedNode";
+import { changeNodeForWallet } from "platforms/desktop/actions/selectNode";
+import { NodeLocation, LocalNode, SelectedNode } from "platforms/desktop/types";
 import { Information } from "assets/styles/type.js";
 import { createNodeOptions } from "platforms/desktop/pages/_wallet/settings/node/options";
-import { ThreeState } from "shared/types/types";
 
 export enum NodeSelectionType {
   local,
@@ -23,22 +21,24 @@ export enum NodeSelectionType {
 }
 
 export interface NodeOption {
-  trusted:boolean;
+  trusted: boolean;
   name: string;
   location: NodeLocation;
   address: string;
   port: string;
   selectionType: NodeSelectionType;
+  username?: string;
+  password?: string;
 }
 
 interface NodeSettingProps {
   isRemoteSyncing: boolean;
   localNode: boolean;
-  node: NodeState;
-  isConnected: ThreeState;
+  node: SelectedNode;
+  isConnected: boolean;
   isRequestingSwitch: boolean;
   nodeOptions: NodeOption[];
-  setHavenNode: (
+  changeNodeForWallet: (
     selectedNodeOption: NodeOption,
     address: string,
     port: string
@@ -49,7 +49,7 @@ interface NodeSettingState {
   selectedNodeOption: NodeOption;
   address: string;
   port: string;
-  connected: ThreeState;
+  connected: boolean;
   locked: boolean;
 }
 
@@ -58,13 +58,13 @@ class NodeSettingComponent extends React.Component<
   NodeSettingState
 > {
   state = {
-    address: this.props.node.address,
+    address: this.props.node.address!,
     connected: this.props.isConnected,
-    locked: this.props.isConnected !== ThreeState.False,
+    locked: this.props.isConnected !== false,
     selectedNodeOption: this.props.nodeOptions.find(
       (nodeOption) => nodeOption.address === this.props.node.address
     )!,
-    port: this.props.node.port,
+    port: this.props.node.port!,
   };
 
   onConnect = (e: SyntheticEvent) => {
@@ -75,12 +75,12 @@ class NodeSettingComponent extends React.Component<
     if (
       address === this.props.node.address &&
       port === this.props.node.port &&
-      this.props.isConnected === ThreeState.True
+      this.props.isConnected === true
     ) {
       return;
     }
 
-    this.props.setHavenNode(selectedNodeOption, address, port);
+    this.props.changeNodeForWallet(selectedNodeOption, address, port);
   };
 
   selectLocation = (option: NodeOption) => {
@@ -113,7 +113,7 @@ class NodeSettingComponent extends React.Component<
     let newState = {};
 
     const isConnectedOrTryingToConnectAgain =
-      nextProps.isConnected !== ThreeState.False &&
+      nextProps.isConnected !== false &&
       prevState.connected !== nextProps.isConnected;
 
     // when we are connected to a daemon or trying to connect  --> again lock
@@ -152,10 +152,10 @@ class NodeSettingComponent extends React.Component<
     const { locked } = this.state;
     const { isConnected, isRequestingSwitch } = this.props;
 
-    if (isConnected === ThreeState.Unset || isRequestingSwitch) {
+    if (isConnected === false || isRequestingSwitch) {
       // Don't change this label as it's equality checked on child
       return "Loading";
-    } else if (locked && isConnected === ThreeState.True) {
+    } else if (locked && isConnected === true) {
       return "Connected";
     } else if (!locked) {
       return "Connect";
@@ -209,24 +209,23 @@ class NodeSettingComponent extends React.Component<
           <Container>
             <Intstructions>
               <Information>
-                {this.props.isConnected === ThreeState.True
+                {this.props.isConnected
                   ? "Vault is connected to "
-                  : this.props.isConnected === ThreeState.Unset
+                  : this.props.isConnected === false
                   ? "Vault is trying to connect to "
                   : "Vault is not connected to "}
-                <strong>{this.state.selectedNodeOption.name}</strong>.
-                Change nodes by clicking <strong>Disconnect</strong>, then
-                select a new node from the dropdown, then click{" "}
-                <strong>Connect</strong>.
+                <strong>{this.state.selectedNodeOption.name}</strong>. Change
+                nodes by clicking <strong>Disconnect</strong>, then select a new
+                node from the dropdown, then click <strong>Connect</strong>.
               </Information>
             </Intstructions>
             <DoubleFooter
               // Left section
-              onClick={() => {}}
               leftLabel={"Disconnect"}
               leftDisabled={!locked}
               leftOnClick={this.onDisconnect}
               leftLoading={false}
+              leftVisible={true}
               // Right section
               rightOnClick={this.onConnect}
               rightDisabled={locked}
@@ -241,14 +240,14 @@ class NodeSettingComponent extends React.Component<
 }
 
 const mapStateToProps = (state: DesktopAppState) => ({
-  node: state.havenNode,
-  isRemoteSyncing: selectIsWalletSyncingRemote(state),
-  isConnected: state.walletRPC.isConnectedToDaemon,
-  isRequestingSwitch: state.walletRPC.isRequestingSwitch,
-  localNode: selectisLocalNode(state.havenNode),
-  nodeOptions: createNodeOptions(state.havenNode),
+  node: state.connectedNode,
+  isRemoteSyncing: false,
+  isConnected: state.walletSession.isWalletConectedToDaemon,
+  isRequestingSwitch: false,
+  localNode: selectisLocalNode(state.connectedNode),
+  nodeOptions: createNodeOptions(state.connectedNode),
 });
 
 export const HavenNodeSetting = connect(mapStateToProps, {
-  setHavenNode: setNodeForWallet,
+  changeNodeForWallet,
 })(NodeSettingComponent);

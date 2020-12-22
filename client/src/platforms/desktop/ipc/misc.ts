@@ -1,17 +1,19 @@
 import { ipcRenderer } from "electron";
+import { NetworkType } from "typings";
 import { CommunicationChannel } from "./ipc-types";
 
 // @ts-ignore
 const ipcRender: typeof ipcRenderer = window.havenProcess;
 
-export const getHavendStateIPC = () => {
-  return ipcRender.invoke(CommunicationChannel.HAVEND);
+export const requestSavedWalletsIPC = (netTypeId: NetworkType) => {
+  return ipcRender.invoke(CommunicationChannel.STORED_WALLETS, netTypeId);
 };
 
-export const getWalletStateIPC = () => {
-  return ipcRender.invoke(CommunicationChannel.WALLET_RPC);
-};
+export const getConfigIPC = () => {
+  return ipcRender.invoke(CommunicationChannel.CONFIG);
+}
 
-export const requestSavedWalletsIPC = () => {
-  return ipcRender.invoke(CommunicationChannel.STORED_WALLETS);
-};
+
+export const updateConfigIPC = (config: any) => {
+  return ipcRender.invoke(CommunicationChannel.CONFIG, config);
+}

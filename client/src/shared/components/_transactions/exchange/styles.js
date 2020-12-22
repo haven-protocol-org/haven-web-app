@@ -61,7 +61,7 @@ export const Tag = styled.div`
   background: ${(props) => {
     switch (props.priority) {
       case 1:
-        return `${props.theme.body.background}`;
+        return `${props.theme.body.foreground}`;
       case 2:
         return `${props.theme.button.primary_hover}`;
       case 3:

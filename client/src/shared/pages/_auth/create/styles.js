@@ -38,7 +38,6 @@ export const Image = styled.img`
  `};
 `;
 
-
 export const Heading = styled.div`
   font-size: 48px;
   color: white;
