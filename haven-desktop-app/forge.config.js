@@ -84,7 +84,7 @@ const copyTargetNodesToBuild = (
 
 
 module.exports = {
-  packagerConfig: {
+/*   packagerConfig: {
     executableName: "Haven",
     name: "Haven",
     ignore: ignoredPaths,
@@ -93,6 +93,14 @@ module.exports = {
     asar: {
       unpackDir: "haven-node/**",
     },
+  }, */
+
+    packagerConfig: {
+    executableName: "Haven",
+    name: "Haven",
+    ignore: ignoredPaths,
+    afterCopy: [substituteEnvsForBuild],
+    icon: "./icons/icon",
   },
 
   hooks: {readPackageJson: (value) => {
