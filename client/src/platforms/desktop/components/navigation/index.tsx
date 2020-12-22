@@ -17,6 +17,7 @@ import {
   OptionsIcon,
   OptionsList,
   OptionsSVG,
+  Legal,
 } from "./styles";
 
 import { Body, Label } from "assets/styles/type";
@@ -36,6 +37,8 @@ interface NavigationProps {
   isLocalNode: boolean;
   show_networks: boolean;
   logout: (isWeb: boolean) => void;
+  chain: any;
+  isClosingSession: boolean;
 }
 
 class Navigation extends Component<NavigationProps, any> {
@@ -113,6 +116,11 @@ class Navigation extends Component<NavigationProps, any> {
     const { current_network } = this.state;
     const { node, height } = this.props;
 
+    // @ts-ignore
+    const { chainHeight, walletHeight } = this.props.chain;
+    const syncStarted = chainHeight !== 0;
+    const syncedFinished = syncStarted && chainHeight === walletHeight;
+
     return (
       <Container>
         <Brand>
@@ -121,7 +129,11 @@ class Navigation extends Component<NavigationProps, any> {
         </Brand>
 
         <Menu>
-          <Buttons isLoading={false} auth={auth} onClick={this.handleLogout} />
+          <Buttons
+            isLoading={this.props.isClosingSession}
+            auth={auth}
+            onClick={this.handleLogout}
+          />
 
           <Options onClick={this.showDropdownMenu}>
             <OptionsIcon>
@@ -151,19 +163,33 @@ class Navigation extends Component<NavigationProps, any> {
               </OptionsDoubleRow>
               <OptionsDoubleRow>
                 <Body>Block Height</Body>
-                <Label>{height}</Label>
+                <Label>{chainHeight}</Label>
               </OptionsDoubleRow>
-              <OptionsDoubleRow>
-                <Body>Vault Height</Body>
-                <Label>...</Label>
-              </OptionsDoubleRow>
+              {syncedFinished ? (
+                <OptionsDoubleRow>
+                  <Body>Vault Synced</Body>
+                  <Label>Yes</Label>
+                </OptionsDoubleRow>
+              ) : (
+                <OptionsDoubleRow>
+                  <Body>Vault Height</Body>
+                  <Label>{walletHeight}</Label>
+                </OptionsDoubleRow>
+              )}
               <OptionsDoubleRow>
                 <Body>Help</Body>
-                <Label>Knowledge Base</Label>
+                <Legal
+                  target="_blank"
+                  href="https://havenprotocol.org/knowledge/"
+                >
+                  <Label>Knowledge Base</Label>
+                </Legal>
               </OptionsDoubleRow>
               <OptionsDoubleRow>
                 <Body>Legal</Body>
-                <Label>Terms & Conditions</Label>
+                <Legal target="_blank" href="https://havenprotocol.org/legal/">
+                  <Label>Terms & Conditions</Label>
+                </Legal>
               </OptionsDoubleRow>
             </OptionsList>
           </>
@@ -178,6 +204,8 @@ const mapStateToProps = (state: DesktopAppState) => ({
   node: state.connectedNode,
   isLocalNode: selectisLocalNode(state.connectedNode),
   height: selectBlockHeight(state),
+  chain: state.chain,
+  isClosingSession: state.walletSession.isClosingSession,
 });
 
 export const NavigationDesktop = connect(mapStateToProps, {
