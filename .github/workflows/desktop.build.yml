@@ -33,7 +33,7 @@ jobs:
     - name: Client Build for Desktop
       working-directory: client
       run: |
-          export NET=1 && npm run build:desktop 
+          NET=1 && npm run build:desktop 
     - name: Copy Build
       working-directory: client
       run: |
