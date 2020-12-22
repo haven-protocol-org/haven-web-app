@@ -7,9 +7,7 @@
 // modified 2017 for some CN functions by luigi1111
 
 import { dialog } from "electron";
-import { config } from "./daemons/config/config";
-import { RPCHRequestHandler } from "./rpc/RPCHRequestHandler";
-import { decode_address } from "./xmr-core/addressUtils";
+import * as core from "./shared/wallet";
 
 export enum KeyType {
   PRIVATE_VIEW,
@@ -25,70 +23,26 @@ const PRIVATE_SPEND_KEY = "spend_key";
 const PUBLIC_VIEW_KEY = "public_view_key";
 const PUBLIC_SPEND_KEY = "public_spend_key";
 
-export const showKey = (key: KeyType) => {
+export const showKey = async (key: KeyType) => {
   switch (key) {
     case KeyType.MNEMONIC:
-      fetchKey("Seed", MNEMONIC);
+       showDialog("Seed", await core.getMnemonic())
       return;
     case KeyType.PRIVATE_VIEW:
-      fetchKey("Private View Key", PRIVATE_VIEW_KEY);
+      showDialog("Private View Key", await core.getPrivateView())
       return;
     case KeyType.PRIVATE_SPEND:
-      fetchKey("Private Spend Key", PRIVATE_SPEND_KEY);
+      showDialog("Private Spend Key", await core.getPrivateSpend())
       return;
-
     case KeyType.PUBLIC_VIEW:
-      fetchAdress(PUBLIC_VIEW_KEY);
+      showDialog("Public View Key", await core.getPublicView())
       return;
     case KeyType.PUBLIC_SPEND:
-      fetchAdress(PUBLIC_SPEND_KEY);
+      showDialog("Public Spend Key", await core.getPublicSpend())
       return;
   }
 };
 
 const showDialog = (title: string, message: string) => {
   dialog.showMessageBox(null, { title, message });
-};
-
-const fetchAdress = async (keyType: string) => {
-  const objRequest = {
-    id: 0,
-    jsonrpc: "2.0",
-    method: "get_address",
-    params: { account_index: 0 },
-  };
-
-  const rpcKeyHandler = new RPCHRequestHandler();
-  rpcKeyHandler.port = config().wallet.port;
-
-  const response = await rpcKeyHandler.sendRequest(objRequest);
-
-  if (response.data.result) {
-    const pubKeys = decode_address(response.data.result.address);
-
-    if (keyType === PUBLIC_SPEND_KEY) {
-      showDialog("Public Spend Key", pubKeys.spend);
-    } else {
-      showDialog("Public View Key", pubKeys.view);
-    }
-  }
-};
-
-const fetchKey = async (title: string, keyType: string) => {
-  const objRequest = {
-    id: 0,
-    jsonrpc: "2.0",
-    method: "query_key",
-    params: { key_type: "" },
-  };
-
-  objRequest.params.key_type = keyType;
-  const rpcKeyHandler = new RPCHRequestHandler();
-  rpcKeyHandler.port = config().wallet.port;
-  const response = await rpcKeyHandler.sendRequest(objRequest);
-
-  if (response.data.result) {
-    const key = response.data.result.key;
-    showDialog(title, key);
-  }
 };

@@ -10,11 +10,11 @@ import {
   Brand,
   Button,
   Logout,
-  Tag
+  Tag,
 } from "./styles.js";
-import Icon from "../../../../assets/haven.svg";
-import { closeWallet } from "../../../actions";
-import { selectIsLoggedIn } from "../../../../platforms/web/reducers/account";
+import Icon from "../../../../assets/icons/haven.svg";
+import { closeWallet } from "../../../closeWallet";
+import { selectIsLoggedIn } from "shared/reducers/walletSession";
 import { APP_VERSION, NET_TYPE_NAME } from "../../../../constants/env";
 
 class Navigation extends Component {
@@ -27,14 +27,14 @@ class Navigation extends Component {
 
     return (
       <Container>
-        <Brand to={auth? "/wallet/assets" : "/"}>
+        <Brand to={auth ? "/wallet/assets" : "/"}>
           <Logo src={Icon} />
-          <Haven>HAVEN </Haven>
+          <Haven>HAVEN</Haven>
           <Tag>
             v{APP_VERSION} {NET_TYPE_NAME}
           </Tag>
         </Brand>
-        { !auth ? (
+        {!auth ? (
           <Button to="/login">Login</Button>
         ) : (
           <Logout onClick={this.handleLogout}>Logout</Logout>
@@ -44,11 +44,8 @@ class Navigation extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  isLoggedIn: selectIsLoggedIn(state)
+const mapStateToProps = (state) => ({
+  isLoggedIn: selectIsLoggedIn(state),
 });
 
-export default connect(
-  mapStateToProps,
-  { logout: closeWallet }
-)(Navigation);
+export default connect(mapStateToProps, { logout: closeWallet })(Navigation);

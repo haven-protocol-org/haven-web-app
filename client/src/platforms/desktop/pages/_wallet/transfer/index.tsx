@@ -1,21 +1,15 @@
-import { getAddress } from "platforms/desktop/actions/subadresses";
-import { DesktopAppState } from "platforms/desktop/reducers";
+import { HavenAppState } from "platforms/desktop/reducers";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Transfer } from "shared/pages/_wallet/transfer";
 import { Ticker } from "shared/reducers/types";
-import { resetTransferProcess } from "../../../actions";
-import { transferSucceed } from "../../../reducers/transferProcess";
-import { createTransfer } from "platforms/desktop/actions";
+import { resetTransferProcess } from "shared/actions/transfer";
+import { transferSucceed } from "../../../../../shared/reducers/transferProcess";
+import { createTransfer } from "shared/actions/transfer";
 
-class TransferDesktopContainer extends Component<any, any> {
-
+class Container extends Component<any, any> {
   private sendTicker: Ticker = Ticker.XHV;
-  componentDidMount(): void {
-    if (this.props.address.length === 0) {
-      this.props.getOwnAddress();
-    }
-  }
+  componentDidMount(): void {}
 
   componentDidUpdate(
     prevProps: Readonly<any>,
@@ -23,8 +17,6 @@ class TransferDesktopContainer extends Component<any, any> {
     snapshot?: any
   ): void {
     if (this.props.transferSucceed) {
-      console.log("ROUTE", this.props.tx.fromTicker);
-
       this.props.resetTransferProcess();
       this.props.history.push("/wallet/assets/" + this.sendTicker);
     }
@@ -33,11 +25,10 @@ class TransferDesktopContainer extends Component<any, any> {
   onSendFunds = (
     address: string,
     amount: number,
-    paymentId: string,
-    ticker: Ticker = Ticker.XHV
+    ticker: Ticker = Ticker.XHV, sweepAll: boolean
   ) => {
     this.sendTicker = ticker;
-    this.props.createTransfer(address, amount, paymentId, ticker);
+    this.props.createTransfer(address, amount, ticker, sweepAll);
   };
 
   render() {
@@ -52,14 +43,13 @@ class TransferDesktopContainer extends Component<any, any> {
   }
 }
 
-export const mapStateToProps = (state: DesktopAppState) => ({
+export const mapStateToProps = (state: HavenAppState) => ({
   address: state.address,
   transferSucceed: transferSucceed(state),
   tx: state.transferProcess,
 });
 
-export const TransferDesktop = connect(mapStateToProps, {
+export const HavenTransfer = connect(mapStateToProps, {
   createTransfer,
   resetTransferProcess,
-  getOwnAddress: getAddress,
-})(TransferDesktopContainer);
+})(Container);

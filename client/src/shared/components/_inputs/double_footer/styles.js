@@ -37,18 +37,19 @@ export const Fill = styled.button`
 
   &:hover {
     cursor: pointer;
-    background: background: ${(props) => props.theme.button.primary_hover};
+    background: ${(props) => props.theme.button.primary_hover};
     transition: 500ms;
   }
 `;
 
 export const Outline = styled.button`
+  visibility: ${(props) => (props.leftVisible ? "visible" : "hidden")}
   background: ${(props) => props.theme.body.foreground};
   border: 1px solid ${(props) => props.theme.body.border};
   width: auto;
   min-width: 128px;
   height: 50px;
-  color: ${(props) => props.theme.type.primary};
+  color: ${(props) => props.theme.type.secondary};
   font-size: 16px;
   text-align: center;
   border-radius: 4px;

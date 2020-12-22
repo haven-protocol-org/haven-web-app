@@ -1,25 +1,24 @@
 import { app, BrowserWindow, Menu, shell } from "electron";
 import { BrowserWindowConstructorOptions } from "electron";
 import * as path from "path";
-import { devServerStarted } from "./dev";
+import { addConfigHandler } from "./config/appConfig";
+import { startInDevMode } from "./dev";
 import { isDevMode } from "./env";
-import { appEventBus, DAEMONS_STOPPED_EVENT } from "./EventBus";
+import { appEventBus, LOCAL_NODE_STOPPED_EVENT } from "./EventBus";
 import { HavenWallet } from "./HavenWallet";
 import { havenMenu } from "./menu";
-
-const wallet = new HavenWallet();
 
 app.enableSandbox();
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 // tslint:disable-next-line: no-var-requires
 if (require("electron-squirrel-startup")) {
-
   app.quit();
 }
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow: Electron.BrowserWindow;
+const wallet = new HavenWallet();
 
 const menu = Menu.buildFromTemplate(havenMenu);
 Menu.setApplicationMenu(menu);
@@ -44,29 +43,18 @@ const startApp = (): void => {
 
   if (isDevMode) {
     // Open the DevTools.
-    mainWindow.webContents.openDevTools();
-
-    devServerStarted.subscribe((hasStarted) => {
-      console.log("hasStarted : ", hasStarted);
-      if (hasStarted) {
-        mainWindow.loadURL("http://localhost:3000");
-      } else {
-        mainWindow.loadURL(
-          path.join(`file://${__dirname}`, "../sites/dev/index.html"),
-        );
-      }
-    });
+    startInDevMode(mainWindow);
   } else {
     // and load the index.html of the app.
     mainWindow.loadURL(
-      path.join(`file://${__dirname}`, "../client/index.html"),
+      path.join(`file://${__dirname}`, "../client/index.html")
     );
-
-    // mainWindow.maximize();
   }
 
   // start the app
   wallet.start();
+  //
+  addConfigHandler();
   // Emitted when the window is closed.
   mainWindow.on("closed", () => {
     // Dereference the window object, usually you would store windows
@@ -84,7 +72,6 @@ const startApp = (): void => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on("ready", startApp);
-
 
 let willQuit = false;
 
@@ -111,9 +98,11 @@ app.on("web-contents-created", (event, contents) => {
 const onAppQuit = () => {
   console.log("on App quit called");
 
-  appEventBus.once(DAEMONS_STOPPED_EVENT, () => {
+  appEventBus.once(LOCAL_NODE_STOPPED_EVENT, () => {
     app.quit();
   });
 
   wallet.quit();
 };
+
+export { mainWindow };

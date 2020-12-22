@@ -1,7 +1,7 @@
 import styled, { keyframes } from "styled-components";
 import { Link } from "react-router-dom";
 import { ReactComponent as ArrowUp } from "../../../../assets/icons/arrow-up.svg";
-import { ReactComponent as HavenIcon } from "../../../../assets/haven.svg";
+import { ReactComponent as HavenIcon } from "../../../../assets/icons/haven.svg";
 import { ReactComponent as OptionIcon } from "../../../../assets/icons/options.svg";
 
 const appear = keyframes`

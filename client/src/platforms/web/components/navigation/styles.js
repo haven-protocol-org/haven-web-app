@@ -1,21 +1,38 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { Link } from "react-router-dom";
-import media from "../../../constants/media.js";
+import { ReactComponent as ArrowUp } from "../../../../assets/icons/arrow-up.svg";
+import { ReactComponent as HavenIcon } from "../../../../assets/icons/haven.svg";
+import { ReactComponent as OptionIcon } from "../../../../assets/icons/options.svg";
+
+const appear = keyframes`
+  0% { transform: translateY(-20px);  }
+  50% { transform: translateY(10px);  }
+  100% {transform: translateY(0px);   }
+`;
 
 export const Container = styled.header`
   height: 64px;
   z-index: 1000;
   position: fixed;
   width: 100vw;
-  background: #26282c;
+  background: ${(props) => props.theme.body.navigation};
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border-bottom: 1px solid ${(props) => props.theme.body.border};
 `;
 
-export const Logo = styled.img`
+export const Icon = styled(HavenIcon)`
   height: 24px;
-  width: auto;
+  width: 24px;
+
+  .color {
+    fill: ${(props) => props.theme.type.primary};
+  }
+`;
+
+export const Legal = styled.a`
+  text-decoration: none;
 `;
 
 export const Tag = styled.div`
@@ -25,14 +42,10 @@ export const Tag = styled.div`
   border-radius: 3px;
   margin-left: 12px;
   color: #26282c;
-
-  ${media.mobile`
-     font-size: 8px
-   `};
 `;
 
 export const Haven = styled.div`
-  color: white;
+  color: ${(props) => props.theme.type.primary};
   font-size: 20px;
   font-family: "Inter-Bold";
   margin-left: 12px;
@@ -47,13 +60,13 @@ export const Brand = styled(Link)`
   text-decoration: none;
 `;
 
-export const Theme = styled.div`
+export const Auth = styled.div`
   padding: 12px 26px;
-  background: #7289da;
+  background: ${(props) => props.theme.button.primary};
   border: none;
   margin-right: 16px;
   height: auto;
-  color: white;
+  color: #fff;
   font-size: 14px;
   border-radius: 4px;
   text-decoration: none;
@@ -62,37 +75,18 @@ export const Theme = styled.div`
 
   &:hover {
     cursor: pointer;
-    background: #5b6eae;
+    background: ${(props) => props.theme.button.primary_hover};
     transition: 500ms;
   }
 `;
 
-export const Button = styled(Link)`
-  padding: 12px 26px;
-  background: #7289da;
-  border: none;
-  margin-right: 16px;
-  height: auto;
-  color: white;
-  font-size: 14px;
-  border-radius: 4px;
-  text-decoration: none;
-
-  transition: 500ms;
-
-  &:hover {
-    cursor: pointer;
-    background: #5b6eae;
-    transition: 500ms;
-  }
-`;
 export const Logout = styled.div`
   padding: 12px 26px;
-  background: #7289da;
+  background: ${(props) => props.theme.button.primary};
   border: none;
   margin-right: 16px;
   height: auto;
-  color: white;
+  color: #fff;
   font-size: 14px;
   border-radius: 4px;
   text-decoration: none;
@@ -101,7 +95,117 @@ export const Logout = styled.div`
 
   &:hover {
     cursor: pointer;
-    background: #5b6eae;
+    background: ${(props) => props.theme.button.primary_hover};
     transition: 500ms;
+  }
+`;
+
+export const Menu = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const Tab = styled.div`
+  height: 32px;
+  background: pink;
+  padding: 12px;
+  border-bottom: 1px solid ${(props) => props.theme.body.border};
+`;
+
+export const OptionsSVG = styled(OptionIcon)`
+  .bg {
+    fill: ${(props) => props.theme.type.secondary};
+  }
+`;
+
+export const Arrow = styled.div`
+  height: auto;
+  width: 20px;
+  background: white;
+  right: 8px;
+  position: absolute;
+  z-index: 999;
+`;
+
+export const Arr = styled(ArrowUp)`
+  position: fixed;
+  margin-top: -7px;
+
+  .bg {
+    fill: ${(props) => props.theme.body.foreground};
+  }
+
+  .outline {
+    stroke: ${(props) => props.theme.body.border};
+  }
+`;
+
+export const Options = styled.button`
+  height: 64px;
+  width: 64px;
+  background: none;
+  border: none;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-left: 1px solid ${(props) => props.theme.body.border};
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+export const OptionsList = styled.div`
+  height: auto;
+  min-height: 140px;
+  width: 280px;
+  background: ${(props) => props.theme.body.foreground}
+  border: 1px solid ${(props) => props.theme.body.border};
+  border-radius: 4px;
+  position: fixed;
+  right: 12px;
+  top: 74px;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+  z-index: 1000;
+  animation: ${appear} 0.5s forwards;
+`;
+
+export const OptionsIcon = styled.div`
+  height: 20px;
+  width: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const OptionsSingleRow = styled.div`
+  height: auto;
+  color: white;
+  padding-left: 20px;
+  padding: 16px;
+  font-size: 14px;
+  text-align: center;
+
+  &:hover {
+    background: ${(props) => props.theme.body.background};
+    cursor: pointer;
+  }
+`;
+
+export const OptionsDoubleRow = styled.div`
+  height: auto;
+  color: white;
+  padding-left: 20px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  align-items: center;
+  border-bottom: 1px solid ${(props) => props.theme.body.border};
+
+  &:nth-last-child(1) {
+    border-bottom: none;
   }
 `;

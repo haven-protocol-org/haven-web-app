@@ -9,7 +9,6 @@ import { Information } from "../../../../assets/styles/type.js";
 export const Transaction = ({
   checked,
   onChange,
-  paymentId,
   recipientAddress,
   ticker,
   transferAmount,
@@ -19,17 +18,13 @@ export const Transaction = ({
   const last = recipientAddress.substring(recipientAddress.length - 4);
   const truncated = first + "...." + last;
 
-  const paymentIdFirstFour = paymentId.substring(0, 4);
-  const paymentIdLastFour = paymentId.substring(paymentId.length - 4);
-  const paymentIdTruncated = paymentIdFirstFour + "...." + paymentIdLastFour;
-
   return (
     <Fragment>
       <Container>
         <Row>
           <Key>Transfer Asset</Key>
           <Value>
-            {transferAmount.toFixed(4)} {ticker}
+            {transferAmount.toFixed(2)} {ticker}
           </Value>
         </Row>
 
@@ -37,35 +32,27 @@ export const Transaction = ({
           <Key>Recipient Address</Key>
           <Value>{truncated}</Value>
         </Row>
-        {paymentId.length > 63 ? (
-          <Row>
-            <Key>Payment ID</Key>
-            <Value>{paymentIdTruncated}</Value>
-          </Row>
-        ) : null}
+
         <Row>
-          <Key>Final Transfer Fee </Key>
+          <Key>Final Transfer Fee</Key>
           <Tag>
             {" "}
             <Value>
-              {fee} {ticker}
+              {fee.toFixed(4)} {ticker}
             </Value>
           </Tag>
         </Row>
         <Confirm
-          description="I reviewed my Transfer details and I accept the Fees and Terms"
+          description="I reviewed the transaction and I accept the Fees and Terms"
           checked={checked}
           onChange={onChange}
         />
       </Container>
       <Information>
-        <strong>Terms:</strong> You accept any and all responsibility for your
-        Transfer including the verification of Recipient Addresses, Payment
-        ID's, Amounts and Fees. Upon clicking <strong>Confirm</strong> a portion
-        of your balance may be locked for ~20 mins until the transaction is
-        complete. The Vault will indicate any pending balances which can be seen
-        by clicking the <strong>Show Pending Balances</strong> button in the
-        Assets page.
+        I have reviewed my transfer details and accept all responsibility for
+        this transaction. Once I click confirm, I understand that a portion of
+        my total balance may be temporarily locked for ~20 mins until the
+        transfer is confirmed.
       </Information>
     </Fragment>
   );

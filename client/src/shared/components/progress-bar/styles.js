@@ -11,6 +11,6 @@ export const Container = styled.div`
 export const Progress = styled.div`
   height: 100%;
   border-radius: 12px;
-  background: ${props => props.theme.button.primary};
-  width: ${props => props.width + `%`};
+  background: ${(props) => props.theme.button.primary};
+  width: ${(props) => props.width + `%`};
 `;

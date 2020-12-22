@@ -9,18 +9,18 @@ import Header from "shared/components/_layout/header";
 import Form from "shared/components/_inputs/form";
 import Theme from "shared/components/_inputs/theme";
 // For the miner
-import { selectisLocalNode } from "platforms/desktop/reducers/havenNode";
+import { selectisLocalNode } from "platforms/desktop/reducers/connectedNode";
 import { dark, light, sepia } from "assets/styles/themes.js";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import {
   MiningRequestTypes,
   MiningStatus,
-} from "platforms/desktop/reducers/mining";
+} from "platforms/desktop/reducers/localMining";
 import {
   miningStatus,
   startMining,
   stopMining,
-} from "platforms/desktop/actions/mining";
+} from "platforms/desktop/actions/localMining";
 import { HavenNodeSetting } from "platforms/desktop/pages/_wallet/settings/node/nodeSetting";
 
 type ThemeOption = { theme: string; value: string };
@@ -101,24 +101,10 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
   }
 
   handleClick = ({ theme, value }: ThemeOption) => {
-    if (theme === "light") {
-      this.props.selectTheme(light);
+      this.props.selectTheme(theme);
       this.setState({
         value: value,
       });
-    } else if (theme === "dark") {
-      this.props.selectTheme(dark);
-      this.setState({
-        value: value,
-      });
-    } else if (theme === "sepia") {
-      this.props.selectTheme(sepia);
-      this.setState({
-        value: value,
-      });
-    } else {
-      return null;
-    }
   };
 
   onMiningButtonClicked = () => {
@@ -177,7 +163,7 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
 const mapStateToProps = (state: DesktopAppState) => ({
   theme: state.theme,
   mining: state.mining,
-  localNode: selectisLocalNode(state.havenNode),
+  localNode: selectisLocalNode(state.connectedNode),
 });
 
 export const SettingsDesktop = connect(mapStateToProps, {

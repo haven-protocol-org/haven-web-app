@@ -12,34 +12,30 @@ import {
   Icon,
   Logout,
   Menu,
-  NetworkStatus,
   Options,
   OptionsDoubleRow,
   OptionsIcon,
   OptionsList,
-  State,
   OptionsSVG,
 } from "./styles";
 
 import { Body, Label } from "assets/styles/type";
-import { closeWallet } from "../../actions";
-import { selectIsLoggedIn } from "../../reducers/walletSession";
+import { closeWallet } from "shared/actions/wallet";
+import { selectIsLoggedIn } from "../../../../shared/reducers/walletSession";
 import { getNetworkByName, isDevMode, NET_TYPE_NAME } from "constants/env";
 import { DesktopAppState } from "../../reducers";
-import { NodeState } from "platforms/desktop/types";
-import { WalletState } from "platforms/desktop/ipc/ipc-types";
-import { selectisLocalNode } from "platforms/desktop/reducers/havenNode";
-import { ThreeState } from "shared/types/types";
-import { selectBlockHeight } from "platforms/desktop/reducers/chain";
+import { LocalNode, SelectedNode } from "platforms/desktop/types";
+import { selectisLocalNode } from "platforms/desktop/reducers/connectedNode";
+import { selectBlockHeight } from "shared/reducers/chain";
+import Buttons from "./buttons/index.js";
 
 interface NavigationProps {
-  wallet: WalletState;
-  node: NodeState;
+  node: SelectedNode;
   isLoggedIn: boolean;
   height: number;
   isLocalNode: boolean;
   show_networks: boolean;
-  logout: () => void;
+  logout: (isWeb: boolean) => void;
 }
 
 class Navigation extends Component<NavigationProps, any> {
@@ -47,6 +43,7 @@ class Navigation extends Component<NavigationProps, any> {
     current_network: getNetworkByName(),
     showOptions: false,
     showNotifications: false,
+    mouseIsHovering: false,
   };
 
   onComponentDidMount() {
@@ -63,9 +60,11 @@ class Navigation extends Component<NavigationProps, any> {
   };
 
   hideDropdownMenu = () => {
-    this.setState({ showOptions: false }, () => {
-      document.removeEventListener("click", this.hideDropdownMenu);
-    });
+    if (!this.state.mouseIsHovering) {
+      this.setState({ showOptions: false }, () => {
+        document.removeEventListener("click", this.hideDropdownMenu);
+      });
+    }
   };
 
   showNotifications = (event: any) => {
@@ -81,10 +80,6 @@ class Navigation extends Component<NavigationProps, any> {
     });
   };
 
-  userFocused = () => {
-    this.setState({ showNotifications: true });
-  };
-
   handleClick = () => {
     this.setState({ showNotifications: true }, () => {
       document.addEventListener("click", this.hideNotifications);
@@ -92,7 +87,7 @@ class Navigation extends Component<NavigationProps, any> {
   };
 
   handleLogout = () => {
-    this.props.logout();
+    this.props.logout(false);
   };
 
   showOptions = () => {
@@ -101,38 +96,32 @@ class Navigation extends Component<NavigationProps, any> {
     });
   };
 
+  handleMouseEnter = () => {
+    this.setState({
+      mouseIsHovering: true,
+    });
+  };
+
+  handleMouseLeave = () => {
+    this.setState({
+      mouseIsHovering: false,
+    });
+  };
+
   render() {
     const auth = this.props.isLoggedIn;
     const { current_network } = this.state;
-    const { wallet, node, isLocalNode, height } = this.props;
+    const { node, height } = this.props;
 
     return (
       <Container>
         <Brand>
           <Icon />
           <Haven>HAVEN</Haven>
-          <NetworkStatus>
-            {isDevMode() &&
-              wallet.isRunning &&
-              wallet.isConnectedToDaemon === ThreeState.False && (
-                <State isActive={false}>Wallet not connected to a daemon</State>
-              )}
-            {isDevMode() &&
-              wallet.isRunning &&
-              wallet.isConnectedToDaemon === ThreeState.True && (
-                <State isActive={true}>
-                  Wallet connected {isLocalNode ? "local" : "remote"} daemon
-                </State>
-              )}
-          </NetworkStatus>
         </Brand>
 
         <Menu>
-          {auth === false ? (
-            <Button to="/">Login</Button>
-          ) : (
-            <Logout onClick={this.handleLogout}>Logout</Logout>
-          )}
+          <Buttons isLoading={false} auth={auth} onClick={this.handleLogout} />
 
           <Options onClick={this.showDropdownMenu}>
             <OptionsIcon>
@@ -142,25 +131,39 @@ class Navigation extends Component<NavigationProps, any> {
         </Menu>
         {this.state.showOptions && (
           <>
-            <OptionsList>
+            <OptionsList
+              onMouseEnter={this.handleMouseEnter}
+              onMouseLeave={this.handleMouseLeave}
+            >
               <Arrow>
                 <Arr />
               </Arrow>
               <OptionsDoubleRow>
                 <Body>Network</Body>
-                <Label>{current_network}</Label>
+                <Label>
+                  {current_network === "testnet" ? "Testnet" : "Mainnet"}
+                  {` `} v{window.havenProcess.appVersion}
+                </Label>
               </OptionsDoubleRow>
               <OptionsDoubleRow>
-                <Body>Node</Body>
+                <Body>Node Type</Body>
                 <Label>{node.location}</Label>
               </OptionsDoubleRow>
               <OptionsDoubleRow>
-                <Body>Block</Body>
+                <Body>Block Height</Body>
                 <Label>{height}</Label>
               </OptionsDoubleRow>
               <OptionsDoubleRow>
-                <Body>Version</Body>
-                <Label>v{window.havenProcess.appVersion}</Label>
+                <Body>Vault Height</Body>
+                <Label>...</Label>
+              </OptionsDoubleRow>
+              <OptionsDoubleRow>
+                <Body>Help</Body>
+                <Label>Knowledge Base</Label>
+              </OptionsDoubleRow>
+              <OptionsDoubleRow>
+                <Body>Legal</Body>
+                <Label>Terms & Conditions</Label>
               </OptionsDoubleRow>
             </OptionsList>
           </>
@@ -172,9 +175,8 @@ class Navigation extends Component<NavigationProps, any> {
 
 const mapStateToProps = (state: DesktopAppState) => ({
   isLoggedIn: selectIsLoggedIn(state),
-  wallet: state.walletRPC,
-  node: state.havenNode,
-  isLocalNode: selectisLocalNode(state.havenNode),
+  node: state.connectedNode,
+  isLocalNode: selectisLocalNode(state.connectedNode),
   height: selectBlockHeight(state),
 });
 

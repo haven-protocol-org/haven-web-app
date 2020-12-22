@@ -2,17 +2,17 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Details } from "shared/pages/_wallet/details";
 import { Ticker } from "shared/reducers/types";
-import { convertToMoney } from "utility/utility";
-import { TxHistoryDesktop } from "../../../components/TxHistory";
-import { DesktopAppState } from "../../../reducers";
+import { convertBalanceToMoney } from "utility/utility";
+import { TxHistoryDesktop } from "shared/components/tx-history/container";
 import { XBalances } from "shared/reducers/xBalance";
 import {
   BlockHeaderRate,
   selectXRate,
 } from "shared/reducers/blockHeaderExchangeRates";
 import { RouteComponentProps } from "react-router";
+import { HavenAppState } from "platforms/desktop/reducers";
 
-interface DetailsDesktopProps {
+interface DetailsProps {
   balances: XBalances;
   rates: BlockHeaderRate[];
 }
@@ -21,8 +21,8 @@ interface RouteProps {
   id: Ticker;
 }
 
-class DetailsDesktopContainer extends Component<
-  DetailsDesktopProps & RouteComponentProps<RouteProps>,
+class DetailsContainer extends Component<
+DetailsProps & RouteComponentProps<RouteProps>,
   any
 > {
   componentDidMount() {
@@ -32,7 +32,7 @@ class DetailsDesktopContainer extends Component<
   render() {
     const ticker = this.props.match.params.id;
     const xRate = selectXRate(this.props.rates, ticker, Ticker.xUSD);
-    let amount: number = convertToMoney(
+    let amount: number = convertBalanceToMoney(
       this.props.balances[ticker].unlockedBalance
     );
     let value = amount * xRate;
@@ -46,12 +46,12 @@ class DetailsDesktopContainer extends Component<
   }
 }
 
-const mapStateToProps = (state: DesktopAppState) => ({
+const mapStateToProps = (state: HavenAppState) => ({
   balances: state.xBalance,
   rates: state.blockHeaderExchangeRate,
 });
 
-export const DetailsDesktop = connect(
+export const HavenDetails = connect(
   mapStateToProps,
   {}
-)(DetailsDesktopContainer);
+)(DetailsContainer);

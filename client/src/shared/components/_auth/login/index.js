@@ -13,44 +13,41 @@ import {
   Cancel,
   Body,
   Route,
-  Label
+  Label,
+  Tabs,
+  Tab,
 } from "./styles";
 import { Spinner } from "../../spinner";
 
-const Auth = ({
-  title,
-  description,
-  children,
-  route,
-  onClick,
-  link,
-  label,
-  information,
-  submit,
-  cancel,
-  step,
-  width,
-  loading,
-  disable
-}) => {
+const Auth = ({ ...props }) => {
   return (
     <Container>
       <Header>
-        <Title>{title}</Title>
-        <Description>{description}</Description>
+        <Title>{props.title}</Title>
+        <Description>{props.description}</Description>
       </Header>
+      {!props.hideTabs ? (
+        <Tabs>
+          <Tab active={!props.selectedSeed} onClick={props.selectKeystore}>
+            Vault File
+          </Tab>
+          <Tab active={props.selectedSeed} onClick={props.selectSeed}>
+            Seed Phrase
+          </Tab>
+        </Tabs>
+      ) : null}
       <Main>
-        <Body>{children}</Body>
+        <Body>{props.children}</Body>
         <Buttons>
           <Cancel to="/">Cancel</Cancel>
-          <Submit disabled={disable} onClick={onClick}>
-            {loading ? <Spinner color={"white"} /> : "Login"}
+          <Submit disabled={props.disable} onClick={props.onClick}>
+            {props.loading ? <Spinner color={"white"} /> : "Login"}
           </Submit>
         </Buttons>
       </Main>
       <Footer>
-        <Label>{label}</Label>
-        <Route to={link}>{route}</Route>
+        <Label>{props.label}</Label>
+        <Route to={props.link}>{props.route}</Route>
       </Footer>
     </Container>
   );

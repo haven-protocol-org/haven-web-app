@@ -2,16 +2,16 @@
 import React, { Component } from "react";
 
 // Relative Imports
-import { Information } from "../../../../assets/styles/type.js";
+
 import Seed from "../../_inputs/seed";
 
 class VerifySeed extends Component {
-  handleChange = event => {
+  handleChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
 
     this.setState({
-      [name]: value
+      [name]: value,
     });
   };
 
@@ -44,14 +44,6 @@ class VerifySeed extends Component {
           action={action}
           actionEvent={onClick}
         />
-
-        <Information>
-          Please verify your Seed Phrase this will ensure that your Seed Phrase
-          has been correctly backed up.{" "}
-          <strong>
-            Store your seed in a safe location and do not share this with anyone
-          </strong>
-        </Information>
       </>
     );
   }

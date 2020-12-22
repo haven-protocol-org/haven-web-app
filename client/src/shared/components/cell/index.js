@@ -7,7 +7,6 @@ import {
   Column,
   Title,
   Subtitle,
-  Ticker,
   Locked,
   Unlocked,
   Row,
@@ -19,8 +18,9 @@ import {
   PendingSpacer,
   Balance,
   Arrow,
+  ShortRow,
 } from "./styles";
-// import chevron from "../../../assets/icons/chevron.svg";
+import Dots from "../_animations/dots/index.js";
 
 const Cell = ({
   tokenName,
@@ -34,6 +34,7 @@ const Cell = ({
 }) => {
   const [open, openBalance] = useState(false);
   const balance = totalBalance * price;
+
   return (
     <>
       {lockedBalance === 0 ? (
@@ -43,13 +44,30 @@ const Cell = ({
               <Row>
                 <Asset>
                   <Title>{tokenName}</Title>
-                  <Ticker>{ticker}</Ticker>
                 </Asset>
-                <Balance>${balance.toFixed(4)}</Balance>
+                <Balance>
+                  {price === 0 ? (
+                    <ShortRow>
+                      $ <Dots />
+                    </ShortRow>
+                  ) : (
+                    `${"$" + balance.toFixed(2)}`
+                  )}
+                </Balance>
               </Row>
               <Row>
-                <Subtitle>${price}</Subtitle>
-                <Subtitle>{totalBalance}</Subtitle>
+                <Subtitle>
+                  {ticker} {totalBalance === 0 ? "0.00" : totalBalance}
+                </Subtitle>
+                <Subtitle>
+                  {price === 0 ? (
+                    <Row>
+                      $ <Dots />
+                    </Row>
+                  ) : (
+                    `${"$" + price.toFixed(2)}`
+                  )}
+                </Subtitle>
               </Row>
             </Column>
             <Route>
@@ -63,13 +81,15 @@ const Cell = ({
             <Column>
               <Row>
                 <Asset>
-                  <Title>{tokenName} </Title> <Ticker>{ticker}</Ticker>
+                  <Title>{tokenName}</Title>
                 </Asset>
-                <Balance>${balance.toFixed(4)}</Balance>
+                <Balance>{"$" + balance.toFixed(2)}</Balance>
               </Row>
               <Row>
-                <Subtitle>${price}</Subtitle>
-                <Subtitle>{totalBalance}</Subtitle>
+                <Subtitle>
+                  {ticker} {totalBalance}
+                </Subtitle>
+                <Subtitle>{"$" + price.toFixed(2)}</Subtitle>
               </Row>
             </Column>
             <Route>
@@ -85,13 +105,12 @@ const Cell = ({
               </Pending>
               <Pending>
                 <Subtitle>Locked Balance</Subtitle>
-                <Subtitle>{lockedBalance}</Subtitle>
+                <Subtitle>{lockedBalance.toFixed(2)}</Subtitle>
               </Pending>
               <Pending>
                 <Subtitle>Unlocked Balance</Subtitle>
-                <Subtitle>{unlockedBalance}</Subtitle>
+                <Subtitle>{unlockedBalance.toFixed(2)}</Subtitle>
               </Pending>
-
               <PendingSpacer />
             </PendingWrapper>
           )}

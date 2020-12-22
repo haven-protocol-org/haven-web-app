@@ -1,5 +1,5 @@
 import { AnyAction } from "redux";
-import { GET_BLOCK_HEADER_EXCHANGE_RATE_SUCCEED } from "../../platforms/desktop/actions/types";
+import { GET_BLOCK_HEADER_EXCHANGE_RATE_SUCCEED } from "shared/actions/types";
 import { DesktopAppState } from "../../platforms/desktop/reducers";
 import { Ticker } from "shared/reducers/types";
 import bigInt from "big-integer";
@@ -102,7 +102,7 @@ export const selectLastExchangeRates = (
 export const hasLatestXRate = (state: DesktopAppState) => {
   const chainHeight: number = state.chain.chainHeight;
   return state.blockHeaderExchangeRate.some(
-    (xRate) => xRate.height === chainHeight
+    (xRate) => xRate.height === chainHeight - 1
   );
 };
 

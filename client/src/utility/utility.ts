@@ -5,6 +5,7 @@ import { NO_PRICE } from "shared/reducers/priceHistory";
 import { NO_BALANCE } from "shared/reducers/xBalance";
 import { Ticker } from "shared/reducers/types";
 import bigInt from "big-integer";
+import BigInteger from "haven-wallet-core/src/main/js/common/biginteger";
 
 export const convertTimestampToDateString = (timestamp: any) =>
   new Date(timestamp).toLocaleDateString();
@@ -13,7 +14,7 @@ export const convertTimestampToDateString = (timestamp: any) =>
 export const decreasePricePoints = (priceData: any) => {
   const prices = priceData.prices;
   const decreasedPrices = [];
-  const maxVal = 30;
+  const maxVal = 500;
   const delta = Math.round(prices.length / maxVal);
   let i;
   for (i = 0; i < prices.length; i += delta) {
@@ -28,7 +29,7 @@ export const getCurrentValueInUSD = (
   ticker: Ticker,
   priceInUSD: number
 ) => {
-  const humanAmount: number = convertBalanceForReading(Math.abs(amount));
+  const humanAmount: number = convertBalanceToMoney(Math.abs(amount));
 
   switch (ticker) {
     case Ticker.xUSD:
@@ -38,38 +39,41 @@ export const getCurrentValueInUSD = (
   }
 };
 
-export const convertBalanceForReading = (balance: any) => {
-  if (balance === NO_BALANCE) return Number(balance);
-
-  let readableBalance: any;
-  if (bigInt.isInstance(balance)) {
-    readableBalance = Number(balance.divide(Math.pow(10, 8)));
-
-    return readableBalance / 10000;
-  }
-
-  readableBalance = (balance / Math.pow(10, 12)).toFixed(4);
-
-  if (readableBalance % 1 === 0) return parseInt(readableBalance);
-  return readableBalance;
-};
-
-
-export const convertToMoney = (atomicMoney: any) => {
+export const convertBalanceToMoney = (atomicMoney: bigInt.BigInteger | number, decimals: number = 2 ): number => {
   if (atomicMoney === NO_BALANCE) return 0;
 
+  const atomicUnits = 12;
   let readableBalance;
-  if (typeof atomicMoney === "bigint") {
-    readableBalance = Number(atomicMoney / BigInt(Math.pow(10, 8)));
-
-    return readableBalance / 10000;
+  if (bigInt.isInstance(atomicMoney)) {
+     readableBalance = Number(atomicMoney.divide(Math.pow(10, atomicUnits - decimals)));
+    readableBalance =  readableBalance / Math.pow(10, decimals);
+    return Number(readableBalance.toFixed(decimals));
   }
 
-  readableBalance = (atomicMoney / Math.pow(10, 12));
+  readableBalance = atomicMoney / Math.pow(10, 12);
 
   if (readableBalance % 1 === 0) return Math.round(readableBalance);
-  return Number(readableBalance.toFixed(4));
+  return Number(readableBalance.toFixed(decimals));
 };
+
+
+// converts user input in atomic units
+export const convertMoneyToBalance = (amount: number): bigInt.BigInteger => {
+
+  const atomicUnits = 12;
+  if (amount === Math.round(amount)) {
+    return bigInt(amount).multiply(bigInt(Math.pow(10,atomicUnits)));
+  }
+
+  const amountString = amount.toFixed(12);
+  let numDecimals = amountString.split(".")[1].length || 0;
+  let roundAmount: string;  
+  roundAmount = amountString.replace(".", "");
+  
+  console.log(roundAmount);
+  console.log(amountString);
+  return bigInt(roundAmount).multiply(Math.pow(10, Math.max((atomicUnits - numDecimals),0)))
+}
 
 export const uuidv4 = () => {
   var uuid = "",
@@ -120,7 +124,7 @@ export const getPriceValues = (prices: any) => {
 };
 
 export const logM = (message: any) => {
-  // console.log(message);
+   console.log(message);
 };
 
 export const createRemainingTimeString = (remainingTimeInMinutes: number) => {
@@ -133,4 +137,18 @@ export const createRemainingTimeString = (remainingTimeInMinutes: number) => {
     (hours > 0 ? hours + "h " : "") +
     (minutes > 0 ? minutes + "m" : "");
   return timeString;
+};
+
+// haven wallet core uses its own implementation of BigInteger, and we need to convert to adapt the apps
+//implementaion of bigInts
+
+export const bigIntegerToBigInt = (value: BigInteger): bigInt.BigInteger => {
+  if (value instanceof BigInteger) {
+    return bigInt(value.toString(10));
+  }
+
+  //@ts-ignore
+  const convertedBigInteger = BigInteger._construct(value._d, value._s);
+
+  return bigInt(convertedBigInteger.toString(10));
 };

@@ -11,6 +11,7 @@ export const Container = styled.div`
   left: 0;
   display: flex;
   justify-content: center;
+  overflow: scroll;
 `;
 
 export const Placeholder = styled.div`
@@ -46,6 +47,7 @@ export const Inner = styled.div`
 
   ${media.mobile`
     min-width: 90%
+    margin-top: 20px;
   `}
 `;
 

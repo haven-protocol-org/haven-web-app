@@ -1,16 +1,16 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import media from "../../../../assets/styles/media.js";
 
 export const Container = styled.header`
   height: 64px;
   z-index: 1000;
   position: fixed;
   width: 100vw;
-  background: #26282c;
+  background: ${(props) => props.theme.body.navigation};
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border-bottom: 1px solid #3a4048;
 `;
 
 export const Logo = styled.img`
@@ -25,10 +25,6 @@ export const Tag = styled.div`
   border-radius: 3px;
   margin-left: 12px;
   color: #26282c;
-
-  ${media.mobile`
-     font-size: 8px
-   `};
 `;
 
 export const Haven = styled.div`

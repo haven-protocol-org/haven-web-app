@@ -2,7 +2,6 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import AddressDropdown from "../../../components/_inputs/addresses_dropdown/index.js";
 import Description from "../../../components/_inputs/description";
-import Footer from "../../../components/_inputs/footer";
 import DoubleFooter from "../../../components/_inputs/double_footer";
 import Form from "../../../components/_inputs/form";
 import Input from "../../../components/_inputs/input";
@@ -10,22 +9,27 @@ import { Container } from "./styles";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { AddressEntry } from "shared/reducers/address";
 import { writeText } from "vendor/clipboard/clipboard-polyfill";
+import { showModal } from "../../../actions/modal";
+import { MODAL_TYPE } from "../../../reducers/modal";
+import { selectSelectedAddress } from "../../../reducers/address";
+import { setSelectedAddress } from "shared/actions/address";
 
 interface OwnAddressState {
-  selected: AddressEntry;
   copyButtonState: string;
   secondTabLabel: string;
 }
 
 interface OwnAddressProps {
   addresses: AddressEntry[];
+  showModal: (modalType: MODAL_TYPE) => void;
+  setSelectedAddress: (addressIndex: number) => void;
+  selected: AddressEntry | undefined;
 }
 
 class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
   private addressValue: any = React.createRef();
 
   state: OwnAddressState = {
-    selected: this.props.addresses[0],
     copyButtonState: "Copy",
     secondTabLabel: "",
   };
@@ -35,13 +39,11 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
   }
 
   selectAddress = (selected: AddressEntry) => {
-    this.setState({
-      selected,
-    });
+    this.props.setSelectedAddress(selected.index);
   };
 
   clipboardAddress = () => {
-    const { address } = this.state.selected;
+    const { address } = this.props.selected!;
 
     this.setState({
       copyButtonState: "Copied...",
@@ -56,6 +58,14 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
     }, 1000);
   };
 
+  showQRCodeModal = () => {
+    this.props.showModal(MODAL_TYPE.ShowQRCode);
+  };
+
+  showAddressModal = () => {
+    this.props.showModal(MODAL_TYPE.ShowAddressModal);
+  };
+
   render() {
     const windowWidth = window.innerWidth;
 
@@ -63,67 +73,72 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
       return null;
     }
 
-    const qrEnabled = false;
+    const { selected, addresses } = this.props;
+
+    const handleLabel =
+      selected!.label === undefined
+        ? `Address ${selected!.index}`
+        : selected!.label;
 
     return (
       <Fragment>
         <Form>
           <AddressDropdown
-            label="Select Vault"
+            label="Select or Create Address"
             readOnly={true}
-            value={this.props.addresses[0].label}
-            options={this.props.addresses}
+            value={handleLabel}
+            options={addresses}
             onClick={this.selectAddress}
-            editable={false}
+            editable={true}
+            editAddress={this.showAddressModal}
           />
           {windowWidth < 1380 ? (
             <Description
-              label="Selected Vault Address"
+              label={`Address (${handleLabel})`}
               width={true}
-              value={this.state.selected.address}
+              value={selected!.address}
               readOnly={true}
               rows={windowWidth < 600 ? "3" : "2"}
             />
           ) : (
             <Input
               ref={(textarea) => (this.addressValue = textarea)}
-              label="Selected Vault Address"
+              label={`Address (${handleLabel})`}
               placeholder="Select an address"
               width={true}
               type={"text"}
               name="address"
-              value={this.state.selected.address}
+              value={selected!.address}
               readOnly={true}
             />
           )}
         </Form>
         <Container>
-          {qrEnabled ? (
-            <DoubleFooter
-              leftLabel={"Show QR"}
-              leftDisabled={false}
-              leftLoading={false}
-              leftOnClick={() => {}}
-              rightLabel={this.state.copyButtonState}
-              rightDisabled={false}
-              rightLoading={false}
-              rightOnClick={this.clipboardAddress}
-              onClick={() => {}}
-            />
-          ) : (
-            <Footer
-              label={this.state.copyButtonState}
-              onClick={this.clipboardAddress}
-              disabled={false}
-              loading={false}
-            />
-          )}
+          <DoubleFooter
+            // Left Section
+            leftLabel={"Show QR"}
+            leftDisabled={false}
+            leftLoading={false}
+            leftOnClick={this.showQRCodeModal}
+            leftVisible={true}
+            // Right Section
+            rightLabel={this.state.copyButtonState}
+            rightDisabled={false}
+            rightLoading={false}
+            rightOnClick={this.clipboardAddress}
+          />
         </Container>
       </Fragment>
     );
   }
 }
 
-const mapStateToProps = (state: DesktopAppState) => ({});
+const mapStateToProps = (state: DesktopAppState) => ({
+  selected: selectSelectedAddress(state),
+  addresses: state.address.entrys,
+});
 
-export const OwnAddress = connect(mapStateToProps, null)(OwnAddressContainer);
+export const OwnAddress = connect(mapStateToProps, {
+  showModal,
+  setSelectedAddress,
+})(OwnAddressContainer);

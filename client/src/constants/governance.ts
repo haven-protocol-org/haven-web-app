@@ -1,4 +1,4 @@
-import { NetworkType } from "constants/env";
+import { NetworkType } from "typings";
 
 const GOVERNANCE_WALLET_ADDRESS = [
   [

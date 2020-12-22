@@ -2,7 +2,7 @@ import styled from "styled-components";
 import media from "../../../../assets/styles/media.js";
 
 export const Container = styled.div`
-  background: ${props => props.theme.body.background};
+  background: ${(props) => props.theme.body.background};
   height: auto;
   overflow: auto;
   display: grid;

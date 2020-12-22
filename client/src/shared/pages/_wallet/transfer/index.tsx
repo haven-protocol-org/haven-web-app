@@ -8,14 +8,15 @@ import Body from "../../../components/_layout/body";
 import Header from "../../../components/_layout/header";
 import { SendFunds } from "./send";
 import { AddressEntry } from "shared/reducers/address";
+
 // Relative Imports
 
 interface TransferOwnProps {
   sendFunds: (
     address: string,
     amount: number,
-    paymentId: string,
-    ticker: Ticker
+    ticker: Ticker,
+    sweepAll: boolean
   ) => void;
   addresses: AddressEntry[];
   isProcessing: boolean;
@@ -85,7 +86,7 @@ export class Transfer extends Component<TransferProps, TransferState> {
               isProcessing={this.props.isProcessing}
             />
           ) : (
-            <OwnAddress addresses={this.props.addresses} />
+            <OwnAddress />
           )}
         </Body>
       </Fragment>

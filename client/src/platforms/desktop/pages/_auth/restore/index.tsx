@@ -2,9 +2,10 @@ import {
   selectErrorMessageForLogin,
   selectIsLoggedIn,
   selectIsRequestingLogin,
-} from "../../../reducers/walletSession";
+} from "shared/reducers/walletSession";
+import { selectIsWalletCreated } from "shared/reducers/walletCreation";
 import { connect } from "react-redux";
-import { restoreWallet } from "../../../actions";
+import { restoreWalletByMnemomic } from "shared/actions/wallet";
 import { Redirect } from "react-router";
 import React, { Component } from "react";
 import { Information } from "assets/styles/type";
@@ -14,13 +15,21 @@ import { Spinner } from "shared/components/spinner";
 import { Body, Wrapper } from "./styles";
 import Input from "shared/components/_inputs/input";
 import { DesktopAppState } from "../../../reducers";
-import InputButton from "shared/components/_inputs/input_button/index.js";
+import InputButton from "shared/components/_inputs/input_button";
+import { startWalletSession } from "shared/actions/wallet";
 
 interface RestoreProps {
-  restoreWallet: (seed: string, name: string, pw: string) => void;
+  restoreWalletByMnemomic: (
+    path: string | undefined,
+    seed: string,
+    pw: string,
+    walletName: string | undefined
+  ) => void;
   isLoggedIn: boolean;
   isRequestingLogin: boolean;
   errorMessage: string;
+  isWalletCreated: boolean;
+  startWalletSession: (walletName: string | undefined) => void;
 }
 
 enum RESTORE_STEP {
@@ -47,13 +56,18 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
     showPassword: false,
   };
 
-  componentWillReceiveProps(nextProps: RestoreProps, nextContext: any) {
-    if (nextProps.errorMessage) {
-      this.setState({
-        error: nextProps.errorMessage,
-        step: RESTORE_STEP.SEED_STEP,
-      });
+  componentDidUpdate(
+    prevProps: Readonly<RestoreProps>,
+    prevState: Readonly<RestoreState>,
+    snapshot?: any
+  ): void {
+    if (prevProps.errorMessage === "" && this.props.errorMessage) {
+      this.setState({ error: this.props.errorMessage });
       setTimeout(() => this.setState({ error: "" }), 2000);
+    }
+
+    if (prevProps.isWalletCreated === false && this.props.isWalletCreated) {
+      this.props.startWalletSession(this.state.name);
     }
   }
 
@@ -66,7 +80,7 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
 
     this.validateNameAndPW();
 
-    this.props.restoreWallet(seed, name, pw);
+    this.props.restoreWalletByMnemomic(name, seed, pw, name);
   };
 
   onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -118,10 +132,12 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
                 onChange={this.onChangeHandler}
               />
               <Information>
-                <strong>Disclaimer:</strong> Your seed is used to generate an
-                encrypted signature on your device and unlock your account. This
-                ensures the security of your seed or keys, as they're never
-                submitted to a server or sent across the internet.
+                Enter your 25 word seed phrase to generate a new vault file.
+                This is an encrypted file, with a unique name and password. A
+                restore requires a full chain sync and can take ~2.5hrs. An
+                alternative approach is to create a new vault to use within the
+                web wallet, which is much quicker, and then transferring your
+                funds into that new vault.
               </Information>
             </Body>
             <Buttons buttons="single">
@@ -183,9 +199,11 @@ const mapStateToProps = (state: DesktopAppState) => ({
   isRequestingLogin: selectIsRequestingLogin(state),
   isLoggedIn: selectIsLoggedIn(state),
   errorMessage: selectErrorMessageForLogin(state),
+  isWalletCreated: selectIsWalletCreated(state),
 });
 
 // @ts-ignore
-export const RestoreDesktop = connect(mapStateToProps, { restoreWallet })(
-  RestoreDesktopContainer
-);
+export const RestoreDesktop = connect(mapStateToProps, {
+  restoreWalletByMnemomic,
+  startWalletSession,
+})(RestoreDesktopContainer);

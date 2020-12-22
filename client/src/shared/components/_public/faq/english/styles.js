@@ -19,7 +19,7 @@ export const Container = styled.div`
   padding: 80px;
   max-width: 1400px;
 
-  background: ${props => (props.reverse ? "#2b2e34" : "#36393F")};
+  background: ${(props) => (props.reverse ? "#2b2e34" : "#36393F")};
 
   justify-content: center;
   align-items: center;
