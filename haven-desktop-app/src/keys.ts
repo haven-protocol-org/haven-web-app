@@ -29,17 +29,16 @@ export const showKey = async (key: KeyType) => {
        showDialog("Seed", await core.getMnemonic())
       return;
     case KeyType.PRIVATE_VIEW:
-      //  fetchKey("Private View Key", PRIVATE_VIEW_KEY);
+      showDialog("Private View Key", await core.getPrivateView())
       return;
     case KeyType.PRIVATE_SPEND:
-      //  fetchKey("Private Spend Key", PRIVATE_SPEND_KEY);
+      showDialog("Private Spend Key", await core.getPrivateSpend())
       return;
-
     case KeyType.PUBLIC_VIEW:
-      //  fetchAdress(PUBLIC_VIEW_KEY);
+      showDialog("Public View Key", await core.getPublicView())
       return;
     case KeyType.PUBLIC_SPEND:
-      //  fetchAdress(PUBLIC_SPEND_KEY);
+      showDialog("Public Spend Key", await core.getPublicSpend())
       return;
   }
 };
