@@ -25,7 +25,7 @@
     "build:web": "bash -ac '. ./env/.net; . ./env/.env.web; npm version patch; react-scripts build'",
     "start:desktop": "bash -ac '. ./env/.net; . ./env/.env.desktop; react-scripts start'",
     "build:desktop": "bash -ac '. ./env/.net; . ./env/.env.desktop; . ./env/.env.desktop.build;  react-scripts build'",
-    "build:desktop:ci": "bash -ac '. ./env/.env.desktop; . ./env/.env.desktop.build;  react-scripts build'",
+    "build:desktop:ci": "bash -ac \". ./env/.env.desktop; . ./env/.env.desktop.build;  react-scripts build\"",
     "copy-build": "rm -rf ../haven-desktop-app/client && rm -rf ./build/libs && cp -rf ./build ../haven-desktop-app/client",
     "copy-haven-core": "bash -ac 'cp ./node_modules/haven-wallet-core/dist/{MoneroWebWorker.dist.js,haven_offshore.js,haven_offshore.wasm} ./public'",
     "test": "react-scripts test",
