@@ -21,7 +21,7 @@ export const WALLET_PATH_STAGENET: string = path.join(
 const checkAndCreateWalletDir = (path: string) => {
 
     if (!fs.existsSync(path)) {
-      fs.mkdirSync(WALLET_PATH_MAINNET, { recursive: true });
+      fs.mkdirSync(path, { recursive: true });
     }
 };
 
