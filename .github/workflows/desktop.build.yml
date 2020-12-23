@@ -35,9 +35,11 @@ jobs:
 
     - name: Client Build for Desktop
       working-directory: client
+      env:
+        CI: false
       run: |
           npm run build:desktop:ci 
-          
+
     - name: Copy Build
       working-directory: client
       run: |
