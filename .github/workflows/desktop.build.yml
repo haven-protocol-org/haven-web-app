@@ -37,6 +37,7 @@ jobs:
       working-directory: client
       run: |
           npm run build:desktop:ci 
+          
     - name: Copy Build
       working-directory: client
       run: |
