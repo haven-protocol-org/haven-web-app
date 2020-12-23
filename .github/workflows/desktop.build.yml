@@ -12,7 +12,7 @@ on:
       - develop
 
 env:
-  NET: 1
+  REACT_APP_NET_TYPE_ID: 1
 
 jobs:
   build:
@@ -37,7 +37,7 @@ jobs:
       working-directory: client
       shell: bash
       run: |
-          npm run build:desktop 
+          npm run build:desktop:ci 
     - name: Copy Build
       working-directory: client
       run: |
