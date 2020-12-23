@@ -17,34 +17,29 @@ export const storeKeyFileToDisk = (name: string) => {
     dispatch(
       addNotificationByMessage(
         NotificationType.SUCCESS,
-        "Vault File download was successful"
+        "Vault file download was successful"
       )
     );
   };
 };
 
 export const storeWalletInDB = (): any => {
-
-  return async(dispatch: any, getState: () => HavenAppState) => {
-    
+  return async (dispatch: any, getState: () => HavenAppState) => {
     const walletName = getState().walletSession.activeWallet;
     const currentHeight = getState().chain.walletHeight;
-     // if its a temporary wallet ( just login via seed ) we don't store the wallet in any way
-    
+    // if its a temporary wallet ( just login via seed ) we don't store the wallet in any way
+
     if (walletName !== undefined) {
       try {
         await storeWalletDataInIndexedDB(walletName);
-      }
-      catch (e) {
+      } catch (e) {
         return false;
       }
     }
-  //  dispatch({ type: SET_STORED_HEIGHT, payload: 0 });
+    //  dispatch({ type: SET_STORED_HEIGHT, payload: 0 });
     return true;
-
-    }
+  };
 };
-
 
 export const getWalletCacheByName = async (
   name: string
@@ -58,8 +53,6 @@ export const getWalletCacheByName = async (
   }
 };
 
-
-
 const fetchValueByKey = (name: string): Promise<ArrayBuffer> => {
   return new Promise((resolutionFunc, rejectionFunc) => {
     const openRequest: IDBOpenDBRequest = indexedDB.open(HAVEN_DB);
@@ -69,9 +62,7 @@ const fetchValueByKey = (name: string): Promise<ArrayBuffer> => {
     };
 
     openRequest.onerror = function (this: IDBRequest<IDBDatabase>) {
-
-      rejectionFunc("we cannot open indexedDB")
-        
+      rejectionFunc("Sorry, cannot open indexedDB");
     };
     openRequest.onsuccess = function (this: IDBRequest<IDBDatabase>) {
       const db = this.result;
@@ -80,7 +71,7 @@ const fetchValueByKey = (name: string): Promise<ArrayBuffer> => {
         const keyRequest = transaction.objectStore(WALLET_STORE).get(name);
         keyRequest.onsuccess = function (this: IDBRequest<any>) {
           if (this.result === undefined) {
-            rejectionFunc("does not exist or is undefined");
+            rejectionFunc("Does not exist or is undefined");
           } else {
             const walletCache = this.result as ArrayBuffer;
             resolutionFunc(walletCache);
@@ -109,8 +100,7 @@ const fetchKeysFromDB = () => {
   };
 };
 
-const storeWalletDataInIndexedDB = async (name: string):Promise<any>  => {
-  
+const storeWalletDataInIndexedDB = async (name: string): Promise<any> => {
   return new Promise(async (resolutionFunc, rejectionFunc) => {
     const walletData = await walletProxy.getWalletData();
     const wallet = walletData[1];
@@ -140,9 +130,4 @@ const storeWalletDataInIndexedDB = async (name: string):Promise<any>  => {
       };
     };
   });
-
-
-
-
-}
- 
+};

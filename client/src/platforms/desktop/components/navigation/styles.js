@@ -29,6 +29,10 @@ export const Haven = styled.div`
   margin-left: 8px;
 `;
 
+export const Legal = styled.a`
+  text-decoration: none;
+`;
+
 export const Icon = styled(HavenIcon)`
   height: 24px;
   width: 24px;
