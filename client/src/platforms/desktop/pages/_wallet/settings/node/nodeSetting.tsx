@@ -245,7 +245,7 @@ const mapStateToProps = (state: DesktopAppState) => ({
   isConnected: state.walletSession.isWalletConectedToDaemon,
   isRequestingSwitch: false,
   localNode: selectisLocalNode(state.connectedNode),
-  nodeOptions: createNodeOptions(state.connectedNode),
+  nodeOptions: createNodeOptions(state.connectedNode, state.nodeList),
 });
 
 export const HavenNodeSetting = connect(mapStateToProps, {

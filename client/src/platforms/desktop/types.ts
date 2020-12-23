@@ -10,6 +10,9 @@ export enum NodeLocation {
   None = "None",
 }
 
+
+
+
 export interface BasicNode {
 
   address?: string;
@@ -17,6 +20,10 @@ export interface BasicNode {
   location: NodeLocation
   default?: boolean;
 }
+
+export interface RemoteNode extends BasicNode {
+  provider:string;
+} 
 
 export interface SelectedNode extends BasicNode {
   appIsConnected: boolean;

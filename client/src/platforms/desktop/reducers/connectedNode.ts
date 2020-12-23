@@ -1,5 +1,5 @@
 import { AnyAction, combineReducers } from "redux";
-import { NodeLocation, LocalNode, SelectedNode, BasicNode } from "platforms/desktop/types";
+import { NodeLocation, LocalNode, SelectedNode, BasicNode, RemoteNode } from "platforms/desktop/types";
 import { DesktopAppState } from "platforms/desktop/reducers/index";
 import {
   SET_NODE_FOR_WALLET_SUCCESS,
@@ -15,7 +15,7 @@ const INITAL_STATE_SELECTED: SelectedNode = {
 };
 
 
-const INITIAL_STATE_LIST: BasicNode[] = [];
+const INITIAL_STATE_LIST: RemoteNode[] = [];
 
 
 export const connectedNode = (
@@ -33,7 +33,7 @@ export const connectedNode = (
 };
 
 export const nodeList = (state = INITIAL_STATE_LIST, action: AnyAction
-): BasicNode[] => {
+): RemoteNode[] => {
   switch (action.type) {
     case SET_NODE_LIST_FOR_WALLET_SUCCESS:
       return action.payload;
