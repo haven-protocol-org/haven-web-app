@@ -16,7 +16,6 @@ export const Container = styled.div`
 
 export const Wrapper = styled.div`
   width: auto;
-  background: pink;
   display: flex;
   background: ${(props) => props.theme.input.input_background};
   border: 1px solid ${(props) => props.theme.input.input_border};
@@ -33,7 +32,7 @@ export const Button = styled.div`
   width: 64px;
   border-radius: 2px;
   font-size: 11px;
-  color: #fff;
+  color: ${(props) => props.theme.button.primary_label}
   font-family: Inter-Regular;
   text-transform: uppercase;
   display: flex;
