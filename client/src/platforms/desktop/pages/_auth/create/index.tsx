@@ -190,8 +190,6 @@ class CreateDesktopContainer extends Component<
     const { fileName, step, verify_seed, error } = this.state;
 
     switch (step) {
-      case CREATION_STEPS.Info:
-        return <Placeholder platform={"desktop"} />; // No longer needed. Delete
       case CREATION_STEPS.Credentials:
         return (
           <>
