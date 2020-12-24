@@ -23,8 +23,6 @@ export const Main = styled.div`
 `;
 
 export const Header = styled.div`
-  height: auto;
-  width: auto;
   padding: 20px;
   background: ${(props) => props.theme.body.background};
   border-bottom: 1px solid ${(props) => props.theme.body.border};
@@ -44,16 +42,6 @@ export const Description = styled.div`
   font-size: 14px;
   color: ${(props) => props.theme.type.secondary};
   line-height: 24px;
-`;
-
-export const Step = styled.div`
-  width: ${(props) =>
-    (props.width === 1 ? "10%" : null) ||
-    (props.width === 2 ? "50%" : null) ||
-    (props.width === 3 ? "100%" : null)}
-  background: #7289DA;
-  height: auto;
-  border-radius: 4px;
 `;
 
 export const Body = styled.div`

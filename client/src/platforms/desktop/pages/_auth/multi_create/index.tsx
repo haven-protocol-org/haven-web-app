@@ -19,7 +19,7 @@ import { DesktopAppState } from "../../../reducers";
 import { connect } from "react-redux";
 import { selectIsLoggedIn } from "../../../../../shared/reducers/walletSession";
 import { Redirect } from "react-router";
-import { CreateDesktop } from "platforms/desktop/pages/_auth/create";
+import { CreateDesktop } from "../create";
 
 interface MultiloginState {
   loginType: LOGIN_TYPE;
