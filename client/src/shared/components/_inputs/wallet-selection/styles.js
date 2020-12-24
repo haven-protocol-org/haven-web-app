@@ -101,30 +101,29 @@ export const Name = styled.div`
 `;
 
 export const Button = styled.button`
-    width: 100%;
-    height: auto;
-    background: ${(props) => props.theme.input.input_background};
-    outline: none;
-    grid-column: 1 / 3;
-    padding: 20px;
-    border-radius: 3px;
-    font-size: 16px;
-    color: white;
-    display: flex;
-    align-items: flex-start;
-    border: none;
-    cursor: pointer;
+  width: 100%;
+  height: auto;
+  background: ${(props) => props.theme.input.input_background};
+  outline: none;
+  grid-column: 1 / 3;
+  padding: 20px;
+  border-radius: 3px;
+  font-size: 16px;
+  color: ${(props) => props.theme.type.primary};
+  display: flex;
+  align-items: flex-start;
+  border: none;
+  cursor: pointer;
 
-
-
-&:before{
-    content:"";
+  &:before {
+    content: "";
     position: absolute;
     width: 0px;
     height: 0px;
     border: 7px solid;
-    border-color: ${(props) =>
-      props.theme.input.input_select} transparent transparent transparent;
+    border-color: ${(props) => props.theme.input.input_select} transparent
+      transparent transparent;
     right: 16px;
     top: 24px;
+  }
 `;
