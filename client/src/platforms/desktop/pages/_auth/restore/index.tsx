@@ -9,7 +9,6 @@ import { restoreWalletByMnemomic } from "shared/actions/wallet";
 import { Redirect } from "react-router";
 import React, { Component } from "react";
 import { Information } from "assets/styles/type";
-// import Description from "shared/components/_inputs/description";
 import VerifySeed from "shared/components/_create/verify_seed";
 import { Buttons, Submit } from "../multi_login/styles";
 import { Spinner } from "shared/components/spinner";
