@@ -13,21 +13,13 @@ import MoneroTxWallet = require("haven-wallet-core/src/main/js/wallet/model/Mone
 let wallet: MoneroWalletWasm;
 
 export const createWallet = async (walletData: ICreateWallet) => {
-  try {
     wallet = await core.createWalletWasm(walletData);
     return true;
-  } catch (e) {
-    return e;
-  }
 };
 
 export const openWallet = async (walletData: IOpenWallet) => {
-  try {
     wallet = await core.openWalletWasm(walletData);
     return true;
-  } catch (e) {
-    return e;
-  }
 };
 
 export const closeWallet = async (save: boolean) => {
@@ -222,3 +214,7 @@ export const labelAddress = async (label: string, addressIndex: number) => {
 export const rescanBlockchain = async () => {
   return wallet.rescanBlockchain();
 };
+
+export const isClosed = async() => {
+  return wallet.isClosed();
+}

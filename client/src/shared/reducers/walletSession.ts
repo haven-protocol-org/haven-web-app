@@ -95,7 +95,7 @@ export const selectErrorMessageForLogin = (state: HavenAppState) => {
 
   if (error) {
     const message = getMessageOfError(error);
-    return message || error.message;
+    return message || error.message || error;
   }
 
   return "";

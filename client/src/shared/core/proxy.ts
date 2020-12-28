@@ -19,14 +19,16 @@ const walletHandler: ProxyHandler<typeof walletCore> = {
       return async function (...args: any[]) {
         // we need to handle serialization of data as ipcrenderer cannot transport classes, only raw objects
 
+
+        try {
+
+
         const response = await callWalletBackend(
           name,
           args,
           CommunicationChannel.WALLET
         );
 
-        logM(name);
-        logM(response);
 
         if (name === "transfer") {
           const txs: MoneroTxWallet[] = response.map(
@@ -65,7 +67,15 @@ const walletHandler: ProxyHandler<typeof walletCore> = {
           return addresses;
         }
 
+        logM(response);
         return response;
+
+      }
+      catch(e) {
+        logM(e);
+        return e;
+
+        }
       };
     }
     return Reflect.get(target, name, receiver);

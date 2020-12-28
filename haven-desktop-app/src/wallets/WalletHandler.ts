@@ -105,8 +105,8 @@ export class WalletHandler {
   }
   catch(e) {
 
-  //  logInDevMode(e);
-    return e;
+    logInDevMode(e);
+    return e.toString();
   }
 
   };
@@ -126,8 +126,8 @@ export class WalletHandler {
        return response;
     }
     catch (e) {
-      logInDevMode(e);
-      return e;
+     
+      return e.toString();
     }
 
   };
