@@ -82,7 +82,7 @@ class FixedStatusContainer extends Component<FixedStatusProps, any> {
     // show a trying to connect message
     if (
       isWalletConnectedNow === false &&
-      didWalletConnectBefore !== isWalletConnectedNow &&
+      didWalletConnectBefore && this.props.isLoggedIn &&
       !this.tryingConnectMessageID
     ) {
       const nodeName =
