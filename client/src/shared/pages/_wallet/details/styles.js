@@ -44,7 +44,7 @@ export const Illustration = styled(Transaction)`
 `;
 
 export const Message = styled.div`
-  font-size: 16px;
+  font-size: 14px;
   font-family: Inter-Regular;
   color: ${(props) => props.theme.type.secondary};
   margin-top: 12px;

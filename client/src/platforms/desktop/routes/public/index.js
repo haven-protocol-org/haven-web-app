@@ -5,15 +5,13 @@ import { Route } from "react-router-dom";
 // Relative Imports
 
 import { RestoreDesktop } from "../../pages/_auth/restore";
-import { LoginDesktop } from "../../pages/public/login";
-import { CreateDesktop } from "../../pages/public/create";
+import LoginDesktop from "../../pages/public/login";
+import CreateDesktop from "../../pages/public/create";
 import { withRouter } from "react-router";
 import { connect } from "react-redux";
 
 class PublicRoutes extends Component {
-  componentDidMount() {
-  
-  }
+  componentDidMount() {}
 
   render() {
     return (
@@ -26,9 +24,4 @@ class PublicRoutes extends Component {
   }
 }
 
-export const PublicRoutesDesktop = withRouter(
-  connect(
-    null,
-    {   }
-  )(PublicRoutes)
-);
+export const PublicRoutesDesktop = withRouter(connect(null, {})(PublicRoutes));

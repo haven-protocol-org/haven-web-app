@@ -2,7 +2,7 @@
 
 export const dark = {
   value: "Dark Theme",
-  name:"dark",
+  name: "dark",
   body: {
     navigation: "#26282C",
     background: "#36393F",
@@ -50,7 +50,7 @@ export const dark = {
 
 export const light = {
   value: "Light Theme",
-  name:"light",
+  name: "light",
   body: {
     navigation: "#e5e5e5",
     background: "#f5f5f5",
@@ -98,7 +98,7 @@ export const light = {
 
 export const sepia = {
   value: "Sepia Theme",
-  name:"sepia",
+  name: "sepia",
   body: {
     navigation: "#c6b3a1",
     background: "#e2d9d0",

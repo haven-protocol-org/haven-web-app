@@ -82,7 +82,7 @@ class OpenWalletDesktopContainer extends Component<
 
   togglePassword = () => {
     this.setState({
-      reveal: !this.state.reveal,
+      showPassword: !this.state.showPassword,
     });
   };
 
@@ -103,7 +103,7 @@ class OpenWalletDesktopContainer extends Component<
         <Dropdown
           onClick={this.handleNoWallet}
           options={noWallets}
-          placeholder="Choose a vault"
+          placeholder="Select a vault"
           label={"Select Vault"}
           error={""}
           value={"Select a vault"}
@@ -111,15 +111,17 @@ class OpenWalletDesktopContainer extends Component<
           {noWallets}
         </Dropdown>
         {/* @ts-ignore */}
-        <Toggle
+        <InputButton
           label="Vault Password"
           placeholder="Enter vault password"
           name="password"
-          type={"text"}
           value={password}
           onChange={this.onChangeHandler}
           onClick={this.togglePassword}
-          reveal={this.state.reveal}
+          error={error}
+          type={this.state.showPassword === true ? "text" : "password"}
+          button={this.state.showPassword === true ? "hide" : "show"}
+          width={false}
         />
         <Information>
           Select your vault file and enter your password. If you are new to
@@ -149,15 +151,15 @@ class OpenWalletDesktopContainer extends Component<
           value={selectedWallet}
         />
         <InputButton
-          // @ts-ignore
           label="Vault Password"
           placeholder="Enter vault password"
           name="password"
-          type={showPassword ? "text" : "password"}
-          button={showPassword ? "hide" : "show"}
           value={password}
           onChange={this.onChangeHandler}
           onClick={this.togglePassword}
+          error={error}
+          type={this.state.showPassword === true ? "text" : "password"}
+          button={this.state.showPassword === true ? "hide" : "show"}
         />
         <Information>
           Select your vault file and enter your password. If you are new to

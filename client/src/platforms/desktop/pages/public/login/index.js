@@ -1,19 +1,16 @@
 // Library Imports
 import React, { Component } from "react";
+import { withTheme } from "styled-components";
 
 // Relative Imports
 import { Container, Microcopy, Page } from "./styles";
 import { MultiLoginDesktop } from "../../_auth/multi_login/index.tsx";
 
-export class LoginDesktop extends Component {
-  componentDidMount() {
-    window.scrollTo(0, 0);
-  }
-
+class LoginDesktop extends Component {
   render() {
     return (
       <Page>
-        <Container>
+        <Container theme={this.props.theme.name}>
           <Microcopy>
             <MultiLoginDesktop />
           </Microcopy>
@@ -22,3 +19,5 @@ export class LoginDesktop extends Component {
     );
   }
 }
+
+export default withTheme(LoginDesktop);

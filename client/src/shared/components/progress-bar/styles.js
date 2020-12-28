@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Container = styled.div`
   width: 200px;
   height: 4px;
-  background: rgba(255, 255, 255, 0.1);
+  background: ${(props) => props.theme.body.background};
   border-radius: 12px;
   margin-top: 20px;
 `;

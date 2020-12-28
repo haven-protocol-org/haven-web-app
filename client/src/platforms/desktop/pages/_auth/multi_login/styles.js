@@ -7,7 +7,7 @@ export const Container = styled.div`
   max-width: 624px;
   flex-direction: column;
   margin: 20px;
-  border: 1px solid #3a4048;
+  border: 1px solid ${(props) => props.theme.body.border};
   border-radius: 4px;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.05);
 `;
@@ -19,21 +19,20 @@ export const Main = styled.div`
   display: flex;
   flex-direction: column;
   align-items: space-between;
-  background: #36393f;
+  background: ${(props) => props.theme.body.background};
 `;
 
 export const Header = styled.div`
-  height: auto;
-  width: auto;
   padding: 20px;
-  background: #36393f;
-  border-bottom: 1px solid #3a4048;
+  background: ${(props) => props.theme.body.background};
+  border-bottom: 1px solid ${(props) => props.theme.body.border};
+  border-radius: 3px 3px 0px 0px;
 `;
 
 export const Title = styled.div`
   font-family: Inter-SemiBold;
   font-size: 20px;
-  color: #fff;
+  color: ${(props) => props.theme.type.primary};
   letter-spacing: 0;
   line-height: 30px;
 `;
@@ -41,26 +40,8 @@ export const Title = styled.div`
 export const Description = styled.div`
   font-family: Inter-Regular;
   font-size: 14px;
-  color: #8a8d90;
+  color: ${(props) => props.theme.type.secondary};
   line-height: 24px;
-`;
-
-export const Progress = styled.div`
-  display: grid;
-  background: #2b2e34;
-  height: 4px;
-  width: 100%;
-  margin-bottom: 16px;
-`;
-
-export const Step = styled.div`
-  width: ${(props) =>
-    (props.width === 1 ? "10%" : null) ||
-    (props.width === 2 ? "50%" : null) ||
-    (props.width === 3 ? "100%" : null)}
-  background: #7289DA;
-  height: auto;
-  border-radius: 4px;
 `;
 
 export const Body = styled.div`
@@ -81,11 +62,11 @@ export const Buttons = styled.div`
 `;
 
 export const Submit = styled.button`
-  background: #7289da;
+  background: ${(props) => props.theme.button.primary};
   border-radius: 4px;
   font-family: Inter-Regular;
   font-size: 14px;
-  color: #ffffff;
+  color: ${(props) => props.theme.button.primary_label};
   text-align: center;
   line-height: 24px;
   width: 106px;
@@ -101,7 +82,7 @@ export const Submit = styled.button`
   &:hover {
     cursor: pointer;
     transition: 500ms;
-    background: #5b6eae;
+    background: ${(props) => props.theme.button.primary_hover};
   }
 
   &:disabled {
@@ -110,70 +91,22 @@ export const Submit = styled.button`
   }
 `;
 
-export const Back = styled.div`
-  background: #36393f;
-  border-radius: 4px;
-  font-family: Inter-Regular;
-  font-size: 14px;
-  color: #ffffff;
-  text-align: center;
-  line-height: 24px;
-  width: 106px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid #3a4048;
-  text-decoration: none;
-  transition: 500ms;
-
-  &:hover {
-    cursor: pointer;
-    background: #313339;
-    transition: 500ms;
-  }
-`;
-
-export const Cancel = styled(Link)`
-  background: #36393f;
-  border-radius: 4px;
-  font-family: Inter-Regular;
-  font-size: 14px;
-  color: #ffffff;
-  text-align: center;
-  line-height: 24px;
-  width: 106px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid #3a4048;
-  text-decoration: none;
-  transition: 500ms;
-
-  &:hover {
-    cursor: pointer;
-    background: #313339;
-    transition: 500ms;
-  }
-`;
-
 export const Footer = styled.div`
   height: 60px;
-  border-top: 1px solid #3a4048;
+  border-top: 1px solid ${(props) => props.theme.body.border};
   text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
-  background: #36393f;
+  background: ${(props) => props.theme.body.background};
   border-radius: 0px 0px 4px 4px;
 `;
 
 export const Route = styled(Link)`
   font-family: Inter-SemiBold;
   font-size: 14px;
-  color: #fff;
+  color: ${(props) => props.theme.type.primary};
   text-decoration: none;
   margin-left: 8px;
 `;
@@ -181,6 +114,6 @@ export const Route = styled(Link)`
 export const Label = styled.div`
   font-family: Inter-Regular;
   font-size: 14px;
-  color: #8a8d90;
+  color: ${(props) => props.theme.type.secondary};
   text-decoration: none;
 `;
