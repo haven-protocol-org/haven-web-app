@@ -6,7 +6,7 @@ import { startInDevMode } from "./dev";
 import { isDevMode } from "./env";
 import { appEventBus, LOCAL_NODE_STOPPED_EVENT } from "./EventBus";
 import { HavenWallet } from "./HavenWallet";
-import { havenMenu } from "./menu";
+import { createMenu } from "./menu";
 
 app.enableSandbox();
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -20,9 +20,7 @@ if (require("electron-squirrel-startup")) {
 let mainWindow: Electron.BrowserWindow;
 const wallet = new HavenWallet();
 
-const menu = Menu.buildFromTemplate(havenMenu);
-Menu.setApplicationMenu(menu);
-
+createMenu();
 const startApp = (): void => {
   const browserOptions: BrowserWindowConstructorOptions = {
     width: 992,
