@@ -137,7 +137,10 @@ const prepareTxInfo = (
   const transactionDate = new Date(
     tx.timestamp * 1000
   ).toLocaleDateString();
-  const mempool = tx.mempool;
+
+  // DANDELION bug we can not trust this information --> tx.mempool
+  const mempool = tx.mempool || tx.height === undefined || tx.height === currentHeight;
+
   const readableAmount = convertBalanceToMoney(tx.amount);
   const currentValueInUSD = readableAmount * xRate;
 
