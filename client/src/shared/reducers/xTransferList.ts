@@ -50,7 +50,7 @@ export const selectTransferListByTicker = (
         txEntry.fee = bigIntegerToBigInt(walletTx.getFee());
         txEntry.height = walletTx.getHeight();
         txEntry.unlockHeight = walletTx.getUnlockHeight();
-        txEntry.mempool = walletTx.inTxPool();
+        txEntry.mempool = walletTx.inTxPool() || walletTx.getNumConfirmations() === 0;
         txEntry.isIncoming = true;
         txEntry.isConfirmed = walletTx.isConfirmed();
         txEntry.isMinerTx = walletTx.isMinerTx();
@@ -68,7 +68,7 @@ export const selectTransferListByTicker = (
         txEntry.height = walletTx.getHeight();
         txEntry.unlockHeight = walletTx.getUnlockHeight();
         txEntry.isIncoming = false;
-        txEntry.mempool = walletTx.inTxPool();
+        txEntry.mempool = walletTx.inTxPool() || walletTx.getNumConfirmations() === 0;
         txEntry.isConfirmed = walletTx.isConfirmed();
         txEntry.isMinerTx = walletTx.isMinerTx();
         txEntry.timestamp = walletTx.isConfirmed()
