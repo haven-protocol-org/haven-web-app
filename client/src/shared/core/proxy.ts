@@ -86,6 +86,7 @@ const havendHandler: ProxyHandler<typeof havendCore> = {
   get: (target: typeof havendCore, name: keyof typeof havendCore, receiver: any) => {
     if (isDesktop()) {
       return async function (...args: any[]) {
+        try {
         const response = await callWalletBackend(
           name,
           args,
@@ -97,6 +98,10 @@ const havendHandler: ProxyHandler<typeof havendCore> = {
           return headerResponse;
         }
         return response;
+      }
+      catch(e) {
+        throw e;
+      }
       };
     }
     return Reflect.get(target, name, receiver);

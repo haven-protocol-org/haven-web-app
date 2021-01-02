@@ -105,7 +105,7 @@ export class WalletHandler {
   }
   catch(e) {
 
-    logInDevMode(e);
+   // logInDevMode(e);
     return e.toString();
   }
 
