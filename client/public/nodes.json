@@ -31,9 +31,9 @@
       "trusted": true
     },
     {
-      "address": "https://vault.havenprotocol.org/",
+      "address": "https://vault.havenprotocol.org",
       "provider": "Haven European Node",
-      "port": "17750",
+      "port": "443",
       "trusted": true,
       "default": true
     }

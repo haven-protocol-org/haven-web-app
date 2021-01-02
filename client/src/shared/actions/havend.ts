@@ -1,4 +1,3 @@
-import { webWalletConnection } from "platforms/web/nodes";
 import { havendProxy } from "shared/core/proxy";
 import { DAEMON_CONECTION_CREATED } from "./types";
 import { getNodeForWallet } from "./wallet";

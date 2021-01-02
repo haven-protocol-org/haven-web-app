@@ -6,8 +6,6 @@ import {
   GET_TRANSFERS_FETCHING,
   GET_TRANSFERS_FAILED,
 } from "./types";
-import { isDesktop } from "constants/env";
-import { MoneroBlock } from "haven-wallet-core";
 
 export const getAllTransfers = () => {
   return async (dispatch: any) => {

@@ -218,4 +218,22 @@ export const getIntegratedAddress = async(paymentId?: string) => {
   return wallet.getIntegratedAddress(paymentId)
 }
 
+export const setSyncHeight = (syncHeight: number) => {
+  return wallet.setSyncHeight(syncHeight);
+}
+
+export const getSyncHeight = () => {
+  return wallet.getSyncHeight();
+}
+
+
+export const rescanBlockChain = () => {
+  return wallet.rescanBlockchain();
+}
+
+export const rescanSpent = () => {
+  return wallet.rescanSpent();
+}
+
+
 
