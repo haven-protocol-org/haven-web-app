@@ -23,10 +23,11 @@ export const Modal = ({
   description,
   leftButton,
   rightButton,
-  disabled,
+  disabledRight,
   isLoading,
   onCancel,
   onConfirm,
+  disabledLeft,
   children,
 }) => {
   return (
@@ -42,8 +43,10 @@ export const Modal = ({
               <Placeholder>{children}</Placeholder>
             </Details>
             <Footer>
-              <Cancel onClick={onCancel}>{leftButton}</Cancel>
-              <Confirm onClick={onConfirm} disabled={disabled}>
+              <Cancel onClick={onCancel} disabled={disabledLeft}>
+                {leftButton}
+              </Cancel>
+              <Confirm onClick={onConfirm} disabled={disabledRight}>
                 {isLoading ? <Spinner /> : rightButton}
               </Confirm>
             </Footer>
