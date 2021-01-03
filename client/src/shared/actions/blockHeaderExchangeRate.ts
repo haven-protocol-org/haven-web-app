@@ -7,15 +7,21 @@ import { BlockHeaderRate } from "shared/reducers/blockHeaderExchangeRates";
 import bigInt from "big-integer";
 import { havendProxy } from "shared/core/proxy";
 import MoneroBlockHeader from "haven-wallet-core/src/main/js/daemon/model/MoneroBlockHeader";
+import { addErrorNotification } from "./notification";
 
 export const getLastBlockHeader = () => {
   return async (dispatch: any) => {
     dispatch({ type: GET_BLOCK_HEADER_EXCHANGE_RATE_FETCH });
 
+    try {
     const rawHeader: MoneroBlockHeader = await havendProxy.getLastBlockHeader();
 
     const recordEntry = createRecordEntry(rawHeader);
     dispatch(getLastBlockerHeaderSucceed(recordEntry));
+    }
+    catch(e) {
+        dispatch(addErrorNotification('Failed to fetch price rates'));
+    }
 
     //TODO add some error handling
   };

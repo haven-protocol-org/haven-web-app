@@ -9,6 +9,7 @@ export enum MODAL_TYPE {
   ShowQRCode,
   ShowAddressModal,
   LoginOnboarding,
+  RescanBC,
 }
 
 const INITIAL_STATE: MODAL_TYPE = MODAL_TYPE.None;

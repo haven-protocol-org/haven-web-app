@@ -1,5 +1,5 @@
 import MoneroWalletListener from "haven-wallet-core/src/main/js/wallet/model/MoneroWalletListener";
-import { bigIntegerToBigInt } from "utility/utility";
+import { bigIntegerToBigInt, logM } from "utility/utility";
 import BigInteger from "haven-wallet-core/src/main/js/common/biginteger";
 import { Balance } from "shared/reducers/xBalance";
 import { getBalancesSucceed } from "./balance";
@@ -40,10 +40,11 @@ export class HavenWalletListener extends MoneroWalletListener {
     message: string
   ): void {
 
+    logM(height);
     const syncDistance = endHeight - height;
 
     let updateInterval = Math.pow(10, Math.floor(Math.log10(syncDistance)));
-    updateInterval = Math.min(5000, updateInterval);
+    updateInterval = Math.min(1000, updateInterval);
     updateInterval = Math.max(updateInterval, 1);
   
     if (syncDistance % updateInterval === 0 || height === startHeight)  {

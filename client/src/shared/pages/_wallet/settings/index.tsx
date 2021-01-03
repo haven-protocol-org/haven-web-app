@@ -19,6 +19,8 @@ import { dark, light, sepia } from "../../../../assets/styles/themes.js";
 import { HavenAppState } from "platforms/desktop/reducers";
 import { IKeys } from "typings";
 import { isTemporaryWallet as selectIsTemporaryWallet } from "shared/reducers/walletSession";
+import { selectSyncState } from "shared/reducers/chain";
+import { SyncState } from "shared/types/types";
 
 const options = [
   { theme: "dark", value: "Dark Theme" },
@@ -29,7 +31,7 @@ const options = [
 interface SettingsProps extends IKeys {
   theme: any;
   selectTheme: (theme: any) => void;
-  chain: any;
+  syncState: SyncState;
   wallet: any;
   storeKeyFileToDisk: (walletname: string) => void;
   tempWallet: boolean;
@@ -94,7 +96,7 @@ class SettingsPage extends Component<SettingsProps, SettingsState> {
     console.log(" PROPS", this.props);
 
     const windowWidth = window.innerWidth;
-    const { nodeHeight, walletHeight } = this.props.chain;
+    const { isSyncing } = this.props.syncState;
 
     return (
       <Body>
@@ -180,13 +182,13 @@ class SettingsPage extends Component<SettingsProps, SettingsState> {
           <DoubleFooter
             // Left section
             leftLabel={"Download Vault File"}
-            leftDisabled={walletHeight !== nodeHeight || this.props.tempWallet}
+            leftDisabled={isSyncing || this.props.tempWallet}
             leftLoading={false}
             leftOnClick={this.downloadKeystore}
             leftVisible={!this.props.tempWallet}
             // Right section
             rightLabel={this.state.reveal ? "Hide Keys" : "Show Keys"}
-            rightDisabled={walletHeight !== nodeHeight ? true : false}
+            rightDisabled={isSyncing? true : false}
             rightLoading={false}
             rightOnClick={this.toggleVisibility}
           />
@@ -198,7 +200,7 @@ class SettingsPage extends Component<SettingsProps, SettingsState> {
 
 const mapStateToProps = (state: HavenAppState) => ({
   theme: state.theme,
-  chain: state.chain,
+  syncState: selectSyncState(state),
   wallet: state.walletSession,
   tempWallet: selectIsTemporaryWallet(state),
 });

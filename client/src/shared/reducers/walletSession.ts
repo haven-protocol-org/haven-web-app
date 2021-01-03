@@ -6,6 +6,7 @@ import {
   CREATE_WALLET_FETCHING,
   SET_APP_TO_DAEMON_CONNECTION_STATE,
   CLOSE_WALLET_SESSION,
+  SET_RESTORE_HEIGHT,
 } from "shared/actions/types";
 import { AnyAction } from "redux";
 import { HavenAppState } from "platforms/desktop/reducers/index";
@@ -24,7 +25,7 @@ interface WalletSession {
   error: RPCError | null;
   isWalletConectedToDaemon: boolean;
   isAppConnectedToDaemon: boolean;
-  lastStoredHeight: number;
+  restoreHeight: number;
   isClosingSession: boolean;
 }
 
@@ -35,7 +36,7 @@ const INITIAL_STATE: WalletSession = {
   error: null,
   isWalletConectedToDaemon: false,
   isAppConnectedToDaemon: false,
-  lastStoredHeight: -1,
+  restoreHeight: 0,
   isClosingSession: false,
 };
 
@@ -60,6 +61,8 @@ export const walletSession = function (
         activeWallet: action.payload,
         isSessionStarted: true,
       };
+    case SET_RESTORE_HEIGHT:
+      return {...state, restoreHeight: action.payload};
     case SET_WALLET_CONNECTION_STATE:
       return { ...state, isWalletConectedToDaemon: action.payload };
     case SET_APP_TO_DAEMON_CONNECTION_STATE:
@@ -95,7 +98,7 @@ export const selectErrorMessageForLogin = (state: HavenAppState) => {
 
   if (error) {
     const message = getMessageOfError(error);
-    return message || error.message;
+    return message || error.message || error;
   }
 
   return "";

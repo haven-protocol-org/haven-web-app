@@ -8,6 +8,7 @@ import { getAvailableWallets } from "./walletPaths";
 import { HavenWalletListener } from "./HavenWalletListener";
 import MoneroTxWallet = require("haven-wallet-core/src/main/js/wallet/model/MoneroTxWallet");
 import MoneroSubaddress = require("haven-wallet-core/src/main/js/wallet/model/MoneroSubaddress");
+import { enableKeysMenu } from "../menu";
 
 export interface WalletRequest {
   methodName: string;
@@ -48,11 +49,15 @@ export class WalletHandler {
   private handleWalletCoreRequest = async (request: WalletRequest) => {
     const methodName: keyof typeof core = request.methodName as keyof typeof core;
     const params = request.params;
-    logInDevMode(request);
 
     if (methodName === "addWalletListener") {
       this.addWalletListener();
+      enableKeysMenu(true);
       return;
+    }
+
+    if (methodName === "closeWallet") {
+        enableKeysMenu(false);
     }
 
     try {
@@ -95,10 +100,13 @@ export class WalletHandler {
       return addressJsonObjects;
 
       }
+      logInDevMode(response);
       return response;
   }
   catch(e) {
-    return e;
+
+   // logInDevMode(e);
+    return e.toString();
   }
 
   };
@@ -118,8 +126,8 @@ export class WalletHandler {
        return response;
     }
     catch (e) {
-      logInDevMode(e);
-      return e;
+     
+      return e.toString();
     }
 
   };
