@@ -92,17 +92,17 @@ export const Confirm = styled.button`
   font-size: 15px;
 
   &:disabled {
-    color: rgba(255, 255, 255, 0.5);
+    color: ${(props) => props.theme.type.primary}
 
     &:hover {
-      background: #677bc4;
+      background: ${(props) => props.theme.button.primary_hover};
       cursor: not-allowed;
     }
   }
 
   &:hover {
     cursor: pointer;
-    background: #5b6eae;
+    background: ${(props) => props.theme.button.primary_hover};
     transition: 500ms;
   }
 `;

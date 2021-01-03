@@ -38,11 +38,7 @@ class RescanBCM extends React.Component<any, any> {
         onConfirm={(e: any) => this.startRescan(e)}
         onCancel={() => this.onCancel()}
       >
-        <Rescan
-          isLoading={isLoading}
-          color="#9a9a9a"
-          restoreHeight={(e: any) => this.props.restoreHeight(e)}
-        />
+        <Rescan isLoading={isLoading} />
       </Modal>
     );
   }

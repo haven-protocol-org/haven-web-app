@@ -1,12 +1,14 @@
 // Library Imports
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useContext } from "react";
+import { ThemeContext } from "styled-components";
 
 // Relative Imports
 import { Container, Instructions, Image, Canvas } from "./styles";
 import { Information } from "../../../assets/styles/type.js";
 
-const Rescan = ({ restoreHeight, color, isLoading }) => {
+const Rescan = ({ isLoading }) => {
   const canvasRef = useRef(null);
+  const theme = useContext(ThemeContext);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -17,7 +19,7 @@ const Rescan = ({ restoreHeight, color, isLoading }) => {
     ctx.canvas.height = 180;
 
     ctx.font = "14px Inter-Regular";
-    ctx.fillStyle = `${color}`;
+    ctx.fillStyle = `${theme.type.secondary}`;
 
     const fontSize = 20;
     const columns = Math.floor(canvas.width / fontSize);
@@ -74,7 +76,7 @@ const Rescan = ({ restoreHeight, color, isLoading }) => {
       }
     }
     draw();
-  }, [color, isLoading]);
+  }, [isLoading]);
 
   return (
     <Container>
@@ -83,10 +85,10 @@ const Rescan = ({ restoreHeight, color, isLoading }) => {
       </Image>
       <Instructions>
         <Information>
-          Refreshing your vault will force it to rescan the blockchain from
-          block {restoreHeight}. This process detects and clears stuck
-          transactions but also prevents you from using the vault until it is
-          complete. To begin the process click the 'Refresh' button.
+          Refreshing your vault will force it to rescan the blockchain. This
+          process detects and clears stuck transactions but also prevents you
+          from using the vault until it is complete. To begin the process click
+          the 'Refresh' button.
         </Information>
       </Instructions>
     </Container>
