@@ -34,6 +34,9 @@ import Cell from "./cell";
 import Link from "./link";
 import Tab from "./tab";
 
+import { showModal } from "shared/actions/modal";
+import { MODAL_TYPE } from "shared/reducers/modal";
+
 interface NavigationProps {
   isLoggedIn: boolean;
   auth: boolean;
@@ -47,6 +50,7 @@ interface NavigationProps {
   advancedActive: boolean;
   restoreHeight: number;
   startedResync: boolean;
+  showModal: (modalType: MODAL_TYPE) => void;
 }
 
 class Navigation extends Component<NavigationProps, {}> {
@@ -109,12 +113,9 @@ class Navigation extends Component<NavigationProps, {}> {
     });
   };
 
-  refreshVault = (e: any) => {
-    this.setState({
-      startedResync: true,
-    });
-
+  refreshVault = () => {
     // this.handleRefreshRequest(e);
+    this.props.showModal(MODAL_TYPE.RescanBC);
   };
 
   render() {
@@ -123,7 +124,6 @@ class Navigation extends Component<NavigationProps, {}> {
     const { connected } = this.props;
     const { blockHeight, scannedHeight, isSyncing } = this.props.syncState;
     const networkLabel = `${NET_TYPE_NAME}  v${APP_VERSION}`;
-    console.log("RESYNCING", this.state.startedResync);
 
     return (
       <Container>
@@ -209,17 +209,7 @@ class Navigation extends Component<NavigationProps, {}> {
                         body="Refresh Height"
                         label={this.props.restoreHeight}
                       />
-
-                      <Scan onClick={(e: any) => this.refreshVault(e)}>
-                        {this.state.startedResync ? (
-                          <Spinner />
-                        ) : (
-                          "Refresh Vault"
-                        )}
-                      </Scan>
-                      {/*<Scan onClick={(e: any) => this.refreshVault(e)}>
-                        Refresh Vault
-                      </Scan>*/}
+                      <Scan onClick={this.refreshVault}>Refresh Vault</Scan>
                     </>
                   )}
                 </>
@@ -244,4 +234,5 @@ export const NavigationWeb = connect(mapStateToProps, {
   logout: closeWallet,
   syncFromFirstIncomingTx,
   rescanSpent,
+  showModal,
 })(Navigation);

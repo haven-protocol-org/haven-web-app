@@ -27,8 +27,8 @@ export const Scan = styled.div`
   border-radius: 4px;
   margin: 8px;
   height: 36px;
-  background: ${(props) => props.theme.body.active_menu};
-  color: ${(props) => props.theme.type.primary};
+  background: ${(props) => props.theme.button.primary};
+  color: ${(props) => props.theme.button.primary_label};
   display: flex;
   align-items: center;
   justify-content: center;

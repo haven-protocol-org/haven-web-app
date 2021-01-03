@@ -25,9 +25,12 @@ export const Item = styled.div`
   align-items: center;
 
   color: ${(props) =>
-    props.active ? props.theme.type.primary : props.theme.type.secondary}
+    props.active
+      ? props.theme.button.primary_label
+      : props.theme.type.secondary}
+
   background: ${(props) =>
-    props.active ? props.theme.body.active_menu : props.theme.body.foreground}
+    props.active ? props.theme.button.primary : props.theme.body.foreground}
 
   &:hover {
     cursor: pointer;
