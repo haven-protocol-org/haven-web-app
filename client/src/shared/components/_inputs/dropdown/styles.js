@@ -26,7 +26,6 @@ export const Select = styled.div`
   border-radius: 4px;
   grid-column: 1 / 3;
   transition: 500ms;
-  background: red;
 
   &:focus {
     transition: 500ms;
