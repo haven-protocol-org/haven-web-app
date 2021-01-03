@@ -67,7 +67,8 @@ export class ManageAddress extends React.Component<
           leftButton="Cancel"
           rightButton="Save"
           isLoading={this.state.isLoading}
-          disabled={false}
+          disabledRight={false}
+          disabledLeft={false}
         >
           <ManageAddresses>
             <Input

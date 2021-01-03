@@ -16,8 +16,9 @@ class ShowQRCodeModal extends React.Component<any, any> {
         description={`Scan and share your  address`}
         leftButton="Cancel"
         rightButton="Finish"
-        disabled={false}
         isLoading={false}
+        disabledRight={false}
+        disabledLeft={false}
         onConfirm={() => this.onCancel()}
         onCancel={() => this.onCancel()}
       >

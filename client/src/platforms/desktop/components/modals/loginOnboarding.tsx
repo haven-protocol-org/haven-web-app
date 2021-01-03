@@ -13,7 +13,8 @@ class LoginOnboarding extends React.Component<any, any> {
         description="Take a few moments to learn about your vault"
         leftButton="Learn More"
         rightButton="Ok, I got it"
-        disabled={false}
+        disabledRight={false}
+        disabledLeft={false}
         isLoading={false}
         onConfirm={() => this.onCancel()}
         onCancel={() =>
