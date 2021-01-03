@@ -7,32 +7,32 @@ import {
   Container,
   Haven,
   Brand,
-  Logout,
-  Tag,
   Icon,
-  Auth,
   Menu,
   Options,
-  OptionsDoubleRow,
   OptionsIcon,
   OptionsList,
   OptionsSVG,
+  Scan,
   Arr,
-  Legal,
-  Tab,
   Arrow,
+  Label,
 } from "./styles.js";
-import { Body, Label } from "assets/styles/type";
+
 import Buttons from "./buttons/index.js";
 import { closeWallet } from "shared/actions/wallet";
-import { syncFromFirstIncomingTx, rescanSpent } from "shared/actions/refresh"
+import { syncFromFirstIncomingTx, rescanSpent } from "shared/actions/refresh";
 import { selectIsLoggedIn } from "shared/reducers/walletSession";
 import { APP_VERSION, NET_TYPE_NAME } from "constants/env";
 import { WebAppState } from "platforms/web/reducers/index.js";
-import { logM } from "utility/utility";
 import { selectSyncState } from "shared/reducers/chain";
 import { SyncState } from "shared/types/types.js";
 import { HavenAppState } from "platforms/desktop/reducers/index.js";
+import { Spinner } from "../../../../shared/components/spinner/index.js";
+
+import Cell from "./cell";
+import Link from "./link";
+import Tab from "./tab";
 
 interface NavigationProps {
   isLoggedIn: boolean;
@@ -40,9 +40,13 @@ interface NavigationProps {
   logout: (isWeb: boolean) => void;
   getStoredWallets: () => void;
   syncFromFirstIncomingTx: () => void;
-  rescanSpent:() => void;
+  rescanSpent: () => void;
   isClosingSession: boolean;
   syncState: SyncState;
+  basicActive: boolean;
+  advancedActive: boolean;
+  restoreHeight: number;
+  startedResync: boolean;
 }
 
 class Navigation extends Component<NavigationProps, {}> {
@@ -50,6 +54,9 @@ class Navigation extends Component<NavigationProps, {}> {
     showOptions: false,
     showNotifications: false,
     mouseIsHovering: false,
+    basicActive: true,
+    advancedActive: false,
+    startedResync: false,
   };
 
   handleLogout = () => {
@@ -88,11 +95,35 @@ class Navigation extends Component<NavigationProps, {}> {
     });
   };
 
+  selectBasic = () => {
+    this.setState({
+      basicActive: true,
+      advancedActive: false,
+    });
+  };
+
+  selectAdvanced = () => {
+    this.setState({
+      basicActive: false,
+      advancedActive: true,
+    });
+  };
+
+  refreshVault = (e: any) => {
+    this.setState({
+      startedResync: true,
+    });
+
+    // this.handleRefreshRequest(e);
+  };
+
   render() {
     const auth = this.props.isLoggedIn;
     // @ts-ignore
     const { connected } = this.props;
-    const { blockHeight, scannedHeight, isSyncing} = this.props.syncState
+    const { blockHeight, scannedHeight, isSyncing } = this.props.syncState;
+    const networkLabel = `${NET_TYPE_NAME}  v${APP_VERSION}`;
+    console.log("RESYNCING", this.state.startedResync);
 
     return (
       <Container>
@@ -121,58 +152,78 @@ class Navigation extends Component<NavigationProps, {}> {
               <Arrow>
                 <Arr />
               </Arrow>
-              <OptionsDoubleRow>
-                <Body>Network</Body>
-                <Label>
-                  {NET_TYPE_NAME} v{APP_VERSION}
-                </Label>
-              </OptionsDoubleRow>
-              { auth && (
+              {!auth && (
                 <>
-              <OptionsDoubleRow>
-                <Body>Vault Status</Body>
-                <Label>{connected ? "Online" : "Offline"}</Label>
-              </OptionsDoubleRow>
-              <OptionsDoubleRow>
-                <Body>Block Height</Body>
-                <Label>{blockHeight}</Label>
-              </OptionsDoubleRow>
-              
-               {!isSyncing ? (
-                <>
-                <OptionsDoubleRow>
-                  <Body>Vault Synced</Body>
-                  <Label>Yes</Label>
-                </OptionsDoubleRow>
-                <OptionsDoubleRow onClick={(e: any) => this.handleRefreshRequest(e)} >
-                  <Body >Rescan Wallet</Body>
-                  <Label></Label>
-                </OptionsDoubleRow>
-                </>
-              ) : (
-                <OptionsDoubleRow>
-                  <Body>Vault Height</Body>
-                  <Label>{scannedHeight}</Label>
-                </OptionsDoubleRow>
-              )}
+                  <Cell body="Network" label={networkLabel} />
+                  <Link
+                    body="Help"
+                    label="Knowledge Base"
+                    url={`https://havenprotocol.org/knowledge`}
+                  />
+                  <Link
+                    body="Legal"
+                    label="Terms"
+                    url={`https://havenprotocol.org/legal`}
+                  />
                 </>
               )}
-             
-              <OptionsDoubleRow>
-                <Body>Help</Body>
-                <Legal
-                  target="_blank"
-                  href="https://havenprotocol.org/knowledge/"
-                >
-                  <Label>Knowledge Base</Label>
-                </Legal>
-              </OptionsDoubleRow>
-              <OptionsDoubleRow>
-                <Body>Legal</Body>
-                <Legal target="_blank" href="https://havenprotocol.org/legal/">
-                  <Label>Terms & Conditions</Label>
-                </Legal>
-              </OptionsDoubleRow>
+
+              {auth && (
+                <>
+                  <Tab
+                    basicActive={this.state.basicActive}
+                    basicSelect={this.selectBasic}
+                    advancedSelect={this.selectAdvanced}
+                    advancedActive={this.state.advancedActive}
+                  />
+
+                  {this.state.basicActive ? (
+                    <>
+                      <Cell body="Network" label={networkLabel} />
+                      {!isSyncing ? (
+                        <>
+                          <Cell body="Vault Synced" label="Yes" />
+                        </>
+                      ) : (
+                        <Cell body="Vault Height" label={scannedHeight} />
+                      )}
+                      <Link
+                        body="Help"
+                        label="Knowledge Base"
+                        url={`https://havenprotocol.org/knowledge`}
+                      />
+                      <Link
+                        body="Legal"
+                        label="Terms"
+                        url={`https://havenprotocol.org/legal`}
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <Cell
+                        body="Vault Status"
+                        label={connected ? "Online" : "Offline"}
+                      />
+                      <Cell body="Block Height" label={blockHeight} />
+                      <Cell
+                        body="Refresh Height"
+                        label={this.props.restoreHeight}
+                      />
+
+                      <Scan onClick={(e: any) => this.refreshVault(e)}>
+                        {this.state.startedResync ? (
+                          <Spinner />
+                        ) : (
+                          "Refresh Vault"
+                        )}
+                      </Scan>
+                      {/*<Scan onClick={(e: any) => this.refreshVault(e)}>
+                        Refresh Vault
+                      </Scan>*/}
+                    </>
+                  )}
+                </>
+              )}
             </OptionsList>
           </>
         )}
@@ -186,8 +237,11 @@ const mapStateToProps = (state: WebAppState) => ({
   syncState: selectSyncState(state as HavenAppState),
   connected: state.walletSession.isWalletConectedToDaemon,
   isClosingSession: state.walletSession.isClosingSession,
+  restoreHeight: state.walletSession.restoreHeight,
 });
 
 export const NavigationWeb = connect(mapStateToProps, {
-  logout: closeWallet, syncFromFirstIncomingTx, rescanSpent
+  logout: closeWallet,
+  syncFromFirstIncomingTx,
+  rescanSpent,
 })(Navigation);

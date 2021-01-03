@@ -22,6 +22,30 @@ export const Container = styled.header`
   border-bottom: 1px solid ${(props) => props.theme.body.border};
 `;
 
+export const Scan = styled.div`
+  font-size: 13px;
+  border-radius: 4px;
+  margin: 8px;
+  height: 36px;
+  background: ${(props) => props.theme.body.active_menu};
+  color: ${(props) => props.theme.type.primary};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+export const Label = styled.div`
+  font-family: Inter-Regular;
+  text-align: center;
+  font-size: 13px;
+  padding: 8px;
+  color: ${(props) => props.theme.type.secondary};
+`;
+
 export const Icon = styled(HavenIcon)`
   height: 24px;
   width: 24px;
@@ -33,15 +57,6 @@ export const Icon = styled(HavenIcon)`
 
 export const Legal = styled.a`
   text-decoration: none;
-`;
-
-export const Tag = styled.div`
-  padding: 4px 8px;
-  background: #34d8ac;
-  font-size: 10px;
-  border-radius: 3px;
-  margin-left: 12px;
-  color: #26282c;
 `;
 
 export const Haven = styled.div`
@@ -60,56 +75,9 @@ export const Brand = styled(Link)`
   text-decoration: none;
 `;
 
-export const Auth = styled.div`
-  padding: 12px 26px;
-  background: ${(props) => props.theme.button.primary};
-  border: none;
-  margin-right: 16px;
-  height: auto;
-  color: #fff;
-  font-size: 14px;
-  border-radius: 4px;
-  text-decoration: none;
-
-  transition: 500ms;
-
-  &:hover {
-    cursor: pointer;
-    background: ${(props) => props.theme.button.primary_hover};
-    transition: 500ms;
-  }
-`;
-
-export const Logout = styled.div`
-  padding: 12px 26px;
-  background: ${(props) => props.theme.button.primary};
-  border: none;
-  margin-right: 16px;
-  height: auto;
-  color: #fff;
-  font-size: 14px;
-  border-radius: 4px;
-  text-decoration: none;
-
-  transition: 500ms;
-
-  &:hover {
-    cursor: pointer;
-    background: ${(props) => props.theme.button.primary_hover};
-    transition: 500ms;
-  }
-`;
-
 export const Menu = styled.div`
   display: flex;
   align-items: center;
-`;
-
-export const Tab = styled.div`
-  height: 32px;
-  background: pink;
-  padding: 12px;
-  border-bottom: 1px solid ${(props) => props.theme.body.border};
 `;
 
 export const OptionsSVG = styled(OptionIcon)`
@@ -177,35 +145,4 @@ export const OptionsIcon = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-`;
-
-export const OptionsSingleRow = styled.div`
-  height: auto;
-  color: white;
-  padding-left: 20px;
-  padding: 16px;
-  font-size: 14px;
-  text-align: center;
-
-  &:hover {
-    background: ${(props) => props.theme.body.background};
-    cursor: pointer;
-  }
-`;
-
-export const OptionsDoubleRow = styled.div`
-  height: auto;
-  color: white;
-  padding-left: 20px;
-  padding: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 14px;
-  align-items: center;
-  border-bottom: 1px solid ${(props) => props.theme.body.border};
-
-  &:nth-last-child(1) {
-    border-bottom: none;
-  }
 `;
