@@ -6,16 +6,12 @@ import { selectTheme } from "../../../actions";
 import Body from "../../../components/_layout/body";
 import Header from "../../../components/_layout/header";
 import Input from "../../../components/_inputs/input";
-import Description from "../../../components/_inputs/description";
 import RevealSeed from "../../../components/_inputs/revealSeed";
-
 import Form from "../../../components/_inputs/form";
 import Theme from "../../../components/_inputs/theme";
 import DoubleFooter from "../../../components/_inputs/double_footer";
-
 import { Container } from "./styles";
 import { storeKeyFileToDisk } from "platforms/web/actions/storage";
-import { dark, light, sepia } from "../../../../assets/styles/themes.js";
 import { HavenAppState } from "platforms/desktop/reducers";
 import { IKeys } from "typings";
 import { isTemporaryWallet as selectIsTemporaryWallet } from "shared/reducers/walletSession";
@@ -66,11 +62,10 @@ class SettingsPage extends Component<SettingsProps, SettingsState> {
   }
 
   handleClick = ({ theme, value }: { theme: string; value: string }) => {
-      
     this.props.selectTheme(theme);
-      this.setState({
-        value: value,
-      });
+    this.setState({
+      value: value,
+    });
   };
 
   toggleVisibility = () => {
@@ -93,9 +88,6 @@ class SettingsPage extends Component<SettingsProps, SettingsState> {
       truncated = first + last;
     }
 
-    console.log(" PROPS", this.props);
-
-    const windowWidth = window.innerWidth;
     const { isSyncing } = this.props.syncState;
 
     return (
@@ -188,7 +180,7 @@ class SettingsPage extends Component<SettingsProps, SettingsState> {
             leftVisible={!this.props.tempWallet}
             // Right section
             rightLabel={this.state.reveal ? "Hide Keys" : "Show Keys"}
-            rightDisabled={isSyncing? true : false}
+            rightDisabled={isSyncing ? true : false}
             rightLoading={false}
             rightOnClick={this.toggleVisibility}
           />
