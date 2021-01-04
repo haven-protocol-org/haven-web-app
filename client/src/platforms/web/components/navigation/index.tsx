@@ -6,7 +6,8 @@ import { connect } from "react-redux";
 import {
   Container,
   Haven,
-  Brand,
+  Auth,
+  NoAuth,
   Icon,
   Menu,
   Options,
@@ -127,10 +128,17 @@ class Navigation extends Component<NavigationProps, {}> {
 
     return (
       <Container>
-        <Brand to={auth ? "/wallet/assets" : "/"}>
-          <Icon />
-          <Haven>HAVEN</Haven>
-        </Brand>
+        {auth ? (
+          <Auth to={"/wallet/assets"}>
+            <Icon />
+            <Haven>HAVEN</Haven>
+          </Auth>
+        ) : (
+          <NoAuth href="https://havenprotocol.org" target="_blank">
+            <Icon />
+            <Haven>HAVEN</Haven>
+          </NoAuth>
+        )}
         <Menu>
           <Buttons
             isLoading={this.props.isClosingSession}
@@ -182,10 +190,13 @@ class Navigation extends Component<NavigationProps, {}> {
                       <Cell body="Network" label={networkLabel} />
                       {!isSyncing ? (
                         <>
-                          <Cell body="Vault Synced" label="Yes" />
+                          <Cell body="Vault Status" label="Synced" />
                         </>
                       ) : (
-                        <Cell body="Vault Height" label={scannedHeight} />
+                        <Cell
+                          body="Sync Status"
+                          label={scannedHeight + "/" + blockHeight}
+                        />
                       )}
                       <Link
                         body="Help"
