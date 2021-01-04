@@ -113,7 +113,6 @@ class Navigation extends Component<NavigationProps, {}> {
   };
 
   refreshVault = () => {
-    // this.handleRefreshRequest(e);
     this.props.showModal(MODAL_TYPE.RescanBC);
   };
 
@@ -210,8 +209,8 @@ class Navigation extends Component<NavigationProps, {}> {
                   ) : (
                     <>
                       <Cell
-                        body="Vault Status"
-                        label={connected ? "Online" : "Offline"}
+                        body="Vault Connected"
+                        label={connected ? "Yes" : "No"}
                       />
                       <Cell body="Block Height" label={blockHeight} />
                       <Cell

@@ -16,7 +16,7 @@ const Rescan = ({ isLoading }) => {
     let raf;
 
     ctx.canvas.width = window.innerWidth;
-    ctx.canvas.height = 180;
+    ctx.canvas.height = 170;
 
     ctx.font = "14px Inter-Regular";
     ctx.fillStyle = `${theme.type.secondary}`;
@@ -75,7 +75,7 @@ const Rescan = ({ isLoading }) => {
         then = now - (delta % interval);
       }
     }
-    draw();
+    isLoading && draw();
   }, [isLoading, theme.type.secondary]);
 
   return (

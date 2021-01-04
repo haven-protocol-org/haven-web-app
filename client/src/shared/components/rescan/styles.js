@@ -10,12 +10,12 @@ export const Instructions = styled.div`
 `;
 
 export const Image = styled.div`
-  height: 180px;
+  height: auto;
   font-family: Inter-Regular;
   width: 100%;
   overflow: hidden;
 `;
 
 export const Canvas = styled.canvas`
-  margin-top: -12px;
+  margin-top: -4px;
 `;

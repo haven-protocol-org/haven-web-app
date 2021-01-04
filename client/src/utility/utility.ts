@@ -126,9 +126,7 @@ export const getPriceValues = (prices: any) => {
   return prices.map((priceItem: any) => priceItem[1]);
 };
 
-export const logM = (message: any) => {
-   console.log(message);
-};
+export const logM = (message: any) => {};
 
 export const createRemainingTimeString = (remainingTimeInMinutes: number) => {
   const days = Math.floor(remainingTimeInMinutes / (60 * 24));
