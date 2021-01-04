@@ -6,11 +6,9 @@ import {
   Arr,
   Arrow,
   Brand,
-  Button,
   Container,
   Haven,
   Icon,
-  Logout,
   Menu,
   Options,
   OptionsDoubleRow,
@@ -23,9 +21,9 @@ import {
 import { Body, Label } from "assets/styles/type";
 import { closeWallet } from "shared/actions/wallet";
 import { selectIsLoggedIn } from "../../../../shared/reducers/walletSession";
-import { getNetworkByName, isDevMode, NET_TYPE_NAME } from "constants/env";
+import { getNetworkByName, NET_TYPE_NAME } from "constants/env";
 import { DesktopAppState } from "../../reducers";
-import { LocalNode, SelectedNode } from "platforms/desktop/types";
+import { SelectedNode } from "platforms/desktop/types";
 import { selectisLocalNode } from "platforms/desktop/reducers/connectedNode";
 import { selectBlockHeight } from "shared/reducers/chain";
 import Buttons from "./buttons/index.js";
@@ -114,7 +112,7 @@ class Navigation extends Component<NavigationProps, any> {
   render() {
     const auth = this.props.isLoggedIn;
     const { current_network } = this.state;
-    const { node, height } = this.props;
+    const { node } = this.props;
 
     // @ts-ignore
     const { chainHeight, walletHeight } = this.props.chain;

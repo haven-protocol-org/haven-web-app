@@ -81,11 +81,10 @@ class SettingsPage extends Component<SettingsProps, SettingsState> {
   render() {
     const { value, reveal } = this.state;
     const seed = this.props.mnemonic;
-    let truncated = "";
     if (seed.length > 0) {
       const first = seed.substring(0, 32);
       const last = seed.substring(seed.length - 32);
-      truncated = first + last;
+      const truncated = first + last;
     }
 
     const { isSyncing } = this.props.syncState;

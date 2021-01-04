@@ -76,7 +76,7 @@ const Rescan = ({ isLoading }) => {
       }
     }
     draw();
-  }, [isLoading]);
+  }, [isLoading, theme.type.secondary]);
 
   return (
     <Container>

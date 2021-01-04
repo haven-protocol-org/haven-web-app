@@ -3,7 +3,7 @@ import { setTheme } from "shared/actions";
 import { getConfigIPC, updateConfigIPC } from "../ipc/misc";
 import { DesktopAppState } from "../reducers";
 import { selectRemoteDefaultNode } from "../reducers/connectedNode";
-import { BasicNode, NodeLocation, RemoteNode, SelectedNode } from "../types";
+import { NodeLocation, RemoteNode, SelectedNode } from "../types";
 import { setNodeForWalletSucceed } from "./selectNode";
 import { SET_NODE_LIST_FOR_WALLET_SUCCESS } from "./types";
 

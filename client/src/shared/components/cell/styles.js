@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import { Link } from "react-router-dom";
 import media from "../../../assets/styles/media.js";
 import { ReactComponent as ChevronIcon } from "../../../assets/icons/chevron.svg";

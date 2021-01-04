@@ -3,7 +3,6 @@ import { Modal } from "shared/components/modal";
 import { HavenAppState } from "platforms/desktop/reducers/index.js";
 import { connect } from "react-redux";
 import { hideModal } from "shared/actions/modal";
-import LoginTutorial from "../../../../shared/components/tutorial/login/index.js";
 import Rescan from "../../../../shared/components/rescan";
 import {
   syncFromFirstIncomingTx,

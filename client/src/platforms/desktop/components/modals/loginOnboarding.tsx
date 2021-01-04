@@ -1,6 +1,5 @@
 import * as React from "react";
 import { Modal } from "shared/components/modal";
-import { HavenAppState } from "platforms/desktop/reducers/index.js";
 import { connect } from "react-redux";
 import { hideModal } from "shared/actions/modal";
 import LoginTutorial from "../../../../shared/components/tutorial/login/index.js";
@@ -30,8 +29,6 @@ class LoginOnboarding extends React.Component<any, any> {
     this.props.hideModal();
   }
 }
-
-const mapStateToProps = (state: HavenAppState) => ({});
 
 export const LoginOnboardingModal = connect(null, { hideModal })(
   LoginOnboarding

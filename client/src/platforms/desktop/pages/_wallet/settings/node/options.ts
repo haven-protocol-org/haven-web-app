@@ -1,11 +1,18 @@
-import { NodeLocation, LocalNode, SelectedNode, BasicNode, RemoteNode } from "platforms/desktop/types";
+import {
+  NodeLocation,
+  SelectedNode,
+  RemoteNode,
+} from "platforms/desktop/types";
 import { REMOTE_NODES } from "platforms/desktop/nodes";
 import {
   NodeOption,
   NodeSelectionType,
 } from "platforms/desktop/pages/_wallet/settings/node/nodeSetting";
 
-export const createNodeOptions = (havendState: SelectedNode, remoteList: RemoteNode[]): NodeOption[] => {
+export const createNodeOptions = (
+  havendState: SelectedNode,
+  remoteList: RemoteNode[]
+): NodeOption[] => {
   const remoteNodes: NodeOption[] = remoteList.map((node) => {
     return {
       location: NodeLocation.Remote,

@@ -10,7 +10,7 @@ import { DesktopAppState } from "platforms/desktop/reducers";
 import { connect } from "react-redux";
 import { selectisLocalNode } from "platforms/desktop/reducers/connectedNode";
 import { changeNodeForWallet } from "platforms/desktop/actions/selectNode";
-import { NodeLocation, LocalNode, SelectedNode } from "platforms/desktop/types";
+import { NodeLocation, SelectedNode } from "platforms/desktop/types";
 import { Information } from "assets/styles/type.js";
 import { createNodeOptions } from "platforms/desktop/pages/_wallet/settings/node/options";
 

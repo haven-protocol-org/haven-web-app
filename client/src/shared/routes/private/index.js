@@ -19,7 +19,6 @@ import { SettingsWeb } from "platforms/web/pages/_wallet/settings";
 import { storeWalletInDB } from "platforms/web/actions/storage";
 import { refresh } from "shared/actions/refresh";
 import { isWalletSynced } from "shared/reducers/chain";
-import { Idle } from "shared/components/idle";
 
 /**
  *root component for private wallet

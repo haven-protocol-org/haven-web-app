@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 
 // Relative Imports
-import { Container, Overview, Item, Wrapper, Icon } from "./styles";
+import { Container, Overview, Item, Wrapper } from "./styles";
 
 import { MultiBalance } from "../../multi-balance";
 

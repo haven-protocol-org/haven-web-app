@@ -17,7 +17,6 @@ import {
   Scan,
   Arr,
   Arrow,
-  Label,
 } from "./styles.js";
 
 import Buttons from "./buttons/index.js";
@@ -29,7 +28,6 @@ import { WebAppState } from "platforms/web/reducers/index.js";
 import { selectSyncState } from "shared/reducers/chain";
 import { SyncState } from "shared/types/types.js";
 import { HavenAppState } from "platforms/desktop/reducers/index.js";
-import { Spinner } from "../../../../shared/components/spinner/index.js";
 
 import Cell from "./cell";
 import Link from "./link";
