@@ -23,10 +23,9 @@ interface WalletSession {
   isFetching: boolean;
   isSessionStarted: boolean;
   error: RPCError | null;
-  isWalletConectedToDaemon: boolean;
-  isAppConnectedToDaemon: boolean;
   restoreHeight: number;
   isClosingSession: boolean;
+
 }
 
 const INITIAL_STATE: WalletSession = {
@@ -34,10 +33,9 @@ const INITIAL_STATE: WalletSession = {
   isFetching: false,
   isSessionStarted: false,
   error: null,
-  isWalletConectedToDaemon: false,
-  isAppConnectedToDaemon: false,
   restoreHeight: 0,
   isClosingSession: false,
+
 };
 
 export const walletSession = function (
@@ -63,10 +61,6 @@ export const walletSession = function (
       };
     case SET_RESTORE_HEIGHT:
       return {...state, restoreHeight: action.payload};
-    case SET_WALLET_CONNECTION_STATE:
-      return { ...state, isWalletConectedToDaemon: action.payload };
-    case SET_APP_TO_DAEMON_CONNECTION_STATE:
-       return { ...state, isAppConnectedToDaemon: action.payload };
     case START_WALLET_SESSION:
       return {
         ...state,

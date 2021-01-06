@@ -16,7 +16,8 @@ import { walletSession } from "shared/reducers/walletSession";
 import { walletCreation } from "shared/reducers/walletCreation";
 import modal from "shared/reducers/modal";
 import { STOP_WALLET_SESSION } from "shared/actions/types";
-
+import { connectedNode } from "platforms/desktop/reducers/selectedNode"
+ 
 const appReducer = combineReducers({
   theme,
   address,
@@ -32,6 +33,7 @@ const appReducer = combineReducers({
   walletSession,
   walletCreation,
   modal,
+  connectedNode
 });
 
 const rootReducer = (state: any, action: AnyAction) => {

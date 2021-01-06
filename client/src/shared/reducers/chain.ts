@@ -9,7 +9,7 @@ import {
   HavenAppState,
 } from "platforms/desktop/reducers/index";
 import { isDesktop } from "constants/env";
-import { selectisLocalNode } from "platforms/desktop/reducers/connectedNode";
+import { selectisLocalNode } from "platforms/desktop/reducers/selectedNode";
 
 export interface Chain {
   walletHeight: number;
@@ -43,7 +43,7 @@ export const selectNodeHeight = (state: HavenAppState) => {
 
 export const selectSyncState = (state: HavenAppState): SyncState => {
   // if wallet is not connected at all, we are not syncing
-  const isWalletConnected = state.walletSession.isWalletConectedToDaemon === true;
+  const isWalletConnected = state.connectedNode.isWalletConectedToDaemon === true;
 
   const blockHeight = state.chain.nodeHeight;
   let scannedHeight: number;

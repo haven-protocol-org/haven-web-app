@@ -135,7 +135,7 @@ class FixedStatusContainer extends Component<FixedStatusProps, any> {
 const mapStateToProps = (state: DesktopAppState) => ({
   isLoggedIn: selectIsLoggedIn(state),
   isSyncing: selectSyncState(state).isSyncing,
-  isWalletConnected: state.walletSession.isWalletConectedToDaemon,
+  isWalletConnected: state.connectedNode.isWalletConectedToDaemon,
   daemonUrl: state.connectedNode.address!,
 });
 

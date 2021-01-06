@@ -26,7 +26,17 @@ export interface RemoteNode extends BasicNode {
 } 
 
 export interface SelectedNode extends BasicNode {
-  appIsConnected: boolean;
+
+
+}
+
+
+export interface NodeConnection {
+
+  isWalletConectedToDaemon: boolean,
+  isAppConnectedToDaemon: boolean,
+  isConnecting: boolean
+
 }
 
 export interface LocalNode {

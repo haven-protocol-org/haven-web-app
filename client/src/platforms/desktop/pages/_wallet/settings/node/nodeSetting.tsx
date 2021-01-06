@@ -8,11 +8,11 @@ import DoubleFooter from "shared/components/_inputs/double_footer/index.js";
 import React, { SyntheticEvent } from "react";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { connect } from "react-redux";
-import { selectisLocalNode } from "platforms/desktop/reducers/connectedNode";
-import { changeNodeForWallet } from "platforms/desktop/actions/selectNode";
-import { NodeLocation, LocalNode, SelectedNode } from "platforms/desktop/types";
+import { selectisLocalNode } from "platforms/desktop/reducers/selectedNode";
+import { changeNodeForWallet, disconnectNode } from "platforms/desktop/actions/selectNode";
+import { NodeConnection, NodeLocation, SelectedNode } from "platforms/desktop/types";
 import { Information } from "assets/styles/type.js";
-import { createNodeOptions } from "platforms/desktop/pages/_wallet/settings/node/options";
+import { createNodeOptions, getDefaultNode } from "platforms/desktop/pages/_wallet/settings/node/options";
 
 export enum NodeSelectionType {
   local,
@@ -32,12 +32,12 @@ export interface NodeOption {
 }
 
 interface NodeSettingProps {
-  isRemoteSyncing: boolean;
   localNode: boolean;
-  node: SelectedNode;
+  node: SelectedNode & NodeConnection;
   isConnected: boolean;
-  isRequestingSwitch: boolean;
   nodeOptions: NodeOption[];
+  defaultNode: NodeOption;
+  disconnectNode: () => void;
   changeNodeForWallet: (
     selectedNodeOption: NodeOption,
     address: string,
@@ -60,8 +60,10 @@ class NodeSettingComponent extends React.Component<
   state = {
     address: this.props.node.address!,
     connected: this.props.isConnected,
-    locked: this.props.isConnected !== false,
-    selectedNodeOption: this.props.nodeOptions.find(
+    locked: this.props.isConnected,
+    selectedNodeOption: this.props.node.location === NodeLocation.None ? this.props.defaultNode
+    :  
+    this.props.nodeOptions.find(
       (nodeOption) => nodeOption.address === this.props.node.address
     )!,
     port: this.props.node.port!,
@@ -73,14 +75,23 @@ class NodeSettingComponent extends React.Component<
     const { address, selectedNodeOption, port } = this.state;
 
     if (
-      address === this.props.node.address &&
-      port === this.props.node.port &&
+      selectedNodeOption.address === this.props.node.address &&
+      selectedNodeOption.port === this.props.node.port &&
       this.props.isConnected === true
     ) {
       return;
     }
 
-    this.props.changeNodeForWallet(selectedNodeOption, address, port);
+    if (selectedNodeOption.selectionType === NodeSelectionType.custom) {
+      this.props.changeNodeForWallet(selectedNodeOption, address, port);
+    }
+    else {
+      this.props.changeNodeForWallet(selectedNodeOption, selectedNodeOption.address, selectedNodeOption.port);
+    }
+
+
+    this.setState({locked: true});
+
   };
 
   selectLocation = (option: NodeOption) => {
@@ -101,12 +112,14 @@ class NodeSettingComponent extends React.Component<
   };
 
   onDisconnect = () => {
+
+    this.props.disconnectNode();
     this.setState({
       locked: false,
     });
   };
 
-  static getDerivedStateFromProps(
+  /* static getDerivedStateFromProps(
     nextProps: Readonly<NodeSettingProps>,
     prevState: Readonly<NodeSettingState>
   ) {
@@ -146,13 +159,14 @@ class NodeSettingComponent extends React.Component<
       }
     }
     return newState;
-  }
+  } */
 
   buttonLogic = () => {
     const { locked } = this.state;
-    const { isConnected, isRequestingSwitch } = this.props;
+    const { isConnected } = this.props;
+    const { isConnecting } = this.props.node;
 
-    if (isConnected === false || isRequestingSwitch) {
+    if (isConnecting ) {
       // Don't change this label as it's equality checked on child
       return "Loading";
     } else if (locked && isConnected === true) {
@@ -166,7 +180,6 @@ class NodeSettingComponent extends React.Component<
 
   render() {
     const selectedNodeOption = this.state.selectedNodeOption;
-    const { isRemoteSyncing } = this.props;
     const { locked } = this.state;
 
     return (
@@ -211,7 +224,7 @@ class NodeSettingComponent extends React.Component<
               <Information>
                 {this.props.isConnected
                   ? "Vault is connected to "
-                  : this.props.isConnected === false
+                  : this.props.node.location !== NodeLocation.None
                   ? "Vault is trying to connect to "
                   : "Vault is not connected to "}
                 <strong>{this.state.selectedNodeOption.name}</strong>. Change
@@ -229,7 +242,7 @@ class NodeSettingComponent extends React.Component<
               // Right section
               rightOnClick={this.onConnect}
               rightDisabled={locked}
-              rightLoading={isRemoteSyncing}
+              rightLoading={false}
               rightLabel={this.buttonLogic()}
             />
           </Container>
@@ -241,13 +254,12 @@ class NodeSettingComponent extends React.Component<
 
 const mapStateToProps = (state: DesktopAppState) => ({
   node: state.connectedNode,
-  isRemoteSyncing: false,
-  isConnected: state.walletSession.isWalletConectedToDaemon,
-  isRequestingSwitch: false,
+  isConnected: state.connectedNode.isWalletConectedToDaemon,
   localNode: selectisLocalNode(state.connectedNode),
   nodeOptions: createNodeOptions(state.connectedNode, state.nodeList),
+  defaultNode: getDefaultNode(state.nodeList)
 });
 
 export const HavenNodeSetting = connect(mapStateToProps, {
-  changeNodeForWallet,
+  changeNodeForWallet, disconnectNode
 })(NodeSettingComponent);

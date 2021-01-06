@@ -9,7 +9,7 @@ import Header from "shared/components/_layout/header";
 import Form from "shared/components/_inputs/form";
 import Theme from "shared/components/_inputs/theme";
 // For the miner
-import { selectisLocalNode } from "platforms/desktop/reducers/connectedNode";
+import { selectisLocalNode } from "platforms/desktop/reducers/selectedNode";
 import { dark, light, sepia } from "assets/styles/themes.js";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import {

@@ -26,7 +26,7 @@ import { selectIsLoggedIn } from "../../../../shared/reducers/walletSession";
 import { getNetworkByName, isDevMode, NET_TYPE_NAME } from "constants/env";
 import { DesktopAppState } from "../../reducers";
 import { LocalNode, SelectedNode } from "platforms/desktop/types";
-import { selectisLocalNode } from "platforms/desktop/reducers/connectedNode";
+import { selectisLocalNode } from "platforms/desktop/reducers/selectedNode";
 import { selectBlockHeight } from "shared/reducers/chain";
 import Buttons from "./buttons/index.js";
 

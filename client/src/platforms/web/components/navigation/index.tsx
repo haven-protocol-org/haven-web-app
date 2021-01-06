@@ -13,10 +13,9 @@ import {
   OptionsIcon,
   OptionsList,
   OptionsSVG,
-  Scan,
   Arr,
+  Scan,
   Arrow,
-  Label,
 } from "./styles.js";
 
 import Buttons from "./buttons/index.js";
@@ -235,7 +234,7 @@ class Navigation extends Component<NavigationProps, {}> {
 const mapStateToProps = (state: WebAppState) => ({
   isLoggedIn: selectIsLoggedIn(state),
   syncState: selectSyncState(state as HavenAppState),
-  connected: state.walletSession.isWalletConectedToDaemon,
+  connected: state.connectedNode.isWalletConectedToDaemon,
   isClosingSession: state.walletSession.isClosingSession,
   restoreHeight: state.walletSession.restoreHeight,
 });
