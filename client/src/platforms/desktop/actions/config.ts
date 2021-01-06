@@ -2,7 +2,7 @@ import { getNetworkByName } from "constants/env";
 import { setTheme } from "shared/actions";
 import { getConfigIPC, updateConfigIPC } from "../ipc/misc";
 import { DesktopAppState } from "../reducers";
-import { selectRemoteDefaultNode } from "../reducers/connectedNode";
+import { selectRemoteDefaultNode } from "../reducers/selectedNode";
 import { BasicNode, NodeLocation, RemoteNode, SelectedNode } from "../types";
 import { setNodeForWalletSucceed } from "./selectNode";
 import { SET_NODE_LIST_FOR_WALLET_SUCCESS } from "./types";
@@ -34,7 +34,7 @@ export const setDesktopConfig = () => {
           )
         );
       }
-      // if there is no last selected node we set the defaulzt remote one
+ /*      // if there is no last selected node we set the defaulzt remote one
       else {
         const defaultNode = selectRemoteDefaultNode(getState());
         dispatch(
@@ -44,7 +44,7 @@ export const setDesktopConfig = () => {
             defaultNode.location
           )
         );
-      }
+      } */
     }
 
     if (config && config.theme) {
