@@ -1,4 +1,3 @@
-import CreateSeed from "../../../../shared/components/_create/create_seed/index.js";
 import { hideModal } from "shared/actions/modal";
 import * as React from "react";
 import { Modal } from "shared/components/modal";
@@ -67,7 +66,8 @@ export class ManageAddress extends React.Component<
           leftButton="Cancel"
           rightButton="Save"
           isLoading={this.state.isLoading}
-          disabled={false}
+          disabledRight={false}
+          disabledLeft={false}
         >
           <ManageAddresses>
             <Input

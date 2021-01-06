@@ -1,9 +1,7 @@
 // Library Imports
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 
 // Relative Imports
-import Placeholder from "shared/components/_create/placeholder";
-
 import { Body, Buttons, Submit } from "../multi_login/styles";
 import CreateSeed from "shared/components/_create/create_seed";
 import { createNewWallet, startWalletSession } from "shared/actions/wallet";

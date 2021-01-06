@@ -5,10 +5,8 @@ import {
   Submit,
 } from "platforms/desktop/pages/_auth/multi_login/styles";
 import { Spinner } from "../../../../../shared/components/spinner";
-import { Body, Wrapper } from "./styles";
+import { Body } from "./styles";
 import { Information } from "assets/styles/type";
-import Input from "shared/components/_inputs/input";
-import Toggle from "shared/components/_inputs/toggle";
 import {
   selectErrorMessageForLogin,
   selectIsRequestingLogin,
@@ -87,7 +85,7 @@ class OpenWalletDesktopContainer extends Component<
   };
 
   render() {
-    const { selectedWallet, password, showPassword, error } = this.state;
+    const { selectedWallet, password, error } = this.state;
     const disabled = selectedWallet !== null && password.length > 0;
 
     const { wallets } = this.props;

@@ -27,8 +27,8 @@ export const Scan = styled.div`
   border-radius: 4px;
   margin: 8px;
   height: 36px;
-  background: ${(props) => props.theme.body.active_menu};
-  color: ${(props) => props.theme.type.primary};
+  background: ${(props) => props.theme.button.primary};
+  color: ${(props) => props.theme.button.primary_label};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -66,7 +66,16 @@ export const Haven = styled.div`
   margin-left: 12px;
 `;
 
-export const Brand = styled(Link)`
+export const Auth = styled(Link)`
+  width: auto;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  margin-left: 16px;
+  text-decoration: none;
+`;
+
+export const NoAuth = styled.a`
   width: auto;
   height: 40px;
   display: flex;

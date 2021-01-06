@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import media from "../../../assets/styles/media.js";
 
 export const Container = styled.div`
   height: auto;

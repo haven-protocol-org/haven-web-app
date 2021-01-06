@@ -3,9 +3,11 @@ import {
   NodeOption,
   NodeSelectionType,
 } from "platforms/desktop/pages/_wallet/settings/node/nodeSetting";
-import Nodes from "shared/components/_inputs/nodes";
 
-export const createNodeOptions = (havendState: SelectedNode, remoteList: RemoteNode[]): NodeOption[] => {
+export const createNodeOptions = (
+  havendState: SelectedNode,
+  remoteList: RemoteNode[]
+): NodeOption[] => {
   const remoteNodes: NodeOption[] = remoteList.map((node) => {
     return {
       location: NodeLocation.Remote,

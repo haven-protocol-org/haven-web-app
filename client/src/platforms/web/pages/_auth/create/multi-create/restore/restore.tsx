@@ -7,7 +7,6 @@ import Input from "shared/components/_inputs/input";
 import Toggle from "shared/components/_inputs/toggle";
 import { Information } from "assets/styles/type.js";
 import VerifySeed from "shared/components/_create/verify_seed";
-import { Container } from "../styles";
 import InputButton from "shared/components/_inputs/input_button";
 import { connect } from "react-redux";
 import {
@@ -257,7 +256,7 @@ class RestoreWeb extends Component<RestoreProps, RestoreState> {
           <>
             <Toggle
               label="Vault Password"
-              placeholder="Create a Vault password"
+              placeholder="Re-enter your vault password"
               name="check_vault_password"
               type={this.state.reveal === true ? "text" : "password"}
               reveal={this.state.reveal}

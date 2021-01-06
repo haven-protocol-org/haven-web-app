@@ -3,9 +3,7 @@ import React from "react";
 
 // Relative Imports
 import {
-  Container,
   Main,
-  Header,
   Buttons,
   Submit,
   Footer,
@@ -14,10 +12,6 @@ import {
   Route,
   Label,
   Back,
-  Title,
-  Description,
-  Tabs,
-  Tab,
 } from "./styles";
 import { Spinner } from "../../spinner";
 

@@ -14,7 +14,7 @@ export const Tabs = styled.div`
   align-items: center;
   width: 100%;
   border-radius: 4px;
-  overflow: clip;
+  overflow: hidden;
 `;
 
 export const Item = styled.div`

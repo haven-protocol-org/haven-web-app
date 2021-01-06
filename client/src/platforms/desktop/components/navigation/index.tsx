@@ -6,29 +6,37 @@ import {
   Arr,
   Arrow,
   Brand,
-  Button,
   Container,
   Haven,
   Icon,
-  Logout,
   Menu,
   Options,
-  OptionsDoubleRow,
   OptionsIcon,
   OptionsList,
   OptionsSVG,
   Legal,
+  Scan,
 } from "./styles";
 
 import { Body, Label } from "assets/styles/type";
 import { closeWallet } from "shared/actions/wallet";
 import { selectIsLoggedIn } from "../../../../shared/reducers/walletSession";
-import { getNetworkByName, isDevMode, NET_TYPE_NAME } from "constants/env";
+import { getNetworkByName, NET_TYPE_NAME } from "constants/env";
 import { DesktopAppState } from "../../reducers";
 import { LocalNode, SelectedNode } from "platforms/desktop/types";
 import { selectisLocalNode } from "platforms/desktop/reducers/selectedNode";
 import { selectBlockHeight } from "shared/reducers/chain";
-import Buttons from "./buttons/index.js";
+import { SyncState } from "shared/types/types.js";
+import { syncFromFirstIncomingTx, rescanSpent } from "shared/actions/refresh";
+
+// Local files
+import Buttons from "./buttons";
+import Cell from "./cell";
+import Link from "./link";
+import Tab from "./tab";
+
+import { showModal } from "shared/actions/modal";
+import { MODAL_TYPE } from "shared/reducers/modal";
 
 interface NavigationProps {
   node: SelectedNode;
@@ -39,6 +47,13 @@ interface NavigationProps {
   logout: (isWeb: boolean) => void;
   chain: any;
   isClosingSession: boolean;
+  basicActive: boolean;
+  advancedActive: boolean;
+  startedResync: boolean;
+  showModal: (modalType: MODAL_TYPE) => void;
+  syncState: SyncState;
+  connected: boolean;
+  restoreHeight: number;
 }
 
 class Navigation extends Component<NavigationProps, any> {
@@ -47,6 +62,9 @@ class Navigation extends Component<NavigationProps, any> {
     showOptions: false,
     showNotifications: false,
     mouseIsHovering: false,
+    basicActive: true,
+    advancedActive: false,
+    startedResync: false,
   };
 
   onComponentDidMount() {
@@ -111,15 +129,35 @@ class Navigation extends Component<NavigationProps, any> {
     });
   };
 
+  selectBasic = () => {
+    this.setState({
+      basicActive: true,
+      advancedActive: false,
+    });
+  };
+
+  selectAdvanced = () => {
+    this.setState({
+      basicActive: false,
+      advancedActive: true,
+    });
+  };
+
+  refreshVault = () => {
+    this.props.showModal(MODAL_TYPE.RescanBC);
+  };
+
   render() {
     const auth = this.props.isLoggedIn;
     const { current_network } = this.state;
-    const { node, height } = this.props;
+    const { node, connected, restoreHeight } = this.props;
 
     // @ts-ignore
     const { chainHeight, walletHeight } = this.props.chain;
     const syncStarted = chainHeight !== 0;
     const syncedFinished = syncStarted && chainHeight === walletHeight;
+
+    const version = window.havenProcess.appVersion;
 
     return (
       <Container>
@@ -127,14 +165,12 @@ class Navigation extends Component<NavigationProps, any> {
           <Icon />
           <Haven>HAVEN</Haven>
         </Brand>
-
         <Menu>
           <Buttons
             isLoading={this.props.isClosingSession}
             auth={auth}
             onClick={this.handleLogout}
           />
-
           <Options onClick={this.showDropdownMenu}>
             <OptionsIcon>
               <OptionsSVG />
@@ -150,47 +186,86 @@ class Navigation extends Component<NavigationProps, any> {
               <Arrow>
                 <Arr />
               </Arrow>
-              <OptionsDoubleRow>
-                <Body>Network</Body>
-                <Label>
-                  {current_network === "testnet" ? "Testnet" : "Mainnet"}
-                  {` `} v{window.havenProcess.appVersion}
-                </Label>
-              </OptionsDoubleRow>
-              <OptionsDoubleRow>
-                <Body>Node Type</Body>
-                <Label>{node.location}</Label>
-              </OptionsDoubleRow>
-              <OptionsDoubleRow>
-                <Body>Block Height</Body>
-                <Label>{chainHeight}</Label>
-              </OptionsDoubleRow>
-              {syncedFinished ? (
-                <OptionsDoubleRow>
-                  <Body>Vault Synced</Body>
-                  <Label>Yes</Label>
-                </OptionsDoubleRow>
-              ) : (
-                <OptionsDoubleRow>
-                  <Body>Vault Height</Body>
-                  <Label>{walletHeight}</Label>
-                </OptionsDoubleRow>
+
+              {!auth && (
+                <>
+                  <Cell
+                    body="Network"
+                    label={
+                      current_network === "testnet"
+                        ? `Testnet v${version}`
+                        : `Mainnet v${version}`
+                    }
+                  />
+                  <Link
+                    body="Help"
+                    label="Knowledge Base"
+                    url={`https://havenprotocol.org/knowledge`}
+                  />
+                  <Link
+                    body="Legal"
+                    label="Terms"
+                    url={`https://havenprotocol.org/legal`}
+                  />
+                </>
               )}
-              <OptionsDoubleRow>
-                <Body>Help</Body>
-                <Legal
-                  target="_blank"
-                  href="https://havenprotocol.org/knowledge/"
-                >
-                  <Label>Knowledge Base</Label>
-                </Legal>
-              </OptionsDoubleRow>
-              <OptionsDoubleRow>
-                <Body>Legal</Body>
-                <Legal target="_blank" href="https://havenprotocol.org/legal/">
-                  <Label>Terms & Conditions</Label>
-                </Legal>
-              </OptionsDoubleRow>
+
+              {auth && (
+                <>
+                  <Tab
+                    basicActive={this.state.basicActive}
+                    basicSelect={this.selectBasic}
+                    advancedSelect={this.selectAdvanced}
+                    advancedActive={this.state.advancedActive}
+                  />
+
+                  {this.state.basicActive ? (
+                    <>
+                      <Cell
+                        body="Network"
+                        label={
+                          current_network === "testnet"
+                            ? `Testnet v${version}`
+                            : `Mainnet v${version}`
+                        }
+                      />
+                      {!syncStarted ? (
+                        <>
+                          <Cell body="Vault Status" label="Synced" />
+                        </>
+                      ) : (
+                        <Cell
+                          body="Sync Status"
+                          label={walletHeight + "/" + chainHeight}
+                        />
+                      )}
+                      <Link
+                        body="Help"
+                        label="Knowledge Base"
+                        url={`https://havenprotocol.org/knowledge`}
+                      />
+                      <Link
+                        body="Legal"
+                        label="Terms"
+                        url={`https://havenprotocol.org/legal`}
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <Cell
+                        body="Vault Connected"
+                        label={connected ? "Yes" : "No"}
+                      />
+                      <Cell body="Block Height" label={chainHeight} />
+                      <Cell
+                        body="Refresh Height"
+                        label={this.props.restoreHeight}
+                      />
+                      <Scan onClick={this.refreshVault}>Refresh Vault</Scan>
+                    </>
+                  )}
+                </>
+              )}
             </OptionsList>
           </>
         )}
@@ -206,8 +281,13 @@ const mapStateToProps = (state: DesktopAppState) => ({
   height: selectBlockHeight(state),
   chain: state.chain,
   isClosingSession: state.walletSession.isClosingSession,
+  connected: state.walletSession.isWalletConectedToDaemon,
+  restoreHeight: state.walletSession.restoreHeight,
 });
 
 export const NavigationDesktop = connect(mapStateToProps, {
   logout: closeWallet,
+  syncFromFirstIncomingTx,
+  rescanSpent,
+  showModal,
 })(Navigation);

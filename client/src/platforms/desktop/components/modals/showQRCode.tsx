@@ -4,7 +4,6 @@ import QrCode from "../../../../shared/components/qrCode/index.js";
 import { HavenAppState } from "platforms/desktop/reducers/index.js";
 import { connect } from "react-redux";
 import { hideModal } from "shared/actions/modal";
-import { selectPrimaryAddress } from "shared/reducers/address";
 
 class ShowQRCodeModal extends React.Component<any, any> {
   render() {
@@ -16,8 +15,9 @@ class ShowQRCodeModal extends React.Component<any, any> {
         description={`Scan and share your  address`}
         leftButton="Cancel"
         rightButton="Finish"
-        disabled={false}
         isLoading={false}
+        disabledRight={false}
+        disabledLeft={false}
         onConfirm={() => this.onCancel()}
         onCancel={() => this.onCancel()}
       >

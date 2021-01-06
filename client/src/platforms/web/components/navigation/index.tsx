@@ -6,7 +6,8 @@ import { connect } from "react-redux";
 import {
   Container,
   Haven,
-  Brand,
+  Auth,
+  NoAuth,
   Icon,
   Menu,
   Options,
@@ -27,11 +28,13 @@ import { WebAppState } from "platforms/web/reducers/index.js";
 import { selectSyncState } from "shared/reducers/chain";
 import { SyncState } from "shared/types/types.js";
 import { HavenAppState } from "platforms/desktop/reducers/index.js";
-import { Spinner } from "../../../../shared/components/spinner/index.js";
 
 import Cell from "./cell";
 import Link from "./link";
 import Tab from "./tab";
+
+import { showModal } from "shared/actions/modal";
+import { MODAL_TYPE } from "shared/reducers/modal";
 
 interface NavigationProps {
   isLoggedIn: boolean;
@@ -46,6 +49,7 @@ interface NavigationProps {
   advancedActive: boolean;
   restoreHeight: number;
   startedResync: boolean;
+  showModal: (modalType: MODAL_TYPE) => void;
 }
 
 class Navigation extends Component<NavigationProps, {}> {
@@ -108,12 +112,8 @@ class Navigation extends Component<NavigationProps, {}> {
     });
   };
 
-  refreshVault = (e: any) => {
-    this.setState({
-      startedResync: true,
-    });
-
-    // this.handleRefreshRequest(e);
+  refreshVault = () => {
+    this.props.showModal(MODAL_TYPE.RescanBC);
   };
 
   render() {
@@ -122,14 +122,20 @@ class Navigation extends Component<NavigationProps, {}> {
     const { connected } = this.props;
     const { blockHeight, scannedHeight, isSyncing } = this.props.syncState;
     const networkLabel = `${NET_TYPE_NAME}  v${APP_VERSION}`;
-    console.log("RESYNCING", this.state.startedResync);
 
     return (
       <Container>
-        <Brand to={auth ? "/wallet/assets" : "/"}>
-          <Icon />
-          <Haven>HAVEN</Haven>
-        </Brand>
+        {auth ? (
+          <Auth to={"/wallet/assets"}>
+            <Icon />
+            <Haven>HAVEN</Haven>
+          </Auth>
+        ) : (
+          <NoAuth href="https://havenprotocol.org" target="_blank">
+            <Icon />
+            <Haven>HAVEN</Haven>
+          </NoAuth>
+        )}
         <Menu>
           <Buttons
             isLoading={this.props.isClosingSession}
@@ -181,10 +187,13 @@ class Navigation extends Component<NavigationProps, {}> {
                       <Cell body="Network" label={networkLabel} />
                       {!isSyncing ? (
                         <>
-                          <Cell body="Vault Synced" label="Yes" />
+                          <Cell body="Vault Status" label="Synced" />
                         </>
                       ) : (
-                        <Cell body="Vault Height" label={scannedHeight} />
+                        <Cell
+                          body="Sync Status"
+                          label={scannedHeight + "/" + blockHeight}
+                        />
                       )}
                       <Link
                         body="Help"
@@ -200,25 +209,15 @@ class Navigation extends Component<NavigationProps, {}> {
                   ) : (
                     <>
                       <Cell
-                        body="Vault Status"
-                        label={connected ? "Online" : "Offline"}
+                        body="Vault Connected"
+                        label={connected ? "Yes" : "No"}
                       />
                       <Cell body="Block Height" label={blockHeight} />
                       <Cell
                         body="Refresh Height"
                         label={this.props.restoreHeight}
                       />
-
-                      <Scan onClick={(e: any) => this.refreshVault(e)}>
-                        {this.state.startedResync ? (
-                          <Spinner />
-                        ) : (
-                          "Refresh Vault"
-                        )}
-                      </Scan>
-                      {/*<Scan onClick={(e: any) => this.refreshVault(e)}>
-                        Refresh Vault
-                      </Scan>*/}
+                      <Scan onClick={this.refreshVault}>Refresh Vault</Scan>
                     </>
                   )}
                 </>
@@ -243,4 +242,5 @@ export const NavigationWeb = connect(mapStateToProps, {
   logout: closeWallet,
   syncFromFirstIncomingTx,
   rescanSpent,
+  showModal,
 })(Navigation);
