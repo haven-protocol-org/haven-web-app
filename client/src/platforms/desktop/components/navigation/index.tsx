@@ -281,7 +281,7 @@ const mapStateToProps = (state: DesktopAppState) => ({
   height: selectBlockHeight(state),
   chain: state.chain,
   isClosingSession: state.walletSession.isClosingSession,
-  connected: state.walletSession.isWalletConectedToDaemon,
+  connected: state.connectedNode.isWalletConectedToDaemon,
   restoreHeight: state.walletSession.restoreHeight,
 });
 
