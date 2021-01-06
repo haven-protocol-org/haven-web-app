@@ -6,6 +6,7 @@ import { NO_BALANCE } from "shared/reducers/xBalance";
 import { Ticker } from "shared/reducers/types";
 import bigInt from "big-integer";
 import BigInteger from "haven-wallet-core/src/main/js/common/biginteger";
+import { isDevMode } from "constants/env";
 
 export const convertTimestampToDateString = (timestamp: any) =>
   new Date(timestamp).toLocaleDateString();
@@ -127,7 +128,10 @@ export const getPriceValues = (prices: any) => {
 };
 
 export const logM = (message: any) => {
-   console.log(message);
+
+  if (isDevMode()) {
+    console.log(message);
+  }
 };
 
 export const createRemainingTimeString = (remainingTimeInMinutes: number) => {
