@@ -256,7 +256,7 @@ class RestoreWeb extends Component<RestoreProps, RestoreState> {
           <>
             <Toggle
               label="Vault Password"
-              placeholder="Create a Vault password"
+              placeholder="Re-enter your vault password"
               name="check_vault_password"
               type={this.state.reveal === true ? "text" : "password"}
               reveal={this.state.reveal}
