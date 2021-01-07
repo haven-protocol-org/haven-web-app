@@ -17,12 +17,14 @@ import { WebAppState } from "platforms/web/reducers";
 import { storeKeyFileToDisk } from "platforms/web/actions/storage";
 import {
   restoreWalletByMnemomic,
+} from "shared/actions/walletCreation";
+import {
   startWalletSession,
-} from "shared/actions/wallet";
-import { Redirect } from "react-router";
+} from "shared/actions/walletSession";
 import { selectIsLoggedIn } from "shared/reducers/walletSession";
 import { MoneroUtils } from "haven-wallet-core";
 import Checkbox from "../../../../../../../shared/components/checkbox";
+import { Redirect } from "react-router";
 
 interface RestoreProps {
   walletName: string;

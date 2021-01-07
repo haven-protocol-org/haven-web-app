@@ -4,7 +4,8 @@ import React, { Component } from "react";
 // Relative Imports
 import { Body, Buttons, Submit } from "../multi_login/styles";
 import CreateSeed from "shared/components/_create/create_seed";
-import { createNewWallet, startWalletSession } from "shared/actions/wallet";
+import { startWalletSession } from "shared/actions/walletSession";
+import {createNewWallet} from "shared/actions/walletCreation";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { connect } from "react-redux";
 import {

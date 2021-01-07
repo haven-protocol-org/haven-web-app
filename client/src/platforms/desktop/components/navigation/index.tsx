@@ -19,7 +19,7 @@ import {
 } from "./styles";
 
 import { Body, Label } from "assets/styles/type";
-import { closeWallet } from "shared/actions/wallet";
+import { closeWallet } from "shared/actions/walletSession";
 import { selectIsLoggedIn } from "../../../../shared/reducers/walletSession";
 import { getNetworkByName, NET_TYPE_NAME } from "constants/env";
 import { DesktopAppState } from "../../reducers";

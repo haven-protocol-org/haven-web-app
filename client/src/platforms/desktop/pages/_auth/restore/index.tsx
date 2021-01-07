@@ -5,7 +5,7 @@ import {
 } from "shared/reducers/walletSession";
 import { selectIsWalletCreated } from "shared/reducers/walletCreation";
 import { connect } from "react-redux";
-import { restoreWalletByMnemomic } from "shared/actions/wallet";
+import { restoreWalletByMnemomic } from "shared/actions/walletCreation";
 import { Redirect } from "react-router";
 import React, { Component } from "react";
 import { Information } from "assets/styles/type";
@@ -16,7 +16,7 @@ import { Body, Wrapper } from "./styles";
 import Input from "shared/components/_inputs/input";
 import { DesktopAppState } from "../../../reducers";
 import InputButton from "shared/components/_inputs/input_button";
-import { startWalletSession } from "shared/actions/wallet";
+import { startWalletSession } from "shared/actions/walletSession";
 
 interface RestoreProps {
   restoreWalletByMnemomic: (

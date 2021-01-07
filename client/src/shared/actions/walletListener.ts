@@ -4,7 +4,7 @@ import BigInteger from "haven-wallet-core/src/main/js/common/biginteger";
 import { Balance } from "shared/reducers/xBalance";
 import { getBalancesSucceed } from "./balance";
 import { Chain, selectSyncState } from "shared/reducers/chain";
-import { onWalletSyncUpdateSucceed } from "shared/actions/wallet";
+import { onWalletSyncUpdateSucceed } from "shared/actions/walletCreation";
 import { getLastBlockHeader } from "./blockHeaderExchangeRate";
 import { updateHavenFeatures } from "./havenFeature";
 import { HavenAppState } from "platforms/desktop/reducers";

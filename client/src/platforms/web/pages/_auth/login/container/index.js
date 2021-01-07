@@ -7,8 +7,10 @@ import { connect } from "react-redux";
 import {
   restoreWalletByMnemomic,
   openWalletByData,
-  startWalletSession,
-} from "shared/actions/wallet";
+} from "shared/actions/walletCreation";
+import {
+  startWalletSession
+} from "shared/actions/walletSession";
 import Login from "../component";
 import { Redirect } from "react-router";
 import React, { Component } from "react";

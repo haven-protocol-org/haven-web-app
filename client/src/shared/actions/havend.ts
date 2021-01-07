@@ -1,6 +1,6 @@
 import { havendProxy } from "shared/core/proxy";
 import { DAEMON_CONECTION_CREATED } from "./types";
-import { getNodeForWallet } from "./wallet";
+import { getNodeForWallet } from "./walletCreation";
 
 export const connectAppToDaemon = () => {
   return (dispatch: any, getState: any) => {

@@ -20,7 +20,6 @@ import {
 } from "./styles.js";
 
 import Buttons from "./buttons/index.js";
-import { closeWallet } from "shared/actions/wallet";
 import { syncFromFirstIncomingTx, rescanSpent } from "shared/actions/refresh";
 import { selectIsLoggedIn } from "shared/reducers/walletSession";
 import { APP_VERSION, NET_TYPE_NAME } from "constants/env";
@@ -35,6 +34,7 @@ import Tab from "./tab";
 
 import { showModal } from "shared/actions/modal";
 import { MODAL_TYPE } from "shared/reducers/modal";
+import { closeWallet } from "shared/actions/walletSession";
 
 interface NavigationProps {
   isLoggedIn: boolean;

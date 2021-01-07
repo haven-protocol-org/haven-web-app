@@ -1,10 +1,9 @@
 // Library Imports
 import React from "react";
-
 import { Icon } from "./styles";
 import { DesktopAppState } from "../../reducers";
 import { connect } from "react-redux";
-import { rescanBlockchain } from "shared/actions/wallet";
+import { rescanBlockchain } from "shared/actions/walletCreation";
 
 const RefreshIconComponent = (props: any) => {
   return (

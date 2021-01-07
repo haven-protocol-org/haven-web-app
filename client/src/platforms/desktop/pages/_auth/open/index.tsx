@@ -15,9 +15,8 @@ import { WalletSelection } from "shared/components/_inputs/wallet-selection";
 import Dropdown from "../../../../../shared/components/_inputs/dropdown";
 import InputButton from "shared/components/_inputs/input_button";
 
-import { openWalletByFile } from "shared/actions/wallet";
+import { openWalletByFile } from "shared/actions/walletCreation";
 import { DesktopAppState } from "platforms/desktop/reducers";
-
 interface OpenWalletState {
   selectedWallet: string | null;
   password: string;
