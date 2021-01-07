@@ -2,7 +2,7 @@ import { AnyAction } from "redux";
 import { NodeLocation, LocalNode, SelectedNode, BasicNode, RemoteNode, NodeConnection } from "platforms/desktop/types";
 import { DesktopAppState } from "platforms/desktop/reducers/index";
 import {
-  SET_NODE_FOR_WALLET_REQUESTED,
+  RESET_NODE_FOR_WALLET,
   SET_NODE_FOR_WALLET_SUCCESS,
   SET_NODE_LIST_FOR_WALLET_SUCCESS,
 } from "platforms/desktop/actions/types";
@@ -35,9 +35,9 @@ export const connectedNode = (
     case SET_APP_TO_DAEMON_CONNECTION_STATE:
        return { ...state, isAppConnectedToDaemon: action.payload };
     case SET_NODE_FOR_WALLET_SUCCESS:
-      return { ...state, ...action.payload };
-      case SET_NODE_FOR_WALLET_REQUESTED:
-        return {...state, isConnecting: true};
+      return { ...state, ...action.payload, isAppConnectedToDaemon: false, isWalletConectedToDaemon: false, isConnecting: true };
+      case RESET_NODE_FOR_WALLET:
+        return {location: NodeLocation.None,address:"", port:"", isConnecting: false, isAppConnectedToDaemon: false, isWalletConectedToDaemon: false};
     default:
       return state;
   }

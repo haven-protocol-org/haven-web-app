@@ -49,7 +49,7 @@ interface NodeSettingState {
   selectedNodeOption: NodeOption;
   address: string;
   port: string;
-  connected: boolean;
+  isConnecting: boolean;
   locked: boolean;
 }
 
@@ -59,7 +59,7 @@ class NodeSettingComponent extends React.Component<
 > {
   state = {
     address: this.props.node.address!,
-    connected: this.props.isConnected,
+    isConnecting: this.props.node.isConnecting,
     locked: this.props.isConnected,
     selectedNodeOption: this.props.node.location === NodeLocation.None ? this.props.defaultNode
     :  
@@ -119,47 +119,28 @@ class NodeSettingComponent extends React.Component<
     });
   };
 
-  /* static getDerivedStateFromProps(
+   static getDerivedStateFromProps(
     nextProps: Readonly<NodeSettingProps>,
     prevState: Readonly<NodeSettingState>
   ) {
-    let newState = {};
+    
+    let newState:Partial<NodeSettingState> = {};
 
-    const isConnectedOrTryingToConnectAgain =
-      nextProps.isConnected !== false &&
-      prevState.connected !== nextProps.isConnected;
-
-    // when we are connected to a daemon or trying to connect  --> again lock
-    if (isConnectedOrTryingToConnectAgain) {
-      newState = { ...newState, locked: true };
+    //track previous isConnecting state
+    if (prevState.isConnecting !== nextProps.node.isConnecting) {
+      newState = {isConnecting: nextProps.node.isConnecting}
     }
 
-    if (nextProps.isConnected !== prevState.connected) {
-      newState = { ...newState, connected: nextProps.isConnected };
+
+    //when we attempt to connect to another node, but failed, lets unlock again
+    if (prevState.isConnecting && !nextProps.node.isConnecting && !nextProps.node.isWalletConectedToDaemon && !prevState.locked)
+    {
+        newState = {...newState, locked: false};
     }
 
-    if (isConnectedOrTryingToConnectAgain) {
-      if (nextProps.node.address !== prevState.address) {
-        const changes = {
-          address: nextProps.node.address,
-          port: nextProps.node.port,
-        };
-        newState = { ...newState, ...changes };
-      }
-    }
-
-    if (isConnectedOrTryingToConnectAgain) {
-      if (prevState.selectedNodeOption.address !== nextProps.node.address) {
-        const changes = {
-          selectedNodeOption: nextProps.nodeOptions.find(
-            (nodeOption) => nodeOption.address === nextProps.node.address
-          )!,
-        };
-        newState = { ...newState, ...changes };
-      }
-    }
     return newState;
-  } */
+  }
+
 
   buttonLogic = () => {
     const { locked } = this.state;
@@ -224,7 +205,7 @@ class NodeSettingComponent extends React.Component<
               <Information>
                 {this.props.isConnected
                   ? "Vault is connected to "
-                  : this.props.node.location !== NodeLocation.None
+                  : this.props.node.location !== NodeLocation.None && this.props.node.isConnecting
                   ? "Vault is trying to connect to "
                   : "Vault is not connected to "}
                 <strong>{this.state.selectedNodeOption.name}</strong>. Change

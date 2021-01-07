@@ -1,6 +1,6 @@
 import {
   SET_NODE_FOR_WALLET_FAILED,
-  SET_NODE_FOR_WALLET_REQUESTED,
+  RESET_NODE_FOR_WALLET,
   SET_NODE_FOR_WALLET_SUCCESS,
 } from "./types";
 import { NodeLocation } from "platforms/desktop/types";
@@ -9,9 +9,7 @@ import { addErrorNotification } from "shared/actions/notification";
 import { NodeOption } from "../pages/_wallet/settings/node/nodeSetting";
 import { walletProxy, havendProxy } from "shared/core/proxy";
 import { IMonerRPCConnection } from "typings";
-import { startLocalNode, stopLocalNode } from "./localNode";
 import { logM } from "utility/utility";
-import { SSL_OP_NETSCAPE_DEMO_CIPHER_CHANGE_BUG } from "constants";
 import { SET_APP_TO_DAEMON_CONNECTION_STATE, SET_WALLET_CONNECTION_STATE } from "shared/actions/types";
 
 export const changeNodeForWallet = (
@@ -20,7 +18,8 @@ export const changeNodeForWallet = (
   nodePort: string
 ) => {
   return async(dispatch: any, getState: () => DesktopAppState) => {
-    dispatch(setNodeForWalletRequested());
+
+
 
     let address: string = createFullAddress(nodeAddress, nodePort);
 
@@ -48,11 +47,9 @@ export const changeNodeForWallet = (
 
     try {
       
-      const res1 = await walletProxy.setDaemonConnection(connection)
-      const res2 = await havendProxy.createDaemonConnection(connection)
+      await walletProxy.setDaemonConnection(connection)
+      await havendProxy.createDaemonConnection(connection)
 
-      console.log("setDaemonConnection");
-      console.log(res1);
 
        dispatch(
           setNodeForWalletSucceed(
@@ -71,7 +68,7 @@ export const changeNodeForWallet = (
 };
 
 
-export const disconnectNode = async() => {
+export const disconnectNode = () => {
 
   // we just create an empty connection
   const connection: IMonerRPCConnection = {
@@ -89,12 +86,7 @@ export const disconnectNode = async() => {
     dispatch({type: SET_WALLET_CONNECTION_STATE, payload: false});
 
 
-     dispatch(
-        setNodeForWalletSucceed(
-          "",
-          "",
-          NodeLocation.None
-        ))
+     dispatch(resetNodeForWallet())
 
   }
   catch (error)
@@ -120,10 +112,10 @@ const createFullAddress = (nodeAddress: string, nodePort: string) => {
   return address;
 }
 
-const setNodeForWalletRequested = () => {
+const resetNodeForWallet = () => {
   return (dispatch: any) => {
     dispatch({
-      type: SET_NODE_FOR_WALLET_REQUESTED,
+      type: RESET_NODE_FOR_WALLET,
     });
   };
 };
