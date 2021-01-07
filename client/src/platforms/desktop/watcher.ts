@@ -5,8 +5,8 @@ import { walletProxy } from "shared/core/proxy";
 export const addDesktopStoreWatchers = (store: Store) => {
     
     // add watcher when we are connected to a daemon again
-    let syncWatcher = watch(() => store.getState().connectedNode.isWalletConectedToDaemon)
-    store.subscribe(syncWatcher((isConnected: boolean, wasConnected: boolean) => {
+    let connectWatcher = watch(() => store.getState().connectedNode.isWalletConectedToDaemon)
+    store.subscribe(connectWatcher((isConnected: boolean, wasConnected: boolean) => {
     if (isConnected && !wasConnected) {
         walletProxy.syncWallet();
     }
