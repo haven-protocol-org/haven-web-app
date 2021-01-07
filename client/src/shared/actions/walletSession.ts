@@ -31,7 +31,7 @@ export const startWalletSession = (
       dispatch(connectAppToDaemon());
       // fetch latest prices once at start
       dispatch(getLastBlockHeader());
-      await dispatch(initReduxWallet());
+
   
       // start wallet listeners
       const listener = new HavenWalletListener(dispatch, getStore);
@@ -41,34 +41,16 @@ export const startWalletSession = (
         walletProxy.addWalletListener();
         initDesktopWalletListener(listener);
       }
+
+      await dispatch(initWallet());
       walletProxy.syncWallet();
   
-      //core.syncAtOnce(1);
-    };
-  };
-  
-  export const closeWallet = (isWeb: boolean) => {
-    return async (dispatch: any, getState: () => HavenAppState) => {
-      // closing wallet is handled differently for web and desktop
-  
-      dispatch({type: CLOSE_WALLET_SESSION})
-      if (isWeb) {
-        await walletProxy.stopSyncing();
-        await dispatch(storeWalletInDB());
-        await walletProxy.closeWallet(false);
-      } else {
-        await walletProxy.stopSyncing();
-        await walletProxy.closeWallet(true);
-        removeDesktopListener();
-      }
-  
-      dispatch({ type: STOP_WALLET_SESSION });
     };
   };
   
   // init some basic data before wallet listener
   // will be responsible for data updates
-  const initReduxWallet = () => {
+  export const initWallet = () => {
     return async (dispatch: any) => {
       dispatch(getXHVBalance());
       dispatch(getXUSDBalance());
@@ -91,5 +73,25 @@ export const startWalletSession = (
       dispatch(updateHavenFeatures(nodeHeight));
   
       return;
+    };
+  };
+
+
+  export const closeWallet = (isWeb: boolean) => {
+    return async (dispatch: any, getState: () => HavenAppState) => {
+      // closing wallet is handled differently for web and desktop
+  
+      dispatch({type: CLOSE_WALLET_SESSION})
+      if (isWeb) {
+        await walletProxy.stopSyncing();
+        await dispatch(storeWalletInDB());
+        await walletProxy.closeWallet(false);
+      } else {
+        await walletProxy.stopSyncing();
+        await walletProxy.closeWallet(true);
+        removeDesktopListener();
+      }
+  
+      dispatch({ type: STOP_WALLET_SESSION });
     };
   };

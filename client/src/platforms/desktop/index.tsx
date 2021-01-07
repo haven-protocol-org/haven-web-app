@@ -12,12 +12,14 @@ import {
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { GlobalStyle } from "globalStyle";
+import { addDesktopStoreWatchers } from "./watcher";
 
 let store: Store;
 
 export const startDesktopApp = () => {
   const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore);
   store = createStoreWithMiddleware(reducers);
+  addDesktopStoreWatchers(store);
   render();
 };
 
@@ -31,7 +33,7 @@ export const startDesktopAppInDevMode = () => {
   store.subscribe(() => {
     saveDesktopState(store.getState());
   });
-
+  addDesktopStoreWatchers(store);
   render();
 };
 
