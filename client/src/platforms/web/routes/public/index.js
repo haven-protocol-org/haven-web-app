@@ -8,10 +8,11 @@ import { CreateWeb } from "../../pages/_auth/create";
 import { LoginWeb } from "../../pages/_auth/login/container";
 import { showModal } from "shared/actions/modal";
 import { MODAL_TYPE } from "shared/reducers/modal";
+import { isWeb } from "constants/env";
 
 class PublicRoutes extends Component {
   componentDidMount() {
-    if (localStorage.getItem("onboard") === null) {
+    if (localStorage.getItem("onboard") === null && isWeb() ) {
       this.props.showModal(MODAL_TYPE.LoginOnboarding);
       localStorage.setItem("onboard", true);
     }
