@@ -133,7 +133,7 @@ class NodeSettingComponent extends React.Component<
 
 
     //when we attempt to connect to another node, but failed, lets unlock again
-    if (prevState.isConnecting && !nextProps.node.isConnecting && !nextProps.node.isWalletConectedToDaemon && !prevState.locked)
+    if (prevState.isConnecting && !nextProps.node.isConnecting && !nextProps.node.isWalletConectedToDaemon && prevState.locked)
     {
         newState = {...newState, locked: false};
     }
