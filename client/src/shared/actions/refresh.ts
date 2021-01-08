@@ -1,15 +1,14 @@
-import { isDesktop, isWeb } from "constants/env";
+import { isDesktop } from "constants/env";
 import { getLocalNodeState } from "platforms/desktop/actions/localNode";
 import { HavenAppState } from "platforms/desktop/reducers";
-import { storeWalletInDB } from "platforms/web/actions/storage";
 import { walletProxy } from "shared/core/proxy";
 import { MODAL_TYPE } from "shared/reducers/modal";
 import { getHeightOfFirstIncomingTx, hasNoTxsEntries } from "shared/reducers/xTransferList";
-import { logM } from "utility/utility";
 import { getAppConnectionState, getWalletConnectionState } from "./connection";
 import { hideModal, showModal } from "./modal";
 import { getAllTransfers } from "./transferHistory";
 import { SET_RESTORE_HEIGHT } from "./types";
+import { saveWallet } from "./walletSession";
 
 
 // a few things we need to refresh
@@ -49,9 +48,7 @@ export const syncFromFirstIncomingTx = () => {
         }
         dispatch(showModal(MODAL_TYPE.RescanBC));
         await walletProxy.rescanBlockchain();
-        if (isWeb()) {
-            dispatch(storeWalletInDB());
-        }
+        dispatch(saveWallet());
         dispatch(hideModal());
     }
 
