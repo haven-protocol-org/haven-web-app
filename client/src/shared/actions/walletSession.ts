@@ -52,17 +52,11 @@ export const startWalletSession = (
 
   export const initChainData = () => {
 
-
     return async(dispatch: any) => {
-
-  
 
     const chainHeight = await walletProxy.getChainHeight();
     const nodeHeight = await walletProxy.getNodeHeight();
     const walletHeight = await walletProxy.getWalletHeight();
-
-
-
     const chainHeights: Partial<Chain> = {
       walletHeight,
       nodeHeight,
@@ -121,8 +115,5 @@ export const startWalletSession = (
         }else {
             walletProxy.saveWallet();
         }
-
-
     }
-
   }

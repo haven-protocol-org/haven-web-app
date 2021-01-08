@@ -1,46 +1,25 @@
-import { IOpenWallet, ICreateWallet, IMonerRPCConnection } from "typings";
 import { getNetworkByName, isDesktop, isWeb } from "constants/env";
+import { NotificationType } from "constants/notificationList";
+import { DesktopAppState, HavenAppState } from "platforms/desktop/reducers";
+import { selectStorePath } from "platforms/desktop/reducers/storedWallets";
+import { NodeLocation } from "platforms/desktop/types";
 import {
-  OPEN_WALLET_FETCHING,
-  OPEN_WALLET_FAILED,
-  OPEN_WALLET_SUCCEED,
-  CREATE_WALLET_FAILED,
-  CREATE_WALLET_SUCCEED,
-  CREATE_WALLET_FETCHING,
-  QUERY_MNEMONIC_FOR_WALLET_GENERATION_SUCCEED,
-  RESTORE_WALLET_BY_SEED_FETCHING,
-  RESTORE_WALLET_BY_SEED_SUCCEED,
-  RESTORE_WALLET_BY_SEED_FAILED,
-  START_WALLET_SESSION,
-  STOP_WALLET_SESSION,
-  GET_WALLET_HEIGHT_SUCCEED,
-  CLOSE_WALLET_SESSION,
-} from "./types";
+  getWalletCacheByName
+} from "platforms/web/actions/storage";
+import { webWalletConnection } from "platforms/web/nodes";
+import { Chain } from "shared/reducers/chain";
+import { ICreateWallet, IMonerRPCConnection, IOpenWallet } from "typings";
 import { walletProxy } from "../core/proxy";
 import { addNotificationByMessage } from "./notification";
-import { NotificationType } from "constants/notificationList";
-import { getXHVBalance, getXUSDBalance } from "./balance";
-import { webWalletConnection } from "platforms/web/nodes";
-import { connectAppToDaemon as connectAppToDaemon } from "./havend";
-import { updateHavenFeatures } from "./havenFeature";
-import { Chain } from "shared/reducers/chain";
-import { DesktopAppState, HavenAppState } from "platforms/desktop/reducers";
-import { getAllTransfers } from "./transferHistory";
 import {
-  getWalletCacheByName,
-  storeWalletInDB,
-} from "platforms/web/actions/storage";
-import { HavenWalletListener } from "shared/actions/walletListener";
-import { selectStorePath } from "platforms/desktop/reducers/storedWallets";
-import {
-  initDesktopWalletListener,
-  removeDesktopListener,
-} from "platforms/desktop/ipc/wallet";
-import { getAddresses } from "./address";
-import { getLastBlockHeader } from "./blockHeaderExchangeRate";
-import { refresh } from "./refresh";
-import { setWebConfig } from "platforms/web/actions/config";
-import { NodeLocation } from "platforms/desktop/types";
+  CREATE_WALLET_FAILED,
+  CREATE_WALLET_FETCHING, CREATE_WALLET_SUCCEED,
+  GET_WALLET_HEIGHT_SUCCEED, OPEN_WALLET_FAILED, OPEN_WALLET_FETCHING,
+  OPEN_WALLET_SUCCEED,
+  QUERY_MNEMONIC_FOR_WALLET_GENERATION_SUCCEED,
+  RESTORE_WALLET_BY_SEED_FAILED, RESTORE_WALLET_BY_SEED_FETCHING,
+  RESTORE_WALLET_BY_SEED_SUCCEED
+} from "./types";
 import { startWalletSession } from "./walletSession";
 
 /** collection of actions to open, create and store wallet */
