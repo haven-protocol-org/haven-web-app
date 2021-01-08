@@ -3,33 +3,45 @@ import * as path from "path";
 import { APP_DATA_PATH } from "../env";
 import { NET } from "../types";
 
-const MAINNET_WALLET_PATH = "/wallet/main";
-const TESTNET_WALLET_PATH = "/wallet/test";
-const STAGENET_WALLET_PATH = "/wallet/stage";
-export const WALLET_PATH_TESTNET: string = path.join(
-  APP_DATA_PATH,
-  TESTNET_WALLET_PATH
-);
-export const WALLET_PATH_MAINNET: string = path.join(
-  APP_DATA_PATH,
-  MAINNET_WALLET_PATH
-);
-export const WALLET_PATH_STAGENET: string = path.join(
-  APP_DATA_PATH,
-  STAGENET_WALLET_PATH
-);
-const checkAndCreateWalletDir = (path: string) => {
 
-    if (!fs.existsSync(path)) {
-      fs.mkdirSync(path, { recursive: true });
-    }
-};
+const newPaths = ["/vault/main", "/vault/test","/vault/stage"];
+const oldPaths = ["/wallet/main", "/wallet/test", "/wallet/stage"];
+
+const getOldWalletPath = (netTypeId: NET) => {
+
+    return path.join(APP_DATA_PATH, oldPaths[netTypeId]);
+}
 
 const getWalletPath = (netTypeId: NET) => {
-  const path = [WALLET_PATH_MAINNET, WALLET_PATH_TESTNET, WALLET_PATH_STAGENET][netTypeId];
-  checkAndCreateWalletDir(path);
-  return path;
+  return path.join(APP_DATA_PATH, newPaths[netTypeId]);
+}
 
+const getOrConstructWalletPath = (netTypeId: NET) => {
+
+  const walletPath = getWalletPath(netTypeId);
+  if (!fs.existsSync(walletPath)) {
+    // create new wallet folder
+    fs.mkdirSync(walletPath, { recursive: true });
+
+    //check for old wallet folder and copy over keys files
+    const oldPath = getOldWalletPath(netTypeId);
+
+    if (fs.existsSync(oldPath)) {
+
+      const oldWallets = fs.readdirSync(oldPath);
+
+      const keyFiles = oldWallets
+        .filter((file: string) => file.endsWith(".keys"))
+
+        for (const file of keyFiles) {
+
+          const oldFile = path.join(oldPath, file);
+          const newFile = path.join(walletPath, file)
+          fs.copyFileSync(oldFile, newFile);
+        }
+    }
+  }
+  return walletPath;
 };
 
 
@@ -37,7 +49,7 @@ export const getAvailableWallets = (netTypeId: NET): {
   storePath: string;
   wallets: string[];
 } => {
-  const walletPath: string = getWalletPath(netTypeId);
+  const walletPath: string = getOrConstructWalletPath(netTypeId);
   let availableWallets: string[];
 
   const files = fs.readdirSync(walletPath);
