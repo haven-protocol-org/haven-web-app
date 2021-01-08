@@ -76,6 +76,7 @@ export const disconnectNode = () => {
   };
 
 
+  walletProxy.stopSyncing();
   return async(dispatch: any, getState: () => DesktopAppState) => {
   try {
       
