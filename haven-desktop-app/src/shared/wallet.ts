@@ -218,3 +218,12 @@ export const rescanBlockchain = async () => {
 export const isClosed = async() => {
   return wallet.isClosed();
 }
+
+export const rescanSpent = () => {
+  return wallet.rescanSpent();
+}
+
+export const saveWallet = () => {
+  return wallet.save();
+}
+

@@ -47,6 +47,33 @@ export const startWalletSession = (
   
     };
   };
+
+
+
+  export const initChainData = () => {
+
+
+    return async(dispatch: any) => {
+
+  
+
+    const chainHeight = await walletProxy.getChainHeight();
+    const nodeHeight = await walletProxy.getNodeHeight();
+    const walletHeight = await walletProxy.getWalletHeight();
+
+
+
+    const chainHeights: Partial<Chain> = {
+      walletHeight,
+      nodeHeight,
+      chainHeight: chainHeight < nodeHeight? nodeHeight : chainHeight,
+    } as Partial<Chain>;
+
+    dispatch(onWalletSyncUpdateSucceed(chainHeights));
+    dispatch(updateHavenFeatures(nodeHeight));
+    }
+
+  }
   
   // init some basic data before wallet listener
   // will be responsible for data updates
@@ -57,20 +84,8 @@ export const startWalletSession = (
       dispatch(getAllTransfers());
       dispatch(getAddresses());
       dispatch(refresh());
-      const chainHeight = await walletProxy.getChainHeight();
-      const nodeHeight = await walletProxy.getNodeHeight();
-      const walletHeight = await walletProxy.getWalletHeight();
-  
-  
-  
-      const chainHeights: Partial<Chain> = {
-        walletHeight,
-        nodeHeight,
-        chainHeight: chainHeight < nodeHeight? nodeHeight : chainHeight,
-      } as Partial<Chain>;
-  
-      dispatch(onWalletSyncUpdateSucceed(chainHeights));
-      dispatch(updateHavenFeatures(nodeHeight));
+ 
+      dispatch(initChainData());
   
       return;
     };
@@ -95,3 +110,19 @@ export const startWalletSession = (
       dispatch({ type: STOP_WALLET_SESSION });
     };
   };
+
+
+  export const saveWallet = () => {
+
+    return (dispatch: any) => {
+
+        if (isWeb()) {
+            dispatch(storeWalletInDB());
+        }else {
+            walletProxy.saveWallet();
+        }
+
+
+    }
+
+  }

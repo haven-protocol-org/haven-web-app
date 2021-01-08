@@ -226,14 +226,11 @@ export const getSyncHeight = () => {
   return wallet.getSyncHeight();
 }
 
-
-export const rescanBlockChain = () => {
-  return wallet.rescanBlockchain();
-}
-
 export const rescanSpent = () => {
   return wallet.rescanSpent();
 }
 
-
+export const saveWallet = () => {
+  return wallet.save();
+}
 
