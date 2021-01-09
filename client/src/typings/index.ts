@@ -22,6 +22,7 @@ export interface IOpenWallet {
   keysData?: Uint8Array;
   cacheData?: Uint8Array;
   server?: IMonerRPCConnection;
+  proxyToWorker?: boolean;
 }
 
 /** meant for either restoring a wallet ( either with mnemomic or keys )
