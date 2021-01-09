@@ -5,7 +5,7 @@ import { WebAppState } from "platforms/web/reducers";
 
 export enum NotificationDuration {
   STICKY = -1,
-  DEFAULT = 3000,
+  DEFAULT = 3500,
 }
 
 export interface HavenNotification {
