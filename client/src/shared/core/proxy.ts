@@ -29,6 +29,10 @@ const walletHandler: ProxyHandler<typeof walletCore> = {
           CommunicationChannel.WALLET
         );
 
+        if (response && response.status && response.status === "error") {
+          throw new Error(response.message);
+        }
+
 
         if (name === "transfer") {
           const txs: MoneroTxWallet[] = response.map(
@@ -72,8 +76,8 @@ const walletHandler: ProxyHandler<typeof walletCore> = {
 
       }
       catch(e) {
-        logM(e);
-        return e;
+        
+        throw (e.message);
 
         }
       };

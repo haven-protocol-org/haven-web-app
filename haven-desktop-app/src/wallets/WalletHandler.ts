@@ -50,6 +50,8 @@ export class WalletHandler {
     const methodName: keyof typeof core = request.methodName as keyof typeof core;
     const params = request.params;
 
+    logInDevMode(request.methodName);
+
     if (methodName === "addWalletListener") {
       this.addWalletListener();
       enableKeysMenu(true);
@@ -63,6 +65,8 @@ export class WalletHandler {
     try {
 
     const response = await core[methodName].call(null, ...params);
+
+    logInDevMode(response);
 
     if (methodName === "getTxs") {
       const txClassObjects = response;
@@ -105,8 +109,13 @@ export class WalletHandler {
   }
   catch(e) {
 
-   // logInDevMode(e);
-    return e.toString();
+    logInDevMode(e);
+
+    return {
+      message: e.message,
+      status:"error",
+      code:e.code
+    }
   }
 
   };
