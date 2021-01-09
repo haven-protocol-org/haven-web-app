@@ -20,7 +20,7 @@ export const getLastBlockHeader = () => {
     dispatch(getLastBlockerHeaderSucceed(recordEntry));
     }
     catch(e) {
-        dispatch(addErrorNotification('Failed to fetch price rates'));
+      //  dispatch(addErrorNotification('Failed to fetch price rates'));
     }
 
     //TODO add some error handling
