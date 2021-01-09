@@ -12,6 +12,8 @@ const load = keyframes`
 }
 `;
 
+
+
 export const Container = styled.div`
   height: auto;
   width: 100%;
@@ -19,7 +21,7 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  bottom: 0;
+  bottom: ${(props) => props.count * 50 + "px"};
   position: absolute;
   animation: ${load} 0.5s alternate;
 
