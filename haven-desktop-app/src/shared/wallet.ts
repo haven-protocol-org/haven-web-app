@@ -211,6 +211,19 @@ export const labelAddress = async (label: string, addressIndex: number) => {
   throw "not implemented yet";
 };
 
+export const getIntegratedAddress = async(paymentId?: string) => {
+  //@ts-ignore
+  return wallet.getIntegratedAddress(paymentId)
+}
+
+export const setSyncHeight = (syncHeight: number) => {
+  return wallet.setSyncHeight(syncHeight);
+}
+
+export const getSyncHeight = () => {
+  return wallet.getSyncHeight();
+}
+
 export const rescanBlockchain = async () => {
   return wallet.rescanBlockchain();
 };

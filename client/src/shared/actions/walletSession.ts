@@ -12,7 +12,7 @@ import { connectAppToDaemon } from "./havend";
 import { updateHavenFeatures } from "./havenFeature";
 import { refresh } from "./refresh";
 import { getAllTransfers } from "./transferHistory";
-import { CLOSE_WALLET_SESSION, START_WALLET_SESSION, STOP_WALLET_SESSION } from "./types";
+import { CLOSE_WALLET_SESSION, SET_RESTORE_HEIGHT, START_WALLET_SESSION, STOP_WALLET_SESSION } from "./types";
 import { onWalletSyncUpdateSucceed } from "./walletCreation";
 import { HavenWalletListener } from "./walletListener";
 
@@ -43,6 +43,8 @@ export const startWalletSession = (
       }
 
       await dispatch(initWallet());
+      const syncHeight = await walletProxy.getSyncHeight();
+      dispatch({type: SET_RESTORE_HEIGHT, payload: syncHeight});
       walletProxy.syncWallet();
   
     };
@@ -78,7 +80,7 @@ export const startWalletSession = (
       dispatch(getAllTransfers());
       dispatch(getAddresses());
       dispatch(refresh());
- 
+
       dispatch(initChainData());
   
       return;
