@@ -15,12 +15,8 @@ import {
 } from "shared/reducers/walletCreation";
 import { WebAppState } from "platforms/web/reducers";
 import { storeKeyFileToDisk } from "platforms/web/actions/storage";
-import {
-  restoreWalletByMnemomic,
-} from "shared/actions/walletCreation";
-import {
-  startWalletSession,
-} from "shared/actions/walletSession";
+import { restoreWalletByMnemomic } from "shared/actions/walletCreation";
+import { startWalletSession } from "shared/actions/walletSession";
 import { selectIsLoggedIn } from "shared/reducers/walletSession";
 import { MoneroUtils } from "haven-wallet-core";
 import Checkbox from "../../../../../../../shared/components/checkbox";
@@ -164,7 +160,7 @@ class RestoreWeb extends Component<RestoreProps, RestoreState> {
     const windowWidth = window.innerWidth;
     const { step, mnemomic, error } = this.state;
 
-    // Is the sole inline style because it's for a <strong /> tag
+    // Is the sole inline style because it's for a strong tag
     const styles = {
       color: "#96989b",
     };
