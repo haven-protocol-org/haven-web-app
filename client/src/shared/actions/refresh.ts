@@ -35,7 +35,6 @@ export const syncFromFirstIncomingTx = () => {
         }
 
         let newSyncHeight = getHeightOfFirstIncomingTx(getState());
-        console.log(newSyncHeight);
 
         dispatch({type: SET_RESTORE_HEIGHT, payload: newSyncHeight});
 
