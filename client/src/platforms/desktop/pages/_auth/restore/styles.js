@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
 export const Body = styled.div`
-  height: 264px;
+  min-height: 264px;
   margin: 10px;
 `;
 
 export const Wrapper = styled.div`
-  height: 100%;
+  height: auto;
   margin-bottom: 10px;
 `;

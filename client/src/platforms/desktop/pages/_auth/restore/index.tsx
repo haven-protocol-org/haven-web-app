@@ -17,6 +17,7 @@ import Input from "shared/components/_inputs/input";
 import { DesktopAppState } from "../../../reducers";
 import InputButton from "shared/components/_inputs/input_button";
 import { startWalletSession } from "shared/actions/walletSession";
+import Form from "../../../../../shared/components/_inputs/form";
 
 interface RestoreProps {
   restoreWalletByMnemomic: (
@@ -42,6 +43,7 @@ interface RestoreState {
   error: string | undefined;
   seed: string;
   pw: string;
+  restore_height: string;
   name: string;
   showPassword: boolean;
 }
@@ -53,6 +55,7 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
     seed: "",
     pw: "",
     name: "",
+    restore_height: "",
     showPassword: false,
   };
 
@@ -150,14 +153,25 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
         {step === RESTORE_STEP.NAME_STEP && (
           <Wrapper>
             <Body>
-              <Input
-                label="Vault Name"
-                placeholder="Create a vault name"
-                name="name"
-                type={"text"}
-                value={name}
-                onChange={this.onChangeHandler}
-              />
+              <Form>
+                <Input
+                  label="Vault Name"
+                  placeholder="Create a vault name"
+                  name="name"
+                  type={"text"}
+                  value={name}
+                  onChange={this.onChangeHandler}
+                />
+                <Input
+                  // @ts-ignore
+                  label="Restore Height (Optional)"
+                  placeholder="Enter restore height"
+                  name="restore_height"
+                  value={this.state.restore_height}
+                  onChange={this.onChangeHandler}
+                  type="number"
+                />
+              </Form>
               <InputButton
                 // @ts-ignore
                 label="Vault Password"
@@ -169,6 +183,7 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
                 onChange={this.onChangeHandler}
                 onClick={this.togglePassword}
               />
+
               <Information>
                 Create a unique name and strong password for your vault file. If
                 you lose your vault file you can always restore it with the 25

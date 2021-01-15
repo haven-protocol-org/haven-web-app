@@ -15,16 +15,13 @@ import {
 } from "shared/reducers/walletCreation";
 import { WebAppState } from "platforms/web/reducers";
 import { storeKeyFileToDisk } from "platforms/web/actions/storage";
-import {
-  restoreWalletByMnemomic,
-} from "shared/actions/walletCreation";
-import {
-  startWalletSession,
-} from "shared/actions/walletSession";
+import { restoreWalletByMnemomic } from "shared/actions/walletCreation";
+import { startWalletSession } from "shared/actions/walletSession";
 import { selectIsLoggedIn } from "shared/reducers/walletSession";
 import { MoneroUtils } from "haven-wallet-core";
 import Checkbox from "../../../../../../../shared/components/checkbox";
 import { Redirect } from "react-router";
+import Form from "../../../../../../../shared/components/_inputs/form";
 
 interface RestoreProps {
   walletName: string;
@@ -55,6 +52,7 @@ interface RestoreState {
   validationSucceed: boolean;
   checked: boolean;
   disabled: boolean;
+  restore_height: string;
 }
 
 class RestoreWeb extends Component<RestoreProps, RestoreState> {
@@ -72,6 +70,7 @@ class RestoreWeb extends Component<RestoreProps, RestoreState> {
     validationSucceed: false,
     checked: false,
     disabled: false,
+    restore_height: "",
   };
 
   componentDidUpdate(prevProps: RestoreProps, prevState: RestoreState) {
@@ -164,11 +163,6 @@ class RestoreWeb extends Component<RestoreProps, RestoreState> {
     const windowWidth = window.innerWidth;
     const { step, mnemomic, error } = this.state;
 
-    // Is the sole inline style because it's for a <strong /> tag
-    const styles = {
-      color: "#96989b",
-    };
-
     switch (step) {
       case 1:
         return (
@@ -185,27 +179,37 @@ class RestoreWeb extends Component<RestoreProps, RestoreState> {
             />
             <Information>
               Enter your 25 word seed phrase to generate a new vault file. This
-              is an encrypted file, with a unique name and password.{" "}
-              <strong style={styles}>
-                A restore requires a full chain sync and can take ~2.5hrs. An
-                alternative approach is to create a new vault to use within the
-                web wallet, which is much quicker, and then transferring your
-                funds into that new vault.
-              </strong>
+              is an encrypted file, with a unique name and password. A restore
+              requires a full chain sync and can take ~2.5hrs. An alternative
+              approach is to create a new vault to use within the web wallet,
+              which is much quicker, and then transferring your funds into that
+              new vault.
             </Information>
           </>
         );
       case 2:
         return (
           <>
-            <Input
-              label="Vault Name"
-              type="text"
-              placeholder="Create a Vault name"
-              name="create_vault_name"
-              value={this.state.create_vault_name}
-              onChange={this.handleChange}
-            />
+            <Form>
+              <Input
+                label="Vault Name"
+                type="text"
+                placeholder="Create a Vault name"
+                name="create_vault_name"
+                value={this.state.create_vault_name}
+                onChange={this.handleChange}
+              />
+              <Input
+                // @ts-ignore
+                label="Restore Height (Optional)"
+                placeholder="Enter restore height"
+                name="restore_height"
+                type="string"
+                value={this.state.restore_height}
+                onChange={this.handleChange}
+              />
+            </Form>
+
             <Toggle
               label="Vault Password"
               placeholder="Create a Vault password"
@@ -219,6 +223,7 @@ class RestoreWeb extends Component<RestoreProps, RestoreState> {
               error={error}
               width={false}
             />
+
             <Information>
               Create a unique name and strong password for your vault file. You
               will be asked to confirm this password on the final step. If you
@@ -284,6 +289,7 @@ class RestoreWeb extends Component<RestoreProps, RestoreState> {
     if (this.props.isLoggedIn) {
       return <Redirect to="/wallet/assets" />;
     }
+
     const { step } = this.state;
     return (
       <MultiRestore
