@@ -59,7 +59,6 @@ export const Transaction = ({
     isMainnet() ? "" : "-testnet"
   }.havenprotocol.org/tx/${hash}`;
 
-  console.log("FEE", fee);
 
   return (
     <Container href={txExplorerLink} target="_blank">

@@ -14,7 +14,7 @@ export const Container = styled.div`
 
 export const Main = styled.div`
   min-height: auto;
-  height: 100%;
+  height: auto;
   padding: 10px;
   display: flex;
   flex-direction: column;
