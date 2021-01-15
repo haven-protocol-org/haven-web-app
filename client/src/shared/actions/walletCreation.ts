@@ -64,11 +64,12 @@ const openWallet = (walletData: IOpenWallet, path: string) => {
   return async (dispatch: any) => {
     dispatch(openWalletFetching());
 
-    const successOrError: boolean | object = await walletProxy.openWallet(
-      walletData
-    );
+    try {
 
-    if (successOrError === true) {
+     await walletProxy.openWallet(
+        walletData
+      );
+
       dispatch(openWalletSucceed(path));
       dispatch(
         addNotificationByMessage(
@@ -77,12 +78,16 @@ const openWallet = (walletData: IOpenWallet, path: string) => {
         )
       );
       dispatch(startWalletSession(path));
-    } else {
+
+
+    } catch(e) {
+
       addNotificationByMessage(
         NotificationType.ERROR,
         "Open vault is not working, please try again soon..."
       );
-      dispatch(openWalletFailed(successOrError as object));
+      dispatch(openWalletFailed(e));
+
     }
   };
 };
@@ -107,21 +112,25 @@ export const createNewWallet = (
       server: getNodeForWallet(getStore),
       networkType: getNetworkByName(),
     };
-    const successOrError: boolean | object = await walletProxy.createWallet(
-      walletData
-    );
 
-    if (successOrError === true) {
+    try {
+
+      await walletProxy.createWallet(
+        walletData
+      );
+
       const mnemomic = await walletProxy.getMnemonic();
       dispatch(queryMnemonicForWalletGenerationSucceed(mnemomic));
       dispatch(createWalletSucceed());
       addNotificationByMessage(NotificationType.SUCCESS, "Vault is open");
-    } else {
+
+    }catch (e) {
+
       addNotificationByMessage(
         NotificationType.ERROR,
         "Open vault is not working, please try again soon..."
       );
-      dispatch(createWalletFailed(successOrError as object));
+      dispatch(createWalletFailed(e));
     }
   };
 };
@@ -155,22 +164,25 @@ export const restoreWalletByMnemomic = (
     };
 
     dispatch(restoreWalletFetching(walletName));
-    const successOrError: boolean | object = await walletProxy.createWallet(
-      walletData
-    );
 
-    if (successOrError === true) {
+    try {
+
+      await walletProxy.createWallet(
+        walletData
+      );
+
       dispatch(restoreWalletSucceed(walletName));
       addNotificationByMessage(
         NotificationType.SUCCESS,
         "Restored vault with Mnemomic"
       );
-    } else {
+    } catch(e) {
+
       addNotificationByMessage(
         NotificationType.ERROR,
         "Restore vault is not working, please try again soon..."
       );
-      dispatch(restoreWalletFailed(successOrError));
+      dispatch(restoreWalletFailed(e));
     }
   };
 };
@@ -196,22 +208,28 @@ export const restoreWalletByKeys = (
   };
 
     dispatch(createWalletFetch(walletName));
-    const successOrError: boolean | object = await walletProxy.createWallet(
-      walletData
-    );
 
-    if (successOrError === true) {
+    try {
+
+      await walletProxy.createWallet(
+        walletData
+      );
+
       dispatch(restoreWalletSucceed(path));
       addNotificationByMessage(
         NotificationType.SUCCESS,
         "Restored vault with Keystore"
       );
-    } else {
+
+    } catch(e) {
+
       addNotificationByMessage(
         NotificationType.ERROR,
         "Open vault is not working, please try again soon..."
       );
-      dispatch(restoreWalletFailed(successOrError));
+      dispatch(restoreWalletFailed(e));
+
+
     }
   };
 };
