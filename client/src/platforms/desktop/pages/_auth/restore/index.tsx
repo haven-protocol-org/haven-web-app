@@ -120,8 +120,6 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
       return <Redirect to="/wallet/assets" />;
     }
 
-    console.log("RESTORE HEIGHT", this.state.restore_height);
-
     return (
       <>
         {step === RESTORE_STEP.SEED_STEP && (

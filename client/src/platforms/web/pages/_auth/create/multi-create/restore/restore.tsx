@@ -163,11 +163,6 @@ class RestoreWeb extends Component<RestoreProps, RestoreState> {
     const windowWidth = window.innerWidth;
     const { step, mnemomic, error } = this.state;
 
-    // Is the sole inline style because it's for a strong tag
-    const styles = {
-      color: "#96989b",
-    };
-
     switch (step) {
       case 1:
         return (
