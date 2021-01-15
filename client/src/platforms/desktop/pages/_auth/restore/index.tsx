@@ -155,23 +155,14 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
         {step === RESTORE_STEP.NAME_STEP && (
           <Wrapper>
             <Body>
-              <Input
-                label="Vault Name"
-                placeholder="Create a vault name"
-                name="name"
-                type={"text"}
-                value={name}
-                onChange={this.onChangeHandler}
-              />
               <Form>
                 <Input
-                  // @ts-ignore
-                  label="Vault Password"
-                  placeholder="Enter vault password"
-                  name="pw"
-                  value={this.state.pw}
+                  label="Vault Name"
+                  placeholder="Create a vault name"
+                  name="name"
+                  type={"text"}
+                  value={name}
                   onChange={this.onChangeHandler}
-                  type="text"
                 />
                 <Input
                   // @ts-ignore
@@ -183,6 +174,18 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
                   type="number"
                 />
               </Form>
+              <InputButton
+                // @ts-ignore
+                label="Vault Password"
+                placeholder="Enter vault password"
+                name="pw"
+                type={this.state.showPassword === true ? "text" : "password"}
+                button={this.state.showPassword === true ? "hide" : "show"}
+                value={this.state.pw}
+                onChange={this.onChangeHandler}
+                onClick={this.togglePassword}
+              />
+
               <Information>
                 Create a unique name and strong password for your vault file. If
                 you lose your vault file you can always restore it with the 25

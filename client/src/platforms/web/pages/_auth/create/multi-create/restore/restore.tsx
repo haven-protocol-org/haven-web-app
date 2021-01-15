@@ -21,6 +21,7 @@ import { selectIsLoggedIn } from "shared/reducers/walletSession";
 import { MoneroUtils } from "haven-wallet-core";
 import Checkbox from "../../../../../../../shared/components/checkbox";
 import { Redirect } from "react-router";
+import Form from "../../../../../../../shared/components/_inputs/form";
 
 interface RestoreProps {
   walletName: string;
@@ -51,6 +52,7 @@ interface RestoreState {
   validationSucceed: boolean;
   checked: boolean;
   disabled: boolean;
+  restore_height: string;
 }
 
 class RestoreWeb extends Component<RestoreProps, RestoreState> {
@@ -68,6 +70,7 @@ class RestoreWeb extends Component<RestoreProps, RestoreState> {
     validationSucceed: false,
     checked: false,
     disabled: false,
+    restore_height: "",
   };
 
   componentDidUpdate(prevProps: RestoreProps, prevState: RestoreState) {
@@ -194,14 +197,26 @@ class RestoreWeb extends Component<RestoreProps, RestoreState> {
       case 2:
         return (
           <>
-            <Input
-              label="Vault Name"
-              type="text"
-              placeholder="Create a Vault name"
-              name="create_vault_name"
-              value={this.state.create_vault_name}
-              onChange={this.handleChange}
-            />
+            <Form>
+              <Input
+                label="Vault Name"
+                type="text"
+                placeholder="Create a Vault name"
+                name="create_vault_name"
+                value={this.state.create_vault_name}
+                onChange={this.handleChange}
+              />
+              <Input
+                // @ts-ignore
+                label="Restore Height (Optional)"
+                placeholder="Enter restore height"
+                name="restore_height"
+                type="string"
+                value={this.state.restore_height}
+                onChange={this.handleChange}
+              />
+            </Form>
+
             <Toggle
               label="Vault Password"
               placeholder="Create a Vault password"
@@ -215,6 +230,7 @@ class RestoreWeb extends Component<RestoreProps, RestoreState> {
               error={error}
               width={false}
             />
+
             <Information>
               Create a unique name and strong password for your vault file. You
               will be asked to confirm this password on the final step. If you
@@ -280,6 +296,7 @@ class RestoreWeb extends Component<RestoreProps, RestoreState> {
     if (this.props.isLoggedIn) {
       return <Redirect to="/wallet/assets" />;
     }
+
     const { step } = this.state;
     return (
       <MultiRestore
