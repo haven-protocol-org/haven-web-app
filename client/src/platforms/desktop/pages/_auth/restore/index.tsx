@@ -17,6 +17,7 @@ import Input from "shared/components/_inputs/input";
 import { DesktopAppState } from "../../../reducers";
 import InputButton from "shared/components/_inputs/input_button";
 import { startWalletSession } from "shared/actions/walletSession";
+import Form from "../../../../../shared/components/_inputs/form";
 
 interface RestoreProps {
   restoreWalletByMnemomic: (
@@ -42,6 +43,7 @@ interface RestoreState {
   error: string | undefined;
   seed: string;
   pw: string;
+  restore_height: string;
   name: string;
   showPassword: boolean;
 }
@@ -53,6 +55,7 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
     seed: "",
     pw: "",
     name: "",
+    restore_height: "",
     showPassword: false,
   };
 
@@ -117,6 +120,8 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
       return <Redirect to="/wallet/assets" />;
     }
 
+    console.log("RESTORE HEIGHT", this.state.restore_height);
+
     return (
       <>
         {step === RESTORE_STEP.SEED_STEP && (
@@ -158,17 +163,26 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
                 value={name}
                 onChange={this.onChangeHandler}
               />
-              <InputButton
-                // @ts-ignore
-                label="Vault Password"
-                placeholder="Enter vault password"
-                name="pw"
-                type={this.state.showPassword === true ? "text" : "password"}
-                button={this.state.showPassword === true ? "hide" : "show"}
-                value={this.state.pw}
-                onChange={this.onChangeHandler}
-                onClick={this.togglePassword}
-              />
+              <Form>
+                <Input
+                  // @ts-ignore
+                  label="Vault Password"
+                  placeholder="Enter vault password"
+                  name="pw"
+                  value={this.state.pw}
+                  onChange={this.onChangeHandler}
+                  type="text"
+                />
+                <Input
+                  // @ts-ignore
+                  label="Restore Height (Optional)"
+                  placeholder="Enter restore height"
+                  name="restore_height"
+                  value={this.state.restore_height}
+                  onChange={this.onChangeHandler}
+                  type="number"
+                />
+              </Form>
               <Information>
                 Create a unique name and strong password for your vault file. If
                 you lose your vault file you can always restore it with the 25
