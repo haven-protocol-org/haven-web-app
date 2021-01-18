@@ -35,7 +35,8 @@ interface RestoreProps {
     path: string | undefined,
     mnemomic: string,
     password: string,
-    walletName: string | undefined
+    walletName: string | undefined,
+    restoreHeight: number | undefined
   ) => void;
 }
 
@@ -52,7 +53,7 @@ interface RestoreState {
   validationSucceed: boolean;
   checked: boolean;
   disabled: boolean;
-  restore_height: string;
+  restore_height: number | undefined;
 }
 
 class RestoreWeb extends Component<RestoreProps, RestoreState> {
@@ -70,7 +71,7 @@ class RestoreWeb extends Component<RestoreProps, RestoreState> {
     validationSucceed: false,
     checked: false,
     disabled: false,
-    restore_height: "",
+    restore_height: undefined,
   };
 
   componentDidUpdate(prevProps: RestoreProps, prevState: RestoreState) {
@@ -104,7 +105,7 @@ class RestoreWeb extends Component<RestoreProps, RestoreState> {
         undefined,
         this.state.mnemomic,
         this.state.create_vault_password,
-        this.state.create_vault_name
+        this.state.create_vault_name, this.state.restore_height
       );
       return;
     }
@@ -138,6 +139,16 @@ class RestoreWeb extends Component<RestoreProps, RestoreState> {
     const name = event.target.name;
     const value = event.target.value;
 
+    this.setState<never>({
+      [name]: value,
+    });
+  };
+
+
+  handleRestoreChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const name = e.currentTarget.name;
+    let value: number = e.currentTarget.valueAsNumber;
+    value = value < 0 ? 0: value;
     this.setState<never>({
       [name]: value,
     });
@@ -204,9 +215,9 @@ class RestoreWeb extends Component<RestoreProps, RestoreState> {
                 label="Restore Height (Optional)"
                 placeholder="Enter restore height"
                 name="restore_height"
-                type="string"
+                type="number"
                 value={this.state.restore_height}
-                onChange={this.handleChange}
+                onChange={this.handleRestoreChange}
               />
             </Form>
 
