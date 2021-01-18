@@ -76,7 +76,7 @@ const havenMenu: MenuItemConstructorOptions[] = [
         label: "Twitter",
         click: async () => {
           const { shell } = require("electron");
-          await shell.openExternal("https://twitter.com/HavenXHV");
+          await shell.openExternal("https://twitter.com/havenxhv");
         },
       },
 
@@ -84,7 +84,7 @@ const havenMenu: MenuItemConstructorOptions[] = [
         label: "Medium",
         click: async () => {
           const { shell } = require("electron");
-          await shell.openExternal("https://medium.com/@havencurrency");
+          await shell.openExternal("https://havenprotocol.medium.com/");
         },
       },
       { type: "separator" },
@@ -123,33 +123,23 @@ const havenMenu: MenuItemConstructorOptions[] = [
   },
 
   {
-    label: "White Papers",
+    label: "Knowledge",
     submenu: [
       {
-        label: "English",
+        label: "White Papers",
         click: async () => {
           const { shell } = require("electron");
           await shell.openExternal(
-            "http://docs.havenprotocol.org/whitepapers/english.pdf",
+            "https://havenprotocol.org/whitepaper/",
           );
         },
       },
-
-      {
-        label: "French",
+     {
+        label: "Knowledge Base",
         click: async () => {
           const { shell } = require("electron");
           await shell.openExternal(
-            "http://docs.havenprotocol.org/whitepapers/french.pdf",
-          );
-        },
-      },
-      {
-        label: "中文",
-        click: async () => {
-          const { shell } = require("electron");
-          await shell.openExternal(
-            "http://docs.havenprotocol.org/whitepapers/chinese.pdf",
+            "https://havenprotocol.org/knowledge/",
           );
         },
       },
