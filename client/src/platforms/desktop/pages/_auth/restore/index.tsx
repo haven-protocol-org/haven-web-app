@@ -1,9 +1,8 @@
 import {
   selectErrorMessageForLogin,
   selectIsLoggedIn,
-  selectIsRequestingLogin,
 } from "shared/reducers/walletSession";
-import { selectIsWalletCreated } from "shared/reducers/walletCreation";
+import { selectisRequestingWalletCreation, selectIsWalletCreated } from "shared/reducers/walletCreation";
 import { connect } from "react-redux";
 import { restoreWalletByMnemomic } from "shared/actions/walletCreation";
 import { Redirect } from "react-router";
@@ -18,7 +17,6 @@ import { DesktopAppState } from "../../../reducers";
 import InputButton from "shared/components/_inputs/input_button";
 import { startWalletSession } from "shared/actions/walletSession";
 import Form from "../../../../../shared/components/_inputs/form";
-import { logM } from "utility/utility";
 
 interface RestoreProps {
   restoreWalletByMnemomic: (
@@ -217,7 +215,7 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
 
 // @ts-ignore
 const mapStateToProps = (state: DesktopAppState) => ({
-  isRequestingLogin: selectIsRequestingLogin(state),
+  isRequestingLogin: selectisRequestingWalletCreation(state),
   isLoggedIn: selectIsLoggedIn(state),
   errorMessage: selectErrorMessageForLogin(state),
   isWalletCreated: selectIsWalletCreated(state),
