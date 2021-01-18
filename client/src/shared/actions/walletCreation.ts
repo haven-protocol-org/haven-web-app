@@ -146,7 +146,8 @@ export const restoreWalletByMnemomic = (
   path: string | undefined,
   mnemonic: string,
   password: string,
-  walletName: string | undefined
+  walletName: string | undefined,
+  restoreHeight?: number
 ) => {
   return async (dispatch: any, getStore: () => HavenAppState) => {
     let storePath = path;
@@ -161,6 +162,7 @@ export const restoreWalletByMnemomic = (
       password,
       networkType: getNetworkByName(),
       server: getNodeForWallet(getStore),
+      restoreHeight
     };
 
     dispatch(restoreWalletFetching(walletName));

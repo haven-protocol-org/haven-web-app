@@ -18,13 +18,15 @@ import { DesktopAppState } from "../../../reducers";
 import InputButton from "shared/components/_inputs/input_button";
 import { startWalletSession } from "shared/actions/walletSession";
 import Form from "../../../../../shared/components/_inputs/form";
+import { logM } from "utility/utility";
 
 interface RestoreProps {
   restoreWalletByMnemomic: (
     path: string | undefined,
     seed: string,
     pw: string,
-    walletName: string | undefined
+    walletName: string | undefined,
+    restoreHeight?: number
   ) => void;
   isLoggedIn: boolean;
   isRequestingLogin: boolean;
@@ -43,7 +45,7 @@ interface RestoreState {
   error: string | undefined;
   seed: string;
   pw: string;
-  restore_height: string;
+  restoreHeight: number | undefined;
   name: string;
   showPassword: boolean;
 }
@@ -55,7 +57,7 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
     seed: "",
     pw: "",
     name: "",
-    restore_height: "",
+    restoreHeight: undefined,
     showPassword: false,
   };
 
@@ -75,7 +77,7 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
   }
 
   onRestoreWallet = () => {
-    const { seed, pw, name } = this.state;
+    const { seed, pw, name, restoreHeight } = this.state;
 
     if (!seed || !name || !pw) {
       return;
@@ -83,13 +85,20 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
 
     this.validateNameAndPW();
 
-    this.props.restoreWalletByMnemomic(name, seed, pw, name);
+
+    this.props.restoreWalletByMnemomic(name, seed, pw, name, restoreHeight);
   };
 
   onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const name = e.currentTarget.name;
     const value: string = e.currentTarget.value;
+    this.setState<never>({ [name]: value });
+  };
 
+  onSetRestoreHeight = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const name = e.currentTarget.name;
+    let value: number = e.currentTarget.valueAsNumber;
+    value = value < 0 ? 0: value;
     this.setState<never>({ [name]: value });
   };
 
@@ -166,9 +175,9 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
                   // @ts-ignore
                   label="Restore Height (Optional)"
                   placeholder="Enter restore height"
-                  name="restore_height"
-                  value={this.state.restore_height}
-                  onChange={this.onChangeHandler}
+                  name="restoreHeight"
+                  value={this.state.restoreHeight}
+                  onChange={this.onSetRestoreHeight}
                   type="number"
                 />
               </Form>
