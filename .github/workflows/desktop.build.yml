@@ -12,7 +12,7 @@ on:
       - develop
 
 env:
-  REACT_APP_NET_TYPE_ID: 1
+  REACT_APP_NET_TYPE_ID: 0
 
 jobs:
   build:
