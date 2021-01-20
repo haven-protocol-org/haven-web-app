@@ -16,7 +16,6 @@ import Menu from "../../components/_layout/menu/thick";
 
 import { isDesktop, isWeb } from "constants/env";
 import { SettingsWeb } from "platforms/web/pages/_wallet/settings";
-import { storeWalletInDB } from "platforms/web/actions/storage";
 import { refresh } from "shared/actions/refresh";
 import { isWalletSynced } from "shared/reducers/chain";
 
@@ -86,6 +85,5 @@ const mapStateToProps = (state) => ({
 });
 
 export const PrivateRoutes = connect(mapStateToProps, {
-  storeWalletInDB,
   refresh,
 })(PrivateRoutesContainer);
