@@ -204,7 +204,7 @@ export const getSubAddresses = async () => {
 
 export const createSubAddress = async (label: string) => {
   //@ts-ignore
-  return wallet.createSubaddress(label);
+  return wallet.createSubaddress(0, label);
 };
 
 export const labelAddress = async (label: string, addressIndex: number) => {

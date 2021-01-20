@@ -104,7 +104,10 @@ export class WalletHandler {
       return addressJsonObjects;
 
       }
-      logInDevMode(response);
+      if (methodName === "createSubAddress") {
+        // serialize address data
+        return response.toJson();
+      }
       return response;
   }
   catch(e) {

@@ -29,6 +29,9 @@ const walletHandler: ProxyHandler<typeof walletCore> = {
           CommunicationChannel.WALLET
         );
 
+
+        logM(response);
+
         if (response && response.status && response.status === "error") {
           throw new Error(response.message);
         }
@@ -71,7 +74,13 @@ const walletHandler: ProxyHandler<typeof walletCore> = {
           return addresses;
         }
 
-        logM(response);
+
+        if (name === "createSubAddress") {
+
+          const address: MoneroSubaddress = new MoneroSubaddress(response)
+          return address;
+      }
+
         return response;
 
       }
