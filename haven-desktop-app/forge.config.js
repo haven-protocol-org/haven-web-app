@@ -96,7 +96,7 @@ module.exports = {
   }, */
 
     packagerConfig: {
-    executableName: "haven",
+    executableName: process.platform === "linux" ? "haven" : "Haven",
     name: "Haven",
     ignore: ignoredPaths,
     afterCopy: [substituteEnvsForBuild],
