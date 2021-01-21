@@ -96,7 +96,7 @@ module.exports = {
   }, */
 
     packagerConfig: {
-    executableName: "Haven",
+    executableName: "haven",
     name: "Haven",
     ignore: ignoredPaths,
     afterCopy: [substituteEnvsForBuild],
