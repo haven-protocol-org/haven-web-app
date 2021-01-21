@@ -2,7 +2,10 @@ import {
   selectErrorMessageForLogin,
   selectIsLoggedIn,
 } from "shared/reducers/walletSession";
-import { selectisRequestingWalletCreation, selectIsWalletCreated } from "shared/reducers/walletCreation";
+import {
+  selectisRequestingWalletCreation,
+  selectIsWalletCreated,
+} from "shared/reducers/walletCreation";
 import { connect } from "react-redux";
 import { restoreWalletByMnemomic } from "shared/actions/walletCreation";
 import { Redirect } from "react-router";
@@ -11,7 +14,7 @@ import { Information } from "assets/styles/type";
 import VerifySeed from "shared/components/_create/verify_seed";
 import { Buttons, Submit } from "../multi_login/styles";
 import { Spinner } from "shared/components/spinner";
-import { Body, Wrapper } from "./styles";
+import { Body, Wrapper, Url } from "./styles";
 import Input from "shared/components/_inputs/input";
 import { DesktopAppState } from "../../../reducers";
 import InputButton from "shared/components/_inputs/input_button";
@@ -83,7 +86,6 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
 
     this.validateNameAndPW();
 
-
     this.props.restoreWalletByMnemomic(name, seed, pw, name, restoreHeight);
   };
 
@@ -96,7 +98,7 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
   onSetRestoreHeight = (e: React.ChangeEvent<HTMLInputElement>) => {
     const name = e.currentTarget.name;
     let value: number = e.currentTarget.valueAsNumber;
-    value = value < 0 ? 0: value;
+    value = value < 0 ? 0 : value;
     this.setState<never>({ [name]: value });
   };
 
@@ -142,8 +144,9 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
                 onChange={this.onChangeHandler}
               />
               <Information>
-                Enter your 25 word seed phrase to generate a new vault file.
-                This is an encrypted file, with a unique name and password.
+                Restore your vault by entering a 25 word seed phrase. This
+                process will generate an encrypted vault file that enables you
+                to store, send and convert assets in complete privacy.
               </Information>
             </Body>
             <Buttons buttons="single">
@@ -190,12 +193,20 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
                 onChange={this.onChangeHandler}
                 onClick={this.togglePassword}
               />
-
               <Information>
                 Create a unique name and strong password for your vault file. If
                 you lose your vault file you can always restore it with the 25
                 word seed phrase you entered on the previous step. Store your
-                password in a safe location such as a password manager.
+                password in a safe location such as a password manager. Lastly,
+                you can save sync time by entering your restore height above, if
+                you'd like to learn more you can click{" "}
+                <Url
+                  target="_blank"
+                  href="https://havenprotocol.org/knowledge/vault-restore-height/"
+                >
+                  here
+                </Url>
+                .
               </Information>
             </Body>
             <Buttons buttons="single">
