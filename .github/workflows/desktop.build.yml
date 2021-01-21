@@ -54,16 +54,9 @@ jobs:
       run: |
           sh './sh/make.sh'
 
-    - if: matrix.os == 'macOS-latest'
-      name: Upload macOS
+    - name: Upload Build
       uses: actions/upload-artifact@v2
       with:
-        name: Haven-macOS-x64
+        name: matrix.os
         path: haven-desktop-app/out/make/
 
-    - if: matrix.os == 'windows-latest'
-      name: Upload Windows
-      uses: actions/upload-artifact@v2
-      with:
-        name: Haven-Win-x64
-        path: haven-desktop-app/out/make/
