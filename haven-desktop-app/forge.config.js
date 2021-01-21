@@ -62,7 +62,7 @@ const copyTargetNodesToBuild = (
   };
 
 
-  const netType = netTypes[process.env.NET_TYPE_ID];
+  const netType = netTypes[process.env.REACT_APP_NET_TYPE_ID];
 
 
   fs.mkdirSync(path.resolve(buildPath, `./haven-node/${platform}/`), {
