@@ -105,7 +105,8 @@ class RestoreWeb extends Component<RestoreProps, RestoreState> {
         undefined,
         this.state.mnemomic,
         this.state.create_vault_password,
-        this.state.create_vault_name, this.state.restore_height
+        this.state.create_vault_name,
+        this.state.restore_height
       );
       return;
     }
@@ -144,11 +145,10 @@ class RestoreWeb extends Component<RestoreProps, RestoreState> {
     });
   };
 
-
   handleRestoreChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const name = e.currentTarget.name;
     let value: number = e.currentTarget.valueAsNumber;
-    value = value < 0 ? 0: value;
+    value = value < 0 ? 0 : value;
     this.setState<never>({
       [name]: value,
     });
