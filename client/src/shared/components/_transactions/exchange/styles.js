@@ -3,7 +3,6 @@ import styled from "styled-components";
 export const Container = styled.div`
   height: auto;
   width: 100%;
-  background: pink;
   border-radius: 4px;
   background: ${(props) => props.theme.body.foreground};
   border: 1px solid ${(props) => props.theme.body.border};
@@ -61,7 +60,7 @@ export const Tag = styled.div`
   background: ${(props) => {
     switch (props.priority) {
       case 1:
-        return `${props.theme.body.foreground}`;
+        return `${props.theme.body.background}`;
       case 2:
         return `${props.theme.button.primary_hover}`;
       case 3:
