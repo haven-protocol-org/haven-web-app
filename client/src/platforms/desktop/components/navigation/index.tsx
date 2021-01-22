@@ -236,7 +236,11 @@ class Navigation extends Component<NavigationProps, any> {
                       ) : (
                         <Cell
                           body="Sync Status"
-                          label={walletHeight + "/" + chainHeight}
+                          label={
+                            walletHeight === chainHeight
+                              ? "Synced"
+                              : walletHeight + "/" + chainHeight
+                          }
                         />
                       )}
                       <Link
