@@ -82,25 +82,25 @@ class TransferContainer extends Component<TransferProps, TransferState> {
     });
   };
 
-
-    handleSendAmountChange = (event: any) => {
+  handleSendAmountChange = (event: any) => {
     const name = event.target.name;
     const value = event.target.value;
     this.setState<never>({
-      [name]: value,sweep_all: false,
+      [name]: value,
+      sweep_all: false,
     });
   };
 
   setSendAsset = (asset: AssetOption) => {
     this.setState({
-      selectedAsset: asset, sweep_all: false
+      selectedAsset: asset,
+      sweep_all: false,
     });
   };
 
   handleSubmit = () => {
     const { send_amount, recipient_address, selectedAsset } = this.state;
 
- 
     if (selectedAsset !== null) {
       this.props.sendFunds(
         recipient_address,
@@ -111,27 +111,27 @@ class TransferContainer extends Component<TransferProps, TransferState> {
     }
   };
 
-  setMaxAmount = () => {
-    const { selectedAsset } = this.state;
-
-    let availableBalance = null;
-    if (selectedAsset) {
-      availableBalance = convertBalanceToMoney(
-        this.props.xBalances[selectedAsset.ticker].unlockedBalance
-      );
-    }
-
-    if (availableBalance != null) {
-      this.setState({
-        send_amount: availableBalance.toFixed(2),
-        sweep_all: true,
-      });
-    } else {
-      this.setState({
-        amountError: "Select an asset",
-      });
-    }
-  };
+  // setMaxAmount = () => {
+  //   const { selectedAsset } = this.state;
+  //
+  //   let availableBalance = null;
+  //   if (selectedAsset) {
+  //     availableBalance = convertBalanceToMoney(
+  //       this.props.xBalances[selectedAsset.ticker].unlockedBalance
+  //     );
+  //   }
+  //
+  //   if (availableBalance != null) {
+  //     this.setState({
+  //       send_amount: availableBalance.toFixed(2),
+  //       sweep_all: true,
+  //     });
+  //   } else {
+  //     this.setState({
+  //       amountError: "Select an asset",
+  //     });
+  //   }
+  // };
 
   amountIsValid = (availableBalance: number): string | true => {
     const { send_amount } = this.state;
@@ -143,7 +143,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
       return "Not enough funds";
     }
 
-    return true
+    return true;
   };
 
   // @ts-ignore
@@ -157,9 +157,6 @@ class TransferContainer extends Component<TransferProps, TransferState> {
       return "Enter a valid address";
     }
   };
-
-
-  
 
   render() {
     const { selectedAsset, send_amount, recipient_address } = this.state;
@@ -176,7 +173,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
     const checkValidation =
       send_amount.length > 0 &&
       recipient_address.length > 97 &&
-      this.amountIsValid(availableBalance) === true
+      this.amountIsValid(availableBalance) === true;
 
     return (
       <Fragment>
@@ -190,7 +187,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
             options={this.props.options}
             onClick={this.setSendAsset}
           />
-          <InputButton
+          <Input
             // @ts-ignore
             label={
               availableBalance
@@ -204,8 +201,6 @@ class TransferContainer extends Component<TransferProps, TransferState> {
             name="send_amount"
             value={send_amount}
             onChange={this.handleSendAmountChange}
-            button={"max"}
-            onClick={this.setMaxAmount}
           />
           {windowWidth < 1380 ? (
             <Description
