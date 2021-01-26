@@ -91,6 +91,39 @@ export const Submit = styled.button`
   }
 `;
 
+export const Button = styled(Link)`
+  visibility: ${(props) => (props.step < 3 ? "hidden" : "inherit")};
+  background: ${(props) => props.theme.body.background};
+  border-radius: 4px;
+  font-family: Inter-Regular;
+  font-size: 14px;
+  color: ${(props) => props.theme.type.secondary};
+  text-align: center;
+  line-height: 24px;
+  width: 106px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 500ms;
+  border: 1px solid ${(props) => props.theme.body.border};
+  outline: none;
+  margin-right: left;
+  text-decoration: none;
+
+  &:hover {
+    cursor: pointer;
+    transition: 500ms;
+    background: ${(props) => props.theme.body.foreground};
+    color: ${(props) => props.theme.type.primary};
+  }
+
+  &:disabled {
+    color: rgba(255, 255, 255, 0.5);
+    cursor: not-allowed;
+  }
+`;
+
 export const Footer = styled.div`
   height: 60px;
   border-top: 1px solid ${(props) => props.theme.body.border};

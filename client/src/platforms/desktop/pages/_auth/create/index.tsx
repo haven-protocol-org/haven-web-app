@@ -2,10 +2,10 @@
 import React, { Component } from "react";
 
 // Relative Imports
-import { Body, Buttons, Submit } from "../multi_login/styles";
+import { Body, Buttons, Button, Submit } from "../multi_login/styles";
 import CreateSeed from "shared/components/_create/create_seed";
 import { startWalletSession } from "shared/actions/walletSession";
-import {createNewWallet} from "shared/actions/walletCreation";
+import { createNewWallet } from "shared/actions/walletCreation";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { connect } from "react-redux";
 import {
@@ -287,7 +287,11 @@ class CreateDesktopContainer extends Component<
     return (
       <>
         <Body>{this.handleSwitch()}</Body>
-        <Buttons buttons="single">
+        <Buttons>
+          <Button step={step} onClick={this.prevStep}>
+            Back
+          </Button>
+
           <Submit
             disabled={
               step === 0
