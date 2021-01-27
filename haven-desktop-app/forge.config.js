@@ -13,7 +13,7 @@ const ignoredPaths = [
   "yarn.lock",
   "forge.config.js",
   "^/haven-node",
-  "^/icons",
+ // "^/icons",
 ];
 
 const substituteEnvsForBuild = (
