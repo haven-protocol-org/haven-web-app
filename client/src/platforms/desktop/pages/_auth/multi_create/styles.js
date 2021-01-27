@@ -87,6 +87,29 @@ export const Step = styled.div`
   border-radius: 4px;
 `;
 
+export const Button = styled(Link)`
+  background: #7289da;
+  border-radius: 4px;
+  font-size: 16px;
+  line-height: 36px;
+  height: 56px;
+  width: 196px;
+  color: white;
+  border: none;
+  margin: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  animation-duration: 5s;
+
+  &:hover {
+    background: #5b6eae;
+    cursor: pointer;
+    animation-duration: 4s;
+  }
+`;
+
 export const Footer = styled.div`
   height: 60px;
   border-top: 1px solid ${(props) => props.theme.body.border};

@@ -108,7 +108,7 @@ const Transaction = ({
       <Information>
         I have reviewed my conversion details and accept all responsibility for
         this transaction. Once I click confirm, I understand that a portion of
-        my balance may be locked for the entirety of your {priorityInfo} unlock
+        my balance may be locked for the entirety of the {priorityInfo} unlock
         priority time.
       </Information>
     </Fragment>

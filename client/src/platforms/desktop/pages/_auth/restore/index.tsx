@@ -144,7 +144,7 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
                 onChange={this.onChangeHandler}
               />
               <Information>
-                Restore your vault by entering a 25 word seed phrase. This
+                Restore your vault by entering your 25 word seed phrase. This
                 process will generate an encrypted vault file that enables you
                 to store, send and convert assets in complete privacy.
               </Information>
