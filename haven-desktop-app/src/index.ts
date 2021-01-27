@@ -27,6 +27,7 @@ const startApp = (): void => {
     minWidth: 470,
     minHeight: 720,
     height: 750,
+    icon:path.join(__dirname, "../icons/icon"),
   };
 
   browserOptions.webPreferences = {
