@@ -15,7 +15,7 @@ export const convertTimestampToDateString = (timestamp: any) =>
 export const decreasePricePoints = (priceData: any) => {
   const prices = priceData.prices;
   const decreasedPrices = [];
-  const maxVal = 500;
+  const maxVal = 220;
   const delta = Math.round(prices.length / maxVal);
   let i;
   for (i = 0; i < prices.length; i += delta) {
@@ -128,7 +128,6 @@ export const getPriceValues = (prices: any) => {
 };
 
 export const logM = (message: any) => {
-
   if (isDevMode()) {
     console.log(message);
   }
