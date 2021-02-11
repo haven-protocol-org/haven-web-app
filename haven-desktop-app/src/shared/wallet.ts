@@ -13,21 +13,13 @@ import MoneroTxWallet = require("haven-wallet-core/src/main/js/wallet/model/Mone
 let wallet: MoneroWalletWasm;
 
 export const createWallet = async (walletData: ICreateWallet) => {
-  try {
     wallet = await core.createWalletWasm(walletData);
     return true;
-  } catch (e) {
-    return e;
-  }
 };
 
 export const openWallet = async (walletData: IOpenWallet) => {
-  try {
     wallet = await core.openWalletWasm(walletData);
     return true;
-  } catch (e) {
-    return e;
-  }
 };
 
 export const closeWallet = async (save: boolean) => {
@@ -212,13 +204,39 @@ export const getSubAddresses = async () => {
 
 export const createSubAddress = async (label: string) => {
   //@ts-ignore
-  return wallet.createSubaddress(label);
+  return wallet.createSubaddress(0, label);
 };
 
 export const labelAddress = async (label: string, addressIndex: number) => {
   throw "not implemented yet";
 };
 
+export const getIntegratedAddress = async(paymentId?: string) => {
+  //@ts-ignore
+  return wallet.getIntegratedAddress(paymentId)
+}
+
+export const setSyncHeight = (syncHeight: number) => {
+  return wallet.setSyncHeight(syncHeight);
+}
+
+export const getSyncHeight = () => {
+  return wallet.getSyncHeight();
+}
+
 export const rescanBlockchain = async () => {
   return wallet.rescanBlockchain();
 };
+
+export const isClosed = async() => {
+  return wallet.isClosed();
+}
+
+export const rescanSpent = () => {
+  return wallet.rescanSpent();
+}
+
+export const saveWallet = () => {
+  return wallet.save();
+}
+

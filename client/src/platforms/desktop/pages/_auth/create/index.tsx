@@ -1,12 +1,11 @@
 // Library Imports
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 
 // Relative Imports
-import Placeholder from "shared/components/_create/placeholder";
-
-import { Body, Buttons, Submit } from "../multi_login/styles";
+import { Body, Buttons, Button, Submit } from "../multi_login/styles";
 import CreateSeed from "shared/components/_create/create_seed";
-import { createNewWallet, startWalletSession } from "shared/actions/wallet";
+import { startWalletSession } from "shared/actions/walletSession";
+import { createNewWallet } from "shared/actions/walletCreation";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { connect } from "react-redux";
 import {
@@ -190,8 +189,6 @@ class CreateDesktopContainer extends Component<
     const { fileName, step, verify_seed, error } = this.state;
 
     switch (step) {
-      case CREATION_STEPS.Info:
-        return <Placeholder platform={"desktop"} />; // No longer needed. Delete
       case CREATION_STEPS.Credentials:
         return (
           <>
@@ -290,7 +287,11 @@ class CreateDesktopContainer extends Component<
     return (
       <>
         <Body>{this.handleSwitch()}</Body>
-        <Buttons buttons="single">
+        <Buttons>
+          <Button step={step} onClick={this.prevStep}>
+            Back
+          </Button>
+
           <Submit
             disabled={
               step === 0

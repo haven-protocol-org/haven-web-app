@@ -8,8 +8,6 @@ const appear = keyframes`
 `;
 
 export const Container = styled.div`
-  width: auto;
-  height: auto;
   display: flex;
   flex-direction: column;
   padding-bottom: 12px;
@@ -27,7 +25,6 @@ export const Select = styled.div`
   border: 1px solid ${(props) => props.theme.input.input_border};
   border-radius: 4px;
   grid-column: 1 / 3;
-
   transition: 500ms;
 
   &:focus {
@@ -59,8 +56,6 @@ export const Wrapper = styled.ul`
 `;
 
 export const Labels = styled.div`
-  height: auto;
-  width: auto
   display: flex;
   justify-content: space-between;
   margin-bottom: 4px;
@@ -103,34 +98,43 @@ export const Name = styled.div`
 `;
 
 export const Button = styled.button`
-    width: 100%;
-    height: auto;
-    background: ${(props) => props.theme.input.input_background};
-    outline: none;
-    grid-column: 1 / 3;
-    padding: 20px;
-    border-radius: 3px;
-    font-size: 16px;
-    color: ${(props) => props.theme.input.input_value};
-    display: flex;
-    align-items: flex-start;
-    border: none;
-    cursor: pointer;
+  width: 100%;
+  height: auto;
+  background: ${(props) => props.theme.input.input_background};
+  outline: none;
+  grid-column: 1 / 3;
+  padding: 20px;
+  border-radius: 3px;
+  font-size: 16px;
+  color: ${(props) => props.theme.type.primary};
+  display: flex;
+  align-items: flex-start;
+  border: none;
+  cursor: pointer;
+  font-family: Inter-Regular;
+
+  &::placeholder {
+    color: red;
+  }
 
   &:disabled {
     cursor: not-allowed;
   }
 
-
-
-&:before{
-    content:"";
+  &:before {
+    color: ${(props) => props.theme.type.primary};
+    content: "";
     position: absolute;
     width: 0px;
     height: 0px;
     border: 7px solid;
-    border-color: ${(props) =>
-      props.theme.type.primary} transparent transparent transparent;
+    border-color: ${(props) => props.theme.type.primary} transparent transparent
+      transparent;
     right: 16px;
     top: 24px;
+
+    &::placeholder {
+      color: red;
+    }
+  }
 `;

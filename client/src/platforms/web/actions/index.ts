@@ -1,1 +1,1 @@
-export * from "shared/actions/wallet";
+export * from "shared/actions/walletCreation";

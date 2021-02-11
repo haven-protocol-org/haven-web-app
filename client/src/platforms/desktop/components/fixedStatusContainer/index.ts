@@ -18,12 +18,15 @@ import {
 } from "constants/notificationList";
 import { NotificationDuration } from "shared/reducers/notification";
 import { selectIsLoggedIn } from "shared/reducers/walletSession";
+import { NodeLocation } from "platforms/desktop/types";
 
 interface FixedStatusProps {
   daemonUrl: string;
   isSyncing: boolean;
   isWalletConnected: boolean;
+  isWalletConnecting: boolean;
   isLoggedIn: boolean;
+  nodeLocation: NodeLocation;
   addNotificationByKey: (
     key: any,
     duration?: NotificationDuration,
@@ -44,9 +47,9 @@ class FixedStatusContainer extends Component<FixedStatusProps, any> {
     snapshot?: any
   ): void {
     this.checkAndHandleSyncState(prevProps.isSyncing, this.props.isSyncing);
-    this.checkAndHandleConnectionState(
-      prevProps.isWalletConnected,
-      this.props.isWalletConnected
+    this.setIsConnectingStatus(
+      this.props.isWalletConnecting,
+      this.props.daemonUrl, this.props.isWalletConnected
     );
     this.checkAndHandleLoggedInState(
       prevProps.isLoggedIn,
@@ -71,49 +74,41 @@ class FixedStatusContainer extends Component<FixedStatusProps, any> {
     if (!isSyncingNow && this.syncingMessageID) {
       this.props.removeNotification(this.syncingMessageID);
       this.syncingMessageID = null;
-      this.props.addNotificationByKey(SYNCING_SUCCEED_MESSAGE);
+      if (this.props.isLoggedIn) {
+        this.props.addNotificationByKey(SYNCING_SUCCEED_MESSAGE);
+      }
     }
   }
 
-  checkAndHandleConnectionState(
-    didWalletConnectBefore: boolean,
-    isWalletConnectedNow: boolean
-  ) {
-    // show a trying to connect message
-    if (
-      isWalletConnectedNow === false &&
-      didWalletConnectBefore !== isWalletConnectedNow &&
-      !this.tryingConnectMessageID
-    ) {
-      const nodeName =
-        this.props.daemonUrl === "" ? "local node" : this.props.daemonUrl;
+  setIsConnectingStatus(isConnecting: boolean, nodeAddress: string, isConnected: boolean) {
 
+    if (isConnecting && !this.tryingConnectMessageID) {
+
+      const nodeName =
+      this.props.daemonUrl === "" ? "local node" : this.props.daemonUrl;
       const id = uuidv4();
       this.props.addNotificationByKey(
-        WALLET_IS_CONNECTING,
-        NotificationDuration.STICKY,
-        id,
-        [nodeName]
-      );
+      WALLET_IS_CONNECTING,
+      NotificationDuration.STICKY,
+      id,
+      [nodeName]
+    );
       this.tryingConnectMessageID = id;
     }
-
-    // if connection succeed, remove fixed message and show success message
-    if (
-      isWalletConnectedNow === true &&
-      didWalletConnectBefore === false &&
-      this.tryingConnectMessageID
-    ) {
-      const nodeName =
-        this.props.daemonUrl === "" ? "local node" : this.props.daemonUrl;
+     else if (!isConnecting && this.tryingConnectMessageID) {
       this.props.removeNotification(this.tryingConnectMessageID);
       this.tryingConnectMessageID = null;
+
+      if (isConnected) {
+        const nodeName =
+        this.props.daemonUrl === "" ? "local node" : this.props.daemonUrl;
+
       this.props.addNotificationByKey(
         WALLET_CONNECT_SUCCEED,
         NotificationDuration.DEFAULT,
         uuidv4(),
-        [nodeName]
-      );
+        [nodeName])
+      }
     }
   }
 
@@ -135,8 +130,10 @@ class FixedStatusContainer extends Component<FixedStatusProps, any> {
 const mapStateToProps = (state: DesktopAppState) => ({
   isLoggedIn: selectIsLoggedIn(state),
   isSyncing: selectSyncState(state).isSyncing,
-  isWalletConnected: state.walletSession.isWalletConectedToDaemon,
+  isWalletConnected: state.connectedNode.isWalletConectedToDaemon,
+  isWalletConnecting: state.connectedNode.isConnecting,
   daemonUrl: state.connectedNode.address!,
+  nodeLocation: state.connectedNode.location
 });
 
 export const FixedStatus = connect(mapStateToProps, {

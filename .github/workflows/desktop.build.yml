@@ -11,12 +11,15 @@ on:
     branches:
       - develop
 
+env:
+  REACT_APP_NET_TYPE_ID: 0
+
 jobs:
   build:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [windows-latest, macOS-latest]
+        os: [windows-latest, macOS-latest, ubuntu-latest]
 
     steps:
     - uses: actions/checkout@v2
@@ -32,8 +35,11 @@ jobs:
 
     - name: Client Build for Desktop
       working-directory: client
+      env:
+        CI: false
       run: |
-          npm run build:desktop:mainnet
+          npm run build:desktop:ci 
+
     - name: Copy Build
       working-directory: client
       run: |
@@ -46,18 +52,11 @@ jobs:
 
     - name: Build Final App
       run: |
-          sh './sh/make_mainnet.sh'
+          sh './sh/make.sh'
 
-    - if: matrix.os == 'macOS-latest'
-      name: Upload macOS
+    - name: Upload Build
       uses: actions/upload-artifact@v2
       with:
-        name: Haven-macOS-x64
+        name: ${{ matrix.os }}
         path: haven-desktop-app/out/make/
 
-    - if: matrix.os == 'windows-latest'
-      name: Upload Windows
-      uses: actions/upload-artifact@v2
-      with:
-        name: Haven-Win-x64
-        path: haven-desktop-app/out/make/

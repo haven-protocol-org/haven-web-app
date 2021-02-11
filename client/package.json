@@ -1,12 +1,12 @@
 {
   "name": "haven_web_wallet",
-  "version": "1.47.1",
+  "version": "1.47.8",
   "private": true,
   "dependencies": {
     "big-integer": "^1.6.48",
     "chart.js": "^2.9.4",
     "file-saver": "^2.0.5",
-    "haven-wallet-core": "^1.1.2",
+    "haven-wallet-core": "^1.2.8",
     "react": "^16.14.0",
     "react-chartjs-2": "^2.11.1",
     "react-dom": "^16.14.0",
@@ -21,12 +21,13 @@
     "styled-components": "^4.4.0"
   },
   "scripts": {
-    "start:web": "bash -ac '. ./env/.net; . ./env/.env.web; react-scripts start'",
-    "build:web": "bash -ac '. ./env/.net; . ./env/.env.web; npm version patch; react-scripts build'",
-    "start:desktop": "bash -ac '. ./env/.net; . ./env/.env.desktop; react-scripts start'",
-    "build:desktop": "bash -ac '. ./env/.net; . ./env/.env.desktop; . ./env/.env.desktop.build;  react-scripts build'",
-    "copy-build": "rm -rf ../haven-desktop-app/client && rm -rf ./build/libs && cp -rf ./build ../haven-desktop-app/client",
-    "copy-haven-core": "bash -ac 'cp ./node_modules/haven-wallet-core/dist/{MoneroWebWorker.dist.js,haven_offshore.js,haven_offshore.wasm} ./public'",
+    "start:web": "bash -ac '. ./env/.env.net; . ./env/.env.web; react-scripts start'",
+    "build:web": "bash -ac '. ./env/.env.net; . ./env/.env.web; npm version patch; react-scripts build'",
+    "start:desktop": "bash -ac '. ./env/.env.net; . ./env/.env.desktop; react-scripts start'",
+    "build:desktop": "bash -ac '. ./env/.env.net; . ./env/.env.desktop; . ./env/.env.desktop.build;  react-scripts build'",
+    "build:desktop:ci": "bash -ac \". ./env/.env.desktop; . ./env/.env.desktop.build;  react-scripts build\"",
+    "copy-build": "rm -rf ../haven-desktop-app/client && rm -rf ./build/{HavenWebWorker*,haven_offshore*} && cp -rf ./build ../haven-desktop-app/client",
+    "copy-haven-core": "bash -ac 'cp ./node_modules/haven-wallet-core/dist/{HavenWebWorker*,haven_offshore*} ./public'",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

@@ -6,6 +6,7 @@ import { NO_BALANCE } from "shared/reducers/xBalance";
 import { Ticker } from "shared/reducers/types";
 import bigInt from "big-integer";
 import BigInteger from "haven-wallet-core/src/main/js/common/biginteger";
+import { isDevMode } from "constants/env";
 
 export const convertTimestampToDateString = (timestamp: any) =>
   new Date(timestamp).toLocaleDateString();
@@ -14,7 +15,7 @@ export const convertTimestampToDateString = (timestamp: any) =>
 export const decreasePricePoints = (priceData: any) => {
   const prices = priceData.prices;
   const decreasedPrices = [];
-  const maxVal = 500;
+  const maxVal = 220;
   const delta = Math.round(prices.length / maxVal);
   let i;
   for (i = 0; i < prices.length; i += delta) {
@@ -39,14 +40,19 @@ export const getCurrentValueInUSD = (
   }
 };
 
-export const convertBalanceToMoney = (atomicMoney: bigInt.BigInteger | number, decimals: number = 2 ): number => {
+export const convertBalanceToMoney = (
+  atomicMoney: bigInt.BigInteger | number,
+  decimals: number = 2
+): number => {
   if (atomicMoney === NO_BALANCE) return 0;
 
   const atomicUnits = 12;
   let readableBalance;
   if (bigInt.isInstance(atomicMoney)) {
-     readableBalance = Number(atomicMoney.divide(Math.pow(10, atomicUnits - decimals)));
-    readableBalance =  readableBalance / Math.pow(10, decimals);
+    readableBalance = Number(
+      atomicMoney.divide(Math.pow(10, atomicUnits - decimals))
+    );
+    readableBalance = readableBalance / Math.pow(10, decimals);
     return Number(readableBalance.toFixed(decimals));
   }
 
@@ -56,24 +62,22 @@ export const convertBalanceToMoney = (atomicMoney: bigInt.BigInteger | number, d
   return Number(readableBalance.toFixed(decimals));
 };
 
-
 // converts user input in atomic units
 export const convertMoneyToBalance = (amount: number): bigInt.BigInteger => {
-
   const atomicUnits = 12;
   if (amount === Math.round(amount)) {
-    return bigInt(amount).multiply(bigInt(Math.pow(10,atomicUnits)));
+    return bigInt(amount).multiply(bigInt(Math.pow(10, atomicUnits)));
   }
 
   const amountString = amount.toFixed(12);
   let numDecimals = amountString.split(".")[1].length || 0;
-  let roundAmount: string;  
+  let roundAmount: string;
   roundAmount = amountString.replace(".", "");
-  
-  console.log(roundAmount);
-  console.log(amountString);
-  return bigInt(roundAmount).multiply(Math.pow(10, Math.max((atomicUnits - numDecimals),0)))
-}
+
+  return bigInt(roundAmount).multiply(
+    Math.pow(10, Math.max(atomicUnits - numDecimals, 0))
+  );
+};
 
 export const uuidv4 = () => {
   var uuid = "",
@@ -124,7 +128,9 @@ export const getPriceValues = (prices: any) => {
 };
 
 export const logM = (message: any) => {
-   console.log(message);
+  if (isDevMode()) {
+    console.log(message);
+  }
 };
 
 export const createRemainingTimeString = (remainingTimeInMinutes: number) => {

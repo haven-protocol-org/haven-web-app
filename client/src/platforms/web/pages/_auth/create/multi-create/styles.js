@@ -1,15 +1,7 @@
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 import media from "../../../../../../assets/styles/media.js";
 import { background } from "../../../../../../assets/styles/colors.js";
-
-const appear = keyframes`
-  0% { transform: translateY(0px);  }
-  25% { transform: translateY(4px);  }
-  50% { transform: translateY(8px);  }
-  75% { transform: translateY(4px);  }
-  100% {transform: translateY(0px);   }
-`;
 
 export const Container = styled.div`
   min-height: 100vh;

@@ -1,11 +1,15 @@
 import { app } from "electron";
 import { isDevMode } from "./env";
 import { KeyType, showKey } from "./keys";
-import MenuItemConstructorOptions = Electron.MenuItemConstructorOptions;
+import { isClosed } from "./shared/wallet";
+import { Menu, MenuItemConstructorOptions } from "electron";
+import { logInDevMode } from "./dev";
+
 
 const isMac = process.platform === "darwin";
 
-export const havenMenu: MenuItemConstructorOptions[] = [
+
+const havenMenu: MenuItemConstructorOptions[] = [
   // { role: 'appMenu' }
   ...(isMac
     ? [
@@ -72,7 +76,7 @@ export const havenMenu: MenuItemConstructorOptions[] = [
         label: "Twitter",
         click: async () => {
           const { shell } = require("electron");
-          await shell.openExternal("https://twitter.com/HavenXHV");
+          await shell.openExternal("https://twitter.com/havenxhv");
         },
       },
 
@@ -80,7 +84,7 @@ export const havenMenu: MenuItemConstructorOptions[] = [
         label: "Medium",
         click: async () => {
           const { shell } = require("electron");
-          await shell.openExternal("https://medium.com/@havencurrency");
+          await shell.openExternal("https://havenprotocol.medium.com/");
         },
       },
       { type: "separator" },
@@ -119,33 +123,23 @@ export const havenMenu: MenuItemConstructorOptions[] = [
   },
 
   {
-    label: "White Papers",
+    label: "Knowledge",
     submenu: [
       {
-        label: "English",
+        label: "White Papers",
         click: async () => {
           const { shell } = require("electron");
           await shell.openExternal(
-            "http://docs.havenprotocol.org/whitepapers/english.pdf",
+            "https://havenprotocol.org/whitepaper/",
           );
         },
       },
-
-      {
-        label: "French",
+     {
+        label: "Knowledge Base",
         click: async () => {
           const { shell } = require("electron");
           await shell.openExternal(
-            "http://docs.havenprotocol.org/whitepapers/french.pdf",
-          );
-        },
-      },
-      {
-        label: "中文",
-        click: async () => {
-          const { shell } = require("electron");
-          await shell.openExternal(
-            "http://docs.havenprotocol.org/whitepapers/chinese.pdf",
+            "https://havenprotocol.org/knowledge/",
           );
         },
       },
@@ -154,6 +148,7 @@ export const havenMenu: MenuItemConstructorOptions[] = [
 
   {
     label: "Keys",
+    id:"Keys",
     submenu: [
       {
         label: "Show Public Spend Key",
@@ -208,3 +203,25 @@ export const havenMenu: MenuItemConstructorOptions[] = [
     ],
   },
 ] as MenuItemConstructorOptions[];
+
+export const createMenu = () => {
+  
+  const menu = Menu.buildFromTemplate(havenMenu);
+
+  Menu.setApplicationMenu(menu);
+
+  enableKeysMenu(false);
+
+
+
+}
+
+export const enableKeysMenu = (enable: boolean) => {
+
+  const menu = Menu.getApplicationMenu();
+
+  const menuItem = menu.getMenuItemById("Keys");
+  menuItem.enabled = enable;
+  Menu.setApplicationMenu(menu);
+}
+

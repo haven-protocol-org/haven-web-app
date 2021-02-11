@@ -14,9 +14,9 @@ export const loadState = () => {
 
 export const saveDesktopState = (state: DesktopAppState) => {
   try {
+    const {walletSession, nodeList, connectedNode, address} = state;
     const serializedState = JSON.stringify({
-      walletSession: state.walletSession,
-      address: state.address,
+     walletSession, nodeList, connectedNode, address
     });
     localStorage.setItem("state", serializedState);
   } catch (e) {

@@ -8,6 +8,7 @@ import { getAvailableWallets } from "./walletPaths";
 import { HavenWalletListener } from "./HavenWalletListener";
 import MoneroTxWallet = require("haven-wallet-core/src/main/js/wallet/model/MoneroTxWallet");
 import MoneroSubaddress = require("haven-wallet-core/src/main/js/wallet/model/MoneroSubaddress");
+import { enableKeysMenu } from "../menu";
 
 export interface WalletRequest {
   methodName: string;
@@ -48,16 +49,24 @@ export class WalletHandler {
   private handleWalletCoreRequest = async (request: WalletRequest) => {
     const methodName: keyof typeof core = request.methodName as keyof typeof core;
     const params = request.params;
-    logInDevMode(request);
+
+    logInDevMode(request.methodName);
 
     if (methodName === "addWalletListener") {
       this.addWalletListener();
+      enableKeysMenu(true);
       return;
+    }
+
+    if (methodName === "closeWallet") {
+        enableKeysMenu(false);
     }
 
     try {
 
     const response = await core[methodName].call(null, ...params);
+
+    logInDevMode(response);
 
     if (methodName === "getTxs") {
       const txClassObjects = response;
@@ -95,10 +104,21 @@ export class WalletHandler {
       return addressJsonObjects;
 
       }
+      if (methodName === "createSubAddress") {
+        // serialize address data
+        return response.toJson();
+      }
       return response;
   }
   catch(e) {
-    return e;
+
+    logInDevMode(e);
+
+    return {
+      message: e.message,
+      status:"error",
+      code:e.code
+    }
   }
 
   };
@@ -118,8 +138,8 @@ export class WalletHandler {
        return response;
     }
     catch (e) {
-      logInDevMode(e);
-      return e;
+     
+      return e.toString();
     }
 
   };

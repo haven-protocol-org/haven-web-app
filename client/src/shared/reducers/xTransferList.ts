@@ -1,11 +1,8 @@
 import { Ticker } from "./types";
-import { AnyAction, combineReducers } from "redux";
+import { AnyAction } from "redux";
 import {
-  GET_TRANSFERS_FAILED,
-  GET_TRANSFERS_FETCHING,
   GET_TRANSFERS_SUCCEED,
 } from "../actions/types";
-import { INITAL_FETCHING_STATE, XFetching } from "./types";
 import { HavenAppState } from "../../platforms/desktop/reducers";
 import MoneroTxWallet from "haven-wallet-core/src/main/js/wallet/model/MoneroTxWallet";
 import MoneroIncomingTransfer from "haven-wallet-core/src/main/js/wallet/model/MoneroIncomingTransfer";
@@ -50,7 +47,7 @@ export const selectTransferListByTicker = (
         txEntry.fee = bigIntegerToBigInt(walletTx.getFee());
         txEntry.height = walletTx.getHeight();
         txEntry.unlockHeight = walletTx.getUnlockHeight();
-        txEntry.mempool = walletTx.inTxPool();
+        txEntry.mempool = walletTx.inTxPool() || walletTx.getNumConfirmations() === 0;
         txEntry.isIncoming = true;
         txEntry.isConfirmed = walletTx.isConfirmed();
         txEntry.isMinerTx = walletTx.isMinerTx();
@@ -68,7 +65,7 @@ export const selectTransferListByTicker = (
         txEntry.height = walletTx.getHeight();
         txEntry.unlockHeight = walletTx.getUnlockHeight();
         txEntry.isIncoming = false;
-        txEntry.mempool = walletTx.inTxPool();
+        txEntry.mempool = walletTx.inTxPool() || walletTx.getNumConfirmations() === 0;
         txEntry.isConfirmed = walletTx.isConfirmed();
         txEntry.isMinerTx = walletTx.isMinerTx();
         txEntry.timestamp = walletTx.isConfirmed()
@@ -86,3 +83,38 @@ export const selectTransferListByTicker = (
 
   return txEntries;
 };
+
+
+
+export const hasNoTxsEntries = (state: HavenAppState): boolean => {
+
+  return state.xTransferList.length === 0;
+
+}
+
+
+
+export const getHeightOfFirstIncomingTx = (state: HavenAppState) :number => {
+
+const currentHeight = state.chain.walletHeight;
+const walletTxs = state.xTransferList;
+
+const firstTxHeight: number = walletTxs.reduce(
+    (height: number, walletTx: MoneroTxWallet) => {
+      const incomings:
+        | undefined
+        | MoneroIncomingTransfer[] = walletTx.getIncomingTransfers();
+
+      if (incomings !== undefined) {
+        const incomingHeight = walletTx.getHeight();
+        if (incomingHeight !== undefined) {
+          height = Math.min(height, incomingHeight);
+        }
+      }
+      return height;
+    },
+    currentHeight
+  );
+
+  return firstTxHeight;
+}

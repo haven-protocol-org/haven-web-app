@@ -6,35 +6,50 @@ import { connect } from "react-redux";
 import {
   Container,
   Haven,
-  Brand,
-  Logout,
-  Tag,
-  Icon,
   Auth,
+  NoAuth,
+  Icon,
   Menu,
   Options,
-  OptionsDoubleRow,
   OptionsIcon,
   OptionsList,
   OptionsSVG,
   Arr,
-  Legal,
-  Tab,
+  Scan,
   Arrow,
 } from "./styles.js";
-import { Body, Label } from "assets/styles/type";
+
 import Buttons from "./buttons/index.js";
-import { closeWallet } from "shared/actions/wallet";
+import { syncFromFirstIncomingTx, rescanSpent } from "shared/actions/refresh";
 import { selectIsLoggedIn } from "shared/reducers/walletSession";
 import { APP_VERSION, NET_TYPE_NAME } from "constants/env";
 import { WebAppState } from "platforms/web/reducers/index.js";
+import { selectSyncState } from "shared/reducers/chain";
+import { SyncState } from "shared/types/types.js";
+import { HavenAppState } from "platforms/desktop/reducers/index.js";
+
+import Cell from "./cell";
+import Link from "./link";
+import Tab from "./tab";
+
+import { showModal } from "shared/actions/modal";
+import { MODAL_TYPE } from "shared/reducers/modal";
+import { closeWallet } from "shared/actions/walletSession";
 
 interface NavigationProps {
   isLoggedIn: boolean;
   auth: boolean;
   logout: (isWeb: boolean) => void;
   getStoredWallets: () => void;
+  syncFromFirstIncomingTx: () => void;
+  rescanSpent: () => void;
   isClosingSession: boolean;
+  syncState: SyncState;
+  basicActive: boolean;
+  advancedActive: boolean;
+  restoreHeight: number;
+  startedResync: boolean;
+  showModal: (modalType: MODAL_TYPE) => void;
 }
 
 class Navigation extends Component<NavigationProps, {}> {
@@ -42,10 +57,17 @@ class Navigation extends Component<NavigationProps, {}> {
     showOptions: false,
     showNotifications: false,
     mouseIsHovering: false,
+    basicActive: true,
+    advancedActive: false,
+    startedResync: false,
   };
 
   handleLogout = () => {
     this.props.logout(true);
+  };
+
+  handleRefreshRequest = (event: any) => {
+    this.props.syncFromFirstIncomingTx();
   };
 
   showDropdownMenu = (event: any) => {
@@ -76,21 +98,44 @@ class Navigation extends Component<NavigationProps, {}> {
     });
   };
 
+  selectBasic = () => {
+    this.setState({
+      basicActive: true,
+      advancedActive: false,
+    });
+  };
+
+  selectAdvanced = () => {
+    this.setState({
+      basicActive: false,
+      advancedActive: true,
+    });
+  };
+
+  refreshVault = () => {
+    this.props.showModal(MODAL_TYPE.RescanBC);
+  };
+
   render() {
     const auth = this.props.isLoggedIn;
     // @ts-ignore
-    const { chainHeight, walletHeight } = this.props.chain;
-    // @ts-ignore
     const { connected } = this.props;
-    const syncStarted = chainHeight !== 0;
-    const syncedFinished = syncStarted && chainHeight === walletHeight;
+    const { blockHeight, scannedHeight, isSyncing } = this.props.syncState;
+    const networkLabel = `${NET_TYPE_NAME}  v${APP_VERSION}`;
 
     return (
       <Container>
-        <Brand to={auth ? "/wallet/assets" : "/"}>
-          <Icon />
-          <Haven>HAVEN</Haven>
-        </Brand>
+        {auth ? (
+          <Auth to={"/wallet/assets"}>
+            <Icon />
+            <Haven>HAVEN</Haven>
+          </Auth>
+        ) : (
+          <NoAuth href="https://havenprotocol.org" target="_blank">
+            <Icon />
+            <Haven>HAVEN</Haven>
+          </NoAuth>
+        )}
         <Menu>
           <Buttons
             isLoading={this.props.isClosingSession}
@@ -112,46 +157,71 @@ class Navigation extends Component<NavigationProps, {}> {
               <Arrow>
                 <Arr />
               </Arrow>
-              <OptionsDoubleRow>
-                <Body>Network</Body>
-                <Label>
-                  {NET_TYPE_NAME} v{APP_VERSION}
-                </Label>
-              </OptionsDoubleRow>
-              <OptionsDoubleRow>
-                <Body>Vault Status</Body>
-                <Label>{connected ? "Online" : "Offline"}</Label>
-              </OptionsDoubleRow>
-              <OptionsDoubleRow>
-                <Body>Block Height</Body>
-                <Label>{chainHeight}</Label>
-              </OptionsDoubleRow>
-              {syncedFinished ? (
-                <OptionsDoubleRow>
-                  <Body>Vault Synced</Body>
-                  <Label>Yes</Label>
-                </OptionsDoubleRow>
-              ) : (
-                <OptionsDoubleRow>
-                  <Body>Vault Height</Body>
-                  <Label>{walletHeight}</Label>
-                </OptionsDoubleRow>
+              {!auth && (
+                <>
+                  <Cell body="Network" label={networkLabel} />
+                  <Link
+                    body="Help"
+                    label="Knowledge Base"
+                    url={`https://havenprotocol.org/knowledge`}
+                  />
+                  <Link
+                    body="Legal"
+                    label="Terms"
+                    url={`https://havenprotocol.org/legal`}
+                  />
+                </>
               )}
-              <OptionsDoubleRow>
-                <Body>Help</Body>
-                <Legal
-                  target="_blank"
-                  href="https://havenprotocol.org/knowledge/"
-                >
-                  <Label>Knowledge Base</Label>
-                </Legal>
-              </OptionsDoubleRow>
-              <OptionsDoubleRow>
-                <Body>Legal</Body>
-                <Legal target="_blank" href="https://havenprotocol.org/legal/">
-                  <Label>Terms & Conditions</Label>
-                </Legal>
-              </OptionsDoubleRow>
+
+              {auth && (
+                <>
+                  <Tab
+                    basicActive={this.state.basicActive}
+                    basicSelect={this.selectBasic}
+                    advancedSelect={this.selectAdvanced}
+                    advancedActive={this.state.advancedActive}
+                  />
+
+                  {this.state.basicActive ? (
+                    <>
+                      <Cell body="Network" label={networkLabel} />
+                      {!isSyncing ? (
+                        <>
+                          <Cell body="Vault Status" label="Synced" />
+                        </>
+                      ) : (
+                        <Cell
+                          body="Sync Status"
+                          label={scannedHeight + "/" + blockHeight}
+                        />
+                      )}
+                      <Link
+                        body="Help"
+                        label="Knowledge Base"
+                        url={`https://havenprotocol.org/knowledge`}
+                      />
+                      <Link
+                        body="Legal"
+                        label="Terms"
+                        url={`https://havenprotocol.org/legal`}
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <Cell
+                        body="Vault Connected"
+                        label={connected ? "Yes" : "No"}
+                      />
+                      <Cell body="Block Height" label={blockHeight} />
+                      <Cell
+                        body="Refresh Height"
+                        label={this.props.restoreHeight}
+                      />
+                      <Scan onClick={this.refreshVault}>Refresh Vault</Scan>
+                    </>
+                  )}
+                </>
+              )}
             </OptionsList>
           </>
         )}
@@ -162,11 +232,15 @@ class Navigation extends Component<NavigationProps, {}> {
 
 const mapStateToProps = (state: WebAppState) => ({
   isLoggedIn: selectIsLoggedIn(state),
-  chain: state.chain,
-  connected: state.walletSession.isWalletConectedToDaemon,
+  syncState: selectSyncState(state as HavenAppState),
+  connected: state.connectedNode.isWalletConectedToDaemon,
   isClosingSession: state.walletSession.isClosingSession,
+  restoreHeight: state.walletSession.restoreHeight,
 });
 
 export const NavigationWeb = connect(mapStateToProps, {
   logout: closeWallet,
+  syncFromFirstIncomingTx,
+  rescanSpent,
+  showModal,
 })(Navigation);

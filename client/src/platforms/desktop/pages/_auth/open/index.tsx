@@ -5,9 +5,8 @@ import {
   Submit,
 } from "platforms/desktop/pages/_auth/multi_login/styles";
 import { Spinner } from "../../../../../shared/components/spinner";
-import { Body, Wrapper } from "./styles";
+import { Body } from "./styles";
 import { Information } from "assets/styles/type";
-import Input from "shared/components/_inputs/input";
 import {
   selectErrorMessageForLogin,
   selectIsRequestingLogin,
@@ -16,15 +15,15 @@ import { WalletSelection } from "shared/components/_inputs/wallet-selection";
 import Dropdown from "../../../../../shared/components/_inputs/dropdown";
 import InputButton from "shared/components/_inputs/input_button";
 
-import { openWalletByFile } from "shared/actions/wallet";
+import { openWalletByFile } from "shared/actions/walletCreation";
 import { DesktopAppState } from "platforms/desktop/reducers";
-
 interface OpenWalletState {
   selectedWallet: string | null;
   password: string;
   validated: boolean;
   showPassword: boolean;
   error: string;
+  reveal: boolean;
 }
 
 interface OpenWalletProps {
@@ -44,6 +43,7 @@ class OpenWalletDesktopContainer extends Component<
     validated: false,
     showPassword: false,
     error: "",
+    reveal: false,
   };
 
   onOpenWallet = () => {
@@ -84,7 +84,7 @@ class OpenWalletDesktopContainer extends Component<
   };
 
   render() {
-    const { selectedWallet, password, showPassword, error } = this.state;
+    const { selectedWallet, password, error } = this.state;
     const disabled = selectedWallet !== null && password.length > 0;
 
     const { wallets } = this.props;
@@ -100,20 +100,25 @@ class OpenWalletDesktopContainer extends Component<
         <Dropdown
           onClick={this.handleNoWallet}
           options={noWallets}
-          placeholder="Choose a Vault"
+          placeholder="Select a vault"
           label={"Select Vault"}
           error={""}
-          value={"Choose a Vault"}
+          value={"Select a vault"}
         >
           {noWallets}
         </Dropdown>
-        <Input
+        {/* @ts-ignore */}
+        <InputButton
           label="Vault Password"
-          placeholder="Enter your Vault password"
+          placeholder="Enter vault password"
           name="password"
-          type={"text"}
           value={password}
           onChange={this.onChangeHandler}
+          onClick={this.togglePassword}
+          error={error}
+          type={this.state.showPassword === true ? "text" : "password"}
+          button={this.state.showPassword === true ? "hide" : "show"}
+          width={false}
         />
         <Information>
           Select your vault file and enter your password. If you are new to
@@ -143,15 +148,15 @@ class OpenWalletDesktopContainer extends Component<
           value={selectedWallet}
         />
         <InputButton
-          // @ts-ignore
           label="Vault Password"
-          placeholder="Enter your Vault password"
+          placeholder="Enter vault password"
           name="password"
-          type={showPassword ? "text" : "password"}
-          button={showPassword ? "hide" : "show"}
           value={password}
           onChange={this.onChangeHandler}
           onClick={this.togglePassword}
+          error={error}
+          type={this.state.showPassword === true ? "text" : "password"}
+          button={this.state.showPassword === true ? "hide" : "show"}
         />
         <Information>
           Select your vault file and enter your password. If you are new to

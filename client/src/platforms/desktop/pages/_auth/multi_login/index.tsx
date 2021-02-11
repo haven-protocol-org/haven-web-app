@@ -3,10 +3,15 @@ import React, { Component } from "react";
 
 // Relative Imports
 import {
+  Container,
+  Main,
+  Header,
+  Footer,
+  Route,
+  Label,
   Title,
-  Description as Subtitle,
-} from "../../../../../assets/styles/type.js";
-import { Container, Main, Header, Footer, Route, Label } from "./styles";
+  Description,
+} from "./styles";
 import { DesktopAppState } from "../../../reducers";
 import { connect } from "react-redux";
 import { getSavedWallets } from "platforms/desktop/actions/storedWallets";
@@ -14,7 +19,6 @@ import { selectIsLoggedIn } from "shared/reducers/walletSession";
 import { Redirect } from "react-router";
 import { OpenWalletDesktop } from "../open";
 import { setDesktopConfig } from "platforms/desktop/actions/config";
-
 
 interface MultiloginState {
   loginType: LOGIN_TYPE;
@@ -40,7 +44,7 @@ class MultiLoginPage extends Component<MultiLoginProps, MultiloginState> {
 
   componentDidMount(): void {
     this.props.getSavedWallets();
-      this.props.setDesktopConfig();
+    this.props.setDesktopConfig();
   }
 
   render() {
@@ -52,7 +56,9 @@ class MultiLoginPage extends Component<MultiLoginProps, MultiloginState> {
       <Container>
         <Header>
           <Title>Vault Login</Title>
-          <Subtitle>Privately store, exchange and transfer assets</Subtitle>
+          <Description>
+            Privately store, exchange and transfer assets
+          </Description>
         </Header>
         <Main>
           <OpenWalletDesktop wallets={this.props.wallets} />
@@ -71,6 +77,7 @@ const mapStateToProps = (state: DesktopAppState) => ({
   isLoggedIn: selectIsLoggedIn(state),
 });
 
-export const MultiLoginDesktop = connect(mapStateToProps, { getSavedWallets, setDesktopConfig })(
-  MultiLoginPage
-);
+export const MultiLoginDesktop = connect(mapStateToProps, {
+  getSavedWallets,
+  setDesktopConfig,
+})(MultiLoginPage);

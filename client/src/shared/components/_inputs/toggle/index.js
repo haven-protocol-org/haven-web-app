@@ -16,7 +16,7 @@ const Toggle = ({
   width,
   readOnly,
   onClick,
-  reveal
+  reveal,
 }) => {
   return (
     <Container width={width}>

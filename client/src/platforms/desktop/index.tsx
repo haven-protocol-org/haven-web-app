@@ -1,9 +1,9 @@
 import React from "react";
 import { HavenApp } from "../../shared/App";
 
-import { applyMiddleware, createStore, Store } from "redux";
-import reduxThunk from "redux-thunk";
-import reducers from "./reducers";
+import { Action, AnyAction, applyMiddleware, createStore, Store } from "redux";
+import reduxThunk, { ThunkDispatch } from "redux-thunk";
+import reducers, { DesktopAppState } from "./reducers";
 import {
   loadState,
   logger,
@@ -12,18 +12,23 @@ import {
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { GlobalStyle } from "globalStyle";
+import { addDesktopStoreWatchers } from "./watcher";
 
-let store: Store;
+
+export type DispatchFunctionType = ThunkDispatch<DesktopAppState, undefined, AnyAction>
+
+let store: Store<DesktopAppState, Action<DesktopAppState>> & {dispatch: DispatchFunctionType};
 
 export const startDesktopApp = () => {
-  const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore);
+  const createStoreWithMiddleware = applyMiddleware<DispatchFunctionType, DesktopAppState>(reduxThunk)(createStore);
   store = createStoreWithMiddleware(reducers);
+  addDesktopStoreWatchers(store);
   render();
 };
 
 export const startDesktopAppInDevMode = () => {
   const persistedState = loadState();
-  const createStoreWithMiddleware = applyMiddleware(
+  const createStoreWithMiddleware = applyMiddleware<DispatchFunctionType, DesktopAppState>(
     reduxThunk,
     logger
   )(createStore);
@@ -31,7 +36,7 @@ export const startDesktopAppInDevMode = () => {
   store.subscribe(() => {
     saveDesktopState(store.getState());
   });
-
+  addDesktopStoreWatchers(store);
   render();
 };
 

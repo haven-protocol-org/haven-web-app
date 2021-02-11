@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import media from "../../../../../assets/styles/media.js";
 import { NavLink } from "react-router-dom";
-import { ReactComponent as ChevronIcon } from "../../../../../assets/icons/chevron.svg";
 
 const activeClassName = "selected";
 

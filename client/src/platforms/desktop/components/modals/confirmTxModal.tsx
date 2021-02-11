@@ -40,7 +40,8 @@ class ConfirmTxModal extends React.Component<ConfirmTxModalProps, any> {
         description="Please review and confirm your transaction"
         leftButton="Cancel"
         rightButton="Confirm"
-        disabled={!checked}
+        disabledRight={!checked}
+        disabledLeft={false}
         isLoading={this.state.loading}
         onConfirm={() => this.onConfirm()}
         onCancel={() => this.onCancel()}

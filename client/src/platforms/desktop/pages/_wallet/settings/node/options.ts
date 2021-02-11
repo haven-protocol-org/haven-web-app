@@ -1,20 +1,22 @@
-import { NodeLocation, LocalNode, SelectedNode } from "platforms/desktop/types";
-import { REMOTE_NODES } from "platforms/desktop/nodes";
+import { NodeLocation, SelectedNode, RemoteNode, BasicNode } from "platforms/desktop/types";
 import {
   NodeOption,
   NodeSelectionType,
 } from "platforms/desktop/pages/_wallet/settings/node/nodeSetting";
 
-export const createNodeOptions = (havendState: SelectedNode): NodeOption[] => {
-  const remoteNodes: NodeOption[] = REMOTE_NODES.map((node) => {
+export const createNodeOptions = (
+  havendState: SelectedNode,
+  remoteList: RemoteNode[]
+): NodeOption[] => {
+  const remoteNodes: NodeOption[] = remoteList.map((node) => {
     return {
       location: NodeLocation.Remote,
-      address: node.address,
-      port: node.port,
-      trusted: node.trusted,
+      address: node.address!,
+      port: node.port!,
+      trusted: true,
       provider: node.provider,
       name: `Remote Node (${node.provider})`,
-      selectionType: NodeSelectionType.local,
+      selectionType: NodeSelectionType.remote,
     };
   });
 
@@ -27,7 +29,7 @@ export const createNodeOptions = (havendState: SelectedNode): NodeOption[] => {
     selectionType: NodeSelectionType.local,
   };
 
-  const customNode: NodeOption = isCustomNode(havendState)
+  const customNode: NodeOption = isCustomNode(havendState, remoteList)
     ? {
         location: NodeLocation.Remote,
         address: havendState.address!,
@@ -50,7 +52,8 @@ export const createNodeOptions = (havendState: SelectedNode): NodeOption[] => {
     return [...remoteNodes, customNode];
   }
 
-  return [localNode, ...remoteNodes, customNode];
+  // omit local node for windows as well for now
+  return [...remoteNodes, customNode];
 };
 
 const createCustomNodeName = (havendState: SelectedNode) => {
@@ -61,11 +64,24 @@ const createCustomNodeName = (havendState: SelectedNode) => {
   }
 };
 
-const isCustomNode = (havendState: SelectedNode): boolean => {
+const isCustomNode = (havendState: SelectedNode, remoteList: RemoteNode []): boolean => {
   return (
     havendState.location === NodeLocation.Remote &&
-    !REMOTE_NODES.some(
+    !remoteList.some(
       (remoteNode) => remoteNode.address === havendState.address
     )
   );
 };
+
+export const getDefaultNode = (nodeList: RemoteNode[]): NodeOption => {
+  const node: RemoteNode =  nodeList.find( node => !!node.default)!;
+
+  return {
+    location: NodeLocation.Remote,
+    address: node.address!,
+    port: node.port!,
+    trusted: true,
+    name: `Remote Node (${node.provider})`,
+    selectionType: NodeSelectionType.remote,
+  };
+}

@@ -1,6 +1,7 @@
 import { UPDATE_SAVED_WALLETS } from "./types";
 import { requestSavedWalletsIPC } from "../ipc/misc";
 import {  NET_TYPE_ID } from "constants/env";
+import { logM } from "utility/utility";
 
 export const getSavedWallets = () => {
   return (dispatch: any) => {
@@ -8,7 +9,7 @@ export const getSavedWallets = () => {
       .then((savedWallets: { wallets: string[]; storePath: string }) =>
         dispatch(updateSavedWallets(savedWallets))
       )
-      .catch((err) => console.log(err));
+      .catch((err) => logM(err));
   };
 };
 

@@ -6,19 +6,17 @@ import { selectTheme } from "../../../actions";
 import Body from "../../../components/_layout/body";
 import Header from "../../../components/_layout/header";
 import Input from "../../../components/_inputs/input";
-import Description from "../../../components/_inputs/description";
 import RevealSeed from "../../../components/_inputs/revealSeed";
-
 import Form from "../../../components/_inputs/form";
 import Theme from "../../../components/_inputs/theme";
 import DoubleFooter from "../../../components/_inputs/double_footer";
-
 import { Container } from "./styles";
 import { storeKeyFileToDisk } from "platforms/web/actions/storage";
-import { dark, light, sepia } from "../../../../assets/styles/themes.js";
 import { HavenAppState } from "platforms/desktop/reducers";
 import { IKeys } from "typings";
 import { isTemporaryWallet as selectIsTemporaryWallet } from "shared/reducers/walletSession";
+import { selectSyncState } from "shared/reducers/chain";
+import { SyncState } from "shared/types/types";
 
 const options = [
   { theme: "dark", value: "Dark Theme" },
@@ -29,7 +27,7 @@ const options = [
 interface SettingsProps extends IKeys {
   theme: any;
   selectTheme: (theme: any) => void;
-  chain: any;
+  syncState: SyncState;
   wallet: any;
   storeKeyFileToDisk: (walletname: string) => void;
   tempWallet: boolean;
@@ -64,11 +62,10 @@ class SettingsPage extends Component<SettingsProps, SettingsState> {
   }
 
   handleClick = ({ theme, value }: { theme: string; value: string }) => {
-      
     this.props.selectTheme(theme);
-      this.setState({
-        value: value,
-      });
+    this.setState({
+      value: value,
+    });
   };
 
   toggleVisibility = () => {
@@ -84,17 +81,13 @@ class SettingsPage extends Component<SettingsProps, SettingsState> {
   render() {
     const { value, reveal } = this.state;
     const seed = this.props.mnemonic;
-    let truncated = "";
     if (seed.length > 0) {
       const first = seed.substring(0, 32);
       const last = seed.substring(seed.length - 32);
-      truncated = first + last;
+      const truncated = first + last;
     }
 
-    console.log(" PROPS", this.props);
-
-    const windowWidth = window.innerWidth;
-    const { nodeHeight, walletHeight } = this.props.chain;
+    const { isSyncing } = this.props.syncState;
 
     return (
       <Body>
@@ -180,13 +173,13 @@ class SettingsPage extends Component<SettingsProps, SettingsState> {
           <DoubleFooter
             // Left section
             leftLabel={"Download Vault File"}
-            leftDisabled={walletHeight !== nodeHeight || this.props.tempWallet}
+            leftDisabled={isSyncing || this.props.tempWallet}
             leftLoading={false}
             leftOnClick={this.downloadKeystore}
             leftVisible={!this.props.tempWallet}
             // Right section
             rightLabel={this.state.reveal ? "Hide Keys" : "Show Keys"}
-            rightDisabled={walletHeight !== nodeHeight ? true : false}
+            rightDisabled={isSyncing ? true : false}
             rightLoading={false}
             rightOnClick={this.toggleVisibility}
           />
@@ -198,7 +191,7 @@ class SettingsPage extends Component<SettingsProps, SettingsState> {
 
 const mapStateToProps = (state: HavenAppState) => ({
   theme: state.theme,
-  chain: state.chain,
+  syncState: selectSyncState(state),
   wallet: state.walletSession,
   tempWallet: selectIsTemporaryWallet(state),
 });

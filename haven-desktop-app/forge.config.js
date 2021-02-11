@@ -13,7 +13,7 @@ const ignoredPaths = [
   "yarn.lock",
   "forge.config.js",
   "^/haven-node",
-  "^/icons",
+ // "^/icons",
 ];
 
 const substituteEnvsForBuild = (
@@ -62,7 +62,7 @@ const copyTargetNodesToBuild = (
   };
 
 
-  const netType = netTypes[process.env.NET_TYPE_ID];
+  const netType = netTypes[process.env.REACT_APP_NET_TYPE_ID];
 
 
   fs.mkdirSync(path.resolve(buildPath, `./haven-node/${platform}/`), {
@@ -84,11 +84,22 @@ const copyTargetNodesToBuild = (
 
 
 module.exports = {
-  packagerConfig: {
+/*   packagerConfig: {
     executableName: "Haven",
     name: "Haven",
     ignore: ignoredPaths,
     afterCopy: [copyTargetNodesToBuild, substituteEnvsForBuild],
+    icon: "./icons/icon",
+    asar: {
+      unpackDir: "haven-node/**",
+    },
+  }, */
+
+    packagerConfig: {
+    executableName: process.platform === "linux" ? "haven" : "Haven",
+    name: "Haven",
+    ignore: ignoredPaths,
+    afterCopy: [substituteEnvsForBuild],
     icon: "./icons/icon",
     asar: {
       unpackDir: "haven-node/**",
@@ -121,7 +132,8 @@ module.exports = {
     },
     {
       name: "@electron-forge/maker-deb",
-      config: {name:"haven", productName:"Haven"},
+      platforms: ["linux"],
+      config: {name:"haven", productName:"haven"},
     },
   ],
 

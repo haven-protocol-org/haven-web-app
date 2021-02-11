@@ -1,7 +1,7 @@
 import { Component } from "react";
 import { connect } from "react-redux";
 import { isWalletSynced } from "shared/reducers/chain"
-import { closeWallet } from "shared/actions/wallet";
+import { closeWallet } from "shared/actions/walletCreation";
 import { isWeb } from "constants/env";
 
 
