@@ -45,6 +45,14 @@ class Balances extends Component<BalanceProps, BalanceState> {
     });
   }
 
+  handleSync = (isSyncing: boolean, balance: any, totalBalance: any) => {
+    if (isSyncing) {
+      return "-/-";
+    } else {
+      return balance === -1 ? <Spinner /> : totalBalance;
+    }
+  };
+
   render() {
     const ticker = this.state.currentTicker;
 
@@ -74,7 +82,7 @@ class Balances extends Component<BalanceProps, BalanceState> {
     return (
       <Wrapper onClick={() => this.onClickNext()}>
         <Amount isSyncing={isSyncing}>
-          {balance === -1 ? <Spinner /> : totalBalance}
+          {this.handleSync(isSyncing, balance, totalBalance)}
         </Amount>
         <Value>
           {isSyncing
