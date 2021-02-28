@@ -40,23 +40,6 @@ export const getBalance = async (
   }
   //@ts-ignore
   const balance: BigInteger = await wallet.getBalance(
-    accountIdx,
-    subaddressIdx
-  );
-  return balance;
-};
-
-export const getOffshoreBalance = async (
-  accountIdx: number | undefined = undefined,
-  subaddressIdx: number | undefined = undefined
-) => {
-  if (!wallet) {
-    throw Error("no wallet exist");
-  }
-  //@ts-ignore
-  const balance: BigInteger = await wallet.getOffshoreBalance(
-    accountIdx,
-    subaddressIdx
   );
   return balance;
 };
@@ -70,21 +53,6 @@ export const getUnlockedBalance = async (
   }
   //@ts-ignore
   const balance: BigInteger = await wallet.getUnlockedBalance(
-    accountIdx,
-    subaddressIdx
-  );
-  return balance;
-};
-
-export const getUnlockedOffshoreBalance = async (
-  accountIdx: number | undefined = undefined,
-  subaddressIdx: number | undefined = undefined
-) => {
-  if (!wallet) {
-    throw Error("no wallet exist");
-  }
-  //@ts-ignore
-  const balance: BigInteger = await wallet.getUnlockedOffshoreBalance(
     accountIdx,
     subaddressIdx
   );

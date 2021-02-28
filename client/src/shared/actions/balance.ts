@@ -29,30 +29,6 @@ export const getXHVBalance = () => {
   };
 };
 
-export const getXUSDBalance = () => {
-  return async (dispatch: any) => {
-    dispatch(getBalancesFetching());
-    try {
-      const balance = bigIntegerToBigInt(
-        await walletProxy.getOffshoreBalance()
-      );
-      const unlockedBalance = bigIntegerToBigInt(
-        await walletProxy.getUnlockedOffshoreBalance()
-      );
-      const xUSDBalance: Balance = {
-        unlockedBalance,
-        balance,
-        lockedBalance: balance.subtract(unlockedBalance),
-      };
-      dispatch(getBalancesSucceed({ xUSD: xUSDBalance }));
-    } catch (e) {
-      dispatch(getBalancesFailed(e));
-    }
-
-    return;
-  };
-};
-
 const getBalancesFetching = () => ({ type: GET_BALANCES_FETCHING });
 
 export const getBalancesSucceed = (balance: XBalance) => ({

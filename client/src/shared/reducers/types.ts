@@ -12,8 +12,8 @@ export enum BalanceTypes {
 
 export enum Ticker {
   XHV = "XHV",
-  xUSD = "xUSD",
-  xBTC = "xBTC",
+  XUSD = "xUSD",
+  XBTC = "xBTC",
 }
 export type XFetchingItem = Partial<{ [key in Ticker]?: XFetchingStats }>;
 export type XFetching = { [key in Ticker]?: XFetchingStats };

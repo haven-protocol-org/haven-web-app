@@ -8,6 +8,7 @@ import { onWalletSyncUpdateSucceed } from "shared/actions/walletCreation";
 import { getLastBlockHeader } from "./blockHeaderExchangeRate";
 import { updateHavenFeatures } from "./havenFeature";
 import { HavenAppState } from "platforms/desktop/reducers";
+import { Ticker } from "shared/reducers/types";
 
 export class HavenWalletListener extends MoneroWalletListener {
   // we keep a dispatch and getStore instance in the walletlistener
@@ -86,7 +87,7 @@ export class HavenWalletListener extends MoneroWalletListener {
   // @ts-ignore
   onBalancesChanged(
     newBalance: BigInteger,
-    newUnlockedBalance: BigInteger
+    newUnlockedBalance: BigInteger, assetType: string 
   ): void {
     const balance = bigIntegerToBigInt(newBalance);
     const unlockedBalance = bigIntegerToBigInt(newUnlockedBalance);
@@ -95,7 +96,9 @@ export class HavenWalletListener extends MoneroWalletListener {
       balance,
       lockedBalance: balance.subtract(unlockedBalance),
     };
-    this.dispatch(getBalancesSucceed({ XHV: xhvBalance }));
+
+    logM(assetType);
+    this.dispatch(getBalancesSucceed({ [assetType as Ticker] : xhvBalance }));
     // this.dispatch(getAllTransfers());
   }
   /**
