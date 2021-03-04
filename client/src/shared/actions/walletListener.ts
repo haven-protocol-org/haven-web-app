@@ -41,7 +41,6 @@ export class HavenWalletListener extends MoneroWalletListener {
     message: string
   ): void {
 
-    logM(height);
     const syncDistance = endHeight - height;
 
     let updateInterval = Math.pow(10, Math.floor(Math.log10(syncDistance)));
@@ -53,6 +52,8 @@ export class HavenWalletListener extends MoneroWalletListener {
         walletHeight: height,
         nodeHeight:endHeight
       };
+      logM(height);
+
       this.dispatch(onWalletSyncUpdateSucceed(chain));
     }
   }
@@ -99,26 +100,6 @@ export class HavenWalletListener extends MoneroWalletListener {
 
     logM(assetType);
     this.dispatch(getBalancesSucceed({ [assetType as Ticker] : xhvBalance }));
-    // this.dispatch(getAllTransfers());
-  }
-  /**
-   * Invoked when the wallet's offshore balances change.
-   *
-   * @param {BigInteger} newBalance - new wallet balance
-   * @param {BigInteger} newUnlockedBalance - new unlocked wallet balance
-   */
-  onOffshoreBalancesChanged(
-    newBalance: BigInteger,
-    newUnlockedBalance: BigInteger
-  ): void {
-    const balance = bigIntegerToBigInt(newBalance);
-    const unlockedBalance = bigIntegerToBigInt(newUnlockedBalance);
-    const xUSDBalance: Balance = {
-      unlockedBalance,
-      balance,
-      lockedBalance: balance.subtract(unlockedBalance),
-    };
-    this.dispatch(getBalancesSucceed({ xUSD: xUSDBalance }));
     // this.dispatch(getAllTransfers());
   }
   /**
