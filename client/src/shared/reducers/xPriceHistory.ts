@@ -25,7 +25,7 @@ const emptyPriceHistory = [
 ].map((rangeInDays) => ({ prices: [], rangeInDays }));
 
 const INITIAL_STATE: XPriceRangeHistory = {
-  xUSD: emptyPriceHistory,
-  XHV: emptyPriceHistory,
-  xBTC: emptyPriceHistory,
+  [Ticker.xUSD]: emptyPriceHistory,
+  [Ticker.XHV]: emptyPriceHistory,
+  [Ticker.xBTC]: emptyPriceHistory,
 };

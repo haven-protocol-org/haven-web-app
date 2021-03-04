@@ -46,9 +46,9 @@ const INITIAL_VIEW_BALANCE: ViewBalance = {
 };
 
 const INITIAL_STATE: XBalances = {
-  xUSD: { ...INITIAL_BALANCE },
-  XHV: { ...INITIAL_BALANCE },
-  xBTC: { ...INITIAL_BALANCE },
+  [Ticker.xUSD]: { ...INITIAL_BALANCE },
+  [Ticker.XHV]: { ...INITIAL_BALANCE },
+  [Ticker.xBTC]: { ...INITIAL_BALANCE },
 };
 
 export function fetching(
@@ -127,7 +127,7 @@ export const selectTotalBalances = (
     return defaultBalance;
   }
 
-  const xUSDTotalBalance: ViewBalance = Object.entries(xBalance.xUSD).reduce(
+  const xUSDTotalBalance: ViewBalance = Object.entries(xBalance[Ticker.xUSD]).reduce(
     (result: any, [balanceType, balance]) => {
       const total =
         xBalance.XHV[balanceType].toJSNumber() * xhvToUSdRate +
@@ -141,7 +141,7 @@ export const selectTotalBalances = (
   const xHVTotalBalance: ViewBalance = Object.entries(xBalance.XHV).reduce(
     (result: any, [balanceType, balance]) => {
       const total =
-        xBalance.xUSD[balanceType].toJSNumber() * usdToXhvRate +
+        xBalance[Ticker.xUSD][balanceType].toJSNumber() * usdToXhvRate +
         balance.toJSNumber();
       result[balanceType] = convertBalanceToMoney(total);
       return result;
@@ -174,7 +174,7 @@ export const selectValueOfAssetsInUSD = (
   );
 
   let xUSDBalance: ViewBalance = { ...INITIAL_VIEW_BALANCE };
-  Object.entries(state.xBalance.xUSD).forEach(
+  Object.entries(state.xBalance[Ticker.xUSD]).forEach(
     ([balanceType, balance]) =>
       (xUSDBalance[balanceType] = convertBalanceToMoney(balance.toJSNumber()))
   );

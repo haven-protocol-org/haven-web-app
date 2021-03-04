@@ -4,12 +4,10 @@ import { DesktopAppState } from "platforms/desktop/reducers";
 import { connect } from "react-redux";
 import {
   selectValueOfAssetsInUSD,
-  ViewBalance,
   XViewBalance
 } from "shared/reducers/xBalance";
 import { Ticker, BalanceTypes as BalanceType } from "shared/reducers/types";
 import { Container, DonutChart, Legend } from "./style";
-import { blockHeaderExchangeRate } from "shared/reducers/blockHeaderExchangeRates";
 
 interface AssetAllocationProps {
   assetsInUSD: XViewBalance;
@@ -104,7 +102,7 @@ class AssetAllocationComponent extends Component<AssetAllocationProps, any> {
   };
 
   createDonutSVGChart = () => {
-    if (this.props.assetsInUSD.XHV && this.props.assetsInUSD.xUSD) {
+    if (this.props.assetsInUSD.XHV && this.props.assetsInUSD[Ticker.xUSD]) {
       return (
         <svg
           shapeRendering={"geometricPrecision"}
