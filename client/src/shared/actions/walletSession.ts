@@ -77,7 +77,7 @@ export const startWalletSession = (
     return async (dispatch: any) => {
       dispatch(getXHVBalance());
       dispatch(getAllTransfers());
-      dispatch(getAddresses());
+      //dispatch(getAddresses());
       dispatch(refresh());
 
       dispatch(initChainData());
