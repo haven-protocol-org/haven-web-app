@@ -216,9 +216,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       fromAmount,
       toAmount,
       this.state.selectedPrio.prio,
-      this.state.externAddress,
-      exchangeType
-    );
+      this.state.externAddress    );
   };
 
   toggleBasic = () => {

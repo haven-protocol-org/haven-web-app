@@ -20,7 +20,6 @@ import { Ticker } from "shared/reducers/types";
 import { showModal } from "shared/actions/modal";
 import { MODAL_TYPE } from "shared/reducers/modal";
 import { selectPrimaryAddress } from "shared/reducers/address";
-import { NotificationType } from "constants/notificationList";
 import {
   ExchangeProcessInfo,
   ExchangeType,
@@ -30,7 +29,7 @@ import MoneroDestination from "haven-wallet-core/src/main/js/wallet/model/Monero
 import { HavenTxType } from "haven-wallet-core";
 import MoneroTxWallet from "haven-wallet-core/src/main/js/wallet/model/MoneroTxWallet";
 import bigInt from "big-integer";
-import { convertBalanceToMoney, convertMoneyToBalance } from "utility/utility";
+import {convertMoneyToBalance } from "utility/utility";
 
 interface RPCExchangeResponse {
   amount_list: Array<number>;
@@ -61,7 +60,6 @@ export function createExchange(
   toAmount: number,
   priority: number,
   externAddress: string,
-  exchangeType: ExchangeType
 ): any {
   return async (dispatch: any, getState: () => DesktopAppState) => {
     const address =
@@ -69,25 +67,31 @@ export function createExchange(
         ? externAddress
         : selectPrimaryAddress(getState().address.entrys);
 
-    const xhvAnmount =
-      exchangeType === ExchangeType.Offshore ? fromAmount : toAmount;
+
+
+      const txType = fromTicker == Ticker.xUSD
+        ? HavenTxType.EXCHANGE_FROM_USD
+        : HavenTxType.EXCHANGE_TO_USD;
+
+
+      const xhvAnmount =
+      txType === HavenTxType.EXCHANGE_TO_USD ? fromAmount : toAmount;
+    
+      const currency = txType == HavenTxType.EXCHANGE_FROM_USD? toTicker : fromTicker
 
     let amount = convertMoneyToBalance(xhvAnmount);
     // we need to round the value as just for diigits are allowed for onshore/offshore
     const roundingValue = bigInt(100000000);
     amount = amount.divide(roundingValue).multiply(roundingValue);
     dispatch(
-      onExchangeCreationFetch({ priority, exchangeType, address } as Partial<
+      onExchangeCreationFetch({ priority, txType, address } as Partial<
         ExchangeProcessInfo
       >)
     );
     const destinations = [
       new MoneroDestination(address, amount.toString()).toJson(),
     ];
-    const txType =
-      exchangeType === ExchangeType.Onshore
-        ? HavenTxType.ONSHORE
-        : HavenTxType.OFFSHORE;
+
 
     const txConfig: Partial<ITxConfig> = {
       canSplit: true,
@@ -101,7 +105,7 @@ export function createExchange(
     try {
       const createdTx: MoneroTxWallet[] = await walletProxy.transfer(txConfig);
 
-      const exchangeInfo = parseExchangeResonse(createdTx, exchangeType);
+      const exchangeInfo = parseExchangeResonse(createdTx);
       dispatch(onExchangeCreationSucceed(exchangeInfo));
       dispatch(showModal(MODAL_TYPE.ConfirmExchange));
     } catch (e) {
@@ -112,9 +116,7 @@ export function createExchange(
 }
 
 const parseExchangeResonse = (
-  txList: MoneroTxWallet[],
-  exchangeType: ExchangeType
-): Partial<ExchangeProcessInfo> => {
+  txList: MoneroTxWallet[]): Partial<ExchangeProcessInfo> => {
   let fromAmount: bigInt.BigInteger;
   let toAmount: bigInt.BigInteger;
   let fee: bigInt.BigInteger;

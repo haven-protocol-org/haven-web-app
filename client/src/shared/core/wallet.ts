@@ -9,6 +9,7 @@ import {
   IMonerRPCConnection,
 } from "../../typings";
 import MoneroTxWallet from "haven-wallet-core/src/main/js/wallet/model/MoneroTxWallet";
+import HavenBalance from "haven-wallet-core/src/main/js/wallet/model/HavenBalance";
 
 let wallet: MoneroWalletWasm;
 
@@ -33,28 +34,30 @@ export const closeWallet = async (save: boolean) => {
 
 export const getBalance = async (
   accountIdx: number | undefined = undefined,
-  subaddressIdx: number | undefined = undefined
+  subaddressIdx: number | undefined = undefined,
+  assetType: string | undefined = undefined
 ) => {
   if (!wallet) {
     throw Error("no wallet exist");
   }
   //@ts-ignore
-  const balance: BigInteger = await wallet.getBalance(
+  const balance: HavenBalance = await wallet.getBalance(
   );
   return balance;
 };
 
 export const getUnlockedBalance = async (
   accountIdx: number | undefined = undefined,
-  subaddressIdx: number | undefined = undefined
+  subaddressIdx: number | undefined = undefined,
+  assetType: string | undefined = undefined
 ) => {
   if (!wallet) {
     throw Error("no wallet exist");
   }
-  //@ts-ignore
-  const balance: BigInteger = await wallet.getUnlockedBalance(
-    accountIdx,
-    subaddressIdx
+
+  const balance: HavenBalance = await wallet.getUnlockedBalance(
+      //@ts-ignore
+    accountIdx, subaddressIdx, assetType
   );
   return balance;
 };

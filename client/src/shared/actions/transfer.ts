@@ -42,10 +42,7 @@ export const createTransfer = (
   
 
     const priority = MoneroTxPriority.NORMAL;
-    const txType =
-      fromTicker === Ticker.XHV
-        ? HavenTxType.CLASSIC
-        : HavenTxType.OFFSHORE_TO_OFFSHORE;
+    const txType = HavenTxType.TRANSFER;
     
     dispatch(
       transferCreationFetch({
