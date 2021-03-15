@@ -24,8 +24,7 @@ const emptyPriceHistory = [
   PRICE_RANGE_MAX,
 ].map((rangeInDays) => ({ prices: [], rangeInDays }));
 
-const INITIAL_STATE: XPriceRangeHistory = {
-  [Ticker.xUSD]: emptyPriceHistory,
-  [Ticker.XHV]: emptyPriceHistory,
-  [Ticker.xBTC]: emptyPriceHistory,
-};
+
+let tempObj: any = {}
+Object.values(Ticker).forEach( ticker => tempObj[ticker] = emptyPriceHistory )
+const INITIAL_STATE: XPriceRangeHistory = tempObj;

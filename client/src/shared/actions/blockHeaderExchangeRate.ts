@@ -32,7 +32,8 @@ const createRecordEntry = (blockHeader: MoneroBlockHeader): BlockHeaderRate => {
 
   Object.entries(blockHeader.getPricingRecord()).forEach(([key, value]) => {
     if (key !== "signature") {
-      pricingRecord[key] = bigInt(value as number);
+      // upper case asset key to match Ticker keys
+      pricingRecord[key.toUpperCase()] = bigInt(value as number);
     }
   });
   pricingRecord.height = blockHeader.getHeight();

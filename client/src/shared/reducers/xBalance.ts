@@ -10,7 +10,6 @@ import {
   GET_BALANCES_FETCHING,
   GET_BALANCES_SUCCEED,
 } from "shared/actions/types";
-import { GET_OFFSHORE_BALANCE_SUCCEED } from "shared/actions/types";
 
 export const NO_BALANCE = bigInt.zero;
 
@@ -45,11 +44,10 @@ const INITIAL_VIEW_BALANCE: ViewBalance = {
   lockedBalance: -1,
 };
 
-const INITIAL_STATE: XBalances = {
-  [Ticker.xUSD]: { ...INITIAL_BALANCE },
-  [Ticker.XHV]: { ...INITIAL_BALANCE },
-  [Ticker.xBTC]: { ...INITIAL_BALANCE },
-};
+
+let tempObj: any = {}
+Object.values(Ticker).forEach( ticker => tempObj[ticker] = {...INITIAL_BALANCE} )
+const INITIAL_STATE: XBalances = tempObj;
 
 export function fetching(
   state = INITAL_FETCHING_STATE,
@@ -71,7 +69,6 @@ export function xBalance(
 ): XBalances {
   switch (action.type) {
     case GET_BALANCES_SUCCEED:
-    case GET_OFFSHORE_BALANCE_SUCCEED:
       return { ...state, ...action.payload };
     default:
       return state;
@@ -100,7 +97,7 @@ export const selectTotalBalances = (
   const defaultBalance = {
     [Ticker.XHV]: { ...INITIAL_VIEW_BALANCE },
     [Ticker.xUSD]: { ...INITIAL_VIEW_BALANCE },
-    xBTC: { ...INITIAL_VIEW_BALANCE },
+    [Ticker.xBTC]: { ...INITIAL_VIEW_BALANCE },
   };
 
   const xBalance = state.xBalance;
@@ -160,7 +157,7 @@ export const selectTotalBalances = (
 
   return {
     [Ticker.xUSD]: xUSDTotalBalance,
-    xBTC: btcTotalBalance,
+    XBTC: btcTotalBalance,
   };
 };
 

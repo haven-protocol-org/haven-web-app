@@ -1,13 +1,14 @@
+
+// id matches Ticker enum
 export const AssetList = [
   {
+    id:"XUSD",
     token: "United States Dollar",
     ticker: "USD",
-    price: "$1.00",
-    change: "~ 0.00",
     symbol: "$",
   },
-
   {
+    id:"XEUR",
     token: "Euro",
     ticker: "EUR",
     price: "$1.00",
@@ -15,25 +16,21 @@ export const AssetList = [
     symbol: "€",
   },
   {
+    id:"XCNY",
     token: "Chinese Yuan",
     ticker: "CNY",
-    price: "$1.00",
-    change: "~ 0.00",
     symbol: "¥",
   },
-
   {
+    id:"XAU",
     token: "Gold",
     ticker: "GOLD",
-    price: "$1.00",
-    change: "~ 0.00",
     symbol: "$",
   },
   {
+    id:"XAG",
     token: "Silver",
     ticker: "SILV",
-    price: "$1.00",
-    change: "~ 0.00",
     symbol: "$",
   },
 ];

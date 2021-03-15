@@ -18,28 +18,20 @@ export interface XRates {
   rates: ConversionRate[];
 }
 
-export interface BlockHeaderRate {
-  [key: string]: BlockHeaderRate[keyof BlockHeaderRate];
+
+type Rates = Record<Ticker, bigInt.BigInteger>;
+interface BlockHeader {
+
   height: number;
   signature: string;
   unused1: bigInt.BigInteger;
   unused2: bigInt.BigInteger;
   unused3: bigInt.BigInteger;
-  xAG: bigInt.BigInteger;
-  xAU: bigInt.BigInteger;
-  xAUD: bigInt.BigInteger;
-  xBTC: bigInt.BigInteger;
-  xCAD: bigInt.BigInteger;
-  xCHF: bigInt.BigInteger;
-  xCNY: bigInt.BigInteger;
-  xEUR: bigInt.BigInteger;
-  xGBP: bigInt.BigInteger;
-  xJPY: bigInt.BigInteger;
-  xNOK: bigInt.BigInteger;
-  xNZD: bigInt.BigInteger;
-  xUSD: bigInt.BigInteger;
   timestamp: bigInt.BigInteger;
+
 }
+
+export type BlockHeaderRate = BlockHeader & Rates;
 
 const INITIAL_STATE: BlockHeaderRate[] = [];
 
@@ -114,7 +106,7 @@ export const priceDelta = (state: DesktopAppState): number | null => {
   const latestBlockerHeader =
     state.blockHeaderExchangeRate[state.blockHeaderExchangeRate.length - 1];
 
-  return latestBlockerHeader.xUSD
+  return latestBlockerHeader.XUSD
     .subtract(latestBlockerHeader.unused1)
     .abs()
     .toJSNumber();
