@@ -2,15 +2,12 @@ import React, { Component, ReactSVGElement } from "react";
 import Header from "../_layout/header";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { connect } from "react-redux";
-import {
-  selectValueOfAssetsInUSD,
-  XViewBalance
-} from "shared/reducers/xBalance";
+import { XViewBalance } from "shared/reducers/xBalance";
 import { Ticker, BalanceTypes as BalanceType } from "shared/reducers/types";
 import { Container, DonutChart, Legend } from "./style";
 
 interface AssetAllocationProps {
-  assetsInUSD: XViewBalance;
+  //assetsInUSD: XViewBalance;
 }
 
 type DonutSegementItem = {
@@ -47,7 +44,7 @@ class AssetAllocationComponent extends Component<AssetAllocationProps, any> {
   segments: DonutSegementItem[] = [];
 
   createSegments = () => {
-    this.segments = [];
+   /*  this.segments = [];
 
     const balances = this.props.assetsInUSD;
     const totalBalance =
@@ -129,7 +126,7 @@ class AssetAllocationComponent extends Component<AssetAllocationProps, any> {
           })}
         </svg>
       );
-    }
+    } */
 
     return null;
   };
@@ -145,7 +142,7 @@ class AssetAllocationComponent extends Component<AssetAllocationProps, any> {
         />
 
         <Container>
-          <DonutChart>{this.createDonutSVGChart()}</DonutChart>
+          {/* <DonutChart>{this.createDonutSVGChart()}</DonutChart> */}
           <Legend>
             <ul>
               {this.segments.map((segment: DonutSegementItem) => {
@@ -178,7 +175,7 @@ class AssetAllocationComponent extends Component<AssetAllocationProps, any> {
 }
 
 export const mapStateToProps = (state: DesktopAppState) => ({
-  assetsInUSD: selectValueOfAssetsInUSD(state)
+  //assetsInUSD: selectValueOfAssetsInUSD(state)
 });
 
 export const AssetAllocation = connect(

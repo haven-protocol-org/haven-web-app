@@ -9,11 +9,11 @@ import Cell from "../../../components/cell";
 import CellDisabled from "../../../components/cell_disabled";
 
 import { AssetList } from "constants/assets";
-import { convertBalanceToMoney } from "utility/utility";
+import { convertBalanceToMoney, logM } from "utility/utility";
 import { Ticker } from "shared/reducers/types";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import {
-  selectValueOfAssetsInUSD,
+  selectValueInOtherAsset,
   XBalances,
   XViewBalance,
 } from "shared/reducers/xBalance";
@@ -31,7 +31,7 @@ interface AssetsProps {
 
 interface AssetsState {}
 
-const Enabled_TICKER = [Ticker.xUSD, Ticker.XHV];
+const Enabled_TICKER = [Ticker.xUSD, Ticker.XHV, Ticker.XAG, Ticker.XAU, Ticker.xCNY, Ticker.xEUR];
 
 class AssetsPage extends Component<AssetsProps, any> {
   state = {
@@ -44,16 +44,19 @@ class AssetsPage extends Component<AssetsProps, any> {
 
   renderEnabledTokens = () => {
     const enabledTokens = AssetList.filter((asset: any) =>
-      Enabled_TICKER.includes(("x" + asset.ticker) as Ticker)
+      Enabled_TICKER.includes(asset.id as Ticker)
     );
     return enabledTokens.map((data) => {
-      const { token, ticker } = data;
+      const { token, ticker, id } = data;
 
-      const xTicker = ("x" + ticker) as Ticker;
+      const xTicker = id;
 
       const unlockedBalance = convertBalanceToMoney(
         this.props.balances[xTicker].unlockedBalance
       );
+
+
+      logM(this.props.balances);
 
       const totalBalance = convertBalanceToMoney(this.props.balances[xTicker].balance);
 
@@ -61,8 +64,8 @@ class AssetsPage extends Component<AssetsProps, any> {
         this.props.balances[xTicker].lockedBalance
       );
 
-      const value = this.props.assetsInUSD[xTicker]!.unlockedBalance;
-      const xRate = 1;
+      const value = selectValueInOtherAsset(this.props.balances[xTicker], this.props.rates, xTicker, Ticker.xUSD);// this.props.assetsInUSD[xTicker]!.unlockedBalance;
+      const xRate = selectXRate(this.props.rates, xTicker, Ticker.xUSD);
 
       return (
         <Cell
@@ -86,9 +89,9 @@ class AssetsPage extends Component<AssetsProps, any> {
     );
 
     return disabledTokens.map((data) => {
-      const { token, ticker, symbol } = data;
+      const { token, ticker, symbol, id } = data;
 
-      const xTicker = ("x" + ticker) as Ticker;
+      const xTicker = id;
       const rates = this.props.rates;
       const xRate = selectXRate(rates, xTicker, Ticker.xUSD);
       const xRateString = symbol + xRate.toFixed(2);
@@ -115,7 +118,8 @@ class AssetsPage extends Component<AssetsProps, any> {
 
     const lockedBalance = convertBalanceToMoney(this.props.balances.XHV.lockedBalance);
 
-    const xhvInUSD = this.props.assetsInUSD.XHV!.unlockedBalance;
+    const xhvInUSD = selectValueInOtherAsset(this.props.balances.XHV, this.props.rates, Ticker.xUSD, Ticker.XHV).unlockedBalance;
+
     const xRate = selectXRate(this.props.rates, Ticker.XHV, Ticker.xUSD);
 
     return (
@@ -138,18 +142,17 @@ class AssetsPage extends Component<AssetsProps, any> {
           unlockedBalance={unlockedBalance}
         />
         {this.renderEnabledTokens()}
-        <Header
+     {/*    <Header
           title="Coming Soon"
           description="Upcoming Haven asset integrations"
         />
-        {this.renderDisabledTokens()}
+        {this.renderDisabledTokens()} */}
       </Body>
     );
   }
 }
 
 export const mapStateToProps = (state: DesktopAppState | WebAppState) => ({
-  assetsInUSD: selectValueOfAssetsInUSD(state),
   rates: state.blockHeaderExchangeRate,
   balances: state.xBalance,
 });

@@ -1,34 +1,33 @@
+import { Ticker } from "shared/reducers/types";
 
 // id matches Ticker enum
 export const AssetList = [
   {
-    id:"XUSD",
+    id:Ticker.xUSD,
     token: "United States Dollar",
     ticker: "USD",
     symbol: "$",
   },
   {
-    id:"XEUR",
+    id:Ticker.xEUR,
     token: "Euro",
     ticker: "EUR",
-    price: "$1.00",
-    change: "~ 0.00",
     symbol: "€",
   },
   {
-    id:"XCNY",
+    id:Ticker.xCNY,
     token: "Chinese Yuan",
     ticker: "CNY",
     symbol: "¥",
   },
   {
-    id:"XAU",
+    id:Ticker.XAU,
     token: "Gold",
     ticker: "GOLD",
     symbol: "$",
   },
   {
-    id:"XAG",
+    id:Ticker.XAG,
     token: "Silver",
     ticker: "SILV",
     symbol: "$",

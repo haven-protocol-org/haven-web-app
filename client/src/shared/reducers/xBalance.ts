@@ -1,7 +1,7 @@
 import { AnyAction } from "redux";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { INITAL_FETCHING_STATE, Ticker, XFetching } from "./types";
-import { selectXRate } from "shared/reducers/blockHeaderExchangeRates";
+import { BlockHeaderRate, selectXRate } from "shared/reducers/blockHeaderExchangeRates";
 import bigInt from "big-integer";
 import {  convertBalanceToMoney } from "utility/utility";
 import { WebAppState } from "platforms/web/reducers";
@@ -161,31 +161,20 @@ export const selectTotalBalances = (
   };
 };
 
-export const selectValueOfAssetsInUSD = (
-  state: DesktopAppState | WebAppState
-): XViewBalance => {
-  const xhvToUSDRate: number = selectXRate(
-    state.blockHeaderExchangeRate,
-    Ticker.XHV,
-    Ticker.xUSD
+
+export const selectValueInOtherAsset = (balance: Balance, exchangeRates:BlockHeaderRate[], fromAsset: Ticker, toAsset: Ticker): ViewBalance => {
+
+  const xRate: number = selectXRate(
+    exchangeRates,
+    fromAsset,
+    toAsset
   );
 
-  let xUSDBalance: ViewBalance = { ...INITIAL_VIEW_BALANCE };
-  Object.entries(state.xBalance[Ticker.xUSD]).forEach(
+
+  const viewBalance: ViewBalance = { ...INITIAL_VIEW_BALANCE };
+  Object.entries(balance).forEach(
     ([balanceType, balance]) =>
-      (xUSDBalance[balanceType] = convertBalanceToMoney(balance.toJSNumber()))
+      (viewBalance[balanceType] = convertBalanceToMoney(balance.toJSNumber() * xRate))
   );
-
-  let xhvBalanceInUSD: ViewBalance = { ...INITIAL_VIEW_BALANCE };
-  Object.entries(state.xBalance.XHV).forEach(
-    ([balanceType, balance]) =>
-      (xhvBalanceInUSD[balanceType] = convertBalanceToMoney(
-        balance.toJSNumber() * xhvToUSDRate
-      ))
-  );
-
-  return {
-    [Ticker.XHV]: xhvBalanceInUSD,
-    [Ticker.xUSD]: xUSDBalance,
-  };
-};
+  return viewBalance;
+}
