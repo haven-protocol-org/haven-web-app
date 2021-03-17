@@ -113,7 +113,7 @@ class Chart extends Component {
         </Button>
       </Buttons>
     );
-    if (this.props.prices.length === 0) {
+    if (!this.props.prices || this.props.prices.length === 0) {
       return (
         <>
           <Header>
