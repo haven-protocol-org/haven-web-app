@@ -73,13 +73,24 @@ export function createExchange(
         ? HavenTxType.EXCHANGE_FROM_USD
         : HavenTxType.EXCHANGE_TO_USD;
 
+    const currency = txType == HavenTxType.EXCHANGE_FROM_USD? toTicker : fromTicker
 
-      const xhvAnmount =
+    let exchangeAmount: number;
+    //onshore/offshore tx
+    if (currency === Ticker.XHV) {
+
+
+      exchangeAmount =
       txType === HavenTxType.EXCHANGE_TO_USD ? fromAmount : toAmount;
-    
-      const currency = txType == HavenTxType.EXCHANGE_FROM_USD? toTicker : fromTicker
+    }
+    // xusdt->xasset, xasset->xusd tx
+    else {
 
-    let amount = convertMoneyToBalance(xhvAnmount);
+      exchangeAmount =
+      txType === HavenTxType.EXCHANGE_TO_USD ? toAmount : fromAmount;
+
+    }
+    let amount = convertMoneyToBalance(exchangeAmount);
     // we need to round the value as just for diigits are allowed for onshore/offshore
     const roundingValue = bigInt(100000000);
     amount = amount.divide(roundingValue).multiply(roundingValue);
@@ -100,6 +111,7 @@ export function createExchange(
       relay: false,
       txType,
       priority,
+      currency
     } as Partial<ITxConfig>;
 
     try {
