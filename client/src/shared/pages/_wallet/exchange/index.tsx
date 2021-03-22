@@ -63,6 +63,8 @@ type ExchangeState = {
   externAddress: string;
   selectedPrio: ExchangePrioOption;
   hasEnough: boolean;
+  fromOptions: AssetOption[];
+  toOptions: AssetOption[];
 };
 
 export interface AssetOption {
@@ -80,9 +82,11 @@ export interface ExchangePrioOption {
 const assetOptions: AssetOption[] = [
   { name: "Haven", ticker: Ticker.XHV },
   { name: "United States Dollar", ticker: Ticker.xUSD },
+  { name: "Yuan", ticker: Ticker.xCNY },
   { name: "Euro", ticker: Ticker.xEUR },
   { name: "Gold", ticker: Ticker.XAU },
   { name: "Silver", ticker: Ticker.XAG },
+
 ];
 
 const exchangePrioOptions: ExchangePrioOption[] = [
@@ -99,6 +103,8 @@ const INITIAL_STATE: ExchangeState = {
   externAddress: "",
   selectedPrio: exchangePrioOptions[0],
   hasEnough: false,
+  fromOptions: [...assetOptions],
+  toOptions: [...assetOptions]
 };
 class Exchange extends Component<ExchangeProps, ExchangeState> {
   private sendTicker: Ticker = Ticker.XHV;
@@ -343,6 +349,8 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       selectedTab,
       selectedPrio,
       externAddress,
+      fromOptions,
+      toOptions
     } = this.state;
 
     const { fromTicker, toTicker } = this.props;
@@ -386,7 +394,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 name="from_asset"
                 ticker={fromTicker}
                 value={fromAsset ? fromAsset.name : "Select Asset"}
-                options={assetOptions}
+                options={fromOptions}
                 onClick={this.setFromAsset}
               />
               <Input
@@ -412,7 +420,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 name="to_asset"
                 value={toAsset ? toAsset.name : "Select Asset"}
                 ticker={toTicker}
-                options={assetOptions}
+                options={toOptions}
                 onClick={this.setToAsset}
               />
               <Input
