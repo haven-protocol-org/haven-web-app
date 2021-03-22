@@ -111,7 +111,7 @@ export const Submit = styled.button`
   transition: 500ms;
   border: none;
   outline: none;
-  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")}
+  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
 
   &:hover {
     cursor: pointer;
@@ -144,7 +144,7 @@ export const Back = styled.div`
 
   &:hover {
     cursor: pointer;
-    background: #27292;
+    background: #272920;
     transition: 500ms;
   }
 `;
@@ -168,7 +168,7 @@ export const Cancel = styled(Link)`
 
   &:hover {
     cursor: pointer;
-    background: #27292;
+    background: #272920;
     transition: 500ms;
   }
 `;

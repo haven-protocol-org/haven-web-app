@@ -81,7 +81,7 @@ export const Step = styled.div`
   width: ${(props) =>
     (props.width === 1 ? "10%" : null) ||
     (props.width === 2 ? "50%" : null) ||
-    (props.width === 3 ? "100%" : null)}
+    (props.width === 3 ? "100%" : null)};
   background: #7289DA;
   height: auto;
   border-radius: 4px;

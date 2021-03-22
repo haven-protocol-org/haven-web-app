@@ -68,7 +68,7 @@ export const Field = styled.div`
   color: ${(props) =>
     props.value === "Select vault file"
       ? props.theme.input.input_placeholder
-      : props.theme.input.input_value}
+      : props.theme.input.input_value};
   line-height: 26px;
   outline: none;
   transition: 500ms;
@@ -77,7 +77,7 @@ export const Field = styled.div`
   &::placeholder {
     font-family: Inter-Regular;
     font-size: 16px;
-    color: ${(props) => props.theme.input.input_placeholder}
+    color: ${(props) => props.theme.input.input_placeholder};
     line-height: 26px;
   }
 `;
@@ -91,7 +91,7 @@ export const Labels = styled.div`
 `;
 
 export const Labeled = styled.label`
-  color: ${(props) => props.theme.input.input_value}
+  color: ${(props) => props.theme.input.input_value};
   display: inline-block;
   cursor: pointer;
   display: flex;

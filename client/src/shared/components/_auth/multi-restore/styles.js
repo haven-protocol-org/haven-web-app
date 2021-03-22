@@ -168,7 +168,7 @@ export const Cancel = styled(Link)`
 
   &:hover {
     cursor: pointer;
-    background: #27292;
+    background: #272920;
     transition: 500ms;
   }
 `;
