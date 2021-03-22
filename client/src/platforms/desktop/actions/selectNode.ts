@@ -10,19 +10,18 @@ import { NodeOption } from "../pages/_wallet/settings/node/nodeSetting";
 import { walletProxy, havendProxy } from "shared/core/proxy";
 import { IMonerRPCConnection } from "typings";
 import { logM } from "utility/utility";
-import { SET_APP_TO_DAEMON_CONNECTION_STATE, SET_WALLET_CONNECTION_STATE } from "shared/actions/types";
+import {
+  SET_APP_TO_DAEMON_CONNECTION_STATE,
+  SET_WALLET_CONNECTION_STATE,
+} from "shared/actions/types";
 
 export const changeNodeForWallet = (
   selectedNodeOption: NodeOption,
   nodeAddress: string,
   nodePort: string
 ) => {
-  return async(dispatch: any, getState: () => DesktopAppState) => {
-
-
-
+  return async (dispatch: any, getState: () => DesktopAppState) => {
     let address: string = createFullAddress(nodeAddress, nodePort);
-
 
     const connection: IMonerRPCConnection = {
       uri: address,
@@ -36,7 +35,7 @@ export const changeNodeForWallet = (
       connection.password = selectedNodeOption.password;
     }
 
-/*     // start local node when we select it
+    /*     // start local node when we select it
     if (selectedNodeOption.location === NodeLocation.Local && !getState().localNode.isRunning) {
       dispatch(startLocalNode());
     }
@@ -46,72 +45,55 @@ export const changeNodeForWallet = (
     } */
 
     try {
-      
-      await walletProxy.setDaemonConnection(connection)
-      await havendProxy.createDaemonConnection(connection)
+      await walletProxy.setDaemonConnection(connection);
+      await havendProxy.createDaemonConnection(connection);
 
-
-       dispatch(
-          setNodeForWalletSucceed(
-            nodeAddress,
-            nodePort,
-            selectedNodeOption.location
-          ))
-
+      dispatch(
+        setNodeForWalletSucceed(
+          nodeAddress,
+          nodePort,
+          selectedNodeOption.location
+        )
+      );
+    } catch (error) {
+      dispatch(setNodeForWalletFailed(error));
     }
-    catch (error)
-    {
-        dispatch(setNodeForWalletFailed(error));
-    };
-    
   };
 };
 
-
 export const disconnectNode = () => {
-
   // we just create an empty connection
   const connection: IMonerRPCConnection = {
     uri: "",
   };
 
-
   walletProxy.stopSyncing();
-  return async(dispatch: any, getState: () => DesktopAppState) => {
-  try {
-      
-    await walletProxy.setDaemonConnection(connection)
-    await havendProxy.createDaemonConnection(connection)
+  return async (dispatch: any, getState: () => DesktopAppState) => {
+    try {
+      await walletProxy.setDaemonConnection(connection);
+      await havendProxy.createDaemonConnection(connection);
 
-    dispatch({type: SET_APP_TO_DAEMON_CONNECTION_STATE, payload: false});
-    dispatch({type: SET_WALLET_CONNECTION_STATE, payload: false});
+      dispatch({ type: SET_APP_TO_DAEMON_CONNECTION_STATE, payload: false });
+      dispatch({ type: SET_WALLET_CONNECTION_STATE, payload: false });
 
-
-     dispatch(resetNodeForWallet())
-
-  }
-  catch (error)
-  {
+      dispatch(resetNodeForWallet());
+    } catch (error) {
       logM("set empty node failed");
+    }
   };
-
-}
-}
-
-
+};
 
 const createFullAddress = (nodeAddress: string, nodePort: string) => {
-
   let address = nodeAddress + ":" + nodePort;
-  
-    // if someone omits the protocol for custom nodes
-    const protocolPattern = /^((http|https):\/\/)/;
-    if (!protocolPattern.test(address)) {
-      address = "http://" + address;
-    }
+
+  // if someone omits the protocol for custom nodes
+  const protocolPattern = /^((http|https):\/\/)/;
+  if (!protocolPattern.test(address)) {
+    address = "http://" + address;
+  }
 
   return address;
-}
+};
 
 const resetNodeForWallet = () => {
   return (dispatch: any) => {
@@ -141,7 +123,3 @@ const setNodeForWalletFailed = (error: any) => {
     );
   };
 };
-
-
-
-
