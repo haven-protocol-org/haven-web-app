@@ -67,7 +67,7 @@ type ExchangeState = {
   toOptions: AssetOption[];
 };
 
-export interface AssetOption {
+ interface AssetOption {
   ticker: Ticker;
   name: string;
 }

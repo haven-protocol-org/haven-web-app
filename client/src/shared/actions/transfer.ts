@@ -43,6 +43,7 @@ export const createTransfer = (
 
     const priority = MoneroTxPriority.NORMAL;
     const txType = HavenTxType.TRANSFER;
+    const currency: Ticker = fromTicker;
     
     dispatch(
       transferCreationFetch({
@@ -58,6 +59,7 @@ export const createTransfer = (
       relay: false,
       txType,
       priority,
+      currency
     } as Partial<ITxConfig>;
 
 

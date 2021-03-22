@@ -1,7 +1,6 @@
 // Library Imports
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import { AssetOption } from "shared/pages/_wallet/exchange";
 import { Ticker } from "shared/reducers/types";
 import { XBalances } from "shared/reducers/xBalance";
 import { convertBalanceToMoney } from "utility/utility";
@@ -16,14 +15,27 @@ import { Container } from "./styles";
 import TransferSummary from "shared/components/_summaries/transfer-summary";
 // Relative Imports
 
-const xhvOption = { name: "Haven", ticker: Ticker.XHV };
-const xUSDOption = { name: "United States Dollar", ticker: Ticker.xUSD };
+const assetOptions: AssetOption[] = [
+  { name: "Haven", ticker: Ticker.XHV },
+  { name: "United States Dollar", ticker: Ticker.xUSD },
+  { name: "Yuan", ticker: Ticker.xCNY },
+  { name: "Euro", ticker: Ticker.xEUR },
+  { name: "Gold", ticker: Ticker.XAU },
+  { name: "Silver", ticker: Ticker.XAG },
+
+];
+
+//const xhvOption = { name: "Haven", ticker: Ticker.XHV };
+//const xUSDOption = { name: "United States Dollar", ticker: Ticker.xUSD };
 
 interface TransferOption {
   name: string;
   ticker: Ticker;
 }
-
+interface AssetOption {
+  ticker: Ticker;
+  name: string;
+}
 interface TransferOwnProps {
   sendFunds: (
     address: string,
@@ -254,7 +266,7 @@ const mapStateToProps = (
   ownProps: TransferOwnProps
 ): TransferReduxProps => ({
   xBalances: state.xBalance,
-  options: [xhvOption, xUSDOption],
+  options: assetOptions,
 });
 
 export const SendFunds = connect<TransferReduxProps, {}, TransferOwnProps>(
