@@ -36,10 +36,10 @@ export const Download = styled.a`
   margin-right: 4px;
   border-radius: 2px;
   font-size: 12px;
+  font-family: Inter-Regular;
   text-transform: uppercase;
   text-decoration: none;
   transition: 500ms;
-  font-family: Inter-Regular;
 
   &:hover {
     background: ${(props) => props.theme.button.primary_hover};
@@ -105,6 +105,7 @@ export const Labeled = styled.label`
   font-size: 11px;
   text-transform: uppercase;
   transition: 500ms;
+  font-family: Inter-Regular;
 
   &:hover {
     transition: 500ms;

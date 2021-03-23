@@ -44,7 +44,6 @@ export const Description = styled.div`
 export const Tabs = styled.div`
   height: 40px;
   wdith: 100%;
-  background: red;
   display: flex;
 `;
 
@@ -54,6 +53,7 @@ export const Tab = styled.div`
   align-items: center;
   justify-content: center;
   font-size: 14px;
+  font-family: "Inter-Regular"
   background: ${(props) => (props.active ? "#36393F" : "#2B2E32")};
   color: ${(props) => (props.active ? "#ffffff" : "#8a8d90")};
 

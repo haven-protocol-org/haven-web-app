@@ -91,5 +91,6 @@ export const Labeled = styled.label`
   margin-right: 16px;
   border-radius: 2px;
   font-size: 11px;
+  font-family: Inter-Regular;
   text-transform: uppercase;
 `;

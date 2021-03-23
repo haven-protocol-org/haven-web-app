@@ -20,6 +20,7 @@ export const Auth = styled(Link)`
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: Inter-Regular;
 
   transition: 500ms;
 
