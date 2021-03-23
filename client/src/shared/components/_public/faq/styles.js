@@ -4,7 +4,6 @@ import media from "../../../../assets/styles/media.js";
 export const Wrapper = styled.div`
   height: auto;
   width: 100%;
-  background: red;
   display: flex;
   flex-direction: column;
   padding: 40px;

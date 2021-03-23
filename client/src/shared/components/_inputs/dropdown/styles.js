@@ -113,10 +113,6 @@ export const Button = styled.button`
   cursor: pointer;
   font-family: Inter-Regular;
 
-  &::placeholder {
-    color: red;
-  }
-
   &:disabled {
     cursor: not-allowed;
   }
@@ -134,7 +130,7 @@ export const Button = styled.button`
     top: 24px;
 
     &::placeholder {
-      color: red;
+      color: ${(props) => props.theme.type.secondary};
     }
   }
 `;

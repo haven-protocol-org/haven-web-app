@@ -29,7 +29,6 @@ export const Header = styled.div`
 export const Tabs = styled.div`
   height: 40px;
   wdith: 100%;
-  background: red;
   display: flex;
 `;
 
