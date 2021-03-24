@@ -26,6 +26,7 @@ export const Fill = styled.button`
   outline: none;
   font-size: 15px;
 
+
   &:disabled {
     color: rgba(255, 255, 255, 0.5);
 
@@ -43,7 +44,7 @@ export const Fill = styled.button`
 `;
 
 export const Outline = styled.button`
-  visibility: ${(props) => (props.leftVisible ? "visible" : "hidden")}
+  visibility: ${(props) => (props.leftVisible ? "visible" : "hidden")};
   background: ${(props) => props.theme.body.foreground};
   border: 1px solid ${(props) => props.theme.body.border};
   width: auto;

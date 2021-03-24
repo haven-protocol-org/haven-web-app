@@ -137,7 +137,7 @@ export const OptionsList = styled.div`
   height: auto;
   min-height: 140px;
   width: 280px;
-  background: ${(props) => props.theme.body.foreground}
+  background: ${(props) => props.theme.body.foreground};
   border: 1px solid ${(props) => props.theme.body.border};
   border-radius: 4px;
   position: fixed;

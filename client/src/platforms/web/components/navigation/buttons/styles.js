@@ -21,7 +21,6 @@ export const Auth = styled(Link)`
   justify-content: center;
   align-items: center;
   font-family: Inter-Regular;
-
   transition: 500ms;
 
   &:hover {
@@ -44,6 +43,7 @@ export const Logout = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: Inter-Regular;
 
   transition: 500ms;
 

@@ -123,7 +123,7 @@ export const Asset = styled.div`
 `;
 
 export const Title = styled.div`
-  font-family: Inter-Bold;
+  font-family: Inter-SemiBold;
   font-size: 17px;
   color: ${(props) => props.theme.type.primary};
   letter-spacing: 0;

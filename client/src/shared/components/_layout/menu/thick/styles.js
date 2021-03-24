@@ -83,6 +83,7 @@ export const Item = styled(NavLink).attrs({
   padding: 20px;
   border-radius: 8px;
   transition: 250ms;
+  font-family: Inter-Regular;
 
   &:hover {
     color: ${(props) => props.theme.type.primary};
