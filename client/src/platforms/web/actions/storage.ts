@@ -100,7 +100,7 @@ const fetchKeysFromDB = () => {
   };
 };
 
-const storeWalletDataInIndexedDB = async (name: string): Promise<any> => {
+const storeWalletDataInIndexedDB = async (name: string): Promise<void> => {
   return new Promise(async (resolutionFunc, rejectionFunc) => {
     const walletData = await walletProxy.getWalletData();
     const wallet = walletData[1];
