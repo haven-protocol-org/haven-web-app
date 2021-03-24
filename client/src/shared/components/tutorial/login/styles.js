@@ -11,7 +11,7 @@ export const List = styled.ul`
   list-style-type: none;
   margin-left: -40px;
   font-size: 15px;
-  font-family: "Inter-Bold";
+  font-family: Inter-Bold;
 `;
 
 export const Item = styled.li`
@@ -20,4 +20,5 @@ export const Item = styled.li`
   color: #8a8d90;
   margin-top: -8px;
   line-height: 1.5em;
+  font-family: Inter-Regular;
 `;
