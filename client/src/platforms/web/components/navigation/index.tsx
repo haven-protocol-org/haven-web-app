@@ -79,7 +79,7 @@ class Navigation extends Component<NavigationProps, {}> {
 
   hideDropdownMenu = () => {
     if (!this.state.mouseIsHovering) {
-      this.setState({ showOptions: false }, () => {
+      this.setState({ showOptions: true }, () => {
         document.removeEventListener("click", this.hideDropdownMenu);
       });
     }
