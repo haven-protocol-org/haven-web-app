@@ -11,7 +11,7 @@ export const List = styled.ul`
   list-style-type: none;
   margin-left: -40px;
   font-size: 15px;
-  font-family: Inter-Bold;
+  font-family: Inter-SemiBold;
 `;
 
 export const Item = styled.li`
