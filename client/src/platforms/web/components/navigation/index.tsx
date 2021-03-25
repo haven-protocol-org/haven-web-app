@@ -18,7 +18,6 @@ import {
   Scan,
   Arrow,
 } from "./styles.js";
-
 import Buttons from "./buttons/index.js";
 import { syncFromFirstIncomingTx, rescanSpent } from "shared/actions/refresh";
 import { selectIsLoggedIn } from "shared/reducers/walletSession";
@@ -27,11 +26,9 @@ import { WebAppState } from "platforms/web/reducers/index.js";
 import { selectSyncState } from "shared/reducers/chain";
 import { SyncState } from "shared/types/types.js";
 import { HavenAppState } from "platforms/desktop/reducers/index.js";
-
 import Cell from "./cell";
 import Link from "./link";
 import Tab from "./tab";
-
 import { showModal } from "shared/actions/modal";
 import { MODAL_TYPE } from "shared/reducers/modal";
 import { closeWallet } from "shared/actions/walletSession";
@@ -172,7 +169,6 @@ class Navigation extends Component<NavigationProps, {}> {
                   />
                 </>
               )}
-
               {auth && (
                 <>
                   <Tab
