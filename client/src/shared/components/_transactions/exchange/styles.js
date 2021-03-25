@@ -55,20 +55,20 @@ export const Tag = styled.div`
   padding-left: 8px;
   padding-right: 8px;
   border-radius: 2px;
-  border: 1px solid ${(props) =>
-    props.priority === 1 ? props.theme.body.border : "none"}
+  border: 1px solid
+    ${(props) => (props.priority === 0 ? props.theme.body.border : "none")};
+
   background: ${(props) => {
     switch (props.priority) {
-      case 1:
+      case 0:
         return `${props.theme.body.background}`;
-      case 2:
+      case 1:
         return `${props.theme.button.primary_hover}`;
-      case 3:
+      case 2:
         return `${props.theme.states.warning}`;
-      case 4:
+      case 3:
         return `${props.theme.states.error}`;
       default:
     }
   }};
-
 `;
