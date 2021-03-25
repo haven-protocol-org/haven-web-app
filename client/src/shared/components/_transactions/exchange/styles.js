@@ -14,6 +14,7 @@ export const Header = styled.div`
   padding: 16px 12px;
   border-bottom: 1px solid ${(props) => props.theme.body.border};
 `;
+
 export const Footer = styled.div`
   height: auto;
   padding: 16px 12px;
@@ -21,6 +22,14 @@ export const Footer = styled.div`
   background: ${(props) => props.theme.body.foreground};
   margin-top: 12px;
   border-radius: 4px;
+`;
+
+export const Url = styled.a`
+  text-decoration: none;
+  font-family: Inter-Regular;
+  font-size: 13px;
+  line-height: 22px;
+  color: ${(props) => props.theme.button.primary};
 `;
 
 export const Row = styled.div`
@@ -36,6 +45,27 @@ export const Key = styled.div`
   font-family: Inter-Regular;
   font-size: 14px;
   color: ${(props) => props.theme.type.secondary};
+`;
+
+export const Information = styled.div`
+  font-family: Inter-Regular;
+  font-size: 13px;
+  line-height: 22px;
+  color: ${(props) => props.theme.type.secondary};
+`;
+
+export const Highlight = styled.div`
+  font-family: Inter-Regular;
+  font-size: 13px;
+  line-height: 22px;
+  color: ${(props) => props.theme.type.primary};
+`;
+
+export const Link = styled.div`
+  font-family: Inter-Regular;
+  font-size: 13px;
+  line-height: 22px;
+  color: ${(props) => props.theme.type.primary};
 `;
 
 export const Value = styled.div`
