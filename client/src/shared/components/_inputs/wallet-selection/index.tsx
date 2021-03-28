@@ -32,6 +32,7 @@ export class WalletSelection extends React.Component<
 
   showDropdownMenu = (event: any) => {
     event.preventDefault();
+    event.stopPropagation();
     this.setState({ displayMenu: true }, () => {
       document.addEventListener("click", this.hideDropdownMenu);
     });
