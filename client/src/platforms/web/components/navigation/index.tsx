@@ -68,6 +68,7 @@ class Navigation extends Component<NavigationProps, {}> {
   };
 
   showDropdownMenu = (event: any) => {
+    event.stopPropagation();
     event.preventDefault();
     this.setState({ showOptions: true }, () => {
       document.addEventListener("click", this.hideDropdownMenu);
@@ -76,7 +77,7 @@ class Navigation extends Component<NavigationProps, {}> {
 
   hideDropdownMenu = () => {
     if (!this.state.mouseIsHovering) {
-      this.setState({ showOptions: true }, () => {
+      this.setState({ showOptions: false }, () => {
         document.removeEventListener("click", this.hideDropdownMenu);
       });
     }
@@ -119,6 +120,9 @@ class Navigation extends Component<NavigationProps, {}> {
     const { blockHeight, scannedHeight, isSyncing } = this.props.syncState;
     const networkLabel = `${NET_TYPE_NAME}  v${APP_VERSION}`;
 
+    // console.log("SHOW OPTIONS", this.state.showOptions);
+    // console.log("MOUSE IS HOVERING", this.state.showOptions);
+
     return (
       <Container>
         {auth ? (
@@ -138,7 +142,13 @@ class Navigation extends Component<NavigationProps, {}> {
             auth={this.props.isLoggedIn}
             onClick={this.handleLogout}
           />
-          <Options onClick={this.showDropdownMenu}>
+          <Options
+            onClick={
+              this.state.showOptions
+                ? this.hideDropdownMenu
+                : this.showDropdownMenu
+            }
+          >
             <OptionsIcon>
               <OptionsSVG />
             </OptionsIcon>
