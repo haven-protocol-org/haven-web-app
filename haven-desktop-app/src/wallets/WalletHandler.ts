@@ -104,8 +104,8 @@ export class WalletHandler {
       return addressJsonObjects;
 
       }
-      if (methodName === "createSubAddress") {
-        // serialize address data
+      if (methodName === "createSubAddress" || methodName === "getBalance" || methodName === "getUnlockedBalance") {
+        // serialize address and balance data
         return response.toJson();
       }
       return response;
