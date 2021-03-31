@@ -118,7 +118,6 @@ class Navigation extends Component<NavigationProps, {}> {
     const { connected } = this.props;
     const { blockHeight, scannedHeight, isSyncing } = this.props.syncState;
     const networkLabel = `${NET_TYPE_NAME}  v${APP_VERSION}`;
-    console.log("SHOW OPTIONS", this.state.showOptions);
 
     return (
       <Container>
