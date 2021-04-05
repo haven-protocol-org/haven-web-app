@@ -32,6 +32,10 @@ const TransferSummary = ({
         <Key>Recipient Address</Key>
         <Value>{recipientAddress === "--" ? "--" : truncated}</Value>
       </Row>
+      <Row>
+        <Key>Standard Priority</Key>
+        <Value>Unlocks ~20m</Value>
+      </Row>
     </Container>
   );
 };
