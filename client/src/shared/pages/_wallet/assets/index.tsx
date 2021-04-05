@@ -31,7 +31,14 @@ interface AssetsProps {
 
 interface AssetsState {}
 
-const Enabled_TICKER = [Ticker.xUSD, Ticker.XHV, Ticker.XAG, Ticker.XAU, Ticker.xCNY, Ticker.xEUR];
+const Enabled_TICKER = [
+  Ticker.xUSD,
+  Ticker.XHV,
+  Ticker.XAG,
+  Ticker.XAU,
+  Ticker.xCNY,
+  Ticker.xEUR,
+];
 
 class AssetsPage extends Component<AssetsProps, any> {
   state = {
@@ -55,16 +62,22 @@ class AssetsPage extends Component<AssetsProps, any> {
         this.props.balances[xTicker].unlockedBalance
       );
 
-
       logM(this.props.balances);
 
-      const totalBalance = convertBalanceToMoney(this.props.balances[xTicker].balance);
+      const totalBalance = convertBalanceToMoney(
+        this.props.balances[xTicker].balance
+      );
 
       const lockedBalance = convertBalanceToMoney(
         this.props.balances[xTicker].lockedBalance
       );
 
-      const value = selectValueInOtherAsset(this.props.balances[xTicker], this.props.rates, xTicker, Ticker.xUSD);// this.props.assetsInUSD[xTicker]!.unlockedBalance;
+      const value = selectValueInOtherAsset(
+        this.props.balances[xTicker],
+        this.props.rates,
+        xTicker,
+        Ticker.xUSD
+      ); // this.props.assetsInUSD[xTicker]!.unlockedBalance;
       const xRate = selectXRate(this.props.rates, xTicker, Ticker.xUSD);
 
       return (
@@ -116,9 +129,16 @@ class AssetsPage extends Component<AssetsProps, any> {
 
     const totalBalance = convertBalanceToMoney(this.props.balances.XHV.balance);
 
-    const lockedBalance = convertBalanceToMoney(this.props.balances.XHV.lockedBalance);
+    const lockedBalance = convertBalanceToMoney(
+      this.props.balances.XHV.lockedBalance
+    );
 
-    const xhvInUSD = selectValueInOtherAsset(this.props.balances.XHV, this.props.rates, Ticker.xUSD, Ticker.XHV).unlockedBalance;
+    const xhvInUSD = selectValueInOtherAsset(
+      this.props.balances.XHV,
+      this.props.rates,
+      Ticker.xUSD,
+      Ticker.XHV
+    ).unlockedBalance;
 
     const xRate = selectXRate(this.props.rates, Ticker.XHV, Ticker.xUSD);
 
@@ -142,11 +162,6 @@ class AssetsPage extends Component<AssetsProps, any> {
           unlockedBalance={unlockedBalance}
         />
         {this.renderEnabledTokens()}
-     {/*    <Header
-          title="Coming Soon"
-          description="Upcoming Haven asset integrations"
-        />
-        {this.renderDisabledTokens()} */}
       </Body>
     );
   }

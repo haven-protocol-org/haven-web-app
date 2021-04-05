@@ -24,7 +24,7 @@ export const Transaction = ({
         <Row>
           <Key>Transfer Asset</Key>
           <Value>
-            {transferAmount.toFixed(2)} {ticker}
+            {transferAmount.toFixed(4)} {ticker}
           </Value>
         </Row>
 
