@@ -56,19 +56,12 @@ class Balances extends Component<BalanceProps, BalanceState> {
         </Wrapper>
       );
 
-    const { prefix, suffix } =
-      ticker === Ticker.xUSD
-        ? { prefix: "$", suffix: "" }
-        : ticker === Ticker.xBTC
-        ? { prefix: "₿", suffix: "" }
-        : { prefix: "Ħ", suffix: "" };
+    const { prefix } =
+      ticker === Ticker.xUSD ? { prefix: "$" } : { prefix: "₿" };
 
     const { balance } = this.props.balances[ticker];
-
-    const totalBalance = prefix + balance.toFixed(2) + suffix;
-
+    const totalBalance = prefix + balance.toFixed(4);
     const { isSyncing, blockHeight, scannedHeight } = this.props.syncState;
-
     const percentage = ((scannedHeight / blockHeight) * 100).toFixed(2);
 
     return (
@@ -79,9 +72,7 @@ class Balances extends Component<BalanceProps, BalanceState> {
         <Value>
           {isSyncing
             ? `Syncing Vault... ${percentage}%`
-            : `Portfolio Value (${
-                ticker === "XHV" ? ticker : ticker.substring(1)
-              }) `}
+            : `Portfolio Value (${ticker.substring(1)}) `}
         </Value>
         {isSyncing && <ProgressBar percentage={percentage} />}
       </Wrapper>
