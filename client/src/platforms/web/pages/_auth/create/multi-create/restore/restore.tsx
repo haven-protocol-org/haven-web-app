@@ -232,7 +232,7 @@ class RestoreWeb extends Component<RestoreProps, RestoreState> {
               onClick={this.showPassword}
               readOnly={false}
               error={error}
-              width={false}
+              width
             />
 
             <Information>
