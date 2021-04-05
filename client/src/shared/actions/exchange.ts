@@ -67,13 +67,12 @@ export function createExchange(
         ? externAddress
         : selectPrimaryAddress(getState().address.entrys);
 
-
-
       const txType = fromTicker == Ticker.xUSD
         ? HavenTxType.EXCHANGE_FROM_USD
         : HavenTxType.EXCHANGE_TO_USD;
 
-    const currency = txType == HavenTxType.EXCHANGE_FROM_USD? toTicker : fromTicker
+    const currency = txType == HavenTxType.EXCHANGE_FROM_USD ? toTicker : fromTicker
+    let xassetConversion: boolean;
 
     let exchangeAmount: number;
     //onshore/offshore tx
@@ -82,12 +81,14 @@ export function createExchange(
 
       exchangeAmount =
       txType === HavenTxType.EXCHANGE_TO_USD ? fromAmount : toAmount;
+      xassetConversion = false;
     }
     // xusdt->xasset, xasset->xusd tx
     else {
 
       exchangeAmount =
       txType === HavenTxType.EXCHANGE_TO_USD ? toAmount : fromAmount;
+      xassetConversion = true;
 
     }
     let amount = convertMoneyToBalance(exchangeAmount);
@@ -95,7 +96,7 @@ export function createExchange(
     const roundingValue = bigInt(100000000);
     amount = amount.divide(roundingValue).multiply(roundingValue);
     dispatch(
-      onExchangeCreationFetch({ priority, txType, address } as Partial<
+      onExchangeCreationFetch({ priority, txType, address, xassetConversion } as Partial<
         ExchangeProcessInfo
       >)
     );

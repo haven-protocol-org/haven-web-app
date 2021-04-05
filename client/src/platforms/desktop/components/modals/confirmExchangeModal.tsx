@@ -41,7 +41,7 @@ class ConfirmExchangeModal extends React.Component<
       toTicker,
       fee,
       priority,
-      xasset_conversion,
+      xassetConversion,
     } = this.props.exchange;
 
     const isOwnAddress = this.props.isOwnAddress;
@@ -73,7 +73,7 @@ class ConfirmExchangeModal extends React.Component<
           fee={readAbleFeeAmount}
           externAddress={address}
           isOwnAddress={isOwnAddress}
-          xasset_conversion={xasset_conversion}
+          xasset_conversion={xassetConversion}
         />
       </Modal>
     );

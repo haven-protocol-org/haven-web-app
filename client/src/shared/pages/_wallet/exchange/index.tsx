@@ -215,8 +215,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       return true;
     }
 
-
-
     return false;
   }
 
