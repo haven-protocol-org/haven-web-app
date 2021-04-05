@@ -120,9 +120,6 @@ class Navigation extends Component<NavigationProps, {}> {
     const { blockHeight, scannedHeight, isSyncing } = this.props.syncState;
     const networkLabel = `${NET_TYPE_NAME}  v${APP_VERSION}`;
 
-    // console.log("SHOW OPTIONS", this.state.showOptions);
-    // console.log("MOUSE IS HOVERING", this.state.showOptions);
-
     return (
       <Container>
         {auth ? (
