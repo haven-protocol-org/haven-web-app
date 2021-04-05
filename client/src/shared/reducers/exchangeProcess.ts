@@ -41,7 +41,7 @@ const INITIAL_STATE: ExchangeProcessInfo = {
   toTicker: Ticker.xUSD,
   fromTicker: Ticker.XHV,
   metaList: [],
-  xasset_conversion: false,
+  xasset_conversion: true,
   // ^^^ xasset_conversion: Hardcoded for @marty
 };
 
