@@ -36,8 +36,8 @@ const Transaction = ({
       : null;
 
   // Adding for simplicity and clarity
-  const from = `${fromAmount.toFixed(2)} ${fromTicker}`;
-  const to = `${toAmount.toFixed(2)} ${toTicker}`;
+  const from = `${fromAmount.toFixed(4)} ${fromTicker}`;
+  const to = `${toAmount.toFixed(4)} ${toTicker}`;
 
   return (
     <Fragment>
