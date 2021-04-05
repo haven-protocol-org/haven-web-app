@@ -32,11 +32,14 @@ export const Transaction = ({
           <Key>Recipient Address</Key>
           <Value>{truncated}</Value>
         </Row>
+        <Row>
+          <Key>Standard Priority</Key>
+          <Value>Unlocks ~20m</Value>
+        </Row>
 
         <Row>
           <Key>Final Transfer Fee</Key>
           <Tag>
-            {" "}
             <Value>
               {fee.toFixed(4)} {ticker}
             </Value>
