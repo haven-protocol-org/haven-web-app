@@ -18,6 +18,7 @@ const Transaction = ({
   checked,
   priority,
   isOwnAddress,
+  xasset_conversion,
 }) => {
   const first = externAddress.substring(0, 4);
   const last = externAddress.substring(externAddress.length - 4);
@@ -46,19 +47,23 @@ const Transaction = ({
         {!isOwnAddress && (
           <Cell left="Recipient Address" right={truncatedAddress} />
         )}
-        {(function () {
-          switch (priority) {
-            case 0:
-              return <Cell left="Normal Priority" right="Unlocks ~7d" />;
-            case 1:
-              return <Cell left="Low Priority" right="Unlocks ~48h" />;
-            case 2:
-              return <Cell left="Medium Priority" right="Unlocks ~24h" />;
-            case 3:
-              return <Cell left="High Priority" right="Unlocks ~6h" />;
-            default:
-          }
-        })()}
+        {xasset_conversion ? (
+          <Cell left="Standard Priority" right="Unlocks ~20m" />
+        ) : (
+          (function () {
+            switch (priority) {
+              case 0:
+                return <Cell left="Normal Priority" right="Unlocks ~7d" />;
+              case 1:
+                return <Cell left="Low Priority" right="Unlocks ~48h" />;
+              case 2:
+                return <Cell left="Medium Priority" right="Unlocks ~24h" />;
+              case 3:
+                return <Cell left="High Priority" right="Unlocks ~6h" />;
+              default:
+            }
+          })()
+        )}
         <Row>
           <Key>Final Conversion Fee</Key>
           <Tag priority={priority}>

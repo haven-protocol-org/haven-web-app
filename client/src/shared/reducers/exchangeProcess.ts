@@ -23,6 +23,8 @@ export interface ExchangeProcessInfo extends TxProcessInfo {
   txType: HavenTxType | null;
   toTicker: Ticker | null;
   toAmount: number | null | bigInt.BigInteger;
+  xasset_conversion: boolean;
+  // ^^^ xasset_conversion: Hardcoded for @marty
 }
 
 const INITIAL_STATE: ExchangeProcessInfo = {
@@ -39,6 +41,8 @@ const INITIAL_STATE: ExchangeProcessInfo = {
   toTicker: Ticker.xUSD,
   fromTicker: Ticker.XHV,
   metaList: [],
+  xasset_conversion: false,
+  // ^^^ xasset_conversion: Hardcoded for @marty
 };
 
 export const exchangeProcess = (

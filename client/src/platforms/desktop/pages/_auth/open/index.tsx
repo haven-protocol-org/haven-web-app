@@ -118,7 +118,7 @@ class OpenWalletDesktopContainer extends Component<
           error={error}
           type={this.state.showPassword === true ? "text" : "password"}
           button={this.state.showPassword === true ? "hide" : "show"}
-          width={false}
+          width
         />
         <Information>
           Select your vault file and enter your password. If you are new to

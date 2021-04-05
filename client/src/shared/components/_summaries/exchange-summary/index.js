@@ -14,6 +14,7 @@ export const ExchangeSummary = ({
   fee,
   selectedPrio,
   hasLatestXRate,
+  xasset_conversion,
 }) => {
   return (
     <Wrapper>
@@ -46,10 +47,17 @@ export const ExchangeSummary = ({
             {toTicker ? toTicker : "--"}
           </Value>
         </Row>
-        <Row>
-          <Key>{selectedPrio.name} Priority</Key>
-          <Value>{selectedPrio.ticker}</Value>
-        </Row>
+        {xasset_conversion ? (
+          <Row>
+            <Key>Standard Priority</Key>
+            <Value>Unlocks ~20m</Value>
+          </Row>
+        ) : (
+          <Row>
+            <Key>{selectedPrio.name} Priority</Key>
+            <Value>{selectedPrio.ticker}</Value>
+          </Row>
+        )}
       </Container>
     </Wrapper>
   );
