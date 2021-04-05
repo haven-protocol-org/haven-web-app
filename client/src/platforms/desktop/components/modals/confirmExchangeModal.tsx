@@ -41,10 +41,10 @@ class ConfirmExchangeModal extends React.Component<
       toTicker,
       fee,
       priority,
+      xasset_conversion,
     } = this.props.exchange;
 
     const isOwnAddress = this.props.isOwnAddress;
-
     const readableToAmout = convertBalanceToMoney(toAmount!);
     const readAbleFromAmount = convertBalanceToMoney(fromAmount!);
     const readAbleFeeAmount = convertBalanceToMoney(fee!, 4);
@@ -73,6 +73,7 @@ class ConfirmExchangeModal extends React.Component<
           fee={readAbleFeeAmount}
           externAddress={address}
           isOwnAddress={isOwnAddress}
+          xasset_conversion={xasset_conversion}
         />
       </Modal>
     );
@@ -80,7 +81,6 @@ class ConfirmExchangeModal extends React.Component<
 
   onCancel() {
     this.props.hideModal();
-    // this.props.resetExchangeProcess();
   }
 
   onConfirm() {
