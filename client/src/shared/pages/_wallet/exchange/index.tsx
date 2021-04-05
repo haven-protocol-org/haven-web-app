@@ -180,17 +180,14 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     }
   };
 
-  
-
-
   // we need to check a few conversion combinations which are not allowed like XHV -> XEUR ...
-  isTickerMismatch(toTicker: Ticker | null, fromticker: Ticker | null): boolean {
-
+  isTickerMismatch(
+    toTicker: Ticker | null,
+    fromticker: Ticker | null
+  ): boolean {
     const isXassets = (ticker: Ticker) => {
-
       return ticker !== null && ticker !== Ticker.xUSD && ticker !== Ticker.XHV;
-
-    }
+    };
 
     if (toTicker === null || fromticker === null) {
       return false;
@@ -214,8 +211,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     if (isXassets(fromticker) && isXassets(toTicker)) {
       return true;
     }
-
-
 
     return false;
   }
@@ -342,9 +337,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     const { fromAmount } = this.state;
 
     const availableBalanceString = availableBalance.toString();
-
-    // const convertToNum = parseFloat(fromAmount);
-    // const convertBalance = parseFloat(availableBalance);
 
     //@ts-ignore
     if (fromAmount > availableBalance) {
