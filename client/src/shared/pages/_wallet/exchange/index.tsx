@@ -54,6 +54,7 @@ interface ExchangeProps extends RouteComponentProps<any> {
   fromTicker: Ticker | null;
   toTicker: Ticker | null;
   balances: XBalances;
+  xasset_conversion: boolean; // Hardcoded for testing @marty
 }
 
 type ExchangeState = {
@@ -67,7 +68,7 @@ type ExchangeState = {
   toOptions: AssetOption[];
 };
 
- interface AssetOption {
+interface AssetOption {
   ticker: Ticker;
   name: string;
 }
@@ -86,7 +87,6 @@ const assetOptions: AssetOption[] = [
   { name: "Euro", ticker: Ticker.xEUR },
   { name: "Gold", ticker: Ticker.XAU },
   { name: "Silver", ticker: Ticker.XAG },
-
 ];
 
 const exchangePrioOptions: ExchangePrioOption[] = [
@@ -104,7 +104,7 @@ const INITIAL_STATE: ExchangeState = {
   selectedPrio: exchangePrioOptions[0],
   hasEnough: false,
   fromOptions: [...assetOptions],
-  toOptions: [...assetOptions]
+  toOptions: [...assetOptions],
 };
 class Exchange extends Component<ExchangeProps, ExchangeState> {
   private sendTicker: Ticker = Ticker.XHV;
@@ -225,7 +225,8 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       fromAmount,
       toAmount,
       this.state.selectedPrio.prio,
-      this.state.externAddress    );
+      this.state.externAddress
+    );
   };
 
   toggleBasic = () => {
@@ -350,7 +351,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       selectedPrio,
       externAddress,
       fromOptions,
-      toOptions
+      toOptions,
     } = this.state;
 
     const { fromTicker, toTicker } = this.props;
@@ -462,6 +463,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
             </Form>
             <Container>
               <ExchangeSummary
+                xasset_conversion={true} // Hardcoded for testing @marty
                 xRate={this.props.xRate}
                 fromAmount={fromAmount}
                 toAmount={toAmount}
