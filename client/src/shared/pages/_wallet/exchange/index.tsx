@@ -165,8 +165,8 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
   setFromAsset = (option: AssetOption) => {
     // Call back function from Dropdown
     this.props.setFromTicker(option.ticker);
-
-    if (this.props.toTicker === option.ticker) {
+    //on mismatch, just reset the other ticker
+    if (this.isTickerMismatch(option.ticker, this.props.toTicker)) {
       this.props.setToTicker(null);
     }
   };
@@ -174,10 +174,51 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
   setToAsset = (option: AssetOption) => {
     // Call back function from Dropdown
     this.props.setToTicker(option.ticker);
-    if (this.props.fromTicker === option.ticker) {
+    //on mismatch, just reset the other ticker
+    if (this.isTickerMismatch(this.props.fromTicker, option.ticker)) {
       this.props.setFromTicker(null);
     }
   };
+
+  
+
+
+  // we need to check a few conversion combinations which are not allowed like XHV -> XEUR ...
+  isTickerMismatch(toTicker: Ticker | null, fromticker: Ticker | null): boolean {
+
+    const isXassets = (ticker: Ticker) => {
+
+      return ticker !== null && ticker !== Ticker.xUSD && ticker !== Ticker.XHV;
+
+    }
+
+    if (toTicker === null || fromticker === null) {
+      return false;
+    }
+
+    // transfer not allowed in conversion tab
+    if (toTicker === fromticker) {
+      return true;
+    }
+
+    // conversions from and to XHV only via XUSD
+    if (fromticker === Ticker.XHV && toTicker !== Ticker.xUSD) {
+      return true;
+    }
+
+    if (toTicker === Ticker.XHV && fromticker !== Ticker.xUSD) {
+      return true;
+    }
+
+    // conversions between xassets not allowed
+    if (isXassets(fromticker) && isXassets(toTicker)) {
+      return true;
+    }
+
+
+
+    return false;
+  }
 
   calcConversion(setToAmount: boolean = true) {
     const { toAmount, fromAmount } = this.state;
