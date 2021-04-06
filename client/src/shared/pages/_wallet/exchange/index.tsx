@@ -81,13 +81,21 @@ export interface ExchangePrioOption {
   percent: string;
 }
 
-const assetOptions: AssetOption[] = [
-  { name: "Haven", ticker: Ticker.XHV },
-  { name: "U.S Dollar", ticker: Ticker.xUSD },
+const xassetOptions: AssetOption[] = [
   { name: "Yuan", ticker: Ticker.xCNY },
   { name: "Euro", ticker: Ticker.xEUR },
   { name: "Gold", ticker: Ticker.XAU },
   { name: "Silver", ticker: Ticker.XAG },
+];
+
+const xusdOption = { name: "U.S Dollar", ticker: Ticker.xUSD };
+const xhvOption = { name: "Haven", ticker: Ticker.XHV };
+
+const assetOptions: AssetOption[] = [
+  xhvOption,
+  xusdOption,
+  ...xassetOptions
+
 ];
 
 const exchangePrioOptions: ExchangePrioOption[] = [
@@ -105,7 +113,7 @@ const INITIAL_STATE: ExchangeState = {
   selectedPrio: exchangePrioOptions[0],
   hasEnough: false,
   fromOptions: [...assetOptions],
-  toOptions: [...assetOptions],
+  toOptions: [xusdOption],
   xassetConversion: false,
 };
 class Exchange extends Component<ExchangeProps, ExchangeState> {
@@ -138,6 +146,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     if (this.props.fromTicker !== prevProps.fromTicker) {
       this.calcConversion();
       this.setConversionType(this.props.fromTicker, this.props.toTicker);
+      this.setToAssetOptions(this.props.fromTicker);
     }
   }
 
@@ -164,6 +173,28 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     this.setState({ ...this.state, [name]: value }, () => {
       this.calcConversion(false);
     });
+  };
+
+  setToAssetOptions(fromTicker: Ticker | null): void  {
+
+
+    if (fromTicker === null ) {
+      return;
+    }
+
+    if (fromTicker === Ticker.XHV) {
+      this.setState({toOptions: [xusdOption]})
+      return;
+    }
+
+    if (fromTicker === Ticker.xUSD) {
+      this.setState({toOptions: [xhvOption, ...xassetOptions]})
+      return;
+    }
+
+    // here we can safely assume that a xasset option was selected
+    this.setState({toOptions: [xusdOption]});
+
   };
 
   setFromAsset = (option: AssetOption) => {
