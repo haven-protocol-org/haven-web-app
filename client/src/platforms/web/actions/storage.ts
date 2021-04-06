@@ -1,7 +1,7 @@
 import { walletProxy } from "shared/core/proxy";
 import { addNotificationByMessage } from "shared/actions/notification";
 import { NotificationType } from "constants/notificationList";
-import { saveAs } from "file-saver";
+import { saveAs } from "vendor/FileSaver";
 import { HavenAppState } from "platforms/desktop/reducers";
 
 const HAVEN_DB = "haven";
