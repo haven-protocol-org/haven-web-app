@@ -30,7 +30,7 @@ import {
 } from "shared/reducers/exchangeProcess";
 import { setFromTicker, setToTicker } from "shared/actions/exchange";
 import { NO_BALANCE, XBalances } from "shared/reducers/xBalance";
-import { convertBalanceToMoney } from "utility/utility";
+import { convertBalanceToMoney, logM } from "utility/utility";
 import { showModal } from "shared/actions/modal";
 import { MODAL_TYPE } from "shared/reducers/modal";
 import { ExchangeSummary } from "shared/components/_summaries/exchange-summary";
@@ -54,7 +54,6 @@ interface ExchangeProps extends RouteComponentProps<any> {
   fromTicker: Ticker | null;
   toTicker: Ticker | null;
   balances: XBalances;
-  xasset_conversion: boolean; // Hardcoded for testing @marty
 }
 
 type ExchangeState = {
@@ -66,6 +65,8 @@ type ExchangeState = {
   hasEnough: boolean;
   fromOptions: AssetOption[];
   toOptions: AssetOption[];
+  xassetConversion: boolean; 
+
 };
 
 interface AssetOption {
@@ -105,6 +106,7 @@ const INITIAL_STATE: ExchangeState = {
   hasEnough: false,
   fromOptions: [...assetOptions],
   toOptions: [...assetOptions],
+  xassetConversion: false,
 };
 class Exchange extends Component<ExchangeProps, ExchangeState> {
   private sendTicker: Ticker = Ticker.XHV;
@@ -116,10 +118,10 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
   }
 
   componentDidUpdate(
-    nextProps: Readonly<ExchangeProps>,
+    prevProps: Readonly<ExchangeProps>,
     nextContext: any
   ): void {
-    if (!this.props.exchangeSucceed && nextProps.exchangeSucceed) {
+    if (!this.props.exchangeSucceed && prevProps.exchangeSucceed) {
       this.setState({
         fromAmount: "",
         toAmount: "",
@@ -129,11 +131,13 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       this.props.history.push("/wallet/assets/" + this.sendTicker);
     }
 
-    if (this.props.toTicker !== nextProps.toTicker) {
+    if (this.props.toTicker !== prevProps.toTicker) {
       this.calcConversion();
+      this.setConversionType(this.props.fromTicker, this.props.toTicker);
     }
-    if (this.props.fromTicker !== nextProps.fromTicker) {
+    if (this.props.fromTicker !== prevProps.fromTicker) {
       this.calcConversion();
+      this.setConversionType(this.props.fromTicker, this.props.toTicker);
     }
   }
 
@@ -180,14 +184,16 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     }
   };
 
+  isXassets = (ticker: Ticker | null) => {
+    return ticker !== null && ticker !== Ticker.xUSD && ticker !== Ticker.XHV;
+  };
+
   // we need to check a few conversion combinations which are not allowed like XHV -> XEUR ...
   isTickerMismatch(
     toTicker: Ticker | null,
     fromticker: Ticker | null
   ): boolean {
-    const isXassets = (ticker: Ticker) => {
-      return ticker !== null && ticker !== Ticker.xUSD && ticker !== Ticker.XHV;
-    };
+
 
     if (toTicker === null || fromticker === null) {
       return false;
@@ -208,11 +214,21 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     }
 
     // conversions between xassets not allowed
-    if (isXassets(fromticker) && isXassets(toTicker)) {
+    if (this.isXassets(fromticker) && this.isXassets(toTicker)) {
       return true;
     }
-
     return false;
+  }
+
+
+  setConversionType(fromTicker: Ticker | null, toTicker: Ticker | null) {
+
+
+    const xassetConversion = this.isXassets(fromTicker) || this.isXassets(toTicker);
+    this.setState({
+      xassetConversion
+    });
+
   }
 
   calcConversion(setToAmount: boolean = true) {
@@ -496,7 +512,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
             </Form>
             <Container>
               <ExchangeSummary
-                xasset_conversion={true} // Hardcoded for testing @marty
+                xasset_conversion={this.state.xassetConversion}
                 xRate={this.props.xRate}
                 fromAmount={fromAmount}
                 toAmount={toAmount}
