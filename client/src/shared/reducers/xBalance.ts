@@ -91,6 +91,34 @@ export const selectBalances = (
   };
 };
 
+
+
+export const selectPortfolioInUSD = (state: DesktopAppState | WebAppState): XViewBalance => {
+
+
+    const usdPortfolio: ViewBalance = { balance:0, unlockedBalance:0, lockedBalance:0};
+    const xBalance = state.xBalance;
+
+    const toTicker = Ticker.xUSD;
+    // iterate over all balance assets 
+    Object.entries(xBalance).forEach( ([ticker, balance]: [string, Balance]) => {
+
+       const fromTicker: Ticker = ticker as Ticker;
+       const xRate = selectXRate(state.blockHeaderExchangeRate, fromTicker, toTicker);
+      
+       //iterate different balance types
+       Object.entries(balance).forEach(([balanceType, amount]: [string, bigInt.BigInteger]) => {
+
+        const usdAmount = xRate * amount.toJSNumber();
+        usdPortfolio[balanceType] += convertBalanceToMoney(usdAmount);
+
+       })
+    })
+
+    return {[Ticker.xUSD] : usdPortfolio};
+
+}
+
 export const selectTotalBalances = (
   state: DesktopAppState | WebAppState
 ): XViewBalance => {
