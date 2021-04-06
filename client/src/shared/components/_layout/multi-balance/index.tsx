@@ -9,10 +9,10 @@ import { ProgressBar } from "../../progress-bar";
 import { HavenAppState } from "platforms/desktop/reducers";
 import { SyncState } from "shared/types/types";
 import { selectSyncState } from "shared/reducers/chain";
-import { selectTotalBalances, XViewBalances } from "shared/reducers/xBalance";
+import { selectPortfolioInUSD, XViewBalances } from "shared/reducers/xBalance";
 import { Ticker } from "shared/reducers/types";
 
-const OFFSHORE_TICKERS = [Ticker.xUSD, Ticker.xBTC, null];
+const OFFSHORE_TICKERS = [Ticker.xUSD,  null];
 
 interface BalanceProps {
   syncState: SyncState;
@@ -81,7 +81,7 @@ class Balances extends Component<BalanceProps, BalanceState> {
 }
 
 const mapStateToProps = (state: HavenAppState) => ({
-  balances: selectTotalBalances(state),
+  balances: selectPortfolioInUSD(state),
   syncState: selectSyncState(state),
 });
 export const MultiBalance = connect(mapStateToProps, null)(Balances);
