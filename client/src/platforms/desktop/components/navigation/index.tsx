@@ -108,7 +108,7 @@ class Navigation extends Component<NavigationProps, any> {
   };
 
   handleLogout = () => {
-    this.props.logout(false);
+    this.props.logout(true);
   };
 
   showOptions = () => {
