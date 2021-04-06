@@ -17,16 +17,12 @@ import TransferSummary from "shared/components/_summaries/transfer-summary";
 
 const assetOptions: AssetOption[] = [
   { name: "Haven", ticker: Ticker.XHV },
-  { name: "United States Dollar", ticker: Ticker.xUSD },
+  { name: "U.S Dollar", ticker: Ticker.xUSD },
   { name: "Yuan", ticker: Ticker.xCNY },
   { name: "Euro", ticker: Ticker.xEUR },
   { name: "Gold", ticker: Ticker.XAU },
   { name: "Silver", ticker: Ticker.XAG },
-
 ];
-
-//const xhvOption = { name: "Haven", ticker: Ticker.XHV };
-//const xUSDOption = { name: "United States Dollar", ticker: Ticker.xUSD };
 
 interface TransferOption {
   name: string;
