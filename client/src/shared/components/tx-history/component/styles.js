@@ -19,6 +19,12 @@ export const Container = styled.a`
   }
 `;
 
+export const ShortRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+`;
+
 export const Row = styled.div`
   height: auto;
   padding: 12px 20px;

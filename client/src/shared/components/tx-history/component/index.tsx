@@ -11,8 +11,10 @@ import {
   Column,
   Row,
   Data,
+  ShortRow,
 } from "./styles";
 import { isMainnet } from "constants/env";
+import Dots from "../../_animations/dots";
 
 export interface TransactionProps {
   type: any;
@@ -49,7 +51,7 @@ export const Transaction = ({
   let statusLabel = "Status";
 
   if (mempool) {
-    statusDetails = "Pending...";
+    statusDetails = "Pending";
   } else if (timeTillUnlocked) {
     statusDetails = "~ " + timeTillUnlocked;
     statusLabel = "Unlocks in";
@@ -72,7 +74,16 @@ export const Transaction = ({
           </Data>
 
           <Data>
-            <Value alignment="center">{statusDetails}</Value>
+            <Value alignment="center">
+              {statusDetails === "Pending" ? (
+                <ShortRow>
+                  <>Pending</>
+                  <Dots />
+                </ShortRow>
+              ) : (
+                statusDetails
+              )}
+            </Value>
             <Label alignment="center">{statusLabel}</Label>
           </Data>
 

@@ -20,7 +20,7 @@ import {
   Arrow,
   ShortRow,
 } from "./styles";
-import Dots from "../_animations/dots/index.js";
+import Dots from "../_animations/dots";
 
 const Cell = ({
   tokenName,
