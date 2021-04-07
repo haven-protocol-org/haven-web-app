@@ -49,7 +49,7 @@ export const Transaction = ({
   let statusLabel = "Status";
 
   if (mempool) {
-    statusDetails = "Not confirmed yet";
+    statusDetails = "Pending...";
   } else if (timeTillUnlocked) {
     statusDetails = "~ " + timeTillUnlocked;
     statusLabel = "Unlocks in";
@@ -58,7 +58,6 @@ export const Transaction = ({
   const txExplorerLink = `https://explorer${
     isMainnet() ? "" : "-testnet"
   }.havenprotocol.org/tx/${hash}`;
-
 
   return (
     <Container href={txExplorerLink} target="_blank">
@@ -90,7 +89,9 @@ export const Transaction = ({
             </Data>
           ) : (
             <Data>
-              <Value alignment="left">{block}</Value>
+              <Value alignment="left">
+                {block === undefined ? "N/A" : block}
+              </Value>
               <Label alignment="left">Block</Label>
             </Data>
           )}
