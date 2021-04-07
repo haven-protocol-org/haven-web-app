@@ -23,6 +23,7 @@ import {
   PRICE_RANGE_MONTH,
   PRICE_RANGE_YEAR,
 } from "../../reducers/priceHistory";
+import { HavenLineChart } from "../haven_line_chart";
 
 class Chart extends Component {
   constructor(props) {
@@ -139,7 +140,7 @@ class Chart extends Component {
           <Label>{this.state.hoveredLabel}</Label>
         </PriceHistory>
         <Container onMouseLeave={this.onMouseLeave}>
-          <Line
+       {/*    <Line
             ref={(ref) => (this.chartJs = ref)}
             options={{
               hover: {
@@ -196,8 +197,11 @@ class Chart extends Component {
                 },
               ],
             }}
-          />
+          /> */}
+                  <HavenLineChart prices={this.props.prices} ticker={null} lineColor={this.props.theme.charts.border}/>
         </Container>
+
+
       </>
     );
   }
