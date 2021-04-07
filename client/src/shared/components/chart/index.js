@@ -198,7 +198,7 @@ class Chart extends Component {
               ],
             }}
           /> */}
-                  <HavenLineChart prices={this.props.prices} ticker={this.props.ticker} lineColor={this.props.theme.charts.border}/>
+          <HavenLineChart prices={this.props.prices} ticker={this.props.ticker} lineColor={this.props.theme.charts.border}/>
         </Container>
 
 

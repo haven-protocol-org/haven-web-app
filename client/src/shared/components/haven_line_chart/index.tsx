@@ -62,7 +62,7 @@ import { Ticker } from "shared/reducers/types";
         }}
          viewBox={"0 0 100 100"}
          height={containerHeight}
-         width={"auto"}
+         width={"100%"}
          xmlns="http://www.w3.org/2000/svg"
          preserveAspectRatio={"none"}
         
