@@ -10,10 +10,8 @@ import Footer from "../../../components/_inputs/footer";
 import Form from "../../../components/_inputs/form";
 import Input from "../../../components/_inputs/input";
 import InputButton from "../../../components/_inputs/input_button";
-
 import { Container } from "./styles";
 import TransferSummary from "shared/components/_summaries/transfer-summary";
-// Relative Imports
 
 const assetOptions: AssetOption[] = [
   { name: "Haven", ticker: Ticker.XHV },
