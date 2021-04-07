@@ -1,6 +1,5 @@
 // Library Imports
 import React, { Component } from "react";
-import { Line } from "react-chartjs-2";
 import { Spinner } from "../spinner/index.js";
 import { withTheme } from "styled-components";
 
@@ -24,6 +23,7 @@ import {
   PRICE_RANGE_YEAR,
 } from "../../reducers/priceHistory";
 import { HavenLineChart } from "../haven_line_chart";
+import { Ticker } from "shared/reducers/types";
 
 class Chart extends Component {
   constructor(props) {
@@ -198,7 +198,7 @@ class Chart extends Component {
               ],
             }}
           /> */}
-                  <HavenLineChart prices={this.props.prices} ticker={null} lineColor={this.props.theme.charts.border}/>
+                  <HavenLineChart prices={this.props.prices} ticker={this.props.ticker} lineColor={this.props.theme.charts.border}/>
         </Container>
 
 

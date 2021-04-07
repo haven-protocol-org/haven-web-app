@@ -59,6 +59,7 @@ class ChartWrapper extends Component<any, any> {
         <Chart
           prices={prices}
           labels={labels}
+          ticker={id}
           price={price.toFixed(2)}
           onChangePriceRange={(args: number | string) =>
             this.selectPriceHistory(args)
