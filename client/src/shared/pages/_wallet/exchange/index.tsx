@@ -65,8 +65,7 @@ type ExchangeState = {
   hasEnough: boolean;
   fromOptions: AssetOption[];
   toOptions: AssetOption[];
-  xassetConversion: boolean; 
-
+  xassetConversion: boolean;
 };
 
 interface AssetOption {
@@ -91,12 +90,7 @@ const xassetOptions: AssetOption[] = [
 const xusdOption = { name: "U.S Dollar", ticker: Ticker.xUSD };
 const xhvOption = { name: "Haven", ticker: Ticker.XHV };
 
-const assetOptions: AssetOption[] = [
-  xhvOption,
-  xusdOption,
-  ...xassetOptions
-
-];
+const assetOptions: AssetOption[] = [xhvOption, xusdOption, ...xassetOptions];
 
 const exchangePrioOptions: ExchangePrioOption[] = [
   { name: "Default", ticker: "Unlocks ~7d", percent: "0.2%", prio: 0 },
@@ -175,27 +169,24 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     });
   };
 
-  setToAssetOptions(fromTicker: Ticker | null): void  {
-
-
-    if (fromTicker === null ) {
+  setToAssetOptions(fromTicker: Ticker | null): void {
+    if (fromTicker === null) {
       return;
     }
 
     if (fromTicker === Ticker.XHV) {
-      this.setState({toOptions: [xusdOption]})
+      this.setState({ toOptions: [xusdOption] });
       return;
     }
 
     if (fromTicker === Ticker.xUSD) {
-      this.setState({toOptions: [xhvOption, ...xassetOptions]})
+      this.setState({ toOptions: [xhvOption, ...xassetOptions] });
       return;
     }
 
     // here we can safely assume that a xasset option was selected
-    this.setState({toOptions: [xusdOption]});
-
-  };
+    this.setState({ toOptions: [xusdOption] });
+  }
 
   setFromAsset = (option: AssetOption) => {
     // Call back function from Dropdown
@@ -224,8 +215,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     toTicker: Ticker | null,
     fromticker: Ticker | null
   ): boolean {
-
-
     if (toTicker === null || fromticker === null) {
       return false;
     }
@@ -251,15 +240,12 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     return false;
   }
 
-
   setConversionType(fromTicker: Ticker | null, toTicker: Ticker | null) {
-
-
-    const xassetConversion = this.isXassets(fromTicker) || this.isXassets(toTicker);
+    const xassetConversion =
+      this.isXassets(fromTicker) || this.isXassets(toTicker);
     this.setState({
-      xassetConversion
+      xassetConversion,
     });
-
   }
 
   calcConversion(setToAmount: boolean = true) {
@@ -432,6 +418,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       externAddress,
       fromOptions,
       toOptions,
+      xassetConversion,
     } = this.state;
 
     const { fromTicker, toTicker } = this.props;
@@ -524,11 +511,15 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                     label="Priority"
                     placeholder="Select Priority"
                     name="exchange_priority"
-                    value={selectedPrio.name}
-                    ticker={selectedPrio.ticker}
+                    value={xassetConversion ? "Standard" : selectedPrio.name}
+                    ticker={
+                      xassetConversion ? "Unlocks ~20m" : selectedPrio.ticker
+                    }
                     options={exchangePrioOptions}
                     onClick={this.setExchangePriority}
+                    disabled={xassetConversion ? true : false}
                   />
+
                   <Input
                     label="Recipient Address (Optional)"
                     placeholder="Exchange to another address"
