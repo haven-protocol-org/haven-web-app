@@ -12,7 +12,7 @@ import { selectSyncState } from "shared/reducers/chain";
 import { selectPortfolioInUSD, XViewBalances } from "shared/reducers/xBalance";
 import { Ticker } from "shared/reducers/types";
 
-const OFFSHORE_TICKERS = [Ticker.xUSD,  null];
+const OFFSHORE_TICKERS = [Ticker.xUSD, null];
 
 interface BalanceProps {
   syncState: SyncState;
@@ -60,7 +60,7 @@ class Balances extends Component<BalanceProps, BalanceState> {
       ticker === Ticker.xUSD ? { prefix: "$" } : { prefix: "₿" };
 
     const { balance } = this.props.balances[ticker];
-    const totalBalance = prefix + balance.toFixed(4);
+    const totalBalance = prefix + balance.toFixed(2);
     const { isSyncing, blockHeight, scannedHeight } = this.props.syncState;
     const percentage = ((scannedHeight / blockHeight) * 100).toFixed(2);
 
