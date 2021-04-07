@@ -7,9 +7,11 @@ on:
   push:
     branches:
       - develop
+      - feature/xassets
   pull_request:
     branches:
       - develop
+      - feature/xassets
 
 env:
   REACT_APP_NET_TYPE_ID: 0
