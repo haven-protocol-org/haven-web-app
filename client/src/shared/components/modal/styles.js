@@ -92,7 +92,7 @@ export const Confirm = styled.button`
   font-size: 15px;
 
   &:disabled {
-    color: ${(props) => props.theme.type.primary}
+    color: rgba(255, 255, 255, 0.5);
 
     &:hover {
       background: ${(props) => props.theme.button.primary_hover};
