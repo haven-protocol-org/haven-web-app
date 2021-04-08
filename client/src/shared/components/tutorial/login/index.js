@@ -2,52 +2,54 @@
 import React from "react";
 
 // Relative Imports
-import { Container, List, Item, Image } from "./styles";
+import { Container, Background, List, Item, Image } from "./styles";
+import data from "../../../../assets/illustration/onboarding/data.svg";
+import optimal from "../../../../assets/illustration/onboarding/optimal.svg";
+import seed from "../../../../assets/illustration/onboarding/seed.svg";
+import incognito from "../../../../assets/illustration/onboarding/incognito.svg";
 
 const LoginTutorial = ({ step }) => {
   return (
     <Container>
       {step === 0 && (
-        <>
-          <Image />
-          <List>Same seed. New Vault.</List>
+        <Background>
+          <Image src={optimal} />
+          <List>Introducing Haven</List>
           <Item>
-            For existing users, your old vault file will be incompatible with
-            the current wallet. Simply resync your vault or restore a vault with
-            yout seed phrase.
+            Haven now includes additional private assets such as Chinese Yuan,
+            Euros, Gold and Silver –– in addition to U.S dollars.
           </Item>
-        </>
+        </Background>
       )}
       {step === 1 && (
-        <>
-          <Image />
-          <List>Data Requirements</List>
+        <Background>
+          <Image src={seed} />
+          <List>Resync Requirements</List>
           <Item>
-            A vault needs to sync ~2gb of data to your device. This can be a
-            slow process depending on your connection speed and device.
+            Your vault must resync to have access to these new assets and will
+            begin resyncing when you login for the first time.
           </Item>
-        </>
+        </Background>
       )}
       {step === 2 && (
-        <>
-          <Image />
-          <List>Vault Persistance</List>
+        <Background>
+          <Image src={data} />
+          <List>Download Requirements</List>
           <Item>
-            Avoid incognito mode or clearing your browsers history as this will
-            delete the vault data from your browser and require you to resync.
+            A vault needs to sync about 2gb of data to your device. This can be
+            a slow process depending on your connection speed and device.
           </Item>
-        </>
+        </Background>
       )}
       {step === 3 && (
-        <>
-          <Image />
-          <List>Optimal Experience</List>
+        <Background>
+          <Image src={incognito} />
+          <List>Our Suggestions</List>
           <Item>
-            The best way to get started is to create a new vault and transfer
-            any assets to it. This avoids any syncing delays and allows you to
-            privately store, exchange and transfer assets.
+            Avoid using incognito mode or clearing your cache as this will force
+            your browser to resync all over again.
           </Item>
-        </>
+        </Background>
       )}
     </Container>
   );

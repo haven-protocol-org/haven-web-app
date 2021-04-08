@@ -28,25 +28,19 @@ class LoginOnboarding extends React.Component<any, any> {
   };
 
   render() {
-    console.log("STATE:", this.state.count);
     const { count } = this.state;
 
     return (
       <Modal
-        title="Welcome to Haven 2.0"
-        description="Take a few moments to learn about your vault"
+        title="Welcome to Haven"
+        description="Lets take a moment to learn about your vault"
         leftButton={"Back"}
         rightButton={count === 3 ? "Finish" : "Next"}
         disabledRight={false}
         disabledLeft={count === 0 ? true : false}
         isLoading={false}
         onConfirm={count === 3 ? () => this.onCancel() : this.incrementCount}
-        onCancel={count === 3 ? () => this.onCancel() : this.decrementCount}
-
-        // onConfirm={() => this.onCancel()}
-        // onCancel={() =>
-        //   window.open("https://havenprotocol.org/knowledge/quick-start-guide")
-        // }
+        onCancel={this.decrementCount}
       >
         <LoginTutorial step={this.state.count} />
       </Modal>
