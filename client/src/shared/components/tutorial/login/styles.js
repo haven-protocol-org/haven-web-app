@@ -7,11 +7,19 @@ export const Container = styled.div`
   margin-bottom: 20px;
 `;
 
+export const Image = styled.div`
+  height: 200px;
+  width: auto;
+  background: pink;
+  margin-top: 20px;
+`;
+
 export const List = styled.ul`
   list-style-type: none;
   margin-left: -40px;
   font-size: 15px;
   font-family: Inter-SemiBold;
+  text-align: center;
 `;
 
 export const Item = styled.li`
@@ -21,4 +29,5 @@ export const Item = styled.li`
   margin-top: -8px;
   line-height: 1.5em;
   font-family: Inter-Regular;
+  text-align: center;
 `;

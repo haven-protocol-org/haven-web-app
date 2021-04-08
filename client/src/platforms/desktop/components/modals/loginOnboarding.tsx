@@ -5,22 +5,50 @@ import { hideModal } from "shared/actions/modal";
 import LoginTutorial from "../../../../shared/components/tutorial/login/index.js";
 
 class LoginOnboarding extends React.Component<any, any> {
+  state = {
+    count: 0,
+  };
+
+  incrementCount = () => {
+    this.setState({
+      count: this.state.count + 1,
+    });
+  };
+
+  decrementCount = () => {
+    if (this.state.count === 0) {
+      this.setState({
+        count: 0,
+      });
+    } else {
+      this.setState({
+        count: this.state.count - 1,
+      });
+    }
+  };
+
   render() {
+    console.log("STATE:", this.state.count);
+    const { count } = this.state;
+
     return (
       <Modal
-        title="Welcome to Haven"
+        title="Welcome to Haven 2.0"
         description="Take a few moments to learn about your vault"
-        leftButton="Learn More"
-        rightButton="Ok, I got it"
+        leftButton={"Back"}
+        rightButton={count === 3 ? "Finish" : "Next"}
         disabledRight={false}
-        disabledLeft={false}
+        disabledLeft={count === 0 ? true : false}
         isLoading={false}
-        onConfirm={() => this.onCancel()}
-        onCancel={() =>
-          window.open("https://havenprotocol.org/knowledge/quick-start-guide")
-        }
+        onConfirm={count === 3 ? () => this.onCancel() : this.incrementCount}
+        onCancel={count === 3 ? () => this.onCancel() : this.decrementCount}
+
+        // onConfirm={() => this.onCancel()}
+        // onCancel={() =>
+        //   window.open("https://havenprotocol.org/knowledge/quick-start-guide")
+        // }
       >
-        <LoginTutorial />
+        <LoginTutorial step={this.state.count} />
       </Modal>
     );
   }
