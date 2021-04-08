@@ -29,7 +29,7 @@ export const Url = styled.a`
   font-family: Inter-Regular;
   font-size: 13px;
   line-height: 22px;
-  color: ${(props) => props.theme.button.primary};
+  color: ${(props) => props.theme.type.secondary};
 `;
 
 export const Row = styled.div`
