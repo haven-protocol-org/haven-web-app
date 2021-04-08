@@ -84,7 +84,6 @@ class SettingsPage extends Component<SettingsProps, SettingsState> {
     if (seed.length > 0) {
       const first = seed.substring(0, 32);
       const last = seed.substring(seed.length - 32);
-      const truncated = first + last;
     }
 
     const { isSyncing } = this.props.syncState;

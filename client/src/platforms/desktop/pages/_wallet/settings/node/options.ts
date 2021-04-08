@@ -1,4 +1,8 @@
-import { NodeLocation, SelectedNode, RemoteNode, BasicNode } from "platforms/desktop/types";
+import {
+  NodeLocation,
+  SelectedNode,
+  RemoteNode,
+} from "platforms/desktop/types";
 import {
   NodeOption,
   NodeSelectionType,
@@ -20,14 +24,14 @@ export const createNodeOptions = (
     };
   });
 
-  const localNode: NodeOption = {
-    location: NodeLocation.Local,
-    address: "",
-    port: "",
-    trusted: true,
-    name: "Local Node",
-    selectionType: NodeSelectionType.local,
-  };
+  // const localNode: NodeOption = {
+  //   location: NodeLocation.Local,
+  //   address: "",
+  //   port: "",
+  //   trusted: true,
+  //   name: "Local Node",
+  //   selectionType: NodeSelectionType.local,
+  // };
 
   const customNode: NodeOption = isCustomNode(havendState, remoteList)
     ? {
@@ -64,17 +68,18 @@ const createCustomNodeName = (havendState: SelectedNode) => {
   }
 };
 
-const isCustomNode = (havendState: SelectedNode, remoteList: RemoteNode []): boolean => {
+const isCustomNode = (
+  havendState: SelectedNode,
+  remoteList: RemoteNode[]
+): boolean => {
   return (
     havendState.location === NodeLocation.Remote &&
-    !remoteList.some(
-      (remoteNode) => remoteNode.address === havendState.address
-    )
+    !remoteList.some((remoteNode) => remoteNode.address === havendState.address)
   );
 };
 
 export const getDefaultNode = (nodeList: RemoteNode[]): NodeOption => {
-  const node: RemoteNode =  nodeList.find( node => !!node.default)!;
+  const node: RemoteNode = nodeList.find((node) => !!node.default)!;
 
   return {
     location: NodeLocation.Remote,
@@ -84,4 +89,4 @@ export const getDefaultNode = (nodeList: RemoteNode[]): NodeOption => {
     name: `Remote Node (${node.provider})`,
     selectionType: NodeSelectionType.remote,
   };
-}
+};

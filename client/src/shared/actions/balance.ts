@@ -1,7 +1,6 @@
 import HavenBalance from "haven-wallet-core/src/main/js/wallet/model/HavenBalance";
 import { walletProxy } from "shared/core/proxy";
-import { Ticker } from "shared/reducers/types";
-import { Balance, XBalance } from "shared/reducers/xBalance";
+import { XBalance } from "shared/reducers/xBalance";
 import { bigIntegerToBigInt } from "utility/utility";
 import {
   GET_BALANCES_SUCCEED,
@@ -14,7 +13,6 @@ export const getXHVBalance = () => {
   return async (dispatch: any) => {
     dispatch(getBalancesFetching());
     try {
-      
       const balance: HavenBalance = await walletProxy.getBalance();
       const unlockedBalance: HavenBalance = await walletProxy.getUnlockedBalance();
       const xBalances: XBalance = convertBalance(balance, unlockedBalance);
@@ -38,31 +36,29 @@ const getBalancesFailed = (error: any) => ({
   payload: error,
 });
 
-
-const convertBalance = (balances: HavenBalance , unlockedBalances: HavenBalance): XBalance => {
-
-  const unlockedDict:{[key: string]: BigInteger } = unlockedBalances.toDict();
-  const balanceDict: {[key: string]: BigInteger } = balances.toDict();
+const convertBalance = (
+  balances: HavenBalance,
+  unlockedBalances: HavenBalance
+): XBalance => {
+  const unlockedDict: { [key: string]: BigInteger } = unlockedBalances.toDict();
+  const balanceDict: { [key: string]: BigInteger } = balances.toDict();
   const assetArr = Object.keys(balanceDict);
   const xBalances: XBalance = {};
 
-  for (const asset of assetArr)  {
-
+  for (const asset of assetArr) {
     const unlockedBalance = bigIntegerToBigInt(unlockedDict[asset]);
-    const balance =  bigIntegerToBigInt(balanceDict[asset]);
+    const balance = bigIntegerToBigInt(balanceDict[asset]);
     const lockedBalance = balance.subtract(unlockedBalance);
-    
+
     const xBalance: XBalance = {
       [asset]: {
-        lockedBalance, unlockedBalance, balance
-      }
-    }
+        lockedBalance,
+        unlockedBalance,
+        balance,
+      },
+    };
     Object.assign(xBalances, xBalance);
   }
 
   return xBalances;
-
-}
-
-
-
+};
