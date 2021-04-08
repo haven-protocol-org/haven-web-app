@@ -29,7 +29,6 @@ class ConfirmTxModal extends React.Component<ConfirmTxModalProps, any> {
 
   render() {
     const { fromTicker, fromAmount, address, fee } = this.props.transfer;
-    const { checked } = this.state;
 
     const readableFee = convertBalanceToMoney(fee!, 4);
     const readableAmount = convertBalanceToMoney(fromAmount!);
@@ -40,7 +39,7 @@ class ConfirmTxModal extends React.Component<ConfirmTxModalProps, any> {
         description="Please review and confirm your transaction"
         leftButton="Cancel"
         rightButton="Confirm"
-        disabledRight={!checked}
+        disabledRight={!this.state.checked}
         disabledLeft={false}
         isLoading={this.state.loading}
         onConfirm={() => this.onConfirm()}
