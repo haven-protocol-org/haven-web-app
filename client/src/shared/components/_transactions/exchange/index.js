@@ -73,7 +73,9 @@ const Transaction = ({
           </Tag>
         </Row>
         <Confirm
-          description="I reviewed my transaction and I accept the Fees and Terms"
+          description={`I accept the ${
+            xasset_conversion ? "~20m" : priorityInfo
+          } Unlock Time, Terms & Fees`}
           checked={checked}
           onChange={onChange}
         />
@@ -83,16 +85,19 @@ const Transaction = ({
         this transaction. Once I click confirm,{" "}
         <strong>
           I understand that a portion of my balance may be locked for the
-          entirety of the {priorityInfo} unlock priority time.{" "}
+          entirety of the {xasset_conversion ? "~20m" : priorityInfo} unlock
+          priority time.{" "}
         </strong>
         To learn more about how locked tokens work, and how they might impact
         your experience{" "}
-        <Url
-          target="_blank"
-          href="https://havenprotocol.org/knowledge/haven-transactions/"
-        >
-          click here.
-        </Url>
+        <strong>
+          <Url
+            target="_blank"
+            href="https://havenprotocol.org/knowledge/haven-transactions/"
+          >
+            click here.
+          </Url>
+        </strong>
       </Information>
     </Fragment>
   );
