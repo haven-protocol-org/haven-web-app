@@ -73,6 +73,7 @@ class Navigation extends Component<NavigationProps, any> {
 
   showDropdownMenu = (event: any) => {
     event.preventDefault();
+    event.stopPropagation();
     this.setState({ showOptions: true }, () => {
       document.addEventListener("click", this.hideDropdownMenu);
     });
