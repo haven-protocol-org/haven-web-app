@@ -1,6 +1,6 @@
 {
   "name": "haven_web_wallet",
-  "version": "2.0.8",
+  "version": "2.0.9",
   "private": true,
   "dependencies": {
     "big-integer": "^1.6.48",
