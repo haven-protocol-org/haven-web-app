@@ -56,7 +56,8 @@ class ChartWrapper extends Component<any, any> {
           title={`${id} Overview`}
           description="Pricing history and asset values"
         />
-        <Chart
+
+        {this.props.assetId === Ticker.XHV || this.props.assetId === Ticker.xUSD ? ( <Chart
           prices={prices}
           labels={labels}
           ticker={id}
@@ -64,7 +65,7 @@ class ChartWrapper extends Component<any, any> {
           onChangePriceRange={(args: number | string) =>
             this.selectPriceHistory(args)
           }
-        />
+        />): null}
         <Row>
           <Statistic label="Amount" value={amount.toFixed(2)} />
           <Statistic label="Price" value={`$` + price.toFixed(2)} />
