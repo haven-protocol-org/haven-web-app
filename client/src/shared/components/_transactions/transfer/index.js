@@ -2,7 +2,7 @@
 import React, { Fragment } from "react";
 
 // Relative Imports
-import { Container, Row, Key, Value, Tag } from "./styles";
+import { Container, Row, Key, Value, Tag, Url } from "./styles";
 import Confirm from "../../confirm/index.js";
 import { Information } from "../../../../assets/styles/type.js";
 
@@ -46,16 +46,28 @@ export const Transaction = ({
           </Tag>
         </Row>
         <Confirm
-          description="I reviewed the transaction and I accept the Fees and Terms"
+          description="I accept the ~20m Unlock Time, Terms & Fees."
           checked={checked}
           onChange={onChange}
         />
       </Container>
       <Information>
         I have reviewed my transfer details and accept all responsibility for
-        this transaction. Once I click confirm, I understand that a portion of
-        my total balance may be temporarily locked for ~20 mins until the
-        transfer is confirmed.
+        this transaction. Once I click confirm,{" "}
+        <strong>
+          I understand that a portion of my balance may be locked for the
+          entirety of the ~20m unlock priority time.{" "}
+        </strong>
+        To learn more about how locked tokens work, and how they might impact
+        your experience{" "}
+        <strong>
+          <Url
+            target="_blank"
+            href="https://havenprotocol.org/knowledge/haven-transactions/"
+          >
+            click here.
+          </Url>
+        </strong>
       </Information>
     </Fragment>
   );
