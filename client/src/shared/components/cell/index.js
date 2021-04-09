@@ -105,11 +105,11 @@ const Cell = ({
               </Pending>
               <Pending>
                 <Subtitle>Locked Balance</Subtitle>
-                <Subtitle>{lockedBalance.toFixed(2)}</Subtitle>
+                <Subtitle>{lockedBalance}</Subtitle>
               </Pending>
               <Pending>
                 <Subtitle>Unlocked Balance</Subtitle>
-                <Subtitle>{unlockedBalance.toFixed(2)}</Subtitle>
+                <Subtitle>{unlockedBalance}</Subtitle>
               </Pending>
               <PendingSpacer />
             </PendingWrapper>

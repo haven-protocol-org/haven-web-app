@@ -58,18 +58,18 @@ class AssetsPage extends Component<AssetsProps, any> {
 
       const xTicker = id;
 
+      const numDecimals = (xTicker === Ticker.XAG || xTicker === Ticker.XAU) ? 4 : 2;
+
       const unlockedBalance = convertBalanceToMoney(
-        this.props.balances[xTicker].unlockedBalance
+        this.props.balances[xTicker].unlockedBalance, numDecimals
       );
 
-      logM(this.props.balances);
-
       const totalBalance = convertBalanceToMoney(
-        this.props.balances[xTicker].balance
+        this.props.balances[xTicker].balance, numDecimals
       );
 
       const lockedBalance = convertBalanceToMoney(
-        this.props.balances[xTicker].lockedBalance
+        this.props.balances[xTicker].lockedBalance, numDecimals
       );
 
       const value = selectValueInOtherAsset(
