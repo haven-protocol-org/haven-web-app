@@ -117,6 +117,8 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
 
   componentDidMount() {
     window.scrollTo(0, 0);
+    this.props.setFromTicker(Ticker.XHV);
+    this.props.setToTicker(Ticker.xUSD);
   }
 
   componentDidUpdate(
