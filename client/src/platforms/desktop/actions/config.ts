@@ -5,6 +5,7 @@ import { DesktopAppState } from "../reducers";
 import { NodeLocation, RemoteNode, SelectedNode } from "../types";
 import { setNodeForWalletSucceed } from "./selectNode";
 import { SET_NODE_LIST_FOR_WALLET_SUCCESS } from "./types";
+import {selectRemoteDefaultNode} from "platforms/desktop/reducers/selectedNode"
 
 export const setDesktopConfig = () => {
   return async (dispatch: any, getState: () => DesktopAppState) => {
@@ -33,7 +34,7 @@ export const setDesktopConfig = () => {
           )
         );
       }
-      /*      // if there is no last selected node we set the defaulzt remote one
+    
       else {
         const defaultNode = selectRemoteDefaultNode(getState());
         dispatch(
@@ -43,7 +44,7 @@ export const setDesktopConfig = () => {
             defaultNode.location
           )
         );
-      } */
+      } 
     }
 
     if (config && config.theme) {
