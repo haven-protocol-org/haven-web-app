@@ -79,7 +79,7 @@ export const selectXRate = (
     /**
      * handles xUSD --> XHV and XHV -> xUSD
      */
-  if (from === Ticker.XHV) {
+  if (from === Ticker.XHV && latestBlockerHeader[to]) {
     return latestBlockerHeader[to].toJSNumber() / Math.pow(10, 12);
   } else if (to === Ticker.XHV) {
     if (!latestBlockerHeader[from].isZero()) {
@@ -87,7 +87,7 @@ export const selectXRate = (
     }
 }
 
-if (fromTicker === Ticker.xUSD) {
+if (fromTicker === Ticker.xUSD && latestBlockerHeader[toTicker]) {
     return latestBlockerHeader[toTicker].toJSNumber() / Math.pow(10, 12);
 } else {
   if (!latestBlockerHeader[fromTicker].isZero()) {
