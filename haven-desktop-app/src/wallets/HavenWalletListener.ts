@@ -21,6 +21,8 @@ export class HavenWalletListener extends MoneroWalletListener {
     percentDone: number,
     message: string
   ): void {
+
+
     
     if (percentDone === 1) {
       this.isSyncing = false;
@@ -60,24 +62,12 @@ export class HavenWalletListener extends MoneroWalletListener {
   // @ts-ignore
   onBalancesChanged(
     newBalance: BigInteger,
-    newUnlockedBalance: BigInteger
+    newUnlockedBalance: BigInteger, assetType: string
   ): void {
     const walletupdate: WalletRequest = {
       methodName: "onBalancesChanged",
       params: [...arguments],
     };
-    this.webContent.send(CommunicationChannel.WALLET, walletupdate);
-  }
-
-  onOffshoreBalancesChanged(
-    newBalance: BigInteger,
-    newUnlockedBalance: BigInteger
-  ): void {
-    const walletupdate: WalletRequest = {
-      methodName: "onOffshoreBalancesChanged",
-      params: [...arguments],
-    };
-
     this.webContent.send(CommunicationChannel.WALLET, walletupdate);
   }
 
