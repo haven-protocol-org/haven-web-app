@@ -1,10 +1,10 @@
 {
   "name": "haven_web_wallet",
-  "version": "2.0.18",
+  "version": "2.0.19",
   "private": true,
   "dependencies": {
     "big-integer": "^1.6.48",
-    "haven-wallet-core": "^1.4.24",
+    "haven-wallet-core": "^1.4.26",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-qr-code": "^1.1.1",
