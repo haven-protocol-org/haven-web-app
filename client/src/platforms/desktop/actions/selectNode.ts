@@ -14,6 +14,7 @@ import {
   SET_APP_TO_DAEMON_CONNECTION_STATE,
   SET_WALLET_CONNECTION_STATE,
 } from "shared/actions/types";
+import { updateDesktopConfig } from "./config";
 
 export const changeNodeForWallet = (
   selectedNodeOption: NodeOption,
@@ -48,6 +49,8 @@ export const changeNodeForWallet = (
       await walletProxy.setDaemonConnection(connection);
       await havendProxy.createDaemonConnection(connection);
 
+
+
       dispatch(
         setNodeForWalletSucceed(
           nodeAddress,
@@ -55,6 +58,9 @@ export const changeNodeForWallet = (
           selectedNodeOption.location
         )
       );
+
+
+      updateDesktopConfig({selectedNode: {location: selectedNodeOption.location, address: nodeAddress, port: nodePort}})
     } catch (error) {
       dispatch(setNodeForWalletFailed(error));
     }
@@ -77,6 +83,7 @@ export const disconnectNode = () => {
       dispatch({ type: SET_WALLET_CONNECTION_STATE, payload: false });
 
       dispatch(resetNodeForWallet());
+      updateDesktopConfig({selectedNode: {location: NodeLocation.None, address: "", port: ""}});
     } catch (error) {
       logM("set empty node failed");
     }

@@ -35,7 +35,7 @@ export const setDesktopConfig = () => {
         );
       }
     
-      else {
+   /*    else {
         const defaultNode = selectRemoteDefaultNode(getState());
         dispatch(
           setNodeForWalletSucceed(
@@ -44,7 +44,7 @@ export const setDesktopConfig = () => {
             defaultNode.location
           )
         );
-      } 
+      }  */
     }
 
     if (config && config.theme) {
