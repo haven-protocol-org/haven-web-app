@@ -102,6 +102,8 @@ module.exports = {
     afterCopy: [substituteEnvsForBuild],
     icon: "./icons/icon",
     asar: true,
+    },
+    
 
   hooks: {readPackageJson: (value) => {
 
