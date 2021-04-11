@@ -38,7 +38,7 @@ jobs:
     - name: Audit client dependencies
       working-directory: client
       run: |
-          npm audit fix --only=prod --audit-level=moderate
+          npm audit fix --audit-level=moderate
 
     - name: Client Build for Desktop
       working-directory: client
@@ -60,7 +60,7 @@ jobs:
     - name: Audit backend dependencies
       working-directory: haven-desktop-app
       run: |
-          npm audit fix --only=prod --audit-level=moderate
+          npm audit fix --audit-level=moderate
 
     - name: Build Final App
       run: |
