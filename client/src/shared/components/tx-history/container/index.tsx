@@ -49,9 +49,11 @@ interface TxHistoryProps {
   getAllTransfers:() => void;
 }
 
+type TXType = "Mined" | "Pending" | "Sent" | "Received";
+
 class TxHistoryContainer extends Component<TxHistoryProps, any> {
 
-  static getTransactionType(tx: TxEntry) {
+  static getTransactionType(tx: TxEntry) : TXType {
     if (tx.isMinerTx) {
       return "Mined";
     } else if (tx.mempool) {
@@ -175,7 +177,7 @@ const prepareTxInfo = (
     date: transactionDate,
     amount: readableAmount,
     hash: tx.hash,
-    fee: convertBalanceToMoney(tx.fee),
+    fee: tx.isIncoming ? 0 : convertBalanceToMoney(tx.fee),
     block: tx.height
   };
 };
