@@ -1,11 +1,10 @@
-import { getNetworkByName } from "constants/env";
+import { getNetworkByName, NET_TYPE_ID } from "constants/env";
 import { setTheme } from "shared/actions";
 import { getConfigIPC, updateConfigIPC } from "../ipc/misc";
 import { DesktopAppState } from "../reducers";
 import { NodeLocation, RemoteNode, SelectedNode } from "../types";
 import { setNodeForWalletSucceed } from "./selectNode";
 import { SET_NODE_LIST_FOR_WALLET_SUCCESS } from "./types";
-import {selectRemoteDefaultNode} from "platforms/desktop/reducers/selectedNode"
 
 export const setDesktopConfig = () => {
   return async (dispatch: any, getState: () => DesktopAppState) => {
@@ -19,7 +18,7 @@ export const setDesktopConfig = () => {
       payload: netSpecificNodes,
     });
 
-    const config: any = await getConfigIPC();
+    const config: any = await getConfigIPC(NET_TYPE_ID);
     //  dispatch(setNodeForWallet())
 
     if (config && config.selectedNode) {
@@ -54,7 +53,7 @@ export const setDesktopConfig = () => {
 };
 
 export const updateDesktopConfig = (config: any) => {
-  updateConfigIPC(config);
+  updateConfigIPC(NET_TYPE_ID, config);
 };
 
 export const getAllAvailableNodes = async () => {
