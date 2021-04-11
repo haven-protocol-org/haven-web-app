@@ -101,7 +101,7 @@ module.exports = {
     ignore: ignoredPaths,
     afterCopy: [substituteEnvsForBuild],
     icon: "./icons/icon",
-  },
+    asar: true,
 
   hooks: {readPackageJson: (value) => {
 
