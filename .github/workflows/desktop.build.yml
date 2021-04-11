@@ -35,6 +35,11 @@ jobs:
       run: |
           npm install
 
+    - name: Audit client dependencies
+      working-directory: client
+      run: |
+          npm audit fix --only=prod --audit-level=moderate
+
     - name: Client Build for Desktop
       working-directory: client
       env:
@@ -51,6 +56,11 @@ jobs:
       working-directory: haven-desktop-app
       run: |
           npm install
+
+    - name: Audit backend dependencies
+      working-directory: haven-desktop-app
+      run: |
+          npm audit fix --only=prod --audit-level=moderate
 
     - name: Build Final App
       run: |
