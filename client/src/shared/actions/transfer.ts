@@ -89,7 +89,6 @@ export const createTransfer = (
         metaList: txList.map((tx: MoneroTxWallet) => tx.getMetadata()),
       } as Partial<TxProcessInfo>;
 
-      //console.log(createdTx[0].toJson());
       dispatch(transferCreationSucceed(reduxParams));
       dispatch(showModal(MODAL_TYPE.ConfirmTx));
     } catch (e) {
