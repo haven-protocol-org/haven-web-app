@@ -48,7 +48,7 @@ const Transaction = ({
           <Cell left="Recipient Address" right={truncatedAddress} />
         )}
         {xasset_conversion ? (
-          <Cell left="Standard Priority" right="Unlocks ~20m" />
+          <Cell left="Standard Priority" right="Unlocks ~6h" />
         ) : (
           (function () {
             switch (priority) {
@@ -74,7 +74,7 @@ const Transaction = ({
         </Row>
         <Confirm
           description={`I accept the ${
-            xasset_conversion ? "~20m" : priorityInfo
+            xasset_conversion ? "~6h" : priorityInfo
           } Unlock Time, Terms & Fees`}
           checked={checked}
           onChange={onChange}
@@ -85,7 +85,7 @@ const Transaction = ({
         this transaction. Once I click confirm,{" "}
         <strong>
           I understand that a portion of my balance may be locked for the
-          entirety of the {xasset_conversion ? "~20m" : priorityInfo} unlock
+          entirety of the {xasset_conversion ? "~6h" : priorityInfo} unlock
           priority time.{" "}
         </strong>
         To learn more about how locked tokens work, and how they might impact

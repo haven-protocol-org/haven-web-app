@@ -67,7 +67,7 @@ export const ExchangeSummary = ({
         {xasset_conversion ? (
           <Row>
             <Key>Standard Priority</Key>
-            <Value>Unlocks ~20m</Value>
+            <Value>Unlocks ~6h</Value>
           </Row>
         ) : (
           <Row>
