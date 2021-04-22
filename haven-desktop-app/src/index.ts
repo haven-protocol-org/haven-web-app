@@ -8,6 +8,8 @@ import { appEventBus, LOCAL_NODE_STOPPED_EVENT } from "./EventBus";
 import { HavenWallet } from "./HavenWallet";
 import { createMenu } from "./menu";
 
+
+
 app.enableSandbox();
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 // tslint:disable-next-line: no-var-requires
@@ -66,7 +68,8 @@ const startApp = (): void => {
     mainWindow.show();
   });
 };
-
+//app.commandLine.appendSwitch('--js-flags', '--experimental-wasm-threads');
+//app.commandLine.appendSwitch('--js-flags', '--experimental-wasm-bulk-memory');
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
