@@ -21,8 +21,6 @@ export class HavenWalletListener extends MoneroWalletListener {
     percentDone: number,
     message: string
   ): void {
-
-
     
     if (percentDone === 1) {
       this.isSyncing = false;
@@ -32,7 +30,7 @@ export class HavenWalletListener extends MoneroWalletListener {
     const syncDistance = endHeight - height;
 
     let updateInterval = Math.pow(10, Math.floor(Math.log10(syncDistance)));
-    updateInterval = Math.min(2000, updateInterval);
+    updateInterval = Math.min(1000, updateInterval);
     updateInterval = Math.max(updateInterval, 1);
   
     if (syncDistance % updateInterval === 0 || height === startHeight) {
