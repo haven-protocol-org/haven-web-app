@@ -46,7 +46,7 @@ export const selectSyncState = (state: HavenAppState): SyncState => {
   const isWalletConnected = state.connectedNode.isWalletConectedToDaemon === true;
 
   const blockHeight = state.chain.nodeHeight;
-  let scannedHeight: number;
+  let scannedHeight: number = 0;
   let isSyncing: boolean;
 
   //we must distinguish between multiple cases
@@ -68,7 +68,7 @@ export const selectSyncState = (state: HavenAppState): SyncState => {
 
 
   if (selectChainDataNotUpdatedYet(state.chain)) {
-    return { isSyncing: true, blockHeight, scannedHeight };
+    return { isSyncing: true, blockHeight:1, scannedHeight };
   }
 
 
