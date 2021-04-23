@@ -5,6 +5,7 @@
   "description": "Desktop App for Haven Vault",
   "main": "dist/index.js",
   "scripts": {
+    "//": "npm run build && electron-forge start -- --js-flags='--experimental-wasm-threads --experimental-wasm-bulk-memory'",
     "start": "npm run build && electron-forge start",
     "test": "jest --detectOpenHandles",
     "package": "npm run build && electron-forge package",
@@ -27,7 +28,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "electron-squirrel-startup": "^1.0.0",
-    "haven-wallet-core": "^1.4.32",
+    "haven-wallet-core": "^1.4.41",
     "rxjs": "^6.6.6"
   },
   "devDependencies": {
