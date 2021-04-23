@@ -39,6 +39,7 @@ export const openWalletByData = (
       password,
       networkType: getNetworkByName(),
       server: getNodeForWallet(getState),
+      proxyToWorker:true
     };
     dispatch(openWallet(walletData, walletName));
   };
@@ -54,6 +55,7 @@ export const openWalletByFile = (filename: string, password: string) => {
       password,
       networkType: getNetworkByName(),
       server: getNodeForWallet(getStore),
+      proxyToWorker:true
     };
 
     dispatch(openWallet(walletData, filename));
@@ -111,6 +113,7 @@ export const createNewWallet = (
       password,
       server: getNodeForWallet(getStore),
       networkType: getNetworkByName(),
+      proxyToWorker: true
     };
 
     try {
@@ -162,7 +165,8 @@ export const restoreWalletByMnemomic = (
       password,
       networkType: getNetworkByName(),
       server: getNodeForWallet(getStore),
-      restoreHeight
+      restoreHeight,
+      proxyToWorker:true
     };
 
     dispatch(restoreWalletFetching(walletName));
