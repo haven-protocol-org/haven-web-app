@@ -101,7 +101,7 @@ module.exports = {
     ignore: ignoredPaths,
     afterCopy: [substituteEnvsForBuild],
     icon: "./icons/icon",
-    asar: true,
+    asar: false
     },
     
 
@@ -136,7 +136,7 @@ module.exports = {
     },
   ],
 
-  plugins: [["@electron-forge/plugin-auto-unpack-natives"]],
+ //  plugins: [["@electron-forge/plugin-auto-unpack-natives"]],
 
   publishers: [
     {
