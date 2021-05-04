@@ -63,7 +63,7 @@ class AssetsPage extends Component<AssetsProps, any> {
 
       const xTicker = id;
 
-      const numDecimals = (xTicker === Ticker.XAG || xTicker === Ticker.XAU) ? 4 : 2;
+      const numDecimals = (xTicker === Ticker.XAG || xTicker === Ticker.XAU || xTicker === Ticker.xBTC) ? 4 : 2;
 
       const unlockedBalance = convertBalanceToMoney(
         this.props.balances[xTicker].unlockedBalance, numDecimals
