@@ -38,6 +38,11 @@ const Enabled_TICKER = [
   Ticker.XAU,
   Ticker.xCNY,
   Ticker.xEUR,
+  Ticker.xBTC,
+  Ticker.xAUD,
+  Ticker.xJPY,
+  Ticker.xGBP,
+  Ticker.xCHF
 ];
 
 class AssetsPage extends Component<AssetsProps, any> {

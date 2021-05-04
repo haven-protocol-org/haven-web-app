@@ -85,6 +85,11 @@ const xassetOptions: AssetOption[] = [
   { name: "Euro", ticker: Ticker.xEUR },
   { name: "Gold", ticker: Ticker.XAU },
   { name: "Silver", ticker: Ticker.XAG },
+  { name: "Bitcoin", ticker: Ticker.xBTC },
+  { name: "Swiss Franc", ticker: Ticker.xCHF },
+  { name: "Australian Dollar", ticker: Ticker.xAUD },
+  { name: "British Pound", ticker: Ticker.xGBP },
+  { name: "Japanese Yen", ticker: Ticker.xJPY },
 ];
 
 const xusdOption = { name: "U.S Dollar", ticker: Ticker.xUSD };

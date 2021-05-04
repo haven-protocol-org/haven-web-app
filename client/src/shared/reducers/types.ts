@@ -17,8 +17,13 @@ export enum Ticker {
   XAU="XAU",
   XAG="XAG",
   xEUR="XEUR",
-  xCNY="XCNY"
+  xCNY="XCNY",
+  xGBP="XGBP",
+  xJPY="XJPY",
+  xAUD="XAUD",
+  xCHF="XCHF"
 }
+
 export type XFetchingItem = Partial<{ [key in Ticker]?: XFetchingStats }>;
 export type XFetching = { [key in Ticker]?: XFetchingStats };
 const INITAL_FETCH_STATS: XFetchingStats = {

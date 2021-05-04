@@ -15,10 +15,15 @@ import TransferSummary from "shared/components/_summaries/transfer-summary";
 const assetOptions: AssetOption[] = [
   { name: "Haven", ticker: Ticker.XHV },
   { name: "U.S Dollar", ticker: Ticker.xUSD },
+  { name: "Bitcoin", ticker: Ticker.xBTC },
   { name: "Yuan", ticker: Ticker.xCNY },
   { name: "Euro", ticker: Ticker.xEUR },
   { name: "Gold", ticker: Ticker.XAU },
   { name: "Silver", ticker: Ticker.XAG },
+  { name: "Swiss Franc", ticker: Ticker.xCHF },
+  { name: "Australian Dollar", ticker: Ticker.xAUD },
+  { name: "British Pound", ticker: Ticker.xGBP },
+  { name: "Japanese Yen", ticker: Ticker.xJPY },
 ];
 
 interface TransferOption {

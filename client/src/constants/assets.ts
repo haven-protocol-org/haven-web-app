@@ -32,4 +32,34 @@ export const AssetList = [
     ticker: "SILV",
     symbol: "$",
   },
+  {
+    id: Ticker.xBTC,
+    token: "Bitcoin",
+    ticker: "BTC",
+    symbol: "$",
+  },
+  {
+    id: Ticker.xAUD,
+    token: "Australian Dollar",
+    ticker: "AUD",
+    symbol: "$",
+  },
+  {
+    id: Ticker.xCHF,
+    token: "Swiss Franc",
+    ticker: "CHF",
+    symbol: "₣",
+  },
+  {
+    id: Ticker.xJPY,
+    token: "Japanese Yen",
+    ticker: "JPY",
+    symbol: "¥",
+  },
+  {
+    id: Ticker.xGBP,
+    token: "British Pound",
+    ticker: "GBP",
+    symbol: "£",
+  },
 ];
