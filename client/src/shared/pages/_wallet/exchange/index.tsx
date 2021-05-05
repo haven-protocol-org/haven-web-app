@@ -30,7 +30,7 @@ import {
 } from "shared/reducers/exchangeProcess";
 import { setFromTicker, setToTicker } from "shared/actions/exchange";
 import { NO_BALANCE, XBalances } from "shared/reducers/xBalance";
-import { convertBalanceToMoney, logM } from "utility/utility";
+import { convertBalanceToMoney, logM, iNum } from "utility/utility";
 import { showModal } from "shared/actions/modal";
 import { MODAL_TYPE } from "shared/reducers/modal";
 import { ExchangeSummary } from "shared/components/_summaries/exchange-summary";
@@ -57,8 +57,8 @@ interface ExchangeProps extends RouteComponentProps<any> {
 }
 
 type ExchangeState = {
-  fromAmount?: string;
-  toAmount?: string;
+  fromAmount?: number;
+  toAmount?: number;
   selectedTab: ExchangeTab;
   externAddress: string;
   selectedPrio: ExchangePrioOption;
@@ -105,8 +105,8 @@ const exchangePrioOptions: ExchangePrioOption[] = [
 ];
 
 const INITIAL_STATE: ExchangeState = {
-  fromAmount: "",
-  toAmount: "",
+  fromAmount: undefined,
+  toAmount: undefined,
   selectedTab: ExchangeTab.Basic,
   externAddress: "",
   selectedPrio: exchangePrioOptions[0],
@@ -115,6 +115,7 @@ const INITIAL_STATE: ExchangeState = {
   toOptions: [xusdOption],
   xassetConversion: false,
 };
+
 class Exchange extends Component<ExchangeProps, ExchangeState> {
   private sendTicker: Ticker = Ticker.XHV;
 
@@ -132,8 +133,8 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
   ): void {
     if (!this.props.exchangeSucceed && prevProps.exchangeSucceed) {
       this.setState({
-        fromAmount: "",
-        toAmount: "",
+        fromAmount: undefined,
+        toAmount: undefined,
         externAddress: "",
       });
 
@@ -153,7 +154,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
 
   onEnterFromAmount = (event: any) => {
     const name = event.target.name;
-    const value = event.target.value;
+    const value = parseFloat(event.target.value);
 
     this.setState({ ...this.state, [name]: value }, () => {
       this.calcConversion(true);
@@ -169,7 +170,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
 
   onEnterToAmount = (event: any) => {
     const name = event.target.name;
-    const value = event.target.value;
+    const value = parseFloat(event.target.value);
 
     this.setState({ ...this.state, [name]: value }, () => {
       this.calcConversion(false);
@@ -264,13 +265,17 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     }
 
     if (fromAmount !== undefined && setToAmount) {
-      this.setState({ toAmount: (parseFloat(fromAmount) * xRate).toFixed(2) });
+
+      const toAmount = parseFloat(iNum(fromAmount * xRate));
+
+      this.setState({ toAmount });
       return;
     }
 
     if (toAmount !== undefined && !setToAmount) {
+      const fromAmount = parseFloat(iNum(toAmount * (1 / xRate)));
       this.setState({
-        fromAmount: (parseFloat(toAmount) * (1 / xRate)).toFixed(2),
+        fromAmount
       });
     }
   }
@@ -290,8 +295,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       fromTicker === Ticker.XHV && toTicker !== Ticker.XHV
         ? ExchangeType.Offshore
         : ExchangeType.Onshore;
-    const fromAmount = parseFloat(this.state.fromAmount);
-    const toAmount = parseFloat(this.state.toAmount);
+    const {fromAmount, toAmount } = this.state;
 
     this.sendTicker = fromTicker;
 
@@ -320,7 +324,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     this.setState({ selectedPrio: selectedOption });
   };
 
-  setMaxFromAmount = () => {
+  /* setMaxFromAmount = () => {
     const { fromTicker } = this.props;
 
     const availBalance = fromTicker
@@ -333,9 +337,9 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
         this.calcConversion(true);
       }
     );
-  };
+  }; */
 
-  setMaxToAmount = () => {
+/*   setMaxToAmount = () => {
     const { toTicker } = this.props;
 
     const availBalance = toTicker
@@ -345,12 +349,12 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     this.setState({ ...this.state, toAmount: availBalance.toString() }, () => {
       this.calcConversion(false);
     });
-  };
+  }; */
 
   validateExchange = (availableBalance: any) => {
     const { fromAmount, toAmount } = this.state;
-    const fromAmountValid = fromAmount !== "";
-    const toAmountValid = toAmount !== "";
+    const fromAmountValid = fromAmount !== undefined;
+    const toAmountValid = toAmount !== undefined;
     const { hasLatestXRate } = this.props;
     const hasEnoughFunds =
       fromAmount !== undefined ? fromAmount < availableBalance : false;
@@ -376,14 +380,13 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
   fromAmountIsValid = (availableBalance: any) => {
     const { fromAmount } = this.state;
 
-    const availableBalanceString = availableBalance.toString();
 
     //@ts-ignore
     if (fromAmount > availableBalance) {
       return "Not enough funds";
     }
     //@ts-ignore
-    if (fromAmount === availableBalanceString) {
+    if (fromAmount === availableBalance) {
       return "Save some for fees";
     }
   };
@@ -484,7 +487,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 type="number"
                 name="fromAmount"
                 // @ts-ignore
-                value={fromAmount}
+                value={fromAmount || ""}
                 onChange={this.onEnterFromAmount}
                 error={this.fromAmountIsValid(availBalance)}
                 readOnly={fromTicker === null}
@@ -507,7 +510,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 placeholder="Enter amount"
                 name="toAmount"
                 type="number"
-                value={toAmount}
+                value={toAmount || ""}
                 onChange={this.onEnterToAmount}
                 error={toTicker === null ? "Please select an asset first" : ""}
                 readOnly={toTicker === null}
@@ -543,8 +546,8 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
               <ExchangeSummary
                 xasset_conversion={this.state.xassetConversion}
                 xRate={this.props.xRate}
-                fromAmount={fromAmount}
-                toAmount={toAmount}
+                fromAmount={iNum(fromAmount)}
+                toAmount={iNum(toAmount)}
                 toTicker={toTicker}
                 hasLatestXRate={hasLatestXRate}
                 fee={this.calculateFeeEstimate()}
