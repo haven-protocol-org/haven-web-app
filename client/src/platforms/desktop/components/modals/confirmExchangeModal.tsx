@@ -36,6 +36,7 @@ class ConfirmExchangeModal extends React.Component<
     const {
       address,
       fromAmount,
+      change,
       toAmount,
       fromTicker,
       toTicker,
@@ -48,6 +49,7 @@ class ConfirmExchangeModal extends React.Component<
     const readableToAmout = convertBalanceToMoney(toAmount!, 4);
     const readAbleFromAmount = convertBalanceToMoney(fromAmount!, 4);
     const readAbleFeeAmount = convertBalanceToMoney(fee!, 4);
+    const readableChangeAmount = convertBalanceToMoney(change!, 4);
 
     return (
       <Modal

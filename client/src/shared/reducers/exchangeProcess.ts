@@ -13,6 +13,7 @@ import { AnyAction } from "redux";
 import { TxProcessInfo } from "./transferProcess";
 import { Ticker } from "shared/reducers/types";
 import HavenTxType from "haven-wallet-core/src/main/js/wallet/model/HavenTxType";
+import bigInt from "big-integer";
 
 export enum ExchangeType {
   Onshore,
@@ -23,6 +24,7 @@ export interface ExchangeProcessInfo extends TxProcessInfo {
   txType: HavenTxType | null;
   toTicker: Ticker | null;
   toAmount: number | null | bigInt.BigInteger;
+  change: number | null | bigInt.BigInteger;
   xassetConversion: boolean;
 }
 
@@ -31,6 +33,7 @@ const INITIAL_STATE: ExchangeProcessInfo = {
   fromAmount: null,
   toAmount: null,
   fee: null,
+  change:null,
   isFetching: false,
   info: "",
   error: "",
