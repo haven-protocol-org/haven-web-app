@@ -172,10 +172,6 @@ export const iNum = (rawNumber: number | undefined | null): string => {
     return "";
   }
 
-  // two decimals for numbers > 1
-  if (rawNumber > 1) {
-    return rawNumber.toFixed(2);
-  }
 
   // at least four non zeros digits, but no trailing zero
   //@ts-ignore

@@ -88,14 +88,14 @@ export const Transaction = ({
           </Data>
 
           <Data>
-            <Value alignment="right">${inUsd.toFixed(2)}</Value>
+            <Value alignment="right">${inUsd}</Value>
             <Label alignment="right">Current Value</Label>
           </Data>
         </Row>
         <Row>
           {fee !== 0 ? (
             <Data>
-              <Value alignment="left">{fee.toFixed(4)}</Value>
+              <Value alignment="left">{fee}</Value>
               <Label alignment="left">Fee</Label>
             </Data>
           ) : (
