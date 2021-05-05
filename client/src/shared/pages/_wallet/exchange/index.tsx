@@ -520,7 +520,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                     name="exchange_priority"
                     value={xassetConversion ? "Standard" : selectedPrio.name}
                     ticker={
-                      xassetConversion ? "Unlocks ~6h" : selectedPrio.ticker
+                      xassetConversion ? "Unlocks ~20m" : selectedPrio.ticker
                     }
                     options={exchangePrioOptions}
                     onClick={this.setExchangePriority}
