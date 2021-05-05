@@ -165,7 +165,7 @@ export const bigIntegerToBigInt = (value: BigInteger): bigInt.BigInteger => {
  * @param rawNumber 
  * @returns string
  */
-export const iNum = (rawNumber: number | undefined | null): string  => {
+export const iNum = (rawNumber: number | undefined | null): string => {
 
   
   if (rawNumber === undefined || rawNumber === null) {
