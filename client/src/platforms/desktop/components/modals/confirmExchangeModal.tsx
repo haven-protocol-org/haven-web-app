@@ -5,7 +5,7 @@ import { Modal } from "shared/components/modal";
 import { ExchangeProcessInfo } from "shared/reducers/exchangeProcess";
 import { hideModal } from "shared/actions/modal";
 import Transaction from "shared/components/_transactions/exchange";
-import { convertBalanceToMoney } from "utility/utility";
+import { convertBalanceToMoney, iNum } from "utility/utility";
 import { selectPrimaryAddress } from "shared/reducers/address";
 import { HavenAppState } from "platforms/desktop/reducers";
 
@@ -46,10 +46,10 @@ class ConfirmExchangeModal extends React.Component<
     } = this.props.exchange;
 
     const isOwnAddress = this.props.isOwnAddress;
-    const readableToAmout = convertBalanceToMoney(toAmount!, 4);
-    const readAbleFromAmount = convertBalanceToMoney(fromAmount!, 4);
-    const readAbleFeeAmount = convertBalanceToMoney(fee!, 4);
-    const readableChangeAmount = convertBalanceToMoney(change!, 4);
+    const readableToAmout = convertBalanceToMoney(toAmount!, 6);
+    const readAbleFromAmount = convertBalanceToMoney(fromAmount!, 6);
+    const readAbleFeeAmount = convertBalanceToMoney(fee!, 6);
+    const readableChangeAmount = convertBalanceToMoney(change!, 6);
 
     return (
       <Modal
@@ -67,12 +67,12 @@ class ConfirmExchangeModal extends React.Component<
           xRate={1}
           priority={priority}
           onChange={this.approveTransfer}
-          fromAmount={readAbleFromAmount}
+          fromAmount={iNum(readAbleFromAmount)}
           checked={this.state.checked}
-          toAmount={readableToAmout}
+          toAmount={iNum(readableToAmout)}
           fromTicker={fromTicker}
           toTicker={toTicker}
-          fee={readAbleFeeAmount}
+          fee={iNum(readAbleFeeAmount)}
           externAddress={address}
           isOwnAddress={isOwnAddress}
           xasset_conversion={xassetConversion}

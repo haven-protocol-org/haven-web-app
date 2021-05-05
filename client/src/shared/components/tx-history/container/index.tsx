@@ -9,6 +9,7 @@ import { Spinner } from "shared/components/spinner";
 import {
   convertBalanceToMoney,
   createRemainingTimeString,
+  iNum,
 } from "utility/utility";
 import React, { Component } from "react";
 import { connect } from "react-redux";
@@ -142,8 +143,8 @@ const prepareTxInfo = (
 
   const mempool = tx.mempool;
 
-  const readableAmount = convertBalanceToMoney(tx.amount);
-  const currentValueInUSD = readableAmount * xRate;
+  const readableAmount = iNum(convertBalanceToMoney(tx.amount, 6));
+  const currentValueInUSD = iNum(parseFloat(readableAmount) * xRate);
 
   const txType = TxHistoryContainer.getTransactionType(
     tx
@@ -176,7 +177,7 @@ const prepareTxInfo = (
     date: transactionDate,
     amount: readableAmount,
     hash: tx.hash,
-    fee: tx.isIncoming ? 0 : convertBalanceToMoney(tx.fee),
+    fee: tx.isIncoming ? 0 : iNum(convertBalanceToMoney(tx.fee, 4)),
     block: tx.height
   };
 };

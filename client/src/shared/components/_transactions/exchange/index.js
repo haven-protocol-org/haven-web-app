@@ -36,8 +36,8 @@ const Transaction = ({
       : null;
 
   // Adding for simplicity and clarity
-  const from = `${fromAmount.toFixed(4)} ${fromTicker}`;
-  const to = `${toAmount.toFixed(4)} ${toTicker}`;
+  const from = `${fromAmount} ${fromTicker}`;
+  const to = `${toAmount} ${toTicker}`;
 
   return (
     <Fragment>
@@ -68,7 +68,7 @@ const Transaction = ({
           <Key>Final Conversion Fee</Key>
           <Tag priority={priority}>
             <Value>
-              {fee.toFixed(4)} {fromTicker}
+              {fee} {fromTicker}
             </Value>
           </Tag>
         </Row>

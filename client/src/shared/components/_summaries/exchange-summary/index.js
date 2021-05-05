@@ -5,6 +5,7 @@ import React from "react";
 import { Wrapper, Container, Row, Key, Value } from "./styles";
 import { Error } from "../../../../assets/styles/type.js";
 import {Ticker} from "shared/reducers/types"
+import {iNum} from "utility/utility";
 
 export const ExchangeSummary = ({
   xRate,
@@ -42,25 +43,21 @@ export const ExchangeSummary = ({
             {!hasLatestXRate ? (
               <Error>Awaiting lastest rates...</Error>
             ) : (
-              `1 ${xFromTicker} : ${rate.toFixed(2)} ${xToTicker}`
+              `1 ${xFromTicker} : ${iNum(rate)} ${xToTicker}`
             )}
           </Value>
         </Row>
         <Row>
           <Key>Converting From</Key>
           <Value>
-            {fromAmount && !isNaN(fromAmount)
-              ? parseFloat(fromAmount).toFixed(2)
-              : "0"}{" "}
+            {fromAmount}&#160;
             {fromTicker ? fromTicker : "--"}
           </Value>
         </Row>
         <Row>
           <Key>Converting To</Key>
           <Value>
-            {toAmount && !isNaN(toAmount)
-              ? parseFloat(toAmount).toFixed(2)
-              : "0"}{" "}
+            {toAmount}&#160;
             {toTicker ? toTicker : "--"}
           </Value>
         </Row>
