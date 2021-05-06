@@ -152,11 +152,11 @@ const parseExchangeResonse = (
       acc.add(bigInt(tx.getFee().toString())),
     bigInt(0)
   );
-/*   change = txList.reduce(
+  change = txList.reduce(
     (acc: bigInt.BigInteger, tx: MoneroTxWallet) =>
       acc.add(bigInt(tx.getChangeAmount().toString())),
     bigInt(0)
-  ); */
+  ); 
   const metaList: Array<string> = txList.map((tx: MoneroTxWallet) =>
     tx.getMetadata()
   );
