@@ -24,6 +24,9 @@ import {
   TickerLabel,
   EmptyLabel,
   SearchCell,
+  Row,
+  TokenLabel,
+  Column,
 } from "./styles.js";
 import Buttons from "./buttons/index.js";
 import { syncFromFirstIncomingTx, rescanSpent } from "shared/actions/refresh";
@@ -40,6 +43,8 @@ import { showModal } from "shared/actions/modal";
 import { MODAL_TYPE } from "shared/reducers/modal";
 import { closeWallet } from "shared/actions/walletSession";
 import { AssetList } from "../../../../constants/assets";
+import { XBalances } from "shared/reducers/xBalance";
+import { convertBalanceToMoney } from "utility/utility";
 
 interface NavigationProps {
   isLoggedIn: boolean;
@@ -55,6 +60,7 @@ interface NavigationProps {
   restoreHeight: number;
   startedResync: boolean;
   search: string;
+  balances: XBalances;
   showModal: (modalType: MODAL_TYPE) => void;
 }
 
@@ -134,10 +140,20 @@ class Navigation extends Component<NavigationProps, {}> {
         return null;
       }
     }).map((value, key) => {
+      const { id, token } = value;
+
       return (
-        <SearchCell to={`/wallet/assets/${value.id}`} key={key}>
-          <AssetLabel>{value.token}</AssetLabel>{" "}
-          <TickerLabel>{value.id}</TickerLabel>
+        <SearchCell to={`/wallet/assets/${id}`} key={key}>
+          <Column>
+            <TokenLabel>{token}</TokenLabel>
+            <TickerLabel>Avail Balance:</TickerLabel>
+          </Column>
+          <Column>
+            <AssetLabel right>{id}</AssetLabel>
+            <TickerLabel right>
+              {convertBalanceToMoney(this.props.balances[id].balance)}
+            </TickerLabel>
+          </Column>
         </SearchCell>
       );
     });
@@ -325,6 +341,7 @@ const mapStateToProps = (state: WebAppState) => ({
   connected: state.connectedNode.isWalletConectedToDaemon,
   isClosingSession: state.walletSession.isClosingSession,
   restoreHeight: state.walletSession.restoreHeight,
+  balances: state.xBalance,
 });
 
 export const NavigationWeb = connect(mapStateToProps, {

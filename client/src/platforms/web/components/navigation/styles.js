@@ -165,19 +165,14 @@ export const SearchDropdown = styled.div`
 `;
 
 export const SearchCell = styled(Link)`
-  height: 48px;
   display: flex;
   align-items: center;
   font-size: 15px;
-  padding: 4px 16px;
+  padding: 12px 16px;
   color: ${(props) => props.theme.type.primary};
   border-bottom: 1px solid ${(props) => props.theme.body.border};
   text-decoration: none;
-  /* background: ${(props) => props.theme.body.foreground}; */
-
-  &:nth-last-child(1) {
-    border-bottom: red;
-  }
+  justify-content: space-between;
 
   &:hover {
     background: ${(props) => props.theme.body.background};
@@ -185,34 +180,62 @@ export const SearchCell = styled(Link)`
   }
 `;
 
-export const AssetLabel = styled.div`
-  font-size: 15px;
+export const Row = styled.div`
+  display: flex;
+`;
+
+export const Column = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const TokenLabel = styled.div`
+  font-size: 16px;
+  font-family: Inter-SemiBold;
+  text-align: ${(props) => (props.right ? "right" : "left")};
   color: ${(props) => props.theme.type.primary};
 `;
 
+export const AssetLabel = styled.div`
+  font-size: 16px;
+  font-family: Inter-SemiBold;
+  text-align: ${(props) => (props.right ? "right" : "left")};
+  color: ${(props) => props.theme.type.primary};
+
+  /* &::first-letter {
+    text-transform: lowercase;
+  } */
+`;
+
 export const TickerLabel = styled.div`
-  font-size: 15px;
+  font-size: 14px;
+  margin-top: 4px;
   color: ${(props) => props.theme.type.secondary};
-  margin-left: 8px;
+  text-align: ${(props) => (props.right ? "right" : "left")};
 `;
 
 export const EmptyLabel = styled.div`
   font-size: 15px;
+  height: 36px;
   margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: ${(props) => props.theme.type.secondary};
 `;
 
 export const SearchInput = styled.input`
   font-size: 14px;
   border-radius: 50px;
-  padding: 12px 16px;
+  padding-left: 16px;
+  height: 44px;
   outline: none;
   border: 1px solid ${(props) => props.theme.body.border};
   color: ${(props) => props.theme.type.primary};
   background: ${(props) => props.theme.body.foreground};
   width: 350px;
   position: fixed;
-  top: 9px;
+  top: 10px;
 `;
 
 export const Results = styled.div`
