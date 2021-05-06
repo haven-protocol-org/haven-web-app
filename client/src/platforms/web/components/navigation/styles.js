@@ -152,7 +152,7 @@ export const OptionsList = styled.div`
 `;
 
 export const SearchDropdown = styled.div`
-  margin-right: 20px;
+  margin-right: 36px;
   width: 350px;
   height: 100%;
   display: flex;
@@ -228,7 +228,7 @@ export const SearchInput = styled.input`
   font-size: 14px;
   border-radius: 50px;
   padding-left: 16px;
-  height: 44px;
+  height: 41px;
   outline: none;
   border: 1px solid ${(props) => props.theme.body.border};
   color: ${(props) => props.theme.type.primary};
@@ -239,7 +239,7 @@ export const SearchInput = styled.input`
 `;
 
 export const Results = styled.div`
-  width: 350px;
+  width: 368px;
   min-height: 52px;
   max-height: 300px;
   overflow: scroll;

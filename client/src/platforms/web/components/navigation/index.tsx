@@ -216,7 +216,7 @@ class Navigation extends Component<NavigationProps, {}> {
             <SearchDropdown>
               <SearchInput
                 // @ts-ignore
-                type="search"
+                type="text"
                 placeholder="Search assets..."
                 name="search"
                 value={this.state.search}
