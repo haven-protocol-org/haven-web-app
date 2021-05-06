@@ -7,7 +7,7 @@ import Header from "../_layout/header";
 import { Row } from "./styles";
 import { connect } from "react-redux";
 import { PRICE_RANGE_MONTH } from "../../reducers/priceHistory";
-import { getPriceDates, getPriceValues } from "utility/utility";
+import { getPriceDates, getPriceValues, iNum } from "utility/utility";
 import { getPriceHistory } from "../../actions";
 import Statistic from "../statistic";
 import { withRouter } from "react-router";
@@ -67,8 +67,8 @@ class ChartWrapper extends Component<any, any> {
           }
         />): null}
         <Row>
-          <Statistic label="Amount" value={amount.toFixed(2)} />
-          <Statistic label="Price" value={`$` + price.toFixed(2)} />
+          <Statistic label="Amount" value={iNum(amount)} />
+          <Statistic label="Price" value={`$` + iNum(price)} />
           <Statistic
             label="Value"
             value={value.toLocaleString("en-US", {
