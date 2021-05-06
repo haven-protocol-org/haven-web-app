@@ -16,7 +16,14 @@ import {
   OptionsSVG,
   Arr,
   Scan,
+  Results,
+  SearchInput,
   Arrow,
+  SearchDropdown,
+  AssetLabel,
+  TickerLabel,
+  EmptyLabel,
+  SearchCell,
 } from "./styles.js";
 import Buttons from "./buttons/index.js";
 import { syncFromFirstIncomingTx, rescanSpent } from "shared/actions/refresh";
@@ -32,6 +39,7 @@ import Tab from "./tab";
 import { showModal } from "shared/actions/modal";
 import { MODAL_TYPE } from "shared/reducers/modal";
 import { closeWallet } from "shared/actions/walletSession";
+import { AssetList } from "../../../../constants/assets";
 
 interface NavigationProps {
   isLoggedIn: boolean;
@@ -46,17 +54,20 @@ interface NavigationProps {
   advancedActive: boolean;
   restoreHeight: number;
   startedResync: boolean;
+  search: string;
   showModal: (modalType: MODAL_TYPE) => void;
 }
 
 class Navigation extends Component<NavigationProps, {}> {
   state = {
     showOptions: false,
+    showSearch: false,
     showNotifications: false,
     mouseIsHovering: false,
     basicActive: true,
     advancedActive: false,
     startedResync: false,
+    search: "",
   };
 
   handleLogout = () => {
@@ -81,6 +92,55 @@ class Navigation extends Component<NavigationProps, {}> {
         document.removeEventListener("click", this.hideDropdownMenu);
       });
     }
+  };
+
+  showSearchDropdownMenu = (event: any) => {
+    event.stopPropagation();
+    event.preventDefault();
+    this.setState({ showSearch: true }, () => {
+      document.addEventListener("click", this.hideSearchDropdownMenu);
+    });
+  };
+
+  hideSearchDropdownMenu = () => {
+    if (!this.state.mouseIsHovering) {
+      this.setState({ showSearch: false, search: "" }, () => {
+        document.removeEventListener("click", this.hideSearchDropdownMenu);
+      });
+    }
+  };
+
+  handleChange = (event: any) => {
+    const name = event.target.name;
+    const value = event.target.value;
+
+    this.setState<never>({
+      [name]: value,
+    });
+  };
+
+  searchAssets = () => {
+    const { search } = this.state;
+
+    return AssetList.filter((value) => {
+      if (search === "") {
+        return value;
+      } else if (
+        value.token.toLowerCase().includes(search.toLowerCase()) ||
+        value.id.toLowerCase().includes(search.toLowerCase())
+      ) {
+        return value;
+      } else {
+        return null;
+      }
+    }).map((value, key) => {
+      return (
+        <SearchCell to={`/wallet/assets/${value.id}`} key={key}>
+          <AssetLabel>{value.token}</AssetLabel>{" "}
+          <TickerLabel>{value.id}</TickerLabel>
+        </SearchCell>
+      );
+    });
   };
 
   handleMouseEnter = () => {
@@ -119,6 +179,7 @@ class Navigation extends Component<NavigationProps, {}> {
     const { connected } = this.props;
     const { blockHeight, scannedHeight, isSyncing } = this.props.syncState;
     const networkLabel = `${NET_TYPE_NAME}  v${APP_VERSION}`;
+    const { showSearch } = this.state;
 
     return (
       <Container>
@@ -133,7 +194,33 @@ class Navigation extends Component<NavigationProps, {}> {
             <Haven>HAVEN</Haven>
           </NoAuth>
         )}
+
         <Menu>
+          {auth && (
+            <SearchDropdown>
+              <SearchInput
+                // @ts-ignore
+                type="search"
+                placeholder="Search assets..."
+                name="search"
+                value={this.state.search}
+                onChange={this.handleChange}
+                onClick={
+                  showSearch
+                    ? this.hideSearchDropdownMenu
+                    : this.showSearchDropdownMenu
+                }
+              />
+              <Results showSearch={showSearch}>
+                {this.searchAssets()}
+                <>
+                  <SearchCell to={`/wallet/assets`} key={"na"}>
+                    <EmptyLabel>No more assets</EmptyLabel>
+                  </SearchCell>
+                </>
+              </Results>
+            </SearchDropdown>
+          )}
           <Buttons
             isLoading={this.props.isClosingSession}
             auth={this.props.isLoggedIn}

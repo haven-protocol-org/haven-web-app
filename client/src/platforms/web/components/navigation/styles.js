@@ -1,4 +1,6 @@
 import styled, { keyframes } from "styled-components";
+import media from "../../../../assets/styles/media.js";
+
 import { Link } from "react-router-dom";
 import { ReactComponent as ArrowUp } from "../../../../assets/icons/arrow-up.svg";
 import { ReactComponent as HavenIcon } from "../../../../assets/icons/haven.svg";
@@ -147,6 +149,84 @@ export const OptionsList = styled.div`
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
   z-index: 1000;
   animation: ${appear} 0.5s forwards;
+`;
+
+export const SearchDropdown = styled.div`
+  margin-right: 20px;
+  width: 350px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  ${media.tablet`
+    display: none;
+  `};
+`;
+
+export const SearchCell = styled(Link)`
+  height: 48px;
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+  padding: 4px 16px;
+  color: ${(props) => props.theme.type.primary};
+  border-bottom: 1px solid ${(props) => props.theme.body.border};
+  text-decoration: none;
+  /* background: ${(props) => props.theme.body.foreground}; */
+
+  &:nth-last-child(1) {
+    border-bottom: red;
+  }
+
+  &:hover {
+    background: ${(props) => props.theme.body.background};
+    cursor: pointer;
+  }
+`;
+
+export const AssetLabel = styled.div`
+  font-size: 15px;
+  color: ${(props) => props.theme.type.primary};
+`;
+
+export const TickerLabel = styled.div`
+  font-size: 15px;
+  color: ${(props) => props.theme.type.secondary};
+  margin-left: 8px;
+`;
+
+export const EmptyLabel = styled.div`
+  font-size: 15px;
+  margin: auto;
+  color: ${(props) => props.theme.type.secondary};
+`;
+
+export const SearchInput = styled.input`
+  font-size: 14px;
+  border-radius: 50px;
+  padding: 12px 16px;
+  outline: none;
+  border: 1px solid ${(props) => props.theme.body.border};
+  color: ${(props) => props.theme.type.primary};
+  background: ${(props) => props.theme.body.foreground};
+  width: 350px;
+  position: fixed;
+  top: 9px;
+`;
+
+export const Results = styled.div`
+  width: 350px;
+  min-height: 52px;
+  max-height: 300px;
+  overflow: scroll;
+  position: fixed;
+  border-radius: 4px;
+  background: ${(props) => props.theme.body.foreground};
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+  margin-top: 28px;
+  display: ${(props) => (props.showSearch ? "inline" : "none")};
+  border: 1px solid ${(props) => props.theme.body.border};
 `;
 
 export const OptionsIcon = styled.div`
