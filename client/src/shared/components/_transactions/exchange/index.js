@@ -19,6 +19,7 @@ const Transaction = ({
   priority,
   isOwnAddress,
   xasset_conversion,
+  change,
 }) => {
   const first = externAddress.substring(0, 4);
   const last = externAddress.substring(externAddress.length - 4);
@@ -38,6 +39,8 @@ const Transaction = ({
   // Adding for simplicity and clarity
   const from = `${fromAmount} ${fromTicker}`;
   const to = `${toAmount} ${toTicker}`;
+
+  console.log("CHANGE", change.value);
 
   return (
     <Fragment>
@@ -75,20 +78,17 @@ const Transaction = ({
         <Confirm
           description={`I accept the ${
             xasset_conversion ? "~20m" : priorityInfo
-          } Unlock Time, Terms & Fees`}
+          } Locked Balance, Unlock Time, Terms & Fees`}
           checked={checked}
           onChange={onChange}
         />
       </Container>
       <Information>
         I have reviewed my conversion details and accept all responsibility for
-        this transaction. Once I click confirm,{" "}
-        <strong>
-          I understand that a portion of my balance may be locked for the
-          entirety of the {xasset_conversion ? "~20m" : priorityInfo} unlock
-          priority time.{" "}
-        </strong>
-        To learn more about how locked tokens work, and how they might impact
+        this transaction. Once I click confirm, I understand that {change.value}
+        {fromTicker} will be locked for the entirety of the{" "}
+        {xasset_conversion ? "~20m" : priorityInfo} unlock priority time. To
+        learn more about how locked balances work, and how they might impact
         your experience{" "}
         <strong>
           <Url
