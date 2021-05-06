@@ -435,7 +435,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     const { hasLatestXRate } = this.props;
 
     const availBalance = fromTicker
-      ? convertBalanceToMoney(this.props.balances[fromTicker].unlockedBalance)
+      ? convertBalanceToMoney(this.props.balances[fromTicker].unlockedBalance,12)
       : NO_BALANCE;
 
     const fromAsset = assetOptions.find(
@@ -445,8 +445,12 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     const toAsset = assetOptions.find((option) => option.ticker === toTicker);
 
     const toBalance = toTicker
-      ? convertBalanceToMoney(this.props.balances[toTicker].unlockedBalance)
+      ? convertBalanceToMoney(this.props.balances[toTicker].unlockedBalance, 12)
       : NO_BALANCE;
+
+
+      const displayedFromAmount = fromAmount !== undefined? fromAmount : "";
+      const displayedToAmount = toAmount !== undefined? toAmount : "";
 
     return (
       <Fragment>
@@ -487,7 +491,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 type="number"
                 name="fromAmount"
                 // @ts-ignore
-                value={fromAmount || ""}
+                value={displayedFromAmount}
                 onChange={this.onEnterFromAmount}
                 error={this.fromAmountIsValid(availBalance)}
                 readOnly={fromTicker === null}
@@ -510,7 +514,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 placeholder="Enter amount"
                 name="toAmount"
                 type="number"
-                value={toAmount || ""}
+                value={displayedToAmount}
                 onChange={this.onEnterToAmount}
                 error={toTicker === null ? "Please select an asset first" : ""}
                 readOnly={toTicker === null}
