@@ -7,6 +7,7 @@ import data from "../../../../assets/illustration/onboarding/data.svg";
 import optimal from "../../../../assets/illustration/onboarding/optimal.svg";
 import seed from "../../../../assets/illustration/onboarding/seed.svg";
 import incognito from "../../../../assets/illustration/onboarding/incognito.svg";
+import bitcoin from "../../../../assets/illustration/onboarding/bitcoin.svg";
 
 const LoginTutorial = ({ step }) => {
   return (
@@ -14,14 +15,26 @@ const LoginTutorial = ({ step }) => {
       {step === 0 && (
         <Background>
           <Image src={optimal} />
-          <List>Introducing Haven</List>
+          <List>Welcome to Haven</List>
           <Item>
-            Haven now includes additional private assets such as Chinese Yuan,
-            Euros, Gold and Silver –– in addition to U.S dollars.
+            Haven 2.0 now includes additional private assets such as xGBP,
+            xEURO, xYUAN, xAUD, xCHF, xJPY, Gold and Silver –– in addition to
+            XHV & xUSD.
           </Item>
         </Background>
       )}
       {step === 1 && (
+        <Background>
+          <Image src={bitcoin} />
+          <List>Introducing xBTC</List>
+          <Item>
+            xBitcoin is provides exposure to Bitcoin while also increasing
+            privacy, lowering fees and providing faster speeds than native
+            Bitcoin.
+          </Item>
+        </Background>
+      )}
+      {step === 2 && (
         <Background>
           <Image src={seed} />
           <List>Resync Requirements</List>
@@ -31,7 +44,7 @@ const LoginTutorial = ({ step }) => {
           </Item>
         </Background>
       )}
-      {step === 2 && (
+      {step === 3 && (
         <Background>
           <Image src={data} />
           <List>Download Requirements</List>
@@ -41,7 +54,7 @@ const LoginTutorial = ({ step }) => {
           </Item>
         </Background>
       )}
-      {step === 3 && (
+      {step === 4 && (
         <Background>
           <Image src={incognito} />
           <List>Our Suggestions</List>
