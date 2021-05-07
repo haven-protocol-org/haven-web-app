@@ -176,7 +176,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
     let availableBalance = 0;
     if (selectedAsset) {
       availableBalance = convertBalanceToMoney(
-        this.props.xBalances[selectedAsset.ticker].unlockedBalance
+        this.props.xBalances[selectedAsset.ticker].unlockedBalance, 12
       );
     }
 
@@ -201,7 +201,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
             // @ts-ignore
             label={
               availableBalance
-                ? `Amount (Avail. ${availableBalance.toFixed(2)})`
+                ? `Amount (Avail. ${availableBalance})`
                 : "Amount"
             }
             placeholder="Enter amount"
