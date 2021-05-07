@@ -76,7 +76,7 @@ class ConfirmExchangeModal extends React.Component<
           externAddress={address}
           isOwnAddress={isOwnAddress}
           xasset_conversion={xassetConversion}
-          change={change}
+          change={readableChangeAmount}
         />
       </Modal>
     );
