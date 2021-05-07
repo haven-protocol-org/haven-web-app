@@ -83,7 +83,7 @@ const Transaction = ({
       </Container>
       <Information>
         I have reviewed my conversion details and accept all responsibility for
-        this transaction. Once I click confirm, I understand that {change}
+        this transaction. Once I click confirm, I understand that {change}{" "}
         {fromTicker} will be locked for the entirety of the{" "}
         {xasset_conversion ? "~20m" : priorityInfo} unlock priority time. To
         learn more about how locked balances work, and how they might impact

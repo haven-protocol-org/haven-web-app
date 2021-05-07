@@ -172,14 +172,26 @@ export const iNum = (rawNumber: number | undefined | null): string => {
     return "";
   }
 
+  let preciseNumString;
 
-  // at least four non zeros digits, but no trailing zero
+
+
+  if (numDigits(rawNumber) > 1) 
+  {
+   preciseNumString = rawNumber.toFixed(2);
+  } else {
+    preciseNumString = rawNumber.toPrecision(4);
+  }
   //@ts-ignore
-  const preciseNumString =  rawNumber.toPrecision(6);
 
   //trim to 6 decimals max and remove trailing zeros
  //@ts-ignore
   const preciseNum =  Number(preciseNumString).toFixed(6)/1;
 
   return preciseNum.toString();
+}
+
+
+const numDigits = (value: number) => {
+  return Math.max(Math.floor(Math.log10(Math.abs(value))), 0) + 1;
 }
