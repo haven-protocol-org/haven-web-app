@@ -151,6 +151,15 @@ export const OptionsList = styled.div`
   animation: ${appear} 0.5s forwards;
 `;
 
+export const OptionsIcon = styled.div`
+  height: 20px;
+  width: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+// Search: Needs to be broken out into own component
 export const SearchDropdown = styled.div`
   margin-right: 36px;
   width: 350px;
@@ -251,12 +260,4 @@ export const Results = styled.div`
   display: ${(props) => (props.showSearch ? "inline" : "none")};
   border: 1px solid ${(props) => props.theme.body.border};
   overflow-x: hidden;
-`;
-
-export const OptionsIcon = styled.div`
-  height: 20px;
-  width: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `;

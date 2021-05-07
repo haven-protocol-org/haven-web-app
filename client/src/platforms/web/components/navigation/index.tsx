@@ -44,7 +44,7 @@ import { MODAL_TYPE } from "shared/reducers/modal";
 import { closeWallet } from "shared/actions/walletSession";
 import { AssetList } from "../../../../constants/assets";
 import { XBalances } from "shared/reducers/xBalance";
-import { convertBalanceToMoney } from "utility/utility";
+import { convertBalanceToMoney, iNum } from "utility/utility";
 
 interface NavigationProps {
   isLoggedIn: boolean;
@@ -146,7 +146,7 @@ class Navigation extends Component<NavigationProps, {}> {
         <SearchCell to={`/wallet/assets/${id}`} key={key}>
           <Column>
             <TokenLabel>{token}</TokenLabel>
-            <TickerLabel>Avail Balance:</TickerLabel>
+            <TickerLabel>Avail Balance</TickerLabel>
           </Column>
           <Column>
             <AssetLabel right>{id}</AssetLabel>
