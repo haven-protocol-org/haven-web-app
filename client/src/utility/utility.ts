@@ -175,7 +175,7 @@ export const iNum = (rawNumber: number | undefined | null): string => {
 
   // at least four non zeros digits, but no trailing zero
   //@ts-ignore
-  const preciseNumString =  rawNumber.toPrecision(4);
+  const preciseNumString =  rawNumber.toPrecision(6);
 
   //trim to 6 decimals max and remove trailing zeros
  //@ts-ignore
