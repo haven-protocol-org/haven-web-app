@@ -173,6 +173,31 @@ export const SearchDropdown = styled.div`
   `};
 `;
 
+export const SearchArrow = styled.div`
+  height: auto;
+  width: 20px;
+  background: white;
+  position: relative;
+  z-index: 999;
+  left: 16px;
+  top: 26px;
+  animation: ${appear} 0.5s forwards;
+  display: ${(props) => (props.showSearch ? "inline" : "none")};
+`;
+
+export const SearchArr = styled(ArrowUp)`
+  position: fixed;
+  display: ${(props) => (props.showSearch ? "inline" : "none")};
+
+  .bg {
+    fill: ${(props) => props.theme.body.foreground};
+  }
+
+  .outline {
+    stroke: ${(props) => props.theme.body.border};
+  }
+`;
+
 export const SearchCell = styled(Link)`
   display: flex;
   align-items: center;
@@ -256,8 +281,9 @@ export const Results = styled.div`
   border-radius: 4px;
   background: ${(props) => props.theme.body.foreground};
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
-  margin-top: 28px;
+  margin-top: 32px;
   display: ${(props) => (props.showSearch ? "inline" : "none")};
   border: 1px solid ${(props) => props.theme.body.border};
   overflow-x: hidden;
+  animation: ${appear} 0.5s forwards;
 `;

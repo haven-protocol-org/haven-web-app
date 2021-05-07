@@ -15,9 +15,11 @@ import {
   OptionsList,
   OptionsSVG,
   Arr,
+  SearchArr,
   Scan,
   Results,
   SearchInput,
+  SearchArrow,
   Arrow,
   SearchDropdown,
   AssetLabel,
@@ -217,6 +219,7 @@ class Navigation extends Component<NavigationProps, {}> {
               <SearchInput
                 // @ts-ignore
                 type="text"
+                autocomplete="off"
                 placeholder="Search assets..."
                 name="search"
                 value={this.state.search}
@@ -227,12 +230,17 @@ class Navigation extends Component<NavigationProps, {}> {
                     : this.showSearchDropdownMenu
                 }
               />
-              <Results showSearch={showSearch}>
-                {this.searchAssets()}
-                <>
-                  <EmptyLabel>No more assets</EmptyLabel>
-                </>
-              </Results>
+              <>
+                <SearchArrow showSearch={showSearch}>
+                  <SearchArr showSearch={showSearch} />
+                </SearchArrow>
+                <Results showSearch={showSearch}>
+                  {this.searchAssets()}
+                  <>
+                    <EmptyLabel>No more assets</EmptyLabel>
+                  </>
+                </Results>
+              </>
             </SearchDropdown>
           )}
           <Buttons
