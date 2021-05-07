@@ -265,7 +265,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     }
 
     if (fromAmount !== undefined && setToAmount) {
-
       const toAmount = parseFloat(iNum(fromAmount * xRate));
 
       this.setState({ toAmount });
@@ -275,7 +274,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     if (toAmount !== undefined && !setToAmount) {
       const fromAmount = parseFloat(iNum(toAmount * (1 / xRate)));
       this.setState({
-        fromAmount
+        fromAmount,
       });
     }
   }
@@ -295,7 +294,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       fromTicker === Ticker.XHV && toTicker !== Ticker.XHV
         ? ExchangeType.Offshore
         : ExchangeType.Onshore;
-    const {fromAmount, toAmount } = this.state;
+    const { fromAmount, toAmount } = this.state;
 
     this.sendTicker = fromTicker;
 
@@ -339,7 +338,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     );
   }; */
 
-/*   setMaxToAmount = () => {
+  /*   setMaxToAmount = () => {
     const { toTicker } = this.props;
 
     const availBalance = toTicker
@@ -379,7 +378,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
 
   fromAmountIsValid = (availableBalance: any) => {
     const { fromAmount } = this.state;
-
 
     //@ts-ignore
     if (fromAmount > availableBalance) {
@@ -435,7 +433,10 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     const { hasLatestXRate } = this.props;
 
     const availBalance = fromTicker
-      ? convertBalanceToMoney(this.props.balances[fromTicker].unlockedBalance,12)
+      ? convertBalanceToMoney(
+          this.props.balances[fromTicker].unlockedBalance,
+          5
+        )
       : NO_BALANCE;
 
     const fromAsset = assetOptions.find(
@@ -445,12 +446,11 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     const toAsset = assetOptions.find((option) => option.ticker === toTicker);
 
     const toBalance = toTicker
-      ? convertBalanceToMoney(this.props.balances[toTicker].unlockedBalance, 12)
+      ? convertBalanceToMoney(this.props.balances[toTicker].unlockedBalance, 5)
       : NO_BALANCE;
 
-
-      const displayedFromAmount = fromAmount !== undefined? fromAmount : "";
-      const displayedToAmount = toAmount !== undefined? toAmount : "";
+    const displayedFromAmount = fromAmount !== undefined ? fromAmount : "";
+    const displayedToAmount = toAmount !== undefined ? toAmount : "";
 
     return (
       <Fragment>

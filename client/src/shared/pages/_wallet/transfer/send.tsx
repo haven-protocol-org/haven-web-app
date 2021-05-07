@@ -176,7 +176,8 @@ class TransferContainer extends Component<TransferProps, TransferState> {
     let availableBalance = 0;
     if (selectedAsset) {
       availableBalance = convertBalanceToMoney(
-        this.props.xBalances[selectedAsset.ticker].unlockedBalance, 12
+        this.props.xBalances[selectedAsset.ticker].unlockedBalance,
+        5
       );
     }
 
