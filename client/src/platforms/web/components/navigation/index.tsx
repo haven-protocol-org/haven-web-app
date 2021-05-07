@@ -230,9 +230,7 @@ class Navigation extends Component<NavigationProps, {}> {
               <Results showSearch={showSearch}>
                 {this.searchAssets()}
                 <>
-                  <SearchCell to={`/wallet/assets`} key={"na"}>
-                    <EmptyLabel>No more assets</EmptyLabel>
-                  </SearchCell>
+                  <EmptyLabel>No more assets</EmptyLabel>
                 </>
               </Results>
             </SearchDropdown>

@@ -216,7 +216,7 @@ export const TickerLabel = styled.div`
 
 export const EmptyLabel = styled.div`
   font-size: 15px;
-  height: 36px;
+  height: 56px;
   margin: auto;
   display: flex;
   justify-content: center;
@@ -250,6 +250,7 @@ export const Results = styled.div`
   margin-top: 28px;
   display: ${(props) => (props.showSearch ? "inline" : "none")};
   border: 1px solid ${(props) => props.theme.body.border};
+  overflow-x: hidden;
 `;
 
 export const OptionsIcon = styled.div`
