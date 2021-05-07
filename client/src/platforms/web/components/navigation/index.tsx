@@ -75,7 +75,7 @@ class Navigation extends Component<NavigationProps, {}> {
     basicActive: true,
     advancedActive: false,
     startedResync: false,
-    search: "",
+    xasset_lookup: "",
   };
 
   handleLogout = () => {
@@ -112,7 +112,7 @@ class Navigation extends Component<NavigationProps, {}> {
 
   hideSearchDropdownMenu = () => {
     if (!this.state.mouseIsHovering) {
-      this.setState({ showSearch: false, search: "" }, () => {
+      this.setState({ showSearch: false, xasset_lookup: "" }, () => {
         document.removeEventListener("click", this.hideSearchDropdownMenu);
       });
     }
@@ -128,14 +128,14 @@ class Navigation extends Component<NavigationProps, {}> {
   };
 
   searchAssets = () => {
-    const { search } = this.state;
+    const { xasset_lookup } = this.state;
 
     return AssetList.filter((value) => {
-      if (search === "") {
+      if (xasset_lookup === "") {
         return value;
       } else if (
-        value.token.toLowerCase().includes(search.toLowerCase()) ||
-        value.id.toLowerCase().includes(search.toLowerCase())
+        value.token.toLowerCase().includes(xasset_lookup.toLowerCase()) ||
+        value.id.toLowerCase().includes(xasset_lookup.toLowerCase())
       ) {
         return value;
       } else {
@@ -221,8 +221,8 @@ class Navigation extends Component<NavigationProps, {}> {
                 type="text"
                 autocomplete="off"
                 placeholder="Search assets..."
-                name="search"
-                value={this.state.search}
+                name="xasset_lookup"
+                value={this.state.xasset_lookup}
                 onChange={this.handleChange}
                 onClick={
                   showSearch
