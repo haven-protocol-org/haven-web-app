@@ -2,9 +2,22 @@
 import React, { Fragment } from "react";
 
 // Relative Imports
-import { Container, Row, Key, Value, Tag, Information, Url } from "./styles";
+import {
+  Container,
+  Row,
+  Key,
+  Value,
+  Tag,
+  Information,
+  Url,
+  Strong,
+} from "./styles";
 import Confirm from "../../confirm/index.js";
 import Cell from "../cells/index.js";
+import {
+  convertBalanceToMoney,
+  bigIntegerToBigInt,
+} from "../../../../utility/utility.ts";
 
 const Transaction = ({
   xRate,
@@ -76,26 +89,40 @@ const Transaction = ({
         <Confirm
           description={`I accept the ${
             xasset_conversion ? "~20m" : priorityInfo
-          } Locked Balance, Unlock Time, Terms & Fees`}
+          } Unlock Time, Details, Terms & Fees`}
           checked={checked}
           onChange={onChange}
         />
       </Container>
       <Information>
-        I have reviewed my conversion details and accept all responsibility for
-        this transaction. Once I click confirm, I understand that {change}{" "}
-        {fromTicker} will be locked for the entirety of the{" "}
-        {xasset_conversion ? "~20m" : priorityInfo} unlock priority time. To
-        learn more about how locked balances work, and how they might impact
-        your experience{" "}
-        <strong>
-          <Url
-            target="_blank"
-            href="https://havenprotocol.org/knowledge/haven-transactions/"
-          >
-            click here.
-          </Url>
-        </strong>
+        {change > 0 ? (
+          <>
+            Details: Approximately{" "}
+            <strong style={{ fontWeight: 600 }}>
+              {change} {fromTicker} will be temporarily locked and unusable for
+              the entirety of the {xasset_conversion ? "~20m" : priorityInfo}{" "}
+              unlock priority time
+            </strong>
+            . However, this amount will be unlocked and usable once the
+            transaction is complete. To understand why this happens and how it
+            might impact your experience, please{" "}
+            <strong>
+              <Url
+                target="_blank"
+                href="https://havenprotocol.org/knowledge/haven-transactions/"
+              >
+                click here.
+              </Url>
+            </strong>
+          </>
+        ) : (
+          <>
+            Details: This {fromTicker} transaction will be unlocked in{" "}
+            {xasset_conversion ? "~20m" : priorityInfo}. I have reviewed my
+            transaction details and accept all responsibility for this
+            transaction.
+          </>
+        )}
       </Information>
     </Fragment>
   );
