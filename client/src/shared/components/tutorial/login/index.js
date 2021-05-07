@@ -28,9 +28,8 @@ const LoginTutorial = ({ step }) => {
           <Image src={bitcoin} />
           <List>Introducing xBTC</List>
           <Item>
-            xBitcoin is provides exposure to Bitcoin while also increasing
-            privacy, lowering fees and providing faster speeds than native
-            Bitcoin.
+            xBitcoin provides exposure to Bitcoin while also increasing privacy,
+            lowering fees and providing faster speeds than native Bitcoin.
           </Item>
         </Background>
       )}
