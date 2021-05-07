@@ -9,6 +9,11 @@ export const Container = styled.div`
   margin-bottom: 12px;
 `;
 
+export const Strong = styled.div`
+  font-family: "Inter-SemiBold";
+  color: red;
+`;
+
 export const Header = styled.div`
   height: auto;
   padding: 16px 12px;

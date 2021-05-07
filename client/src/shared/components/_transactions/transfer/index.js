@@ -46,20 +46,21 @@ export const Transaction = ({
           </Tag>
         </Row>
         <Confirm
-          description="I accept the ~20m Unlock Time, Terms & Fees."
+          description="I accept the ~20m Unlock Time, Details, Terms & Fees."
           checked={checked}
           onChange={onChange}
         />
       </Container>
       <Information>
-        I have reviewed my transfer details and accept all responsibility for
-        this transaction. Once I click confirm,{" "}
+        Details: I have reviewed my transfer details and accept all
+        responsibility for this transaction.{" "}
         <strong>
-          I understand that a portion of my balance may be locked for the
-          entirety of the ~20m unlock priority time.{" "}
+          I understand that a portion of my balance may be locked and unusable
+          for the entirety of the ~20m unlock priority time. However, this
+          amount will be unlocked and usable once the transaction is complete.{" "}
         </strong>
-        To learn more about how locked tokens work, and how they might impact
-        your experience{" "}
+        To understand why this happens and how it might impact your experience,
+        please{" "}
         <strong>
           <Url
             target="_blank"
