@@ -5,6 +5,10 @@ import React, { Fragment } from "react";
 import { Container, Row, Key, Value, Tag, Information, Url } from "./styles";
 import Confirm from "../../confirm/index.js";
 import Cell from "../cells/index.js";
+import {
+  convertBalanceToMoney,
+  bigIntegerToBigInt,
+} from "../../../../utility/utility.ts";
 
 const Transaction = ({
   xRate,
@@ -40,7 +44,9 @@ const Transaction = ({
   const from = `${fromAmount} ${fromTicker}`;
   const to = `${toAmount} ${toTicker}`;
 
-  console.log("CHANGE", change.value);
+  console.log("########################");
+  console.log("CHANGE", change);
+  // console.log("CONVERTED", bigIntegerToBigInt(change.value));
 
   return (
     <Fragment>
