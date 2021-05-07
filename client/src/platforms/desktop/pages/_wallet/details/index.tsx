@@ -33,7 +33,7 @@ DetailsProps & RouteComponentProps<RouteProps>,
     const ticker = this.props.match.params.id;
     const xRate = selectXRate(this.props.rates, ticker, Ticker.xUSD);
     let amount: number = convertBalanceToMoney(
-      this.props.balances[ticker].unlockedBalance
+      this.props.balances[ticker].unlockedBalance, 12
     );
     let value = amount * xRate;
     const detailProps = { assetId: ticker, value, amount, price: xRate };

@@ -44,10 +44,13 @@ const Transaction = ({
   const from = `${fromAmount} ${fromTicker}`;
   const to = `${toAmount} ${toTicker}`;
 
+<<<<<<< HEAD
   console.log("########################");
   console.log("CHANGE", change);
   // console.log("CONVERTED", bigIntegerToBigInt(change.value));
 
+=======
+>>>>>>> f984fcb782481f123c8722b4190ce6ed56ac8d1a
   return (
     <Fragment>
       <Container>
@@ -91,7 +94,7 @@ const Transaction = ({
       </Container>
       <Information>
         I have reviewed my conversion details and accept all responsibility for
-        this transaction. Once I click confirm, I understand that {change.value}
+        this transaction. Once I click confirm, I understand that {change}{" "}
         {fromTicker} will be locked for the entirety of the{" "}
         {xasset_conversion ? "~20m" : priorityInfo} unlock priority time. To
         learn more about how locked balances work, and how they might impact
