@@ -163,7 +163,6 @@ class Navigation extends Component<NavigationProps, {}> {
             <Haven>HAVEN</Haven>
           </NoAuth>
         )}
-
         <Menu>
           {auth && <Search />}
           <Buttons

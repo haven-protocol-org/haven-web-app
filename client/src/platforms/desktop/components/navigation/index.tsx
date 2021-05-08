@@ -186,7 +186,6 @@ class Navigation extends Component<NavigationProps, any> {
               <Arrow>
                 <Arr />
               </Arrow>
-
               {!auth && (
                 <>
                   <Cell
@@ -209,7 +208,6 @@ class Navigation extends Component<NavigationProps, any> {
                   />
                 </>
               )}
-
               {auth && (
                 <>
                   <Tab
