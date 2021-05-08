@@ -26,6 +26,7 @@ import { selectisLocalNode } from "platforms/desktop/reducers/selectedNode";
 import { selectBlockHeight } from "shared/reducers/chain";
 import { SyncState } from "shared/types/types.js";
 import { syncFromFirstIncomingTx, rescanSpent } from "shared/actions/refresh";
+import Search from "../../../../shared/components/search/index.js";
 
 // Local files
 import Buttons from "./buttons";
@@ -164,6 +165,7 @@ class Navigation extends Component<NavigationProps, any> {
           <Haven>HAVEN</Haven>
         </Brand>
         <Menu>
+          {auth && <Search />}
           <Buttons
             isLoading={this.props.isClosingSession}
             auth={auth}

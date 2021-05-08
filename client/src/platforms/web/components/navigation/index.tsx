@@ -47,6 +47,7 @@ import { closeWallet } from "shared/actions/walletSession";
 import { AssetList } from "../../../../constants/assets";
 import { XBalances } from "shared/reducers/xBalance";
 import { convertBalanceToMoney, iNum } from "utility/utility";
+import Search from "../../../../shared/components/search/index.js";
 
 interface NavigationProps {
   isLoggedIn: boolean;
@@ -102,62 +103,12 @@ class Navigation extends Component<NavigationProps, {}> {
     }
   };
 
-  showSearchDropdownMenu = (event: any) => {
-    event.stopPropagation();
-    event.preventDefault();
-    this.setState({ showSearch: true }, () => {
-      document.addEventListener("click", this.hideSearchDropdownMenu);
-    });
-  };
-
-  hideSearchDropdownMenu = () => {
-    if (!this.state.mouseIsHovering) {
-      this.setState({ showSearch: false, xasset_lookup: "" }, () => {
-        document.removeEventListener("click", this.hideSearchDropdownMenu);
-      });
-    }
-  };
-
   handleChange = (event: any) => {
     const name = event.target.name;
     const value = event.target.value;
 
     this.setState<never>({
       [name]: value,
-    });
-  };
-
-  searchAssets = () => {
-    const { xasset_lookup } = this.state;
-
-    return AssetList.filter((value) => {
-      if (xasset_lookup === "") {
-        return value;
-      } else if (
-        value.token.toLowerCase().includes(xasset_lookup.toLowerCase()) ||
-        value.id.toLowerCase().includes(xasset_lookup.toLowerCase())
-      ) {
-        return value;
-      } else {
-        return null;
-      }
-    }).map((value, key) => {
-      const { id, token } = value;
-
-      return (
-        <SearchCell to={`/wallet/assets/${id}`} key={key}>
-          <Column>
-            <TokenLabel>{token}</TokenLabel>
-            <TickerLabel>Avail Balance</TickerLabel>
-          </Column>
-          <Column>
-            <AssetLabel right>{id}</AssetLabel>
-            <TickerLabel right>
-              {convertBalanceToMoney(this.props.balances[id].balance)}
-            </TickerLabel>
-          </Column>
-        </SearchCell>
-      );
     });
   };
 
@@ -214,35 +165,7 @@ class Navigation extends Component<NavigationProps, {}> {
         )}
 
         <Menu>
-          {auth && (
-            <SearchDropdown>
-              <SearchInput
-                // @ts-ignore
-                type="text"
-                autocomplete="off"
-                placeholder="Search assets..."
-                name="xasset_lookup"
-                value={this.state.xasset_lookup}
-                onChange={this.handleChange}
-                onClick={
-                  showSearch
-                    ? this.hideSearchDropdownMenu
-                    : this.showSearchDropdownMenu
-                }
-              />
-              <>
-                <SearchArrow showSearch={showSearch}>
-                  <SearchArr showSearch={showSearch} />
-                </SearchArrow>
-                <Results showSearch={showSearch}>
-                  {this.searchAssets()}
-                  <>
-                    <EmptyLabel>No more assets</EmptyLabel>
-                  </>
-                </Results>
-              </>
-            </SearchDropdown>
-          )}
+          {auth && <Search />}
           <Buttons
             isLoading={this.props.isClosingSession}
             auth={this.props.isLoggedIn}
