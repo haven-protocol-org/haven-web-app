@@ -23,7 +23,7 @@ const TransferSummary = ({
           {transferAmount === "--"
             ? "0"
             : transferAmount && !isNaN(transferAmount)
-            ? parseFloat(transferAmount).toFixed(2)
+            ? transferAmount
             : "0"}{" "}
           {transferAsset}
         </Value>
