@@ -73,12 +73,12 @@ const openWallet = (walletData: IOpenWallet, path: string) => {
       );
 
       dispatch(openWalletSucceed(path));
-      dispatch(
+  /*     dispatch(
         addNotificationByMessage(
           NotificationType.SUCCESS,
           "Vault was successfully unlocked"
         )
-      );
+      ); */
       dispatch(startWalletSession(path));
 
 

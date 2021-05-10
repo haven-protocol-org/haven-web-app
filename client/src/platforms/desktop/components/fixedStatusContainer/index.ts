@@ -54,7 +54,7 @@ class FixedStatusContainer extends Component<FixedStatusProps, any> {
     this.checkAndHandleLoggedInState(
       prevProps.isLoggedIn,
       this.props.isLoggedIn,
-      this.props.isWalletConnected
+      this.props.nodeLocation
     );
   }
 
@@ -120,9 +120,9 @@ class FixedStatusContainer extends Component<FixedStatusProps, any> {
   checkAndHandleLoggedInState(
     loggedInBefore: boolean,
     loggedInNow: boolean,
-    isConnected: boolean
+    nodeLocation: NodeLocation
   ) {
-    if (!loggedInBefore && loggedInNow && isConnected !== true) {
+    if (!loggedInBefore && loggedInNow && nodeLocation === NodeLocation.None) {
       this.props.addNotificationByKey(WALLET_NEEDS_CONNECTION);
     }
   }
