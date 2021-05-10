@@ -33,7 +33,7 @@ const LoginTutorial = ({ step }) => {
           </Item>
         </Background>
       )}
-      {step === 2 && (
+     {/*  {step === 2 && (
         <Background>
           <Image src={seed} />
           <List>Resync Requirements</List>
@@ -52,8 +52,8 @@ const LoginTutorial = ({ step }) => {
             a slow process depending on your connection speed and device.
           </Item>
         </Background>
-      )}
-      {step === 4 && (
+      )} */}
+    {/*   {step === 2 && (
         <Background>
           <Image src={incognito} />
           <List>Our Suggestions</List>
@@ -62,7 +62,7 @@ const LoginTutorial = ({ step }) => {
             your browser to resync all over again.
           </Item>
         </Background>
-      )}
+      )} */}
     </Container>
   );
 };
