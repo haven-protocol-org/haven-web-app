@@ -3,7 +3,7 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { Ticker } from "shared/reducers/types";
 import { XBalances } from "shared/reducers/xBalance";
-import { convertBalanceToMoney } from "utility/utility";
+import { convertBalanceToMoney, iNum } from "utility/utility";
 import Description from "../../../components/_inputs/description";
 import Dropdown from "../../../components/_inputs/dropdown";
 import Footer from "../../../components/_inputs/footer";
@@ -177,7 +177,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
     if (selectedAsset) {
       availableBalance = convertBalanceToMoney(
         this.props.xBalances[selectedAsset.ticker].unlockedBalance,
-        5
+        6
       );
     }
 
@@ -202,13 +202,13 @@ class TransferContainer extends Component<TransferProps, TransferState> {
             // @ts-ignore
             label={
               availableBalance
-                ? `Amount (Avail. ${availableBalance})`
+                ? `Amount (Avail. ${iNum(availableBalance)})`
                 : "Amount"
             }
             placeholder="Enter amount"
             type="number"
             // @ts-ignore
-            error={this.amountIsValid(availableBalance.toFixed(2))}
+            error={this.amountIsValid(availableBalance)}
             name="send_amount"
             value={send_amount}
             onChange={this.handleSendAmountChange}

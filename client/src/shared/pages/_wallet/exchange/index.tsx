@@ -435,9 +435,9 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     const availBalance = fromTicker
       ? convertBalanceToMoney(
           this.props.balances[fromTicker].unlockedBalance,
-          5
+          6
         )
-      : NO_BALANCE;
+      : 0;
 
     const fromAsset = assetOptions.find(
       (option) => option.ticker === fromTicker
@@ -446,8 +446,8 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     const toAsset = assetOptions.find((option) => option.ticker === toTicker);
 
     const toBalance = toTicker
-      ? convertBalanceToMoney(this.props.balances[toTicker].unlockedBalance, 5)
-      : NO_BALANCE;
+      ? convertBalanceToMoney(this.props.balances[toTicker].unlockedBalance, 6)
+      : 0;
 
     const displayedFromAmount = fromAmount !== undefined ? fromAmount : "";
     const displayedToAmount = toAmount !== undefined ? toAmount : "";
@@ -483,8 +483,8 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 // @ts-ignore
                 label={
                   "From Amount " +
-                  (availBalance !== NO_BALANCE
-                    ? `(Avail: ${availBalance})`
+                  (availBalance !== 0
+                    ? `(Avail: ${iNum(availBalance)})`
                     : "")
                 }
                 placeholder="Enter amount"
@@ -509,7 +509,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 // @ts-ignore
                 label={
                   "To Amount " +
-                  (toBalance !== NO_BALANCE ? `(Avail: ${toBalance})` : "")
+                  (toBalance !== 0 ? `(Avail: ${iNum(toBalance)})` : "")
                 }
                 placeholder="Enter amount"
                 name="toAmount"
