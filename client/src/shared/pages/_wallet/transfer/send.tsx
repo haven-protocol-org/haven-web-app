@@ -146,10 +146,9 @@ class TransferContainer extends Component<TransferProps, TransferState> {
   amountIsValid = (availableBalance: number): string | true => {
     const { send_amount } = this.state;
 
-    const convertToNum = parseFloat(send_amount);
+    const send_amount_num:number = parseFloat(send_amount);
 
-    //@ts-ignore
-    if (convertToNum > availableBalance) {
+    if (send_amount_num > availableBalance) {
       return "Not enough funds";
     }
 

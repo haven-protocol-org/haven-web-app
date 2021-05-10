@@ -180,7 +180,7 @@ export const iNum = (rawNumber: number | undefined | null): string => {
   {
    preciseNumString = rawNumber.toFixed(2);
   } else {
-    preciseNumString = rawNumber.toPrecision(4);
+    preciseNumString = rawNumber.toPrecision(5);
   }
   //@ts-ignore
 
