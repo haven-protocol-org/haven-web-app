@@ -158,3 +158,40 @@ export const bigIntegerToBigInt = (value: BigInteger): bigInt.BigInteger => {
 
   return bigInt(convertedBigInteger.toString(10));
 };
+
+
+/**
+ * meant to return a informative/meaningful number to display
+ * @param rawNumber 
+ * @returns string
+ */
+export const iNum = (rawNumber: number | undefined | null): string => {
+
+  
+  if (rawNumber === undefined || rawNumber === null) {
+    return "";
+  }
+
+  let preciseNumString;
+
+
+
+  if (numDigits(rawNumber) > 1) 
+  {
+   preciseNumString = rawNumber.toFixed(2);
+  } else {
+    preciseNumString = rawNumber.toPrecision(5);
+  }
+  //@ts-ignore
+
+  //trim to 6 decimals max and remove trailing zeros
+ //@ts-ignore
+  const preciseNum =  Number(preciseNumString).toFixed(6)/1;
+
+  return preciseNum.toString();
+}
+
+
+const numDigits = (value: number) => {
+  return Math.max(Math.floor(Math.log10(Math.abs(value))), 0) + 1;
+}

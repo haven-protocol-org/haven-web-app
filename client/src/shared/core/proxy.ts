@@ -8,6 +8,7 @@ import MoneroBlockHeader from "haven-wallet-core/src/main/js/daemon/model/Monero
 import MoneroSubaddress from "haven-wallet-core/src/main/js/wallet/model/MoneroSubaddress";
 import { logM } from "utility/utility";
 import MoneroBlock from "haven-wallet-core/src/main/js/daemon/model/MoneroBlock";
+import HavenBalance from "haven-wallet-core/src/main/js/wallet/model/HavenBalance";
 
 const walletHandler: ProxyHandler<typeof walletCore> = {
   get: (
@@ -80,6 +81,13 @@ const walletHandler: ProxyHandler<typeof walletCore> = {
           const address: MoneroSubaddress = new MoneroSubaddress(response)
           return address;
       }
+
+      if (name === "getBalance" || name === "getUnlockedBalance") {
+
+        //@ts-ignore
+        const balance: HavenBalance = new HavenBalance(response)
+        return balance;
+    }
 
         return response;
 

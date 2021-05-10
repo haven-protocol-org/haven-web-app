@@ -29,7 +29,6 @@ export const Header = styled.div`
 export const Tabs = styled.div`
   height: 40px;
   wdith: 100%;
-  background: red;
   display: flex;
 `;
 
@@ -39,6 +38,7 @@ export const Tab = styled.div`
   align-items: center;
   justify-content: center;
   font-size: 14px;
+  font-family: "Inter-Regular"
   background: ${(props) => (props.active ? "#36393F" : "#2B2E32")};
   color: ${(props) => (props.active ? "#ffffff" : "#8a8d90")};
 
@@ -111,7 +111,7 @@ export const Submit = styled.button`
   transition: 500ms;
   border: none;
   outline: none;
-  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")}
+  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
 
   &:hover {
     cursor: pointer;
@@ -144,7 +144,7 @@ export const Back = styled.div`
 
   &:hover {
     cursor: pointer;
-    background: #27292;
+    background: #272920;
     transition: 500ms;
   }
 `;
@@ -168,7 +168,7 @@ export const Cancel = styled(Link)`
 
   &:hover {
     cursor: pointer;
-    background: #27292;
+    background: #272920;
     transition: 500ms;
   }
 `;

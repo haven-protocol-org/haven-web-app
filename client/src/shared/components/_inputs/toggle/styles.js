@@ -32,7 +32,7 @@ export const Button = styled.div`
   width: 64px;
   border-radius: 2px;
   font-size: 11px;
-  color: ${(props) => props.theme.button.primary_label}
+  color: ${(props) => props.theme.button.primary_label};
   font-family: Inter-Regular;
   text-transform: uppercase;
   display: flex;

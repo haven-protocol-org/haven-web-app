@@ -55,10 +55,9 @@ export const Buttons = styled.div`
   margin: 10px;
   display: flex;
   align-items: center;
-  justify-content: ${(props) =>
-    props.buttons === "single" ? "flex-end" : "space-between"}
   margin-top: 40px;
-
+  justify-content: ${(props) =>
+    props.buttons === "single" ? "flex-end" : "space-between"};
 `;
 
 export const Submit = styled.button`

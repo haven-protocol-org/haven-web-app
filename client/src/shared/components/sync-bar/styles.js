@@ -5,5 +5,5 @@ export const Progress = styled.progress`
 `;
 
 export const Container = styled.div`
-  background: red;
+  background: none;
 `;

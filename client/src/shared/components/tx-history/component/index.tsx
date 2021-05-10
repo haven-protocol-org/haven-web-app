@@ -11,8 +11,10 @@ import {
   Column,
   Row,
   Data,
+  ShortRow,
 } from "./styles";
 import { isMainnet } from "constants/env";
+import Dots from "../../_animations/dots";
 
 export interface TransactionProps {
   type: any;
@@ -49,7 +51,7 @@ export const Transaction = ({
   let statusLabel = "Status";
 
   if (mempool) {
-    statusDetails = "Not confirmed yet";
+    statusDetails = "Pending";
   } else if (timeTillUnlocked) {
     statusDetails = "~ " + timeTillUnlocked;
     statusLabel = "Unlocks in";
@@ -58,7 +60,6 @@ export const Transaction = ({
   const txExplorerLink = `https://explorer${
     isMainnet() ? "" : "-testnet"
   }.havenprotocol.org/tx/${hash}`;
-
 
   return (
     <Container href={txExplorerLink} target="_blank">
@@ -73,24 +74,35 @@ export const Transaction = ({
           </Data>
 
           <Data>
-            <Value alignment="center">{statusDetails}</Value>
+            <Value alignment="center">
+              {statusDetails === "Pending" ? (
+                <ShortRow>
+                  <>Pending</>
+                  <Dots />
+                </ShortRow>
+              ) : (
+                statusDetails
+              )}
+            </Value>
             <Label alignment="center">{statusLabel}</Label>
           </Data>
 
           <Data>
-            <Value alignment="right">${inUsd.toFixed(2)}</Value>
+            <Value alignment="right">${inUsd}</Value>
             <Label alignment="right">Current Value</Label>
           </Data>
         </Row>
         <Row>
           {fee !== 0 ? (
             <Data>
-              <Value alignment="left">{fee.toFixed(4)}</Value>
+              <Value alignment="left">{fee}</Value>
               <Label alignment="left">Fee</Label>
             </Data>
           ) : (
             <Data>
-              <Value alignment="left">{block}</Value>
+              <Value alignment="left">
+                {block === undefined ? "N/A" : block}
+              </Value>
               <Label alignment="left">Block</Label>
             </Data>
           )}

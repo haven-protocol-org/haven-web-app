@@ -1,10 +1,11 @@
 import { ipcMain } from "electron";
-import { CommunicationChannel, DesktopConfig, NodeLocation } from "../types";
+import { CommunicationChannel, DesktopConfig, NET, NodeLocation } from "../types";
 import * as fs from "fs";
 import * as path from "path";
 import { APP_DATA_PATH } from "../env";
+import { logInDevMode } from "../dev";
 
-const CONFIG_FILE_NAME = "haven_config.json"
+const CONFIG_FILE_NAME = "haven_config"
 const configFilePath = path.join(APP_DATA_PATH, CONFIG_FILE_NAME);
 
 export const addConfigHandler = () => {
@@ -12,16 +13,24 @@ export const addConfigHandler = () => {
   if (!isConfigCreated()) {
     createDefaultConfig();
   }
-    ipcMain.handle(CommunicationChannel.CONFIG, (event, args) =>
-        getConfig(args),
+    ipcMain.handle(CommunicationChannel.CONFIG, (event, args) => {
+
+      logInDevMode(args);
+      if (Array.isArray(args)) {
+        return getConfig(args[0], args[1]);
+      }
+      return getConfig(args); 
+      
+    }
+
   );
   
 }
 
 
-const getConfig = (update:Partial<DesktopConfig> = undefined): DesktopConfig => {
+const getConfig = ( netTypeID: number,update:Partial<DesktopConfig> = undefined): DesktopConfig => {
 
-  const fileBuffer = fs.readFileSync(configFilePath);
+  const fileBuffer = fs.readFileSync(configFilePath + `_${netTypeID}`);
   const currentConfig =  JSON.parse(fileBuffer.toString());
 
     // if args sent by client, update config
@@ -29,7 +38,7 @@ const getConfig = (update:Partial<DesktopConfig> = undefined): DesktopConfig => 
 
       const updatedConfig = {...currentConfig, ...update};
       const configJson = JSON.stringify(updatedConfig);
-      fs.writeFileSync(configFilePath, configJson, "utf8");
+      fs.writeFileSync(configFilePath + `_${netTypeID}`, configJson, "utf8");
       return updatedConfig;
       
      }
@@ -37,7 +46,7 @@ const getConfig = (update:Partial<DesktopConfig> = undefined): DesktopConfig => 
    }
 
    const isConfigCreated = () => {
-    return fs.existsSync(configFilePath)
+    return fs.existsSync(configFilePath + `_${NET.Mainnet}`)
    }
 
    const createDefaultConfig = () => {
@@ -53,5 +62,7 @@ const getConfig = (update:Partial<DesktopConfig> = undefined): DesktopConfig => 
 
     }
     const configJson = JSON.stringify(defaultConfig);
-    fs.writeFileSync(configFilePath, configJson, "utf8");
+    fs.writeFileSync(configFilePath + `_${NET.Mainnet}`, configJson, "utf8");
+    fs.writeFileSync(configFilePath + `_${NET.Testnet}`, configJson, "utf8");
+    fs.writeFileSync(configFilePath + `_${NET.Stagenet}`, configJson, "utf8");
    }

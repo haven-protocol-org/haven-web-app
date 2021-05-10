@@ -74,6 +74,7 @@ export const Button = styled(Link)`
   border-radius: 4px;
   text-decoration: none;
   margin-right: 20px;
+  font-family: "Inter-Regular";
 
   transition: 500ms;
 
@@ -93,6 +94,7 @@ export const Logout = styled.div`
   font-size: 14px;
   border-radius: 4px;
   text-decoration: none;
+  font-family: "Inter-Regular";
 
   transition: 500ms;
 

@@ -18,28 +18,20 @@ export interface XRates {
   rates: ConversionRate[];
 }
 
-export interface BlockHeaderRate {
-  [key: string]: BlockHeaderRate[keyof BlockHeaderRate];
+
+type Rates = Record<Ticker, bigInt.BigInteger>;
+interface BlockHeader {
+
   height: number;
   signature: string;
-  unused1: bigInt.BigInteger;
-  unused2: bigInt.BigInteger;
-  unused3: bigInt.BigInteger;
-  xAG: bigInt.BigInteger;
-  xAU: bigInt.BigInteger;
-  xAUD: bigInt.BigInteger;
-  xBTC: bigInt.BigInteger;
-  xCAD: bigInt.BigInteger;
-  xCHF: bigInt.BigInteger;
-  xCNY: bigInt.BigInteger;
-  xEUR: bigInt.BigInteger;
-  xGBP: bigInt.BigInteger;
-  xJPY: bigInt.BigInteger;
-  xNOK: bigInt.BigInteger;
-  xNZD: bigInt.BigInteger;
-  xUSD: bigInt.BigInteger;
+  UNUSED1: bigInt.BigInteger;
+  UNUSED2: bigInt.BigInteger;
+  UNUSED3: bigInt.BigInteger;
   timestamp: bigInt.BigInteger;
+
 }
+
+export type BlockHeaderRate = BlockHeader & Rates;
 
 const INITIAL_STATE: BlockHeaderRate[] = [];
 
@@ -55,7 +47,6 @@ export const blockHeaderExchangeRate = (
   }
 };
 
-export const selectXRateAtHeight = () => {};
 
 export const selectXRate = (
   blockHeaderExchangeRate: BlockHeaderRate[],
@@ -74,19 +65,35 @@ export const selectXRate = (
     return 0;
   }
 
-  const from = fromTicker === Ticker.xUSD ? "unused1" : fromTicker;
-  const to = toTicker === Ticker.xUSD ? "unused1" : toTicker;
+  // one of the ticker must be xUSD
+  if (fromTicker !== Ticker.xUSD && toTicker !== Ticker.xUSD) {
+    return 0;
+  }
+
+  const from = fromTicker === Ticker.xUSD ? "UNUSED1" : fromTicker;
+  const to = toTicker === Ticker.xUSD ? "UNUSED1" : toTicker;
 
   const latestBlockerHeader: BlockHeaderRate =
     blockHeaderExchangeRate[blockHeaderExchangeRate.length - 1];
 
-  if (from === Ticker.XHV && to !== Ticker.XHV) {
+    /**
+     * handles xUSD --> XHV and XHV -> xUSD
+     */
+  if (from === Ticker.XHV && latestBlockerHeader[to]) {
     return latestBlockerHeader[to].toJSNumber() / Math.pow(10, 12);
-  } else if (from !== Ticker.XHV && to === Ticker.XHV) {
+  } else if (to === Ticker.XHV) {
     if (!latestBlockerHeader[from].isZero()) {
       return Math.pow(10, 12) / latestBlockerHeader[from].toJSNumber();
     }
+}
+
+if (fromTicker === Ticker.xUSD && latestBlockerHeader[toTicker]) {
+    return latestBlockerHeader[toTicker].toJSNumber() / Math.pow(10, 12);
+} else {
+  if (!latestBlockerHeader[fromTicker].isZero()) {
+    return Math.pow(10, 12) / latestBlockerHeader[fromTicker].toJSNumber();
   }
+}
   return 0;
 };
 
@@ -114,8 +121,8 @@ export const priceDelta = (state: DesktopAppState): number | null => {
   const latestBlockerHeader =
     state.blockHeaderExchangeRate[state.blockHeaderExchangeRate.length - 1];
 
-  return latestBlockerHeader.xUSD
-    .subtract(latestBlockerHeader.unused1)
+  return latestBlockerHeader.XUSD
+    .subtract(latestBlockerHeader.UNUSED1)
     .abs()
     .toJSNumber();
 };

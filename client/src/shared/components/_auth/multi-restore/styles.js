@@ -29,7 +29,6 @@ export const Header = styled.div`
 export const Tabs = styled.div`
   height: 40px;
   wdith: 100%;
-  background: red;
   display: flex;
 `;
 
@@ -70,16 +69,6 @@ export const Progress = styled.div`
   margin-bottom: 16px;
 `;
 
-export const Step = styled.div`
-  width: ${(props) =>
-    (props.width === 1 ? "10%" : null) ||
-    (props.width === 2 ? "50%" : null) ||
-    (props.width === 3 ? "100%" : null)}
-  background: #7289DA;
-  height: auto;
-  border-radius: 4px;
-`;
-
 export const Body = styled.div`
   min-height: 266px;
   height: auto;
@@ -111,7 +100,7 @@ export const Submit = styled.button`
   transition: 500ms;
   border: none;
   outline: none;
-  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")}
+  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
 
   &:hover {
     cursor: pointer;
@@ -168,7 +157,7 @@ export const Cancel = styled(Link)`
 
   &:hover {
     cursor: pointer;
-    background: #27292;
+    background: #272920;
     transition: 500ms;
   }
 `;

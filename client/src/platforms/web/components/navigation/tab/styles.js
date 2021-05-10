@@ -23,14 +23,15 @@ export const Item = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: Inter-Regular;
 
   color: ${(props) =>
     props.active
       ? props.theme.button.primary_label
-      : props.theme.type.secondary}
+      : props.theme.type.secondary};
 
   background: ${(props) =>
-    props.active ? props.theme.button.primary : props.theme.body.foreground}
+    props.active ? props.theme.button.primary : props.theme.body.foreground};
 
   &:hover {
     cursor: pointer;

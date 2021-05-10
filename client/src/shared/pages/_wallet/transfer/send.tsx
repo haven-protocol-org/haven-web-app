@@ -1,29 +1,39 @@
 // Library Imports
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import { AssetOption } from "shared/pages/_wallet/exchange";
 import { Ticker } from "shared/reducers/types";
 import { XBalances } from "shared/reducers/xBalance";
-import { convertBalanceToMoney } from "utility/utility";
+import { convertBalanceToMoney, iNum } from "utility/utility";
 import Description from "../../../components/_inputs/description";
 import Dropdown from "../../../components/_inputs/dropdown";
 import Footer from "../../../components/_inputs/footer";
 import Form from "../../../components/_inputs/form";
 import Input from "../../../components/_inputs/input";
-import InputButton from "../../../components/_inputs/input_button";
-
 import { Container } from "./styles";
 import TransferSummary from "shared/components/_summaries/transfer-summary";
-// Relative Imports
 
-const xhvOption = { name: "Haven", ticker: Ticker.XHV };
-const xUSDOption = { name: "United States Dollar", ticker: Ticker.xUSD };
+const assetOptions: AssetOption[] = [
+  { name: "Haven", ticker: Ticker.XHV },
+  { name: "U.S Dollar", ticker: Ticker.xUSD },
+  { name: "Bitcoin", ticker: Ticker.xBTC },
+  { name: "Yuan", ticker: Ticker.xCNY },
+  { name: "Euro", ticker: Ticker.xEUR },
+  { name: "Gold", ticker: Ticker.XAU },
+  { name: "Silver", ticker: Ticker.XAG },
+  { name: "Swiss Franc", ticker: Ticker.xCHF },
+  { name: "Australian Dollar", ticker: Ticker.xAUD },
+  { name: "British Pound", ticker: Ticker.xGBP },
+  { name: "Japanese Yen", ticker: Ticker.xJPY },
+];
 
 interface TransferOption {
   name: string;
   ticker: Ticker;
 }
-
+interface AssetOption {
+  ticker: Ticker;
+  name: string;
+}
 interface TransferOwnProps {
   sendFunds: (
     address: string,
@@ -136,10 +146,9 @@ class TransferContainer extends Component<TransferProps, TransferState> {
   amountIsValid = (availableBalance: number): string | true => {
     const { send_amount } = this.state;
 
-    const convertToNum = parseFloat(send_amount);
+    const send_amount_num:number = parseFloat(send_amount);
 
-    //@ts-ignore
-    if (convertToNum > availableBalance) {
+    if (send_amount_num > availableBalance) {
       return "Not enough funds";
     }
 
@@ -166,7 +175,8 @@ class TransferContainer extends Component<TransferProps, TransferState> {
     let availableBalance = 0;
     if (selectedAsset) {
       availableBalance = convertBalanceToMoney(
-        this.props.xBalances[selectedAsset.ticker].unlockedBalance
+        this.props.xBalances[selectedAsset.ticker].unlockedBalance,
+        6
       );
     }
 
@@ -191,13 +201,13 @@ class TransferContainer extends Component<TransferProps, TransferState> {
             // @ts-ignore
             label={
               availableBalance
-                ? `Amount (Avail. ${availableBalance.toFixed(2)})`
+                ? `Amount (Avail. ${iNum(availableBalance)})`
                 : "Amount"
             }
             placeholder="Enter amount"
             type="number"
             // @ts-ignore
-            error={this.amountIsValid(availableBalance.toFixed(2))}
+            error={this.amountIsValid(availableBalance)}
             name="send_amount"
             value={send_amount}
             onChange={this.handleSendAmountChange}
@@ -254,7 +264,7 @@ const mapStateToProps = (
   ownProps: TransferOwnProps
 ): TransferReduxProps => ({
   xBalances: state.xBalance,
-  options: [xhvOption, xUSDOption],
+  options: assetOptions,
 });
 
 export const SendFunds = connect<TransferReduxProps, {}, TransferOwnProps>(

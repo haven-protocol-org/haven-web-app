@@ -42,8 +42,8 @@ export const Header = styled.div`
 export const Tabs = styled.div`
   height: 40px;
   width: 100%;
-  background: red;
   display: flex;
+  font-family: Inter-Regular;
 `;
 
 export const Tab = styled.div`
