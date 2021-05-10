@@ -82,6 +82,11 @@ class FixedStatusContainer extends Component<FixedStatusProps, any> {
 
   setIsConnectingStatus(isConnecting: boolean, nodeAddress: string, isConnected: boolean) {
 
+
+    if (!this.props.isLoggedIn) {
+      return;
+    }
+
     if (isConnecting && !this.tryingConnectMessageID) {
 
       const nodeName =
