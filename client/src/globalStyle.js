@@ -13,11 +13,11 @@ export const GlobalStyle = createGlobalStyle`
     padding: 0;
     margin: 0;
     font-size: 16px;
-    font-family: 'Inter-Regular', 'Inter-Bold', serif;
+    font-family: 'Inter-Regular', 'Inter-SemiBold', 'Inter-Bold', serif;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    font-feature-settings: 'zero' 1
+    font-feature-settings: 'zero' 1;
 
     @font-face {
      font-family: 'Inter-Regular';

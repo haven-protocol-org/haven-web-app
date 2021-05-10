@@ -38,7 +38,7 @@ export const Inner = styled.div`
   margin-top: -120px;
   width: 50%;
   min-width: 580px;
-  background: ${(props) => props.theme.body.background}
+  background: ${(props) => props.theme.body.background};
   border-radius: 4px;
 
   ${media.tablet`
@@ -92,7 +92,7 @@ export const Confirm = styled.button`
   font-size: 15px;
 
   &:disabled {
-    color: ${(props) => props.theme.type.primary}
+    color: rgba(255, 255, 255, 0.5);
 
     &:hover {
       background: ${(props) => props.theme.button.primary_hover};

@@ -1,4 +1,6 @@
 import styled, { keyframes } from "styled-components";
+import media from "../../../../assets/styles/media.js";
+
 import { Link } from "react-router-dom";
 import { ReactComponent as ArrowUp } from "../../../../assets/icons/arrow-up.svg";
 import { ReactComponent as HavenIcon } from "../../../../assets/icons/haven.svg";
@@ -32,6 +34,7 @@ export const Scan = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: Inter-Regular;
 
   &:hover {
     cursor: pointer;
@@ -137,7 +140,7 @@ export const OptionsList = styled.div`
   height: auto;
   min-height: 140px;
   width: 280px;
-  background: ${(props) => props.theme.body.foreground}
+  background: ${(props) => props.theme.body.foreground};
   border: 1px solid ${(props) => props.theme.body.border};
   border-radius: 4px;
   position: fixed;

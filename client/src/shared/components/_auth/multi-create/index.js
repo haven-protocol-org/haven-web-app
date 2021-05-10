@@ -27,15 +27,13 @@ const MultiCreate = (props) => {
             <Back onClick={props.prevStep}>Back</Back>
           )}
           {!props.loading ? (
-            <div>
-              <Submit onClick={props.nextStep} disabled={props.disabled}>
-                {(props.step === 1 && "Create") ||
-                  (props.step === 2 && "Next") ||
-                  (props.step === 3 && "Next") ||
-                  (props.step === 4 && "Confirm") ||
-                  (props.step === 5 && "Submit")}
-              </Submit>
-            </div>
+            <Submit onClick={props.nextStep} disabled={props.disabled}>
+              {(props.step === 1 && "Create") ||
+                (props.step === 2 && "Next") ||
+                (props.step === 3 && "Next") ||
+                (props.step === 4 && "Confirm") ||
+                (props.step === 5 && "Submit")}
+            </Submit>
           ) : (
             <Submit disabled={true} onClick={props.nextStep}>
               <Spinner color={"white"} />

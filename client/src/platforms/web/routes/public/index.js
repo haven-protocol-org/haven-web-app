@@ -9,12 +9,15 @@ import { LoginWeb } from "../../pages/_auth/login/container";
 import { showModal } from "shared/actions/modal";
 import { MODAL_TYPE } from "shared/reducers/modal";
 import { isWeb } from "constants/env";
+import { logM } from "utility/utility";
 
+const onboardingVersion = 2;
 class PublicRoutes extends Component {
   componentDidMount() {
-    if (localStorage.getItem("onboard") === null && isWeb() ) {
+
+    if (localStorage.getItem("onboard") !== onboardingVersion.toString() && isWeb() ) {
       this.props.showModal(MODAL_TYPE.LoginOnboarding);
-      localStorage.setItem("onboard", true);
+      localStorage.setItem("onboard",onboardingVersion);
     }
   }
 

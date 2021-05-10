@@ -9,10 +9,10 @@ import { ProgressBar } from "../../progress-bar";
 import { HavenAppState } from "platforms/desktop/reducers";
 import { SyncState } from "shared/types/types";
 import { selectSyncState } from "shared/reducers/chain";
-import { selectTotalBalances, XViewBalances } from "shared/reducers/xBalance";
+import { selectPortfolioInUSD, XViewBalances } from "shared/reducers/xBalance";
 import { Ticker } from "shared/reducers/types";
 
-const OFFSHORE_TICKERS = [Ticker.xUSD, Ticker.xBTC, null];
+const OFFSHORE_TICKERS = [Ticker.xUSD, null];
 
 interface BalanceProps {
   syncState: SyncState;
@@ -64,19 +64,12 @@ class Balances extends Component<BalanceProps, BalanceState> {
         </Wrapper>
       );
 
-    const { prefix, suffix } =
-      ticker === Ticker.xUSD
-        ? { prefix: "$", suffix: "" }
-        : ticker === Ticker.xBTC
-        ? { prefix: "₿", suffix: "" }
-        : { prefix: "Ħ", suffix: "" };
+    const { prefix } =
+      ticker === Ticker.xUSD ? { prefix: "$" } : { prefix: "₿" };
 
     const { balance } = this.props.balances[ticker];
-
-    const totalBalance = prefix + balance.toFixed(2) + suffix;
-
+    const totalBalance = prefix + balance.toFixed(2);
     const { isSyncing, blockHeight, scannedHeight } = this.props.syncState;
-
     const percentage = ((scannedHeight / blockHeight) * 100).toFixed(2);
 
     return (
@@ -87,9 +80,7 @@ class Balances extends Component<BalanceProps, BalanceState> {
         <Value>
           {isSyncing
             ? `Syncing Vault... ${percentage}%`
-            : `Portfolio Value (${
-                ticker === "XHV" ? ticker : ticker.substring(1)
-              }) `}
+            : `Portfolio Value (${ticker.substring(1)}) `}
         </Value>
         {isSyncing && <ProgressBar percentage={percentage} />}
       </Wrapper>
@@ -98,7 +89,7 @@ class Balances extends Component<BalanceProps, BalanceState> {
 }
 
 const mapStateToProps = (state: HavenAppState) => ({
-  balances: selectTotalBalances(state),
+  balances: selectPortfolioInUSD(state),
   syncState: selectSyncState(state),
 });
 export const MultiBalance = connect(mapStateToProps, null)(Balances);

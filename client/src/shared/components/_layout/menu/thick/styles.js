@@ -58,9 +58,7 @@ export const Overview = styled.div`
 
 export const Wrapper = styled.div`
   width: 100%;
-  background ${(props) => props.theme.body.foreground};
-
-
+  background: ${(props) => props.theme.body.foreground};
   ${media.laptop`
     width: 25%;
   `};
@@ -85,6 +83,7 @@ export const Item = styled(NavLink).attrs({
   padding: 20px;
   border-radius: 8px;
   transition: 250ms;
+  font-family: Inter-Regular;
 
   &:hover {
     color: ${(props) => props.theme.type.primary};
@@ -113,7 +112,7 @@ export const Item = styled(NavLink).attrs({
     justify-content: center;
     background: none;
     z-index: 5000;
-    margin: 0px
+    margin: 0px;
     border-radius: 0px;
     border-top: 1px solid ${(props) => props.theme.body.border};
     border-right: 1px solid ${(props) => props.theme.body.border};

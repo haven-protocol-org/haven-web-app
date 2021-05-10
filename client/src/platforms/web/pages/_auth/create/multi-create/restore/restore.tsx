@@ -232,7 +232,7 @@ class RestoreWeb extends Component<RestoreProps, RestoreState> {
               onClick={this.showPassword}
               readOnly={false}
               error={error}
-              width={false}
+              width
             />
 
             <Information>
@@ -282,8 +282,8 @@ class RestoreWeb extends Component<RestoreProps, RestoreState> {
               onChange={this.handleChange}
               onClick={this.showPassword}
               error={error}
-              width={false}
               readOnly={false}
+              width
             />
             <Information>
               Re-enter the password you used to create this vault file. If you

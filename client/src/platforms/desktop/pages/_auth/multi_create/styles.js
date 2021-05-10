@@ -35,12 +35,11 @@ export const Tabs = styled.div`
 
 export const Tab = styled.div`
   width: calc(100% / 2);
-  border: 1px
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 13px;
-  color:  ${(props) =>
+  color: ${(props) =>
     props.active ? props.theme.type.primary : props.theme.type.secondary};
   background: ${(props) =>
     props.active ? props.theme.body.background : props.theme.body.foreground};
@@ -48,11 +47,10 @@ export const Tab = styled.div`
   transition: 500ms;
 
   &:hover {
-  cursor: pointer;
-  transition: 500ms;
-  color: ${(props) => props.theme.type.primary};
+    cursor: pointer;
+    transition: 500ms;
+    color: ${(props) => props.theme.type.primary};
   }
-
 `;
 
 export const Header = styled.div`
@@ -81,8 +79,8 @@ export const Step = styled.div`
   width: ${(props) =>
     (props.width === 1 ? "10%" : null) ||
     (props.width === 2 ? "50%" : null) ||
-    (props.width === 3 ? "100%" : null)}
-  background: #7289DA;
+    (props.width === 3 ? "100%" : null)};
+  background: #7289da;
   height: auto;
   border-radius: 4px;
 `;

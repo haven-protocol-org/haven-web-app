@@ -15,10 +15,21 @@ import {
   OptionsList,
   OptionsSVG,
   Arr,
+  SearchArr,
   Scan,
+  Results,
+  SearchInput,
+  SearchArrow,
   Arrow,
+  SearchDropdown,
+  AssetLabel,
+  TickerLabel,
+  EmptyLabel,
+  SearchCell,
+  Row,
+  TokenLabel,
+  Column,
 } from "./styles.js";
-
 import Buttons from "./buttons/index.js";
 import { syncFromFirstIncomingTx, rescanSpent } from "shared/actions/refresh";
 import { selectIsLoggedIn } from "shared/reducers/walletSession";
@@ -27,14 +38,16 @@ import { WebAppState } from "platforms/web/reducers/index.js";
 import { selectSyncState } from "shared/reducers/chain";
 import { SyncState } from "shared/types/types.js";
 import { HavenAppState } from "platforms/desktop/reducers/index.js";
-
 import Cell from "./cell";
 import Link from "./link";
 import Tab from "./tab";
-
 import { showModal } from "shared/actions/modal";
 import { MODAL_TYPE } from "shared/reducers/modal";
 import { closeWallet } from "shared/actions/walletSession";
+import { AssetList } from "../../../../constants/assets";
+import { XBalances } from "shared/reducers/xBalance";
+import { convertBalanceToMoney, iNum } from "utility/utility";
+import Search from "../../../../shared/components/search/index.js";
 
 interface NavigationProps {
   isLoggedIn: boolean;
@@ -49,17 +62,21 @@ interface NavigationProps {
   advancedActive: boolean;
   restoreHeight: number;
   startedResync: boolean;
+  search: string;
+  balances: XBalances;
   showModal: (modalType: MODAL_TYPE) => void;
 }
 
 class Navigation extends Component<NavigationProps, {}> {
   state = {
     showOptions: false,
+    showSearch: false,
     showNotifications: false,
     mouseIsHovering: false,
     basicActive: true,
     advancedActive: false,
     startedResync: false,
+    xasset_lookup: "",
   };
 
   handleLogout = () => {
@@ -71,8 +88,8 @@ class Navigation extends Component<NavigationProps, {}> {
   };
 
   showDropdownMenu = (event: any) => {
+    event.stopPropagation();
     event.preventDefault();
-
     this.setState({ showOptions: true }, () => {
       document.addEventListener("click", this.hideDropdownMenu);
     });
@@ -84,6 +101,15 @@ class Navigation extends Component<NavigationProps, {}> {
         document.removeEventListener("click", this.hideDropdownMenu);
       });
     }
+  };
+
+  handleChange = (event: any) => {
+    const name = event.target.name;
+    const value = event.target.value;
+
+    this.setState<never>({
+      [name]: value,
+    });
   };
 
   handleMouseEnter = () => {
@@ -122,6 +148,7 @@ class Navigation extends Component<NavigationProps, {}> {
     const { connected } = this.props;
     const { blockHeight, scannedHeight, isSyncing } = this.props.syncState;
     const networkLabel = `${NET_TYPE_NAME}  v${APP_VERSION}`;
+    const { showSearch } = this.state;
 
     return (
       <Container>
@@ -137,12 +164,19 @@ class Navigation extends Component<NavigationProps, {}> {
           </NoAuth>
         )}
         <Menu>
+          {auth && <Search />}
           <Buttons
             isLoading={this.props.isClosingSession}
             auth={this.props.isLoggedIn}
             onClick={this.handleLogout}
           />
-          <Options onClick={this.showDropdownMenu}>
+          <Options
+            onClick={
+              this.state.showOptions
+                ? this.hideDropdownMenu
+                : this.showDropdownMenu
+            }
+          >
             <OptionsIcon>
               <OptionsSVG />
             </OptionsIcon>
@@ -172,7 +206,6 @@ class Navigation extends Component<NavigationProps, {}> {
                   />
                 </>
               )}
-
               {auth && (
                 <>
                   <Tab
@@ -236,6 +269,7 @@ const mapStateToProps = (state: WebAppState) => ({
   connected: state.connectedNode.isWalletConectedToDaemon,
   isClosingSession: state.walletSession.isClosingSession,
   restoreHeight: state.walletSession.restoreHeight,
+  balances: state.xBalance,
 });
 
 export const NavigationWeb = connect(mapStateToProps, {

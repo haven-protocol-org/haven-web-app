@@ -14,20 +14,19 @@ import {
   OptionsIcon,
   OptionsList,
   OptionsSVG,
-  Legal,
   Scan,
 } from "./styles";
 
-import { Body, Label } from "assets/styles/type";
 import { closeWallet } from "shared/actions/walletSession";
 import { selectIsLoggedIn } from "../../../../shared/reducers/walletSession";
 import { getNetworkByName, NET_TYPE_NAME } from "constants/env";
 import { DesktopAppState } from "../../reducers";
-import { LocalNode, SelectedNode } from "platforms/desktop/types";
+import { SelectedNode } from "platforms/desktop/types";
 import { selectisLocalNode } from "platforms/desktop/reducers/selectedNode";
 import { selectBlockHeight } from "shared/reducers/chain";
 import { SyncState } from "shared/types/types.js";
 import { syncFromFirstIncomingTx, rescanSpent } from "shared/actions/refresh";
+import Search from "../../../../shared/components/search/index.js";
 
 // Local files
 import Buttons from "./buttons";
@@ -75,6 +74,7 @@ class Navigation extends Component<NavigationProps, any> {
 
   showDropdownMenu = (event: any) => {
     event.preventDefault();
+    event.stopPropagation();
     this.setState({ showOptions: true }, () => {
       document.addEventListener("click", this.hideDropdownMenu);
     });
@@ -150,12 +150,11 @@ class Navigation extends Component<NavigationProps, any> {
   render() {
     const auth = this.props.isLoggedIn;
     const { current_network } = this.state;
-    const { node, connected, restoreHeight } = this.props;
+    const { connected } = this.props;
 
     // @ts-ignore
     const { chainHeight, walletHeight } = this.props.chain;
     const syncStarted = chainHeight !== 0;
-    const syncedFinished = syncStarted && chainHeight === walletHeight;
 
     const version = window.havenProcess.appVersion;
 
@@ -166,6 +165,7 @@ class Navigation extends Component<NavigationProps, any> {
           <Haven>HAVEN</Haven>
         </Brand>
         <Menu>
+          {auth && <Search />}
           <Buttons
             isLoading={this.props.isClosingSession}
             auth={auth}
@@ -186,7 +186,6 @@ class Navigation extends Component<NavigationProps, any> {
               <Arrow>
                 <Arr />
               </Arrow>
-
               {!auth && (
                 <>
                   <Cell
@@ -209,7 +208,6 @@ class Navigation extends Component<NavigationProps, any> {
                   />
                 </>
               )}
-
               {auth && (
                 <>
                   <Tab

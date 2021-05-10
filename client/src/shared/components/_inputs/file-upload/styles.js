@@ -37,6 +37,6 @@ export const Label = styled.label`
   align-items: center;
   justify-content: center;
   height: 80%;
-  width: 90 %;
+  width: 90%;
   font-size: 14px;
 `;

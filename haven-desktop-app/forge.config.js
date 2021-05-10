@@ -101,10 +101,9 @@ module.exports = {
     ignore: ignoredPaths,
     afterCopy: [substituteEnvsForBuild],
     icon: "./icons/icon",
-    asar: {
-      unpackDir: "haven-node/**",
+    asar: false
     },
-  },
+    
 
   hooks: {readPackageJson: (value) => {
 
@@ -137,7 +136,7 @@ module.exports = {
     },
   ],
 
-  plugins: [["@electron-forge/plugin-auto-unpack-natives"]],
+ //  plugins: [["@electron-forge/plugin-auto-unpack-natives"]],
 
   publishers: [
     {

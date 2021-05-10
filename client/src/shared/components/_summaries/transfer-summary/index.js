@@ -23,7 +23,7 @@ const TransferSummary = ({
           {transferAmount === "--"
             ? "0"
             : transferAmount && !isNaN(transferAmount)
-            ? parseFloat(transferAmount).toFixed(2)
+            ? transferAmount
             : "0"}{" "}
           {transferAsset}
         </Value>
@@ -31,6 +31,10 @@ const TransferSummary = ({
       <Row>
         <Key>Recipient Address</Key>
         <Value>{recipientAddress === "--" ? "--" : truncated}</Value>
+      </Row>
+      <Row>
+        <Key>Standard Priority</Key>
+        <Value>Unlocks ~20m</Value>
       </Row>
     </Container>
   );
