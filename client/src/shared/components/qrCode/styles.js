@@ -27,9 +27,10 @@ export const Value = styled.div`
   margin: 20px;
   font-size: 14px
   border-radius: 4px;
-  color: ${(props) => props.theme.type.primary}
+  color: ${(props) => props.theme.type.primary};
   overflow-wrap: break-word;
   text-align: center;
+  font-family: Inter-Regular;
 
   ${media.mobile`
     font-size: 12px;

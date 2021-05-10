@@ -195,7 +195,7 @@ class CreateDesktopContainer extends Component<
             <Input
               error={this.state.error}
               label="Vault Name"
-              placeholder="Create a Vault name"
+              placeholder="Create a vault name"
               name="fileName"
               type={"text"}
               value={fileName}
@@ -205,7 +205,7 @@ class CreateDesktopContainer extends Component<
             <InputButton
               // @ts-ignore
               label="Vault Password"
-              placeholder="Enter your Vault password"
+              placeholder="Enter your vault password"
               name="pw"
               type={this.state.showPassword === true ? "text" : "password"}
               button={this.state.showPassword === true ? "hide" : "show"}

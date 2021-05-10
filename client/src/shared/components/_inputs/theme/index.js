@@ -19,6 +19,7 @@ class Theme extends React.Component {
   };
 
   showDropdownMenu = event => {
+    event.stopPropagation();
     event.preventDefault();
     this.setState({ displayMenu: true }, () => {
       document.addEventListener("click", this.hideDropdownMenu);

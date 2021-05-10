@@ -7,7 +7,7 @@ import Header from "../_layout/header";
 import { Row } from "./styles";
 import { connect } from "react-redux";
 import { PRICE_RANGE_MONTH } from "../../reducers/priceHistory";
-import { getPriceDates, getPriceValues } from "utility/utility";
+import { getPriceDates, getPriceValues, iNum } from "utility/utility";
 import { getPriceHistory } from "../../actions";
 import Statistic from "../statistic";
 import { withRouter } from "react-router";
@@ -56,17 +56,19 @@ class ChartWrapper extends Component<any, any> {
           title={`${id} Overview`}
           description="Pricing history and asset values"
         />
-        <Chart
+
+        {this.props.assetId === Ticker.XHV || this.props.assetId === Ticker.xUSD ? ( <Chart
           prices={prices}
           labels={labels}
+          ticker={id}
           price={price.toFixed(2)}
           onChangePriceRange={(args: number | string) =>
             this.selectPriceHistory(args)
           }
-        />
+        />): null}
         <Row>
-          <Statistic label="Amount" value={amount.toFixed(2)} />
-          <Statistic label="Price" value={`$` + price.toFixed(2)} />
+          <Statistic label="Amount" value={iNum(amount)} />
+          <Statistic label="Price" value={`$` + iNum(price)} />
           <Statistic
             label="Value"
             value={value.toLocaleString("en-US", {

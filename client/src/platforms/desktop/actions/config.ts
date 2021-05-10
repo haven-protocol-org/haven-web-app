@@ -1,9 +1,8 @@
-import { getNetworkByName } from "constants/env";
+import { getNetworkByName, NET_TYPE_ID } from "constants/env";
 import { setTheme } from "shared/actions";
 import { getConfigIPC, updateConfigIPC } from "../ipc/misc";
 import { DesktopAppState } from "../reducers";
-import { selectRemoteDefaultNode } from "../reducers/selectedNode";
-import { BasicNode, NodeLocation, RemoteNode, SelectedNode } from "../types";
+import { NodeLocation, RemoteNode, SelectedNode } from "../types";
 import { setNodeForWalletSucceed } from "./selectNode";
 import { SET_NODE_LIST_FOR_WALLET_SUCCESS } from "./types";
 
@@ -19,7 +18,7 @@ export const setDesktopConfig = () => {
       payload: netSpecificNodes,
     });
 
-    const config: any = await getConfigIPC();
+    const config: any = await getConfigIPC(NET_TYPE_ID);
     //  dispatch(setNodeForWallet())
 
     if (config && config.selectedNode) {
@@ -34,8 +33,8 @@ export const setDesktopConfig = () => {
           )
         );
       }
- /*      // if there is no last selected node we set the defaulzt remote one
-      else {
+    
+   /*    else {
         const defaultNode = selectRemoteDefaultNode(getState());
         dispatch(
           setNodeForWalletSucceed(
@@ -44,7 +43,7 @@ export const setDesktopConfig = () => {
             defaultNode.location
           )
         );
-      } */
+      }  */
     }
 
     if (config && config.theme) {
@@ -54,7 +53,7 @@ export const setDesktopConfig = () => {
 };
 
 export const updateDesktopConfig = (config: any) => {
-  updateConfigIPC(config);
+  updateConfigIPC(NET_TYPE_ID, config);
 };
 
 export const getAllAvailableNodes = async () => {

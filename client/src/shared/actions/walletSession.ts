@@ -6,7 +6,7 @@ import { storeWalletInDB } from "platforms/web/actions/storage";
 import { walletProxy } from "shared/core/proxy";
 import { Chain } from "shared/reducers/chain";
 import { getAddresses } from "./address";
-import { getXHVBalance, getXUSDBalance } from "./balance";
+import { getXHVBalance } from "./balance";
 import { getLastBlockHeader } from "./blockHeaderExchangeRate";
 import { connectAppToDaemon } from "./havend";
 import { updateHavenFeatures } from "./havenFeature";
@@ -76,7 +76,6 @@ export const startWalletSession = (
   export const initWallet = () => {
     return async (dispatch: any) => {
       dispatch(getXHVBalance());
-      dispatch(getXUSDBalance());
       dispatch(getAllTransfers());
       dispatch(getAddresses());
       dispatch(refresh());

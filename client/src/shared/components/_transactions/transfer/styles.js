@@ -10,6 +10,14 @@ export const Container = styled.div`
   margin-bottom: 12px;
 `;
 
+export const Url = styled.a`
+  text-decoration: none;
+  font-family: Inter-Regular;
+  font-size: 13px;
+  line-height: 22px;
+  color: ${(props) => props.theme.type.secondary};
+`;
+
 export const Header = styled.div`
   height: auto;
   padding: 16px 12px;

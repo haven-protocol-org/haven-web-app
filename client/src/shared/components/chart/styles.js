@@ -28,9 +28,9 @@ export const PriceHistory = styled.div`
 `;
 
 export const Value = styled.div`
-  font-size: 36px;
+  font-size: 32px;
   color: ${(props) => props.theme.type.primary};
-  font-family: "Inter-Bold";
+  font-family: Inter-SemiBold;
   text-align: center;
   margin-top: 12px;
 
@@ -40,14 +40,15 @@ export const Value = styled.div`
 `;
 
 export const Label = styled.div`
-  font-size: 16px;
+  font-size: 14px;
   color: ${(props) => props.theme.type.secondary};
   text-align: center;
+  font-family: Inter-Regular;
 `;
 
 export const Title = styled.div`
   font-size: 16px;
-  font-family: "Inter-SemiBold";
+  font-family: Inter-SemiBold;
   color: ${(props) => props.theme.type.primary};
 `;
 

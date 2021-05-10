@@ -42,10 +42,8 @@ export const createTransfer = (
   
 
     const priority = MoneroTxPriority.NORMAL;
-    const txType =
-      fromTicker === Ticker.XHV
-        ? HavenTxType.CLASSIC
-        : HavenTxType.OFFSHORE_TO_OFFSHORE;
+    const txType = HavenTxType.TRANSFER;
+    const currency: Ticker = fromTicker;
     
     dispatch(
       transferCreationFetch({
@@ -61,6 +59,7 @@ export const createTransfer = (
       relay: false,
       txType,
       priority,
+      currency
     } as Partial<ITxConfig>;
 
 
@@ -90,7 +89,6 @@ export const createTransfer = (
         metaList: txList.map((tx: MoneroTxWallet) => tx.getMetadata()),
       } as Partial<TxProcessInfo>;
 
-      //console.log(createdTx[0].toJson());
       dispatch(transferCreationSucceed(reduxParams));
       dispatch(showModal(MODAL_TYPE.ConfirmTx));
     } catch (e) {

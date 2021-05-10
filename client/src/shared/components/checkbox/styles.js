@@ -12,6 +12,7 @@ export const Container = styled.div`
 export const Message = styled.div`
   font-size: 14px;
   height: 20px;
+  font-family: Inter-Regular;
   align-self: center;
   color: ${(props) => props.theme.type.primary};
   margin-top: 4px;

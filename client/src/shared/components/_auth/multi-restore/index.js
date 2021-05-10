@@ -28,14 +28,12 @@ const MultiRestore = (props) => {
           )}
 
           {!props.loading ? (
-            <div>
-              <Submit onClick={props.nextStep} disabled={props.disabled}>
-                {(props.step === 1 && "Restore") ||
-                  (props.step === 2 && "Next") ||
-                  (props.step === 3 && "Next") ||
-                  (props.step === 4 && "Submit")}
-              </Submit>
-            </div>
+            <Submit onClick={props.nextStep} disabled={props.disabled}>
+              {(props.step === 1 && "Restore") ||
+                (props.step === 2 && "Next") ||
+                (props.step === 3 && "Next") ||
+                (props.step === 4 && "Submit")}
+            </Submit>
           ) : (
             <Submit disabled={true} onClick={props.nextStep}>
               <Spinner color={"white"} />

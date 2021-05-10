@@ -1,11 +1,11 @@
 import { walletProxy } from "shared/core/proxy";
 import { addNotificationByMessage } from "shared/actions/notification";
 import { NotificationType } from "constants/notificationList";
-import { saveAs } from "file-saver";
+import { saveAs } from "vendor/FileSaver";
 import { HavenAppState } from "platforms/desktop/reducers";
 
 const HAVEN_DB = "haven";
-const WALLET_STORE = "wallet";
+const WALLET_STORE = "vault";
 
 export const storeKeyFileToDisk = (name: string) => {
   return async (dispatch: any) => {
@@ -55,7 +55,7 @@ export const getWalletCacheByName = async (
 
 const fetchValueByKey = (name: string): Promise<ArrayBuffer> => {
   return new Promise((resolutionFunc, rejectionFunc) => {
-    const openRequest: IDBOpenDBRequest = indexedDB.open(HAVEN_DB);
+    const openRequest: IDBOpenDBRequest = indexedDB.open(HAVEN_DB, 2);
     openRequest.onupgradeneeded = function (this: IDBRequest<IDBDatabase>) {
       const db = this.result;
       db.createObjectStore(WALLET_STORE);
@@ -89,7 +89,7 @@ const fetchValueByKey = (name: string): Promise<ArrayBuffer> => {
 
 const fetchKeysFromDB = () => {
   let keys: string[] = [];
-  const openRequest: IDBOpenDBRequest = indexedDB.open("haven");
+  const openRequest: IDBOpenDBRequest = indexedDB.open("haven", 2);
   openRequest.onsuccess = function (this: IDBRequest<IDBDatabase>) {
     const db = this.result;
     const transaction = db.transaction("wallet", "readonly");
@@ -100,11 +100,11 @@ const fetchKeysFromDB = () => {
   };
 };
 
-const storeWalletDataInIndexedDB = async (name: string): Promise<any> => {
+const storeWalletDataInIndexedDB = async (name: string): Promise<void> => {
   return new Promise(async (resolutionFunc, rejectionFunc) => {
     const walletData = await walletProxy.getWalletData();
     const wallet = walletData[1];
-    const openRequest: IDBOpenDBRequest = indexedDB.open(HAVEN_DB);
+    const openRequest: IDBOpenDBRequest = indexedDB.open(HAVEN_DB, 2);
 
     openRequest.onupgradeneeded = function (this: IDBRequest<IDBDatabase>) {
       const db = this.result;
@@ -117,6 +117,7 @@ const storeWalletDataInIndexedDB = async (name: string): Promise<any> => {
 
     openRequest.onsuccess = function (this: IDBRequest<IDBDatabase>) {
       const db = this.result;
+
       const transaction = db.transaction(WALLET_STORE, "readwrite");
       const putRequest: IDBRequest<IDBValidKey> = transaction
         .objectStore(WALLET_STORE)
@@ -128,6 +129,7 @@ const storeWalletDataInIndexedDB = async (name: string): Promise<any> => {
       putRequest.onerror = function (this: IDBRequest<IDBValidKey>) {
         rejectionFunc();
       };
+    
     };
   });
 };

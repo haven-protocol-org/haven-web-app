@@ -30,7 +30,7 @@ export class HavenWalletListener extends MoneroWalletListener {
     const syncDistance = endHeight - height;
 
     let updateInterval = Math.pow(10, Math.floor(Math.log10(syncDistance)));
-    updateInterval = Math.min(2000, updateInterval);
+    updateInterval = Math.min(1000, updateInterval);
     updateInterval = Math.max(updateInterval, 1);
   
     if (syncDistance % updateInterval === 0 || height === startHeight) {
@@ -60,24 +60,12 @@ export class HavenWalletListener extends MoneroWalletListener {
   // @ts-ignore
   onBalancesChanged(
     newBalance: BigInteger,
-    newUnlockedBalance: BigInteger
+    newUnlockedBalance: BigInteger, assetType: string
   ): void {
     const walletupdate: WalletRequest = {
       methodName: "onBalancesChanged",
       params: [...arguments],
     };
-    this.webContent.send(CommunicationChannel.WALLET, walletupdate);
-  }
-
-  onOffshoreBalancesChanged(
-    newBalance: BigInteger,
-    newUnlockedBalance: BigInteger
-  ): void {
-    const walletupdate: WalletRequest = {
-      methodName: "onOffshoreBalancesChanged",
-      params: [...arguments],
-    };
-
     this.webContent.send(CommunicationChannel.WALLET, walletupdate);
   }
 

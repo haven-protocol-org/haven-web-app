@@ -268,7 +268,7 @@ class CreateWalletWeb extends Component<CreateProps, CreateState> {
               onClick={this.showPassword}
               readOnly={false}
               error={this.state.confirm_vault_error}
-              width={false}
+              width
             />
             <Information>
               Re-enter the password that you used to create this vault file. If

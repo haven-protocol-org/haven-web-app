@@ -9,6 +9,7 @@ import { Spinner } from "shared/components/spinner";
 import {
   convertBalanceToMoney,
   createRemainingTimeString,
+  iNum,
 } from "utility/utility";
 import React, { Component } from "react";
 import { connect } from "react-redux";
@@ -49,9 +50,11 @@ interface TxHistoryProps {
   getAllTransfers:() => void;
 }
 
+type TXType = "Mined" | "Pending" | "Sent" | "Received";
+
 class TxHistoryContainer extends Component<TxHistoryProps, any> {
 
-  static getTransactionType(tx: TxEntry) {
+  static getTransactionType(tx: TxEntry) : TXType {
     if (tx.isMinerTx) {
       return "Mined";
     } else if (tx.mempool) {
@@ -138,11 +141,10 @@ const prepareTxInfo = (
     tx.timestamp * 1000
   ).toLocaleDateString();
 
-  // DANDELION bug we can not trust this information --> tx.mempool
-  const mempool = tx.mempool || tx.height === undefined || tx.height === currentHeight;
+  const mempool = tx.mempool;
 
-  const readableAmount = convertBalanceToMoney(tx.amount);
-  const currentValueInUSD = readableAmount * xRate;
+  const readableAmount = iNum(convertBalanceToMoney(tx.amount, 6));
+  const currentValueInUSD = iNum(parseFloat(readableAmount) * xRate);
 
   const txType = TxHistoryContainer.getTransactionType(
     tx
@@ -175,7 +177,7 @@ const prepareTxInfo = (
     date: transactionDate,
     amount: readableAmount,
     hash: tx.hash,
-    fee: convertBalanceToMoney(tx.fee),
+    fee: tx.isIncoming ? 0 : iNum(convertBalanceToMoney(tx.fee, 4)),
     block: tx.height
   };
 };

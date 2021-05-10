@@ -12,8 +12,6 @@ const load = keyframes`
 }
 `;
 
-
-
 export const Container = styled.div`
   height: auto;
   width: 100%;
@@ -34,6 +32,7 @@ export const Container = styled.div`
 export const Content = styled.div`
   height: auto;
   font-size: 14px;
+  font-family: Inter-Regular;
   color: white;
   margin: 12px;
   padding: 12px;
@@ -42,9 +41,3 @@ export const Content = styled.div`
   text-align: center;
   background: ${(props) => props.theme.states[props.type]};
 `;
-
-/* bottom: ${(props) => props.count * 50 + "px"}; */
-// ${media.laptop`
-//   order: 2;
-//   margin-bottom: 60px;
-// `}

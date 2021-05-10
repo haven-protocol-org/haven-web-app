@@ -56,7 +56,7 @@ export const Field = styled.div`
   padding: 16px;
   font-family: Inter-Regular;
   font-size: 16px;
-  color: ${(props) => props.theme.input.input_value}
+  color: ${(props) => props.theme.input.input_value};
   line-height: 26px;
   outline: none;
   transition: 500ms;
@@ -91,5 +91,6 @@ export const Labeled = styled.label`
   margin-right: 16px;
   border-radius: 2px;
   font-size: 11px;
+  font-family: Inter-Regular;
   text-transform: uppercase;
 `;

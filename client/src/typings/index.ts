@@ -84,6 +84,8 @@ export interface ITxConfig {
   keyImage: string;
   /** tx type which differntiate between various tx/exchange types */
   txType: number;
+  /** curreny we exchange from or to xUSD */
+  currency: string;
 }
 
 export interface IKeys {

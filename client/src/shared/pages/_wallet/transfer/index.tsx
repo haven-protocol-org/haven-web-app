@@ -11,6 +11,8 @@ import { AddressEntry } from "shared/reducers/address";
 
 // Relative Imports
 
+
+
 interface TransferOwnProps {
   sendFunds: (
     address: string,

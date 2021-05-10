@@ -8,6 +8,7 @@ import { onWalletSyncUpdateSucceed } from "shared/actions/walletCreation";
 import { getLastBlockHeader } from "./blockHeaderExchangeRate";
 import { updateHavenFeatures } from "./havenFeature";
 import { HavenAppState } from "platforms/desktop/reducers";
+import { Ticker } from "shared/reducers/types";
 
 export class HavenWalletListener extends MoneroWalletListener {
   // we keep a dispatch and getStore instance in the walletlistener
@@ -40,7 +41,6 @@ export class HavenWalletListener extends MoneroWalletListener {
     message: string
   ): void {
 
-    logM(height);
     const syncDistance = endHeight - height;
 
     let updateInterval = Math.pow(10, Math.floor(Math.log10(syncDistance)));
@@ -52,6 +52,8 @@ export class HavenWalletListener extends MoneroWalletListener {
         walletHeight: height,
         nodeHeight:endHeight
       };
+      logM(height);
+
       this.dispatch(onWalletSyncUpdateSucceed(chain));
     }
   }
@@ -86,7 +88,7 @@ export class HavenWalletListener extends MoneroWalletListener {
   // @ts-ignore
   onBalancesChanged(
     newBalance: BigInteger,
-    newUnlockedBalance: BigInteger
+    newUnlockedBalance: BigInteger, assetType: string 
   ): void {
     const balance = bigIntegerToBigInt(newBalance);
     const unlockedBalance = bigIntegerToBigInt(newUnlockedBalance);
@@ -95,27 +97,9 @@ export class HavenWalletListener extends MoneroWalletListener {
       balance,
       lockedBalance: balance.subtract(unlockedBalance),
     };
-    this.dispatch(getBalancesSucceed({ XHV: xhvBalance }));
-    // this.dispatch(getAllTransfers());
-  }
-  /**
-   * Invoked when the wallet's offshore balances change.
-   *
-   * @param {BigInteger} newBalance - new wallet balance
-   * @param {BigInteger} newUnlockedBalance - new unlocked wallet balance
-   */
-  onOffshoreBalancesChanged(
-    newBalance: BigInteger,
-    newUnlockedBalance: BigInteger
-  ): void {
-    const balance = bigIntegerToBigInt(newBalance);
-    const unlockedBalance = bigIntegerToBigInt(newUnlockedBalance);
-    const xUSDBalance: Balance = {
-      unlockedBalance,
-      balance,
-      lockedBalance: balance.subtract(unlockedBalance),
-    };
-    this.dispatch(getBalancesSucceed({ xUSD: xUSDBalance }));
+
+    logM(assetType);
+    this.dispatch(getBalancesSucceed({ [assetType as Ticker] : xhvBalance }));
     // this.dispatch(getAllTransfers());
   }
   /**
