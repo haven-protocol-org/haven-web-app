@@ -38,7 +38,7 @@ import { MODAL_TYPE } from "shared/reducers/modal";
 import { ExchangeSummary } from "shared/components/_summaries/exchange-summary";
 import { setSelectedAddress } from "../../../actions/address";
 import { selectSelectedAddress } from "../../../reducers/address";
-import { Container, Wrapper, WideContainer } from "./styles";
+import { Container, Wrapper, WideContainer, ShortContainer } from "./styles";
 
 enum ExchangeTab {
   Basic,
@@ -514,40 +514,43 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
             </Form>
 
             {selectedTab === ExchangeTab.Advanced && (
-              <WideContainer>
-                <Dropdown
-                  label="Priority"
-                  placeholder="Select Priority"
-                  name="exchange_priority"
-                  value={xassetConversion ? "Standard" : selectedPrio.name}
-                  ticker={
-                    xassetConversion ? "Unlocks ~20m" : selectedPrio.ticker
-                  }
-                  options={exchangePrioOptions}
-                  onClick={this.setExchangePriority}
-                  disabled={xassetConversion ? true : false}
-                />
-                <AddressDropdown
-                  label="From Address (Optional)"
-                  placeholder="Select from address"
-                  name="from_address"
-                  value={handleLabel}
-                  address={truncated}
-                  options={addresses}
-                  onClick={this.selectAddress}
-                  hideCreateAddress
-                />
-                <Description
-                  label="Recipient Address (Optional)"
-                  placeholder="Exchange to another address"
-                  name="externAddress"
-                  type="text"
-                  value={externAddress}
-                  onChange={this.onEnterExternAddress}
-                  error={this.recipientIsValid()}
-                  rows="2"
-                />
-              </WideContainer>
+              <>
+                <WideContainer>
+                  <Dropdown
+                    label="Priority"
+                    placeholder="Select Priority"
+                    name="exchange_priority"
+                    value={xassetConversion ? "Standard" : selectedPrio.name}
+                    ticker={
+                      xassetConversion ? "Unlocks ~20m" : selectedPrio.ticker
+                    }
+                    options={exchangePrioOptions}
+                    onClick={this.setExchangePriority}
+                    disabled={xassetConversion ? true : false}
+                  />
+                  <AddressDropdown
+                    label="From Address (Optional)"
+                    placeholder="Select from address"
+                    name="from_address"
+                    value={handleLabel}
+                    address={truncated}
+                    options={addresses}
+                    onClick={this.selectAddress}
+                    hideCreateAddress
+                  />
+
+                  <Description
+                    label="Recipient Address (Optional)"
+                    placeholder="Exchange to another address"
+                    name="externAddress"
+                    type="text"
+                    value={externAddress}
+                    onChange={this.onEnterExternAddress}
+                    error={this.recipientIsValid()}
+                    rows="2"
+                  />
+                </WideContainer>
+              </>
             )}
             <WideContainer>
               <ExchangeSummary

@@ -12,7 +12,6 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding-bottom: 4px;
-
   grid-column: 1 / 3;
 `;
 
