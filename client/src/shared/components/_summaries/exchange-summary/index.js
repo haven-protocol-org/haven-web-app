@@ -4,8 +4,8 @@ import React from "react";
 // Relative Imports
 import { Wrapper, Container, Row, Key, Value } from "./styles";
 import { Error } from "../../../../assets/styles/type.js";
-import {Ticker} from "shared/reducers/types"
-import {iNum} from "utility/utility";
+import { Ticker } from "shared/reducers/types";
+import { iNum } from "utility/utility";
 
 export const ExchangeSummary = ({
   xRate,
@@ -18,21 +18,16 @@ export const ExchangeSummary = ({
   hasLatestXRate,
   xasset_conversion,
 }) => {
-
-
-
-  // use USD always as quote currency for better readability 
-  let xFromTicker = fromTicker
+  // use USD always as quote currency for better readability
+  let xFromTicker = fromTicker;
   let xToTicker = toTicker;
   let rate = xRate;
-  if(fromTicker === Ticker.xUSD && toTicker !== null) {
+  if (fromTicker === Ticker.xUSD && toTicker !== null) {
     xToTicker = fromTicker;
     xFromTicker = toTicker;
-    rate = 1/xRate;
+    rate = 1 / xRate;
   }
   /////////////////////
-
-
 
   return (
     <Wrapper>

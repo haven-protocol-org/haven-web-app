@@ -60,6 +60,11 @@ export const Labels = styled.div`
   margin-bottom: 4px;
 `;
 
+export const Ticker = styled.div`
+  color: ${(props) => props.theme.type.secondary};
+  margin-right: 12px;
+`;
+
 export const Edit = styled.div`
   display: flex;
   align-items: center;

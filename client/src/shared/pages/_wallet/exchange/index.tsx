@@ -5,13 +5,15 @@ import { connect } from "react-redux";
 import Body from "../../../components/_layout/body";
 import Header from "../../../components/_layout/header";
 import Input from "../../../components/_inputs/input";
+import Description from "../../../components/_inputs/description";
+import AddressDropdown from "../../../components/_inputs/addresses_dropdown";
 // import InputButton from "../../../components/_inputs/input_button";
 import Form from "../../../components/_inputs/form";
 import { RouteComponentProps, withRouter } from "react-router";
 import Footer from "../../../components/_inputs/footer";
 import Dropdown from "../../../components/_inputs/dropdown";
 import Tab from "../../../components/tab";
-import { Container } from "./styles";
+
 import {
   hasLatestXRate,
   priceDelta,
@@ -34,6 +36,9 @@ import { convertBalanceToMoney, logM, iNum } from "utility/utility";
 import { showModal } from "shared/actions/modal";
 import { MODAL_TYPE } from "shared/reducers/modal";
 import { ExchangeSummary } from "shared/components/_summaries/exchange-summary";
+import { setSelectedAddress } from "../../../actions/address";
+import { selectSelectedAddress } from "../../../reducers/address";
+import { Container, Wrapper, WideContainer } from "./styles";
 
 enum ExchangeTab {
   Basic,
@@ -323,33 +328,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     this.setState({ selectedPrio: selectedOption });
   };
 
-  /* setMaxFromAmount = () => {
-    const { fromTicker } = this.props;
-
-    const availBalance = fromTicker
-      ? convertBalanceToMoney(this.props.balances[fromTicker].unlockedBalance)
-      : NO_BALANCE;
-
-    this.setState(
-      { ...this.state, fromAmount: availBalance.toString() },
-      () => {
-        this.calcConversion(true);
-      }
-    );
-  }; */
-
-  /*   setMaxToAmount = () => {
-    const { toTicker } = this.props;
-
-    const availBalance = toTicker
-      ? convertBalanceToMoney(this.props.balances[toTicker].unlockedBalance)
-      : NO_BALANCE;
-
-    this.setState({ ...this.state, toAmount: availBalance.toString() }, () => {
-      this.calcConversion(false);
-    });
-  }; */
-
   validateExchange = (availableBalance: any) => {
     const { fromAmount, toAmount } = this.state;
     const fromAmountValid = fromAmount !== undefined;
@@ -417,6 +395,10 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     }
   };
 
+  selectAddress = (selected: AddressEntry) => {
+    this.props.setSelectedAddress(selected.index);
+  };
+
   render() {
     const {
       fromAmount,
@@ -429,7 +411,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       xassetConversion,
     } = this.state;
 
-    const { fromTicker, toTicker } = this.props;
+    const { fromTicker, toTicker, address } = this.props;
     const { hasLatestXRate } = this.props;
 
     const availBalance = fromTicker
@@ -451,6 +433,17 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
 
     const displayedFromAmount = fromAmount !== undefined ? fromAmount : "";
     const displayedToAmount = toAmount !== undefined ? toAmount : "";
+
+    const { selected, addresses } = this.props;
+
+    const handleLabel =
+      selected!.label === undefined
+        ? `Address ${selected!.index}`
+        : selected!.label;
+
+    const first = selected!.address.substring(0, 4);
+    const last = selected!.address.substring(selected!.address.length - 4);
+    const truncated = first + "...." + last;
 
     return (
       <Fragment>
@@ -483,9 +476,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 // @ts-ignore
                 label={
                   "From Amount " +
-                  (availBalance !== 0
-                    ? `(Avail: ${iNum(availBalance)})`
-                    : "")
+                  (availBalance !== 0 ? `(Avail: ${iNum(availBalance)})` : "")
                 }
                 placeholder="Enter amount"
                 type="number"
@@ -518,35 +509,47 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 onChange={this.onEnterToAmount}
                 error={toTicker === null ? "Please select an asset first" : ""}
                 readOnly={toTicker === null}
+                onClick={this.setExchangePriority}
               />
-              {selectedTab === ExchangeTab.Advanced && (
-                <Fragment>
-                  <Dropdown
-                    label="Priority"
-                    placeholder="Select Priority"
-                    name="exchange_priority"
-                    value={xassetConversion ? "Standard" : selectedPrio.name}
-                    ticker={
-                      xassetConversion ? "Unlocks ~20m" : selectedPrio.ticker
-                    }
-                    options={exchangePrioOptions}
-                    onClick={this.setExchangePriority}
-                    disabled={xassetConversion ? true : false}
-                  />
-
-                  <Input
-                    label="Recipient Address (Optional)"
-                    placeholder="Exchange to another address"
-                    name="externAddress"
-                    type="text"
-                    value={externAddress}
-                    onChange={this.onEnterExternAddress}
-                    error={this.recipientIsValid()}
-                  />
-                </Fragment>
-              )}
             </Form>
-            <Container>
+
+            {selectedTab === ExchangeTab.Advanced && (
+              <WideContainer>
+                <Dropdown
+                  label="Priority"
+                  placeholder="Select Priority"
+                  name="exchange_priority"
+                  value={xassetConversion ? "Standard" : selectedPrio.name}
+                  ticker={
+                    xassetConversion ? "Unlocks ~20m" : selectedPrio.ticker
+                  }
+                  options={exchangePrioOptions}
+                  onClick={this.setExchangePriority}
+                  disabled={xassetConversion ? true : false}
+                />
+                <AddressDropdown
+                  label="From Address (Optional)"
+                  placeholder="Select from address"
+                  name="from_address"
+                  value={handleLabel}
+                  address={truncated}
+                  options={addresses}
+                  onClick={this.selectAddress}
+                  hideCreateAddress
+                />
+                <Description
+                  label="Recipient Address (Optional)"
+                  placeholder="Exchange to another address"
+                  name="externAddress"
+                  type="text"
+                  value={externAddress}
+                  onChange={this.onEnterExternAddress}
+                  error={this.recipientIsValid()}
+                  rows="2"
+                />
+              </WideContainer>
+            )}
+            <WideContainer>
               <ExchangeSummary
                 xasset_conversion={this.state.xassetConversion}
                 xRate={this.props.xRate}
@@ -564,7 +567,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 disabled={this.validateExchange(availBalance)}
                 loading={this.props.isProcessingExchange}
               />
-            </Container>
+            </WideContainer>
           </Fragment>
         </Body>
       </Fragment>
@@ -586,6 +589,8 @@ const mapStateToProps = (state: DesktopAppState) => ({
   fromTicker: selectFromTicker(state.exchangeProcess),
   toTicker: selectToTicker(state.exchangeProcess),
   balances: state.xBalance,
+  selected: selectSelectedAddress(state),
+  addresses: state.address.entrys,
 });
 
 export const ExchangePage = withRouter(
@@ -594,5 +599,6 @@ export const ExchangePage = withRouter(
     setToTicker,
     setFromTicker,
     showModal,
+    setSelectedAddress,
   })(Exchange)
 );

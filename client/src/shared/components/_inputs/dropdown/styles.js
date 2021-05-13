@@ -8,10 +8,11 @@ const appear = keyframes`
 `;
 
 export const Container = styled.div`
-  display: flex;
+  display: grid;
   flex-direction: column;
   padding-bottom: 12px;
-  grid-column: ${(props) => (props.width ? "1 / 3" : null)};
+  grid-column: ${(props) => (props.gridColumn ? "1 / 3" : null)};
+  width: 100%;
 
   ${media.mobile`
     grid-column: 1 / 3;

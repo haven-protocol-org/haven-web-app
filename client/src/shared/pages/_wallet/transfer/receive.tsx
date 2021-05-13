@@ -80,6 +80,10 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
         ? `Address ${selected!.index}`
         : selected!.label;
 
+    const first = selected!.address.substring(0, 4);
+    const last = selected!.address.substring(selected!.address.length - 4);
+    const truncated = first + "...." + last;
+
     return (
       <Fragment>
         <Form>
@@ -88,6 +92,7 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
             readOnly={true}
             value={handleLabel}
             options={addresses}
+            address={truncated}
             onClick={this.selectAddress}
             editable={true}
             editAddress={this.showAddressModal}
@@ -109,6 +114,7 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
               type={"text"}
               name="address"
               value={selected!.address}
+              ticker={truncated}
               readOnly={true}
             />
           )}

@@ -12,6 +12,7 @@ import {
   Address,
   Edit,
   Block,
+  Ticker,
 } from "./styles";
 import { Label, Error } from "../../../../assets/styles/type.js";
 
@@ -44,8 +45,6 @@ class AddressDropdown extends React.Component {
       const last = address.substring(address.length - 4);
       const truncated = first + "...." + last;
 
-      // const handleLabel = label === undefined ? `Address ${index}` : label;
-
       return (
         <>
           <Item
@@ -73,7 +72,13 @@ class AddressDropdown extends React.Component {
       placeholder,
       editAddress,
       editable,
+      address,
+      hideCreateAddress,
     } = this.props;
+
+    const first = address.substring(0, 4);
+    const last = address.substring(address.length - 4);
+    const truncated = first + "...." + last;
 
     return (
       <Container>
@@ -84,21 +89,25 @@ class AddressDropdown extends React.Component {
         <Select>
           <Button onClick={this.showDropdownMenu}>
             <Row>
-              <Name>{!value ? placeholder : value}</Name>
+              <Block>
+                <Name>{!value ? placeholder : value}</Name>
+                <Ticker>{address}</Ticker>
+              </Block>
             </Row>
           </Button>
           {displayMenu && (
             <Wrapper>
               {this.renderOptions()}
-              <Item key="addAddress" onClick={editAddress}>
-                <Row>
-                  <Block>
-                    <Name>{"Create address"}</Name>
-                    <Address>{""}</Address>
-                  </Block>
-                  {editable && <Edit onClick={editAddress}>Create</Edit>}
-                </Row>
-              </Item>
+              {!hideCreateAddress && (
+                <Item key="addAddress" onClick={editAddress}>
+                  <Row>
+                    <Block>
+                      <Name>{"Create address"}</Name>
+                    </Block>
+                    {editable && <Edit onClick={editAddress}>Create</Edit>}
+                  </Row>
+                </Item>
+              )}
             </Wrapper>
           )}
         </Select>
