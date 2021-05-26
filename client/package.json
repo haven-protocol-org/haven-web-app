@@ -23,6 +23,7 @@
     "build:web": "bash -ac '. ./env/.env.net; . ./env/.env.web; npm version patch; react-scripts build -- --stats'",
     "start:desktop": "bash -ac '. ./env/.env.net; . ./env/.env.desktop; react-scripts start'",
     "build:desktop": "bash -ac '. ./env/.env.net; . ./env/.env.desktop; . ./env/.env.desktop.build;  react-scripts build'",
+    "build:web:ci": "bash -ac \". ./env/.env.web; react-scripts build\"",
     "build:desktop:ci": "bash -ac \". ./env/.env.desktop; . ./env/.env.desktop.build;  react-scripts build\"",
     "copy-build": "rm -rf ../haven-desktop-app/client && rm -rf ./build/{HavenWebWorker*,haven_offshore*} && cp -rf ./build ../haven-desktop-app/client",
     "copy-haven-core": "bash -ac 'cp ./node_modules/haven-wallet-core/dist/{HavenWebWorker*,haven_offshore*} ./public'",
