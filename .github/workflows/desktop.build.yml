@@ -7,14 +7,14 @@ on:
   push:
     branches:
       - develop
-      - feature/xassets
+      - master
   pull_request:
     branches:
       - develop
-      - feature/xassets
+      - master
 
 env:
-  REACT_APP_NET_TYPE_ID: 0
+  REACT_APP_NET_TYPE_ID: 1
 
 jobs:
   build:
