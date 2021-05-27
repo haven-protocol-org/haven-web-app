@@ -1,6 +1,6 @@
 {
   "name": "haven_web_wallet",
-  "version": "2.1.14",
+  "version": "2.1.16",
   "private": true,
   "dependencies": {
     "big-integer": "^1.6.48",
@@ -20,7 +20,7 @@
   "scripts": {
     "analyze": "npx webpack-bundle-analyzer './build/bundle-stats.json'",
     "start:web": "bash -ac '. ./env/.env.net; . ./env/.env.web; react-scripts start'",
-    "build:web": "bash -ac '. ./env/.env.net; . ./env/.env.web; npm version patch; react-scripts build -- --stats'",
+    "build:web": "bash -ac '. ./env/.env.net; . ./env/.env.web; react-scripts build -- --stats'",
     "start:desktop": "bash -ac '. ./env/.env.net; . ./env/.env.desktop; react-scripts start'",
     "build:desktop": "bash -ac '. ./env/.env.net; . ./env/.env.desktop; . ./env/.env.desktop.build;  react-scripts build'",
     "build:desktop:ci": "bash -ac \". ./env/.env.desktop; . ./env/.env.desktop.build;  react-scripts build\"",
