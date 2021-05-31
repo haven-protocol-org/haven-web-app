@@ -9,7 +9,6 @@ export const Overview = styled.div`
   align-items: center;
   justify-content: center;
   border-bottom: 1px solid ${(props) => props.theme.body.border};
-
   margin-top: 68px;
 
   ${media.laptop`

@@ -18,6 +18,10 @@ export const Container = styled.div`
     align-items: center;
     justify-content: center;
   `}
+
+  ${media.mobile`
+    height: 200px;
+  `}
 `;
 
 export const Pending = styled.div`
