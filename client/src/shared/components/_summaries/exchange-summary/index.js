@@ -27,7 +27,6 @@ export const ExchangeSummary = ({
     xFromTicker = toTicker;
     rate = 1 / xRate;
   }
-  /////////////////////
 
   return (
     <Wrapper>
@@ -36,7 +35,7 @@ export const ExchangeSummary = ({
           <Key>Conversion Rate</Key>
           <Value active={true}>
             {!hasLatestXRate ? (
-              <Error>Awaiting lastest rates...</Error>
+              <Error>Awaiting latest rates...</Error>
             ) : (
               `1 ${xFromTicker} : ${iNum(rate)} ${xToTicker}`
             )}
