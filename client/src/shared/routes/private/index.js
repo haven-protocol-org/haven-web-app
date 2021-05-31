@@ -12,7 +12,7 @@ import { SettingsDesktop } from "../../../platforms/desktop/pages/_wallet/settin
 import { connect } from "react-redux";
 import { selectIsLoggedIn } from "../../reducers/walletSession";
 import Page from "../../components/_layout/page";
-import Menu from "../../components/_layout/menu/thick";
+import Menu from "../../components/_layout/menu/icons";
 
 import { isDesktop, isWeb } from "constants/env";
 import { SettingsWeb } from "platforms/web/pages/_wallet/settings";

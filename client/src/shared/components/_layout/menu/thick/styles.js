@@ -67,7 +67,6 @@ export const Wrapper = styled.div`
 export const Icon = styled.img`
   height: 24px;
   width: 24px;
-  background: white;
 `;
 
 export const Item = styled(NavLink).attrs({
