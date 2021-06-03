@@ -86,7 +86,7 @@ jobs:
       run: |
           npm install
 
-     - name: Copy wallet core to root folder
+    - name: Copy wallet core to root folder
       working-directory: client
       run: |
           npm run copy-haven-core
