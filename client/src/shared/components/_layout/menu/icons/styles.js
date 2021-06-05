@@ -39,14 +39,34 @@ export const Asset = styled(AssetIcon)`
   width: 24px;
 
   .dark_border {
-    fill: ${(props) => props.theme.type.primary};
+    fill: ${(props) =>
+      props.item === "assets"
+        ? props.theme.type.inverse
+        : props.theme.type.primary};
     fill-opacity: ${(props) => (props.item === "assets" ? 1 : 0.5)};
   }
 
   .light_border {
-    fill: ${(props) => props.theme.type.primary};
+    fill: ${(props) =>
+      props.item === "assets"
+        ? props.theme.type.inverse
+        : props.theme.type.primary};
     fill-opacity: ${(props) => (props.item === "assets" ? 0.5 : 0.3)};
   }
+
+  ${media.laptop`
+
+    .dark_border {
+      fill: ${(props) => props.item === "assets" && props.theme.type.primary};
+      fill-opacity: ${(props) => (props.item === "assets" ? 1 : 0.5)};
+    }
+
+    .light_border {
+      fill: ${(props) => props.item === "assets" && props.theme.type.secondary};
+      fill-opacity: ${(props) => (props.item === "assets" ? 0.8 : 0.3)};
+    }
+
+  `};
 `;
 
 export const Convert = styled(ConvertIcon)`
@@ -54,13 +74,35 @@ export const Convert = styled(ConvertIcon)`
   width: 24px;
 
   .dark_border {
-    fill: ${(props) => props.theme.type.primary};
+    fill: ${(props) =>
+      props.item === "convert"
+        ? props.theme.type.inverse
+        : props.theme.type.primary};
     fill-opacity: ${(props) => (props.item === "convert" ? 1 : 0.5)};
   }
 
   .light_border {
-    fill: ${(props) => props.theme.type.primary};
+    fill: ${(props) =>
+      props.item === "convert"
+        ? props.theme.type.inverse
+        : props.theme.type.primary};
     fill-opacity: ${(props) => (props.item === "convert" ? 0.5 : 0.3)};
+
+    ${media.laptop`
+
+      .dark_border {
+        fill: ${(props) =>
+          props.item === "convert" && props.theme.type.primary};
+        fill-opacity: ${(props) => (props.item === "convert" ? 1 : 0.5)};
+      }
+
+      .light_border {
+        fill: ${(props) =>
+          props.item === "convert" && props.theme.type.secondary};
+        fill-opacity: ${(props) => (props.item === "convert" ? 0.8 : 0.3)};
+      }
+
+    `};
   }
 `;
 
@@ -69,14 +111,35 @@ export const Transfer = styled(TransferIcon)`
   width: 24px;
 
   .dark_border {
-    fill: ${(props) => props.theme.type.primary};
+    fill: ${(props) =>
+      props.item === "transfer"
+        ? props.theme.type.inverse
+        : props.theme.type.primary};
     fill-opacity: ${(props) => (props.item === "transfer" ? 1 : 0.5)};
   }
 
   .light_border {
-    fill: ${(props) => props.theme.type.primary};
+    fill: ${(props) =>
+      props.item === "transfer"
+        ? props.theme.type.inverse
+        : props.theme.type.primary};
     fill-opacity: ${(props) => (props.item === "transfer" ? 0.5 : 0.3)};
   }
+
+  ${media.laptop`
+
+    .dark_border {
+      fill: ${(props) => props.item === "transfer" && props.theme.type.primary};
+      fill-opacity: ${(props) => (props.item === "transfer" ? 1 : 0.5)};
+    }
+
+    .light_border {
+      fill: ${(props) =>
+        props.item === "transfer" && props.theme.type.secondary};
+      fill-opacity: ${(props) => (props.item === "transfer" ? 0.8 : 0.3)};
+    }
+
+  `};
 `;
 
 export const Settings = styled(SettingsIcon)`
@@ -84,14 +147,35 @@ export const Settings = styled(SettingsIcon)`
   width: 24px;
 
   .dark_border {
-    fill: ${(props) => props.theme.type.primary};
+    fill: ${(props) =>
+      props.item === "settings"
+        ? props.theme.type.inverse
+        : props.theme.type.primary};
     fill-opacity: ${(props) => (props.item === "settings" ? 1 : 0.5)};
   }
 
   .light_border {
-    fill: ${(props) => props.theme.type.primary};
+    fill: ${(props) =>
+      props.item === "settings"
+        ? props.theme.type.inverse
+        : props.theme.type.primary};
     fill-opacity: ${(props) => (props.item === "settings" ? 0.5 : 0.3)};
   }
+
+  ${media.laptop`
+
+    .dark_border {
+      fill: ${(props) => props.item === "settings" && props.theme.type.primary};
+      fill-opacity: ${(props) => (props.item === "settings" ? 1 : 0.5)};
+    }
+
+    .light_border {
+      fill: ${(props) =>
+        props.item === "settings" && props.theme.type.secondary};
+      fill-opacity: ${(props) => (props.item === "settings" ? 0.8 : 0.3)};
+    }
+
+  `};
 `;
 
 export const Chevron = styled(ChevronIcon)`
@@ -103,7 +187,7 @@ export const Chevron = styled(ChevronIcon)`
   `}
 
   .chevron_color {
-    fill: ${(props) => props.theme.type.primary};
+    fill: ${(props) => props.theme.type.inverse};
   }
 `;
 
