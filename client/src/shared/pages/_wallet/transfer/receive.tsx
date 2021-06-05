@@ -7,6 +7,8 @@ import Form from "../../../components/_inputs/form";
 import Input from "../../../components/_inputs/input";
 import { Container } from "./styles";
 import { DesktopAppState } from "platforms/desktop/reducers";
+
+// Address parts
 import { AddressEntry } from "shared/reducers/address";
 import { writeText } from "vendor/clipboard/clipboard-polyfill";
 import { showModal } from "../../../actions/modal";

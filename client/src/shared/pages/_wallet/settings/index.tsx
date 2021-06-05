@@ -18,6 +18,16 @@ import { isTemporaryWallet as selectIsTemporaryWallet } from "shared/reducers/wa
 import { selectSyncState } from "shared/reducers/chain";
 import { SyncState } from "shared/types/types";
 
+// Address parts
+import { AddressEntry } from "shared/reducers/address";
+import { writeText } from "vendor/clipboard/clipboard-polyfill";
+import { showModal } from "../../../actions/modal";
+import { MODAL_TYPE } from "../../../reducers/modal";
+import { selectSelectedAddress } from "../../../reducers/address";
+import { setSelectedAddress } from "shared/actions/address";
+import AddressDropdown from "../../../components/_inputs/addresses_dropdown/index.js";
+import Description from "../../../components/_inputs/description";
+
 const options = [
   { theme: "dark", value: "Dark Theme" },
   { theme: "light", value: "Light Theme" },
@@ -52,6 +62,7 @@ class SettingsPage extends Component<SettingsProps, SettingsState> {
     psk: "",
     seed: "",
     synced: true,
+    copyButtonState: "Copy",
   };
 
   componentDidMount() {
@@ -78,6 +89,34 @@ class SettingsPage extends Component<SettingsProps, SettingsState> {
     this.props.storeKeyFileToDisk(this.props.wallet.activeWallet);
   };
 
+  selectAddress = (selected: AddressEntry) => {
+    this.props.setSelectedAddress(selected.index);
+  };
+
+  clipboardAddress = () => {
+    const { address } = this.props.selected!;
+
+    this.setState({
+      copyButtonState: "Copied...",
+    });
+
+    writeText(address);
+
+    setTimeout(() => {
+      this.setState({
+        copyButtonState: "Copy",
+      });
+    }, 1000);
+  };
+
+  showQRCodeModal = () => {
+    this.props.showModal(MODAL_TYPE.ShowQRCode);
+  };
+
+  showAddressModal = () => {
+    this.props.showModal(MODAL_TYPE.ShowAddressModal);
+  };
+
   render() {
     const { value, reveal } = this.state;
     const seed = this.props.mnemonic;
@@ -87,6 +126,23 @@ class SettingsPage extends Component<SettingsProps, SettingsState> {
     }
 
     const { isSyncing } = this.props.syncState;
+
+    const windowWidth = window.innerWidth;
+
+    if (this.props.addresses.length === 0) {
+      return null;
+    }
+
+    const { selected, addresses } = this.props;
+
+    const handleLabel =
+      selected!.label === undefined
+        ? `Address ${selected!.index}`
+        : selected!.label;
+
+    const first = selected!.address.substring(0, 4);
+    const last = selected!.address.substring(selected!.address.length - 4);
+    const truncated = first + "...." + last;
 
     return (
       <Body>
@@ -104,6 +160,57 @@ class SettingsPage extends Component<SettingsProps, SettingsState> {
             onClick={this.handleClick}
           />
         </Form>
+        <Header title="Addresses" description="Manage and create addresses" />
+        <>
+          <Form>
+            <AddressDropdown
+              label="Select or Create Address"
+              readOnly={true}
+              value={handleLabel}
+              options={addresses}
+              address={truncated}
+              onClick={this.selectAddress}
+              editable={true}
+              editAddress={this.showAddressModal}
+            />
+            {windowWidth < 1380 ? (
+              <Description
+                label={`Address (${handleLabel})`}
+                width={true}
+                value={selected!.address}
+                readOnly={true}
+                rows={windowWidth < 600 ? "3" : "2"}
+              />
+            ) : (
+              <Input
+                ref={(textarea) => (this.addressValue = textarea)}
+                label={`Address (${handleLabel})`}
+                placeholder="Select an address"
+                width={true}
+                type={"text"}
+                name="address"
+                value={selected!.address}
+                ticker={truncated}
+                readOnly={true}
+              />
+            )}
+          </Form>
+          <Container>
+            <DoubleFooter
+              // Left Section
+              leftLabel={"Show QR"}
+              leftDisabled={false}
+              leftLoading={false}
+              leftOnClick={this.showQRCodeModal}
+              leftVisible={true}
+              // Right Section
+              rightLabel={this.state.copyButtonState}
+              rightDisabled={false}
+              rightLoading={false}
+              rightOnClick={this.clipboardAddress}
+            />
+          </Container>
+        </>
 
         <Header
           title="Private Keys"
@@ -189,6 +296,8 @@ class SettingsPage extends Component<SettingsProps, SettingsState> {
 }
 
 const mapStateToProps = (state: HavenAppState) => ({
+  selected: selectSelectedAddress(state),
+  addresses: state.address.entrys,
   theme: state.theme,
   syncState: selectSyncState(state),
   wallet: state.walletSession,
@@ -197,5 +306,7 @@ const mapStateToProps = (state: HavenAppState) => ({
 
 export const Settings = connect(mapStateToProps, {
   selectTheme,
+  showModal,
+  setSelectedAddress,
   storeKeyFileToDisk,
 })(SettingsPage);
