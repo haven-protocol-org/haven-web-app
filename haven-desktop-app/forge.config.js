@@ -132,7 +132,11 @@ module.exports = {
     {
       name: "@electron-forge/maker-deb",
       platforms: ["linux"],
-      config: {name:"haven", productName:"haven"},
+      config: {
+        name: "haven",
+        productName: "haven",
+        icon: "./icons/icon.png",
+      },
     },
   ],
 
