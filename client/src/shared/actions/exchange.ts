@@ -60,6 +60,7 @@ export function createExchange(
   toAmount: number,
   priority: number,
   externAddress: string,
+  subaddressIndex:number | undefined,
 ): any {
   return async (dispatch: any, getState: () => DesktopAppState) => {
     const address =
@@ -112,6 +113,7 @@ export function createExchange(
       relay: false,
       txType,
       priority,
+      subaddressIndex,
       currency
     } as Partial<ITxConfig>;
 

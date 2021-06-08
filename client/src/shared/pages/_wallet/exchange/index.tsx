@@ -1,5 +1,5 @@
 // Library Imports
-import React, { Component, Fragment } from "react";
+import { Component, Fragment } from "react";
 import { connect } from "react-redux";
 // Relative Imports
 import Body from "../../../components/_layout/body";
@@ -31,14 +31,14 @@ import {
   selectToTicker,
 } from "shared/reducers/exchangeProcess";
 import { setFromTicker, setToTicker } from "shared/actions/exchange";
-import { NO_BALANCE, XBalances } from "shared/reducers/xBalance";
-import { convertBalanceToMoney, logM, iNum } from "utility/utility";
+import { XBalances } from "shared/reducers/xBalance";
+import { convertBalanceToMoney, iNum } from "utility/utility";
 import { showModal } from "shared/actions/modal";
 import { MODAL_TYPE } from "shared/reducers/modal";
 import { ExchangeSummary } from "shared/components/_summaries/exchange-summary";
 import { setSelectedAddress } from "../../../actions/address";
-import { selectSelectedAddress } from "../../../reducers/address";
-import { Container, Wrapper, WideContainer, ShortContainer } from "./styles";
+import { AddressEntry, selectSelectedAddress } from "../../../reducers/address";
+import { WideContainer } from "./styles";
 
 enum ExchangeTab {
   Basic,
@@ -59,6 +59,7 @@ interface ExchangeProps extends RouteComponentProps<any> {
   fromTicker: Ticker | null;
   toTicker: Ticker | null;
   balances: XBalances;
+  addresses:AddressEntry [];
 }
 
 type ExchangeState = {
@@ -71,6 +72,7 @@ type ExchangeState = {
   fromOptions: AssetOption[];
   toOptions: AssetOption[];
   xassetConversion: boolean;
+  selectedAddress:AddressEntry;
 };
 
 interface AssetOption {
@@ -109,6 +111,9 @@ const exchangePrioOptions: ExchangePrioOption[] = [
   { name: "High", ticker: "Unlocks ~6h", percent: "20%", prio: 3 },
 ];
 
+
+const ALL_ADDRESSES: AddressEntry = {index:-1, label:"All Addresses", address:"", used: false};
+
 const INITIAL_STATE: ExchangeState = {
   fromAmount: undefined,
   toAmount: undefined,
@@ -119,6 +124,7 @@ const INITIAL_STATE: ExchangeState = {
   fromOptions: [...assetOptions],
   toOptions: [xusdOption],
   xassetConversion: false,
+  selectedAddress: ALL_ADDRESSES,
 };
 
 class Exchange extends Component<ExchangeProps, ExchangeState> {
@@ -309,7 +315,8 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       fromAmount,
       toAmount,
       this.state.selectedPrio.prio,
-      this.state.externAddress
+      this.state.externAddress,
+      this.state.selectedAddress.index
     );
   };
 
@@ -396,7 +403,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
   };
 
   selectAddress = (selected: AddressEntry) => {
-    this.props.setSelectedAddress(selected.index);
+    this.setState({selectedAddress: selected});
   };
 
   render() {
@@ -409,9 +416,10 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       fromOptions,
       toOptions,
       xassetConversion,
+      selectedAddress
     } = this.state;
 
-    const { fromTicker, toTicker, address } = this.props;
+    const { addresses, fromTicker, toTicker } = this.props;
     const { hasLatestXRate } = this.props;
 
     const availBalance = fromTicker
@@ -434,16 +442,25 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     const displayedFromAmount = fromAmount !== undefined ? fromAmount : "";
     const displayedToAmount = toAmount !== undefined ? toAmount : "";
 
-    const { selected, addresses } = this.props;
-
     const handleLabel =
-      selected!.label === undefined
-        ? `Address ${selected!.index}`
-        : selected!.label;
+      selectedAddress!.label === undefined
+        ? `Address ${selectedAddress!.index}`
+        : selectedAddress!.label;
 
-    const first = selected!.address.substring(0, 4);
-    const last = selected!.address.substring(selected!.address.length - 4);
-    const truncated = first + "...." + last;
+    let truncated: string;
+    if (selectedAddress.index === -1 ) {
+
+      truncated = "(Default)";
+
+    } else {
+
+      const first = selectedAddress!.address.substring(0, 4);
+      const last = selectedAddress!.address.substring(selectedAddress!.address.length - 4);
+      truncated = first + "...." + last;
+
+    }
+
+
 
     return (
       <Fragment>
@@ -592,8 +609,7 @@ const mapStateToProps = (state: DesktopAppState) => ({
   fromTicker: selectFromTicker(state.exchangeProcess),
   toTicker: selectToTicker(state.exchangeProcess),
   balances: state.xBalance,
-  selected: selectSelectedAddress(state),
-  addresses: state.address.entrys,
+  addresses: [ALL_ADDRESSES, ...state.address.entrys],
 });
 
 export const ExchangePage = withRouter(
@@ -602,6 +618,5 @@ export const ExchangePage = withRouter(
     setToTicker,
     setFromTicker,
     showModal,
-    setSelectedAddress,
   })(Exchange)
 );
