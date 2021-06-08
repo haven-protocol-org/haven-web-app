@@ -36,8 +36,7 @@ import { convertBalanceToMoney, iNum } from "utility/utility";
 import { showModal } from "shared/actions/modal";
 import { MODAL_TYPE } from "shared/reducers/modal";
 import { ExchangeSummary } from "shared/components/_summaries/exchange-summary";
-import { setSelectedAddress } from "../../../actions/address";
-import { AddressEntry, selectSelectedAddress } from "../../../reducers/address";
+import { AddressEntry } from "../../../reducers/address";
 import { WideContainer } from "./styles";
 
 enum ExchangeTab {
@@ -309,6 +308,8 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
 
     this.sendTicker = fromTicker;
 
+    const selectedAddressIndex = this.state.selectedAddress.index !== -1 ? this.state.selectedAddress.index : undefined;
+
     this.props.createExchange(
       fromTicker,
       toTicker,
@@ -316,7 +317,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       toAmount,
       this.state.selectedPrio.prio,
       this.state.externAddress,
-      this.state.selectedAddress.index
+      selectedAddressIndex
     );
   };
 
