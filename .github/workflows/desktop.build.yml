@@ -33,7 +33,7 @@ jobs:
     - name: Install client dependencies
       working-directory: client
       run: |
-          npm ci
+          npm install
 
     - name: Audit client dependencies
       working-directory: client
@@ -55,7 +55,7 @@ jobs:
     - name: Install backend dependencies
       working-directory: haven-desktop-app
       run: |
-          npm ci
+          npm install
 
     - name: Audit backend dependencies
       working-directory: haven-desktop-app
