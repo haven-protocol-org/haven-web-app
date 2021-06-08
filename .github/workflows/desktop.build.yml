@@ -7,15 +7,17 @@ on:
   push:
     branches:
       - develop
+      - master
   pull_request:
     branches:
       - develop
+      - master
 
 env:
   REACT_APP_NET_TYPE_ID: 0
 
 jobs:
-  build:
+  desktop-build:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -69,4 +71,41 @@ jobs:
       with:
         name: ${{ matrix.os }}
         path: haven-desktop-app/out/make/
+
+  web-build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: '14'
+    
+    - name: Install client dependencies
+      working-directory: client
+      run: |
+          npm install
+
+    - name: Copy wallet core to root folder
+      working-directory: client
+      run: |
+          npm run copy-haven-core
+
+    - name: Audit client dependencies
+      working-directory: client
+      run: |
+          npm audit fix --audit-level=moderate
+
+    - name: Client Build for Web
+      working-directory: client
+      env:
+        CI: false
+      run: |
+          npm run build:web:ci
+
+    - name: Upload web build
+      uses: actions/upload-artifact@v2
+      with:
+        name: web_build
+        path: client/build/
 
