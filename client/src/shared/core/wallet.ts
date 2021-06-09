@@ -10,6 +10,7 @@ import {
 } from "../../typings";
 import MoneroTxWallet from "haven-wallet-core/src/main/js/wallet/model/MoneroTxWallet";
 import HavenBalance from "haven-wallet-core/src/main/js/wallet/model/HavenBalance";
+import MoneroAddressBookEntry from "haven-wallet-core/src/main/js/wallet/model/MoneroAddressBookEntry";
 
 let wallet: MoneroWalletWasm;
 
@@ -200,4 +201,20 @@ export const rescanSpent = () => {
 export const saveWallet = () => {
   return wallet.save();
 }
+
+export const getAddressBookEntries = async (entryIndices: any[] = []): Promise<MoneroAddressBookEntry[]> => {
+  return wallet.getAddressBookEntries(entryIndices);
+}
+
+export const addAddressBookEntry = async (address: string, description: string): Promise<number> => {
+  return wallet.addAddressBookEntry(address, description);
+};
+
+export const editAddressBookEntry = async(index: number, setAddress: boolean, address: string, setDescription: boolean, description: string): Promise<void> => {
+  return wallet.editAddressBookEntry(index, setAddress, address, setDescription, description);
+}
+
+export const deleteAddressBookEntry = async (entryIdx: any): Promise<void> => {
+  return wallet.deleteAddressBookEntry(entryIdx);
+} 
 
