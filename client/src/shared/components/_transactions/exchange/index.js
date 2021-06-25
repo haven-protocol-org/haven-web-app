@@ -14,10 +14,6 @@ import {
 } from "./styles";
 import Confirm from "../../confirm/index.js";
 import Cell from "../cells/index.js";
-import {
-  convertBalanceToMoney,
-  bigIntegerToBigInt,
-} from "../../../../utility/utility.ts";
 
 const Transaction = ({
   xRate,
@@ -62,7 +58,7 @@ const Transaction = ({
           <Cell left="Recipient Address" right={truncatedAddress} />
         )}
         {xasset_conversion ? (
-          <Cell left="Standard Priority" right="Unlocks ~20m" />
+          <Cell left="Standard Priority" right="Unlocks ~48h" />
         ) : (
           (function () {
             switch (priority) {
