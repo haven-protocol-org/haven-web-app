@@ -84,7 +84,7 @@ const Transaction = ({
         </Row>
         <Confirm
           description={`I accept the ${
-            xasset_conversion ? "~20m" : priorityInfo
+            xasset_conversion ? "48h" : priorityInfo
           } Unlock Time, Details, Terms & Fees`}
           checked={checked}
           onChange={onChange}
@@ -96,7 +96,7 @@ const Transaction = ({
             Details: Approximately{" "}
             <strong style={{ fontWeight: 600 }}>
               {change} {fromTicker} will be temporarily locked and unusable for
-              the entirety of the {xasset_conversion ? "~20m" : priorityInfo}{" "}
+              the entirety of the {xasset_conversion ? "48h" : priorityInfo}{" "}
               unlock priority time
             </strong>
             . However, this amount will be unlocked and usable once the
