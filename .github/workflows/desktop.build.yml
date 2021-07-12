@@ -33,7 +33,7 @@ jobs:
     - name: Install client dependencies
       working-directory: client
       run: |
-          npm install
+          npm install --legacy-peer-deps
 
     - name: Audit client dependencies
       working-directory: client
