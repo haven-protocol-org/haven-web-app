@@ -11,7 +11,6 @@
     "react-redux": "^7.2.4",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "4.0.3",
     "redux": "^4.1.0",
     "redux-thunk": "^2.3.0",
     "redux-watch": "^1.2.0",
@@ -50,6 +49,7 @@
     "@types/react-router": "^5.1.14",
     "@types/react-router-dom": "^5.1.7",
     "@types/redux-watch": "^1.1.0",
+    "react-scripts": "4.0.3",
     "typescript": "^4.2.4"
   }
 }
