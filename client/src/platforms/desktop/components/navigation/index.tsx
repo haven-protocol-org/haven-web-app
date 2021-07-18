@@ -25,7 +25,6 @@ import { SelectedNode } from "platforms/desktop/types";
 import { selectisLocalNode } from "platforms/desktop/reducers/selectedNode";
 import { selectBlockHeight } from "shared/reducers/chain";
 import { SyncState } from "shared/types/types.js";
-import { syncFromFirstIncomingTx, rescanSpent } from "shared/actions/refresh";
 import Search from "../../../../shared/components/search/index.js";
 
 // Local files
@@ -289,7 +288,5 @@ const mapStateToProps = (state: DesktopAppState) => ({
 
 export const NavigationDesktop = connect(mapStateToProps, {
   logout: closeWallet,
-  syncFromFirstIncomingTx,
-  rescanSpent,
   showModal,
 })(Navigation);

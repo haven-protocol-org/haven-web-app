@@ -15,23 +15,10 @@ import {
   OptionsList,
   OptionsSVG,
   Arr,
-  SearchArr,
   Scan,
-  Results,
-  SearchInput,
-  SearchArrow,
   Arrow,
-  SearchDropdown,
-  AssetLabel,
-  TickerLabel,
-  EmptyLabel,
-  SearchCell,
-  Row,
-  TokenLabel,
-  Column,
 } from "./styles.js";
 import Buttons from "./buttons/index.js";
-import { syncFromFirstIncomingTx, rescanSpent } from "shared/actions/refresh";
 import { selectIsLoggedIn } from "shared/reducers/walletSession";
 import { APP_VERSION, NET_TYPE_NAME } from "constants/env";
 import { WebAppState } from "platforms/web/reducers/index.js";
@@ -44,9 +31,7 @@ import Tab from "./tab";
 import { showModal } from "shared/actions/modal";
 import { MODAL_TYPE } from "shared/reducers/modal";
 import { closeWallet } from "shared/actions/walletSession";
-import { AssetList } from "../../../../constants/assets";
 import { XBalances } from "shared/reducers/xBalance";
-import { convertBalanceToMoney, iNum } from "utility/utility";
 import Search from "../../../../shared/components/search/index.js";
 
 interface NavigationProps {
@@ -54,7 +39,6 @@ interface NavigationProps {
   auth: boolean;
   logout: (isWeb: boolean) => void;
   getStoredWallets: () => void;
-  syncFromFirstIncomingTx: () => void;
   rescanSpent: () => void;
   isClosingSession: boolean;
   syncState: SyncState;
@@ -83,9 +67,6 @@ class Navigation extends Component<NavigationProps, {}> {
     this.props.logout(true);
   };
 
-  handleRefreshRequest = (event: any) => {
-    this.props.syncFromFirstIncomingTx();
-  };
 
   showDropdownMenu = (event: any) => {
     event.stopPropagation();
@@ -274,7 +255,5 @@ const mapStateToProps = (state: WebAppState) => ({
 
 export const NavigationWeb = connect(mapStateToProps, {
   logout: closeWallet,
-  syncFromFirstIncomingTx,
-  rescanSpent,
   showModal,
 })(Navigation);
