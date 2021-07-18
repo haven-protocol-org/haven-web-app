@@ -14,7 +14,9 @@ export const getLastBlockHeader = () => {
 };
 
 export const isConnected = () => {
-  return daemon.isConnected();
+  if (daemon) {
+    return daemon.isConnected();
+  }
 };
 
 // only for local nodes
