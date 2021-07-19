@@ -6,6 +6,7 @@ import { HavenAppState } from "platforms/desktop/reducers";
 
 const HAVEN_DB = "haven";
 const WALLET_STORE = "xvault";
+const DB_VERSION = 3;
 
 export const storeKeyFileToDisk = (name: string) => {
   return async (dispatch: any) => {
@@ -55,7 +56,7 @@ export const getWalletCacheByName = async (
 
 const fetchValueByKey = (name: string): Promise<ArrayBuffer> => {
   return new Promise((resolutionFunc, rejectionFunc) => {
-    const openRequest: IDBOpenDBRequest = indexedDB.open(HAVEN_DB, 2);
+    const openRequest: IDBOpenDBRequest = indexedDB.open(HAVEN_DB, DB_VERSION);
     openRequest.onupgradeneeded = function (this: IDBRequest<IDBDatabase>) {
       const db = this.result;
       db.createObjectStore(WALLET_STORE);
@@ -89,7 +90,7 @@ const fetchValueByKey = (name: string): Promise<ArrayBuffer> => {
 
 const fetchKeysFromDB = () => {
   let keys: string[] = [];
-  const openRequest: IDBOpenDBRequest = indexedDB.open("haven", 2);
+  const openRequest: IDBOpenDBRequest = indexedDB.open("haven", DB_VERSION);
   openRequest.onsuccess = function (this: IDBRequest<IDBDatabase>) {
     const db = this.result;
     const transaction = db.transaction("wallet", "readonly");
@@ -104,7 +105,7 @@ const storeWalletDataInIndexedDB = async (name: string): Promise<void> => {
   return new Promise(async (resolutionFunc, rejectionFunc) => {
     const walletData = await walletProxy.getWalletData();
     const wallet = walletData[1];
-    const openRequest: IDBOpenDBRequest = indexedDB.open(HAVEN_DB, 2);
+    const openRequest: IDBOpenDBRequest = indexedDB.open(HAVEN_DB, DB_VERSION);
 
     openRequest.onupgradeneeded = function (this: IDBRequest<IDBDatabase>) {
       const db = this.result;
