@@ -300,10 +300,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     )
       return;
 
-    const exchangeType =
-      fromTicker === Ticker.XHV && toTicker !== Ticker.XHV
-        ? ExchangeType.Offshore
-        : ExchangeType.Onshore;
     const { fromAmount, toAmount } = this.state;
 
     this.sendTicker = fromTicker;
