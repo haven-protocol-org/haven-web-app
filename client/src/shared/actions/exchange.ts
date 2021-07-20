@@ -63,16 +63,21 @@ export function createExchange(
   subaddressIndex:number | undefined,
 ): any {
   return async (dispatch: any, getState: () => DesktopAppState) => {
+
+    dispatch(addErrorNotification("Exchanges disabled in this version!"))
+    return;
+
+
     const address =
       externAddress.trim() !== ""
         ? externAddress
         : selectPrimaryAddress(getState().address.entrys);
 
-      const txType = fromTicker == Ticker.xUSD
+      const txType = fromTicker === Ticker.xUSD
         ? HavenTxType.EXCHANGE_FROM_USD
         : HavenTxType.EXCHANGE_TO_USD;
 
-    const currency = txType == HavenTxType.EXCHANGE_FROM_USD ? toTicker : fromTicker
+    const currency = txType === HavenTxType.EXCHANGE_FROM_USD ? toTicker : fromTicker
     let xassetConversion: boolean;
 
     let exchangeAmount: number;
