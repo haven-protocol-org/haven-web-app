@@ -64,7 +64,7 @@ export function createExchange(
 ): any {
   return async (dispatch: any, getState: () => DesktopAppState) => {
 
-    dispatch(addErrorNotification("Exchanges disabled in this version!"))
+    dispatch(addErrorNotification("Conversions temporarily disabled!"))
     return;
 
 
