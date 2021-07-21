@@ -1,7 +1,7 @@
 {
   "name": "haven",
   "productName": "Haven",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Desktop App for Haven Vault",
   "main": "dist/index.js",
   "scripts": {
@@ -28,7 +28,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "electron-squirrel-startup": "^1.0.0",
-    "haven-wallet-core": "^1.4.57",
+    "haven-wallet-core": "^1.4.59",
     "rxjs": "^7.1.0"
   },
   "devDependencies": {
