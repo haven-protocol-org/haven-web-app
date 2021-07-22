@@ -13,7 +13,7 @@ import {
   Data,
   ShortRow,
 } from "./styles";
-import { isMainnet } from "constants/env";
+import { getNetworkByName, isMainnet } from "constants/env";
 import Dots from "../../_animations/dots";
 
 export interface TransactionProps {
@@ -58,7 +58,7 @@ export const Transaction = ({
   }
 
   const txExplorerLink = `https://explorer${
-    isMainnet() ? "" : "-testnet"
+    isMainnet() ? "" : "-" + getNetworkByName()
   }.havenprotocol.org/tx/${hash}`;
 
   return (

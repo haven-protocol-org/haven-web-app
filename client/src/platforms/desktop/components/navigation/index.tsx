@@ -56,7 +56,7 @@ interface NavigationProps {
 
 class Navigation extends Component<NavigationProps, any> {
   state = {
-    current_network: getNetworkByName(),
+    current_network: NET_TYPE_NAME,
     showOptions: false,
     showNotifications: false,
     mouseIsHovering: false,
@@ -64,12 +64,6 @@ class Navigation extends Component<NavigationProps, any> {
     advancedActive: false,
     startedResync: false,
   };
-
-  onComponentDidMount() {
-    this.setState({
-      current_network: NET_TYPE_NAME,
-    });
-  }
 
   showDropdownMenu = (event: any) => {
     event.preventDefault();
@@ -189,11 +183,7 @@ class Navigation extends Component<NavigationProps, any> {
                 <>
                   <Cell
                     body="Network"
-                    label={
-                      current_network === "testnet"
-                        ? `Testnet v${version}`
-                        : `Mainnet v${version}`
-                    }
+                    label={`${current_network} v${version}`}
                   />
                   <Link
                     body="Help"
