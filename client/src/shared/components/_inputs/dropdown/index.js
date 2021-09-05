@@ -16,21 +16,36 @@ class Dropdown extends React.Component {
   state = {
     displayMenu: false,
     selected: this.props.placeholder,
+    buttonRef: null
   };
 
-  showDropdownMenu = (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-    this.setState({ displayMenu: true }, () => {
-      document.addEventListener("click", this.hideDropdownMenu);
-    });
-  };
+  constructor(props) {
+    super(props)
+
+    this.buttonRef = React.createRef();
+  }
+
+  showDropdownMenu = () => {
+    this.setState({ displayMenu: true });
+  }
 
   hideDropdownMenu = () => {
-    this.setState({ displayMenu: false }, () => {
-      document.removeEventListener("click", this.hideDropdownMenu);
-    });
-  };
+    this.setState({ displayMenu: false });
+  }
+
+  onClickOutside = (e) => {
+    const { target } = e;
+    const { current } = this.buttonRef;
+    if (current && !current.contains(target)) this.hideDropdownMenu();
+  }
+
+  componentDidMount = () => {
+    document.addEventListener("click", this.onClickOutside);
+  }
+
+  componentWillUnmount = () => {
+    document.removeEventListener("click", this.onClickOutside);
+  }
 
   renderOptions = () => {
     const { onClick, options } = this.props;
@@ -66,7 +81,7 @@ class Dropdown extends React.Component {
           <Error>{error}</Error>
         </Labels>
         <Select>
-          <Button disabled={disabled} onClick={this.showDropdownMenu}>
+          <Button type="button" ref={this.buttonRef} disabled={disabled} onClick={this.showDropdownMenu}>
             {value === "Select Asset" ? (
               placeholder
             ) : (
