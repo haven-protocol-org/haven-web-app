@@ -66,14 +66,14 @@ export default class Login extends Component<LoginProps, LoginState> {
   ): void {
     if (prevProps.errorMessageLogin === "" && this.props.errorMessageLogin) {
       this.setState({ error: this.props.errorMessageLogin });
-      setTimeout(() => this.setState({ error: "" }), 2000);
+      setTimeout(() => this.setState({ error: "" }), 5000);
     }
     if (
       prevProps.errorMessageCreation === "" &&
       this.props.errorMessageCreation
     ) {
       this.setState({ error: this.props.errorMessageCreation });
-      setTimeout(() => this.setState({ error: "" }), 2000);
+      setTimeout(() => this.setState({ error: "" }), 5000);
     }
 
     if (prevProps.isWalletCreated === false && this.props.isWalletCreated) {
