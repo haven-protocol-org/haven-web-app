@@ -16,6 +16,7 @@ const Toggle = ({
   width,
   readOnly,
   onClick,
+  onKeyUp,
   reveal,
 }) => {
   return (
@@ -30,6 +31,7 @@ const Toggle = ({
           value={value}
           name={name}
           onChange={onChange}
+          onKeyUp={onKeyUp}
           placeholder={placeholder}
           readOnly={readOnly}
         />
