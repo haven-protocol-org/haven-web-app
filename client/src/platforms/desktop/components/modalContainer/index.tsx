@@ -25,8 +25,8 @@ class ModalContainer extends React.Component<any, any> {
         return <QRCodeModal />;
       case MODAL_TYPE.ShowAddressModal:
         return <ManageAddressModal />;
-      case MODAL_TYPE.LoginOnboarding:
-        return <LoginOnboardingModal />;
+//      case MODAL_TYPE.LoginOnboarding:
+//        return <LoginOnboardingModal />;
       case MODAL_TYPE.RescanBC:
         return <RescanBCMModal />;
     }

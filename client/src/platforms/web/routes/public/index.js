@@ -14,11 +14,12 @@ import { logM } from "utility/utility";
 const onboardingVersion = 2;
 class PublicRoutes extends Component {
   componentDidMount() {
-
+/*
     if (localStorage.getItem("onboard") !== onboardingVersion.toString() && isWeb() ) {
       this.props.showModal(MODAL_TYPE.LoginOnboarding);
       localStorage.setItem("onboard",onboardingVersion);
     }
+*/
   }
 
   render() {
