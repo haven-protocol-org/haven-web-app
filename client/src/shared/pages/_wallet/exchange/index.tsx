@@ -116,7 +116,7 @@ const ALL_ADDRESSES: AddressEntry = {index:-1, label:"All Addresses", address:""
 const INITIAL_STATE: ExchangeState = {
   fromAmount: undefined,
   toAmount: undefined,
-  selectedTab: ExchangeTab.Basic,
+  selectedTab: ExchangeTab.Advanced,
   externAddress: "",
   selectedPrio: exchangePrioOptions[0],
   hasEnough: false,
@@ -439,6 +439,21 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     const displayedFromAmount = fromAmount !== undefined ? fromAmount : "";
     const displayedToAmount = toAmount !== undefined ? toAmount : "";
 
+
+    let tabfragment;
+    //dissable the basic / advanced tabs
+    if(false){
+      tabfragment = <Tab
+      firstTabLabel="Basic"
+      secondTabLabel="Advanced"
+      firstTabState={selectedTab === ExchangeTab.Basic}
+      secondTabState={selectedTab === ExchangeTab.Advanced}
+      firstTabClickEvent={this.toggleBasic}
+      secondTabClickEvent={this.toggleAdvanced}
+      onClick={() => {}}
+      />;
+    }
+
     const handleLabel =
       selectedAddress!.label === undefined
         ? `Address ${selectedAddress!.index}`
@@ -457,8 +472,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
 
     }
 
-
-
     return (
       <Fragment>
         <Body>
@@ -466,15 +479,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
             title="Convert "
             description="Swap between all available Haven assets"
           />
-          <Tab
-            firstTabLabel="Basic"
-            secondTabLabel="Advanced"
-            firstTabState={selectedTab === ExchangeTab.Basic}
-            secondTabState={selectedTab === ExchangeTab.Advanced}
-            firstTabClickEvent={this.toggleBasic}
-            secondTabClickEvent={this.toggleAdvanced}
-            onClick={() => {}}
-          />
+          {tabfragment}
           <Fragment>
             <Form onSubmit={this.handleSubmit}>
               <Dropdown
