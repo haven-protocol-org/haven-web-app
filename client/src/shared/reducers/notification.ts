@@ -5,7 +5,7 @@ import { WebAppState } from "platforms/web/reducers";
 
 export enum NotificationDuration {
   STICKY = -1,
-  DEFAULT = 3500,
+  DEFAULT = 3500, 
 }
 
 export interface HavenNotification {
@@ -25,8 +25,9 @@ export default function (state = INITIAL_STATE, action: AnyAction) {
       return { notifications: [...state.notifications, action.payload] };
     case REMOVE_NOTIFICATION:
       return {
+        //check for matching ids, only return element if the new filtered array doesn't match this one to be removed
         notifications: state.notifications.filter(
-          (not: HavenNotification) => not.id !== action.payload
+          (notification: HavenNotification) => notification.id !== action.payload
         ),
       };
     default:

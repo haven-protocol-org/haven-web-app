@@ -1,6 +1,6 @@
 // Library Imports
 // Relative Imports
-import { Container, Content } from "./styles";
+import { Container, Content, TimerBar } from "./styles";
 import {
   getNotification,
   HavenNotification,
@@ -18,8 +18,10 @@ class Status extends React.Component<StatusProps, any> {
   render() {
     if (!this.props.notifications) return null;
     return this.props.notifications.map((notification, index) => (
-      <Container count={index}  key={notification.id}>
-        <Content type={notification.type}>{notification.message}</Content>
+      <Container count={index} key={notification.id}>
+        <Content type={notification.type}>{notification.message}
+          <TimerBar duration={notification.duration}></TimerBar>
+        </Content>
       </Container>
     ));
   }
