@@ -27,10 +27,12 @@ class Dropdown extends React.Component {
 
   showDropdownMenu = () => {
     this.setState({ displayMenu: true });
+    document.addEventListener("click", this.onClickOutside);
   }
 
   hideDropdownMenu = () => {
     this.setState({ displayMenu: false });
+    document.removeEventListener("click", this.onClickOutside);
   }
 
   onClickOutside = (e) => {
@@ -39,9 +41,6 @@ class Dropdown extends React.Component {
     if (current && !current.contains(target)) this.hideDropdownMenu();
   }
 
-  componentDidMount = () => {
-    document.addEventListener("click", this.onClickOutside);
-  }
 
   componentWillUnmount = () => {
     document.removeEventListener("click", this.onClickOutside);

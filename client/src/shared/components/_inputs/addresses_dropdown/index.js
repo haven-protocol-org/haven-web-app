@@ -20,21 +20,36 @@ class AddressDropdown extends React.Component {
   state = {
     displayMenu: false,
     selected: this.props.placeholder,
+    buttonRef: null
   };
 
+  constructor(props) {
+    super(props)
+    this.buttonRef = React.createRef();
+  }
+
   showDropdownMenu = (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-    this.setState({ displayMenu: true }, () => {
-      document.addEventListener("click", this.hideDropdownMenu);
-    });
+    //event.preventDefault();
+    //event.stopPropagation();
+    // blu - 23.09.2021, commenting these out - seem redundant and stop the click outside of other dropdowns from firing
+    this.setState({ displayMenu: true });
+    document.addEventListener("click", this.onClickOutside);
   };
 
   hideDropdownMenu = () => {
-    this.setState({ displayMenu: false }, () => {
-      document.removeEventListener("click", this.hideDropdownMenu);
-    });
+    this.setState({ displayMenu: false });
+    document.removeEventListener("click", this.onClickOutside);
   };
+
+  onClickOutside = (e) => {
+    const { target } = e;
+    const { current } = this.buttonRef;
+    if (current && !current.contains(target)) this.hideDropdownMenu();
+  }
+
+  componentWillUnmount = () => {
+    document.removeEventListener("click", this.onClickOutside);
+  }
 
   renderOptions = () => {
     const { onClick, options } = this.props;
@@ -74,6 +89,7 @@ class AddressDropdown extends React.Component {
       editable,
       address,
       hideCreateAddress,
+      disabled
     } = this.props;
 
     const first = address.substring(0, 4);
@@ -87,7 +103,7 @@ class AddressDropdown extends React.Component {
           <Error>{error}</Error>
         </Labels>
         <Select>
-          <Button onClick={this.showDropdownMenu}>
+          <Button type="button" ref={this.buttonRef} disabled={disabled} onClick={this.showDropdownMenu}>
             <Row>
               <Block>
                 <Name>{!value ? placeholder : value}</Name>
