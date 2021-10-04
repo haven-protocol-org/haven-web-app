@@ -64,10 +64,6 @@ export function createExchange(
 ): any {
   return async (dispatch: any, getState: () => DesktopAppState) => {
 
-    dispatch(addErrorNotification("Conversions temporarily disabled!"))
-    return;
-
-
     const address =
       externAddress.trim() !== ""
         ? externAddress
