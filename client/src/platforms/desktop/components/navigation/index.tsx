@@ -210,11 +210,7 @@ class Navigation extends Component<NavigationProps, any> {
                     <>
                       <Cell
                         body="Network"
-                        label={
-                          current_network === "testnet"
-                            ? `Testnet v${version}`
-                            : `Mainnet v${version}`
-                        }
+                        label={`${current_network} v${version}`}
                       />
                       {!syncStarted ? (
                         <>
