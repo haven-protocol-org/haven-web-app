@@ -22,11 +22,10 @@ import { MODAL_TYPE } from "shared/reducers/modal";
 import { selectPrimaryAddress } from "shared/reducers/address";
 import {
   ExchangeProcessInfo,
-  ExchangeType,
 } from "shared/reducers/exchangeProcess";
 import { ITxConfig } from "typings";
 import MoneroDestination from "haven-wallet-core/src/main/js/wallet/model/MoneroDestination";
-import { HavenTxType } from "haven-wallet-core";
+//import { HavenTxType } from "haven-wallet-core";
 import MoneroTxWallet from "haven-wallet-core/src/main/js/wallet/model/MoneroTxWallet";
 import bigInt from "big-integer";
 import {convertMoneyToBalance } from "utility/utility";
@@ -69,14 +68,55 @@ export function createExchange(
         ? externAddress
         : selectPrimaryAddress(getState().address.entrys);
 
-      const txType = fromTicker === Ticker.xUSD
+/*      const txType = fromTicker === Ticker.xUSD
         ? HavenTxType.EXCHANGE_FROM_USD
         : HavenTxType.EXCHANGE_TO_USD;
 
     const currency = txType === HavenTxType.EXCHANGE_FROM_USD ? toTicker : fromTicker
-    let xassetConversion: boolean;
+    */
+    //only handle exchanges
+    if(toTicker === fromTicker){
+      dispatch(addErrorNotification({"error":"Conversions must be between different assets"}));
+      return ;
+    }
 
-    let exchangeAmount: number;
+    //conversions should always be "proxied" via xUSD
+    if(toTicker !== Ticker.xUSD && fromTicker !== Ticker.xUSD){
+      dispatch(addErrorNotification({"error":"Conversions must be via xUSD"}));
+      return ;
+    }
+
+
+    // we have a xassetConversion when XHV is not involved
+    let xassetConversion: boolean = fromTicker !== Ticker.XHV && toTicker !== Ticker.XHV;
+
+    let exchangeAmount: number = 0;
+
+    // offshore/onshore tx sends XHV amount
+    if (!xassetConversion) {
+    //offshore TX
+    if(toTicker === Ticker.xUSD ){
+      exchangeAmount = fromAmount;
+    }
+    //onshore TX
+    else if (fromTicker === Ticker.xUSD){ 
+      exchangeAmount = toAmount;
+    }
+  }
+  // xasset conversions sends xUSD amount
+  else {
+    //xasset -> xUSD
+    if(toTicker === Ticker.xUSD ){
+      exchangeAmount = toAmount;
+    }
+    //offshore TX
+    else if (fromTicker === Ticker.xUSD){ 
+      exchangeAmount = fromAmount;
+    }
+  }
+
+
+/*
     //onshore/offshore tx
     if (currency === Ticker.XHV) {
 
@@ -93,12 +133,13 @@ export function createExchange(
       xassetConversion = true;
 
     }
+    */
     let amount = convertMoneyToBalance(exchangeAmount);
-    // we need to round the value as just for diigits are allowed for onshore/offshore
+    // we need to round the value as just for digits are allowed for onshore/offshore
     const roundingValue = bigInt(100000000);
     amount = amount.divide(roundingValue).multiply(roundingValue);
     dispatch(
-      onExchangeCreationFetch({ priority, txType, address, xassetConversion } as Partial<
+      onExchangeCreationFetch({ priority, address, xassetConversion } as Partial<
         ExchangeProcessInfo
       >)
     );
@@ -112,10 +153,10 @@ export function createExchange(
       destinations,
       accountIndex: 0,
       relay: false,
-      txType,
       priority,
       subaddressIndex,
-      currency
+      sourceCurrency: fromTicker,
+      destinationCurrency: toTicker
     } as Partial<ITxConfig>;
 
     try {

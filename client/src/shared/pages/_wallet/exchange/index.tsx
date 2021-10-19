@@ -24,7 +24,6 @@ import { selectNodeHeight } from "shared/reducers/chain";
 import { createExchange } from "platforms/desktop/actions";
 import { Ticker } from "shared/reducers/types";
 import {
-  ExchangeType,
   selectExchangeSucceed,
   selectFromTicker,
   selectIsProcessingExchange,

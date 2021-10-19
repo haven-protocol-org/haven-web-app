@@ -12,7 +12,6 @@ import { TxProcessInfo } from "shared/reducers/transferProcess";
 import { ITxConfig } from "typings";
 import {
   MoneroDestination,
-  HavenTxType,
   MoneroTxPriority,
 } from "haven-wallet-core";
 import {
@@ -31,6 +30,7 @@ export const createTransfer = (
   address: string,
   amount: number,
   fromTicker: Ticker,
+  toTicker: Ticker,
   sweepAll: boolean
 ) => {
 
@@ -42,9 +42,15 @@ export const createTransfer = (
   
 
     const priority = MoneroTxPriority.NORMAL;
-    const txType = HavenTxType.TRANSFER;
-    const currency: Ticker = fromTicker;
+    //const txType = HavenTxType.TRANSFER;
+    //const currency: Ticker = fromTicker;
     
+    if(toTicker !== fromTicker){
+      dispatch(addErrorNotification({"error":"Transfers must be in the same asset"}));
+      return ;
+    }
+
+
     dispatch(
       transferCreationFetch({
         address,
@@ -57,9 +63,9 @@ export const createTransfer = (
       canSplit: true,
       accountIndex: 0,
       relay: false,
-      txType,
       priority,
-      currency
+      sourceCurrency: fromTicker,
+      destinationCurrency: fromTicker
     } as Partial<ITxConfig>;
 
 
