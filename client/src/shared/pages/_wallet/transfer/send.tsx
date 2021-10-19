@@ -9,6 +9,7 @@ import Dropdown from "../../../components/_inputs/dropdown";
 import Footer from "../../../components/_inputs/footer";
 import Form from "../../../components/_inputs/form";
 import Input from "../../../components/_inputs/input";
+import InputButton from "../../../components/_inputs/input_button";
 import { Container } from "./styles";
 import TransferSummary from "shared/components/_summaries/transfer-summary";
 
@@ -121,27 +122,27 @@ class TransferContainer extends Component<TransferProps, TransferState> {
     }
   };
 
-  // setMaxAmount = () => {
-  //   const { selectedAsset } = this.state;
-  //
-  //   let availableBalance = null;
-  //   if (selectedAsset) {
-  //     availableBalance = convertBalanceToMoney(
-  //       this.props.xBalances[selectedAsset.ticker].unlockedBalance
-  //     );
-  //   }
-  //
-  //   if (availableBalance != null) {
-  //     this.setState({
-  //       send_amount: availableBalance.toFixed(2),
-  //       sweep_all: true,
-  //     });
-  //   } else {
-  //     this.setState({
-  //       amountError: "Select an asset",
-  //     });
-  //   }
-  // };
+  setMaxAmount = () => {
+    const { selectedAsset } = this.state;
+  
+    let availableBalance = null;
+    if (selectedAsset) {
+      availableBalance = convertBalanceToMoney(
+        this.props.xBalances[selectedAsset.ticker].unlockedBalance
+      );
+    }
+  
+    if (availableBalance != null) {
+      this.setState({
+        send_amount: availableBalance.toFixed(2),
+        sweep_all: true,
+      });
+    } else {
+      this.setState({
+        amountError: "Select an asset",
+      });
+    }
+  };
 
   amountIsValid = (availableBalance: number): string | true => {
     const { send_amount } = this.state;
@@ -197,7 +198,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
             options={this.props.options}
             onClick={this.setSendAsset}
           />
-          <Input
+          <InputButton
             // @ts-ignore
             label={
               availableBalance
@@ -211,6 +212,8 @@ class TransferContainer extends Component<TransferProps, TransferState> {
             name="send_amount"
             value={send_amount}
             onChange={this.handleSendAmountChange}
+            button={"max"}
+            onClick={this.setMaxAmount}
           />
           {windowWidth < 1380 ? (
             <Description
