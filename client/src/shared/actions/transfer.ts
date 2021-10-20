@@ -30,7 +30,6 @@ export const createTransfer = (
   address: string,
   amount: number,
   fromTicker: Ticker,
-  toTicker: Ticker,
   sweepAll: boolean
 ) => {
 
@@ -42,14 +41,6 @@ export const createTransfer = (
   
 
     const priority = MoneroTxPriority.NORMAL;
-    //const txType = HavenTxType.TRANSFER;
-    //const currency: Ticker = fromTicker;
-    
-    if(toTicker !== fromTicker){
-      dispatch(addErrorNotification({"error":"Transfers must be in the same asset"}));
-      return ;
-    }
-
 
     dispatch(
       transferCreationFetch({
