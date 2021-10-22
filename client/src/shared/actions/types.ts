@@ -79,6 +79,8 @@ export const START_WALLET_SESSION = "start_wallet_session";
 export const STOP_WALLET_SESSION = "stop_wallet_session";
 export const CLOSE_WALLET_SESSION = "close_wallet_session";
 
+export const TOGGLE_PRIVATE_DETAILS = "toggle_private_details";
+
 export const SET_RESTORE_HEIGHT = "set_restore_height";
 
 /*

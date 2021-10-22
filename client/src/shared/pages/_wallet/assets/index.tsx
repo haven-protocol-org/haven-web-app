@@ -22,11 +22,15 @@ import {
   BlockHeaderRate,
   selectXRate,
 } from "shared/reducers/blockHeaderExchangeRates";
+import { walletSession } from "shared/reducers/walletSession";
+
 
 interface AssetsProps {
   balances: XBalances;
   rates: BlockHeaderRate[];
   assetsInUSD: XViewBalance;
+  showPrivateDetails: boolean;
+  
 }
 
 interface AssetsState {}
@@ -96,6 +100,7 @@ class AssetsPage extends Component<AssetsProps, any> {
           totalBalance={totalBalance}
           lockedBalance={lockedBalance}
           unlockedBalance={unlockedBalance}
+          showPrivateDetails={this.props.showPrivateDetails}
         />
       );
     });
@@ -165,6 +170,7 @@ class AssetsPage extends Component<AssetsProps, any> {
           totalBalance={totalBalance.toFixed(2)}
           lockedBalance={lockedBalance}
           unlockedBalance={unlockedBalance}
+          showPrivateDetails={this.props.showPrivateDetails}
         />
         {this.renderEnabledTokens()}
       </Body>
@@ -175,6 +181,7 @@ class AssetsPage extends Component<AssetsProps, any> {
 export const mapStateToProps = (state: DesktopAppState | WebAppState) => ({
   rates: state.blockHeaderExchangeRate,
   balances: state.xBalance,
+  showPrivateDetails: state.walletSession.showPrivateDetails,
 });
 
 export const Assets = connect(mapStateToProps, {})(AssetsPage);

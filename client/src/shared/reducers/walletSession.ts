@@ -6,6 +6,7 @@ import {
   CREATE_WALLET_FETCHING,
   SET_APP_TO_DAEMON_CONNECTION_STATE,
   CLOSE_WALLET_SESSION,
+  TOGGLE_PRIVATE_DETAILS,
   SET_RESTORE_HEIGHT,
 } from "shared/actions/types";
 import { AnyAction } from "redux";
@@ -25,7 +26,7 @@ interface WalletSession {
   error: RPCError | null;
   restoreHeight: number;
   isClosingSession: boolean;
-
+  showPrivateDetails: boolean;
 }
 
 const INITIAL_STATE: WalletSession = {
@@ -35,7 +36,7 @@ const INITIAL_STATE: WalletSession = {
   error: null,
   restoreHeight: 0,
   isClosingSession: false,
-
+  showPrivateDetails: true,
 };
 
 export const walletSession = function (
@@ -78,6 +79,8 @@ export const walletSession = function (
       return { ...state, activeWallet: action.payload, error: null };
     case OPEN_WALLET_FETCHING:
       return { ...state, error: null, isFetching: true };
+    case TOGGLE_PRIVATE_DETAILS:
+      return { ...state, showPrivateDetails: !state.showPrivateDetails  };
     default:
       return state;
   }
