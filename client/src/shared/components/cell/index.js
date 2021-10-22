@@ -31,9 +31,15 @@ const Cell = ({
   totalBalance,
   lockedBalance,
   unlockedBalance,
+  showPrivateDetails
 }) => {
   const [open, openBalance] = useState(false);
   const balance = totalBalance * price;
+  const hiddenBalance = "-/-";
+
+  const displayBalance = (balance) => {
+      return showPrivateDetails ? balance : hiddenBalance;
+  };
 
   return (
     <>
@@ -51,13 +57,13 @@ const Cell = ({
                       $ <Dots />
                     </ShortRow>
                   ) : (
-                    `${"$" + balance.toFixed(2)}`
+                    `${"$" + displayBalance(balance.toFixed(2))}`
                   )}
                 </Balance>
               </Row>
               <Row>
                 <Subtitle>
-                  {ticker} {totalBalance === 0 ? "0.00" : totalBalance}
+                  {ticker} {totalBalance === 0 ? displayBalance("0.00") : displayBalance(totalBalance)}
                 </Subtitle>
                 <Subtitle>
                   {price === 0 ? (
@@ -65,7 +71,7 @@ const Cell = ({
                       $ <Dots />
                     </Row>
                   ) : (
-                    `${"$" + price.toFixed(2)}`
+                    `${"$" + displayBalance(price.toFixed(2))}`
                   )}
                 </Subtitle>
               </Row>
@@ -83,13 +89,13 @@ const Cell = ({
                 <Asset>
                   <Title>{tokenName}</Title>
                 </Asset>
-                <Balance>{"$" + balance.toFixed(2)}</Balance>
+                <Balance>{"$" + displayBalance(balance.toFixed(2))}</Balance>
               </Row>
               <Row>
                 <Subtitle>
                   {ticker} {totalBalance}
                 </Subtitle>
-                <Subtitle>{"$" + price.toFixed(2)}</Subtitle>
+                <Subtitle>{"$" + displayBalance(price.toFixed(2))}</Subtitle>
               </Row>
             </Column>
             <Route>
@@ -101,15 +107,15 @@ const Cell = ({
               <PendingSpacer />
               <Pending>
                 <Subtitle>Total Balance</Subtitle>
-                <Subtitle>{totalBalance}</Subtitle>
+                <Subtitle>{displayBalance(totalBalance)}</Subtitle>
               </Pending>
               <Pending>
                 <Subtitle>Locked Balance</Subtitle>
-                <Subtitle>{lockedBalance}</Subtitle>
+                <Subtitle>{displayBalance(lockedBalance)}</Subtitle>
               </Pending>
               <Pending>
                 <Subtitle>Unlocked Balance</Subtitle>
-                <Subtitle>{unlockedBalance}</Subtitle>
+                <Subtitle>{displayBalance(unlockedBalance)}</Subtitle>
               </Pending>
               <PendingSpacer />
             </PendingWrapper>

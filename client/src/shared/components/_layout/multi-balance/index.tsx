@@ -11,12 +11,15 @@ import { SyncState } from "shared/types/types";
 import { selectSyncState } from "shared/reducers/chain";
 import { selectPortfolioInUSD, XViewBalances } from "shared/reducers/xBalance";
 import { Ticker } from "shared/reducers/types";
+import { togglePrivacyDisplay } from "shared/actions/walletSession";
 
 const OFFSHORE_TICKERS = [Ticker.xUSD, null];
 
 interface BalanceProps {
   syncState: SyncState;
   balances: XViewBalances;
+  showPrivateDetails: boolean;
+  togglePrivacyDisplay:() => void;
 }
 
 interface BalanceState {
@@ -32,6 +35,8 @@ class Balances extends Component<BalanceProps, BalanceState> {
     tickerOptions: OFFSHORE_TICKERS,
   };
 
+
+
   onClickNext() {
     const tickerNum: number = OFFSHORE_TICKERS.length;
 
@@ -46,7 +51,7 @@ class Balances extends Component<BalanceProps, BalanceState> {
   }
 
   handleSync = (isSyncing: boolean, balance: any, totalBalance: any) => {
-    if (isSyncing) {
+    if (isSyncing || !this.props.showPrivateDetails) {
       return "-/-";
     } else {
       return balance === -1 ? <Spinner /> : totalBalance;
@@ -58,7 +63,7 @@ class Balances extends Component<BalanceProps, BalanceState> {
 
     if (ticker === null)
       return (
-        <Wrapper onClick={() => this.onClickNext()}>
+        <Wrapper onClick={() => this.props.togglePrivacyDisplay()}>
           <Amount>-/-</Amount>
           <Value>Portfolio Value Hidden</Value>
         </Wrapper>
@@ -73,7 +78,7 @@ class Balances extends Component<BalanceProps, BalanceState> {
     const percentage = ((scannedHeight / blockHeight) * 100).toFixed(2);
 
     return (
-      <Wrapper onClick={() => this.onClickNext()}>
+      <Wrapper onClick={() => this.props.togglePrivacyDisplay()}>
         <Amount isSyncing={isSyncing}>
           {this.handleSync(isSyncing, balance, totalBalance)}
         </Amount>
@@ -91,5 +96,6 @@ class Balances extends Component<BalanceProps, BalanceState> {
 const mapStateToProps = (state: HavenAppState) => ({
   balances: selectPortfolioInUSD(state),
   syncState: selectSyncState(state),
+  showPrivateDetails: state.walletSession.showPrivateDetails,
 });
-export const MultiBalance = connect(mapStateToProps, null)(Balances);
+export const MultiBalance = connect(mapStateToProps, {togglePrivacyDisplay} )(Balances);
