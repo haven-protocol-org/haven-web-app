@@ -44,7 +44,6 @@ const Enabled_TICKER = [
   Ticker.xEUR,
   Ticker.xBTC,
   Ticker.xAUD,
-  Ticker.xJPY,
   Ticker.xGBP,
   Ticker.xCHF
 ];

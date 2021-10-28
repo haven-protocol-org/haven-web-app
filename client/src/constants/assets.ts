@@ -51,12 +51,6 @@ export const AssetList = [
     symbol: "₣",
   },
   {
-    id: Ticker.xJPY,
-    token: "Japanese Yen",
-    ticker: "JPY",
-    symbol: "¥",
-  },
-  {
     id: Ticker.xGBP,
     token: "British Pound",
     ticker: "GBP",

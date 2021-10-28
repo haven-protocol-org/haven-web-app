@@ -94,7 +94,6 @@ const xassetOptions: AssetOption[] = [
   { name: "Swiss Franc", ticker: Ticker.xCHF },
   { name: "Australian Dollar", ticker: Ticker.xAUD },
   { name: "British Pound", ticker: Ticker.xGBP },
-  { name: "Japanese Yen", ticker: Ticker.xJPY },
 ];
 
 const xusdOption = { name: "U.S Dollar", ticker: Ticker.xUSD };
