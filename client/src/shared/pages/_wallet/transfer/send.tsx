@@ -157,11 +157,10 @@ class TransferContainer extends Component<TransferProps, TransferState> {
 
   // @ts-ignore
   recipientIsValid = () => {
+    const havenRegex = new RegExp('^hv([xist]+)[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{90,100}$');
     const recipient = this.state.recipient_address;
-    if (recipient.length > 97) {
-      return "";
-    } else if (recipient === "") {
-      return "";
+    if (recipient === "" || havenRegex.test(recipient) ) {
+        return "";
     } else {
       return "Enter a valid address";
     }
