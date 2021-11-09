@@ -34,7 +34,7 @@ const startApp = (): void => {
 
   browserOptions.webPreferences = {
     contextIsolation: true,
-    enableRemoteModule: false,
+   //enableRemoteModule: false,
     nodeIntegration: false,
     additionalArguments: [app.getVersion()],
     preload: path.join(__dirname, "../sites/preload/preload.js"),
