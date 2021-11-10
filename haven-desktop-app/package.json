@@ -26,22 +26,22 @@
     "forge": "./forge.config.js"
   },
   "dependencies": {
-    "axios": "0.21.1",
-    "electron-squirrel-startup": "1.0.0",
+    "axios": "^0.21.1",
+    "electron-squirrel-startup": "^1.0.0",
     "haven-wallet-core": "^1.4.111",
     "rxjs": "^7.1.0"
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.57",
     "@electron-forge/maker-deb": "^6.0.0-beta.57",
-    "@electron-forge/maker-dmg": "^6.0.0-beta.57",
+    "@electron-forge/maker-dmg": "6.0.0-beta.57",
     "@electron-forge/maker-rpm": "^6.0.0-beta.57",
-    "@electron-forge/maker-squirrel": "^6.0.0-beta.57",
-    "@electron-forge/maker-zip": "^6.0.0-beta.57",
+    "@electron-forge/maker-squirrel": "6.0.0-beta.57",
+    "@electron-forge/maker-zip": "6.0.0-beta.57",
     "@electron-forge/plugin-auto-unpack-natives": "^6.0.0-beta.57",
     "@types/jest": "^26.0.23",
     "@types/responselike": "^1.0.0",
-    "electron": "15.3.0",
+    "electron": "^15.0.0",
     "jest": "^26.6.3",
     "ncp": "^2.0.0",
     "ts-jest": "^26.5.5",
