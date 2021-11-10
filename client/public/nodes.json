@@ -10,14 +10,14 @@
   ],
   "stagenet": [
     {
-      "address": "seed01-stagenet.havenprotocol.org",
+      "address": "http://seed01-stagenet.havenprotocol.org",
       "provider": "Stagenet - Seed 01",
       "port": "37750",
       "trusted": true,
       "default": true
     },
     {
-      "address": "seed02-stagenet.havenprotocol.org",
+      "address": "http://seed02-stagenet.havenprotocol.org",
       "provider": "Stagenet - Seed 02",
       "port": "37750",
       "trusted": true,
