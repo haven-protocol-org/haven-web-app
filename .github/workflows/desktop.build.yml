@@ -57,6 +57,11 @@ jobs:
       run: |
           npm install
 
+    - name: Install latest wallet core
+      working-directory: haven-desktop-app
+      run: |
+          npm install haven-wallet-core@latest --save
+
     - name: Audit backend dependencies
       working-directory: haven-desktop-app
       run: |
@@ -85,6 +90,11 @@ jobs:
       working-directory: client
       run: |
           npm install
+    
+    - name: Install latest wallet core
+      working-directory: client
+      run: |
+          npm install haven-wallet-core@latest --save
 
     - name: Copy wallet core to root folder
       working-directory: client
