@@ -69,6 +69,16 @@ export const Field = styled.input`
     line-height: 26px;
   }
 
+  &:-internal-autofill-selected,
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover, 
+  &:-webkit-autofill:focus
+  {
+  box-shadow: 0 0 0px 1000px ${(props) => props.theme.input.input_background} inset;
+  -webkit-text-fill-color: ${(props) => props.theme.input.input_value};
+  }
+}
+
   ${media.mobile`
     width: 60%;
   `};
