@@ -10,11 +10,18 @@
   ],
   "stagenet": [
     {
-      "address": "http://remote.eu.havenprotocol.org",
-      "provider": "Stagenet - Haven European Node",
+      "address": "http://seed01-stagenet.havenprotocol.org",
+      "provider": "Stagenet - Seed 01",
       "port": "37750",
       "trusted": true,
       "default": true
+    },
+    {
+      "address": "http://seed02-stagenet.havenprotocol.org",
+      "provider": "Stagenet - Seed 02",
+      "port": "37750",
+      "trusted": true,
+      "default": false
     }
   ],
   "mainnet": [

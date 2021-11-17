@@ -24,7 +24,6 @@ import { selectNodeHeight } from "shared/reducers/chain";
 import { createExchange } from "platforms/desktop/actions";
 import { Ticker } from "shared/reducers/types";
 import {
-  ExchangeType,
   selectExchangeSucceed,
   selectFromTicker,
   selectIsProcessingExchange,
@@ -95,7 +94,6 @@ const xassetOptions: AssetOption[] = [
   { name: "Swiss Franc", ticker: Ticker.xCHF },
   { name: "Australian Dollar", ticker: Ticker.xAUD },
   { name: "British Pound", ticker: Ticker.xGBP },
-  { name: "Japanese Yen", ticker: Ticker.xJPY },
 ];
 
 const xusdOption = { name: "U.S Dollar", ticker: Ticker.xUSD };

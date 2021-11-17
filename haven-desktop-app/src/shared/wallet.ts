@@ -120,6 +120,13 @@ export const transfer = async (
   return wallet.createTxs(txConfig);
 };
 
+export const sweep = async (
+  txConfig: Partial<ITxConfig>
+  ): Promise<MoneroTxWallet[]> => {
+
+    return wallet.sweepUnlocked(txConfig);
+}
+
 export const getTransfers = async () => {
   //@ts-ignore
   return wallet.getTransfers();

@@ -18,7 +18,7 @@ const LoginTutorial = ({ step }) => {
           <List>Welcome to Haven</List>
           <Item>
             Haven 2.0 now includes additional private assets such as xGBP,
-            xEURO, xYUAN, xAUD, xCHF, xJPY, Gold and Silver –– in addition to
+            xEURO, xYUAN, xAUD, xCHF, Gold and Silver –– in addition to
             XHV & xUSD.
           </Item>
         </Background>

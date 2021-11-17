@@ -85,7 +85,7 @@ export class WalletHandler {
       return txJsonObjects;
     }
 
-    if (methodName === "transfer") {
+    if (methodName === "transfer" || methodName === "sweep") {
       const txClassObjects = response
       const txJsonObjects = txClassObjects.map((tx: MoneroTxWallet) => {
         // serialize tx data

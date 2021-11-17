@@ -19,7 +19,6 @@ export enum Ticker {
   xEUR="XEUR",
   xCNY="XCNY",
   xGBP="XGBP",
-  xJPY="XJPY",
   xAUD="XAUD",
   xCHF="XCHF"
 }

@@ -83,9 +83,11 @@ export interface ITxConfig {
   /** key image to sweep (ignored except in sweepOutput() requests) */
   keyImage: string;
   /** tx type which differntiate between various tx/exchange types */
-  txType: number;
-  /** curreny we exchange from or to xUSD */
-  currency: string;
+  //txType: number;
+  /** source Currency */
+  sourceCurrency: string;
+   /** destination Currency */
+  destinationCurrency: string;
 }
 
 export interface IKeys {

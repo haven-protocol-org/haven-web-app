@@ -12,7 +12,6 @@ import { TxProcessInfo } from "shared/reducers/transferProcess";
 import { ITxConfig } from "typings";
 import {
   MoneroDestination,
-  HavenTxType,
   MoneroTxPriority,
 } from "haven-wallet-core";
 import {
@@ -42,9 +41,7 @@ export const createTransfer = (
   
 
     const priority = MoneroTxPriority.NORMAL;
-    const txType = HavenTxType.TRANSFER;
-    const currency: Ticker = fromTicker;
-    
+
     dispatch(
       transferCreationFetch({
         address,
@@ -57,9 +54,9 @@ export const createTransfer = (
       canSplit: true,
       accountIndex: 0,
       relay: false,
-      txType,
       priority,
-      currency
+      sourceCurrency: fromTicker,
+      destinationCurrency: fromTicker
     } as Partial<ITxConfig>;
 
 

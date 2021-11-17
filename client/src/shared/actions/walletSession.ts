@@ -12,7 +12,7 @@ import { connectAppToDaemon } from "./havend";
 import { updateHavenFeatures } from "./havenFeature";
 import { refresh } from "./refresh";
 import { getAllTransfers } from "./transferHistory";
-import { CLOSE_WALLET_SESSION, SET_RESTORE_HEIGHT, START_WALLET_SESSION, STOP_WALLET_SESSION } from "./types";
+import { CLOSE_WALLET_SESSION, SET_RESTORE_HEIGHT, START_WALLET_SESSION, STOP_WALLET_SESSION, TOGGLE_PRIVATE_DETAILS } from "./types";
 import { onWalletSyncUpdateSucceed } from "./walletCreation";
 import { HavenWalletListener } from "./walletListener";
 
@@ -118,3 +118,9 @@ export const startWalletSession = (
         }
     }
   }
+  export const togglePrivacyDisplay = () => {
+    return (dispatch: any) => {
+      dispatch({ type: TOGGLE_PRIVATE_DETAILS });     
+    }
+  }
+  

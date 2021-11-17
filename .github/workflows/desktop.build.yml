@@ -13,15 +13,15 @@ on:
       - develop
       - master
 
-env:
-  REACT_APP_NET_TYPE_ID: 1
-
 jobs:
   desktop-build:
     runs-on: ${{ matrix.os }}
+    env: 
+      REACT_APP_NET_TYPE_ID: ${{matrix.network}}
     strategy:
       matrix:
         os: [windows-latest, macOS-latest, ubuntu-latest]
+        network: [0, 1, 2]
 
     steps:
     - uses: actions/checkout@v2
@@ -57,6 +57,11 @@ jobs:
       run: |
           npm install
 
+    - name: Install latest wallet core
+      working-directory: haven-desktop-app
+      run: |
+          npm install haven-wallet-core@latest --save
+
     - name: Audit backend dependencies
       working-directory: haven-desktop-app
       run: |
@@ -69,43 +74,5 @@ jobs:
     - name: Upload Build
       uses: actions/upload-artifact@v2
       with:
-        name: ${{ matrix.os }}
+        name: ${{ matrix.os }}-${{ matrix.network }}
         path: haven-desktop-app/out/make/
-
-  web-build:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js
-      uses: actions/setup-node@v1
-      with:
-        node-version: '14'
-    
-    - name: Install client dependencies
-      working-directory: client
-      run: |
-          npm install
-
-    - name: Copy wallet core to root folder
-      working-directory: client
-      run: |
-          npm run copy-haven-core
-
-    - name: Audit client dependencies
-      working-directory: client
-      run: |
-          npm audit fix --production
-
-    - name: Client Build for Web
-      working-directory: client
-      env:
-        CI: false
-      run: |
-          npm run build:web:ci
-
-    - name: Upload web build
-      uses: actions/upload-artifact@v2
-      with:
-        name: web_build
-        path: client/build/
-
