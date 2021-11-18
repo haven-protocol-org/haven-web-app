@@ -138,6 +138,15 @@ module.exports = {
         icon: "./icons/icon.png",
       },
     },
+    {
+      name: "@electron-forge/maker-flatpak",
+      platforms: ["linux"],
+      config: {
+        name: "haven",
+        productName: "haven",
+        icon: "./icons/icon.png",
+      },
+    },
   ],
 
  //  plugins: [["@electron-forge/plugin-auto-unpack-natives"]],
