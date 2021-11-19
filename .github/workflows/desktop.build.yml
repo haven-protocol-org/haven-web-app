@@ -67,6 +67,10 @@ jobs:
       run: |
           npm audit fix --production
 
+    - if: matrix.os == 'ubuntu-latest'
+      run: |
+          sudo apt-get flatpak-builder eu-strip
+
     - name: Build Final App
       run: |
           sh './sh/make.sh'
