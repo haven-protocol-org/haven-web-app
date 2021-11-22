@@ -138,7 +138,10 @@ module.exports = {
         icon: "./icons/icon.png",
       },
     },
-    {
+
+    // not flatpak support till issue resolved
+    //https://github.com/electron-userland/electron-forge/issues/2561
+   /*  {
       name: "@electron-forge/maker-flatpak",
       platforms: ["linux"],
       config: {
@@ -146,7 +149,7 @@ module.exports = {
         productName: "haven",
         icon: "./icons/icon.png",
       },
-    },
+    }, */
   ],
 
  //  plugins: [["@electron-forge/plugin-auto-unpack-natives"]],
