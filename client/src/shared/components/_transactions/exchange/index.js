@@ -93,7 +93,7 @@ const Transaction = ({
       <Information>
         {change > 0 ? (
           <>
-            Details: Approximately{" "}
+            <strong style={{ textDecoration: 'underline'}}>ALERT</strong>: Approximately{" "}
             <strong style={{ fontWeight: 600 }}>
               {change} {fromTicker} will be temporarily locked and unusable for
               the entirety of the {xasset_conversion ? "48h" : priorityInfo}{" "}

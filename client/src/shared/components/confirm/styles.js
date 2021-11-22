@@ -26,4 +26,9 @@ export const Checkbox = styled.div`
   justify-content: space-between;
 `;
 
-export const Description = styled.div``;
+export const Description = styled.div`
+  font-family: Inter-Regular;
+  font-size: 13px;
+  line-height: 22px;
+  color: ${(props) => props.theme.type.primary};
+`;

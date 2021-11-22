@@ -4,7 +4,7 @@ import React, { Fragment } from "react";
 // Relative Imports
 import { Container, Row, Key, Value, Tag, Url } from "./styles";
 import Confirm from "../../confirm/index.js";
-import { Information } from "../../../../assets/styles/type.js";
+import { Information } from "../exchange/styles";
 
 export const Transaction = ({
   checked,
@@ -52,7 +52,7 @@ export const Transaction = ({
         />
       </Container>
       <Information>
-        Details: I have reviewed my transfer details and accept all
+        <strong style={{ textDecoration: 'underline'}}>ALERT</strong>: I have reviewed my transfer details and accept all
         responsibility for this transaction.{" "}
         <strong>
           I understand that a portion of my balance may be locked and unusable

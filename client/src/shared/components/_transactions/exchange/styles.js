@@ -56,7 +56,7 @@ export const Information = styled.div`
   font-family: Inter-Regular;
   font-size: 13px;
   line-height: 22px;
-  color: ${(props) => props.theme.type.secondary};
+  color: ${(props) => props.theme.type.primary};
 `;
 
 export const Highlight = styled.div`

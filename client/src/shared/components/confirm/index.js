@@ -11,7 +11,7 @@ const Confirm = ({ checked, onChange, label, description }) => {
     <Container>
       {description && (
         <Description>
-          <Information>{description}</Information>
+          {description}
         </Description>
       )}
       <Checkbox>
