@@ -93,7 +93,7 @@ const Cell = ({
               </Row>
               <Row>
                 <Subtitle>
-                  {ticker} {totalBalance}
+                  {ticker} {displayBalance(totalBalance)}
                 </Subtitle>
                 <Subtitle>{"$" + displayBalance(price.toFixed(2))}</Subtitle>
               </Row>
