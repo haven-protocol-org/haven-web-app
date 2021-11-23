@@ -24,6 +24,7 @@ export const storeKeyFileToDisk = (name: string) => {
   };
 };
 
+
 export const storeWalletInDB = (): any => {
   return async (dispatch: any, getState: () => HavenAppState) => {
     const walletName = getState().walletSession.activeWallet;
@@ -41,6 +42,21 @@ export const storeWalletInDB = (): any => {
     return true;
   };
 };
+
+
+export const deleteWalletInDB = async (walletName: string): Promise<boolean> => {
+
+    if (walletName !== undefined) {
+      try {
+        await deleteWalletInIndexedDb(walletName);
+      } catch (e) {
+        return false;
+      }
+    }
+    return true;
+  };
+
+
 
 export const getWalletCacheByName = async (
   name: string
@@ -134,3 +150,41 @@ const storeWalletDataInIndexedDB = async (name: string): Promise<void> => {
     };
   });
 };
+
+
+export const deleteWalletInIndexedDb = async (name: string): Promise<void> => {
+
+  return new Promise(async (resolutionFunc, rejectionFunc) => {
+  const openRequest: IDBOpenDBRequest = indexedDB.open(HAVEN_DB, DB_VERSION);
+
+
+  openRequest.onupgradeneeded = function (this: IDBRequest<IDBDatabase>) {
+    const db = this.result;
+    db.createObjectStore(WALLET_STORE);
+  };
+
+  openRequest.onerror = function (error: any) {
+    rejectionFunc();
+  };
+
+  openRequest.onsuccess = function (this: IDBRequest<IDBDatabase>) {
+    const db = this.result;
+
+    const transaction = db.transaction(WALLET_STORE, "readwrite");
+    const delRequest: IDBRequest<undefined> = transaction
+      .objectStore(WALLET_STORE)
+      .delete(name);
+
+    delRequest.onsuccess = function (this: IDBRequest<undefined>) {
+      resolutionFunc();
+    };
+    delRequest.onerror = function (this: IDBRequest<undefined>) {
+      rejectionFunc();
+    };
+  
+  };
+});
+
+
+
+}
