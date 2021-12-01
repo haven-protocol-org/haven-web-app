@@ -45,6 +45,7 @@ interface NavigationProps {
   basicActive: boolean;
   advancedActive: boolean;
   restoreHeight: number;
+  activeWallet: string;
   startedResync: boolean;
   search: string;
   balances: XBalances;
@@ -199,6 +200,7 @@ class Navigation extends Component<NavigationProps, {}> {
                   {this.state.basicActive ? (
                     <>
                       <Cell body="Network" label={networkLabel} />
+                      <Cell body="Key File" label={this.props.activeWallet} />
                       {!isSyncing ? (
                         <>
                           <Cell body="Vault Status" label="Synced" />
@@ -250,6 +252,7 @@ const mapStateToProps = (state: WebAppState) => ({
   connected: state.connectedNode.isWalletConectedToDaemon,
   isClosingSession: state.walletSession.isClosingSession,
   restoreHeight: state.walletSession.restoreHeight,
+  activeWallet: state.walletSession.activeWallet,
   balances: state.xBalance,
 });
 
