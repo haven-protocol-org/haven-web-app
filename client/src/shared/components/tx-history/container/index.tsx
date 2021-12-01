@@ -39,8 +39,16 @@ export interface TxEntry {
   isConfirmed: boolean;
   isMinerTx: boolean;
   isIncoming: boolean;
+  conversion: Conversion;
 }
 
+export interface Conversion {
+  isConversion: boolean;
+  amount?: BigInteger;
+  amountStr?: string;
+  prefixStr?: string;
+  assetId?: Ticker;
+}
 
 interface TxHistoryProps {
   transferList: TxEntry[];
@@ -146,6 +154,12 @@ const prepareTxInfo = (
   const readableAmount = iNum(convertBalanceToMoney(tx.amount, 6));
   const currentValueInUSD = iNum(parseFloat(readableAmount) * xRate);
 
+  let conversion: Conversion = tx.conversion;
+  if(tx.conversion.isConversion && tx.conversion.amount != null){
+    conversion.amountStr = iNum(convertBalanceToMoney(tx.conversion.amount, 6));
+    conversion.prefixStr = (tx.isIncoming) ? "From" : "To";
+  }
+  
   const txType = TxHistoryContainer.getTransactionType(
     tx
   );
@@ -173,6 +187,7 @@ const prepareTxInfo = (
     timeTillUnlocked,
     type: txType,
     currentValueInUSD,
+    conversion,
     mempool,
     date: transactionDate,
     amount: readableAmount,

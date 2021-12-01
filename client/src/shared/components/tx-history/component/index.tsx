@@ -12,8 +12,10 @@ import {
   Row,
   Data,
   ShortRow,
+  Pill
 } from "./styles";
 import { getNetworkByName, isMainnet } from "constants/env";
+import { Conversion } from "shared/components/tx-history/container";
 import Dots from "../../_animations/dots";
 
 export interface TransactionProps {
@@ -21,6 +23,7 @@ export interface TransactionProps {
   date: any;
   hash: string;
   amount: any;
+  conversion: Conversion;
   block: any;
   currentValueInUSD: any;
   mempool: boolean;
@@ -33,6 +36,7 @@ export const Transaction = ({
   date,
   hash,
   amount,
+  conversion,
   block,
   currentValueInUSD,
   mempool,
@@ -69,7 +73,9 @@ export const Transaction = ({
       <Column>
         <Row>
           <Data>
-            <Value alignment="left">{amount}</Value>
+            <Value alignment="left">{amount}
+            {conversion.isConversion && conversion.amountStr && <Pill status={type}>{conversion.prefixStr} {conversion.amountStr} {conversion.assetId} </Pill>}
+            </Value>
             <Label alignment="left">Amount</Label>
           </Data>
 

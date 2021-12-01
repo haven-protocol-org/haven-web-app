@@ -6,7 +6,7 @@ import {
 import { HavenAppState } from "../../platforms/desktop/reducers";
 import MoneroTxWallet from "haven-wallet-core/src/main/js/wallet/model/MoneroTxWallet";
 import MoneroIncomingTransfer from "haven-wallet-core/src/main/js/wallet/model/MoneroIncomingTransfer";
-import { TxEntry } from "shared/components/tx-history/container";
+import { TxEntry, Conversion } from "shared/components/tx-history/container";
 import { bigIntegerToBigInt } from "utility/utility";
 import MoneroOutgoingTransfer from "haven-wallet-core/src/main/js/wallet/model/MoneroOutgoingTransfer";
 
@@ -50,6 +50,7 @@ export const selectTransferListByTicker = (
         txEntry.mempool = walletTx.inTxPool() || walletTx.getNumConfirmations() === 0;
         txEntry.isIncoming = true;
         txEntry.isConfirmed = walletTx.isConfirmed();
+        txEntry.conversion = getConversion(walletTx, txEntry.isIncoming );
         txEntry.isMinerTx = walletTx.isMinerTx();
         txEntry.timestamp = walletTx.isConfirmed()
           ? walletTx.getBlock().getTimestamp()
@@ -67,6 +68,7 @@ export const selectTransferListByTicker = (
         txEntry.isIncoming = false;
         txEntry.mempool = walletTx.inTxPool() || walletTx.getNumConfirmations() === 0;
         txEntry.isConfirmed = walletTx.isConfirmed();
+        txEntry.conversion = getConversion(walletTx, txEntry.isIncoming);
         txEntry.isMinerTx = walletTx.isMinerTx();
         txEntry.timestamp = walletTx.isConfirmed()
           ? walletTx.getBlock().getTimestamp()
@@ -84,6 +86,19 @@ export const selectTransferListByTicker = (
   return txEntries;
 };
 
+function getConversion(walletTx: MoneroTxWallet, isIncoming: boolean ) : Conversion {
+  let conversion: Conversion = {isConversion: false};
+  let possibleConversion : MoneroOutgoingTransfer = (isIncoming) ? walletTx.getOutgoingTransfer() : walletTx.getIncomingTransfers() ;
+  if( possibleConversion && possibleConversion ){
+    if( Array.isArray(possibleConversion) ){
+      possibleConversion = possibleConversion[0];
+    }
+    conversion.amount = possibleConversion.getAmount();
+    conversion.assetId = possibleConversion.getCurrency();
+    conversion.isConversion = true;
+  }
+  return conversion;
+}
 
 
 export const hasNoTxsEntries = (state: HavenAppState): boolean => {
