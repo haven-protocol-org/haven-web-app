@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import media from "../../../../assets/styles/media.js";
 
 export const Container = styled.a`
   height: auto;
@@ -106,7 +107,7 @@ export const Value = styled.div`
   letter-spacing: 0;
   line-height: 24px;
   text-align: ${(props) => props.alignment};
-  text-transform: capitalize;
+  text-transform: capitalize;  
 `;
 
 export const Label = styled.div`
@@ -120,31 +121,13 @@ export const Label = styled.div`
   flex-grow: column;
 `;
 
-export const Pill = styled.div`
-  padding:4px;
-  background-color: ${(props) => {
-    switch (props.status) {
-      case "Mined":
-        return `${props.theme.states.error}`;
-      case "Received":
-        return `${props.theme.states.success}`;
-      case "Sent":
-        return `${props.theme.states.default}`;
-      case "Exchange":
-        return `${props.theme.states.alert}`;
-      case "Pending":
-        return `${props.theme.states.warning}`;
-      default:
-    }
-  }};
-
+export const Strapline = styled.span`
   color: ${(props) => props.theme.type.primary};
-  border-radius: 4px;
   font-size: 10px;
-  margin-right: 0px;
-  text-align: center;
   text-transform: none;
   line-height: 1.3em;
-  min-width: 8em;
-  float:right;
+  min-width: 10em;
+  ${media.mobile`
+    display: block;
+  `};
 `;

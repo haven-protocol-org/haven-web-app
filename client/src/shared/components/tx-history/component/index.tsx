@@ -12,7 +12,7 @@ import {
   Row,
   Data,
   ShortRow,
-  Pill
+  Strapline
 } from "./styles";
 import { getNetworkByName, isMainnet } from "constants/env";
 import { Conversion } from "shared/components/tx-history/container";
@@ -65,6 +65,12 @@ export const Transaction = ({
     isMainnet() ? "" : "-" + getNetworkByName()
   }.havenprotocol.org/tx/${hash}`;
 
+  /* -- this changes the type and shows the exchange style
+  if(conversion.isConversion){
+    type = "Exchange";
+  }
+  */
+
   return (
     <Container href={txExplorerLink} target="_blank">
       <State status={type}>
@@ -73,8 +79,8 @@ export const Transaction = ({
       <Column>
         <Row>
           <Data>
-            <Value alignment="left">{amount}
-            {conversion.isConversion && conversion.amountStr && <Pill status={type}>{conversion.prefixStr} {conversion.amountStr} {conversion.assetId} </Pill>}
+            <Value alignment="left">{amount} 
+            {conversion.isConversion && conversion.amountStr && <Strapline> {conversion.prefixStr} {conversion.amountStr} {conversion.assetId} </Strapline>}
             </Value>
             <Label alignment="left">Amount</Label>
           </Data>

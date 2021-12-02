@@ -157,7 +157,7 @@ const prepareTxInfo = (
   let conversion: Conversion = tx.conversion;
   if(tx.conversion.isConversion && tx.conversion.amount != null){
     conversion.amountStr = iNum(convertBalanceToMoney(tx.conversion.amount, 6));
-    conversion.prefixStr = (tx.isIncoming) ? "From" : "To";
+    conversion.prefixStr = (tx.isIncoming) ? "from" : "to";
   }
   
   const txType = TxHistoryContainer.getTransactionType(
