@@ -18,6 +18,8 @@ import { isTemporaryWallet as selectIsTemporaryWallet } from "shared/reducers/wa
 import { selectSyncState } from "shared/reducers/chain";
 import { SyncState } from "shared/types/types";
 
+import {downloadTransfers} from "shared/actions/transferHistory";
+
 // Address parts
 import { AddressEntry } from "shared/reducers/address";
 import { writeText } from "vendor/clipboard/clipboard-polyfill";
@@ -40,6 +42,7 @@ interface SettingsProps extends IKeys {
   syncState: SyncState;
   wallet: any;
   storeKeyFileToDisk: (walletname: string) => void;
+  downloadTransfers: (type: string) => void;
   tempWallet: boolean;
 }
 
@@ -115,6 +118,14 @@ class SettingsPage extends Component<SettingsProps, SettingsState> {
 
   showAddressModal = () => {
     this.props.showModal(MODAL_TYPE.ShowAddressModal);
+  };
+
+  downloadTxJson = () => {
+    this.props.downloadTransfers("json");
+  };
+
+  downloadTxCsv = () => {
+    this.props.downloadTransfers("csv");
   };
 
   render() {
@@ -208,6 +219,28 @@ class SettingsPage extends Component<SettingsProps, SettingsState> {
               rightDisabled={false}
               rightLoading={false}
               rightOnClick={this.clipboardAddress}
+            />
+          </Container>
+        </>
+
+        <Header
+          title="Transaction History"
+          description="Download your transaction history"
+        />
+        <>
+        <Container>
+            <DoubleFooter
+              // Left Section
+              leftLabel={"Download JSON"}
+              leftDisabled={false}
+              leftLoading={false}
+              leftOnClick={this.downloadTxJson}
+              leftVisible={true}
+              // Right Section
+              rightLabel={"Download CSV"}
+              rightDisabled={false}
+              rightLoading={false}
+              rightOnClick={this.downloadTxCsv}
             />
           </Container>
         </>
@@ -309,4 +342,5 @@ export const Settings = connect(mapStateToProps, {
   showModal,
   setSelectedAddress,
   storeKeyFileToDisk,
+  downloadTransfers
 })(SettingsPage);
