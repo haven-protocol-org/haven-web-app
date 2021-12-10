@@ -137,6 +137,10 @@ export const relayTxs = async (metaDataList: string[]) => {
   return wallet.relayTxs(metaDataList);
 };
 
+export const getTxKey = async (txHash: string) => {
+  return wallet.getTxKey(txHash);
+}
+
 export const setDaemonConnection = async (connection: IMonerRPCConnection) => {
   //@ts-ignore
   return wallet.setDaemonConnection(connection);
