@@ -1,6 +1,7 @@
 import { walletProxy } from "shared/core/proxy";
 import { addErrorNotification } from "./notification";
 import MoneroTxWallet from "haven-wallet-core/src/main/js/wallet/model/MoneroTxWallet";
+import { convertBalanceToMoney } from "utility/utility";
 import {
   GET_TRANSFERS_SUCCEED,
   GET_TRANSFERS_FETCHING,
@@ -50,9 +51,22 @@ export const downloadTransfers = (type: string) => {
           //assume csv  
           let fields = ["Height","InOut","UnlockHeight","Timestamp","Hash","Amount","Currency","Fee","Confirmed","Locked","Version","Mined","PaymentID","Key","Confirmations","Address"];
           str_out += fields.join(",") + "\n";
+
           for (let i = 0; i < transfers.length; i++) {
-            let tx_csv = transfers[i].toCsv(fields);
-            str_out += tx_csv.join("\n") + "\n";
+            let tx_csv_obj = transfers[i].toCsvObj(fields); //NOTE: toCsvObj returns an array of objects with kv data 
+            if( tx_csv_obj.length > 0){
+              //make human readable amounts
+              for (let r = 0; r < tx_csv_obj.length; r++) {
+                let numDecimals = ( ["XAG","XAU","XBTC"].includes(tx_csv_obj[r]["Currency"]) ) ? 4 : 2;
+                tx_csv_obj[r]["Fee"] = ( tx_csv_obj[r]["Fee"] > 0) ? convertBalanceToMoney( tx_csv_obj[r]["Fee"], numDecimals) : 0;
+                tx_csv_obj[r]["Amount"] = ( tx_csv_obj[r]["Amount"] > 0) ? convertBalanceToMoney( tx_csv_obj[r]["Amount"], numDecimals) : 0;
+                let orderedCsvData = []; //order the data into field ordering
+                for (let f = 0; f < fields.length; f++) {
+                  orderedCsvData.push( tx_csv_obj[r][ fields[f] ] );
+                }
+                str_out += orderedCsvData.join(',') + "\n";
+              }
+            }
           }
           filename += ".csv";
         }
