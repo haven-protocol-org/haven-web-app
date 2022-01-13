@@ -14,7 +14,7 @@ interface ConfirmTxModalProps {
   resetTransferProcess: () => void;
   hideModal: () => void;
 }
-
+//TOKENOMICS this may need updating
 class ConfirmTxModal extends React.Component<ConfirmTxModalProps, any> {
   state = {
     checked: false,

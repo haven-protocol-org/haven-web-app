@@ -48,6 +48,7 @@ export interface ICreateWallet {
   proxyToWorker?: boolean;
 }
 
+//TOKENOMICS below - priority may need updating
 export interface ITxConfig {
   /** single destination address */
   address: string;

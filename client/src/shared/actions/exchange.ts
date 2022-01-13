@@ -51,7 +51,7 @@ const sanityCheck = (amount: number): boolean => {
   const checkValue = amount * 10000;
   return checkValue % 1 === 0;
 };
-
+//TOKENOMICS below - priority needs updating
 export function createExchange(
   fromTicker: Ticker,
   toTicker: Ticker,
@@ -147,7 +147,7 @@ export function createExchange(
       new MoneroDestination(address, amount.toString()).toJson(),
     ];
 
-
+//TOKENOMICS below - priority needs updating
     const txConfig: Partial<ITxConfig> = {
       canSplit: true,
       destinations,

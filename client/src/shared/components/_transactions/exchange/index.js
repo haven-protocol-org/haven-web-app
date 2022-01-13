@@ -15,6 +15,7 @@ import {
 import Confirm from "../../confirm/index.js";
 import Cell from "../cells/index.js";
 
+//TOKENOMICS below - priority needs updating
 const Transaction = ({
   xRate,
   fromAmount,
@@ -49,6 +50,7 @@ const Transaction = ({
   const from = `${fromAmount} ${fromTicker}`;
   const to = `${toAmount} ${toTicker}`;
 
+//TOKENOMICS below - text / formating and markup needs updating
   return (
     <Fragment>
       <Container>

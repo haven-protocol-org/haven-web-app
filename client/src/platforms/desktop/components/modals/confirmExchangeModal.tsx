@@ -16,7 +16,7 @@ interface ConfirmExchangeModalProps {
   hideModal: () => void;
   isOwnAddress: boolean;
 }
-
+//TOKENOMICS this may need updating
 class ConfirmExchangeModal extends React.Component<
   ConfirmExchangeModalProps,
   any

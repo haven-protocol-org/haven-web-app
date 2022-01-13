@@ -11,6 +11,7 @@ import { AnyAction } from "redux";
 import { HavenAppState } from "../../platforms/desktop/reducers/index";
 import { Ticker } from "shared/reducers/types";
 
+//TOKENOMICS below - priority needs updating
 export interface TxProcessInfo {
   address: string;
   fromAmount: number | null | bigInt.BigInteger;

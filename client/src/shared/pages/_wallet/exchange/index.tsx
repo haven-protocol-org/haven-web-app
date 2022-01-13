@@ -326,6 +326,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     this.setState({ selectedTab: ExchangeTab.Advanced });
   };
 
+//TOKENOMICS below - priority needs updating
   setExchangePriority = (selectedOption: ExchangePrioOption) => {
     this.setState({ selectedPrio: selectedOption });
   };
@@ -469,7 +470,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       truncated = first + "...." + last;
 
     }
-
+//TOKENOMICS below - priority dropdown needs updating
     return (
       <Fragment>
         <Body>
