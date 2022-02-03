@@ -18,6 +18,8 @@ import {
   hasLatestXRate,
   priceDelta,
   selectXRate,
+  BlockHeaderRate,
+  selectLastExchangeRates
 } from "shared/reducers/blockHeaderExchangeRates";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import { selectNodeHeight } from "shared/reducers/chain";
@@ -51,6 +53,7 @@ interface ExchangeProps extends RouteComponentProps<any> {
   hasLatestXRate: boolean;
   exchangeSucceed: boolean;
   priceDelta: number | null;
+  lastExchangeRates: BlockHeaderRate | null;
   setFromTicker: (ticker: Ticker | null) => void;
   setToTicker: (ticker: Ticker | null) => void;
   xRate: number;
@@ -314,7 +317,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       selectedAddressIndex
     );
   };
-
+/*
   toggleBasic = () => {
     this.setState({
       selectedTab: ExchangeTab.Basic,
@@ -325,10 +328,11 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
   toggleAdvanced = () => {
     this.setState({ selectedTab: ExchangeTab.Advanced });
   };
+*/
 
-//TOKENOMICS below - priority needs updating
+//TOKENOMICS below - priority always set to default
   setExchangePriority = (selectedOption: ExchangePrioOption) => {
-    this.setState({ selectedPrio: selectedOption });
+    this.setState({ selectedPrio: exchangePrioOptions[0] });
   };
 
   validateExchange = (availableBalance: any) => {
@@ -403,6 +407,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
   };
 
   render() {
+
     const {
       fromAmount,
       toAmount,
@@ -415,8 +420,27 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       selectedAddress
     } = this.state;
 
-    const { addresses, fromTicker, toTicker } = this.props;
+    const { addresses, fromTicker, toTicker, lastExchangeRates } = this.props;
     const { hasLatestXRate } = this.props;
+
+    let usingSpot = true;
+
+    if(lastExchangeRates !== null && (fromTicker === Ticker.XHV || toTicker === Ticker.XHV) ){
+
+      let last_ma_rate = 0.0;
+      if (fromTicker === Ticker.XHV ) {
+        //to is xUSD
+        last_ma_rate = lastExchangeRates["UNUSED1"].toJSNumber() / Math.pow(10, 12);
+   
+      } else {
+        //from is xUSD
+        last_ma_rate = Math.pow(10, 12) / lastExchangeRates["UNUSED1"].toJSNumber();
+
+      }
+      if( this.props.xRate === last_ma_rate ){
+        usingSpot = false;
+      }
+    }
 
     const availBalance = fromTicker
       ? convertBalanceToMoney(
@@ -437,7 +461,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
 
     const displayedFromAmount = fromAmount !== undefined ? fromAmount : "";
     const displayedToAmount = toAmount !== undefined ? toAmount : "";
-
+    
 
     let tabfragment;
     //dissable the basic / advanced tabs
@@ -527,13 +551,16 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 onChange={this.onEnterToAmount}
                 error={toTicker === null ? "Please select an asset first" : ""}
                 readOnly={toTicker === null}
-                onClick={this.setExchangePriority}
+                
               />
             </Form>
+
 
             {selectedTab === ExchangeTab.Advanced && (
               <>
                 <WideContainer>
+
+                { false && (
                   <Dropdown
                     label="Priority"
                     placeholder="Select Priority"
@@ -546,6 +573,8 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                     onClick={this.setExchangePriority}
                     disabled={xassetConversion ? true : false}
                   />
+                  )}
+                  
                   <AddressDropdown
                     label="From Address (Optional)"
                     placeholder="Select from address"
@@ -556,6 +585,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                     onClick={this.selectAddress}
                     hideCreateAddress
                   />
+                  
 
                   <Description
                     label="Recipient Address (Optional)"
@@ -578,6 +608,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 toAmount={iNum(toAmount)}
                 toTicker={toTicker}
                 hasLatestXRate={hasLatestXRate}
+                usingSpot={usingSpot}
                 fee={this.calculateFeeEstimate()}
                 fromTicker={fromTicker}
                 selectedPrio={selectedPrio}
@@ -607,6 +638,7 @@ const mapStateToProps = (state: DesktopAppState) => ({
   hasLatestXRate: hasLatestXRate(state),
   exchangeSucceed: selectExchangeSucceed(state.exchangeProcess),
   priceDelta: priceDelta(state),
+  lastExchangeRates: selectLastExchangeRates(state),
   fromTicker: selectFromTicker(state.exchangeProcess),
   toTicker: selectToTicker(state.exchangeProcess),
   balances: state.xBalance,

@@ -16,26 +16,42 @@ export const ExchangeSummary = ({
   fee,
   selectedPrio,
   hasLatestXRate,
+  usingSpot,
   xasset_conversion,
 }) => {
   // use USD always as quote currency for better readability
   let xFromTicker = fromTicker;
-  let xToTicker = toTicker;
+  //let xToTicker = toTicker;
+  let xToTicker = toTicker === null ? "" : toTicker;
   let rate = xRate;
+  let conversion_info = "";
+
   if (fromTicker === Ticker.xUSD && toTicker !== null) {
     xToTicker = fromTicker;
     xFromTicker = toTicker;
     rate = 1 / xRate;
+  } else if ( toTicker === null || fromTicker === null ){
+    rate = 1;
+    xFromTicker = "-";
+    xToTicker = "-";
+  }
+
+  if( fromTicker === Ticker.XHV || toTicker === Ticker.XHV ){
+    if( usingSpot){
+      conversion_info = " (Spot Rate)";
+    }else{
+      conversion_info = " (Moving Average)";
+    }
   }
 
   return (
     <Wrapper>
       <Container>
         <Row>
-          <Key>Conversion Rate</Key>
+          <Key>Conversion Rate{conversion_info}</Key>
           <Value active={true}>
             {!hasLatestXRate ? (
-              <Error>Awaiting latest rates...</Error>
+              <Error>Fetching latest rates...</Error>
             ) : (
               `1 ${xFromTicker} : ${iNum(rate)} ${xToTicker}`
             )}

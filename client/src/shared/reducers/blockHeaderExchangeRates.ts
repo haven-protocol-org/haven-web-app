@@ -78,22 +78,38 @@ export const selectXRate = (
 
     /**
      * handles xUSD --> XHV and XHV -> xUSD
+     * Tokenomics change Feb2022: use the least favorable exchange rate on xhv - xusd conversions
      */
-  if (from === Ticker.XHV && latestBlockerHeader[to]) {
-    return latestBlockerHeader[to].toJSNumber() / Math.pow(10, 12);
-  } else if (to === Ticker.XHV) {
-    if (!latestBlockerHeader[from].isZero()) {
-      return Math.pow(10, 12) / latestBlockerHeader[from].toJSNumber();
-    }
-}
 
-if (fromTicker === Ticker.xUSD && latestBlockerHeader[toTicker]) {
-    return latestBlockerHeader[toTicker].toJSNumber() / Math.pow(10, 12);
-} else {
-  if (!latestBlockerHeader[fromTicker].isZero()) {
-    return Math.pow(10, 12) / latestBlockerHeader[fromTicker].toJSNumber();
+
+  if (from === Ticker.XHV && latestBlockerHeader[to]) {
+    //to is xUSD
+    let xusd_ma_rate = latestBlockerHeader["UNUSED1"].toJSNumber() / Math.pow(10, 12);
+    let xusd_spot_rate = latestBlockerHeader[Ticker.xUSD].toJSNumber() / Math.pow(10, 12);
+
+    //give the minimum
+    return Math.min(xusd_ma_rate,xusd_spot_rate);
+    //return latestBlockerHeader[to].toJSNumber() / Math.pow(10, 12);
+
+  } else if (to === Ticker.XHV) {
+    //from is xUSD
+
+    if (!latestBlockerHeader[from].isZero()) {
+
+      let xusd_ma_rate = Math.pow(10, 12) / latestBlockerHeader["UNUSED1"].toJSNumber();
+      let xusd_spot_rate = Math.pow(10, 12) / latestBlockerHeader[Ticker.xUSD].toJSNumber();
+      return Math.min(xusd_ma_rate,xusd_spot_rate);
+      //return Math.pow(10, 12) / latestBlockerHeader[from].toJSNumber();
+    }
   }
-}
+
+  if (fromTicker === Ticker.xUSD && latestBlockerHeader[toTicker]) {
+      return latestBlockerHeader[toTicker].toJSNumber() / Math.pow(10, 12);
+  } else {
+    if (!latestBlockerHeader[fromTicker].isZero()) {
+      return Math.pow(10, 12) / latestBlockerHeader[fromTicker].toJSNumber();
+    }
+  }
   return 0;
 };
 
@@ -101,8 +117,7 @@ export const selectLastExchangeRates = (
   state: DesktopAppState | WebAppState
 ): BlockHeaderRate | null => {
   const latestBlockerHeader: BlockHeaderRate =
-    state.blockHeaderExchangeRate[blockHeaderExchangeRate.length - 1];
-
+    state.blockHeaderExchangeRate[state.blockHeaderExchangeRate.length - 1];
   return latestBlockerHeader;
 };
 

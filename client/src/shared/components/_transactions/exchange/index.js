@@ -97,12 +97,9 @@ const Transaction = ({
           <>
             <strong style={{ textDecoration: 'underline'}}>ALERT</strong>: Approximately{" "}
             <strong style={{ fontWeight: 600 }}>
-              {change} {fromTicker} will be temporarily locked and unusable for
-              the entirety of the {xasset_conversion ? "48h" : priorityInfo}{" "}
-              unlock priority time
+              {change} {fromTicker} will be temporarily locked and unusable for ~20m
             </strong>
-            . However, this amount will be unlocked and usable once the
-            transaction is complete. To understand why this happens and how it
+            . To understand why this happens and how it
             might impact your experience, please{" "}
             <strong>
               <Url
