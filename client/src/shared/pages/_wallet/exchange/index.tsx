@@ -105,10 +105,10 @@ const xhvOption = { name: "Haven", ticker: Ticker.XHV };
 const assetOptions: AssetOption[] = [xhvOption, xusdOption, ...xassetOptions];
 
 const exchangePrioOptions: ExchangePrioOption[] = [
-  { name: "Default", ticker: "Unlocks ~7d", percent: "0.2%", prio: 0 },
-  { name: "Low", ticker: "Unlocks ~48h", percent: "5%", prio: 1 },
-  { name: "Medium", ticker: "Unlocks ~24h", percent: "10%", prio: 2 },
-  { name: "High", ticker: "Unlocks ~6h", percent: "20%", prio: 3 },
+  { name: "Default", ticker: "Unlocks ~21d", percent: "0.2%", prio: 0 },
+  { name: "Low", ticker: "Unlocks ~21d", percent: "5%", prio: 1 },
+  { name: "Medium", ticker: "Unlocks ~21d", percent: "10%", prio: 2 },
+  { name: "High", ticker: "Unlocks ~21d", percent: "20%", prio: 3 },
 ];
 
 
@@ -425,8 +425,8 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
 
     let usingSpot = true;
 
-    if(lastExchangeRates !== null && (fromTicker === Ticker.XHV || toTicker === Ticker.XHV) ){
-
+    if(lastExchangeRates !== null && lastExchangeRates !== undefined && lastExchangeRates.hasOwnProperty("UNUSED1") && (fromTicker === Ticker.XHV || toTicker === Ticker.XHV) ){
+ 
       let last_ma_rate = 0.0;
       if (fromTicker === Ticker.XHV ) {
         //to is xUSD

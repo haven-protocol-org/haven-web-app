@@ -1,6 +1,6 @@
 // Library Imports
 import React, { Fragment } from "react";
-
+import { Ticker } from "shared/reducers/types.ts";
 // Relative Imports
 import {
   Container,
@@ -35,16 +35,16 @@ const Transaction = ({
   const last = externAddress.substring(externAddress.length - 4);
   const truncatedAddress = first + "...." + last;
 
-  const priorityInfo =
-    priority === 0
-      ? "~7d"
-      : priority === 1
-      ? "~48h"
-      : priority === 2
-      ? "~24h"
-      : priority === 3
-      ? "~6h"
-      : null;
+  let unlock_time = "--";
+  if(fromTicker !== null && toTicker != null){
+    if( fromTicker === Ticker.XHV && toTicker === Ticker.xUSD){
+      unlock_time = "~21d";
+    }else if( fromTicker === Ticker.xUSD && toTicker === Ticker.XHV ){
+      unlock_time = "~12h";
+    }else{
+      unlock_time = "~48h"
+    }
+  }
 
   // Adding for simplicity and clarity
   const from = `${fromAmount} ${fromTicker}`;
@@ -59,23 +59,8 @@ const Transaction = ({
         {!isOwnAddress && (
           <Cell left="Recipient Address" right={truncatedAddress} />
         )}
-        {xasset_conversion ? (
-          <Cell left="Standard Priority" right="Unlocks ~48h" />
-        ) : (
-          (function () {
-            switch (priority) {
-              case 0:
-                return <Cell left="Normal Priority" right="Unlocks ~7d" />;
-              case 1:
-                return <Cell left="Low Priority" right="Unlocks ~48h" />;
-              case 2:
-                return <Cell left="Medium Priority" right="Unlocks ~24h" />;
-              case 3:
-                return <Cell left="High Priority" right="Unlocks ~6h" />;
-              default:
-            }
-          })()
-        )}
+        <Cell left="Unlock Time" right={unlock_time} />
+
         <Row>
           <Key>Final Conversion Fee</Key>
           <Tag priority={priority}>
@@ -85,9 +70,7 @@ const Transaction = ({
           </Tag>
         </Row>
         <Confirm
-          description={`I accept the ${
-            xasset_conversion ? "48h" : priorityInfo
-          } Unlock Time, Details, Terms & Fees`}
+          description={`I accept the ${unlock_time} Unlock Time, Details, Terms & Fees`}
           checked={checked}
           onChange={onChange}
         />
@@ -96,11 +79,8 @@ const Transaction = ({
         {change > 0 ? (
           <>
             <strong style={{ textDecoration: 'underline'}}>ALERT</strong>: Approximately{" "}
-            <strong style={{ fontWeight: 600 }}>
-              {change} {fromTicker} will be temporarily locked and unusable for ~20m
-            </strong>
-            . To understand why this happens and how it
-            might impact your experience, please{" "}
+            <strong style={{ fontWeight: 600 }}> {change} {fromTicker} will be temporarily locked and unusable for ~20m</strong>. 
+            To understand why this happens and how it might impact your experience, please{" "}
             <strong>
               <Url
                 target="_blank"
@@ -112,10 +92,8 @@ const Transaction = ({
           </>
         ) : (
           <>
-            Details: This {fromTicker} transaction will be unlocked in{" "}
-            {xasset_conversion ? "~20m" : priorityInfo}. I have reviewed my
-            transaction details and accept all responsibility for this
-            transaction.
+            Details: This {fromTicker} transaction will be unlocked in {unlock_time}. I have reviewed my
+            transaction details and accept all responsibility for this transaction.
           </>
         )}
       </Information>

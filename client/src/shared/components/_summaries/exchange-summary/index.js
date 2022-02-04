@@ -44,6 +44,19 @@ export const ExchangeSummary = ({
     }
   }
 
+  //unlock times
+  let unlock_time = "--";
+  if(fromTicker !== null && toTicker != null){
+    if( fromTicker === Ticker.XHV && toTicker === Ticker.xUSD){
+      unlock_time = "~21d";
+    }else if( fromTicker === Ticker.xUSD && toTicker === Ticker.XHV ){
+      unlock_time = "~12h";
+    }else{
+      unlock_time = "~48h"
+    }
+  }
+
+
   return (
     <Wrapper>
       <Container>
@@ -71,17 +84,10 @@ export const ExchangeSummary = ({
             {toTicker ? toTicker : "--"}
           </Value>
         </Row>
-        {xasset_conversion ? (
-          <Row>
-            <Key>Standard Priority</Key>
-            <Value>Unlocks ~48h</Value>
-          </Row>
-        ) : (
-          <Row>
-            <Key>{selectedPrio.name} Priority</Key>
-            <Value>{selectedPrio.ticker}</Value>
-          </Row>
-        )}
+        <Row>
+          <Key>Unlock Time</Key>
+          <Value>{unlock_time}</Value>
+        </Row>
       </Container>
     </Wrapper>
   );
