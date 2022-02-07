@@ -34,7 +34,7 @@ class ConfirmTxModal extends React.Component<ConfirmTxModalProps, any> {
     const readableAmount = convertBalanceToMoney(fromAmount!,6);
 
     return (
-      <Modal
+      <Modal 
         title="Transfer Confirmation"
         description="Please review and confirm your transaction"
         leftButton="Cancel"

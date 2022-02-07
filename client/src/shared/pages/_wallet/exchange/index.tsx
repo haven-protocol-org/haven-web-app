@@ -85,7 +85,6 @@ export interface ExchangePrioOption {
   ticker: string;
   name: string;
   prio: number;
-  percent: string;
 }
 
 const xassetOptions: AssetOption[] = [
@@ -105,10 +104,10 @@ const xhvOption = { name: "Haven", ticker: Ticker.XHV };
 const assetOptions: AssetOption[] = [xhvOption, xusdOption, ...xassetOptions];
 
 const exchangePrioOptions: ExchangePrioOption[] = [
-  { name: "Default", ticker: "Unlocks ~21d", percent: "0.2%", prio: 0 },
-  { name: "Low", ticker: "Unlocks ~21d", percent: "5%", prio: 1 },
-  { name: "Medium", ticker: "Unlocks ~21d", percent: "10%", prio: 2 },
-  { name: "High", ticker: "Unlocks ~21d", percent: "20%", prio: 3 },
+  { name: "Default", ticker: "Unlocks ~21d", prio: 0 },
+  { name: "Low", ticker: "Unlocks ~21d", prio: 1 },
+  { name: "Medium", ticker: "Unlocks ~21d", prio: 2 },
+  { name: "High", ticker: "Unlocks ~21d", prio: 3 },
 ];
 
 
@@ -466,6 +465,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     let tabfragment;
     //dissable the basic / advanced tabs
     if(false){
+      /*
       tabfragment = <Tab
       firstTabLabel="Basic"
       secondTabLabel="Advanced"
@@ -475,6 +475,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       secondTabClickEvent={this.toggleAdvanced}
       onClick={() => {}}
       />;
+      */
     }
 
     const handleLabel =
