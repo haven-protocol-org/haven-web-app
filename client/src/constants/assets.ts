@@ -39,6 +39,12 @@ export const AssetList = [
     symbol: "$",
   },
   {
+    id: Ticker.xLTC,
+    token: "Litecoin",
+    ticker: "LTC",
+    symbol: "$",
+  },
+  {
     id: Ticker.xAUD,
     token: "Australian Dollar",
     ticker: "AUD",

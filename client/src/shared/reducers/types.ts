@@ -14,6 +14,7 @@ export enum Ticker {
   XHV = "XHV",
   xUSD = "XUSD",
   xBTC = "XBTC",
+  xLTC = "XLTC",
   XAU="XAU",
   XAG="XAG",
   xEUR="XEUR",

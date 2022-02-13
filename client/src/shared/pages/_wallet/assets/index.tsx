@@ -43,6 +43,7 @@ const Enabled_TICKER = [
   Ticker.xCNY,
   Ticker.xEUR,
   Ticker.xBTC,
+  Ticker.xLTC,
   Ticker.xAUD,
   Ticker.xGBP,
   Ticker.xCHF
@@ -66,7 +67,7 @@ class AssetsPage extends Component<AssetsProps, any> {
 
       const xTicker = id;
 
-      const numDecimals = (xTicker === Ticker.XAG || xTicker === Ticker.XAU || xTicker === Ticker.xBTC) ? 4 : 2;
+      const numDecimals = (xTicker === Ticker.XAG || xTicker === Ticker.XAU || xTicker === Ticker.xBTC || xTicker === Ticker.xLTC) ? 4 : 2;
 
       const unlockedBalance = convertBalanceToMoney(
         this.props.balances[xTicker].unlockedBalance, numDecimals

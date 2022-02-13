@@ -57,7 +57,7 @@ export const downloadTransfers = (type: string) => {
             if( tx_csv_obj.length > 0){
               //make human readable amounts
               for (let r = 0; r < tx_csv_obj.length; r++) {
-                let numDecimals = ( ["XAG","XAU","XBTC"].includes(tx_csv_obj[r]["Currency"]) ) ? 4 : 2;
+                let numDecimals = ( ["XAG","XAU","XBTC","XLTC"].includes(tx_csv_obj[r]["Currency"]) ) ? 4 : 2;
                 tx_csv_obj[r]["Fee"] = ( tx_csv_obj[r]["Fee"] > 0) ? convertBalanceToMoney( tx_csv_obj[r]["Fee"], numDecimals) : 0;
                 tx_csv_obj[r]["Amount"] = ( tx_csv_obj[r]["Amount"] > 0) ? convertBalanceToMoney( tx_csv_obj[r]["Amount"], numDecimals) : 0;
                 let orderedCsvData = []; //order the data into field ordering

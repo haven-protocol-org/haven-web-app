@@ -17,6 +17,7 @@ const assetOptions: AssetOption[] = [
   { name: "Haven", ticker: Ticker.XHV },
   { name: "U.S Dollar", ticker: Ticker.xUSD },
   { name: "Bitcoin", ticker: Ticker.xBTC },
+  { name: "Litecoin", ticker: Ticker.xLTC },
   { name: "Yuan", ticker: Ticker.xCNY },
   { name: "Euro", ticker: Ticker.xEUR },
   { name: "Gold", ticker: Ticker.XAU },

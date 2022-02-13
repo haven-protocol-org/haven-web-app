@@ -93,6 +93,7 @@ const xassetOptions: AssetOption[] = [
   { name: "Gold", ticker: Ticker.XAU },
   { name: "Silver", ticker: Ticker.XAG },
   { name: "Bitcoin", ticker: Ticker.xBTC },
+  { name: "Litecoin", ticker: Ticker.xLTC },
   { name: "Swiss Franc", ticker: Ticker.xCHF },
   { name: "Australian Dollar", ticker: Ticker.xAUD },
   { name: "British Pound", ticker: Ticker.xGBP },
