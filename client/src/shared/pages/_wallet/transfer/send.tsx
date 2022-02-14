@@ -125,15 +125,32 @@ class TransferContainer extends Component<TransferProps, TransferState> {
     const { selectedAsset } = this.state;
   
     let availableBalance = null;
+    let numDecimals = 2;
+    console.log(selectedAsset.ticker);
+
+    /* BLUEY TODO
+    standard transfer fees
+    XHV = 0.003109 {XHV}
+    else = 0.000469 {asset}
+    */
+
     if (selectedAsset) {
+
+      numDecimals = ( ["XAG","XAU","XBTC"].includes(selectedAsset.ticker) ) ? 8 : 2;
+
       availableBalance = convertBalanceToMoney(
-        this.props.xBalances[selectedAsset.ticker].unlockedBalance
+        this.props.xBalances[selectedAsset.ticker].unlockedBalance,
+        numDecimals
       );
     }
-  
+    console.log(availableBalance, numDecimals);
+
     if (availableBalance != null) {
+
+      
+
       this.setState({
-        send_amount: availableBalance.toFixed(2),
+        send_amount: availableBalance.toFixed(numDecimals),
         sweep_all: true,
       });
     } else {
