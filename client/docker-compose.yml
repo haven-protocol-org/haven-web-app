@@ -1,0 +1,25 @@
+version: "3.8"
+services:
+  web-app:
+    image: havenprotocolorg/haven-web:latest
+    build: 
+      dockerfile: .docker/Dockerfile
+      context: ./
+      args:
+        REACT_APP_NET_TYPE_ID: ${REACT_APP_NET_TYPE_ID:-0}
+    ports:
+      - 80:80
+    environment:
+      HAVEN_NODE_IP: ${HAVEN_NODE_HOST:-havend}
+      HAVEN_NODE_PORT: ${HAVEN_NODE_PORT:-17750}
+  havend:
+    image: havenprotocolorg/haven-cli:latest
+    environment:
+      NETWORK: ${NETWORK:---mainnet}
+    command: ['havend','${NETWORK}','--non-interactive','--rpc-bind-ip=0.0.0.0','--confirm-external-bind']
+    volumes:
+      - type: volume
+        source: havend
+        target: /home/haven/.haven
+volumes:
+  havend:

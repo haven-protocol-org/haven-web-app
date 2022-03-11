@@ -32,7 +32,7 @@ export const getPort = () => {
   if (isDevMode()) {
     return isMainnet() ? 17750 : isTestnet() ? 27750 : 37750;
   }
-  return 443;
+  return window.location.port;
 };
 
 let apiUrl;
