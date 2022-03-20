@@ -16,9 +16,6 @@ on:
 jobs:
   docker-build:
     runs-on: ubuntu-latest
-    env: 
-      REACT_APP_NET_TYPE_ID: ${{matrix.networks.network}}
-      REACT_APP_HAVEN_DIRECT_HOST: ${{matrix.networks.nodeUrl}}
     strategy:
       matrix:
         networks: [
@@ -31,6 +28,9 @@ jobs:
           {network: "2", nodeUrl: "", tag: "stagenet-latest"}
         ]
     steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v2
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -48,9 +48,9 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: havenprotocolorg/haven-web:${{matrix.networks.tag}}
+          tags: ${{ secrets.DOCKERHUB_REPO }}:${{matrix.networks.tag}}
           file: client/.docker/Dockerfile
           context: client/
-          build-args:
+          build-args: |
             REACT_APP_NET_TYPE_ID=${{matrix.networks.network}}
             REACT_APP_HAVEN_DIRECT_HOST=${{matrix.networks.nodeUrl}}
