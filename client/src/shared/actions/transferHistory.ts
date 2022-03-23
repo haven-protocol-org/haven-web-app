@@ -62,8 +62,6 @@ export const downloadTransfers = (type: string) => {
                 tx_csv_obj[r]["Amount"] = ( tx_csv_obj[r]["Amount"] > 0) ? convertBalanceToMoney( tx_csv_obj[r]["Amount"], numDecimals) : 0;
                 tx_csv_obj[r]["Timestamp"] = new Date(tx_csv_obj[r]["Timestamp"] * 1000).toUTCString();
 
-                console.log(tx_csv_obj[r]["Timestamp"]);
-                console.log( tx_csv_obj[r]["Timestamp"].indexOf(",") );
                 if( tx_csv_obj[r]["Timestamp"].indexOf(",") !== -1 ){
                   tx_csv_obj[r]["Timestamp"] = tx_csv_obj[r]["Timestamp"].split(",").slice(1).join("");
                 }
