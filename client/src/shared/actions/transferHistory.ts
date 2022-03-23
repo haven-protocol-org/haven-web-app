@@ -60,7 +60,13 @@ export const downloadTransfers = (type: string) => {
                 let numDecimals = ( ["XAG","XAU","XBTC"].includes(tx_csv_obj[r]["Currency"]) ) ? 4 : 2;
                 tx_csv_obj[r]["Fee"] = ( tx_csv_obj[r]["Fee"] > 0) ? convertBalanceToMoney( tx_csv_obj[r]["Fee"], numDecimals) : 0;
                 tx_csv_obj[r]["Amount"] = ( tx_csv_obj[r]["Amount"] > 0) ? convertBalanceToMoney( tx_csv_obj[r]["Amount"], numDecimals) : 0;
-                tx_csv_obj[r]["Timestamp"] = new Date(tx_csv_obj[r]["Timestamp"] * 1000).toUTCString().split(",").slice(1).join("");
+                tx_csv_obj[r]["Timestamp"] = new Date(tx_csv_obj[r]["Timestamp"] * 1000).toUTCString();
+
+                console.log(tx_csv_obj[r]["Timestamp"]);
+                console.log( tx_csv_obj[r]["Timestamp"].indexOf(",") );
+                if( tx_csv_obj[r]["Timestamp"].indexOf(",") !== -1 ){
+                  tx_csv_obj[r]["Timestamp"] = tx_csv_obj[r]["Timestamp"].split(",").slice(1).join("");
+                }
                 let orderedCsvData = []; //order the data into field ordering
                 for (let f = 0; f < fields.length; f++) {
                   orderedCsvData.push( tx_csv_obj[r][ fields[f] ] );
