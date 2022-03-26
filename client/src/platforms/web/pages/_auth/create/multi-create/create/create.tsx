@@ -306,7 +306,7 @@ class CreateWalletWeb extends Component<CreateProps, CreateState> {
 
     return (
       <MultiCreate
-        link="/login"
+        link="/"
         route="Login"
         label="Have a Vault?"
         step={step}

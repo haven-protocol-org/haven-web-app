@@ -14,7 +14,7 @@ import { logM } from "utility/utility";
 const onboardingVersion = 2;
 class PublicRoutes extends Component {
   componentDidMount() {
-/*
+    /*
     if (localStorage.getItem("onboard") !== onboardingVersion.toString() && isWeb() ) {
       this.props.showModal(MODAL_TYPE.LoginOnboarding);
       localStorage.setItem("onboard",onboardingVersion);
@@ -25,8 +25,8 @@ class PublicRoutes extends Component {
   render() {
     return (
       <Suspense fallback={<Loader />}>
-        <Route path="/" exact component={CreateWeb} />
-        <Route path="/login" exact component={LoginWeb} />
+        <Route path="/create" exact component={CreateWeb} />
+        <Route path="/" exact component={LoginWeb} />
       </Suspense>
     );
   }
