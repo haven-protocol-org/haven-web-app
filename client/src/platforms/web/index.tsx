@@ -2,7 +2,7 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { GlobalStyle } from "../../globalStyle";
 import React from "react";
-import { applyMiddleware, createStore, Store } from "redux";
+import { applyMiddleware, createStore, Store, compose } from "redux";
 import reduxThunk from "redux-thunk";
 import reducers from "./reducers";
 import { logger } from "../../vendor/clipboard/dev-helper";
@@ -18,13 +18,15 @@ export const startWebApp = () => {
 };
 
 export const startWebAppInDevMode = () => {
-  const createStoreWithMiddleware = applyMiddleware(
-    reduxThunk,
-    logger
-  )(createStore);
-  store = createStoreWithMiddleware(reducers);
+  store = createStore(
+    reducers,
+    {},
+    compose(
+      applyMiddleware(reduxThunk, logger),
+      window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    )
+  );
   addStoreWatchers(store);
-
   render();
 };
 
