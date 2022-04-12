@@ -126,7 +126,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
   
     let availableBalance = null;
     let numDecimals = 2;
-    console.log(selectedAsset.ticker);
+    //console.log(selectedAsset.ticker);
 
     /* BLUEY TODO
     standard transfer fees
@@ -143,7 +143,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
         numDecimals
       );
     }
-    console.log(availableBalance, numDecimals);
+    //console.log(availableBalance, numDecimals);
 
     if (availableBalance != null) {
 
@@ -174,7 +174,7 @@ class TransferContainer extends Component<TransferProps, TransferState> {
 
   // @ts-ignore
   recipientIsValid = () => {
-    const havenRegex = new RegExp('^hv([xist]+)[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{90,100}$');
+    const havenRegex = new RegExp('^hv([xist]+)[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{90,110}$');
     const recipient = this.state.recipient_address;
     if (recipient === "" || havenRegex.test(recipient) ) {
         return "";
