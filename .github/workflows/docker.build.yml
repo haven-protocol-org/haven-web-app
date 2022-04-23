@@ -19,12 +19,12 @@ jobs:
     strategy:
       matrix:
         networks: [
-          {network: "0", nodeUrl: "https://havennodemainnet.app.runonflux.io:443", tag: "flux-mainnet-latest"}, 
+          {network: "0", nodeUrl: "https://nodes.havenprotocol.org:443", tag: "flux-mainnet-latest"}, 
           {network: "0", nodeUrl: "", tag: "mainnet-latest"},
           {network: "0", nodeUrl: "", tag: "latest"},
-          {network: "1", nodeUrl: "https://havennodetestnet.app.runonflux.io:443", tag: "flux-testnet-latest"}, 
+          {network: "1", nodeUrl: "https://nodes-testnet.havenprotocol.org:443", tag: "flux-testnet-latest"}, 
           {network: "1", nodeUrl: "", tag: "testnet-latest"},
-          {network: "2", nodeUrl: "https://havennodestagenet.app.runonflux.io:443", tag: "flux-stagenet-latest"},
+          {network: "2", nodeUrl: "https://nodes-stagenet.havenprotocol.org:443", tag: "flux-stagenet-latest"},
           {network: "2", nodeUrl: "", tag: "stagenet-latest"}
         ]
     steps:
