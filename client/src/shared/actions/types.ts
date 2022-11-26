@@ -138,3 +138,6 @@ export const GET_BLOCK_HEADER_EXCHANGE_RATE_SUCCEED =
   "get_block_header_exchange_rate_succeed";
 export const GET_BLOCK_HEADER_EXCHANGE_RATE_FAILED =
   "get_block_header_exchange_rate_failed";
+
+
+  export const ADD_CIRCULATING_SUPPLY = "add_circulating_supply"
