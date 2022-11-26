@@ -48,3 +48,43 @@ export const selectMcRatio = (state: HavenAppState) => {
     const mcRatio =  xassetMarketCap.toJSNumber() / xhvMarketCap.toJSNumber();
     return mcRatio;
 }
+
+
+export const selectOffshoreVBS = (state: HavenAppState): number | null => {
+
+    const mcRatio = selectMcRatio(state);
+    if(!mcRatio){
+        return null;
+    }
+
+    let offshoreVBS: number;
+
+    if (mcRatio < 0.9) {
+        offshoreVBS = Math.exp(Math.pow(mcRatio + Math.sqrt(mcRatio), 2)) - 0.5;
+    } else {
+        offshoreVBS = Math.sqrt(mcRatio) * 40;
+    }
+    return offshoreVBS;
+}
+
+export const selectOnshoreVBS = (state: HavenAppState): number | null => {
+
+    const mcRatio = selectMcRatio(state);
+    if(!mcRatio){
+        return null;
+    }
+
+    let spreadRatio: number;
+
+    if (mcRatio < 1) {
+        spreadRatio = 1 - mcRatio; 
+    } else {
+        spreadRatio = 0;
+    }
+
+    const offshoreVBS = selectOffshoreVBS(state);
+    const spreadVBS = Math.exp(1+Math.sqrt(spreadRatio)) + 1.5
+    const onshoreVBS = Math.max(spreadVBS, offshoreVBS!);
+
+    return onshoreVBS;
+}
