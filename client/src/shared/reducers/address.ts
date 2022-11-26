@@ -1,5 +1,5 @@
 import { HavenAppState } from "platforms/desktop/reducers";
-import { bindActionCreators, combineReducers } from "redux";
+import { combineReducers } from "redux";
 import {
   GET_ADDRESS_SUCCEED,
   SET_SELECTED_ADDRESS,
