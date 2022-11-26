@@ -11,6 +11,7 @@ import {
 import MoneroTxWallet from "haven-wallet-core/src/main/js/wallet/model/MoneroTxWallet";
 import HavenBalance from "haven-wallet-core/src/main/js/wallet/model/HavenBalance";
 import MoneroAddressBookEntry from "haven-wallet-core/src/main/js/wallet/model/MoneroAddressBookEntry";
+import { Ticker } from "shared/reducers/types";
 
 let wallet: MoneroWalletWasm;
 
@@ -31,6 +32,32 @@ export const openWallet = async (walletData: IOpenWallet) => {
 export const closeWallet = async (save: boolean) => {
   //@ts-ignore
   return wallet.close(save);
+};
+
+export const getBlockCap = async() => {
+   //@ts-ignore
+  return wallet.getBlockCap();
+}
+
+export const getCollateralRequirements = async(sourceAssetType: Ticker, destinationAssetType: Ticker, amount: string) => {
+
+  //@ts-ignore
+  const requiredCollateral = await wallet.getCollateralRequirements(sourceAssetType, destinationAssetType, amount)
+
+  return requiredCollateral;
+
+};
+
+export const getCirculatingSupply = async() => {
+
+  //@ts-ignore
+  return wallet.getCirculatingSupply()
+};
+
+export const getMaxDestinationAmount = async(sourceAssetType: Ticker, destinationAssetType: Ticker) => {
+
+  //@ts-ignore
+  return wallet.getMaxDestinationAmount(sourceAssetType, destinationAssetType)
 };
 
 export const getBalance = async (
