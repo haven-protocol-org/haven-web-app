@@ -8,6 +8,7 @@ import { Chain } from "shared/reducers/chain";
 import { getAddresses } from "./address";
 import { getXHVBalance } from "./balance";
 import { getLastBlockHeader } from "./blockHeaderExchangeRate";
+import { getCirculatingSupply } from "./circulatingSupply";
 import { connectAppToDaemon } from "./havend";
 import { updateHavenFeatures } from "./havenFeature";
 import { refresh } from "./refresh";
@@ -31,6 +32,7 @@ export const startWalletSession = (
       dispatch(connectAppToDaemon());
       // fetch latest prices once at start
       dispatch(getLastBlockHeader());
+      dispatch(getCirculatingSupply());
 
   
       // start wallet listeners
