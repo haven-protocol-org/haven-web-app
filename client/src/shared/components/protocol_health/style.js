@@ -1,6 +1,9 @@
 import styled from "styled-components";
 
-
+export const Container = styled.div`
+    display: grid;
+    grid-column: 1 / 3;
+`;
 
 export const ColorRange = styled.div`
     width:100%;
@@ -32,7 +35,7 @@ export const RatioValue = styled.div`
     margin-left:5px;
     font-style:italic;
     font-size:.7rem;
-    color: ${(props) => props.theme.type.secondary};
+    color: black;
 `;
 
 export const LegendNumber = styled.span`

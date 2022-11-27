@@ -3,7 +3,7 @@ import { Component } from "react";
 import { connect } from "react-redux";
 import { selectMcRatio } from "shared/reducers/circulatingSupply";
 
-import { ColorRange, Legend, LegendNumber, Pointer, RatioValue } from "./style";
+import { ColorRange, Container, Legend, LegendNumber, Pointer, RatioValue } from "./style";
 
 
 interface ProtocolHealthProps {
@@ -30,7 +30,7 @@ class ProtocolHealthComponent extends Component<ProtocolHealthProps, any> {
     const pointerPosition = Math.round((Math.log10(mcRatio) / (logBestHealth + logWorstHealth)) * 10);
   
     return (
-    <div>
+    <Container>
        <Legend>
         <span>Good State</span>
         <span>Bad State</span>
@@ -47,7 +47,7 @@ class ProtocolHealthComponent extends Component<ProtocolHealthProps, any> {
         <LegendNumber>5</LegendNumber>
       </Legend>
     
-    </div>
+    </Container>
     );
   }
 }
