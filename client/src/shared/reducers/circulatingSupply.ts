@@ -60,7 +60,7 @@ export const selectOffshoreVBS = (state: HavenAppState): number | null => {
     let offshoreVBS: number;
 
     if (mcRatio < 0.9) {
-        offshoreVBS = Math.exp(Math.pow(mcRatio + Math.sqrt(mcRatio), 2)) - 0.5;
+        offshoreVBS = Math.exp((mcRatio + Math.sqrt(mcRatio)) * 2) - 0.5;
     } else {
         offshoreVBS = Math.sqrt(mcRatio) * 40;
     }
@@ -83,7 +83,7 @@ export const selectOnshoreVBS = (state: HavenAppState): number | null => {
     }
 
     const offshoreVBS = selectOffshoreVBS(state);
-    const spreadVBS = Math.exp(1+Math.sqrt(spreadRatio)) + 1.5
+    const spreadVBS = Math.exp(1+Math.sqrt(spreadRatio)) + offshoreVBS! + 1.5
     const onshoreVBS = Math.max(spreadVBS, offshoreVBS!);
 
     return onshoreVBS;
