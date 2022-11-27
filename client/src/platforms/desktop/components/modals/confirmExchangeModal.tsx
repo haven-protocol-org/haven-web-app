@@ -43,6 +43,7 @@ class ConfirmExchangeModal extends React.Component<
       fee,
       priority,
       xassetConversion,
+      requiredCollateral
     } = this.props.exchange;
 
     const isOwnAddress = this.props.isOwnAddress;
@@ -50,6 +51,7 @@ class ConfirmExchangeModal extends React.Component<
     const readAbleFromAmount = convertBalanceToMoney(fromAmount!, 6);
     const readAbleFeeAmount = convertBalanceToMoney(fee!, 6);
     const readableChangeAmount = iNum(convertBalanceToMoney(change!, 6));
+    const readableCollateralAmount = convertBalanceToMoney(requiredCollateral!, 6)
 
     return (
       <Modal
@@ -77,6 +79,7 @@ class ConfirmExchangeModal extends React.Component<
           isOwnAddress={isOwnAddress}
           xasset_conversion={xassetConversion}
           change={readableChangeAmount}
+          collateral={readableCollateralAmount}
         />
       </Modal>
     );

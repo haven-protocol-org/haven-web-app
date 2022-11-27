@@ -1,7 +1,6 @@
 import {
   addErrorNotification,
   addExchangeSucceedMessage,
-  addNotificationByMessage,
 } from "shared/actions/notification";
 import {
   EXCHANGE_CREATION_FAILED,
@@ -13,6 +12,7 @@ import {
   EXCHANGE_SUCCEED,
   SELECT_FROM_TICKER,
   SELECT_TO_TICKER,
+  SET_COLLATERAL,
 } from "./types";
 import { walletProxy } from "shared/core/proxy";
 import { DesktopAppState } from "../../platforms/desktop/reducers";
@@ -25,17 +25,10 @@ import {
 } from "shared/reducers/exchangeProcess";
 import { ITxConfig } from "typings";
 import MoneroDestination from "haven-wallet-core/src/main/js/wallet/model/MoneroDestination";
-//import { HavenTxType } from "haven-wallet-core";
 import MoneroTxWallet from "haven-wallet-core/src/main/js/wallet/model/MoneroTxWallet";
 import bigInt from "big-integer";
 import {convertMoneyToBalance } from "utility/utility";
 
-interface RPCExchangeResponse {
-  amount_list: Array<number>;
-  amount_usd_list: Array<number>;
-  fee_list: Array<number>;
-  tx_metadata_list: Array<string>;
-}
 
 export const setToTicker = (toTicker: Ticker | null) => {
   return { type: SELECT_TO_TICKER, payload: toTicker };
@@ -45,12 +38,16 @@ export const setFromTicker = (fromTicker: Ticker | null) => {
   return { type: SELECT_FROM_TICKER, payload: fromTicker };
 };
 
-const sanityCheck = (amount: number): boolean => {
-  // check that our value has not more than 4 decimals
+export const setRequiredCollateral = (fromTicker: Ticker, toTicker:Ticker, fromAmount:number) => {
+  return async (dispatch: any) => {
+    const amount = convertMoneyToBalance(fromAmount);
+    const response = await walletProxy.getCollateralRequirements(fromTicker, toTicker, amount.toString());
+    let collateral: bigInt.BigInteger = bigInt(response.toString());
+    dispatch({type: SET_COLLATERAL, payload: collateral});
+  }
 
-  const checkValue = amount * 10000;
-  return checkValue % 1 === 0;
-};
+}
+
 //TOKENOMICS below - priority needs updating
 export function createExchange(
   fromTicker: Ticker,
@@ -67,13 +64,6 @@ export function createExchange(
       externAddress.trim() !== ""
         ? externAddress
         : selectPrimaryAddress(getState().address.entrys);
-
-/*      const txType = fromTicker === Ticker.xUSD
-        ? HavenTxType.EXCHANGE_FROM_USD
-        : HavenTxType.EXCHANGE_TO_USD;
-
-    const currency = txType === HavenTxType.EXCHANGE_FROM_USD ? toTicker : fromTicker
-    */
     //only handle exchanges
     if(toTicker === fromTicker){
       dispatch(addErrorNotification({"error":"Conversions must be between different assets"}));
@@ -115,25 +105,6 @@ export function createExchange(
     }
   }
 
-
-/*
-    //onshore/offshore tx
-    if (currency === Ticker.XHV) {
-
-
-      exchangeAmount =
-      txType === HavenTxType.EXCHANGE_TO_USD ? fromAmount : toAmount;
-      xassetConversion = false;
-    }
-    // xusdt->xasset, xasset->xusd tx
-    else {
-
-      exchangeAmount =
-      txType === HavenTxType.EXCHANGE_TO_USD ? toAmount : fromAmount;
-      xassetConversion = true;
-
-    }
-    */
     let amount = convertMoneyToBalance(exchangeAmount);
     // we need to round the value as just for digits are allowed for onshore/offshore
     const roundingValue = bigInt(100000000);
@@ -178,6 +149,7 @@ const parseExchangeResonse = (
   let toAmount: bigInt.BigInteger;
   let fee: bigInt.BigInteger;
   let change: bigInt.BigInteger = bigInt(0);
+  let requiredCollateral:bigInt.BigInteger = bigInt(0);
 
   //@ts-ignore
   toAmount = txList.reduce(
@@ -201,10 +173,15 @@ const parseExchangeResonse = (
       acc.add(bigInt(tx.getChangeAmount().toString())),
     bigInt(0)
   ); 
+  requiredCollateral = txList.reduce(
+    (acc: bigInt.BigInteger, tx: MoneroTxWallet) =>
+      acc.add(bigInt(tx.getCollateralAmount().toString())),
+    bigInt(0)
+  ); 
   const metaList: Array<string> = txList.map((tx: MoneroTxWallet) =>
     tx.getMetadata()
   );
-  return { fromAmount, toAmount, fee, metaList, change };
+  return { fromAmount, toAmount, fee, metaList, change, requiredCollateral };
 };
 
 export const confirmExchange = (metaList: Array<string>) => {

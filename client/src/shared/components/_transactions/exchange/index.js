@@ -30,6 +30,7 @@ const Transaction = ({
   isOwnAddress,
   xasset_conversion,
   change,
+  collateral
 }) => {
   const first = externAddress.substring(0, 4);
   const last = externAddress.substring(externAddress.length - 4);
@@ -59,6 +60,7 @@ const Transaction = ({
         {!isOwnAddress && (
           <Cell left="Recipient Address" right={truncatedAddress} />
         )}
+        <Cell left="Collateral" right={collateral + ' XHV'} />
         <Cell left="Unlock Time" right={unlock_time} />
 
         <Row>
