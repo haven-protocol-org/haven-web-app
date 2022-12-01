@@ -168,11 +168,9 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     }
 
     if (this.props.toTicker !== prevProps.toTicker) {
-      this.calcConversion();
       this.setConversionType(this.props.fromTicker, this.props.toTicker);
     }
     if (this.props.fromTicker !== prevProps.fromTicker) {
-      this.calcConversion();
       this.setConversionType(this.props.fromTicker, this.props.toTicker);
       this.setToAssetOptions(this.props.fromTicker);
     }
@@ -184,14 +182,29 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       return;
     }
 
-    let fromAmount = await (walletProxy.getMaxDestinationAmount(this.props.fromTicker!, this.props.toTicker!));
-    fromAmount = convertBalanceToMoney(fromAmount);
+    let amount = await (walletProxy.getMaxDestinationAmount(this.props.fromTicker!, this.props.toTicker!));
+    amount = convertBalanceToMoney(amount);
 
-    this.setState({fromAmount}, () => {
-      this.calcConversion(true);
-      this.requestRequiredCollateral();
-    });
+    const {txType} = this.state;
+    const {fromTicker} = this.props;
+    let stateUpdate;
+    let setToAmount: boolean; 
 
+    switch (txType) {
+
+      case TxType.Shore:
+        stateUpdate = fromTicker === Ticker.XHV ? {fromAmount: amount} : {toAmount: amount};
+        setToAmount = fromTicker === Ticker.XHV ? true : false;
+        break;
+      case TxType.Xasset:
+        stateUpdate = fromTicker === Ticker.xUSD ? {fromAmount: amount} : {toAmount: amount};
+        setToAmount = fromTicker === Ticker.xUSD ? true : false;
+        break;
+    }
+        this.setState({...stateUpdate}, () => {
+          this.calcConversion(setToAmount);
+        });
+    
   }
 
   requestRequiredCollateral = () => {
@@ -216,7 +229,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
 
     this.setState({ ...this.state, [name]: value }, () => {
       this.calcConversion(true);
-      this.requestRequiredCollateral();
     });
   };
 
@@ -310,24 +322,22 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
 
   setConversionType(fromTicker: Ticker | null, toTicker: Ticker | null) {
 
+    let txType: TxType;
     if(fromTicker === null || toTicker === null) {
-      this.setState({
-        txType: TxType.None,
-      });
+      txType = TxType.None;
+      this.setState({fromAmount: 0, toAmount:0})
       return;
     }
-
-    if(fromTicker === Ticker.XHV || toTicker === Ticker.XHV) {
-      this.setState({
-        txType: TxType.Shore,
-      }, () =>
-        this.requestRequiredCollateral())
-      return;
+    else if(fromTicker === Ticker.XHV || toTicker === Ticker.XHV) {
+      txType = TxType.Shore;
+    }
+    else {
+      txType = TxType.Xasset;
     }
 
     this.setState({
-      txType: TxType.Xasset,
-    });
+      txType
+    }, () => this.calcConversion());
   }
 
   calcConversion(setToAmount: boolean = true) {
@@ -341,7 +351,8 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     if (fromAmount !== undefined && setToAmount) {
       const toAmount = parseFloat(iNum(fromAmount * xRate));
 
-      this.setState({ toAmount });
+      this.setState({ toAmount }
+        , () => this.requestRequiredCollateral());
       return;
     }
 
