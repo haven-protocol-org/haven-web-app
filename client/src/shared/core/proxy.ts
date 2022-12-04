@@ -9,6 +9,7 @@ import MoneroSubaddress from "haven-wallet-core/src/main/js/wallet/model/MoneroS
 import { logM } from "utility/utility";
 import MoneroBlock from "haven-wallet-core/src/main/js/daemon/model/MoneroBlock";
 import HavenBalance from "haven-wallet-core/src/main/js/wallet/model/HavenBalance";
+import HavenCiculatingSupply from "haven-wallet-core/src/main/js/wallet/model/HavenCirculatingSupply";
 
 const walletHandler: ProxyHandler<typeof walletCore> = {
   get: (
@@ -66,6 +67,12 @@ const walletHandler: ProxyHandler<typeof walletCore> = {
 
         }
 
+        if (name === "getCirculatingSupply") {
+           //@ts-ignore
+          const circulatingSupply: HavenCiculatingSupply = new HavenCiculatingSupply(response);
+          return circulatingSupply;
+        }
+
         if (name === "getSubAddresses") {
 
             const addresses: MoneroSubaddress[] = response.map(
@@ -92,7 +99,7 @@ const walletHandler: ProxyHandler<typeof walletCore> = {
         return response;
 
       }
-      catch(e) {
+      catch(e:any) {
         
         throw (e.message);
 

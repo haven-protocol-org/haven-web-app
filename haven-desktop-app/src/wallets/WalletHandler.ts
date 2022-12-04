@@ -93,6 +93,10 @@ export class WalletHandler {
       });
       return txJsonObjects;
     }
+
+    if (methodName === "getCollateralRequirements" || methodName === "getMaxDestinationAmount" || methodName=== "getBlockCap") {
+          return response.toString();
+    }
       
       if (methodName === "getSubAddresses") {
 
@@ -104,7 +108,7 @@ export class WalletHandler {
       return addressJsonObjects;
 
       }
-      if (methodName === "createSubAddress" || methodName === "getBalance" || methodName === "getUnlockedBalance") {
+      if (methodName === "createSubAddress" || methodName === "getBalance" || methodName === "getUnlockedBalance" || methodName === "getCirculatingSupply") {
         // serialize address and balance data
         return response.toJson();
       }
