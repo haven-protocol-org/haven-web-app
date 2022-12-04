@@ -7,7 +7,6 @@ export HAVEN_DESKTOP_DEVELOPMENT=true
 export BROWSER=none
 export NODE_INSTALLER=npm
 
-# start rpc client
 # npm run start:desktop:testnet --prefix client &
 npm run start --prefix haven-desktop-app
 
