@@ -88,7 +88,7 @@ const openWallet = (walletData: IOpenWallet, path: string) => {
         NotificationType.ERROR,
         "Open vault is not working, please try again soon..."
       );
-      dispatch(openWalletFailed(e));
+      dispatch(openWalletFailed(e as object));
 
     }
   };
@@ -133,7 +133,7 @@ export const createNewWallet = (
         NotificationType.ERROR,
         "Open vault is not working, please try again soon..."
       );
-      dispatch(createWalletFailed(e));
+      dispatch(createWalletFailed(e as object));
     }
   };
 };

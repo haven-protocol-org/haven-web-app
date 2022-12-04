@@ -116,7 +116,6 @@ class OwnAddressContainer extends Component<OwnAddressProps, OwnAddressState> {
               type={"text"}
               name="address"
               value={selected!.address}
-              ticker={truncated}
               readOnly={true}
             />
           )}

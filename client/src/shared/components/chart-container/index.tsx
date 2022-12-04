@@ -10,7 +10,6 @@ import { PRICE_RANGE_MONTH } from "../../reducers/priceHistory";
 import { getPriceDates, getPriceValues, iNum } from "utility/utility";
 import { getPriceHistory } from "../../actions";
 import Statistic from "../statistic";
-import { withRouter } from "react-router";
 import { PriceRangeHistory } from "shared/reducers/xPriceHistory";
 import { Ticker } from "shared/reducers/types";
 
@@ -27,13 +26,12 @@ class ChartWrapper extends Component<any, any> {
   }
 
   render() {
-    const { id } = this.props.match.params;
-    const { amount, price, value } = this.props;
+    const { assetId, amount, price, value } = this.props;
 
     let prices;
     let labels;
 
-    if (id === Ticker.XHV) {
+    if (assetId === Ticker.XHV) {
       const priceRangeEntry = this.props.priceHistory.prices.find(
         (priceRangeEntry: PriceRangeHistory) =>
           priceRangeEntry.rangeInDays === this.state.selectedRangeInDays
@@ -41,7 +39,7 @@ class ChartWrapper extends Component<any, any> {
 
       prices = getPriceValues(priceRangeEntry.prices);
       labels = getPriceDates(priceRangeEntry.prices);
-    } else if (id === Ticker.xUSD) {
+    } else if (assetId === Ticker.xUSD) {
       prices = [1.0, 1.0];
       labels = [
         new Date(1792, 3, 2).toLocaleDateString(),
@@ -53,14 +51,14 @@ class ChartWrapper extends Component<any, any> {
       <>
         <Header
           back
-          title={`${id} Overview`}
+          title={`${assetId} Overview`}
           description="Pricing history and asset values"
         />
 
         {this.props.assetId === Ticker.XHV || this.props.assetId === Ticker.xUSD ? ( <Chart
           prices={prices}
           labels={labels}
-          ticker={id}
+          ticker={assetId}
           price={price.toFixed(2)}
           onChangePriceRange={(args: number | string) =>
             this.selectPriceHistory(args)
@@ -86,6 +84,6 @@ const mapStateToProps = (state: any) => ({
   priceHistory: state.priceHistory,
 });
 
-export const ChartContainer = withRouter(
+export const ChartContainer =
   connect(mapStateToProps, { getPriceHistory })(ChartWrapper)
-);
+

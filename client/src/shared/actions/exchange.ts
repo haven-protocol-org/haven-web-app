@@ -175,6 +175,7 @@ const parseExchangeResonse = (
   ); 
   requiredCollateral = txList.reduce(
     (acc: bigInt.BigInteger, tx: MoneroTxWallet) =>
+     //@ts-ignore
       acc.add(bigInt(tx.getCollateralAmount().toString())),
     bigInt(0)
   ); 

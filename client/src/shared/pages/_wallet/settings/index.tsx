@@ -44,6 +44,10 @@ interface SettingsProps extends IKeys {
   storeKeyFileToDisk: (walletname: string) => void;
   downloadTransfers: (type: string) => void;
   tempWallet: boolean;
+  selected: AddressEntry | undefined;
+  addresses: AddressEntry[];
+  showModal:(modalType: MODAL_TYPE) => void;
+  setSelectedAddress:(index :number) => void;
 }
 
 interface SettingsState {
@@ -54,6 +58,7 @@ interface SettingsState {
   psk: string;
   seed: string;
   synced: boolean;
+  copyButtonState: string;
 }
 
 class SettingsPage extends Component<SettingsProps, SettingsState> {
@@ -194,14 +199,12 @@ class SettingsPage extends Component<SettingsProps, SettingsState> {
               />
             ) : (
               <Input
-                ref={(textarea) => (this.addressValue = textarea)}
                 label={`Address (${handleLabel})`}
                 placeholder="Select an address"
                 width={true}
                 type={"text"}
                 name="address"
                 value={selected!.address}
-                ticker={truncated}
                 readOnly={true}
               />
             )}

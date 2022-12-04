@@ -17,7 +17,6 @@ import { Transaction, TransactionProps } from "shared/components/tx-history/comp
 import Header from "shared/components/_layout/header/index.js";
 import { selectBlockHeight } from "shared/reducers/chain";
 import { selectTransferListByTicker } from "shared/reducers/xTransferList";
-import { withRouter } from "react-router";
 import { Ticker } from "shared/reducers/types";
 import { HavenAppState } from "platforms/desktop/reducers";
 import {
@@ -44,7 +43,7 @@ export interface TxEntry {
 
 export interface Conversion {
   isConversion: boolean;
-  amount?: BigInteger;
+  amount?: bigInt.BigInteger;
   amountStr?: string;
   prefixStr?: string;
   assetId?: Ticker;
@@ -125,14 +124,13 @@ class TxHistoryContainer extends Component<TxHistoryProps, any> {
 }
 
 const mapStateToProps = (state: HavenAppState, props: any) => ({
-  transferList: selectTransferListByTicker(state, props.match.params.id),
+  transferList: selectTransferListByTicker(state, props.assetId),
   height: selectBlockHeight(state),
   rates: state.blockHeaderExchangeRate,
 });
 
-export const TxHistoryDesktop = withRouter(
-  connect(mapStateToProps, { getAllTransfers })(TxHistoryContainer)
-);
+export const TxHistoryDesktop = 
+  connect(mapStateToProps, { getAllTransfers })(TxHistoryContainer);
 
 
 

@@ -11,7 +11,7 @@ export const getWalletConnectionState = () => {
 
 export const getAppConnectionState = () => {
     return async (dispatch: any) => {
-        const isAppConnected: boolean = await havendProxy.isConnected();
+        const isAppConnected: boolean = await havendProxy.isConnected() as boolean;
         dispatch(setApptoDaemonConnectionState(isAppConnected));
     }
 }
