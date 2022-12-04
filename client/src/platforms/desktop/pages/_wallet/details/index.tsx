@@ -9,8 +9,8 @@ import {
   BlockHeaderRate,
   selectXRate,
 } from "shared/reducers/blockHeaderExchangeRates";
-import { RouteComponentProps } from "react-router";
 import { HavenAppState } from "platforms/desktop/reducers";
+import { useParams } from "react-router";
 
 interface DetailsProps {
   balances: XBalances;
@@ -18,11 +18,12 @@ interface DetailsProps {
 }
 
 interface RouteProps {
-  id: Ticker;
+  assetId: Ticker;
 }
 
+
 class DetailsContainer extends Component<
-DetailsProps & RouteComponentProps<RouteProps>,
+DetailsProps & RouteProps,
   any
 > {
   componentDidMount() {
@@ -30,17 +31,16 @@ DetailsProps & RouteComponentProps<RouteProps>,
   }
 
   render() {
-    const ticker = this.props.match.params.id;
+    const ticker = this.props.assetId;
     const xRate = selectXRate(this.props.rates, ticker, Ticker.xUSD);
     let amount: number = convertBalanceToMoney(
       this.props.balances[ticker].unlockedBalance, 12
     );
     let value = amount * xRate;
     const detailProps = { assetId: ticker, value, amount, price: xRate };
-
     return (
       <Details {...detailProps}>
-        <TxHistoryDesktop assetId={this.props.match.params.id} />
+        <TxHistoryDesktop assetId={ticker} />
       </Details>
     );
   }
@@ -51,7 +51,12 @@ const mapStateToProps = (state: HavenAppState) => ({
   rates: state.blockHeaderExchangeRate,
 });
 
-export const HavenDetails = connect(
+const HavenDetails = connect(
   mapStateToProps,
   {}
 )(DetailsContainer);
+
+export const HavenDetailWithParams = () => {
+  const {id} = useParams();
+  return <HavenDetails assetId={id as Ticker} />
+}

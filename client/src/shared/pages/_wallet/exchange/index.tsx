@@ -9,7 +9,7 @@ import Description from "../../../components/_inputs/description";
 import AddressDropdown from "../../../components/_inputs/addresses_dropdown";
 // import InputButton from "../../../components/_inputs/input_button";
 import Form from "../../../components/_inputs/form";
-import { RouteComponentProps, withRouter } from "react-router";
+import { useNavigate } from "react-router";
 import Footer from "../../../components/_inputs/footer";
 import Dropdown from "../../../components/_inputs/dropdown";
 import {
@@ -46,7 +46,7 @@ enum ExchangeTab {
   Advanced,
 }
 
-interface ExchangeProps extends RouteComponentProps<any> {
+interface ExchangeProps  {
   nodeHeight: number;
   showModal: (modalTyoe: MODAL_TYPE) => void;
   createExchange: typeof createExchange;
@@ -64,6 +64,7 @@ interface ExchangeProps extends RouteComponentProps<any> {
   toTicker: Ticker | null;
   balances: XBalances;
   addresses:AddressEntry [];
+  navigate: (path: string) => void;
 }
 
 enum TxType {
@@ -94,6 +95,7 @@ export interface ExchangePrioOption {
   name: string;
   prio: number;
 }
+
 
 const xassetOptions: AssetOption[] = [
   { name: "Yuan", ticker: Ticker.xCNY },
@@ -156,8 +158,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
         toAmount: undefined,
         externAddress: "",
       });
-
-      this.props.history.push("/wallet/assets/" + this.sendTicker);
+     this.props.navigate("/wallet/assets/" + this.sendTicker);
     }
 
     if(this.props.requiredCollateral !== prevProps.requiredCollateral) {
@@ -689,7 +690,8 @@ const mapStateToProps = (state: DesktopAppState) => ({
   addresses: [ALL_ADDRESSES, ...state.address.entrys],
 });
 
-export const ExchangePage = withRouter(
+//@ts-ignore
+const ConnectedExchangePage  = (
   connect(mapStateToProps, {
     createExchange,
     setToTicker,
@@ -698,3 +700,9 @@ export const ExchangePage = withRouter(
     showModal,
   })(Exchange)
 );
+
+
+export const ExchangePage = () => {
+  const navigate = useNavigate();
+  return <ConnectedExchangePage navigate={navigate} />
+}

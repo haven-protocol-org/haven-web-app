@@ -18,7 +18,7 @@ import { RestoreDesktop } from "../restore";
 import { DesktopAppState } from "../../../reducers";
 import { connect } from "react-redux";
 import { selectIsLoggedIn } from "../../../../../shared/reducers/walletSession";
-import { Redirect } from "react-router";
+import { Navigate } from "react-router";
 import { CreateDesktop } from "../create";
 
 interface MultiloginState {
@@ -54,7 +54,7 @@ class MultiLoginPage extends Component<MultiLoginProps, MultiloginState> {
 
   render() {
     if (this.props.isLoggedIn) {
-      return <Redirect to="/wallet/assets" />;
+      return <Navigate to="/wallet/assets" />;
     }
 
     const { loginType } = this.state;

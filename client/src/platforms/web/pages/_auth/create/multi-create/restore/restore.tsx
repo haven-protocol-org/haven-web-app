@@ -20,7 +20,7 @@ import { startWalletSession } from "shared/actions/walletSession";
 import { selectIsLoggedIn } from "shared/reducers/walletSession";
 import { MoneroUtils } from "haven-wallet-core";
 import Checkbox from "../../../../../../../shared/components/checkbox";
-import { Redirect } from "react-router";
+import { Navigate } from "react-router";
 import Form from "../../../../../../../shared/components/_inputs/form";
 
 interface RestoreProps {
@@ -91,7 +91,7 @@ class RestoreWeb extends Component<RestoreProps, RestoreState> {
     if (step === 1) {
       try {
         MoneroUtils.validateMnemonic(this.state.mnemomic);
-      } catch (e) {
+      } catch (e: any) {
         this.setState({ error: e.message });
         setTimeout(() => {
           this.setState({ error: "" });
@@ -231,6 +231,7 @@ class RestoreWeb extends Component<RestoreProps, RestoreState> {
               onChange={this.handleChange}
               onClick={this.showPassword}
               readOnly={false}
+              onKeyUp={()=>{}}
               error={error}
               width
             />
@@ -282,6 +283,7 @@ class RestoreWeb extends Component<RestoreProps, RestoreState> {
               onChange={this.handleChange}
               onClick={this.showPassword}
               error={error}
+              onKeyUp={()=>{}}
               readOnly={false}
               width
             />
@@ -298,7 +300,7 @@ class RestoreWeb extends Component<RestoreProps, RestoreState> {
 
   render() {
     if (this.props.isLoggedIn) {
-      return <Redirect to="/wallet/assets" />;
+      return <Navigate to="/wallet/assets" />;
     }
 
     const { step } = this.state;
