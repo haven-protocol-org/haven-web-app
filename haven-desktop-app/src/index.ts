@@ -90,12 +90,12 @@ app.on("window-all-closed", () => {
   app.quit();
 });
 app.on("web-contents-created", (event, contents) => {
-  contents.on("new-window", async (event, navigationUrl) => {
-    event.preventDefault();
 
-    await shell.openExternal(navigationUrl);
+  contents.setWindowOpenHandler(  (details: any) => {
+     shell.openExternal(details.url);
+    return { action: 'deny' }
+  })
   });
-});
 
 const onAppQuit = () => {
   console.log("on App quit called");
