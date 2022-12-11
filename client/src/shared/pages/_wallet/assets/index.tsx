@@ -27,6 +27,7 @@ import { ProtocolHealth } from "shared/components/protocol_health";
 import { Row } from "./styles";
 import Statistic from "shared/components/statistic";
 import { selectOffshoreVBS, selectOnshoreVBS } from "shared/reducers/circulatingSupply";
+import { selectBlockap } from "shared/reducers/chain";
 
 
 interface AssetsProps {
@@ -36,6 +37,7 @@ interface AssetsProps {
   showPrivateDetails: boolean;
   offshoreVBS:number | null;
   onshoreVBS:number | null;
+  blockCap: number;
   
 }
 
@@ -158,6 +160,7 @@ class AssetsPage extends Component<AssetsProps, any> {
     const xRate = selectXRate(this.props.rates, Ticker.XHV, Ticker.xUSD);
     const offshoreVBS = this.props.offshoreVBS ? this.props.offshoreVBS.toFixed(2) : 0;
     const onshoreVBS = this.props.onshoreVBS ? this.props.onshoreVBS.toFixed(2) : 0;
+    const blockCap = this.props.blockCap;
 
     return (
       <Body>
@@ -165,6 +168,7 @@ class AssetsPage extends Component<AssetsProps, any> {
         <Row>
           <Statistic label="Offshore VBS" value={offshoreVBS} />
           <Statistic label="Onshore VBS" value={onshoreVBS} />
+          <Statistic label="Block Cap (XHV)" value={blockCap} />
         </Row>
         <Overview />
         <Header
@@ -195,7 +199,8 @@ export const mapStateToProps = (state: DesktopAppState | WebAppState) => ({
   balances: state.xBalance,
   showPrivateDetails: state.walletSession.showPrivateDetails,
   onshoreVBS: selectOnshoreVBS(state),
-  offshoreVBS: selectOffshoreVBS(state)
+  offshoreVBS: selectOffshoreVBS(state),
+  blockCap: selectBlockap(state)
 });
 
 export const Assets = connect(mapStateToProps, {})(AssetsPage);

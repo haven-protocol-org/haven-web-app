@@ -9,6 +9,7 @@ import { getAddresses } from "./address";
 import { getXHVBalance } from "./balance";
 import { getLastBlockHeader } from "./blockHeaderExchangeRate";
 import { getCirculatingSupply } from "./circulatingSupply";
+import { getBlockCap } from "./blockCap";
 import { connectAppToDaemon } from "./havend";
 import { updateHavenFeatures } from "./havenFeature";
 import { refresh } from "./refresh";
@@ -33,7 +34,7 @@ export const startWalletSession = (
       // fetch latest prices once at start
       dispatch(getLastBlockHeader());
       dispatch(getCirculatingSupply());
-
+      dispatch(getBlockCap());
   
       // start wallet listeners
       const listener = new HavenWalletListener(dispatch, getStore);

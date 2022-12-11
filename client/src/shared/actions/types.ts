@@ -141,4 +141,6 @@ export const GET_BLOCK_HEADER_EXCHANGE_RATE_FAILED =
   "get_block_header_exchange_rate_failed";
 
 
-  export const ADD_CIRCULATING_SUPPLY = "add_circulating_supply"
+  export const ADD_CIRCULATING_SUPPLY = "add_circulating_supply";
+
+  export const ADD_BLOCK_CAP = "add_blockcap";

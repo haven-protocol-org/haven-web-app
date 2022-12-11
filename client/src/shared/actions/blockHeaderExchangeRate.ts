@@ -7,7 +7,6 @@ import { BlockHeaderRate } from "shared/reducers/blockHeaderExchangeRates";
 import bigInt from "big-integer";
 import { havendProxy } from "shared/core/proxy";
 import MoneroBlockHeader from "haven-wallet-core/src/main/js/daemon/model/MoneroBlockHeader";
-import { addErrorNotification } from "./notification";
 
 export const getLastBlockHeader = () => {
   return async (dispatch: any) => {
