@@ -6,7 +6,6 @@ export const Container = styled.div`
   border-radius: 4px;
   background: ${(props) => props.theme.body.foreground};
   border: 1px solid ${(props) => props.theme.body.border};
-  margin-bottom: 12px;
 `;
 
 export const Strong = styled.div`
@@ -78,6 +77,17 @@ export const Value = styled.div`
   font-size: 14px;
   color: ${(props) => props.theme.type.primary};
 `;
+
+export const SubHeader = styled.div`
+display: flex;
+justify-content: center;
+font-family: Inter-Regular;
+margin: 12px;
+font-size:14px;
+color: ${(props) => props.theme.type.primary};
+`
+
+
 
 export const Tag = styled.div`
   width: auto;
