@@ -12,7 +12,7 @@ interface ProtocolHealthProps {
 }
 
 const bestHealth = .05;
-const worstHealth = 5;
+const worstHealth = 2.5;
 const logBestHealth = Math.log10(bestHealth);
 const logWorstHealth = Math.log10(worstHealth);
 
@@ -28,6 +28,8 @@ class ProtocolHealthComponent extends Component<ProtocolHealthProps, any> {
     }
 
     const pointerPosition = Math.round((Math.log10(mcRatio) / (logBestHealth + logWorstHealth)) * 10);
+
+    //const shownMcRation = 
   
     return (
     <Container>
@@ -37,7 +39,7 @@ class ProtocolHealthComponent extends Component<ProtocolHealthProps, any> {
       </Legend>
       <ColorRange>
         <Pointer position={pointerPosition}></Pointer>
-        <RatioValue position={pointerPosition}>~{mcRatio.toFixed(3)}</RatioValue>
+        <RatioValue position={pointerPosition}>{mcRatio.toFixed(3)}</RatioValue>
       </ColorRange>
       <Legend>
         <LegendNumber>0.05</LegendNumber>

@@ -9,10 +9,13 @@ export const ColorRange = styled.div`
     width:100%;
     height: 2rem;
     background: linear-gradient(270deg,red,yellow,green);
+    opacity:.4;
     position:relative;
+    margin: 5px 0;
 `;
 
 export const Legend = styled.div`
+
     width:100%;
     font-size:0.8rem;
     display: flex;
@@ -33,8 +36,8 @@ export const RatioValue = styled.div`
     position:absolute;
     left:${(props) => props.position}%;
     margin-left:5px;
-    font-style:italic;
-    font-size:.7rem;
+    font-weight:bold;
+    font-size:.8rem;
     color: black;
 `;
 
