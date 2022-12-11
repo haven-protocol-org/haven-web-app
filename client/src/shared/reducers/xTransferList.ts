@@ -50,6 +50,7 @@ export const selectTransferListByTicker = (
         txEntry.mempool = walletTx.inTxPool() || walletTx.getNumConfirmations() === 0;
         txEntry.isIncoming = true;
         txEntry.isConfirmed = walletTx.isConfirmed();
+        txEntry.isFailed = walletTx.isFailed();
         txEntry.conversion = getConversion(walletTx, txEntry.isIncoming );
         txEntry.isMinerTx = walletTx.isMinerTx();
         txEntry.timestamp = walletTx.isConfirmed()
@@ -68,6 +69,7 @@ export const selectTransferListByTicker = (
         txEntry.isIncoming = false;
         txEntry.mempool = walletTx.inTxPool() || walletTx.getNumConfirmations() === 0;
         txEntry.isConfirmed = walletTx.isConfirmed();
+        txEntry.isFailed = walletTx.isFailed();
         txEntry.conversion = getConversion(walletTx, txEntry.isIncoming);
         txEntry.isMinerTx = walletTx.isMinerTx();
         txEntry.timestamp = walletTx.isConfirmed()

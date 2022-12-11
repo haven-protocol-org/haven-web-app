@@ -36,6 +36,7 @@ export interface TxEntry {
   unlockHeight: number;
   height:number;
   isConfirmed: boolean;
+  isFailed: boolean;
   isMinerTx: boolean;
   isIncoming: boolean;
   conversion: Conversion;
@@ -57,12 +58,15 @@ interface TxHistoryProps {
   getAllTransfers:() => void;
 }
 
-type TXType = "Mined" | "Pending" | "Sent" | "Received";
+type TXType = "Mined" | "Pending" | "Sent" | "Received" | "Failed";
 
 class TxHistoryContainer extends Component<TxHistoryProps, any> {
 
   static getTransactionType(tx: TxEntry) : TXType {
-    if (tx.isMinerTx) {
+    if(tx.isFailed) {
+      return "Failed";
+    }
+    else if (tx.isMinerTx) {
       return "Mined";
     } else if (tx.mempool) {
       return "Pending";
@@ -148,7 +152,7 @@ const prepareTxInfo = (
   ).toLocaleDateString();
 
   const mempool = tx.mempool;
-
+  const failed = tx.isFailed;
   const readableAmount = iNum(convertBalanceToMoney(tx.amount, 6));
   const currentValueInUSD = iNum(parseFloat(readableAmount) * xRate);
 
@@ -191,6 +195,7 @@ const prepareTxInfo = (
     amount: readableAmount,
     hash: tx.hash,
     fee: tx.isIncoming ? 0 : iNum(convertBalanceToMoney(tx.fee, 4)),
-    block: tx.height
+    block: tx.height,
+    failed
   };
 };

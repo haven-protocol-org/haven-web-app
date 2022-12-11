@@ -29,6 +29,7 @@ export interface TransactionProps {
   mempool: boolean;
   timeTillUnlocked: any;
   fee: any;
+  failed: boolean;
 }
 
 export const Transaction = ({
@@ -42,6 +43,7 @@ export const Transaction = ({
   mempool,
   timeTillUnlocked,
   fee,
+  failed
 }: TransactionProps) => {
   const first = hash.substring(0, 4);
   const last = hash.substring(hash.length - 4);
@@ -54,7 +56,10 @@ export const Transaction = ({
   let statusDetails = "Completed";
   let statusLabel = "Status";
 
-  if (mempool) {
+  if (failed) {
+    statusDetails = "Failed";
+  }
+  else if (mempool) {
     statusDetails = "Pending";
   } else if (timeTillUnlocked) {
     statusDetails = "~ " + timeTillUnlocked;
@@ -87,9 +92,9 @@ export const Transaction = ({
 
           <Data>
             <Value alignment="center">
-              {statusDetails === "Pending" ? (
+              {statusDetails === "Pending" || "Failed" ? (
                 <ShortRow>
-                  <>Pending</>
+                  <>{statusDetails}</>
                   <Dots />
                 </ShortRow>
               ) : (
