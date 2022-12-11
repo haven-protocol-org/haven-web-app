@@ -126,13 +126,6 @@ class TransferContainer extends Component<TransferProps, TransferState> {
   
     let availableBalance = null;
     let numDecimals = 2;
-    //console.log(selectedAsset.ticker);
-
-    /* BLUEY TODO
-    standard transfer fees
-    XHV = 0.003109 {XHV}
-    else = 0.000469 {asset}
-    */
 
     if (selectedAsset) {
 
@@ -143,12 +136,8 @@ class TransferContainer extends Component<TransferProps, TransferState> {
         numDecimals
       );
     }
-    //console.log(availableBalance, numDecimals);
 
     if (availableBalance != null) {
-
-      
-
       this.setState({
         send_amount: availableBalance.toFixed(numDecimals),
         sweep_all: true,

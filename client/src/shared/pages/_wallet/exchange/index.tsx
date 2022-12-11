@@ -405,7 +405,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     const hasEnoughFunds =
       fromAmount !== undefined ? fromAmount < availableBalance : false;
 
-    if (fromAmountValid && toAmountValid && hasLatestXRate && hasEnoughFunds) {
+    if (fromAmountValid && toAmountValid && hasLatestXRate && hasEnoughFunds && this.hasEnoughForCollateral()) {
       // If valid then make this 'false' so the footer is enabled
       return false;
     } else {
@@ -435,6 +435,38 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       return "Save some for fees";
     }
   };
+
+  hasEnoughForCollateral = () => {
+
+    const {fromTicker, toTicker, requiredCollateral} = this.props;
+    const {txType, fromAmount} = this.state;
+    if (txType === TxType.Shore && requiredCollateral !== null) {
+
+      const collateral = convertBalanceToMoney(requiredCollateral);
+      const availBalance = convertBalanceToMoney(
+          this.props.balances[Ticker.XHV].unlockedBalance);
+
+      if (fromTicker === Ticker.XHV && fromAmount !== undefined) {
+        if(availBalance < (fromAmount + collateral)) {
+          return false;
+        }
+      }
+      else if(toTicker === Ticker.XHV) {
+        if(availBalance < collateral) {
+          return false;
+      }
+    }
+  }
+    return true
+  }
+
+  getCollateralError = () => {
+
+    if(this.hasEnoughForCollateral())
+    return "";
+    return "not enough funds for collateral";
+
+  }
 
   recipientIsValid = () => {
     const { externAddress } = this.state;
@@ -616,6 +648,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                   width={true}
                   type={"text"}
                   name="collateral"
+                  error={this.getCollateralError()}
                   value={this.state.requiredCollateral}
                   readOnly={true}
                 />
