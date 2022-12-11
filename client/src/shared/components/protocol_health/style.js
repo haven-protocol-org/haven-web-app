@@ -8,7 +8,7 @@ export const Container = styled.div`
 export const ColorRange = styled.div`
     width:100%;
     height: 2rem;
-    background: linear-gradient(270deg,red,yellow,green);
+    background: linear-gradient(270deg,red 30%,yellow,green);
     opacity:.4;
     position:relative;
     margin: 5px 0;
@@ -37,7 +37,7 @@ export const RatioValue = styled.div`
     left:${(props) => props.position}%;
     margin-left:5px;
     font-weight:bold;
-    font-size:.8rem;
+    font-size:1rem;
     color: black;
 `;
 
