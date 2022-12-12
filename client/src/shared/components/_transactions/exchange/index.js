@@ -40,11 +40,11 @@ const Transaction = ({
   let unlock_time = "--";
   if(fromTicker !== null && toTicker != null){
     if( fromTicker === Ticker.XHV && toTicker === Ticker.xUSD){
-      unlock_time = "~21d";
+      unlock_time = "21 day";
     }else if( fromTicker === Ticker.xUSD && toTicker === Ticker.XHV ){
-      unlock_time = "~21d";
+      unlock_time = "21 day";
     }else{
-      unlock_time = "~48h"
+      unlock_time = "48h hour"
     }
   }
 
@@ -64,7 +64,7 @@ const Transaction = ({
         )}
         {collateral > 0 && (<Cell left="Collateral" right={collateral + ' XHV'} />
         )}
-        <Cell left="Unlock Time" right={unlock_time} />
+        <Cell left="Unlock Time" right={unlock_time + "s"}/>
         </Container>
         <Container>
       <SubHeader>Transaction Details</SubHeader>
@@ -79,7 +79,7 @@ const Transaction = ({
           </Tag>
         </Row>
         <Confirm
-          description={`I accept the ${unlock_time} conversion unlock time, details, terms & fees`}
+          description={`I accept the ${unlock_time} conversion unlock time, details, terms & fees.`}
           checked={checked}
           onChange={onChange}
         />
