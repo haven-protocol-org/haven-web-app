@@ -13,8 +13,6 @@ interface ProtocolHealthProps {
 
 const bestHealth = 0;
 const worstHealth = 2;
-//const logBestHealth = Math.log10(bestHealth);
-//const logWorstHealth = Math.log10(worstHealth);
 
 
 class ProtocolHealthComponent extends Component<ProtocolHealthProps, any> {
@@ -29,11 +27,10 @@ class ProtocolHealthComponent extends Component<ProtocolHealthProps, any> {
 
 
     
-    const pointerPosition = ((1 - bestHealth)/ (worstHealth - bestHealth)) * 100;
-    console.log(pointerPosition);
-
-    //const shownMcRation = 
-  
+    let pointerPosition = ((mcRatio - bestHealth)/ (worstHealth - bestHealth)) * 100;  
+    pointerPosition = Math.max(pointerPosition, 0);
+    pointerPosition = Math.min(pointerPosition, 100);
+    
     return (
     <Container>
        <Legend>
