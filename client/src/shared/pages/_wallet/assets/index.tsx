@@ -9,7 +9,7 @@ import Cell from "../../../components/cell";
 import CellDisabled from "../../../components/cell_disabled";
 
 import { AssetList } from "constants/assets";
-import { convertBalanceToMoney, logM } from "utility/utility";
+import { convertBalanceToMoney } from "utility/utility";
 import { Ticker } from "shared/reducers/types";
 import { DesktopAppState } from "platforms/desktop/reducers";
 import {
@@ -22,7 +22,6 @@ import {
   BlockHeaderRate,
   selectXRate,
 } from "shared/reducers/blockHeaderExchangeRates";
-import { walletSession } from "shared/reducers/walletSession";
 import { ProtocolHealth } from "shared/components/protocol_health";
 import { Row } from "./styles";
 import Statistic from "shared/components/statistic";
