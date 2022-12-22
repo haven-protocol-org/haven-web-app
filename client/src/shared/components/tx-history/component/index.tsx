@@ -92,7 +92,7 @@ export const Transaction = ({
 
           <Data>
             <Value alignment="center">
-              {statusDetails === "Pending" || "Failed" ? (
+              {statusDetails === "Pending" ? (
                 <ShortRow>
                   <>{statusDetails}</>
                   <Dots />
