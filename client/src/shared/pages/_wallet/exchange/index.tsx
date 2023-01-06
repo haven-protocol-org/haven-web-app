@@ -108,7 +108,7 @@ const xassetOptions: AssetOption[] = [
   { name: "British Pound", ticker: Ticker.xGBP },
 ];
 
-const xusdOption = { name: "U.S Dollar", ticker: Ticker.xUSD };
+const xusdOption = { name: "U.S. Dollar", ticker: Ticker.xUSD };
 const xhvOption = { name: "Haven", ticker: Ticker.XHV };
 
 const assetOptions: AssetOption[] = [xhvOption, xusdOption, ...xassetOptions];
