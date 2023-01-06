@@ -64,6 +64,7 @@ export const selectOffshoreVBS = (state: HavenAppState): number | null => {
     } else {
         offshoreVBS = Math.sqrt(mcRatio) * 40;
     }
+    offshoreVBS = Math.max(1, offshoreVBS);
     return offshoreVBS;
 }
 
