@@ -29,7 +29,6 @@ export const Footer = styled.div`
 `;
 
 export const Url = styled.a`
-  text-decoration: none;
   font-family: Inter-Regular;
   font-size: 13px;
   line-height: 22px;

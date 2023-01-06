@@ -79,7 +79,9 @@ const Transaction = ({
           </Tag>
         </Row>
         <Confirm
-          description={`I accept the ${unlock_time} conversion unlock time, details, terms & fees.`}
+          description={<span>I accept the ${unlock_time} conversion unlock time, details,<Url
+                target="_blank"
+                href="https://havenprotocol.org/knowledge/haven-transactions/">terms</Url> & fees.</span>}
           checked={checked}
           onChange={onChange}
         />
