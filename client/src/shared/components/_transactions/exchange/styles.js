@@ -32,7 +32,7 @@ export const Url = styled.a`
   font-family: Inter-Regular;
   font-size: 13px;
   line-height: 22px;
-  color: ${(props) => props.theme.type.secondary};
+  color: ${(props) => props.theme.type.primary};
 `;
 
 export const Row = styled.div`
