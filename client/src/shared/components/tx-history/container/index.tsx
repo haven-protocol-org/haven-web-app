@@ -17,7 +17,6 @@ import { Transaction, TransactionProps } from "shared/components/tx-history/comp
 import Header from "shared/components/_layout/header/index.js";
 import { selectBlockHeight } from "shared/reducers/chain";
 import { selectTransferListByTicker } from "shared/reducers/xTransferList";
-import { withRouter } from "react-router";
 import { Ticker } from "shared/reducers/types";
 import { HavenAppState } from "platforms/desktop/reducers";
 import {
@@ -37,6 +36,7 @@ export interface TxEntry {
   unlockHeight: number;
   height:number;
   isConfirmed: boolean;
+  isFailed: boolean;
   isMinerTx: boolean;
   isIncoming: boolean;
   conversion: Conversion;
@@ -44,7 +44,7 @@ export interface TxEntry {
 
 export interface Conversion {
   isConversion: boolean;
-  amount?: BigInteger;
+  amount?: bigInt.BigInteger;
   amountStr?: string;
   prefixStr?: string;
   assetId?: Ticker;
@@ -58,12 +58,15 @@ interface TxHistoryProps {
   getAllTransfers:() => void;
 }
 
-type TXType = "Mined" | "Pending" | "Sent" | "Received";
+type TXType = "Mined" | "Pending" | "Sent" | "Received" | "Failed";
 
 class TxHistoryContainer extends Component<TxHistoryProps, any> {
 
   static getTransactionType(tx: TxEntry) : TXType {
-    if (tx.isMinerTx) {
+    if(tx.isFailed) {
+      return "Failed";
+    }
+    else if (tx.isMinerTx) {
       return "Mined";
     } else if (tx.mempool) {
       return "Pending";
@@ -125,14 +128,13 @@ class TxHistoryContainer extends Component<TxHistoryProps, any> {
 }
 
 const mapStateToProps = (state: HavenAppState, props: any) => ({
-  transferList: selectTransferListByTicker(state, props.match.params.id),
+  transferList: selectTransferListByTicker(state, props.assetId),
   height: selectBlockHeight(state),
   rates: state.blockHeaderExchangeRate,
 });
 
-export const TxHistoryDesktop = withRouter(
-  connect(mapStateToProps, { getAllTransfers })(TxHistoryContainer)
-);
+export const TxHistoryDesktop = 
+  connect(mapStateToProps, { getAllTransfers })(TxHistoryContainer);
 
 
 
@@ -150,7 +152,7 @@ const prepareTxInfo = (
   ).toLocaleDateString();
 
   const mempool = tx.mempool;
-
+  const failed = tx.isFailed;
   const readableAmount = iNum(convertBalanceToMoney(tx.amount, 6));
   const currentValueInUSD = iNum(parseFloat(readableAmount) * xRate);
 
@@ -193,6 +195,7 @@ const prepareTxInfo = (
     amount: readableAmount,
     hash: tx.hash,
     fee: tx.isIncoming ? 0 : iNum(convertBalanceToMoney(tx.fee, 4)),
-    block: tx.height
+    block: tx.height,
+    failed
   };
 };

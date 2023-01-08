@@ -28,6 +28,34 @@ export const closeWallet = async (save: boolean) => {
   return wallet.close(save);
 };
 
+
+export const getBlockCap = async() => {
+  //@ts-ignore
+ return wallet.getBlockCap();
+}
+
+export const getCollateralRequirements = async(sourceAssetType: string, destinationAssetType: string, amount: string) => {
+
+ //@ts-ignore
+ const requiredCollateral = await wallet.getCollateralRequirements(sourceAssetType, destinationAssetType, amount)
+
+ return requiredCollateral;
+
+};
+
+export const getCirculatingSupply = async() => {
+
+ //@ts-ignore
+ return wallet.getCirculatingSupply()
+};
+
+export const getMaxDestinationAmount = async(sourceAssetType: string, destinationAssetType: string) => {
+
+ //@ts-ignore
+ return wallet.getMaxDestinationAmount(sourceAssetType, destinationAssetType)
+};
+
+
 export const getBalance = async (
   accountIdx: number | undefined = undefined,
   subaddressIdx: number | undefined = undefined,

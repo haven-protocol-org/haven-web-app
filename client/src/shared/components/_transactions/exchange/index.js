@@ -8,6 +8,7 @@ import {
   Key,
   Value,
   Tag,
+  SubHeader,
   Information,
   Url,
   Strong,
@@ -30,6 +31,7 @@ const Transaction = ({
   isOwnAddress,
   xasset_conversion,
   change,
+  collateral
 }) => {
   const first = externAddress.substring(0, 4);
   const last = externAddress.substring(externAddress.length - 4);
@@ -38,11 +40,11 @@ const Transaction = ({
   let unlock_time = "--";
   if(fromTicker !== null && toTicker != null){
     if( fromTicker === Ticker.XHV && toTicker === Ticker.xUSD){
-      unlock_time = "~21d";
+      unlock_time = "21 day";
     }else if( fromTicker === Ticker.xUSD && toTicker === Ticker.XHV ){
-      unlock_time = "~12h";
+      unlock_time = "21 day";
     }else{
-      unlock_time = "~48h"
+      unlock_time = "48h hour"
     }
   }
 
@@ -54,14 +56,21 @@ const Transaction = ({
   return (
     <Fragment>
       <Container>
+        <SubHeader>Conversion Details</SubHeader>
         <Cell left="Convert From" right={from} />
         <Cell left="Convert To" right={to} />
         {!isOwnAddress && (
           <Cell left="Recipient Address" right={truncatedAddress} />
         )}
-        <Cell left="Unlock Time" right={unlock_time} />
-
-        <Row>
+        {collateral > 0 && (<Cell left="Collateral" right={collateral + ' XHV'} />
+        )}
+        <Cell left="Unlock Time" right={unlock_time + "s"}/>
+        </Container>
+        <Container>
+      <SubHeader>Transaction Details</SubHeader>
+      <Cell left={`Change(${fromTicker})`} right={change} />
+      <Cell left="Unlock Time" right="~20m" />
+      <Row>
           <Key>Final Conversion Fee</Key>
           <Tag priority={priority}>
             <Value>
@@ -70,33 +79,15 @@ const Transaction = ({
           </Tag>
         </Row>
         <Confirm
-          description={`I accept the ${unlock_time} Unlock Time, Details, Terms & Fees`}
+          description={<span>I accept the {unlock_time} conversion unlock time, details,&nbsp;<Url
+                target="_blank"
+                href="https://havenprotocol.org/knowledge/converting-assets/">terms</Url> & fees.</span>}
           checked={checked}
           onChange={onChange}
         />
+   
       </Container>
-      <Information>
-        {change > 0 ? (
-          <>
-            <strong style={{ textDecoration: 'underline'}}>ALERT</strong>: Approximately{" "}
-            <strong style={{ fontWeight: 600 }}> {change} {fromTicker} will be temporarily locked and unusable for ~20m</strong>. 
-            To understand why this happens and how it might impact your experience, please{" "}
-            <strong>
-              <Url
-                target="_blank"
-                href="https://havenprotocol.org/knowledge/haven-transactions/"
-              >
-                click here.
-              </Url>
-            </strong>
-          </>
-        ) : (
-          <>
-            Details: This {fromTicker} transaction will be unlocked in {unlock_time}. I have reviewed my
-            transaction details and accept all responsibility for this transaction.
-          </>
-        )}
-      </Information>
+
     </Fragment>
   );
 };

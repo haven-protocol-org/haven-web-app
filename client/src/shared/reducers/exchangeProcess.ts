@@ -8,18 +8,18 @@ import {
   EXCHANGE_SUCCEED,
   SELECT_FROM_TICKER,
   SELECT_TO_TICKER,
+  SET_COLLATERAL,
 } from "shared/actions/types";
 import { AnyAction } from "redux";
 import { TxProcessInfo } from "./transferProcess";
 import { Ticker } from "shared/reducers/types";
-//import HavenTxType from "haven-wallet-core/src/main/js/wallet/model/HavenTxType";
 import bigInt from "big-integer";
 export interface ExchangeProcessInfo extends TxProcessInfo {
-//  txType: HavenTxType | null;
   toTicker: Ticker | null;
   toAmount: number | null | bigInt.BigInteger;
   change: number | null | bigInt.BigInteger;
   xassetConversion: boolean;
+  requiredCollateral: null | bigInt.BigInteger
 }
 
 const INITIAL_STATE: ExchangeProcessInfo = {
@@ -38,6 +38,7 @@ const INITIAL_STATE: ExchangeProcessInfo = {
   fromTicker: Ticker.XHV,
   metaList: [],
   xassetConversion: false,
+  requiredCollateral: null
 };
 
 export const exchangeProcess = (
@@ -45,6 +46,8 @@ export const exchangeProcess = (
   action: AnyAction
 ): ExchangeProcessInfo => {
   switch (action.type) {
+    case SET_COLLATERAL:
+      return {...state, requiredCollateral:action.payload}
     case SELECT_FROM_TICKER:
       return { ...state, fromTicker: action.payload };
     case SELECT_TO_TICKER:

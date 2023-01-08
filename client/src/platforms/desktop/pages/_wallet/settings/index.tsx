@@ -15,12 +15,15 @@ import {
   MiningRequestTypes,
   MiningStatus,
 } from "platforms/desktop/reducers/localMining";
+import {downloadTransfers} from "shared/actions/transferHistory";
 import {
   miningStatus,
   startMining,
   stopMining,
 } from "platforms/desktop/actions/localMining";
 import { HavenNodeSetting } from "platforms/desktop/pages/_wallet/settings/node/nodeSetting";
+import { Container } from "./styles";
+import DoubleFooter from "shared/components/_inputs/double_footer";
 
 type ThemeOption = { theme: string; value: string };
 type BalanceOption = { ticker: string; value: string; code: string };
@@ -37,6 +40,7 @@ interface SettingsProps {
   selectTheme: (theme: any) => void;
   startMining: () => void;
   stopMining: () => void;
+  downloadTransfers: (type: string) => void;
   onChange: () => void;
   miningStatus: () => void;
   title: string;
@@ -119,6 +123,14 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
     }
   };
 
+  downloadTxJson = () => {
+    this.props.downloadTransfers("json");
+  };
+
+  downloadTxCsv = () => {
+    this.props.downloadTransfers("csv");
+  };
+
   handleChange = (event: any) => {
     const name = event.target.name;
     const value = event.target.value;
@@ -154,6 +166,25 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
           />
         </Form>
         <HavenNodeSetting />
+        <Header
+          title="Transaction History"
+          description="Download your transaction history"
+        />
+        <Container>
+            <DoubleFooter
+              // Left Section
+              leftLabel={"Download JSON"}
+              leftDisabled={false}
+              leftLoading={false}
+              leftOnClick={this.downloadTxJson}
+              leftVisible={true}
+              // Right Section
+              rightLabel={"Download CSV"}
+              rightDisabled={false}
+              rightLoading={false}
+              rightOnClick={this.downloadTxCsv}
+            />
+          </Container>
       </Body>
     );
   }
@@ -170,4 +201,5 @@ export const SettingsDesktop = connect(mapStateToProps, {
   startMining,
   stopMining,
   miningStatus,
+  downloadTransfers
 })(SettingsDesktopPage);

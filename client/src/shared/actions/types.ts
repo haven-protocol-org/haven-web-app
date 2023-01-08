@@ -121,6 +121,7 @@ export const RESCAN_FAILED = "rescan_failed";
 export const SELECT_FROM_TICKER = "select_from_ticker";
 export const SELECT_TO_TICKER = "select_to_ticker";
 export const EXCHANGE_RESET = "exchange_reset";
+export const SET_COLLATERAL = "set_collateral";
 
 export const GET_OFFSHORE_BALANCE_FETCHING = "get_offshore_balance_fetching";
 export const GET_OFFSHORE_BALANCE_FAILED = "get_offshore_balance_failed";
@@ -138,3 +139,8 @@ export const GET_BLOCK_HEADER_EXCHANGE_RATE_SUCCEED =
   "get_block_header_exchange_rate_succeed";
 export const GET_BLOCK_HEADER_EXCHANGE_RATE_FAILED =
   "get_block_header_exchange_rate_failed";
+
+
+  export const ADD_CIRCULATING_SUPPLY = "add_circulating_supply";
+
+  export const ADD_BLOCK_CAP = "add_blockcap";

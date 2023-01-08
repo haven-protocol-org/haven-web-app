@@ -9,11 +9,9 @@ import Description from "../../../components/_inputs/description";
 import AddressDropdown from "../../../components/_inputs/addresses_dropdown";
 // import InputButton from "../../../components/_inputs/input_button";
 import Form from "../../../components/_inputs/form";
-import { RouteComponentProps, withRouter } from "react-router";
+import { useNavigate } from "react-router";
 import Footer from "../../../components/_inputs/footer";
 import Dropdown from "../../../components/_inputs/dropdown";
-import Tab from "../../../components/tab";
-
 import {
   hasLatestXRate,
   priceDelta,
@@ -31,7 +29,7 @@ import {
   selectIsProcessingExchange,
   selectToTicker,
 } from "shared/reducers/exchangeProcess";
-import { setFromTicker, setToTicker } from "shared/actions/exchange";
+import { setFromTicker, setToTicker, setRequiredCollateral } from "shared/actions/exchange";
 import { XBalances } from "shared/reducers/xBalance";
 import { convertBalanceToMoney, iNum } from "utility/utility";
 import { showModal } from "shared/actions/modal";
@@ -39,13 +37,16 @@ import { MODAL_TYPE } from "shared/reducers/modal";
 import { ExchangeSummary } from "shared/components/_summaries/exchange-summary";
 import { AddressEntry } from "../../../reducers/address";
 import { WideContainer } from "./styles";
+import InputButton from "shared/components/_inputs/input_button";
+import bigInt from "big-integer";
+import { walletProxy } from "shared/core/proxy";
 
 enum ExchangeTab {
   Basic,
   Advanced,
 }
 
-interface ExchangeProps extends RouteComponentProps<any> {
+interface ExchangeProps  {
   nodeHeight: number;
   showModal: (modalTyoe: MODAL_TYPE) => void;
   createExchange: typeof createExchange;
@@ -56,11 +57,18 @@ interface ExchangeProps extends RouteComponentProps<any> {
   lastExchangeRates: BlockHeaderRate | null;
   setFromTicker: (ticker: Ticker | null) => void;
   setToTicker: (ticker: Ticker | null) => void;
+  setRequiredCollateral: (fromTicker: Ticker, toTicker: Ticker, fromAmount: number) => void;
   xRate: number;
+  requiredCollateral:bigInt.BigInteger | null;
   fromTicker: Ticker | null;
   toTicker: Ticker | null;
   balances: XBalances;
   addresses:AddressEntry [];
+  navigate: (path: string) => void;
+}
+
+enum TxType {
+  Shore, Xasset, None
 }
 
 type ExchangeState = {
@@ -72,7 +80,8 @@ type ExchangeState = {
   hasEnough: boolean;
   fromOptions: AssetOption[];
   toOptions: AssetOption[];
-  xassetConversion: boolean;
+  txType: TxType;
+  requiredCollateral: string;
   selectedAddress:AddressEntry;
 };
 
@@ -87,6 +96,7 @@ export interface ExchangePrioOption {
   prio: number;
 }
 
+
 const xassetOptions: AssetOption[] = [
   { name: "Yuan", ticker: Ticker.xCNY },
   { name: "Euro", ticker: Ticker.xEUR },
@@ -98,7 +108,7 @@ const xassetOptions: AssetOption[] = [
   { name: "British Pound", ticker: Ticker.xGBP },
 ];
 
-const xusdOption = { name: "U.S Dollar", ticker: Ticker.xUSD };
+const xusdOption = { name: "U.S. Dollar", ticker: Ticker.xUSD };
 const xhvOption = { name: "Haven", ticker: Ticker.XHV };
 
 const assetOptions: AssetOption[] = [xhvOption, xusdOption, ...xassetOptions];
@@ -122,8 +132,9 @@ const INITIAL_STATE: ExchangeState = {
   hasEnough: false,
   fromOptions: [...assetOptions],
   toOptions: [xusdOption],
-  xassetConversion: false,
+  txType: TxType.Shore,
   selectedAddress: ALL_ADDRESSES,
+  requiredCollateral: ""
 };
 
 class Exchange extends Component<ExchangeProps, ExchangeState> {
@@ -147,19 +158,70 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
         toAmount: undefined,
         externAddress: "",
       });
+     this.props.navigate("/wallet/assets/" + this.sendTicker);
+    }
 
-      this.props.history.push("/wallet/assets/" + this.sendTicker);
+    if(this.props.requiredCollateral !== prevProps.requiredCollateral) {
+      if (this.props.requiredCollateral !== null) {
+        const collateral = convertBalanceToMoney(this.props.requiredCollateral);
+        this.setState({requiredCollateral:collateral.toString()})
+      } 
     }
 
     if (this.props.toTicker !== prevProps.toTicker) {
-      this.calcConversion();
       this.setConversionType(this.props.fromTicker, this.props.toTicker);
     }
     if (this.props.fromTicker !== prevProps.fromTicker) {
-      this.calcConversion();
       this.setConversionType(this.props.fromTicker, this.props.toTicker);
       this.setToAssetOptions(this.props.fromTicker);
     }
+  }
+
+  setMaxAmount = async () => {
+
+    if(this.state.txType === TxType.None) {
+      return;
+    }
+
+    let amount = await (walletProxy.getMaxDestinationAmount(this.props.fromTicker!, this.props.toTicker!));
+    amount = convertBalanceToMoney(amount);
+
+    const {txType} = this.state;
+    const {fromTicker} = this.props;
+    let stateUpdate;
+    let setToAmount: boolean; 
+
+    switch (txType) {
+
+      case TxType.Shore:
+        stateUpdate = fromTicker === Ticker.XHV ? {fromAmount: amount} : {toAmount: amount};
+        setToAmount = fromTicker === Ticker.XHV ? true : false;
+        break;
+      case TxType.Xasset:
+        stateUpdate = fromTicker === Ticker.xUSD ? {fromAmount: amount} : {toAmount: amount};
+        setToAmount = fromTicker === Ticker.xUSD ? true : false;
+        break;
+    }
+        this.setState({...stateUpdate}, () => {
+          this.calcConversion(setToAmount);
+        });
+    
+  }
+
+  requestRequiredCollateral = () => {
+
+    if (this.state.txType !== TxType.Shore) {
+      return;
+    }
+
+    if (!this.state.fromAmount) {
+      this.setState({requiredCollateral:''})
+      return;
+    }
+
+    
+    this.props.setRequiredCollateral(this.props.fromTicker!, this.props.toTicker!, this.state.fromAmount)
+
   }
 
   onEnterFromAmount = (event: any) => {
@@ -184,6 +246,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
 
     this.setState({ ...this.state, [name]: value }, () => {
       this.calcConversion(false);
+
     });
   };
 
@@ -259,11 +322,23 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
   }
 
   setConversionType(fromTicker: Ticker | null, toTicker: Ticker | null) {
-    const xassetConversion =
-      this.isXassets(fromTicker) || this.isXassets(toTicker);
+
+    let txType: TxType;
+    if(fromTicker === null || toTicker === null) {
+      txType = TxType.None;
+      this.setState({fromAmount: 0, toAmount:0})
+      return;
+    }
+    else if(fromTicker === Ticker.XHV || toTicker === Ticker.XHV) {
+      txType = TxType.Shore;
+    }
+    else {
+      txType = TxType.Xasset;
+    }
+
     this.setState({
-      xassetConversion,
-    });
+      txType
+    }, () => this.calcConversion());
   }
 
   calcConversion(setToAmount: boolean = true) {
@@ -277,7 +352,8 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     if (fromAmount !== undefined && setToAmount) {
       const toAmount = parseFloat(iNum(fromAmount * xRate));
 
-      this.setState({ toAmount });
+      this.setState({ toAmount }
+        , () => this.requestRequiredCollateral());
       return;
     }
 
@@ -285,7 +361,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       const fromAmount = parseFloat(iNum(toAmount * (1 / xRate)));
       this.setState({
         fromAmount,
-      });
+      }, () => this.requestRequiredCollateral());
     }
   }
 
@@ -316,20 +392,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       selectedAddressIndex
     );
   };
-/*
-  toggleBasic = () => {
-    this.setState({
-      selectedTab: ExchangeTab.Basic,
-      selectedPrio: exchangePrioOptions[0],
-    });
-  };
 
-  toggleAdvanced = () => {
-    this.setState({ selectedTab: ExchangeTab.Advanced });
-  };
-*/
-
-//TOKENOMICS below - priority always set to default
   setExchangePriority = (selectedOption: ExchangePrioOption) => {
     this.setState({ selectedPrio: exchangePrioOptions[0] });
   };
@@ -342,7 +405,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     const hasEnoughFunds =
       fromAmount !== undefined ? fromAmount < availableBalance : false;
 
-    if (fromAmountValid && toAmountValid && hasLatestXRate && hasEnoughFunds) {
+    if (fromAmountValid && toAmountValid && hasLatestXRate && hasEnoughFunds && this.hasEnoughForCollateral()) {
       // If valid then make this 'false' so the footer is enabled
       return false;
     } else {
@@ -372,6 +435,38 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       return "Save some for fees";
     }
   };
+
+  hasEnoughForCollateral = () => {
+
+    const {fromTicker, toTicker, requiredCollateral} = this.props;
+    const {txType, fromAmount} = this.state;
+    if (txType === TxType.Shore && requiredCollateral !== null) {
+
+      const collateral = convertBalanceToMoney(requiredCollateral);
+      const availBalance = convertBalanceToMoney(
+          this.props.balances[Ticker.XHV].unlockedBalance);
+
+      if (fromTicker === Ticker.XHV && fromAmount !== undefined) {
+        if(availBalance < (fromAmount + collateral)) {
+          return false;
+        }
+      }
+      else if(toTicker === Ticker.XHV) {
+        if(availBalance < collateral) {
+          return false;
+      }
+    }
+  }
+    return true
+  }
+
+  getCollateralError = () => {
+
+    if(this.hasEnoughForCollateral())
+    return "";
+    return "not enough funds for collateral";
+
+  }
 
   recipientIsValid = () => {
     const { externAddress } = this.state;
@@ -415,7 +510,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       externAddress,
       fromOptions,
       toOptions,
-      xassetConversion,
+      txType,
       selectedAddress
     } = this.state;
 
@@ -460,23 +555,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
 
     const displayedFromAmount = fromAmount !== undefined ? fromAmount : "";
     const displayedToAmount = toAmount !== undefined ? toAmount : "";
-    
-
-    let tabfragment;
-    //dissable the basic / advanced tabs
-    if(false){
-      /*
-      tabfragment = <Tab
-      firstTabLabel="Basic"
-      secondTabLabel="Advanced"
-      firstTabState={selectedTab === ExchangeTab.Basic}
-      secondTabState={selectedTab === ExchangeTab.Advanced}
-      firstTabClickEvent={this.toggleBasic}
-      secondTabClickEvent={this.toggleAdvanced}
-      onClick={() => {}}
-      />;
-      */
-    }
 
     const handleLabel =
       selectedAddress!.label === undefined
@@ -495,7 +573,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
       truncated = first + "...." + last;
 
     }
-//TOKENOMICS below - priority dropdown needs updating
     return (
       <Fragment>
         <Body>
@@ -503,7 +580,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
             title="Convert "
             description="Swap between all available Haven assets"
           />
-          {tabfragment}
+         
           <Fragment>
             <Form onSubmit={this.handleSubmit}>
               <Dropdown
@@ -515,7 +592,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 options={fromOptions}
                 onClick={this.setFromAsset}
               />
-              <Input
+              <InputButton
                 // @ts-ignore
                 label={
                   "From Amount " +
@@ -529,6 +606,9 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 onChange={this.onEnterFromAmount}
                 error={this.fromAmountIsValid(availBalance)}
                 readOnly={fromTicker === null}
+                button={"max"}
+                onClick={this.setMaxAmount}
+                
               />
               <Dropdown
                 label={"To Asset"}
@@ -561,19 +641,17 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
               <>
                 <WideContainer>
 
-                { false && (
-                  <Dropdown
-                    label="Priority"
-                    placeholder="Select Priority"
-                    name="exchange_priority"
-                    value={xassetConversion ? "Standard" : selectedPrio.name}
-                    ticker={
-                      xassetConversion ? "Unlocks ~48h" : selectedPrio.ticker
-                    }
-                    options={exchangePrioOptions}
-                    onClick={this.setExchangePriority}
-                    disabled={xassetConversion ? true : false}
-                  />
+                { txType === TxType.Shore  && (
+                  <Input
+                  label='Required Collateral in XHV'
+                  placeholder="auto calculated collateral"
+                  width={true}
+                  type={"text"}
+                  name="collateral"
+                  error={this.getCollateralError()}
+                  value={this.state.requiredCollateral}
+                  readOnly={true}
+                />
                   )}
                   
                   <AddressDropdown
@@ -586,8 +664,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                     onClick={this.selectAddress}
                     hideCreateAddress
                   />
-                  
-
+      
                   <Description
                     label="Recipient Address (Optional)"
                     placeholder="Exchange to another address"
@@ -603,7 +680,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
             )}
             <WideContainer>
               <ExchangeSummary
-                xasset_conversion={this.state.xassetConversion}
                 xRate={this.props.xRate}
                 fromAmount={iNum(fromAmount)}
                 toAmount={iNum(toAmount)}
@@ -643,14 +719,23 @@ const mapStateToProps = (state: DesktopAppState) => ({
   fromTicker: selectFromTicker(state.exchangeProcess),
   toTicker: selectToTicker(state.exchangeProcess),
   balances: state.xBalance,
+  requiredCollateral: state.exchangeProcess.requiredCollateral,
   addresses: [ALL_ADDRESSES, ...state.address.entrys],
 });
 
-export const ExchangePage = withRouter(
+//@ts-ignore
+const ConnectedExchangePage  = (
   connect(mapStateToProps, {
     createExchange,
     setToTicker,
     setFromTicker,
+    setRequiredCollateral,
     showModal,
   })(Exchange)
 );
+
+
+export const ExchangePage = () => {
+  const navigate = useNavigate();
+  return <ConnectedExchangePage navigate={navigate} />
+}

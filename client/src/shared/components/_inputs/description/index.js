@@ -7,10 +7,10 @@ import { Label } from "../../../../assets/styles/type.js";
 
 const Description = ({
   label,
-  error = null,
+  error = "",
   width = false,
   ref = null,
-  type = null,
+  type = 'text',
   ...rest
 }) => {
   return (

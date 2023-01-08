@@ -45,9 +45,8 @@ interface NavigationProps {
   basicActive: boolean;
   advancedActive: boolean;
   restoreHeight: number;
-  activeWallet: string;
+  activeWallet: string | undefined;
   startedResync: boolean;
-  search: string;
   balances: XBalances;
   showModal: (modalType: MODAL_TYPE) => void;
 }

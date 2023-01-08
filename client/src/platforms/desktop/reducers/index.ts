@@ -20,6 +20,7 @@ import { havenFeature } from "shared/reducers/havenFeature";
 import modal from "shared/reducers/modal";
 import { WebAppState } from "platforms/web/reducers";
 import { storedWallets } from "./storedWallets";
+import { circulatingSupply } from "shared/reducers/circulatingSupply";
 
 const appReducer = combineReducers({
   theme,
@@ -40,7 +41,8 @@ const appReducer = combineReducers({
   mining,
   modal,
   connectedNode,
-  nodeList
+  nodeList,
+  circulatingSupply
 });
 
 const rootReducer = (state: any, action: AnyAction) => {

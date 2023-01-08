@@ -5,9 +5,7 @@ import React, { Component } from "react";
 import { Container } from "./styles";
 
 export default class extends Component {
-  state = {
-    status: false
-  };
+
 
   render() {
     return <Container>{this.props.children}</Container>;

@@ -1,4 +1,4 @@
-import { isWeb } from "constants/env";
+import { isDesktop, isWeb } from "constants/env";
 import { initDesktopWalletListener, removeDesktopListener } from "platforms/desktop/ipc/wallet";
 import { HavenAppState } from "platforms/desktop/reducers";
 import { setWebConfig } from "platforms/web/actions/config";
@@ -8,6 +8,8 @@ import { Chain } from "shared/reducers/chain";
 import { getAddresses } from "./address";
 import { getXHVBalance } from "./balance";
 import { getLastBlockHeader } from "./blockHeaderExchangeRate";
+import { getCirculatingSupply } from "./circulatingSupply";
+import { getBlockCap } from "./blockCap";
 import { connectAppToDaemon } from "./havend";
 import { updateHavenFeatures } from "./havenFeature";
 import { refresh } from "./refresh";
@@ -36,8 +38,14 @@ export const startWalletSession = (
       // start wallet listeners
       const listener = new HavenWalletListener(dispatch, getStore);
       if (isWeb()) {
+        dispatch(getCirculatingSupply());
+        dispatch(getBlockCap());
         walletProxy.addWalletListener(listener);
       } else {
+        if(getStore().connectedNode.isWalletConectedToDaemon) {
+          dispatch(getCirculatingSupply());
+          dispatch(getBlockCap());
+        }
         walletProxy.addWalletListener();
         initDesktopWalletListener(listener);
       }

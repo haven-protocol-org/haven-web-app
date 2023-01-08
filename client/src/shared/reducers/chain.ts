@@ -1,4 +1,5 @@
 import {
+  ADD_BLOCK_CAP,
   GET_BLOCK_INFO_SUCEED,
   GET_WALLET_HEIGHT_SUCCEED,
 } from "shared/actions/types";
@@ -15,18 +16,21 @@ export interface Chain {
   walletHeight: number;
   nodeHeight: number;
   chainHeight: number;
+  blockCap: number;
 }
 
 const INITIAL_STATE: Chain = {
   walletHeight: 0,
   chainHeight: 0,
   nodeHeight: 0,
+  blockCap:0
 };
 
 export const chain = (state = INITIAL_STATE, action: AnyAction): Chain => {
   switch (action.type) {
     case GET_BLOCK_INFO_SUCEED:
     case GET_WALLET_HEIGHT_SUCCEED:
+    case ADD_BLOCK_CAP: 
       return { ...state, ...action.payload };
     default:
       return state;
@@ -36,6 +40,10 @@ export const chain = (state = INITIAL_STATE, action: AnyAction): Chain => {
 export const selectBlockHeight = (state: HavenAppState) => {
   return state.chain.chainHeight;
 };
+
+export const selectBlockap = (state: HavenAppState) => {
+  return state.chain.blockCap;
+}
 
 export const selectNodeHeight = (state: HavenAppState) => {
   return state.chain.nodeHeight;

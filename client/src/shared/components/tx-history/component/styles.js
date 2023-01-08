@@ -62,6 +62,8 @@ export const State = styled.div`
   border-right: none;
   background: ${(props) => {
     switch (props.status) {
+      case "Failed":
+        return `${props.theme.states.error}`;
       case "Mined":
         return `${props.theme.states.error}`;
       case "Received":

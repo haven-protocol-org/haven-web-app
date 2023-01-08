@@ -8,7 +8,7 @@ import {
 } from "shared/reducers/walletCreation";
 import { connect } from "react-redux";
 import { restoreWalletByMnemomic } from "shared/actions/walletCreation";
-import { Redirect } from "react-router";
+import { Navigate } from "react-router";
 import React, { Component } from "react";
 import { Information } from "assets/styles/type";
 import VerifySeed from "shared/components/_create/verify_seed";
@@ -126,7 +126,7 @@ class RestoreDesktopContainer extends Component<RestoreProps, RestoreState> {
     const { error, step, seed, name, pw } = this.state;
 
     if (this.props.isLoggedIn) {
-      return <Redirect to="/wallet/assets" />;
+      return <Navigate to="/wallet/assets" />;
     }
 
     return (

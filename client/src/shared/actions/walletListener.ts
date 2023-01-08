@@ -9,6 +9,8 @@ import { getLastBlockHeader } from "./blockHeaderExchangeRate";
 import { updateHavenFeatures } from "./havenFeature";
 import { HavenAppState } from "platforms/desktop/reducers";
 import { Ticker } from "shared/reducers/types";
+import { getCirculatingSupply } from "./circulatingSupply";
+import { getBlockCap } from "./blockCap";
 
 export class HavenWalletListener extends MoneroWalletListener {
   // we keep a dispatch and getStore instance in the walletlistener
@@ -69,7 +71,8 @@ export class HavenWalletListener extends MoneroWalletListener {
     if (!syncState.isSyncing) {
       this.dispatch(getLastBlockHeader());
       this.dispatch(updateHavenFeatures(height));
-
+      this.dispatch(getCirculatingSupply());
+      this.dispatch(getBlockCap());
       if (store.chain.chainHeight < height) {
         this.dispatch(
           onWalletSyncUpdateSucceed({ nodeHeight: height, chainHeight: height })

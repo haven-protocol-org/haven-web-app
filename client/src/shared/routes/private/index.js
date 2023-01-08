@@ -1,6 +1,6 @@
 // Library Imports
 import React, { Component } from "react";
-import { Redirect, Route } from "react-router-dom";
+import { Navigate, Route,Routes, Outlet } from "react-router-dom";
 
 // Relative Imports
 
@@ -45,34 +45,16 @@ class PrivateRoutesContainer extends Component {
   }
 
   render() {
-    const { match } = this.props;
 
     if (!this.props.isLoggedIn) {
-      return <Redirect to="/" />;
+      return <Navigate to="/" />;
     }
 
     return (
       <div>
-        {/* <Idle /> */}
         <Page>
           <Menu />
-          <Route path={`${match.url}/assets`} exact component={AssetsDesktop} />
-          <Route
-            path={`${match.url}/assets/:id`}
-            exact
-            component={HavenDetails}
-          />
-          <Route
-            path={`${match.url}/transfer`}
-            exact
-            component={HavenTransfer}
-          />
-          <Route
-            path={`${match.url}/settings`}
-            exact
-            component={isDesktop() ? SettingsDesktop : SettingsWeb}
-          />
-          <Route path={`${match.url}/convert`} exact component={ExchangePage} />
+          <Outlet />
         </Page>
       </div>
     );

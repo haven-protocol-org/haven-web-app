@@ -6,6 +6,7 @@ import { Ticker } from "shared/reducers/types";
 import { resetTransferProcess } from "shared/actions/transfer";
 import { transferSucceed } from "../../../../../shared/reducers/transferProcess";
 import { createTransfer } from "shared/actions/transfer";
+import { useNavigate } from "react-router";
 
 class Container extends Component<any, any> {
   private sendTicker: Ticker = Ticker.XHV;
@@ -18,7 +19,7 @@ class Container extends Component<any, any> {
   ): void {
     if (this.props.transferSucceed) {
       this.props.resetTransferProcess();
-      this.props.history.push("/wallet/assets/" + this.sendTicker);
+      this.props.navigate("/wallet/assets/" + this.sendTicker);
     }
   }
 
@@ -49,7 +50,13 @@ export const mapStateToProps = (state: HavenAppState) => ({
   tx: state.transferProcess,
 });
 
-export const HavenTransfer = connect(mapStateToProps, {
+const ConnectedTransferPage = connect(mapStateToProps, {
   createTransfer,
   resetTransferProcess,
 })(Container);
+
+
+export const HavenTransfer = () => {
+  const navigate = useNavigate();
+  return <ConnectedTransferPage navigate={navigate} />
+}

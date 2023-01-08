@@ -9,7 +9,7 @@ import { ProgressBar } from "../../progress-bar";
 import { HavenAppState } from "platforms/desktop/reducers";
 import { SyncState } from "shared/types/types";
 import { selectSyncState } from "shared/reducers/chain";
-import { selectPortfolioInUSD, XViewBalances } from "shared/reducers/xBalance";
+import { selectPortfolioInUSD, XViewBalance, XViewBalances } from "shared/reducers/xBalance";
 import { Ticker } from "shared/reducers/types";
 import { togglePrivacyDisplay } from "shared/actions/walletSession";
 
@@ -17,7 +17,7 @@ const OFFSHORE_TICKERS = [Ticker.xUSD, null];
 
 interface BalanceProps {
   syncState: SyncState;
-  balances: XViewBalances;
+  balances: XViewBalance;
   showPrivateDetails: boolean;
   togglePrivacyDisplay:() => void;
 }
@@ -72,7 +72,7 @@ class Balances extends Component<BalanceProps, BalanceState> {
     const { prefix } =
       ticker === Ticker.xUSD ? { prefix: "$" } : { prefix: "₿" };
 
-    const { balance } = this.props.balances[ticker];
+    const { balance } = this.props.balances[ticker]!;
     const totalBalance = prefix + balance.toFixed(2);
     const { isSyncing, blockHeight, scannedHeight } = this.props.syncState;
     const percentage = ((scannedHeight / blockHeight) * 100).toFixed(2);

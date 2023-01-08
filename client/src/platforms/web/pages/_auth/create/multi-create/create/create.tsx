@@ -16,7 +16,7 @@ import { storeKeyFileToDisk } from "platforms/web/actions/storage";
 import { createNewWallet } from "shared/actions/walletCreation";
 import { startWalletSession } from "shared/actions/walletSession";
 import { selectIsLoggedIn } from "shared/reducers/walletSession";
-import { Redirect } from "react-router";
+import { Navigate } from "react-router";
 import Checkbox from "shared/components/checkbox";
 
 interface CreateProps {
@@ -176,6 +176,7 @@ class CreateWalletWeb extends Component<CreateProps, CreateState> {
               onChange={this.handleChange}
               onClick={this.showPassword}
               readOnly={false}
+              onKeyUp={()=>{}}
               error=""
               width={undefined}
             />
@@ -267,6 +268,7 @@ class CreateWalletWeb extends Component<CreateProps, CreateState> {
               onChange={this.handleChange}
               onClick={this.showPassword}
               readOnly={false}
+              onKeyUp={()=>{}}
               error={this.state.confirm_vault_error}
               width
             />
@@ -284,7 +286,7 @@ class CreateWalletWeb extends Component<CreateProps, CreateState> {
 
   render() {
     if (this.props.isLoggedIn) {
-      return <Redirect to="/wallet/assets" />;
+      return <Navigate to="/wallet/assets" />;
     }
 
     const {

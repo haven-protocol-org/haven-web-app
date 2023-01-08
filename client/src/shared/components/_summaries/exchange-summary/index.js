@@ -17,7 +17,6 @@ export const ExchangeSummary = ({
   selectedPrio,
   hasLatestXRate,
   usingSpot,
-  xasset_conversion,
 }) => {
   // use USD always as quote currency for better readability
   let xFromTicker = fromTicker;

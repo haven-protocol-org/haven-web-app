@@ -4,7 +4,7 @@ import { Ticker } from "shared/reducers/types";
 export const AssetList = [
   {
     id: Ticker.xUSD,
-    token: "U.S Dollar",
+    token: "U.S. Dollar",
     ticker: "USD",
     symbol: "$",
   },

@@ -78,7 +78,9 @@ export const downloadTransfers = (type: string) => {
 
         var blob = new Blob([str_out], { type: mimetype });
 
+        //@ts-ignore
         if (navigator.msSaveBlob) { // IE 10+
+                  //@ts-ignore
             navigator.msSaveBlob(blob, filename);
         } else {
             var link = document.createElement("a");

@@ -12,7 +12,7 @@ import {
   startWalletSession
 } from "shared/actions/walletSession";
 import Login from "../component";
-import { Redirect } from "react-router";
+import { Navigate } from "react-router";
 import React, { Component } from "react";
 import {
   selectisRequestingWalletCreation,
@@ -23,7 +23,7 @@ import {
 class LoginWebContainer extends Component {
   render() {
     if (this.props.isLoggedIn) {
-      return <Redirect to="/wallet/assets" />;
+      return <Navigate to="/wallet/assets" />;
     }
 
     return (
