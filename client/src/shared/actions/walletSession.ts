@@ -1,4 +1,4 @@
-import { isWeb } from "constants/env";
+import { isDesktop, isWeb } from "constants/env";
 import { initDesktopWalletListener, removeDesktopListener } from "platforms/desktop/ipc/wallet";
 import { HavenAppState } from "platforms/desktop/reducers";
 import { setWebConfig } from "platforms/web/actions/config";
@@ -33,14 +33,19 @@ export const startWalletSession = (
       dispatch(connectAppToDaemon());
       // fetch latest prices once at start
       dispatch(getLastBlockHeader());
-      dispatch(getCirculatingSupply());
-      dispatch(getBlockCap());
+
   
       // start wallet listeners
       const listener = new HavenWalletListener(dispatch, getStore);
       if (isWeb()) {
+        dispatch(getCirculatingSupply());
+        dispatch(getBlockCap());
         walletProxy.addWalletListener(listener);
       } else {
+        if(getStore().connectedNode.isWalletConectedToDaemon) {
+          dispatch(getCirculatingSupply());
+          dispatch(getBlockCap());
+        }
         walletProxy.addWalletListener();
         initDesktopWalletListener(listener);
       }
