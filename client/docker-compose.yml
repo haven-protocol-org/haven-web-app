@@ -1,0 +1,12 @@
+version: "3.8"
+services:
+  web-app:
+    image: havenprotocolorg/haven-web:latest
+    build: 
+      dockerfile: .docker/Dockerfile
+      context: ./
+      args:
+        REACT_APP_NET_TYPE_ID: ${REACT_APP_NET_TYPE_ID:-0}
+        REACT_APP_HAVEN_DIRECT_HOST: ${REACT_APP_HAVEN_DIRECT_HOST:-https://havennodemainnet.app.runonflux.io:443}
+    ports:
+      - 80:80
