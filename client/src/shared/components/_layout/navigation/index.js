@@ -35,7 +35,7 @@ class Navigation extends Component {
           </Tag>
         </Brand>
         {!auth ? (
-          <Button to="/login">Login</Button>
+          <Button to="/">Login</Button>
         ) : (
           <Logout onClick={this.handleLogout}>Logout</Logout>
         )}

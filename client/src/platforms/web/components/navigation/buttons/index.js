@@ -11,8 +11,8 @@ const Buttons = ({ auth, onClick, isLoading }) => {
 
   return (
     <>
-      {!auth && location.pathname === "/" && <Auth to="/login">Login</Auth>}
-      {!auth && location.pathname === "/login" && <Auth to="/">Create</Auth>}
+      {!auth && location.pathname === "/" && <Auth to="/create">Create</Auth>}
+      {!auth && location.pathname === "/create" && <Auth to="/">Login</Auth>}
       {auth && (
         <Logout onClick={onClick}>{isLoading ? <Spinner /> : "Logout"}</Logout>
       )}
