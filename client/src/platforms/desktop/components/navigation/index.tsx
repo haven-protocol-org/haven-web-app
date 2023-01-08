@@ -35,6 +35,7 @@ import Tab from "./tab";
 
 import { showModal } from "shared/actions/modal";
 import { MODAL_TYPE } from "shared/reducers/modal";
+import { isConnected } from "shared/core/havend";
 
 interface NavigationProps {
   node: SelectedNode;
@@ -212,7 +213,11 @@ class Navigation extends Component<NavigationProps, any> {
                         body="Network"
                         label={`${current_network} v${version}`}
                       />
-                      {!syncStarted ? (
+                      { !connected? (  
+                        <>
+                          <Cell body="Vault Status" label="Not Connected" />
+                        </>
+                        ) : !syncStarted? (
                         <>
                           <Cell body="Vault Status" label="Synced" />
                         </>
