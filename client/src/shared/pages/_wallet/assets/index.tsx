@@ -167,7 +167,7 @@ class AssetsPage extends Component<AssetsProps, any> {
         <Row>
           <Statistic label="Offshore VBS" value={offshoreVBS} />
           <Statistic label="Onshore VBS" value={onshoreVBS} />
-          <Statistic label="Block Cap (XHV)" value={blockCap} />
+        
         </Row>
         <Overview />
         <Header

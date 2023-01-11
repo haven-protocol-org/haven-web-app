@@ -10,8 +10,8 @@ export const getBlockCap = () => {
     return async (dispatch: any) => {
 
     try {
-        
-        const response = await walletProxy.getBlockCap();
+
+        const response = 0;//await walletProxy.getBlockCap();
         const blockCap = bigInt(response.toString())
         
         dispatch(addBlockCap(convertBalanceToMoney(blockCap)));
