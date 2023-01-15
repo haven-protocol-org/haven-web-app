@@ -72,6 +72,7 @@ jobs:
 
     - if: matrix.os == 'ubuntu-latest'
       run: |
+          sudo apt-get update 
           sudo apt-get install flatpak flatpak-builder elfutils
 
     - name: Build Final App
