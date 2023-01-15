@@ -34,13 +34,17 @@ export const selectMcRatio = (state: HavenAppState) => {
     const {XHV : xhvSupply,...xassetsSupply} = circulatingSupply;
     const ATOMIC_UNITS:bigInt.BigInteger = bigInt(Math.pow(10, 12))
     // use  MA24 --> UNUSED1
-    const xhvMarketCap = xhvSupply.multiply(lastExchangeRates.UNUSED1).divide(bigInt(Math.pow(10, 24)));
+    const xhvMarketCap:bigInt.BigInteger = xhvSupply.multiply(lastExchangeRates.UNUSED1).divide(bigInt(Math.pow(10, 24)));
+
+    if (xhvMarketCap.eq(bigInt.zero)) {
+        return null;
+    }
 
     const xassetMarketCap:bigInt.BigInteger = Object.keys(xassetsSupply).reduce((mCap, ticker) => {
       const rateInvertUSD = ticker === Ticker.xUSD? ATOMIC_UNITS : lastExchangeRates![ticker as Ticker]
       const supply = (xassetsSupply as CirculatingSupply)[ticker as Ticker];
       //rate is invert to we divide instead of multiply
-      const assetMCap = supply.divide(rateInvertUSD);
+      const assetMCap = rateInvertUSD.eq(bigInt.zero)? bigInt.zero :  supply.divide(rateInvertUSD);
       return mCap.add(assetMCap);
 
     },bigInt.zero )
