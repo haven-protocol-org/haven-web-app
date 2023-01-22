@@ -20,6 +20,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     env: 
       REACT_APP_NET_TYPE_ID: ${{matrix.network}}
+      ACTION_OS: ${{ matrix.os }}
     strategy:
       matrix:
         os: [windows-latest, macOS-latest, ubuntu-latest]
@@ -75,13 +76,7 @@ jobs:
           sudo apt-get update 
           sudo apt-get install flatpak flatpak-builder elfutils
 
-    - name: Build Final App Mac
-      if: matrix.os == 'macOS-latest'
-      run: |
-          sh "./sh/make.sh --arch='arm64','x64'"
-
-    - name: Build Final App linux/win
-      if: matrix.os != 'macOS-latest'
+    - name: Build Final
       run: |
           sh './sh/make.sh'
 
