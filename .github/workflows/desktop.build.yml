@@ -75,10 +75,12 @@ jobs:
           sudo apt-get update 
           sudo apt-get install flatpak flatpak-builder elfutils
 
-    - name: Build Final App
+    - name: Build Final App Mac
       if: matrix.os == 'macOS-latest'
       run: |
           sh "./sh/make.sh --arch='arm64','x64'"
+
+    - name: Build Final App linux/win
       if: matrix.os != 'macOS-latest'
       run: |
           sh './sh/make.sh'
