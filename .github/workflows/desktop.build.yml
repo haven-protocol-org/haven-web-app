@@ -30,7 +30,7 @@ jobs:
     - name: Use Node.js
       uses: actions/setup-node@v1
       with:
-        node-version: '14'
+        node-version: '15'
     
     - name: Install client dependencies
       working-directory: client
@@ -76,6 +76,11 @@ jobs:
           sudo apt-get install flatpak flatpak-builder elfutils
 
     - name: Build Final App
+    - if: matrix.os == 'macOS-latest'
+      run: |
+          sh "./sh/make.sh --arch='arm64','x64'"
+    
+    - if: matrix.os != 'macOS-latest'
       run: |
           sh './sh/make.sh'
 
