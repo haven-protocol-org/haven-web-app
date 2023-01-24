@@ -37,6 +37,7 @@ jobs:
       working-directory: client
       run: |
           git config --global url."https://".insteadOf git://
+          npm cache verify
           npm install
 
     - name: Audit client dependencies
