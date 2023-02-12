@@ -81,11 +81,26 @@ jobs:
       run: |
           sh './sh/make.sh'
 
-    - name: Upload Build
+    - name: Upload Windows Build
+      if: runner.os == 'Windows'
       uses: actions/upload-artifact@v2
       with:
         name: ${{ matrix.os }}-${{ matrix.network }}
-        path: haven-desktop-app/out/make/
+        path: haven-desktop-app/out/make/squirrel.windows/x64
+
+    - name: Upload Linux Build
+      if: runner.os == 'Linux'
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{ matrix.os }}-${{ matrix.network }}
+        path: haven-desktop-app/out/make/deb/x64/
+
+    - name: Upload Mac Build
+      if: runner.os == 'macOS'
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{ matrix.os }}-${{ matrix.network }}
+        path: haven-desktop-app/out/make/*.dmg
 
   upload-build:
     needs: desktop-build
