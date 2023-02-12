@@ -8,6 +8,7 @@ on:
     branches:
       - develop
       - master
+      - feature/upload-s3
     tags:
       - '*'
   pull_request:
