@@ -18,7 +18,7 @@ on:
 jobs:
   desktop-build:
     runs-on: ${{ matrix.os }}
-    env: 
+    env:
       REACT_APP_NET_TYPE_ID: ${{matrix.network}}
     strategy:
       matrix:
@@ -31,7 +31,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: '14'
-    
+
     - name: Install client dependencies
       working-directory: client
       run: |
@@ -48,7 +48,7 @@ jobs:
       env:
         CI: false
       run: |
-          npm run build:desktop:ci 
+          npm run build:desktop:ci
 
     - name: Copy Build
       working-directory: client
@@ -72,7 +72,7 @@ jobs:
 
     - if: matrix.os == 'ubuntu-latest'
       run: |
-          sudo apt-get update 
+          sudo apt-get update
           sudo apt-get install flatpak flatpak-builder elfutils
 
     - name: Build Final App
@@ -84,3 +84,37 @@ jobs:
       with:
         name: ${{ matrix.os }}-${{ matrix.network }}
         path: haven-desktop-app/out/make/
+
+  upload-build:
+    needs: desktop-build
+    runs-on: ubuntu-20.04
+    env:
+      REACT_APP_NET_TYPE_ID: ${{matrix.network}}
+      ACTION_OS: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest, macOS-latest, ubuntu-latest]
+        network: [0, 1, 2]
+    steps:
+    - uses: actions/download-artifact@v2
+      with:
+        name: ${{ matrix.os }}-${{ matrix.network }}
+    - name: Upload Haven CLI
+      uses: shallwefootball/s3-upload-action@master
+      with:
+        aws_key_id: ${{ secrets.AWS_KEY_ID }}
+        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws_bucket: ${{ secrets.AWS_BUCKET }}
+        source_dir: './'
+        destination_dir: binaries/${{github.ref_name}}
+    - name: notification
+      env:
+        BINARY_NAME: /${{ matrix.os }}-${{ matrix.network }}
+        BINARY_URL: https://docs.havenprotocol.org/binaries/
+        DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+      shell: bash
+      run: |
+        export checksum=($(sha256sum haven-macos.tar.gz))
+        export payload='{"username": "Github", "content": "CLI (macOS) : '${BINARY_URL}${GITHUB_REF_NAME}${BINARY_NAME}' (sha256 checksum : '${checksum}')"}'
+        echo $payload
+        curl -X POST -H "Content-Type: application/json" -d "$payload" $DISCORD_WEBHOOK
