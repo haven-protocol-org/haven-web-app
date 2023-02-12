@@ -115,7 +115,7 @@ jobs:
         DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
       shell: bash
       run: |
-        export checksum=($(sha256sum haven-macos.tar.gz))
-        export payload='{"username": "Github", "content": "CLI (macOS) : '${BINARY_URL}${GITHUB_REF_NAME}${BINARY_NAME}' (sha256 checksum : '${checksum}')"}'
+        export checksum=($(sha256sum ${{ matrix.os }}-${{ matrix.network }}))
+        export payload='{"username": "Github", "content": "GUI (${{ matrix.os }}) : '${BINARY_URL}${GITHUB_REF_NAME}${BINARY_NAME}' (sha256 checksum : '${checksum}')"}'
         echo $payload
         curl -X POST -H "Content-Type: application/json" -d "$payload" $DISCORD_WEBHOOK
