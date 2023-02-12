@@ -86,14 +86,14 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: ${{ matrix.os }}-${{ matrix.network }}
-        path: haven-desktop-app/out/make/squirrel.windows/x64
+        path: haven-desktop-app/out/make/squirrel.windows/x64/*.exe
 
     - name: Upload Linux Build
       if: runner.os == 'Linux'
       uses: actions/upload-artifact@v2
       with:
         name: ${{ matrix.os }}-${{ matrix.network }}
-        path: haven-desktop-app/out/make/deb/x64/
+        path: haven-desktop-app/out/make/deb/x64/*.deb
 
     - name: Upload Mac Build
       if: runner.os == 'macOS'
@@ -123,15 +123,15 @@ jobs:
         aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws_bucket: ${{ secrets.AWS_BUCKET }}
         source_dir: './'
-        destination_dir: binaries/${{github.ref_name}}
-    - name: notification
-      env:
-        BINARY_NAME: /${{ matrix.os }}-${{ matrix.network }}
-        BINARY_URL: https://docs.havenprotocol.org/binaries/
-        DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-      shell: bash
-      run: |
-        export checksum=($(sha256sum ${{ matrix.os }}-${{ matrix.network }}))
-        export payload='{"username": "Github", "content": "GUI (${{ matrix.os }}) : '${BINARY_URL}${GITHUB_REF_NAME}${BINARY_NAME}' (sha256 checksum : '${checksum}')"}'
-        echo $payload
-        curl -X POST -H "Content-Type: application/json" -d "$payload" $DISCORD_WEBHOOK
+        destination_dir: binaries/${{github.ref_name}}/${{ matrix.network }}
+#    - name: notification
+#      env:
+#        BINARY_NAME: /${{ matrix.os }}-${{ matrix.network }}
+#        BINARY_URL: https://docs.havenprotocol.org/binaries/
+#        DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+#      shell: bash
+#      run: |
+#        export checksum=($(sha256sum Haven-*))
+#        export payload='{"username": "Github", "content": "GUI (${{ matrix.os }}) : '${BINARY_URL}${GITHUB_REF_NAME}${matrix.network}${BINARY_NAME}' (sha256 checksum : '${checksum}')"}'
+#        echo $payload
+#        curl -X POST -H "Content-Type: application/json" -d "$payload" $DISCORD_WEBHOOK
