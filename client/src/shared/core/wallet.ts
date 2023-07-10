@@ -1,5 +1,5 @@
 import * as core from "haven-wallet-core";
-import MoneroWalletWasm from "haven-wallet-core/src/main/js/wallet/MoneroWalletWasm";
+import MoneroWalletFull from "haven-wallet-core/src/main/js/wallet/MoneroWalletFull";
 import BigInteger from "haven-wallet-core/src/main/js/common/biginteger";
 import {
   ICreateWallet,
@@ -13,18 +13,18 @@ import HavenBalance from "haven-wallet-core/src/main/js/wallet/model/HavenBalanc
 import MoneroAddressBookEntry from "haven-wallet-core/src/main/js/wallet/model/MoneroAddressBookEntry";
 import { Ticker } from "shared/reducers/types";
 
-let wallet: MoneroWalletWasm;
+let wallet: MoneroWalletFull;
 
 export const createWallet = async (walletData: ICreateWallet) => {
  
-    wallet = await core.createWalletWasm(walletData);
+    wallet = await core.createWalletFull(walletData);
     return true;
 
 };
 
 export const openWallet = async (walletData: IOpenWallet) => {
 
-    wallet = await core.openWalletWasm(walletData);
+    wallet = await core.openWalletFull(walletData);
     return true;
  
 };
@@ -157,7 +157,7 @@ export const isWalletSynced = async (): Promise<boolean> => {
 };
 
 export const isWalletConnected = async (): Promise<boolean> => {
-  return wallet.isConnected();
+  return wallet.isConnectedToDaemon();
 };
 
 export const relayTxs = async (metaDataList: string[]) => {

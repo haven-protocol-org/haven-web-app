@@ -1,11 +1,13 @@
 import MoneroDaemonRpc from "haven-wallet-core/src/main/js/daemon/MoneroDaemonRpc";
 import { IMonerRPCConnection } from "typings";
+import * as core from "haven-wallet-core";
+
 
 let daemon: MoneroDaemonRpc;
 
-export const createDaemonConnection = (rpcConnection: IMonerRPCConnection) => {
+export const createDaemonConnection = async (rpcConnection: IMonerRPCConnection) => {
   //@ts-ignore
-  daemon = new MoneroDaemonRpc(rpcConnection);
+  daemon = await core.connectToDaemonRpc(rpcConnection);
   return true
 };
 
