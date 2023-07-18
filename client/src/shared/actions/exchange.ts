@@ -80,30 +80,7 @@ export function createExchange(
     // we have a xassetConversion when XHV is not involved
     let xassetConversion: boolean = fromTicker !== Ticker.XHV && toTicker !== Ticker.XHV;
 
-    let exchangeAmount: number = 0;
-
-    // offshore/onshore tx sends XHV amount
-    if (!xassetConversion) {
-    //offshore TX
-    if(toTicker === Ticker.xUSD ){
-      exchangeAmount = fromAmount;
-    }
-    //onshore TX
-    else if (fromTicker === Ticker.xUSD){ 
-      exchangeAmount = toAmount;
-    }
-  }
-  // xasset conversions sends xUSD amount
-  else {
-    //xasset -> xUSD
-    if(toTicker === Ticker.xUSD ){
-      exchangeAmount = toAmount;
-    }
-    //offshore TX
-    else if (fromTicker === Ticker.xUSD){ 
-      exchangeAmount = fromAmount;
-    }
-  }
+    let exchangeAmount: number = fromAmount;
 
     let amount = convertMoneyToBalance(exchangeAmount);
     // we need to round the value as just for digits are allowed for onshore/offshore
