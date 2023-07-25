@@ -1,5 +1,5 @@
 import * as core from "haven-wallet-core";
-import MoneroWalletWasm = require("haven-wallet-core/src/main/js/wallet/MoneroWalletWasm");
+import MoneroWalletFull = require("haven-wallet-core/src/main/js/wallet/MoneroWalletFull");
 import {
   ICreateWallet,
   IOpenWallet,
@@ -11,15 +11,15 @@ import MoneroTxWallet = require("haven-wallet-core/src/main/js/wallet/model/Mone
 import HavenBalance = require("haven-wallet-core/src/main/js/wallet/model/HavenBalance");
 import MoneroAddressBookEntry = require("haven-wallet-core/src/main/js/wallet/model/MoneroAddressBookEntry");
 
-let wallet: MoneroWalletWasm;
+let wallet: MoneroWalletFull;
 
 export const createWallet = async (walletData: ICreateWallet) => {
-    wallet = await core.createWalletWasm(walletData);
+    wallet = await core.createWalletFull(walletData);
     return true;
 };
 
 export const openWallet = async (walletData: IOpenWallet) => {
-    wallet = await core.openWalletWasm(walletData);
+    wallet = await core.openWalletFull(walletData);
     return true;
 };
 
@@ -96,7 +96,7 @@ export const getMnemonic = async () => {
 
 export const getPublicSpend = async (): Promise<string> => {
   return wallet.getPublicSpendKey();
-  
+
 };
 
 export const getPrivateSpend = async (): Promise<string> => {
@@ -170,7 +170,7 @@ export const isWalletSynced = async (): Promise<boolean> => {
 };
 
 export const isWalletConnected = async (): Promise<boolean> => {
-  return wallet.isConnected();
+  return wallet.isConnectedToDaemon();
 };
 
 export const relayTxs = async (metaDataList: string[]) => {
@@ -260,6 +260,4 @@ export const editAddressBookEntry = async(index: number, setAddress: boolean, ad
 
 export const deleteAddressBookEntry = async (entryIdx: any): Promise<void> => {
   return wallet.deleteAddressBookEntry(entryIdx);
-} 
-
-
+}
