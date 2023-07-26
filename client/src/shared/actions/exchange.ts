@@ -100,7 +100,7 @@ export function createExchange(
       canSplit: true,
       destinations,
       accountIndex: 0,
-      relay: false,
+      relay: true,
       priority,
       subaddressIndex,
       sourceCurrency: fromTicker,
