@@ -18,24 +18,32 @@ on:
 jobs:
   web-build:
     runs-on: ubuntu-latest
-    env: 
-      REACT_APP_NET_TYPE_ID: ${{matrix.network}}
+    env:
+      REACT_APP_NET_TYPE_ID: ${{matrix.network.id}}
+      REACT_APP_HAVEN_DIRECT_HOST: ${{matrix.network.url}}
     strategy:
       matrix:
-        network: [0, 1, 2]
+        network:
+          - id: 0
+            url: "https://nodes.havenprotocol.org:443"
+          - id: 1
+            url: "https://nodes-testnet.havenprotocol.org:443"
+          - id: 2
+            url: "https://nodes-stagenet.havenprotocol.org:443"
+
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js
       uses: actions/setup-node@v1
       with:
         node-version: '14'
-    
+
     - name: Install client dependencies
       working-directory: client
       run: |
           git config --global url."https://".insteadOf git://
           npm install
-    
+
     - name: Install latest wallet core
       working-directory: client
       run: |
@@ -63,4 +71,3 @@ jobs:
       with:
         name: web_build-${{ matrix.network }}
         path: client/build/
-
