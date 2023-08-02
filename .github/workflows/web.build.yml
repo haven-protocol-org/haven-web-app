@@ -26,10 +26,13 @@ jobs:
         network:
           - id: 0
             url: "https://nodes.havenprotocol.org:443"
+            name: "mainnet"
           - id: 1
             url: "https://nodes-testnet.havenprotocol.org:443"
+            name: "testnet"
           - id: 2
             url: "https://nodes-stagenet.havenprotocol.org:443"
+            name: "stagenet"
 
     steps:
     - uses: actions/checkout@v2
@@ -69,5 +72,5 @@ jobs:
     - name: Upload web build
       uses: actions/upload-artifact@v2
       with:
-        name: web_build-${{ matrix.network }}
+        name: web_build-${{matrix.network.name}}
         path: client/build/

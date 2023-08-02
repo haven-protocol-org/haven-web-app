@@ -18,12 +18,18 @@ on:
 jobs:
   desktop-build:
     runs-on: ${{ matrix.os }}
-    env: 
-      REACT_APP_NET_TYPE_ID: ${{matrix.network}}
+    env:
+      REACT_APP_NET_TYPE_ID: ${{matrix.network.id}}
     strategy:
       matrix:
         os: [windows-latest, macOS-latest, ubuntu-latest]
-        network: [0, 1, 2]
+        network:
+          - id: 0
+            name: "mainnet"
+          - id: 1
+          name: "testnet"
+          - id: 2
+          name: "stagenet"
 
     steps:
     - uses: actions/checkout@v2
@@ -31,7 +37,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: '14'
-    
+
     - name: Install client dependencies
       working-directory: client
       run: |
@@ -48,7 +54,7 @@ jobs:
       env:
         CI: false
       run: |
-          npm run build:desktop:ci 
+          npm run build:desktop:ci
 
     - name: Copy Build
       working-directory: client
@@ -72,7 +78,7 @@ jobs:
 
     - if: matrix.os == 'ubuntu-latest'
       run: |
-          sudo apt-get update 
+          sudo apt-get update
           sudo apt-get install flatpak flatpak-builder elfutils
 
     - name: Build Final App
@@ -82,5 +88,5 @@ jobs:
     - name: Upload Build
       uses: actions/upload-artifact@v2
       with:
-        name: ${{ matrix.os }}-${{ matrix.network }}
+        name: ${{ matrix.os }}-${{ matrix.network.name }}
         path: haven-desktop-app/out/make/
