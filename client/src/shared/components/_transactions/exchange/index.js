@@ -38,13 +38,16 @@ const Transaction = ({
   const truncatedAddress = first + "...." + last;
 
   let unlock_time = "--";
+  let collateral_unlock_time;;
   if(fromTicker !== null && toTicker != null){
     if( fromTicker === Ticker.XHV && toTicker === Ticker.xUSD){
-      unlock_time = "21 day";
+      unlock_time = "24 hour";
+      collateral_unlock_time = "14 days";
     }else if( fromTicker === Ticker.xUSD && toTicker === Ticker.XHV ){
-      unlock_time = "21 day";
+      unlock_time = "24 hour";
+      collateral_unlock_time = "14 days";
     }else{
-      unlock_time = "48h hour"
+      unlock_time = "48 hour"
     }
   }
 
@@ -64,7 +67,8 @@ const Transaction = ({
         )}
         {collateral > 0 && (<Cell left="Collateral" right={collateral + ' XHV'} />
         )}
-        <Cell left="Unlock Time" right={unlock_time + "s"}/>
+        <Cell left="Converted Amount Unlock Time" right={unlock_time + "s"}/>
+        {collateral_unlock_time && (<Cell left="Collateral Unlock Time" right={collateral_unlock_time} />)}
         </Container>
         <Container>
       <SubHeader>Transaction Details</SubHeader>
