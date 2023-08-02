@@ -3,8 +3,8 @@ import * as path from "path";
 import { APP_DATA_PATH } from "../env";
 import { NET } from "../types";
 
-const oldPaths = ["/xvault2/main", "/xvault2/test","/xvault2/stage"];
-const newPaths = ["/xvault3/main", "/xvault3/test","/xvault3/stage"];
+const oldPaths = ["/xvault3/main", "/xvault3/test","/xvault3/stage"];
+const newPaths = ["/xvault4/main", "/xvault4/test","/xvault4/stage"];
 
 const getOldWalletPath = (netTypeId: NET) => {
 
