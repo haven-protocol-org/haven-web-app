@@ -32,9 +32,9 @@ jobs:
             name: "stagenet"
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Use Node.js
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v3
       with:
         node-version: '14'
 
@@ -86,7 +86,7 @@ jobs:
           sh './sh/make.sh'
 
     - name: Upload Build
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: ${{ matrix.os }}-${{ matrix.network.name }}
         path: haven-desktop-app/out/make/
