@@ -27,9 +27,9 @@ jobs:
           - id: 0
             name: "mainnet"
           - id: 1
-          name: "testnet"
+            name: "testnet"
           - id: 2
-          name: "stagenet"
+            name: "stagenet"
 
     steps:
     - uses: actions/checkout@v2
