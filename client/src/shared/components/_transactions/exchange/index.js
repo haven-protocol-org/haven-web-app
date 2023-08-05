@@ -42,10 +42,10 @@ const Transaction = ({
   if(fromTicker !== null && toTicker != null){
     if( fromTicker === Ticker.XHV && toTicker === Ticker.xUSD){
       unlock_time = "24 hour";
-      collateral_unlock_time = "14 days";
+      collateral_unlock_time = "14 day";
     }else if( fromTicker === Ticker.xUSD && toTicker === Ticker.XHV ){
       unlock_time = "24 hour";
-      collateral_unlock_time = "14 days";
+      collateral_unlock_time = "14 day";
     }else{
       unlock_time = "48 hour"
     }
@@ -68,22 +68,22 @@ const Transaction = ({
         {collateral > 0 && (<Cell left="Collateral" right={collateral + ' XHV'} />
         )}
         <Cell left="Converted Amount Unlock Time" right={unlock_time + "s"}/>
-        {collateral_unlock_time && (<Cell left="Collateral Unlock Time" right={collateral_unlock_time} />)}
+        {collateral_unlock_time && (<Cell left="Collateral Unlock Time" right={collateral_unlock_time + "s"} />)}
         </Container>
         <Container>
       <SubHeader>Transaction Details</SubHeader>
-      <Cell left={`Change(${fromTicker})`} right={change} />
+      <Cell left={`Change (${fromTicker})`} right={change} />
       <Cell left="Unlock Time" right="~20m" />
       <Row>
           <Key>Final Conversion Fee</Key>
           <Tag priority={priority}>
             <Value>
-              {fee} {fromTicker}
+              {fee} XHV
             </Value>
           </Tag>
         </Row>
         <Confirm
-          description={<span>I accept the {unlock_time} conversion unlock time, details,&nbsp;<Url
+          description={<span>I accept the {collateral_unlock_time ? collateral_unlock_time : unlock_time} conversion unlock time, details,&nbsp;<Url
                 target="_blank"
                 href="https://havenprotocol.org/knowledge/converting-assets/">terms</Url> & fees.</span>}
           checked={checked}
