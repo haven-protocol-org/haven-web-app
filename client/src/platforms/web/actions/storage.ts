@@ -5,8 +5,8 @@ import { saveAs } from "vendor/FileSaver";
 import { HavenAppState } from "platforms/desktop/reducers";
 
 const HAVEN_DB = "haven";
-const WALLET_STORE = "xvault3";
-const DB_VERSION = 4;
+const WALLET_STORE = "xvault4";
+const DB_VERSION = 5;
 
 export const storeKeyFileToDisk = (name: string) => {
   return async (dispatch: any) => {

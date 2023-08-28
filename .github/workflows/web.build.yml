@@ -18,24 +18,34 @@ on:
 jobs:
   web-build:
     runs-on: ubuntu-latest
-    env: 
-      REACT_APP_NET_TYPE_ID: ${{matrix.network}}
+    env:
+      REACT_APP_NET_TYPE_ID: ${{matrix.network.id}}
+      REACT_APP_HAVEN_DIRECT_HOST: ${{matrix.network.url}}
     strategy:
       matrix:
-        network: [0, 1, 2]
+        network:
+          - id: 0
+            url: "https://nodes.havenprotocol.org:443"
+            name: "mainnet"
+          - id: 1
+            url: "https://nodes-testnet.havenprotocol.org:443"
+            name: "testnet"
+          - id: 2
+            url: "https://nodes-stagenet.havenprotocol.org:443"
+            name: "stagenet"
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Use Node.js
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v3
       with:
         node-version: '14'
-    
+
     - name: Install client dependencies
       working-directory: client
       run: |
           git config --global url."https://".insteadOf git://
           npm install
-    
+
     - name: Install latest wallet core
       working-directory: client
       run: |
@@ -57,10 +67,78 @@ jobs:
         CI: false
       run: |
           npm run build:web:ci
+    - name: Package Web Build
+      run: |
+        cd client/build
+        tar -czvf ../web_build-${{matrix.network.name}}.tar.gz .
 
-    - name: Upload web build
-      uses: actions/upload-artifact@v2
+    - name: Upload Haven Web Build
+      uses: a-sync/s3-uploader@master
       with:
-        name: web_build-${{ matrix.network }}
-        path: client/build/
+        args: --acl public-read
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: eu-west-1
+        S3_BUCKET: ${{ secrets.AWS_BUCKET }}
+        FILE: ./client/web_build-${{matrix.network.name}}.tar.gz
+        S3_KEY: binaries/${{github.ref_name}}/web_build-${{matrix.network.name}}.tar.gz
 
+    - name: Upload on web hosting
+      uses: a-sync/s3-uploader@master
+      with:
+        args: --recursive --acl public-read
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: eu-west-1
+        S3_BUCKET: haven-vault-${{matrix.network.name}}
+        FILE: ./client/build
+    - name: notification
+      env:
+        BINARY_NAME: /web_build-${{matrix.network.name}}.tar.gz
+        BINARY_URL: https://docs.havenprotocol.org/binaries/
+        DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+      shell: bash
+      run: |
+        export checksum=($(sha256sum ./client/web_build-${{matrix.network.name}}.tar.gz))
+        export payload='{"username": "Github", "content": "Web build for ${{matrix.network.name}} : '${BINARY_URL}${GITHUB_REF_NAME}${BINARY_NAME}' (sha256 checksum : '${checksum}')"}'
+        echo $payload
+        curl -X POST -H "Content-Type: application/json" -d "$payload" $DISCORD_WEBHOOK
+
+    - name: Upload binaries to release
+      if: startsWith(github.ref, 'refs/tags/v')
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: ./client/web_build-${{matrix.network.name}}.tar.gz
+        asset_name: web_build-${{matrix.network.name}}.tar.gz
+        tag: ${{ github.ref }}
+        overwrite: true
+        body: ""
+        prerelease: true
+
+  invalidate-cache:
+    runs-on: ubuntu-latest
+    needs:
+      - web-build
+    steps:
+      - name: Cloudfront Purge Cache
+        uses: unfor19/install-aws-cli-action@master
+        with:
+          version: 2
+      - run: |
+          aws s3 ls s3://haven-docs
+          aws cloudfront create-invalidation --debug --distribution-id ${{ secrets.CLOUDFRONT_MAINNET }} --paths "/*"
+          aws cloudfront create-invalidation --debug --distribution-id ${{ secrets.CLOUDFRONT_STAGENET }}  --paths "/*"
+          aws cloudfront create-invalidation --debug --distribution-id ${{ secrets.CLOUDFRONT_TESTNET }}  --paths "/*"
+        shell: bash
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: eu-west-1
+      - name: Cloudflare Purge Cache
+        uses: jakejarvis/cloudflare-purge-action@v0.3.0
+        env:
+          CLOUDFLARE_ZONE: ${{ secrets.CLOUDFLARE_ZONE }}
+          CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
