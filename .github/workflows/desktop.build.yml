@@ -5,12 +5,6 @@ name: CI Desktop Vault
 
 on:
   push:
-    branches:
-      - develop
-      - master
-      - feature/upload-s3
-    tags:
-      - '*'
   pull_request:
     branches:
       - develop
