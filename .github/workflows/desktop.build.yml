@@ -21,7 +21,7 @@ jobs:
         system:
           - os: "windows-latest"
             path: "squirrel.windows/x64/"
-          - os: "macOS-latest"
+          - os: "macos-13"
             path: ""
           - os: ubuntu-latest
             path: "deb/x64/"
