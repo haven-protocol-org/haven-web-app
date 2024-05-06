@@ -157,8 +157,8 @@ class AssetsPage extends Component<AssetsProps, any> {
     ).unlockedBalance;
 
     const xRate = selectXRate(this.props.rates, Ticker.XHV, Ticker.xUSD);
-    const offshoreVBS = this.props.offshoreVBS ? this.props.offshoreVBS.toFixed(2) : 0;
-    const onshoreVBS = this.props.onshoreVBS ? this.props.onshoreVBS.toFixed(2) : 0;
+    const offshoreVBS = this.props.offshoreVBS ? Math.floor(this.props.offshoreVBS) : 0;
+    const onshoreVBS = this.props.onshoreVBS ? Math.floor(this.props.onshoreVBS) : 0;
     const blockCap = this.props.blockCap;
 
     return (
@@ -167,7 +167,7 @@ class AssetsPage extends Component<AssetsProps, any> {
         <Row>
           <Statistic label="Offshore VBS" value={offshoreVBS} />
           <Statistic label="Onshore VBS" value={onshoreVBS} />
-          <Statistic label="Block Cap (XHV)" value={blockCap} />
+        
         </Row>
         <Overview />
         <Header

@@ -34,17 +34,21 @@ export const selectMcRatio = (state: HavenAppState) => {
     const {XHV : xhvSupply,...xassetsSupply} = circulatingSupply;
     const ATOMIC_UNITS:bigInt.BigInteger = bigInt(Math.pow(10, 12))
     // use  MA24 --> UNUSED1
-    const xhvMarketCap = xhvSupply.multiply(lastExchangeRates.UNUSED1).divide(bigInt(Math.pow(10, 24)));
+    const xhvMarketCap:bigInt.BigInteger = xhvSupply.multiply(lastExchangeRates.UNUSED1).divide(bigInt(Math.pow(10, 24)));
+
+    if (xhvMarketCap.eq(bigInt.zero)) {
+        return null;
+    }
 
     const xassetMarketCap:bigInt.BigInteger = Object.keys(xassetsSupply).reduce((mCap, ticker) => {
       const rateInvertUSD = ticker === Ticker.xUSD? ATOMIC_UNITS : lastExchangeRates![ticker as Ticker]
       const supply = (xassetsSupply as CirculatingSupply)[ticker as Ticker];
       //rate is invert to we divide instead of multiply
-      const assetMCap = supply.divide(rateInvertUSD);
+      const assetMCap = rateInvertUSD.eq(bigInt.zero)? bigInt.zero :  supply.divide(rateInvertUSD);
       return mCap.add(assetMCap);
 
     },bigInt.zero )
-  
+
     const mcRatio =  xassetMarketCap.toJSNumber() / xhvMarketCap.toJSNumber();
     return mcRatio;
 }
@@ -59,12 +63,8 @@ export const selectOffshoreVBS = (state: HavenAppState): number | null => {
 
     let offshoreVBS: number;
 
-    if (mcRatio < 0.9) {
-        offshoreVBS = Math.exp((mcRatio + Math.sqrt(mcRatio)) * 2) - 0.5;
-    } else {
-        offshoreVBS = Math.sqrt(mcRatio) * 40;
-    }
-    offshoreVBS = Math.max(1, offshoreVBS);
+    offshoreVBS = Math.floor(Math.sqrt(mcRatio) * 4);
+    offshoreVBS = Math.min(10,Math.max(1, offshoreVBS));
     return offshoreVBS;
 }
 
@@ -75,17 +75,10 @@ export const selectOnshoreVBS = (state: HavenAppState): number | null => {
         return null;
     }
 
-    let spreadRatio: number;
+    let onshoreVBS: number;
 
-    if (mcRatio < 1) {
-        spreadRatio = 1 - mcRatio; 
-    } else {
-        spreadRatio = 0;
-    }
-
-    const offshoreVBS = selectOffshoreVBS(state);
-    const spreadVBS = Math.exp(1+Math.sqrt(spreadRatio)) + offshoreVBS! + 1.5
-    const onshoreVBS = Math.max(spreadVBS, offshoreVBS!);
+    onshoreVBS = Math.floor(Math.sqrt(mcRatio) * 9);
+    onshoreVBS = Math.min(10,Math.max(1, onshoreVBS));
 
     return onshoreVBS;
 }

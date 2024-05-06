@@ -5,11 +5,6 @@ name: CI Desktop Vault
 
 on:
   push:
-    branches:
-      - develop
-      - master
-    tags:
-      - '*'
   pull_request:
     branches:
       - develop
@@ -20,12 +15,13 @@ jobs:
     runs-on: ${{ matrix.system.os }}
     env:
       REACT_APP_NET_TYPE_ID: ${{matrix.network.id}}
+      ACTION_OS: ${{ matrix.system.os }}
     strategy:
       matrix:
         system:
           - os: "windows-latest"
             path: "squirrel.windows/x64/"
-          - os: "macOS-latest"
+          - os: "macos-13"
             path: ""
           - os: ubuntu-latest
             path: "deb/x64/"
@@ -38,7 +34,12 @@ jobs:
             name: "stagenet"
 
     steps:
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
     - uses: actions/checkout@v3
+
     - name: Use Node.js
       uses: actions/setup-node@v3
       with:
@@ -87,7 +88,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install flatpak flatpak-builder elfutils
 
-    - name: Build Final App
+    - name: Build Final
       run: |
           sh './sh/make.sh'
     - name: Package Desktop Build

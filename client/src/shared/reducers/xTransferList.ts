@@ -83,7 +83,7 @@ export const selectTransferListByTicker = (
     []
   );
 
-  txEntries.sort((a: TxEntry, b: TxEntry) => b.isFailed !== a.isFailed? b.isFailed? 1:-1: b.timestamp - a.timestamp);
+  txEntries.sort((a: TxEntry, b: TxEntry) => b.isFailed !== a.isFailed? b.isFailed? -1: 1: b.timestamp - a.timestamp);
 
   return txEntries;
 };
