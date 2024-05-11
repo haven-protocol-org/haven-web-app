@@ -10,6 +10,7 @@ import RevealSeed from "../../../components/_inputs/revealSeed";
 import Form from "../../../components/_inputs/form";
 import Theme from "../../../components/_inputs/theme";
 import DoubleFooter from "../../../components/_inputs/double_footer";
+import Footer from "../../../components/_inputs/footer";
 import { Container } from "./styles";
 import { storeKeyFileToDisk } from "platforms/web/actions/storage";
 import { HavenAppState } from "platforms/desktop/reducers";
@@ -17,14 +18,14 @@ import { IKeys } from "typings";
 import { isTemporaryWallet as selectIsTemporaryWallet } from "shared/reducers/walletSession";
 import { selectSyncState } from "shared/reducers/chain";
 import { SyncState } from "shared/types/types";
+import { showModal } from "shared/actions/modal";
+import { MODAL_TYPE } from "shared/reducers/modal";
 
 import {downloadTransfers} from "shared/actions/transferHistory";
 
 // Address parts
 import { AddressEntry } from "shared/reducers/address";
 import { writeText } from "vendor/clipboard/clipboard-polyfill";
-import { showModal } from "../../../actions/modal";
-import { MODAL_TYPE } from "../../../reducers/modal";
 import { selectSelectedAddress } from "../../../reducers/address";
 import { setSelectedAddress } from "shared/actions/address";
 import AddressDropdown from "../../../components/_inputs/addresses_dropdown/index.js";
@@ -325,6 +326,18 @@ class SettingsPage extends Component<SettingsProps, SettingsState> {
             rightLoading={false}
             rightOnClick={this.toggleVisibility}
           />
+        </Container>
+        <Header
+          title="Refresh Vault"
+          description="Use this option to resolve issues with transactions not displaying correctly in the vault"
+        />
+        <Container>
+            <Footer
+              label={"Refresh Vault"}
+              disabled={false}
+              loading={false}
+              onClick={this.refreshVault}
+            />
         </Container>
       </Body>
     );
