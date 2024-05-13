@@ -194,8 +194,8 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     switch (txType) {
 
       case TxType.Shore:
-        stateUpdate = fromTicker === Ticker.XHV ? {fromAmount: amount} : {toAmount: amount};
-        setToAmount = fromTicker === Ticker.XHV ? true : false;
+        stateUpdate = {fromAmount: amount};
+        setToAmount = true;
         break;
       case TxType.Xasset:
         stateUpdate = fromTicker === Ticker.xUSD ? {fromAmount: amount} : {toAmount: amount};
