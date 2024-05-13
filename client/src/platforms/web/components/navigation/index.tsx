@@ -15,7 +15,6 @@ import {
   OptionsList,
   OptionsSVG,
   Arr,
-  Scan,
   Arrow,
 } from "./styles.js";
 import Buttons from "./buttons/index.js";
@@ -28,8 +27,6 @@ import { HavenAppState } from "platforms/desktop/reducers/index.js";
 import Cell from "./cell";
 import Link from "./link";
 import Tab from "./tab";
-import { showModal } from "shared/actions/modal";
-import { MODAL_TYPE } from "shared/reducers/modal";
 import { closeWallet } from "shared/actions/walletSession";
 import { XBalances } from "shared/reducers/xBalance";
 import Search from "../../../../shared/components/search/index.js";
@@ -48,7 +45,6 @@ interface NavigationProps {
   activeWallet: string | undefined;
   startedResync: boolean;
   balances: XBalances;
-  showModal: (modalType: MODAL_TYPE) => void;
 }
 
 class Navigation extends Component<NavigationProps, {}> {
@@ -117,10 +113,6 @@ class Navigation extends Component<NavigationProps, {}> {
       basicActive: false,
       advancedActive: true,
     });
-  };
-
-  refreshVault = () => {
-    this.props.showModal(MODAL_TYPE.RescanBC);
   };
 
   render() {
@@ -232,7 +224,6 @@ class Navigation extends Component<NavigationProps, {}> {
                         body="Refresh Height"
                         label={this.props.restoreHeight}
                       />
-                      <Scan onClick={this.refreshVault}>Refresh Vault</Scan>
                     </>
                   )}
                 </>
@@ -256,6 +247,5 @@ const mapStateToProps = (state: WebAppState) => ({
 });
 
 export const NavigationWeb = connect(mapStateToProps, {
-  logout: closeWallet,
-  showModal,
+  logout: closeWallet
 })(Navigation);
