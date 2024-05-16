@@ -14,7 +14,6 @@ import {
   OptionsIcon,
   OptionsList,
   OptionsSVG,
-  Scan,
 } from "./styles";
 
 import { closeWallet } from "shared/actions/walletSession";
@@ -33,8 +32,6 @@ import Cell from "./cell";
 import Link from "./link";
 import Tab from "./tab";
 
-import { showModal } from "shared/actions/modal";
-import { MODAL_TYPE } from "shared/reducers/modal";
 import { isConnected } from "shared/core/havend";
 
 interface NavigationProps {
@@ -49,7 +46,6 @@ interface NavigationProps {
   basicActive: boolean;
   advancedActive: boolean;
   startedResync: boolean;
-  showModal: (modalType: MODAL_TYPE) => void;
   syncState: SyncState;
   connected: boolean;
   restoreHeight: number;
@@ -135,10 +131,6 @@ class Navigation extends Component<NavigationProps, any> {
       basicActive: false,
       advancedActive: true,
     });
-  };
-
-  refreshVault = () => {
-    this.props.showModal(MODAL_TYPE.RescanBC);
   };
 
   render() {
@@ -253,7 +245,6 @@ class Navigation extends Component<NavigationProps, any> {
                         body="Refresh Height"
                         label={this.props.restoreHeight}
                       />
-                      <Scan onClick={this.refreshVault}>Refresh Vault</Scan>
                     </>
                   )}
                 </>
@@ -278,6 +269,5 @@ const mapStateToProps = (state: DesktopAppState) => ({
 });
 
 export const NavigationDesktop = connect(mapStateToProps, {
-  logout: closeWallet,
-  showModal,
+  logout: closeWallet
 })(Navigation);

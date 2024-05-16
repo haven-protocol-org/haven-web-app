@@ -8,6 +8,8 @@ import Body from "shared/components/_layout/body";
 import Header from "shared/components/_layout/header";
 import Form from "shared/components/_inputs/form";
 import Theme from "shared/components/_inputs/theme";
+import { showModal } from "shared/actions/modal";
+import { MODAL_TYPE } from "shared/reducers/modal";
 // For the miner
 import { selectisLocalNode } from "platforms/desktop/reducers/selectedNode";
 import { DesktopAppState } from "platforms/desktop/reducers";
@@ -24,6 +26,7 @@ import {
 import { HavenNodeSetting } from "platforms/desktop/pages/_wallet/settings/node/nodeSetting";
 import { Container } from "./styles";
 import DoubleFooter from "shared/components/_inputs/double_footer";
+import Footer from "shared/components/_inputs/footer";
 
 type ThemeOption = { theme: string; value: string };
 type BalanceOption = { ticker: string; value: string; code: string };
@@ -46,6 +49,7 @@ interface SettingsProps {
   title: string;
   description: string;
   localNode: boolean;
+  showModal: (modalType: MODAL_TYPE) => void;
 }
 
 const options: ThemeOption[] = [
@@ -131,6 +135,10 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
     this.props.downloadTransfers("csv");
   };
 
+  refreshVault = () => {
+    this.props.showModal(MODAL_TYPE.RescanBC);
+  };
+
   handleChange = (event: any) => {
     const name = event.target.name;
     const value = event.target.value;
@@ -185,6 +193,18 @@ class SettingsDesktopPage extends Component<SettingsProps, any> {
               rightOnClick={this.downloadTxCsv}
             />
           </Container>
+        <Header
+          title="Refresh Vault"
+          description="Use this option to resolve issues with transactions not displaying correctly in the vault"
+        />
+        <Container>
+            <Footer
+              label={"Refresh Vault"}
+              disabled={false}
+              loading={false}
+              onClick={this.refreshVault}
+            />
+        </Container>
       </Body>
     );
   }
@@ -201,5 +221,6 @@ export const SettingsDesktop = connect(mapStateToProps, {
   startMining,
   stopMining,
   miningStatus,
-  downloadTransfers
+  downloadTransfers,
+  showModal
 })(SettingsDesktopPage);

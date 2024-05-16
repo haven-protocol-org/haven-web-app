@@ -24,23 +24,6 @@ export const Container = styled.header`
   border-bottom: 1px solid ${(props) => props.theme.body.border};
 `;
 
-export const Scan = styled.div`
-  font-size: 13px;
-  border-radius: 4px;
-  margin: 8px;
-  height: 36px;
-  background: ${(props) => props.theme.button.primary};
-  color: ${(props) => props.theme.button.primary_label};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: Inter-Regular;
-
-  &:hover {
-    cursor: pointer;
-  }
-`;
-
 export const Label = styled.div`
   font-family: Inter-Regular;
   text-align: center;
