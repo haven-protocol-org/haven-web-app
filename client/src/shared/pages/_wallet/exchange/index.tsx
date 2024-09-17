@@ -639,21 +639,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
 
             {selectedTab === ExchangeTab.Advanced && (
               <>
-                <WideContainer>
-
-                { txType === TxType.Shore  && (
-                  <Input
-                  label='Required Collateral in XHV'
-                  placeholder="auto calculated collateral"
-                  width={true}
-                  type={"text"}
-                  name="collateral"
-                  error={this.getCollateralError()}
-                  value={this.state.requiredCollateral}
-                  readOnly={true}
-                />
-                  )}
-                  
+                <WideContainer>                  
                   <AddressDropdown
                     label="From Address (Optional)"
                     placeholder="Select from address"
