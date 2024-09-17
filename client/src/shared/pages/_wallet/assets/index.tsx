@@ -22,7 +22,6 @@ import {
   BlockHeaderRate,
   selectXRate,
 } from "shared/reducers/blockHeaderExchangeRates";
-import { ProtocolHealth } from "shared/components/protocol_health";
 import { Row } from "./styles";
 import Statistic from "shared/components/statistic";
 import { selectOffshoreVBS, selectOnshoreVBS } from "shared/reducers/circulatingSupply";
@@ -163,7 +162,6 @@ class AssetsPage extends Component<AssetsProps, any> {
 
     return (
       <Body>
-        <ProtocolHealth></ProtocolHealth>
         <Row>
           <Statistic label="Offshore VBS" value={offshoreVBS} />
           <Statistic label="Onshore VBS" value={onshoreVBS} />
