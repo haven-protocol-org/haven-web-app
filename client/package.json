@@ -54,7 +54,7 @@
     "@babel/plugin-proposal-private-property-in-object": "7.21.0-placeholder-for-preset-env.2",
     "@types/electron": "^1.6.10",
     "@types/file-saver": "^2.0.2",
-    "@types/jest": "^26.0.23",
+    "@types/jest": "^29.5.12",
     "@types/node": "^14.14.44",
     "@types/react": "^17.0.5",
     "@types/react-dom": "^17.0.3",
