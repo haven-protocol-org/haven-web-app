@@ -9,6 +9,8 @@
     "crypto-browserify": "^3.12.0",
     "haven-wallet-core": "^4.1.0",
     "history": "^5.3.0",
+    "nth-check": "^2.1.1",
+    "postcss": "^8.4.47",
     "https-browserify": "^1.0.0",
     "path-browserify":"^1.0.1",
     "react": "^18.2.0",
@@ -63,5 +65,9 @@
     "react-error-overlay": "^6.0.9",
     "react-scripts": "^5.0.1",
     "typescript": "^4.2.4"
+  },
+  "overrides": {
+    "nth-check": "$nth-check",
+    "postcss": "$postcss"
   }
 }
