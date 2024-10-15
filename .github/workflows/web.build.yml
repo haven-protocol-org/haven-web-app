@@ -59,7 +59,7 @@ jobs:
     - name: Audit client dependencies
       working-directory: client
       run: |
-          npm audit fix --production
+          npm audit fix
 
     - name: Client Build for Web
       working-directory: client
