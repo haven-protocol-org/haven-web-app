@@ -49,6 +49,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "7.21.0-placeholder-for-preset-env.2",
     "@types/electron": "^1.6.10",
     "@types/file-saver": "^2.0.2",
     "@types/jest": "^26.0.23",
