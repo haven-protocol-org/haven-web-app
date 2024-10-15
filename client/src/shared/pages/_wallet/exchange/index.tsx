@@ -592,7 +592,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 options={fromOptions}
                 onClick={this.setFromAsset}
               />
-              <InputButton
+              <Input
                 // @ts-ignore
                 label={
                   "From Amount " +
@@ -606,9 +606,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 onChange={this.onEnterFromAmount}
                 error={this.fromAmountIsValid(availBalance)}
                 readOnly={fromTicker === null}
-                button={"max"}
-                onClick={this.setMaxAmount}
-                
               />
               <Dropdown
                 label={"To Asset"}
