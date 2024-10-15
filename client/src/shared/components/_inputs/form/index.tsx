@@ -5,6 +5,7 @@ import { Container } from "./styles";
 // Relative Imports
 
 type FormProps = {
+  children: React.ReactNode;
   onSubmit?: (e: FormEvent) => void;
 };
 
