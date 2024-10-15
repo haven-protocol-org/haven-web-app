@@ -1,4 +1,4 @@
-FROM node:14-buster as builder
+FROM node:18-bookworm as builder
 
 ARG REACT_APP_NET_TYPE_ID
 ARG REACT_APP_HAVEN_DIRECT_HOST
