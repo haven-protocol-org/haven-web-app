@@ -47,11 +47,11 @@ export const ExchangeSummary = ({
   let unlock_time = "--";
   if(fromTicker !== null && toTicker != null){
     if( fromTicker === Ticker.XHV && toTicker === Ticker.xUSD){
-      unlock_time = "~14d";
+      unlock_time = "~24h";
     }else if( fromTicker === Ticker.xUSD && toTicker === Ticker.XHV ){
-      unlock_time = "~14d";
+      unlock_time = "~24h";
     }else{
-      unlock_time = "~48h"
+      unlock_time = "~48h";
     }
   }
 

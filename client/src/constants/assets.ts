@@ -9,16 +9,10 @@ export const AssetList = [
     symbol: "$",
   },
   {
-    id: Ticker.xEUR,
-    token: "Euro",
-    ticker: "EUR",
-    symbol: "€",
-  },
-  {
-    id: Ticker.xCNY,
-    token: "Chinese Yuan",
-    ticker: "CNY",
-    symbol: "¥",
+    id: Ticker.xBTC,
+    token: "Bitcoin",
+    ticker: "BTC",
+    symbol: "$",
   },
   {
     id: Ticker.XAU,
@@ -33,27 +27,33 @@ export const AssetList = [
     symbol: "$",
   },
   {
-    id: Ticker.xBTC,
-    token: "Bitcoin",
-    ticker: "BTC",
-    symbol: "$",
-  },
-  {
     id: Ticker.xAUD,
     token: "Australian Dollar",
     ticker: "AUD",
     symbol: "$",
   },
   {
-    id: Ticker.xCHF,
-    token: "Swiss Franc",
-    ticker: "CHF",
-    symbol: "₣",
-  },
-  {
     id: Ticker.xGBP,
     token: "British Pound",
     ticker: "GBP",
     symbol: "£",
+  },
+  {
+    id: Ticker.xCNY,
+    token: "Chinese Yuan",
+    ticker: "CNY",
+    symbol: "¥",
+  },
+  {
+    id: Ticker.xEUR,
+    token: "Euro",
+    ticker: "EUR",
+    symbol: "€",
+  },
+  {
+    id: Ticker.xCHF,
+    token: "Swiss Franc",
+    ticker: "CHF",
+    symbol: "₣",
   },
 ];

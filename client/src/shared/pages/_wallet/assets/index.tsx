@@ -21,12 +21,14 @@ import { WebAppState } from "platforms/web/reducers";
 import {
   BlockHeaderRate,
   selectXRate,
+  selectLastExchangeRates,
 } from "shared/reducers/blockHeaderExchangeRates";
-import { ProtocolHealth } from "shared/components/protocol_health";
 import { Row } from "./styles";
 import Statistic from "shared/components/statistic";
-import { selectOffshoreVBS, selectOnshoreVBS } from "shared/reducers/circulatingSupply";
+import { selectMcRatio, selectOffshoreVBS, selectOnshoreVBS } from "shared/reducers/circulatingSupply";
 import { selectBlockap } from "shared/reducers/chain";
+import bigInt from "big-integer";
+import { Title } from "assets/styles/type";
 
 
 interface AssetsProps {
@@ -37,7 +39,7 @@ interface AssetsProps {
   offshoreVBS:number | null;
   onshoreVBS:number | null;
   blockCap: number;
-  
+  mcapRatio: number | null;
 }
 
 interface AssetsState {}
@@ -161,14 +163,25 @@ class AssetsPage extends Component<AssetsProps, any> {
     const onshoreVBS = this.props.onshoreVBS ? Math.floor(this.props.onshoreVBS) : 0;
     const blockCap = this.props.blockCap;
 
+    const lastRates = this.props.rates[this.props.rates.length - 1];
+    const xhvSpot = lastRates ? convertBalanceToMoney(lastRates.XUSD, 4) : 0;
+    const xhvMa = lastRates ? convertBalanceToMoney(lastRates.UNUSED1, 4) : 0;
+    const xusdSpot = lastRates ? convertBalanceToMoney(lastRates.UNUSED2, 4) : 0;
+    const xusdMa = lastRates ? convertBalanceToMoney(lastRates.UNUSED3, 4) : 0;
+    const mcapRatio = this.props.mcapRatio ? this.props.mcapRatio.toFixed(4) : '--';
+ 
     return (
       <Body>
-        <ProtocolHealth></ProtocolHealth>
-        <Row>
-          <Statistic label="Offshore VBS" value={offshoreVBS} />
-          <Statistic label="Onshore VBS" value={onshoreVBS} />
-        
-        </Row>
+        {lastRates && <>
+          <Row>
+            <Statistic label="VBS" value={1} />
+            <Statistic label="XHV Spot" value={"$" + xhvSpot} />
+            <Statistic label="XHV MA" value={"$" + xhvMa} />
+            <Statistic label="xUSD Spot" value={"$" + xusdSpot} />
+            <Statistic label="xUSD MA" value={"$" + xusdMa} />
+            <Statistic label="MCap Ratio" value={mcapRatio} />
+          </Row>
+        </>}
         <Overview />
         <Header
           title="Available Assets"
@@ -199,7 +212,8 @@ export const mapStateToProps = (state: DesktopAppState | WebAppState) => ({
   showPrivateDetails: state.walletSession.showPrivateDetails,
   onshoreVBS: selectOnshoreVBS(state),
   offshoreVBS: selectOffshoreVBS(state),
-  blockCap: selectBlockap(state)
+  blockCap: selectBlockap(state),
+  mcapRatio: selectMcRatio(state),
 });
 
 export const Assets = connect(mapStateToProps, {})(AssetsPage);
