@@ -177,9 +177,9 @@ class AssetsPage extends Component<AssetsProps, any> {
             <Statistic label="VBS" value={1} />
             <Statistic label="XHV Spot" value={"$" + xhvSpot} />
             <Statistic label="XHV MA" value={"$" + xhvMa} />
+            <Statistic label="MCap Ratio" value={mcapRatio} />
             <Statistic label="xUSD Spot" value={"$" + xusdSpot} />
             <Statistic label="xUSD MA" value={"$" + xusdMa} />
-            <Statistic label="MCap Ratio" value={mcapRatio} />
           </Row>
         </>}
         <Overview />
