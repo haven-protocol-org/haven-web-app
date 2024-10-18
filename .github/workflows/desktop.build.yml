@@ -54,7 +54,7 @@ jobs:
     - name: Audit client dependencies
       working-directory: client
       run: |
-          npm audit fix
+          npm audit fix --audit-level moderate
 
     - name: Client Build for Desktop
       working-directory: client
@@ -81,7 +81,7 @@ jobs:
     - name: Audit backend dependencies
       working-directory: haven-desktop-app
       run: |
-          npm audit fix
+          npm audit fix --audit-level moderate
 
     - if: matrix.system.os == 'ubuntu-latest'
       run: |

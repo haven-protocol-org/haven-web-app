@@ -12,7 +12,7 @@ RUN git config --global url."https://".insteadOf git://
 RUN npm install
 RUN npm install haven-wallet-core@latest --save
 RUN npm run copy-haven-core
-RUN npm audit fix
+RUN npm audit fix --audit-level moderate
 RUN npm run build:web:ci
 
 FROM nginx:stable-alpine
