@@ -15,6 +15,7 @@ import Loader from "shared/components/loader";
 import { AssetsDesktop } from "platforms/desktop/pages/_wallet/assets";
 import { HavenDetailWithParams } from "platforms/desktop/pages/_wallet/details";
 import { ExchangePage } from "shared/pages/_wallet/exchange";
+import { AuditPage } from "shared/pages/_wallet/audit";
 import { HavenTransfer } from "platforms/desktop/pages/_wallet/transfer";
 import { SettingsDesktop } from "platforms/desktop/pages/_wallet/settings";
 import { SettingsWeb } from "platforms/web/pages/_wallet/settings";
@@ -43,6 +44,7 @@ class App extends Component {
           <Route path="transfer" element={<HavenTransfer />}/>
           <Route path="settings" element={isDesktop() ? <SettingsDesktop /> : <SettingsWeb />}/>
           <Route path="convert"  element={<ExchangePage />} />
+          <Route path="audit"  element={<AuditPage />} />
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

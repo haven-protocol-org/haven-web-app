@@ -1,5 +1,9 @@
 // Library Imports
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { DesktopAppState } from "platforms/desktop/reducers";
+import { WebAppState } from "platforms/web/reducers";
+import { getForkHeights } from "constants/env"
 
 // Relative Imports
 import {
@@ -16,11 +20,16 @@ import {
   Transfer,
   Settings,
   ChevronInactive,
+  Audit
 } from "./styles";
 
 import { MultiBalance } from "../../multi-balance";
 
-class Menu extends Component {
+interface AuditProps {
+  height: number;
+}
+
+class MenuPage extends Component<AuditProps> {
   state = {
     item: "",
   };
@@ -31,20 +40,23 @@ class Menu extends Component {
     });
   }
 
-  handleClick = (item) => {
+  handleClick = (item: string) => {
     this.setState({
       item: item,
     });
   };
-
+ 
   render() {
     const { item } = this.state;
+    const height = this.props.height;
 
+    const auditActive = (height < getForkHeights().HF_VERSION_VBS_DISABLING);
+ 
     return (
       <Container>
         <Overview>
           <MultiBalance />
-        </Overview>
+        </Overview> 
         <Wrapper>
           <Item to="/wallet/assets" onClick={() => this.handleClick("assets")}>
             <Aligner>
@@ -55,16 +67,29 @@ class Menu extends Component {
           </Item>
         </Wrapper>
         <Wrapper>
-          <Item
-            to="/wallet/convert"
-            onClick={() => this.handleClick("convert")}
-          >
-            <Aligner>
-              <Convert item={item} />
-              <Label>Convert</Label>
-            </Aligner>
-            {item === "convert" ? <Chevron /> : <ChevronInactive />}
-          </Item>
+          {(auditActive &&
+            <Item
+              to="/wallet/audit"
+              onClick={() => this.handleClick("audit")}
+            >
+              <Aligner>
+                <Audit item={item} />
+                <Label>Audit</Label>
+              </Aligner>
+              {item === "audit" ? <Chevron /> : <ChevronInactive />}
+            </Item>)
+            ||
+              <Item
+              to="/wallet/convert"
+              onClick={() => this.handleClick("convert")}
+            >
+              <Aligner>
+                <Convert item={item} />
+                <Label>Convert</Label>
+              </Aligner>
+              {item === "convert" ? <Chevron /> : <ChevronInactive />}
+            </Item>
+          }
         </Wrapper>
         <Wrapper>
           <Item
@@ -94,5 +119,11 @@ class Menu extends Component {
     );
   }
 }
+
+export const mapStateToProps = (state: DesktopAppState | WebAppState) => ({
+  height: state.chain.nodeHeight
+});
+
+export const Menu = connect(mapStateToProps, {})(MenuPage);
 
 export default Menu;
