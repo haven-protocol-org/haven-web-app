@@ -17,6 +17,7 @@ import { getAllTransfers } from "./transferHistory";
 import { CLOSE_WALLET_SESSION, SET_RESTORE_HEIGHT, START_WALLET_SESSION, STOP_WALLET_SESSION, TOGGLE_PRIVATE_DETAILS } from "./types";
 import { onWalletSyncUpdateSucceed } from "./walletCreation";
 import { HavenWalletListener } from "./walletListener";
+import { getAuditStatus } from "./auditStatus";
 
 export const startWalletSession = (
     walletName: string | undefined = undefined
@@ -87,10 +88,8 @@ export const startWalletSession = (
       dispatch(getAllTransfers());
       dispatch(getAddresses());
       dispatch(refresh());
-
       dispatch(initChainData());
-  
-      return;
+      dispatch(getAuditStatus());
     };
   };
 
