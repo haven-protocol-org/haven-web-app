@@ -15,7 +15,9 @@ export const getXHVBalance = () => {
     try {
       const balance: HavenBalance = await walletProxy.getBalance();
       const unlockedBalance: HavenBalance = await walletProxy.getUnlockedBalance();
-      const xBalances: XBalance = convertBalance(balance, unlockedBalance);
+      const unauditedBalance: HavenBalance = await walletProxy.getUnauditedBalance(false);
+      const unlockedUnauditedBalance: HavenBalance = await walletProxy.getUnauditedBalance(true);
+      const xBalances: XBalance = convertBalance(balance, unlockedBalance, unauditedBalance, unlockedUnauditedBalance);
       dispatch(getBalancesSucceed(xBalances));
     } catch (e) {
       dispatch(getBalancesFailed(e));
@@ -38,10 +40,14 @@ const getBalancesFailed = (error: any) => ({
 
 const convertBalance = (
   balances: HavenBalance,
-  unlockedBalances: HavenBalance
+  unlockedBalances: HavenBalance,
+  unauditedBalance: HavenBalance,
+  unlockedUnauditedBalance: HavenBalance,
 ): XBalance => {
   const unlockedDict: { [key: string]: BigInteger } = unlockedBalances.toDict();
   const balanceDict: { [key: string]: BigInteger } = balances.toDict();
+  const unlockedUnauditedDict: { [key: string]: BigInteger } = unlockedUnauditedBalance.toDict();
+  const unauditedBalanceDict: { [key: string]: BigInteger } = unauditedBalance.toDict();
   const assetArr = Object.keys(balanceDict);
   const xBalances: XBalance = {};
 
@@ -49,12 +55,18 @@ const convertBalance = (
     const unlockedBalance = bigIntegerToBigInt(unlockedDict[asset]);
     const balance = bigIntegerToBigInt(balanceDict[asset]);
     const lockedBalance = balance.subtract(unlockedBalance);
+    const unlockedUnauditedBalance = bigIntegerToBigInt(unlockedUnauditedDict[asset]);
+    const unauditedBalance = bigIntegerToBigInt(unauditedBalanceDict[asset]);
+    const lockedUnauditedBalance = balance.subtract(unlockedUnauditedBalance);
 
     const xBalance: XBalance = {
       [asset]: {
         lockedBalance,
         unlockedBalance,
         balance,
+        lockedUnauditedBalance,
+        unlockedUnauditedBalance,
+        unauditedBalance,
       },
     };
     Object.assign(xBalances, xBalance);

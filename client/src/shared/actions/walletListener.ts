@@ -11,6 +11,7 @@ import { HavenAppState } from "platforms/desktop/reducers";
 import { Ticker } from "shared/reducers/types";
 import { getCirculatingSupply } from "./circulatingSupply";
 import { getBlockCap } from "./blockCap";
+import { getAuditStatus } from "shared/actions/auditStatus";
 
 export class HavenWalletListener extends MoneroWalletListener {
   // we keep a dispatch and getStore instance in the walletlistener
@@ -73,6 +74,7 @@ export class HavenWalletListener extends MoneroWalletListener {
       this.dispatch(updateHavenFeatures(height));
       this.dispatch(getCirculatingSupply());
       this.dispatch(getBlockCap());
+      this.dispatch(getAuditStatus());
       if (store.chain.chainHeight < height) {
         this.dispatch(
           onWalletSyncUpdateSucceed({ nodeHeight: height, chainHeight: height })
@@ -91,14 +93,22 @@ export class HavenWalletListener extends MoneroWalletListener {
   // @ts-ignore
   onBalancesChanged(
     newBalance: BigInteger,
-    newUnlockedBalance: BigInteger, assetType: string 
+    newUnlockedBalance: BigInteger,
+    newUnauditedBalance: BigInteger,
+    newUnlockedUnauditedBalance: BigInteger,
+    assetType: string
   ): void {
     const balance = bigIntegerToBigInt(newBalance);
     const unlockedBalance = bigIntegerToBigInt(newUnlockedBalance);
+    const unauditedBalance = bigIntegerToBigInt(newUnauditedBalance);
+    const unlockedUnauditedBalance = bigIntegerToBigInt(newUnlockedUnauditedBalance);
     const xhvBalance: Balance = {
       unlockedBalance,
       balance,
       lockedBalance: balance.subtract(unlockedBalance),
+      unlockedUnauditedBalance,
+      unauditedBalance,
+      lockedUnauditedBalance: unauditedBalance.subtract(unlockedUnauditedBalance),
     };
 
     logM(assetType);
