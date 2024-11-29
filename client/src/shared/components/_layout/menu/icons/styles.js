@@ -106,6 +106,43 @@ export const Convert = styled(ConvertIcon)`
   }
 `;
 
+export const Audit = styled(ConvertIcon)`
+  height: 24px;
+  width: 24px;
+
+  .dark_border {
+    fill: ${(props) =>
+      props.item === "audit"
+        ? props.theme.type.inverse
+        : props.theme.type.primary};
+    fill-opacity: ${(props) => (props.item === "audit" ? 1 : 0.5)};
+  }
+
+  .light_border {
+    fill: ${(props) =>
+      props.item === "audit"
+        ? props.theme.type.inverse
+        : props.theme.type.primary};
+    fill-opacity: ${(props) => (props.item === "audit" ? 0.5 : 0.3)};
+
+    ${media.laptop`
+
+      .dark_border {
+        fill: ${(props) =>
+          props.item === "audit" && props.theme.type.primary};
+        fill-opacity: ${(props) => (props.item === "audit" ? 1 : 0.5)};
+      }
+
+      .light_border {
+        fill: ${(props) =>
+          props.item === "audit" && props.theme.type.secondary};
+        fill-opacity: ${(props) => (props.item === "audit" ? 0.8 : 0.3)};
+      }
+
+    `};
+  }
+`;
+
 export const Transfer = styled(TransferIcon)`
   height: 24px;
   width: 24px;

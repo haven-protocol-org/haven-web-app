@@ -39,7 +39,7 @@ const walletHandler: ProxyHandler<typeof walletCore> = {
         }
 
 
-        if (name === "transfer" || name === "sweep") {
+        if (name === "transfer" || name === "sweep" || name == "audit") {
           const txs: MoneroTxWallet[] = response.map(
             (jsonTx: any) => new MoneroTxWallet(jsonTx)
           );
@@ -89,7 +89,7 @@ const walletHandler: ProxyHandler<typeof walletCore> = {
           return address;
       }
 
-      if (name === "getBalance" || name === "getUnlockedBalance") {
+      if (name === "getBalance" || name === "getUnlockedBalance" || name === "getUnauditedBalance") {
 
         //@ts-ignore
         const balance: HavenBalance = new HavenBalance(response)

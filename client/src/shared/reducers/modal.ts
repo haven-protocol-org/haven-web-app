@@ -10,6 +10,7 @@ export enum MODAL_TYPE {
   ShowAddressModal,
   LoginOnboarding,
   RescanBC,
+  ConfirmAudit
 }
 
 const INITIAL_STATE: MODAL_TYPE = MODAL_TYPE.None;

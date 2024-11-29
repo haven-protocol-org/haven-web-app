@@ -144,3 +144,15 @@ export const GET_BLOCK_HEADER_EXCHANGE_RATE_FAILED =
   export const ADD_CIRCULATING_SUPPLY = "add_circulating_supply";
 
   export const ADD_BLOCK_CAP = "add_blockcap";
+
+// Audit
+
+export const GET_AUDIT_STATUS = "get_audit_status";
+
+export const AUDIT_FETCHING = "audit_fetching";
+export const AUDIT_FAILED = "audit_failed";
+export const AUDIT_SUCCEED = "audit_succeed";
+export const AUDIT_RESET = "audit_reset";
+export const AUDIT_CREATION_FETCHING = "audit_creation_fetching";
+export const AUDIT_CREATION_FAILED = "audit_creation_failed";
+export const AUDIT_CREATION_SUCCEED = "audit_creation_succeed";
