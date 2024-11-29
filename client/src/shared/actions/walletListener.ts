@@ -12,6 +12,7 @@ import { Ticker } from "shared/reducers/types";
 import { getCirculatingSupply } from "./circulatingSupply";
 import { getBlockCap } from "./blockCap";
 import { getAuditStatus } from "shared/actions/auditStatus";
+import { getAllTransfers } from "./transferHistory";
 
 export class HavenWalletListener extends MoneroWalletListener {
   // we keep a dispatch and getStore instance in the walletlistener
@@ -75,6 +76,7 @@ export class HavenWalletListener extends MoneroWalletListener {
       this.dispatch(getCirculatingSupply());
       this.dispatch(getBlockCap());
       this.dispatch(getAuditStatus());
+      this.dispatch(getAllTransfers());
       if (store.chain.chainHeight < height) {
         this.dispatch(
           onWalletSyncUpdateSucceed({ nodeHeight: height, chainHeight: height })

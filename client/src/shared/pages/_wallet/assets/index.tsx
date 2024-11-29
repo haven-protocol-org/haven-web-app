@@ -25,11 +25,11 @@ import {
 } from "shared/reducers/blockHeaderExchangeRates";
 import { Row } from "./styles";
 import Statistic from "shared/components/statistic";
+import { Warning, Success } from "shared/components/status";
 import { selectMcRatio, selectOffshoreVBS, selectOnshoreVBS } from "shared/reducers/circulatingSupply";
 import { selectBlockap } from "shared/reducers/chain";
 import bigInt from "big-integer";
 import { Title } from "assets/styles/type";
-
 
 interface AssetsProps {
   balances: XBalances;
@@ -40,6 +40,7 @@ interface AssetsProps {
   onshoreVBS:number | null;
   blockCap: number;
   mcapRatio: number | null;
+  auditStatus: boolean;
 }
 
 interface AssetsState {}
@@ -169,9 +170,13 @@ class AssetsPage extends Component<AssetsProps, any> {
     const xusdSpot = lastRates ? convertBalanceToMoney(lastRates.UNUSED2, 4) : 0;
     const xusdMa = lastRates ? convertBalanceToMoney(lastRates.UNUSED3, 4) : 0;
     const mcapRatio = this.props.mcapRatio ? this.props.mcapRatio.toFixed(4) : '--';
- 
+    const needsAudit = this.props.auditStatus;
+
     return (
       <Body>
+        {needsAudit && <>
+          <Warning message="Some assets in this wallet need to be audited. Please proceed to the Audit page and follow the instructions."/>
+        </>}
         {lastRates && <>
           <Row>
             <Statistic label="VBS" value={1} />
@@ -214,6 +219,7 @@ export const mapStateToProps = (state: DesktopAppState | WebAppState) => ({
   offshoreVBS: selectOffshoreVBS(state),
   blockCap: selectBlockap(state),
   mcapRatio: selectMcRatio(state),
+  auditStatus: state.auditStatus
 });
 
 export const Assets = connect(mapStateToProps, {})(AssetsPage);

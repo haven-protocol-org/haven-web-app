@@ -12,6 +12,8 @@ export const WALLET_NEEDS_CONNECTION = "wallet_needs_connection";
 export const WALLET_IS_CONNECTING = "wallet_is_connecting";
 export const WALLET_CONNECT_SUCCEED = "wallet_connect_succeed";
 
+export const AUDIT_SUCCEED_MESSAGE = "audit_succeed_message";
+
 export const notificationList = [
   {
     key: TRANSFER_SUCCEED_MESSAGE,
@@ -356,5 +358,11 @@ export const notificationList = [
     message: `Please select a node in settings to start syncing your Vault`,
     type: NotificationType.ERROR,
     description: WALLET_NEEDS_CONNECTION,
+  },
+  {
+    key: AUDIT_SUCCEED_MESSAGE,
+    code: 0,
+    message: "Your audit was successfully submitted!",
+    type: NotificationType.SUCCESS,
   },
 ];

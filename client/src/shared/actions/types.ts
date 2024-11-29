@@ -148,3 +148,11 @@ export const GET_BLOCK_HEADER_EXCHANGE_RATE_FAILED =
 // Audit
 
 export const GET_AUDIT_STATUS = "get_audit_status";
+
+export const AUDIT_FETCHING = "audit_fetching";
+export const AUDIT_FAILED = "audit_failed";
+export const AUDIT_SUCCEED = "audit_succeed";
+export const AUDIT_RESET = "audit_reset";
+export const AUDIT_CREATION_FETCHING = "audit_creation_fetching";
+export const AUDIT_CREATION_FAILED = "audit_creation_failed";
+export const AUDIT_CREATION_SUCCEED = "audit_creation_succeed";

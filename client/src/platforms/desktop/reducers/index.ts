@@ -22,6 +22,7 @@ import { WebAppState } from "platforms/web/reducers";
 import { storedWallets } from "./storedWallets";
 import { circulatingSupply } from "shared/reducers/circulatingSupply";
 import auditStatus from "shared/reducers/auditStatus";
+import { auditProcess } from "shared/reducers/auditProcess";
 
 const appReducer = combineReducers({
   theme,
@@ -44,7 +45,8 @@ const appReducer = combineReducers({
   connectedNode,
   nodeList,
   circulatingSupply,
-  auditStatus
+  auditStatus,
+  auditProcess
 });
 
 const rootReducer = (state: any, action: AnyAction) => {
