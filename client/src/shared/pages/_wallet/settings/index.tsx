@@ -134,6 +134,10 @@ class SettingsPage extends Component<SettingsProps, SettingsState> {
     this.props.downloadTransfers("csv");
   };
 
+  refreshVault = () => {
+    this.props.showModal(MODAL_TYPE.RescanBC);
+  };
+
   render() {
     const { value, reveal } = this.state;
     const seed = this.props.mnemonic;

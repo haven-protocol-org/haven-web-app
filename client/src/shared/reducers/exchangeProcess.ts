@@ -19,7 +19,8 @@ export interface ExchangeProcessInfo extends TxProcessInfo {
   toAmount: number | null | bigInt.BigInteger;
   change: number | null | bigInt.BigInteger;
   xassetConversion: boolean;
-  requiredCollateral: null | bigInt.BigInteger
+  requiredCollateral: null | bigInt.BigInteger;
+  slippage: null | bigInt.BigInteger;
 }
 
 const INITIAL_STATE: ExchangeProcessInfo = {
@@ -38,7 +39,8 @@ const INITIAL_STATE: ExchangeProcessInfo = {
   fromTicker: Ticker.XHV,
   metaList: [],
   xassetConversion: false,
-  requiredCollateral: null
+  requiredCollateral: null,
+  slippage: null
 };
 
 export const exchangeProcess = (

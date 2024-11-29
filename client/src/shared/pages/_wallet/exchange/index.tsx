@@ -98,20 +98,22 @@ export interface ExchangePrioOption {
 
 
 const xassetOptions: AssetOption[] = [
-  { name: "Yuan", ticker: Ticker.xCNY },
-  { name: "Euro", ticker: Ticker.xEUR },
+  { name: "Bitcoin", ticker: Ticker.xBTC },
   { name: "Gold", ticker: Ticker.XAU },
   { name: "Silver", ticker: Ticker.XAG },
-  { name: "Bitcoin", ticker: Ticker.xBTC },
-  { name: "Swiss Franc", ticker: Ticker.xCHF },
   { name: "Australian Dollar", ticker: Ticker.xAUD },
   { name: "British Pound", ticker: Ticker.xGBP },
+  { name: "Chinese Yuan", ticker: Ticker.xCNY },
+  { name: "Euro", ticker: Ticker.xEUR },
+  { name: "Swiss Franc", ticker: Ticker.xCHF },
 ];
 
 const xusdOption = { name: "U.S. Dollar", ticker: Ticker.xUSD };
 const xhvOption = { name: "Haven", ticker: Ticker.XHV };
 
 const assetOptions: AssetOption[] = [xhvOption, xusdOption, ...xassetOptions];
+
+const deprecatedAssets = [Ticker.xAUD, Ticker.xGBP, Ticker.xCNY, Ticker.xEUR, Ticker.xCHF];
 
 const exchangePrioOptions: ExchangePrioOption[] = [
   { name: "Default", ticker: "Unlocks ~21d", prio: 0 },
@@ -261,7 +263,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
     }
 
     if (fromTicker === Ticker.xUSD) {
-      this.setState({ toOptions: [xhvOption, ...xassetOptions] });
+      this.setState({ toOptions: [xhvOption, ...xassetOptions.filter(asset => !deprecatedAssets.includes(asset.ticker))] });
       return;
     }
 
@@ -316,6 +318,10 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
 
     // conversions between xassets not allowed
     if (this.isXassets(fromticker) && this.isXassets(toTicker)) {
+      return true;
+    }
+
+    if (deprecatedAssets.includes(toTicker)) {
       return true;
     }
     return false;
@@ -592,7 +598,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 options={fromOptions}
                 onClick={this.setFromAsset}
               />
-              <InputButton
+              <Input
                 // @ts-ignore
                 label={
                   "From Amount " +
@@ -606,9 +612,6 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
                 onChange={this.onEnterFromAmount}
                 error={this.fromAmountIsValid(availBalance)}
                 readOnly={fromTicker === null}
-                button={"max"}
-                onClick={this.setMaxAmount}
-                
               />
               <Dropdown
                 label={"To Asset"}
@@ -639,21 +642,7 @@ class Exchange extends Component<ExchangeProps, ExchangeState> {
 
             {selectedTab === ExchangeTab.Advanced && (
               <>
-                <WideContainer>
-
-                { txType === TxType.Shore  && (
-                  <Input
-                  label='Required Collateral in XHV'
-                  placeholder="auto calculated collateral"
-                  width={true}
-                  type={"text"}
-                  name="collateral"
-                  error={this.getCollateralError()}
-                  value={this.state.requiredCollateral}
-                  readOnly={true}
-                />
-                  )}
-                  
+                <WideContainer>                  
                   <AddressDropdown
                     label="From Address (Optional)"
                     placeholder="Select from address"

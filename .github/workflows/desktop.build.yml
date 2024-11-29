@@ -21,7 +21,7 @@ jobs:
         system:
           - os: "windows-latest"
             path: "squirrel.windows/x64/"
-          - os: "macos-13"
+          - os: "macos-latest"
             path: ""
           - os: ubuntu-latest
             path: "deb/x64/"
@@ -38,12 +38,12 @@ jobs:
       with:
         python-version: '3.10'
 
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Use Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
-        node-version: '14'
+        node-version: '18'
 
     - name: Install client dependencies
       working-directory: client
@@ -54,7 +54,7 @@ jobs:
     - name: Audit client dependencies
       working-directory: client
       run: |
-          npm audit fix --production
+          npm audit fix --audit-level moderate
 
     - name: Client Build for Desktop
       working-directory: client
@@ -81,7 +81,7 @@ jobs:
     - name: Audit backend dependencies
       working-directory: haven-desktop-app
       run: |
-          npm audit fix --production
+          npm audit fix --audit-level moderate
 
     - if: matrix.system.os == 'ubuntu-latest'
       run: |

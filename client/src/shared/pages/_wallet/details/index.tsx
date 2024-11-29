@@ -5,6 +5,7 @@ import Body from "../../../components/_layout/body";
 import { ChartContainer } from "shared/components/chart-container";
 
 interface DetailsProps {
+  children: React.ReactNode;
   amount: number;
   price: number;
   value: number;

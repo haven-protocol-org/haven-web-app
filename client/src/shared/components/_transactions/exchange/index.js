@@ -31,21 +31,22 @@ const Transaction = ({
   isOwnAddress,
   xasset_conversion,
   change,
-  collateral
+  collateral,
+  slippage
 }) => {
   const first = externAddress.substring(0, 4);
   const last = externAddress.substring(externAddress.length - 4);
   const truncatedAddress = first + "...." + last;
 
   let unlock_time = "--";
-  let collateral_unlock_time;;
+  let collateral_unlock_time;
   if(fromTicker !== null && toTicker != null){
     if( fromTicker === Ticker.XHV && toTicker === Ticker.xUSD){
       unlock_time = "24 hour";
-      collateral_unlock_time = "14 day";
+      collateral_unlock_time = "24 hour";
     }else if( fromTicker === Ticker.xUSD && toTicker === Ticker.XHV ){
       unlock_time = "24 hour";
-      collateral_unlock_time = "14 day";
+      collateral_unlock_time = "24 hour";
     }else{
       unlock_time = "48 hour"
     }
@@ -69,6 +70,14 @@ const Transaction = ({
         )}
         <Cell left="Converted Amount Unlock Time" right={unlock_time + "s"}/>
         {collateral_unlock_time && (<Cell left="Collateral Unlock Time" right={collateral_unlock_time + "s"} />)}
+        <Row>
+          <Key>Slippage</Key>
+          <Tag priority={3}>
+            <Value>
+              {slippage} {fromTicker}
+            </Value>
+          </Tag>
+        </Row>
         </Container>
         <Container>
       <SubHeader>Transaction Details</SubHeader>
@@ -83,7 +92,7 @@ const Transaction = ({
           </Tag>
         </Row>
         <Confirm
-          description={<span>I accept the {collateral_unlock_time ? collateral_unlock_time : unlock_time} conversion unlock time, details,&nbsp;<Url
+          description={<span>I accept the slippage, {collateral_unlock_time ? collateral_unlock_time : unlock_time} conversion unlock time, details,&nbsp;<Url
                 target="_blank"
                 href="https://havenprotocol.org/knowledge/converting-assets/">terms</Url> & fees.</span>}
           checked={checked}

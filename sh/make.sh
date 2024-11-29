@@ -4,7 +4,7 @@
 export HAVEN_DESKTOP_DEVELOPMENT=false
 export NODE_INSTALLER=npm
 
-if [ "$ACTION_OS" == "macos-13" ]
+if [ "$ACTION_OS" == "macos-latest" ]
 then
     npm run make --prefix haven-desktop-app -- --arch="arm64,x64" 
 else 
