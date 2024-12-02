@@ -18,6 +18,9 @@ export interface Balance {
   balance: bigInt.BigInteger;
   unlockedBalance: bigInt.BigInteger;
   lockedBalance: bigInt.BigInteger;
+  unauditedBalance: bigInt.BigInteger;
+  unlockedUnauditedBalance: bigInt.BigInteger;
+  lockedUnauditedBalance: bigInt.BigInteger;
 }
 
 export interface ViewBalance {
@@ -25,6 +28,9 @@ export interface ViewBalance {
   balance: number;
   unlockedBalance: number;
   lockedBalance: number;
+  unauditedBalance: number;
+  unlockedUnauditedBalance: number;
+  lockedUnauditedBalance: number;
 }
 
 export type XBalance = Partial<{ [key in Ticker]: Balance }>;
@@ -36,12 +42,18 @@ const INITIAL_BALANCE: Balance = {
   balance: NO_BALANCE,
   unlockedBalance: NO_BALANCE,
   lockedBalance: NO_BALANCE,
+  unauditedBalance: NO_BALANCE,
+  unlockedUnauditedBalance: NO_BALANCE,
+  lockedUnauditedBalance: NO_BALANCE,
 };
 
 const INITIAL_VIEW_BALANCE: ViewBalance = {
   balance: -1,
   unlockedBalance: -1,
   lockedBalance: -1,
+  unauditedBalance: -1,
+  unlockedUnauditedBalance: -1,
+  lockedUnauditedBalance: -1,
 };
 
 
@@ -87,6 +99,13 @@ export const selectBalances = (
       lockedBalance: convertBalanceToMoney(
         state.xBalance[Ticker.XHV].lockedBalance
       ),
+      unauditedBalance: convertBalanceToMoney(state.xBalance[Ticker.XHV].unauditedBalance),
+      unlockedUnauditedBalance: convertBalanceToMoney(
+        state.xBalance[Ticker.XHV].unlockedUnauditedBalance
+      ),
+      lockedUnauditedBalance: convertBalanceToMoney(
+        state.xBalance[Ticker.XHV].lockedUnauditedBalance
+      ),
     },
   };
 };
@@ -96,7 +115,7 @@ export const selectBalances = (
 export const selectPortfolioInUSD = (state: DesktopAppState | WebAppState): XViewBalance => {
 
 
-    const usdPortfolio: ViewBalance = { balance:0, unlockedBalance:0, lockedBalance:0};
+    const usdPortfolio: ViewBalance = { balance:0, unlockedBalance:0, lockedBalance:0, unauditedBalance:0, unlockedUnauditedBalance:0, lockedUnauditedBalance:0 };
     const xBalance = state.xBalance;
 
     const toTicker = Ticker.xUSD;

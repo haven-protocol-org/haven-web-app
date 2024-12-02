@@ -56,8 +56,8 @@ export const Transaction = ({
         responsibility for this transaction.{" "}
         <strong>
           I understand that a portion of my balance may be locked and unusable
-          for the entirety of the ~20m unlock priority time. However, this
-          amount will be unlocked and usable once the transaction is complete.{" "}
+          for the entirety of the ~20m unlock time. However, this
+          amount will be unlocked and usable once the transaction(s) are complete.{" "}
         </strong>
         To understand why this happens and how it might impact your experience,
         please{" "}

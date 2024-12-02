@@ -42,6 +42,28 @@ export const getPort = () => {
   return window.location.port;
 };
 
+export const getForkHeights = () => {
+  if (isMainnet()) {
+    if (isDevMode()) {
+      return {
+        HF_VERSION_SUPPLY_AUDIT: 1732000,
+        HF_VERSION_SUPPLY_AUDIT_END: 1732100,
+        HF_VERSION_VBS_DISABLING: 1732200
+      }
+    }
+    return {
+      HF_VERSION_SUPPLY_AUDIT: 1752270,
+      HF_VERSION_SUPPLY_AUDIT_END: 1783950,
+      HF_VERSION_VBS_DISABLING: 1788990
+    }
+  }
+  return {
+    HF_VERSION_SUPPLY_AUDIT: 1,
+    HF_VERSION_SUPPLY_AUDIT_END: 2,
+    HF_VERSION_VBS_DISABLING: 3
+  }
+}
+
 let apiUrl;
 
 if (isWeb()) {

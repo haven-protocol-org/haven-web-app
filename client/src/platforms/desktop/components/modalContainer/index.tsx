@@ -9,6 +9,7 @@ import { LoginOnboardingModal } from "platforms/desktop/components/modals/loginO
 import { QRCodeModal } from "../modals/showQRCode";
 import { ManageAddressModal } from "../modals/manageAddressModal";
 import { RescanBCMModal } from "../modals/rescanBCModal";
+import { AuditModal } from "../modals/confirmAuditModal";
 
 class ModalContainer extends React.Component<any, any> {
   render() {
@@ -29,6 +30,8 @@ class ModalContainer extends React.Component<any, any> {
 //        return <LoginOnboardingModal />;
       case MODAL_TYPE.RescanBC:
         return <RescanBCMModal />;
+      case MODAL_TYPE.ConfirmAudit:
+        return <AuditModal />;
     }
     return null;
   }

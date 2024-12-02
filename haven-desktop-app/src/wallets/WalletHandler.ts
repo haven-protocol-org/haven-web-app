@@ -85,7 +85,7 @@ export class WalletHandler {
       return txJsonObjects;
     }
 
-    if (methodName === "transfer" || methodName === "sweep") {
+    if (methodName === "transfer" || methodName === "sweep" || methodName === "audit") {
       const txClassObjects = response
       const txJsonObjects = txClassObjects.map((tx: MoneroTxWallet) => {
         // serialize tx data
@@ -108,7 +108,7 @@ export class WalletHandler {
       return addressJsonObjects;
 
       }
-      if (methodName === "createSubAddress" || methodName === "getBalance" || methodName === "getUnlockedBalance" || methodName === "getCirculatingSupply") {
+      if (methodName === "createSubAddress" || methodName === "getBalance" || methodName === "getUnlockedBalance" || methodName == "getUnauditedBalance" || methodName === "getCirculatingSupply") {
         // serialize address and balance data
         return response.toJson();
       }

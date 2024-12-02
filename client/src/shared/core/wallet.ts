@@ -74,6 +74,19 @@ export const getBalance = async (
   return balance;
 };
 
+export const getUnauditedBalance = async (unlocked_only: boolean) => {
+  if (!wallet) {
+    throw Error("no wallet exist");
+  }
+  //@ts-ignore
+  const balance: HavenBalance = await wallet.getUnauditedBalance(unlocked_only);
+  return balance;
+};
+
+export const hasSpendableOldOutputs = async () => {
+  return await wallet.hasSpendableOldOutputs();
+};
+
 export const getUnlockedBalance = async (
   accountIdx: number | undefined = undefined,
   subaddressIdx: number | undefined = undefined,
@@ -133,6 +146,16 @@ export const transfer = async (
 ): Promise<MoneroTxWallet[]> => {
   //@ts-ignore
   return wallet.createTxs(txConfig);
+};
+
+export const audit = async (
+  address: string,
+  keep_subaddress: boolean,
+  priority: number,
+  relay: boolean
+): Promise<MoneroTxWallet[]> => {
+  //@ts-ignore
+  return wallet.createAuditTxs(address, keep_subaddress, priority, relay);
 };
 
 export const sweep = async (
